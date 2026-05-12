@@ -43,7 +43,7 @@ export function MembersList({ members, party, onPartyChange, availableParties, s
         </div>
         <span className="text-s opacity-l">{members.length} Personen</span>
       </div>
-      <div className="grid grid-cols-[1fr_auto_auto_auto] gap-m text-s uppercase opacity-l sm:grid-cols-[1fr_auto_auto_auto_auto]" style={{ letterSpacing: '0.08em' }}>
+      <div className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] gap-m text-s uppercase opacity-l sm:grid-cols-[minmax(0,1fr)_auto_auto_auto_auto]" style={{ letterSpacing: '0.08em' }}>
         <SortHeader label="Name" k="name" sortKey={sortKey} sortDir={sortDir} onSort={onSort} />
         <SortHeader label="Partei" k="party" sortKey={sortKey} sortDir={sortDir} onSort={onSort} />
         <div className="hidden sm:contents">

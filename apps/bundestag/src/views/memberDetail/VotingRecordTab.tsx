@@ -52,10 +52,10 @@ export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilt
         />
       </div>
       <div
-        className="grid grid-cols-[1fr_auto_auto_auto] gap-m py-s text-s uppercase opacity-l"
+        className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] gap-m py-s text-s uppercase opacity-l"
         style={{ letterSpacing: '0.08em' }}
       >
-        <span>Abstimmung</span>
+        <span className="min-w-0">Abstimmung</span>
         <span className="w-24">Datum</span>
         <span className="w-24">Stimme</span>
         <span className="w-16">Linie</span>
@@ -65,10 +65,10 @@ export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilt
           key={r.voteId}
           to="/votes/$id/"
           params={{ id: r.voteId }}
-          className="grid grid-cols-[1fr_auto_auto_auto] items-center gap-m border-t py-m text-m transition-opacity hover:opacity-80"
+          className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] items-center gap-m border-t py-m text-m transition-opacity hover:opacity-80"
           style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
         >
-          <span>{r.title}</span>
+          <span className="min-w-0" style={{ overflowWrap: 'anywhere' }}>{r.title}</span>
           <span className="w-24 text-s opacity-l">{formatDate(r.date)}</span>
           <span className="w-24">{CHOICE_LABEL[r.choice]}</span>
           <span className="w-16 text-s" style={{ color: r.defected ? 'var(--color-danger)' : undefined, opacity: r.defected ? 1 : 0.7 }}>

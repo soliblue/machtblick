@@ -73,7 +73,7 @@ export function AnfragenTab({ data }: Props) {
           </div>
           <div className="flex flex-col">
             <div
-              className="grid grid-cols-[1fr_auto_auto_auto] gap-m py-s text-s uppercase opacity-l"
+              className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] gap-m py-s text-s uppercase opacity-l"
               style={{ letterSpacing: '0.08em' }}
             >
               <span>Anfrage</span>

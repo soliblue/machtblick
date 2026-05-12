@@ -25,11 +25,11 @@ export function AnfrageRow({ row }: Props) {
   return (
     <Wrap
       {...(href ? { href, target: '_blank', rel: 'noreferrer' } : {})}
-      className="grid grid-cols-[1fr_auto_auto_auto] items-start gap-m border-t py-s transition-opacity hover:opacity-80"
+      className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] items-start gap-m border-t py-s transition-opacity hover:opacity-80"
       style={{ borderColor: ROW_BORDER }}
     >
-      <div className="flex flex-col gap-xs">
-        <span className="text-m font-semibold">{row.title}</span>
+      <div className="flex min-w-0 flex-col gap-xs">
+        <span className="text-m font-semibold" style={{ overflowWrap: 'anywhere' }}>{row.title}</span>
         <span className="text-s opacity-l">
           {row.answerRessort ? row.answerRessort : null}
           {row.answerRessort && row.cosignerCount > 0 ? ' · ' : null}

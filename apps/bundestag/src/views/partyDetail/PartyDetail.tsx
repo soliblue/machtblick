@@ -101,11 +101,11 @@ export function PartyDetail({ data, result, onResultChange, partyVote, onPartyVo
             key={v.voteId}
             to="/votes/$id/"
             params={{ id: v.voteId }}
-            className="grid grid-cols-[1fr_auto_auto] items-center gap-l border-t py-m text-m transition-opacity first:border-t-0 hover:opacity-80"
+            className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-l border-t py-m text-m transition-opacity first:border-t-0 hover:opacity-80"
             style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
           >
-            <div className="flex flex-col">
-              <span>{v.title}</span>
+            <div className="flex min-w-0 flex-col">
+              <span style={{ overflowWrap: 'anywhere' }}>{v.title}</span>
               <span className="text-s opacity-l">{formatDate(v.date)}</span>
             </div>
             <VoteChip vote={v.partyVote} />
