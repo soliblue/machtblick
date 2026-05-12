@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "bc600636-5c98-4b76-9c7e-6d1c924e8d85",
-  "prevId": "d8a5774e-d7d5-411e-b253-09020207f767",
+  "id": "ef286aa5-69da-4605-becf-6211119ddc0f",
+  "prevId": "bc600636-5c98-4b76-9c7e-6d1c924e8d85",
   "tables": {
     "anfrage_signatories": {
       "name": "anfrage_signatories",
@@ -418,9 +418,24 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
+        },
+        "bt_mdb_id": {
+          "name": "bt_mdb_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "members_bt_mdb_id_idx": {
+          "name": "members_bt_mdb_id_idx",
+          "columns": [
+            "bt_mdb_id"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},

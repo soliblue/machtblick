@@ -234,6 +234,29 @@ Current coverage on the 6167 21. BT speeches: 5215 matched to a member, 950 role
 
 `speeches_fts` is a contentless FTS5 mirror over `(speaker_name, text_full)` with `unicode61 remove_diacritics 2`. Three triggers keep it in sync with `speeches` (AI/AD/AU). Search with `MATCH` and join back via `rowid`.
 
+## Bundestag MdB-Stammdaten — data notes
+
+Upstream: `https://www.bundestag.de/resource/blob/472878/c2ee46c6dadbf6f06ee27d5618fd24e9/MdB-Stammdaten-data.zip` → `MDB_STAMMDATEN.XML`. Canonical source of the 8-digit Bundestag-MdB-Stammdaten-ID (`11005100` etc.) used as `<redner id>` in plenary protocol XML. Updated several times per year by the Bundestag.
+
+Do not confuse with `https://www.bundestag.de/xml/mdb/index.xml`. That index only carries the 4-digit `mdbID` (different namespace, e.g. `2314` for the same person) plus photo/bio URLs.
+
+### What we use it for
+
+Populating `members.bt_mdb_id` so the speeches ingest can join `<redner id>` deterministically. Without this column, speeches join by fuzzy name match, which fails on marriage names (e.g. `<redner id="11004617">` for Ronja Kemmer — Stammdaten has both `Schmitt` (historic) and `Kemmer` (current) under one ID), middle-name drift (`Charlotte Antonia Neuhäuser` in our DB vs `Charlotte Neuhäuser` in protocol), noble particles, and academic-title variations.
+
+### Quirks
+
+- Per-MdB block has one `<NAMEN>` containing one or more `<NAME>` rows with `HISTORIE_VON/HISTORIE_BIS` — every historical legal name is preserved. Index all of them so post-marriage and pre-marriage lookups both resolve.
+- Filter to MdBs who have `<WAHLPERIODEN><WAHLPERIODE><WP>21</WP>` to scope to the current Bundestag (~635 entries). Older MdBs with name collisions otherwise cause spurious conflicts.
+- Vorname can contain multiple given names (`Thomas Max`); the ingest keeps both a full-vorname key and a first-token-only key as fallback. Same trick as `vote_members.memberId`.
+- Noble particles (`von van de der den dos da di du le la zu auf freiherr graf edler baron …`) and academic honorifics are dropped during key normalization on both sides.
+- ETL is enrich-only — it does not insert new members. abgeordnetenwatch remains the source of truth for membership; Stammdaten only enriches existing rows.
+- One MdB in WP21 is reliably "unmatched feed-side" until abgeordnetenwatch catches up: Henning Otte (`11003821`), a Nachrücker.
+
+### Cron cadence
+
+Monthly is plenty; the file changes only when an MdB joins, leaves, or changes name. Script: `npm run etl:stammdaten`. After running, re-run `npm run etl:speeches:xml:ingest` so speeches re-link via the new IDs.
+
 ## DIP Anfragen — data notes
 
 Upstream: DIP search API (`https://search.dip.bundestag.de/api/v1/`). Three vorgangstyp values: `Kleine Anfrage`, `Große Anfrage`, `Schriftliche Frage`. Full entity model, ID stability, signatory resolution and the time-range fraktion rule are documented in `.claude/plans/06-anfragen.md` (spike findings + log). One thing to repeat here because it affects read paths: **Schriftliche Frage positions carry no fraktion**. Resolve party from `member_affiliations.partyAt(member_id, anfragen.question_date)` rather than DIP's current fraktion tag.
