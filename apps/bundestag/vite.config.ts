@@ -70,7 +70,12 @@ function prerenderPaths(): string[] {
   const votes = db.prepare('SELECT id FROM votes WHERE procedural = 0').all() as Array<{ id: string }>
   for (const v of votes) paths.push(`/votes/${v.id}/`)
   const members = db.prepare('SELECT id FROM members').all() as Array<{ id: string }>
-  for (const m of members) paths.push(`/members/${m.id}/`)
+  for (const m of members) {
+    paths.push(`/members/${m.id}/`)
+    paths.push(`/members/${m.id}/abstimmungen/`)
+    paths.push(`/members/${m.id}/reden/`)
+    paths.push(`/members/${m.id}/anfragen/`)
+  }
   const parties = db.prepare(`
     SELECT DISTINCT s.party FROM vote_party_summaries s
     INNER JOIN votes v ON v.id = s.vote_id

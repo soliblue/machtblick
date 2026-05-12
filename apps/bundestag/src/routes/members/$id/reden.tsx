@@ -7,8 +7,9 @@ export const Route = createFileRoute('/members/$id/reden')({
 
 function RedenRoute() {
   const data = useLoaderData({ from: '/members/$id' })
-  return data.speeches.length > 0 ? (
-    <MemberSpeechesSection speeches={data.speeches} />
+  const speeches = data?.speeches ?? []
+  return speeches.length > 0 ? (
+    <MemberSpeechesSection speeches={speeches} />
   ) : (
     <div className="border p-xl text-center text-m opacity-l" style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}>
       <div className="font-semibold opacity-100">Keine Reden in WP21</div>

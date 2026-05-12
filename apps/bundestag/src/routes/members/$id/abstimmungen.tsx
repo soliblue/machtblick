@@ -22,7 +22,7 @@ function AbstimmungenRoute() {
   }
   return (
     <VotingRecordTab
-      history={data.history}
+      history={data?.history ?? []}
       lineFilter={line ?? null}
       setLineFilter={setLineFilter}
       choiceFilter={choiceFilter}
