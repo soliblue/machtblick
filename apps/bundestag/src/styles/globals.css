@@ -69,8 +69,12 @@
 }
 
 @layer base {
-  html, body { background: var(--color-background); color: var(--color-fg); }
+  html, body { background: var(--color-background); color: var(--color-fg); overflow-x: clip; }
   body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 400; }
+}
+
+@media (pointer: coarse) {
+  input, textarea, select { font-size: 16px !important; }
 }
 
 .mb-scroll-wordmark {
