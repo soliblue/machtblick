@@ -11,7 +11,11 @@
     "db:normalize": "tsx db/normalize-results.ts",
     "etl:donations": "tsx etl/bundestag-spenden/ingest.ts",
     "etl:affiliations": "tsx etl/bundestag-affiliations/ingest.ts",
-    "etl:speeches": "tsx etl/bundestag-reden/ingest.ts"
+    "etl:speeches": "tsx etl/bundestag-reden/ingest.ts",
+    "etl:dip:answers:fetch": "tsx etl/dip/answers/fetch.ts",
+    "etl:dip:answers:extract": "tsx etl/dip/answers/extract.ts",
+    "etl:dip:answers:ingest": "tsx etl/dip/answers/ingest.ts",
+    "etl:dip:answers": "npm run etl:dip:answers:fetch && npm run etl:dip:answers:extract && npm run etl:dip:answers:ingest"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.11",

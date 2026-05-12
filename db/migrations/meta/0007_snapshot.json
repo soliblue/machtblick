@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "d8a5774e-d7d5-411e-b253-09020207f767",
-  "prevId": "5e0cc9ed-0c54-46e9-a015-fed8f776fd27",
+  "id": "bc600636-5c98-4b76-9c7e-6d1c924e8d85",
+  "prevId": "d8a5774e-d7d5-411e-b253-09020207f767",
   "tables": {
     "anfrage_signatories": {
       "name": "anfrage_signatories",
@@ -222,6 +222,58 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
+    "anfragen_answer_text": {
+      "name": "anfragen_answer_text",
+      "columns": {
+        "anfrage_id": {
+          "name": "anfrage_id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "text": {
+          "name": "text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "extracted_at": {
+          "name": "extracted_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "source": {
+          "name": "source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "anfragen_answer_text_anfrage_id_anfragen_id_fk": {
+          "name": "anfragen_answer_text_anfrage_id_anfragen_id_fk",
+          "tableFrom": "anfragen_answer_text",
+          "tableTo": "anfragen",
+          "columnsFrom": [
+            "anfrage_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
     "anfragen_raw": {
       "name": "anfragen_raw",
       "columns": {
@@ -365,13 +417,6 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
-        },
-        "dip_person_id": {
-          "name": "dip_person_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
           "autoincrement": false
         }
       },

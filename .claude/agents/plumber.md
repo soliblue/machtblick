@@ -234,3 +234,24 @@ Current coverage on the 6167 21. BT speeches: 5215 matched to a member, 950 role
 
 `speeches_fts` is a contentless FTS5 mirror over `(speaker_name, text_full)` with `unicode61 remove_diacritics 2`. Three triggers keep it in sync with `speeches` (AI/AD/AU). Search with `MATCH` and join back via `rowid`.
 
+## DIP Anfragen — data notes
+
+Upstream: DIP search API (`https://search.dip.bundestag.de/api/v1/`). Three vorgangstyp values: `Kleine Anfrage`, `Große Anfrage`, `Schriftliche Frage`. Full entity model, ID stability, signatory resolution and the time-range fraktion rule are documented in `.claude/plans/06-anfragen.md` (spike findings + log). One thing to repeat here because it affects read paths: **Schriftliche Frage positions carry no fraktion**. Resolve party from `member_affiliations.partyAt(member_id, anfragen.question_date)` rather than DIP's current fraktion tag.
+
+### Answer text — separate ingest
+
+DIP exposes `answer_pdf_url` but not the answer body. We download every PDF and extract plain text into a sidecar table.
+
+- Tables: `anfragen_answer_text` (`anfrage_id` PK FK, `text`, `extracted_at`, `source` enum). Raw PDFs and extracted `.txt` files persist under `etl/dip/cache/answers/` (gitignored) so re-ingest doesn't re-download or re-extract.
+- Three-step ETL under `etl/dip/answers/`:
+  1. `fetch.ts` — concurrent download (6 workers, 120 ms polite delay). Skips already-cached PDFs. `User-Agent` is set; bundestag.de does not require headers but be polite.
+  2. `extract.ts` — `pdftotext -layout -enc UTF-8 <pdf> -` first. Healthy bundestag Drucksachen come out at alphaRatio 0.55–0.68 across all three Anfrage types. Anything <100 chars or alphaRatio <0.3 falls back to `claude -p --model claude-haiku-4-5` then `claude-sonnet-4-5`. Source tag is recorded in `<id>.meta.json` next to the `.txt` and reaches the DB column.
+  3. `ingest.ts` — upserts `anfragen_answer_text`. Idempotent.
+- Script: `npm run etl:dip:answers` runs fetch → extract → ingest.
+- Volume: ~8.4k PDFs in WP21. Extract step is the bottleneck (~500 ms avg on pdftotext, so ~70 min). Fetch step bandwidth-bound, ~30–45 min at 6× concurrency.
+- Quirk: `Schriftliche Frage` PDFs are bundled — one Drucksache aggregates dozens of Q+A pairs from the same week. The whole bundle ends up in one anfragen row's `text` (because that's the PDF the row links to). Apps that want per-MP-answer slicing need to do their own splitting on the "Frage Nr. NN" headings. Not solved at ingest — too brittle.
+
+### Migration drift workaround
+
+`members.dip_person_id` exists in the DB but not in `db/schema/members.ts` (deliberate, see plan 06 log — added by raw SQL during the earlier ingest). When `drizzle-kit generate` is run, it will try to drop the column. Strip the `ALTER TABLE members DROP COLUMN` from the generated migration before applying it manually with `sqlite3 db/machtblick.sqlite < db/migrations/<file>.sql`. Update `meta/_journal.json` to point at the renamed migration if you renumbered. Until someone reconciles the schema, this is the documented workaround. Do not regenerate migrations without re-checking the diff.
+

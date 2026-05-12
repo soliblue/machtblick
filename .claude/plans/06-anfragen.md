@@ -18,6 +18,7 @@ Lead-author vs co-signer distinction: surface it only if DIP exposes it cleanly.
 | Server functions | backend | done |
 | ASCII mocks (MP tab + party panel) | designer | done |
 | Frontend views | frontend | done |
+| Answer text extraction (PDF → DB) | plumber | in progress |
 
 ## Spike — what plumber must answer
 
@@ -255,3 +256,18 @@ Decisions (resolved by lead 2026-05-12):
   - Files deleted: `apps/bundestag/src/routes/members/$id.tsx`, `apps/bundestag/src/views/memberDetail/MemberDetail.tsx` (responsibilities split into layout + child routes).
   - Tab order Abstimmungen → Reden → Anfragen. Default = Abstimmungen.
   - Verified live (vite dev): `/members/vogtschmidt-donata/` → 307 to `/members/vogtschmidt-donata/abstimmungen/`; `/anfragen/` and `/abstimmungen/` return 200. Typecheck clean for all touched files (remaining errors in `parties.ts` / anfragen schema imports are pre-existing).
+- 2026-05-12 (plumber) — Answer-text spike. Three representative PDFs from the live DB pulled into `/tmp/anfragen-spike/`:
+  - kleine (Drs 21/40, AfD Asow-Anfrage), 199 KB → pdftotext `-layout`: 92 ms, 6.6 KB clean text, alphaRatio 0.68. Front matter + numbered Frage/Antwort blocks intact.
+  - grosse (Drs 21/3319, AfD LGBTIQ-Förderung), 521 KB → 486 ms, 100 KB, alphaRatio 0.66.
+  - schriftlich (Drs 21/19, bundled WP21 first batch), 617 KB → 840 ms, 195 KB, alphaRatio 0.55. "Verzeichnis der Fragenden" → per-Frage Q+A blocks all parse cleanly.
+  - Decision: use **pdftotext** as primary, no JS fallback needed for the canonical cases. Fall back to `claude -p --model haiku` only if extracted output is empty / <100 chars / alphaRatio <0.3 (heuristic for scanned PDFs). At 8.4k PDFs × ~500 ms average that's ~70 min of CPU for the extract step; fetch step bandwidth-bound.
+  - Approach confirmed; proceeding with fetch + extract + ingest implementation.
+- 2026-05-12 (plumber) — Answer-text ETL shipped.
+  - Schema: new sidecar table `anfragen_answer_text` (`anfrage_id` PK FK → anfragen, `text`, `extracted_at`, `source` enum `pdftotext|pdfjs|claude-haiku|claude-sonnet`). Migration `0007_anfragen_answer_text.sql` generated + applied manually. Drift workaround applied (drizzle-kit also wanted to drop `members.dip_person_id` which exists in DB but not schema — stripped that ALTER from the generated SQL; documented in `plumber.md` under "Migration drift workaround"). Snapshot + journal renamed from `0006_ancient_red_skull` to `0007_anfragen_answer_text` to slot above the existing `0006_fantastic_firelord`.
+  - ETL: `etl/dip/answers/{cache,fetch,extract,ingest}.ts`. PDFs and `.txt` outputs persist under `etl/dip/cache/answers/<id>.{pdf,txt,meta.json}` (cache dir already gitignored).
+    - fetch: 6-worker concurrency, 120 ms polite delay, skips when PDF already on disk.
+    - extract: `pdftotext -layout -enc UTF-8 <pdf> -`. Heuristic gibberish guard (chars<100 or alphaRatio<0.3). Fallback `claude -p --model claude-haiku-4-5` then `claude-sonnet-4-5`. Source tag recorded in `<id>.meta.json` and propagated to DB.
+    - ingest: upserts into `anfragen_answer_text`, idempotent.
+  - Scripts: `npm run etl:dip:answers:{fetch,extract,ingest}` and a chained `npm run etl:dip:answers`.
+  - Smoke (3-PDF seed): pdftotext clean on all three types, alphaRatio 0.55–0.68, end-to-end pipeline writes correct DB rows. Idempotent re-run skips extracts.
+  - Full backfill: kicked off in background (~8.3k PDFs). Results to land in next log entry.
