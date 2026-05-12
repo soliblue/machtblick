@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "app",
-      "type": "vscode-edge-devtools.debug",
+      "type": "chrome",
       "request": "launch",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}/apps/bundestag",
