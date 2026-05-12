@@ -8,6 +8,7 @@ export function useMemberListFilters(
   members: MemberListItem[],
   party: string | null,
   state: string | null,
+  query: string = '',
 ) {
   const [sortKey, setSortKey] = useState<MemberSortKey>('name')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
@@ -22,7 +23,8 @@ export function useMemberListFilters(
     return Array.from(set).sort((a, b) => a.localeCompare(b, 'de'))
   }, [members])
   const filtered = useMemo(() => {
-    const base = members.filter((m) => (!party || m.party === party) && (!state || m.state === state))
+    const q = query.trim().toLowerCase()
+    const base = members.filter((m) => (!q || m.name.toLowerCase().includes(q)) && (!party || m.party === party) && (!state || m.state === state))
     const dir = sortDir === 'asc' ? 1 : -1
     return [...base].sort((a, b) => {
       const av = a[sortKey] ?? ''
@@ -30,7 +32,7 @@ export function useMemberListFilters(
       if (typeof av === 'number' && typeof bv === 'number') return (av - bv) * dir
       return String(av).localeCompare(String(bv), 'de') * dir
     })
-  }, [members, party, state, sortKey, sortDir])
+  }, [members, party, state, query, sortKey, sortDir])
   const toggleSort = (key: MemberSortKey) => {
     if (sortKey === key) setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'))
     else {

@@ -4,7 +4,7 @@ import { MembersList } from '@/views/membersList/MembersList'
 import { useMemberListFilters } from '@/hooks/useMemberListFilters'
 import { seoMeta, canonicalLink } from '@/lib/seo'
 
-type Search = { party?: string; state?: string }
+type Search = { party?: string; state?: string; q?: string }
 
 export const Route = createFileRoute('/members/')({
   component: MembersRoute,
@@ -20,19 +20,22 @@ export const Route = createFileRoute('/members/')({
   validateSearch: (search: Record<string, unknown>): Search => ({
     party: typeof search.party === 'string' ? search.party : undefined,
     state: typeof search.state === 'string' ? search.state : undefined,
+    q: typeof search.q === 'string' ? search.q : undefined,
   }),
 })
 
 function MembersRoute() {
   const members = Route.useLoaderData()
-  const { party, state } = Route.useSearch()
+  const { party, state, q } = Route.useSearch()
   const navigate = useNavigate({ from: Route.fullPath })
   const partyValue = party ?? null
   const stateValue = state ?? null
+  const query = q ?? ''
   const { filtered, availableParties, availableStates, sortKey, sortDir, toggleSort } = useMemberListFilters(
     members,
     partyValue,
     stateValue,
+    query,
   )
   return (
     <MembersList
@@ -43,6 +46,8 @@ function MembersRoute() {
       state={stateValue}
       onStateChange={(v) => navigate({ search: (s) => ({ ...s, state: v ?? undefined }) })}
       availableStates={availableStates}
+      query={query}
+      onQueryChange={(v) => navigate({ search: (s) => ({ ...s, q: v.trim() ? v : undefined }) })}
       sortKey={sortKey}
       sortDir={sortDir}
       onSort={toggleSort}

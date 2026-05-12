@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react'
 import { Filter, FileQuestion, CheckCircle2, Building2, Search } from 'lucide-react'
 import type { MemberAnfragen, AnfrageRow as AnfrageRowData } from '@/server/anfragen'
 import { FilterPill } from '@/views/votesList/FilterPill'
-import { AnfragenSummary } from './AnfragenSummary'
 import { AnfrageRow } from './AnfrageRow'
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
@@ -12,12 +11,9 @@ const TYPE_LABEL: Record<string, string> = { kleine: 'Kleine', grosse: 'Große',
 const STATUS_OPTIONS = ['beantwortet', 'offen']
 const STATUS_LABEL: Record<string, string> = { beantwortet: 'Beantwortet', offen: 'Offen' }
 
-type GroupBy = 'thema' | 'datum'
-
 type Props = { data: MemberAnfragen }
 
 export function AnfragenTab({ data }: Props) {
-  const [groupBy, setGroupBy] = useState<GroupBy>('thema')
   const [typeFilter, setTypeFilter] = useState<string | null>(null)
   const [statusFilter, setStatusFilter] = useState<string | null>(null)
   const [ressortFilter, setRessortFilter] = useState<string | null>(null)
@@ -31,21 +27,22 @@ export function AnfragenTab({ data }: Props) {
     if (query && !r.title.toLowerCase().includes(query.trim().toLowerCase())) return false
     return true
   }
-  const filteredFlat = useMemo(() => data.flat.filter(matches), [data.flat, typeFilter, statusFilter, ressortFilter, query])
-  const filteredGroups = useMemo(() => data.groups
-    .map((g) => ({ ...g, rows: g.rows.filter(matches), count: g.rows.filter(matches).length }))
-    .filter((g) => g.count > 0), [data.groups, typeFilter, statusFilter, ressortFilter, query])
+  const filtered = useMemo(() => data.flat.filter(matches), [data.flat, typeFilter, statusFilter, ressortFilter, query])
   return (
     <section>
-      <div className="mb-s flex items-center justify-end gap-xs text-s">
-        <span className="opacity-m">Gruppiert nach</span>
-        <GroupToggle value={groupBy} onChange={setGroupBy} />
-      </div>
-      <div className="mb-l border p-m" style={{ borderColor: ROW_BORDER }}>
-        <AnfragenSummary data={data} />
-      </div>
       {data.total > 0 ? (
         <>
+          <div className="mb-m relative min-w-[12rem]">
+            <Search size={14} className="absolute left-s top-1/2 -translate-y-1/2 opacity-l" />
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Anfragen durchsuchen"
+              className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
+              style={{ borderColor: ROW_BORDER }}
+            />
+          </div>
           <div className="mb-m flex flex-wrap items-center gap-s">
             <Filter size={14} className="opacity-l" />
             <FilterPill
@@ -73,37 +70,19 @@ export function AnfragenTab({ data }: Props) {
                 onChange={setRessortFilter}
               />
             )}
-            <div className="relative min-w-[12rem] flex-1">
-              <Search size={14} className="absolute left-s top-1/2 -translate-y-1/2 opacity-l" />
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Anfragen durchsuchen"
-                className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
-                style={{ borderColor: ROW_BORDER }}
-              />
-            </div>
           </div>
-          {groupBy === 'thema' ? (
-            <div className="flex flex-col">
-              {filteredGroups.map((g) => (
-                <div key={g.sachgebiet} className="mt-l first:mt-0">
-                  <div className="mb-s flex items-baseline justify-between text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>
-                    <span>{g.sachgebiet}</span>
-                    <span className="font-semibold opacity-100">{g.count}</span>
-                  </div>
-                  <div className="flex flex-col">
-                    {g.rows.map((r) => <AnfrageRow key={`${g.sachgebiet}-${r.id}`} row={r} />)}
-                  </div>
-                </div>
-              ))}
+          <div className="flex flex-col">
+            <div
+              className="grid grid-cols-[1fr_auto_auto_auto] gap-m py-s text-s uppercase opacity-l"
+              style={{ letterSpacing: '0.08em' }}
+            >
+              <span>Anfrage</span>
+              <span className="w-24">Datum</span>
+              <span className="w-16">Typ</span>
+              <span className="w-24">Status</span>
             </div>
-          ) : (
-            <div className="flex flex-col">
-              {filteredFlat.map((r) => <AnfrageRow key={r.id} row={r} />)}
-            </div>
-          )}
+            {filtered.map((r) => <AnfrageRow key={r.id} row={r} />)}
+          </div>
         </>
       ) : (
         <div className="border p-xl text-center text-m opacity-l" style={{ borderColor: ROW_BORDER }}>
@@ -112,31 +91,6 @@ export function AnfragenTab({ data }: Props) {
         </div>
       )}
     </section>
-  )
-}
-
-function GroupToggle({ value, onChange }: { value: GroupBy; onChange: (v: GroupBy) => void }) {
-  const opts: Array<{ key: GroupBy; label: string }> = [
-    { key: 'thema', label: 'Thema' },
-    { key: 'datum', label: 'Datum' },
-  ]
-  return (
-    <div className="flex items-center" style={{ border: `1px solid ${ROW_BORDER}` }}>
-      {opts.map((o) => (
-        <button
-          key={o.key}
-          type="button"
-          onClick={() => onChange(o.key)}
-          className="px-s py-xs text-s transition-colors"
-          style={{
-            background: value === o.key ? 'var(--color-surface)' : 'transparent',
-            fontWeight: value === o.key ? 600 : 400,
-          }}
-        >
-          {o.label}
-        </button>
-      ))}
-    </div>
   )
 }
 

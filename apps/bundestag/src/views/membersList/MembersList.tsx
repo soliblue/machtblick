@@ -1,8 +1,10 @@
-import { SlidersHorizontal, Users, MapPin } from 'lucide-react'
+import { SlidersHorizontal, Users, MapPin, Search } from 'lucide-react'
 import type { MemberListItem } from '@/server/members'
 import { MemberRow } from './MemberRow'
 import { FilterPill } from '@/views/votesList/FilterPill'
 import type { MemberSortKey, SortDir } from '@/hooks/useMemberListFilters'
+
+const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 
 type Props = {
   members: MemberListItem[]
@@ -12,15 +14,28 @@ type Props = {
   state: string | null
   onStateChange: (value: string | null) => void
   availableStates: string[]
+  query: string
+  onQueryChange: (value: string) => void
   sortKey: MemberSortKey
   sortDir: SortDir
   onSort: (key: MemberSortKey) => void
 }
 
-export function MembersList({ members, party, onPartyChange, availableParties, state, onStateChange, availableStates, sortKey, sortDir, onSort }: Props) {
+export function MembersList({ members, party, onPartyChange, availableParties, state, onStateChange, availableStates, query, onQueryChange, sortKey, sortDir, onSort }: Props) {
   return (
     <main className="mx-auto max-w-3xl p-l">
-      <div className="mb-l flex items-center justify-between gap-m">
+      <div className="mb-m relative min-w-[12rem]">
+        <Search size={14} className="absolute left-s top-1/2 -translate-y-1/2 opacity-l" />
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => onQueryChange(e.target.value)}
+          placeholder="Abgeordnete durchsuchen"
+          className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
+          style={{ borderColor: ROW_BORDER }}
+        />
+      </div>
+      <div className="mb-l flex flex-wrap items-center justify-between gap-m">
         <div className="flex flex-wrap items-center gap-s">
           <SlidersHorizontal size={17} className="opacity-l" />
           <FilterPill label="Fraktion" icon={Users} options={availableParties} value={party} onChange={onPartyChange} />

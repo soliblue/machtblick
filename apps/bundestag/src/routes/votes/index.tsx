@@ -8,7 +8,7 @@ const VOTE_TYPES: VoteTypeFilter[] = ['namentlich', 'handzeichen', 'hammelsprung
 const isVoteType = (v: unknown): v is VoteTypeFilter => typeof v === 'string' && (VOTE_TYPES as string[]).includes(v)
 const isResult = (v: unknown): v is VoteResultFilter => v === 'angenommen' || v === 'abgelehnt'
 
-type Search = { party?: string; type?: VoteTypeFilter; result?: VoteResultFilter }
+type Search = { party?: string; type?: VoteTypeFilter; result?: VoteResultFilter; q?: string }
 
 export const Route = createFileRoute('/votes/')({
   component: VotesRoute,
@@ -25,17 +25,19 @@ export const Route = createFileRoute('/votes/')({
     party: typeof search.party === 'string' ? search.party : undefined,
     type: isVoteType(search.type) ? search.type : undefined,
     result: isResult(search.result) ? search.result : undefined,
+    q: typeof search.q === 'string' ? search.q : undefined,
   }),
 })
 
 function VotesRoute() {
   const votes = Route.useLoaderData()
-  const { party, type, result } = Route.useSearch()
+  const { party, type, result, q } = Route.useSearch()
   const navigate = useNavigate({ from: Route.fullPath })
   const proposingParty = party ?? null
   const voteType = type ?? 'namentlich'
   const resultValue = result ?? null
-  const { filtered, availableParties } = useVoteListFilters(votes, proposingParty, voteType, resultValue)
+  const query = q ?? ''
+  const { filtered, availableParties } = useVoteListFilters(votes, proposingParty, voteType, resultValue, query)
   return (
     <VotesList
       votes={filtered}
@@ -46,6 +48,8 @@ function VotesRoute() {
       onVoteTypeChange={(v) => navigate({ search: (s) => ({ ...s, type: v ?? undefined }) })}
       result={resultValue}
       onResultChange={(v) => navigate({ search: (s) => ({ ...s, result: v ?? undefined }) })}
+      query={query}
+      onQueryChange={(v) => navigate({ search: (s) => ({ ...s, q: v.trim() ? v : undefined }) })}
     />
   )
 }
