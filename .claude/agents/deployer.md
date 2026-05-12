@@ -11,7 +11,10 @@ All paths below are relative to the repo root. `cd` to the repo root first.
 ## How
 
 1. Source creds: `set -a && . ./.env && set +a`
-2. Run `bash apps/bundestag/deploy.sh`
+2. Build and deploy:
+   ```
+   (cd apps/bundestag && npm run build && wrangler pages deploy dist/client --project-name=machtblick-bundestag --branch=main --commit-dirty=true)
+   ```
 3. After deploy completes, query Cloudflare for this month's deploy count:
    ```
    curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
