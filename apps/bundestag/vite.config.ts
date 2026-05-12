@@ -65,13 +65,19 @@ function writeSpeechesStatic() {
     voteId: r.vote_id,
     voteTitle: r.vote_title,
   }))
-  const texts: Record<string, string> = {}
+  rmSync(`${publicDir}/speeches-search.json`, { force: true })
+  const SHARD_COUNT = 4
+  const shards: Array<Record<string, string>> = Array.from({ length: SHARD_COUNT }, () => ({}))
   for (const r of rows) {
     if (r.speaker_role && CHAIR_ROLES.has(r.speaker_role)) continue
-    texts[r.id] = r.text_full
+    let h = 0
+    for (let i = 0; i < r.id.length; i++) h = (h * 31 + r.id.charCodeAt(i)) | 0
+    shards[Math.abs(h) % SHARD_COUNT][r.id] = r.text_full
   }
   writeFileSync(`${publicDir}/speeches-meta.json`, JSON.stringify(meta))
-  writeFileSync(`${publicDir}/speeches-search.json`, JSON.stringify(texts))
+  for (let i = 0; i < SHARD_COUNT; i++) {
+    writeFileSync(`${publicDir}/speeches-search-${i}.json`, JSON.stringify(shards[i]))
+  }
 }
 
 function prerenderPaths(): string[] {

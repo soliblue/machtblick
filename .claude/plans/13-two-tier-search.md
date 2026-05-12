@@ -156,3 +156,21 @@ Surprises:
 - `DebateList` previously had its own substring filter with no highlight and no snippet — bigger consistency gap than expected. Fixed.
 - `MemberSpeechesSection` also bypassed the texts blob; now wired through. Filters on full text for that member's speeches when texts are loaded, falls back to excerpts otherwise.
 - Visual Grüne badge check is pending live verification — frontend code path is unchanged, so it depends solely on the regenerated meta carrying `party = 'B90/Grüne'`. Spot-checked the regenerated `speeches-meta.json` and Grüne entries do carry that normalized value.
+
+## 2026-05-13 follow-up: shard search blob
+
+CF Pages rejected the deploy because `speeches-search.json` was 29.2 MiB (single-file cap is 25 MiB). Sharded into 4 files keyed by `Math.abs(djb-style hash(id)) % 4` to avoid the length-clustering you'd get from `id.length % 4`.
+
+Files changed:
+- `apps/bundestag/vite.config.ts` — `writeSpeechesStatic()` writes `speeches-search-{0..3}.json`; old single blob removed up front.
+- `apps/bundestag/src/lib/speechesStatic.ts` — `loadSpeechTexts()` fans out 4 parallel `fetchJson` calls and merges. Node/SSR path inherits the fan-out via the same `fetchJson` helper. `textCache` still memoizes the merged map so callers are unchanged.
+
+Per-shard sizes after dev-server rebuild:
+| Shard | Raw | Brotli q11 |
+|---|---|---|
+| 0 | 7.78 MB | 1.88 MB |
+| 1 | 7.57 MB | 1.84 MB |
+| 2 | 7.46 MB | 1.81 MB |
+| 3 | 7.80 MB | 1.89 MB |
+
+`find apps/bundestag/public -type f -size +25M` is empty; file count 26.

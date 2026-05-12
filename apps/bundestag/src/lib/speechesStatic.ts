@@ -19,10 +19,16 @@ export function loadSpeechMeta(): Promise<SpeechMetaEntry[]> {
   return metaCache
 }
 
+const SHARD_COUNT = 4
+
 export function loadSpeechTexts(): Promise<Record<string, string>> {
-  textCache ??= fetchJson<Record<string, string>>('/speeches-search.json').then((t) => {
+  textCache ??= Promise.all(
+    Array.from({ length: SHARD_COUNT }, (_, i) => fetchJson<Record<string, string>>(`/speeches-search-${i}.json`)),
+  ).then((parts) => {
+    const merged: Record<string, string> = {}
+    for (const p of parts) Object.assign(merged, p)
     textsResolved = true
-    return t
+    return merged
   })
   return textCache
 }
