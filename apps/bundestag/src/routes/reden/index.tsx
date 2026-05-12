@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { searchSpeechesStatic } from '@/lib/speechesStatic'
+import { useSpeechSearch } from '@/hooks/useSpeechSearch'
 import { RedenSearch } from '@/views/redenSearch/RedenSearch'
 import { seoMeta, canonicalLink } from '@/lib/seo'
 
@@ -33,12 +34,14 @@ export const Route = createFileRoute('/reden/')({
 })
 
 function RedenRoute() {
-  const data = Route.useLoaderData()
+  const initialData = Route.useLoaderData()
   const { q, party, date, memberId, page } = Route.useSearch()
+  const search = useSpeechSearch({ q, party, date, memberId, page }, initialData)
   const navigate = useNavigate({ from: Route.fullPath })
   return (
     <RedenSearch
-      data={data}
+      data={search.data ?? initialData}
+      textsLoading={search.textsLoading}
       query={q ?? ''}
       party={party ?? null}
       date={date ?? null}

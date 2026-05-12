@@ -1,33 +1,43 @@
 import { useMemo, useState } from 'react'
-import { ChevronDown, ChevronLeft, ChevronRight, Search, Users } from 'lucide-react'
-import { Link } from '../../lib/Link'
-import { PartyBadge } from '@/views/votesList/PartyBadge'
+import { ChevronLeft, ChevronRight, Search, Users } from 'lucide-react'
 import { FilterPill } from '@/views/votesList/FilterPill'
-import { useSpeechBody } from '@/hooks/useSpeechBody'
+import { SpeechRow } from '@/views/redenSearch/SpeechRow'
+import { tokenize } from '@/lib/highlight'
+import { makeSnippet } from '@/lib/snippet'
+import { loadSpeechTexts, speechTextsLoaded } from '@/lib/speechesStatic'
+import { useQuery } from '@tanstack/react-query'
 import type { SpeechSummary } from '@/server/speeches'
 
 type Props = { speeches: SpeechSummary[] }
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
-
 const PAGE_SIZE = 5
 
 export function DebateList({ speeches }: Props) {
   const [query, setQuery] = useState('')
   const [party, setParty] = useState<string | null>(null)
   const [page, setPage] = useState(0)
+  const terms = tokenize(query)
+  const texts = useQuery({
+    queryKey: ['speech-texts'],
+    queryFn: () => loadSpeechTexts(),
+    enabled: terms.length > 0,
+    staleTime: Infinity,
+  })
+  const textsLoading = terms.length > 0 && !speechTextsLoaded()
   const parties = useMemo(
     () => Array.from(new Set(speeches.map((s) => s.party).filter((p): p is string => !!p))).sort(),
     [speeches],
   )
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
     return speeches.filter((s) => {
       if (party && s.party !== party) return false
-      if (!q) return true
-      return s.speakerName.toLowerCase().includes(q) || s.excerpt.toLowerCase().includes(q)
+      if (!terms.length) return true
+      const body = texts.data?.[s.id] ?? s.excerpt
+      const hay = `${s.speakerName} ${body}`.toLowerCase()
+      return terms.every((t) => hay.includes(t))
     })
-  }, [speeches, query, party])
+  }, [speeches, terms, party, texts.data])
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
   const safePage = Math.min(page, pageCount - 1)
   const slice = filtered.slice(safePage * PAGE_SIZE, (safePage + 1) * PAGE_SIZE)
@@ -46,14 +56,21 @@ export function DebateList({ speeches }: Props) {
             className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
             style={{ borderColor: ROW_BORDER }}
           />
+          {textsLoading && <div className="mt-xs text-s opacity-l">Suchindex wird geladen…</div>}
         </div>
         <FilterPill label="Fraktion" icon={Users} options={parties} value={party} onChange={reset(setParty)} />
       </div>
-      {filtered.length === 0 ? (
+      {textsLoading ? (
+        <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>Suche wird vorbereitet…</div>
+      ) : filtered.length === 0 ? (
         <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>Keine Reden gefunden.</div>
       ) : (
         <div className="flex flex-col">
-          {slice.map((s) => <DebateRow key={s.id} speech={s} />)}
+          {slice.map((s) => {
+            const body = texts.data?.[s.id] ?? s.excerpt
+            const snippet = terms.length ? makeSnippet(body, terms) : null
+            return <SpeechRow key={s.id} speech={{ ...s, snippet }} query={query} showVoteLink={false} />
+          })}
         </div>
       )}
       {pageCount > 1 && <Pager page={safePage} pageCount={pageCount} onPage={setPage} />}
@@ -107,63 +124,4 @@ function Pager({ page, pageCount, onPage }: { page: number; pageCount: number; o
       </button>
     </div>
   )
-}
-
-function DebateRow({ speech }: { speech: SpeechSummary }) {
-  const [open, setOpen] = useState(false)
-  const body = useSpeechBody(speech.id, open)
-  return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={() => setOpen((v) => !v)}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault()
-          setOpen((v) => !v)
-        }
-      }}
-      className="cursor-pointer border-t py-m"
-      style={{ borderColor: ROW_BORDER }}
-    >
-      <div className="grid grid-cols-[1fr_auto] items-start gap-m">
-        <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-s">
-            <SpeakerName speech={speech} />
-            {speech.speakerRole
-              ? <span className="text-s opacity-l">{speech.speakerRole}</span>
-              : <PartyBadge party={speech.party} compact />}
-          </div>
-          {open && body.data ? (
-            <div className="mt-s text-m opacity-l whitespace-pre-wrap">{body.data.text}</div>
-          ) : (
-            <div className={open ? 'mt-s text-m opacity-l' : 'mt-s text-m opacity-l line-clamp-2'}>
-              {speech.excerpt}
-            </div>
-          )}
-        </div>
-        <ChevronDown
-          size={17}
-          className="opacity-l transition-transform"
-          style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
-        />
-      </div>
-    </div>
-  )
-}
-
-function SpeakerName({ speech }: { speech: SpeechSummary }) {
-  if (speech.speakerMemberId) {
-    return (
-      <Link
-        to="/members/$id/"
-        params={{ id: speech.speakerMemberId }}
-        onClick={(e) => e.stopPropagation()}
-        className="relative z-10 font-semibold hover:opacity-80"
-      >
-        {speech.speakerName}
-      </Link>
-    )
-  }
-  return <span className="font-semibold">{speech.speakerName}</span>
 }

@@ -3,7 +3,7 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath } from 'node:url'
-import { writeFileSync, mkdirSync, rmSync } from 'node:fs'
+import { writeFileSync, rmSync } from 'node:fs'
 import Database from 'better-sqlite3'
 
 const SITE_URL = 'https://machtblick.de'
@@ -31,6 +31,15 @@ type SpeechRow = {
   vote_title: string | null
 }
 
+const CHAIR_ROLES = new Set([
+  'Präsident',
+  'Präsidentin',
+  'Vizepräsident',
+  'Vizepräsidentin',
+  'Alterspräsident',
+  'Alterspräsidentin',
+])
+
 function writeSpeechesStatic() {
   const db = new Database(fileURLToPath(new URL('../../db/machtblick.sqlite', import.meta.url)), { readonly: true })
   const rows = db.prepare(`
@@ -42,26 +51,27 @@ function writeSpeechesStatic() {
   `).all() as SpeechRow[]
   db.close()
   const publicDir = fileURLToPath(new URL('./public', import.meta.url))
-  const speechesDir = `${publicDir}/speeches`
-  rmSync(speechesDir, { recursive: true, force: true })
-  mkdirSync(speechesDir, { recursive: true })
-  const index = rows.map((r) => ({
+  rmSync(`${publicDir}/speeches`, { force: true, recursive: true })
+  rmSync(`${publicDir}/speeches-index.json`, { force: true })
+  const meta = rows.map((r) => ({
     id: r.id,
     speakerName: r.speaker_name,
     speakerMemberId: r.speaker_member_id,
     speakerRole: r.speaker_role,
     party: normalizeParty(r.party),
     position: r.position,
-    excerpt: r.text_excerpt,
-    text: r.text_full,
+    excerpt: r.text_full.slice(0, 160),
     date: r.date,
     voteId: r.vote_id,
     voteTitle: r.vote_title,
   }))
-  writeFileSync(`${publicDir}/speeches-index.json`, JSON.stringify(index))
+  const texts: Record<string, string> = {}
   for (const r of rows) {
-    writeFileSync(`${speechesDir}/${r.id}.json`, JSON.stringify({ text: r.text_full, date: r.date }))
+    if (r.speaker_role && CHAIR_ROLES.has(r.speaker_role)) continue
+    texts[r.id] = r.text_full
   }
+  writeFileSync(`${publicDir}/speeches-meta.json`, JSON.stringify(meta))
+  writeFileSync(`${publicDir}/speeches-search.json`, JSON.stringify(texts))
 }
 
 function prerenderPaths(): string[] {

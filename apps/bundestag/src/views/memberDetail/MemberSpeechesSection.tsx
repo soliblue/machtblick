@@ -1,7 +1,11 @@
 import { useMemo, useState } from 'react'
 import { Search } from 'lucide-react'
-import { SpeechResultRow } from '@/views/redenSearch/SpeechResultRow'
+import { useQuery } from '@tanstack/react-query'
+import { SpeechRow } from '@/views/redenSearch/SpeechRow'
 import { Pager } from '@/views/redenSearch/Pager'
+import { tokenize } from '@/lib/highlight'
+import { makeSnippet } from '@/lib/snippet'
+import { loadSpeechTexts, speechTextsLoaded } from '@/lib/speechesStatic'
 import type { SpeechResult } from '@/server/speeches'
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
@@ -10,11 +14,22 @@ const PAGE_SIZE = 5
 export function MemberSpeechesSection({ speeches }: { speeches: SpeechResult[] }) {
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(0)
+  const terms = tokenize(query)
+  const texts = useQuery({
+    queryKey: ['speech-texts'],
+    queryFn: () => loadSpeechTexts(),
+    enabled: terms.length > 0,
+    staleTime: Infinity,
+  })
+  const textsLoading = terms.length > 0 && !speechTextsLoaded()
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase()
-    if (!q) return speeches
-    return speeches.filter((s) => s.excerpt.toLowerCase().includes(q))
-  }, [speeches, query])
+    if (!terms.length) return speeches
+    return speeches.filter((s) => {
+      const body = texts.data?.[s.id] ?? s.excerpt
+      const hay = `${s.speakerName} ${body}`.toLowerCase()
+      return terms.every((t) => hay.includes(t))
+    })
+  }, [speeches, terms, texts.data])
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
   const safePage = Math.min(page, pageCount - 1)
   const slice = filtered.slice(safePage * PAGE_SIZE, (safePage + 1) * PAGE_SIZE)
@@ -31,13 +46,20 @@ export function MemberSpeechesSection({ speeches }: { speeches: SpeechResult[] }
             className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
             style={{ borderColor: ROW_BORDER }}
           />
+          {textsLoading && <div className="mt-xs text-s opacity-l">Suchindex wird geladen…</div>}
         </div>
       </div>
-      {filtered.length === 0 ? (
+      {textsLoading ? (
+        <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>Suche wird vorbereitet…</div>
+      ) : filtered.length === 0 ? (
         <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>Keine Reden gefunden.</div>
       ) : (
         <div className="flex flex-col">
-          {slice.map((s) => <SpeechResultRow key={s.id} speech={s} />)}
+          {slice.map((s) => {
+            const body = texts.data?.[s.id] ?? s.excerpt
+            const snippet = terms.length ? makeSnippet(body, terms) : null
+            return <SpeechRow key={s.id} speech={{ ...s, snippet }} query={query} />
+          })}
         </div>
       )}
       {pageCount > 1 && <Pager page={safePage} pageCount={pageCount} onPage={setPage} />}
