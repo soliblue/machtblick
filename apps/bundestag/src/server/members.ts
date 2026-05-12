@@ -3,6 +3,7 @@ import { db } from '@machtblick/db/client'
 import { members, voteMembers, votes, votePartySummaries, speeches } from '@machtblick/db/schema'
 import { eq, desc, and, asc } from 'drizzle-orm'
 import { getCurrentPartyMap, loadAffiliationsByMember, partyAt } from './memberParty'
+import { hasPartyLine } from '../lib/parties'
 import type { SpeechResult } from './speeches'
 
 const SPEECH_PARTY_NORMALIZE: Record<string, string> = {
@@ -17,7 +18,7 @@ export type MemberListItem = {
   state: string
   votesAppeared: number
   attendance: number
-  loyalty: number
+  loyalty: number | null
 }
 
 function majorityChoice(s: typeof votePartySummaries.$inferSelect): string {
@@ -49,10 +50,12 @@ export const listMembers = createServerFn({ method: 'GET' }).handler(async (): P
     s.total++
     if (r.choice === 'nicht_abgegeben') s.absent++
     else {
-      s.loyalEligible++
       const partyAtVote = partyAt(affByMember.get(r.memberId), dateByVote.get(r.voteId)!)
-      const maj = majByVoteParty.get(`${r.voteId} ${partyAtVote}`)
-      if (maj && maj === r.choice) s.loyalMatches++
+      if (hasPartyLine(partyAtVote)) {
+        s.loyalEligible++
+        const maj = majByVoteParty.get(`${r.voteId} ${partyAtVote}`)
+        if (maj && maj === r.choice) s.loyalMatches++
+      }
     }
   }
   const out: MemberListItem[] = []
@@ -65,7 +68,7 @@ export const listMembers = createServerFn({ method: 'GET' }).handler(async (): P
       state: s.state,
       votesAppeared: s.total,
       attendance: 1 - s.absent / s.total,
-      loyalty: s.loyalEligible ? s.loyalMatches / s.loyalEligible : 0,
+      loyalty: s.loyalEligible > 0 ? s.loyalMatches / s.loyalEligible : null,
     })
   }
   out.sort((a, b) => a.name.localeCompare(b.name, 'de'))
@@ -80,7 +83,7 @@ export type MemberVoteRow = {
   choice: 'ja' | 'nein' | 'enthalten' | 'nicht_abgegeben'
   party: string
   partyMajority: string
-  defected: boolean
+  defected: boolean | null
 }
 
 export type MemberDetail = {
@@ -89,7 +92,7 @@ export type MemberDetail = {
   party: string
   state: string
   attendance: number
-  loyalty: number
+  loyalty: number | null
   votesAppeared: number
   defections: number
   history: MemberVoteRow[]
@@ -126,9 +129,10 @@ export const getMember = createServerFn({ method: 'GET' })
     const history: MemberVoteRow[] = vmRows.map((r) => {
       const party = partyAt(affList, r.date)
       const maj = majByVoteParty.get(`${r.voteId} ${party}`) ?? ''
-      const defected = r.choice !== 'nicht_abgegeben' && r.choice !== maj
+      const eligible = hasPartyLine(party)
+      const defected = r.choice === 'nicht_abgegeben' ? false : eligible ? r.choice !== maj : null
       if (r.choice === 'nicht_abgegeben') absent++
-      else {
+      else if (eligible) {
         loyalEligible++
         if (r.choice === maj) loyalMatches++
         else defections++
@@ -171,7 +175,7 @@ export const getMember = createServerFn({ method: 'GET' })
       party: currentParty,
       state: vmRows[0]?.state ?? '',
       attendance: vmRows.length ? 1 - absent / vmRows.length : 0,
-      loyalty: loyalEligible ? loyalMatches / loyalEligible : 0,
+      loyalty: loyalEligible > 0 ? loyalMatches / loyalEligible : null,
       votesAppeared: vmRows.length,
       defections,
       history,

@@ -26,7 +26,7 @@ type Props = {
 
 export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilter, setChoiceFilter }: Props) {
   const filtered = history.filter((r) => {
-    const lineOk = lineFilter ? (lineFilter === 'abw' ? r.defected : !r.defected) : true
+    const lineOk = lineFilter ? (r.defected !== null && (lineFilter === 'abw' ? r.defected : !r.defected)) : true
     const choiceOk = choiceFilter ? r.choice === choiceFilter : true
     return lineOk && choiceOk
   })
@@ -72,7 +72,7 @@ export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilt
           <span className="w-24 text-s opacity-l">{formatDate(r.date)}</span>
           <span className="w-24">{CHOICE_LABEL[r.choice]}</span>
           <span className="w-16 text-s" style={{ color: r.defected ? 'var(--color-danger)' : undefined, opacity: r.defected ? 1 : 0.7 }}>
-            {r.defected ? 'Abw' : 'Linie'}
+            {r.defected === null ? '–' : r.defected ? 'Abw' : 'Linie'}
           </span>
         </Link>
       ))}

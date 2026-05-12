@@ -14,7 +14,7 @@ type Props = {
 export function MemberDetailShell({ data, children }: Props) {
   const tiles = [
     { label: 'Anwesenheit', value: pct(data.attendance), icon: CalendarCheck },
-    { label: 'Linientreue', value: pct(data.loyalty), icon: Heart },
+    { label: 'Linientreue', value: data.loyalty === null ? '–' : pct(data.loyalty), icon: Heart },
     { label: 'Abweichungen', value: String(data.defections), icon: UserX },
     { label: 'Abstimmungen', value: String(data.votesAppeared), icon: Vote },
   ]

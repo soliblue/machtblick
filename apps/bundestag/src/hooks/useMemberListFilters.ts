@@ -27,8 +27,11 @@ export function useMemberListFilters(
     const base = members.filter((m) => (!q || m.name.toLowerCase().includes(q)) && (!party || m.party === party) && (!state || m.state === state))
     const dir = sortDir === 'asc' ? 1 : -1
     return [...base].sort((a, b) => {
-      const av = a[sortKey] ?? ''
-      const bv = b[sortKey] ?? ''
+      const av = a[sortKey]
+      const bv = b[sortKey]
+      if (av === null && bv === null) return 0
+      if (av === null) return 1
+      if (bv === null) return -1
       if (typeof av === 'number' && typeof bv === 'number') return (av - bv) * dir
       return String(av).localeCompare(String(bv), 'de') * dir
     })

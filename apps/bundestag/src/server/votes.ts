@@ -4,6 +4,7 @@ import { votes, voteDocuments, votePartySummaries, voteMembers, members, speeche
 import { eq, desc, sql, asc } from 'drizzle-orm'
 import { parseProposingParty } from './proposingParty'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
+import { hasPartyLine } from '../lib/parties'
 import type { SpeechSummary } from './speeches'
 
 const SPEECH_PARTY_NORMALIZE: Record<string, string> = {
@@ -169,6 +170,7 @@ export const getVote = createServerFn({ method: 'GET' })
     }
     const defectorsByParty = new Map<string, Array<{ id: string; name: string; choice: string }>>()
     for (const r of vmRows) {
+      if (!hasPartyLine(r.party)) continue
       const maj = majorityByParty.get(r.party)
       if (!maj || r.choice === maj || r.choice === 'nicht_abgegeben') continue
       const arr = defectorsByParty.get(r.party) ?? []

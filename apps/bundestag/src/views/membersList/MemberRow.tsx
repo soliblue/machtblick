@@ -21,7 +21,7 @@ export function MemberRow({ member }: Props) {
       <PartyBadge party={member.party} compact />
       <span className="hidden w-32 text-s opacity-l sm:inline">{member.state}</span>
       <span className="w-16 text-right sm:w-20">{pct(member.attendance)}</span>
-      <span className="w-16 text-right sm:w-20">{pct(member.loyalty)}</span>
+      <span className="w-16 text-right sm:w-20">{member.loyalty === null ? '–' : pct(member.loyalty)}</span>
     </div>
   )
 }
