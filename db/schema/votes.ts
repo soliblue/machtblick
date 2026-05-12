@@ -5,6 +5,7 @@ export const votes = sqliteTable('votes', {
   bundestagId: integer('bundestag_id').unique(),
   voteType: text('vote_type', { enum: ['namentlich', 'handzeichen', 'hammelsprung'] }).notNull().default('namentlich'),
   date: text('date').notNull(),
+  agendaItem: text('agenda_item'),
   title: text('title').notNull(),
   topic: text('topic'),
   subject: text('subject'),
