@@ -1,23 +1,31 @@
 import { Info } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
-type Props = { title: string }
+type Props = {
+  title: string
+  as?: 'div' | 'h1'
+  className?: string
+  style?: React.CSSProperties
+  iconSize?: number
+}
 
 const REJECTION_PREFIX = /^(Ablehnung\s+(?:des|der|eines|einer)\s+(?:[\wÄÖÜäöüß-]+-Antrags?|Antrags?)\s*:?)\s*/
 
-export function VoteTitle({ title }: Props) {
+export function VoteTitle({
+  title,
+  as: Tag = 'div',
+  className = 'font-display text-[18px] leading-snug sm:text-[21px]',
+  style = { fontWeight: 500 },
+  iconSize = 15,
+}: Props) {
   const match = title.match(REJECTION_PREFIX)
   if (!match) {
-    return (
-      <div className="font-display text-[18px] leading-snug sm:text-[21px]" style={{ fontWeight: 500 }}>
-        {title}
-      </div>
-    )
+    return <Tag className={className} style={style}>{title}</Tag>
   }
   const prefix = match[1]
   const rest = title.slice(match[0].length)
   return (
-    <div className="font-display text-[18px] leading-snug sm:text-[21px]" style={{ fontWeight: 500 }}>
+    <Tag className={className} style={style}>
       <Tooltip>
         <TooltipTrigger asChild>
           <span
@@ -28,7 +36,7 @@ export function VoteTitle({ title }: Props) {
             style={{ color: 'var(--color-danger)' }}
             aria-label="Was ist eine Ablehnungsempfehlung?"
           >
-            <Info size={15} className="mr-xs inline" style={{ verticalAlign: '-2px' }} />
+            <Info size={iconSize} className="mr-xs inline" style={{ verticalAlign: '-2px' }} />
             {prefix}
           </span>
         </TooltipTrigger>
@@ -37,6 +45,6 @@ export function VoteTitle({ title }: Props) {
         </TooltipContent>
       </Tooltip>
       {' '}{rest}
-    </div>
+    </Tag>
   )
 }

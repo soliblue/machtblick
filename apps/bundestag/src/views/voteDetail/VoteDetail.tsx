@@ -4,6 +4,7 @@ import { formatDate } from '@/lib/format'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { Stamp } from '@/views/votesList/Stamp'
 import { deriveStamps } from '@/views/votesList/deriveStamps'
+import { VoteTitle } from '@/views/votesList/VoteTitle'
 import { VoteDistributionDonut, type VoteChoice } from '@/views/votesList/VoteDistributionDonut'
 import { PartyWaffle } from './PartyWaffle'
 import { DebateList } from './DebateList'
@@ -18,7 +19,7 @@ export function VoteDetail({ data }: Props) {
   const toggle = (c: VoteChoice) => setFilter((prev) => (prev === c ? null : c))
   return (
     <main className="mx-auto max-w-3xl p-l">
-      <h1 className="text-xxl font-semibold">{vote.title}</h1>
+      <VoteTitle title={vote.title} as="h1" className="text-xxl font-semibold" style={{}} iconSize={18} />
       <div className="mt-s flex items-center gap-m text-m">
         <PartyBadge party={proposingParty} />
         <span className="opacity-l">{formatDate(vote.date)}</span>
