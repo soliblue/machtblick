@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "281893",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/1902",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "8244d86afff25034474ff9c5a6849f8c",
+      "aktualisiert": "2025-09-30T16:06:21+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "324940",
+          "titel": "Gesetz zu dem Protokoll vom 21. August 2023 zur Änderung des Abkommens vom 11. August 1971 zwischen der Bundesrepublik Deutschland und der Schweizerischen Eidgenossenschaft zur Vermeidung der Doppelbesteuerung auf dem Gebiete der Steuern vom Einkommen und vom Vermögen in der Fassung des Änderungsprotokolls vom 27. Oktober 2010",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/019/2101902.pdf",
+        "id": "281893",
+        "dokumentnummer": "21/1902",
+        "datum": "2025-09-29",
+        "verteildatum": "2025-09-30",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zu dem Protokoll vom 21. August 2023 zur Änderung des Abkommens vom 11. August 1971 zwischen der Bundesrepublik Deutschland und der Schweizerischen Eidgenossenschaft zur Vermeidung der Doppelbesteuerung auf dem Gebiete der Steuern vom Einkommen und vom Vermögen in der Fassung des Änderungsprotokolls vom 27. Oktober 2010",
+      "datum": "2025-09-29"
+    }
+  ],
+  "cursor": "AoJwkMa6ypkDMURydWNrc2FjaGUtMjgxODkz"
+}

@@ -1,0 +1,24 @@
+# Machtblick
+
+> Machtblick macht öffentliche Daten zu Macht und Politik in Deutschland zugänglich. Erstes Projekt: Transparenz über Abstimmungen, Abgeordnete und Fraktionen des Deutschen Bundestags.
+
+Die Inhalte stammen aus offenen Datenquellen (Bundestag Open Data, abgeordnetenwatch). Alle Daten sind ohne Anmeldung abrufbar. Texte sind auf Deutsch.
+
+## Bundestag
+
+- [Abstimmungen](https://machtblick.de/votes): Liste aller namentlichen Abstimmungen mit Antragsteller, Datum, Ergebnis und Fraktionspositionen.
+- [Abgeordnete](https://machtblick.de/members): Liste aller Mitglieder des Bundestags mit Fraktion, Bundesland, Anwesenheit und Linientreue.
+- [Fraktionen](https://machtblick.de/parties): Übersicht aller Fraktionen mit Sitzplatzverteilung im Hemicycle und Geschlossenheit.
+
+## URL-Struktur
+
+- `/votes` - Liste der Abstimmungen, optional gefiltert via `?party=`, `?type=` (`namentlich`|`handzeichen`|`hammelsprung`), `?result=` (`angenommen`|`abgelehnt`)
+- `/votes/{id}` - Detail einer Abstimmung mit Fraktionsabstimmung, Abweichlern und Dokumenten
+- `/members` - Liste der Abgeordneten, optional gefiltert via `?party=`, `?state=`
+- `/members/{slug}` - Detail eines Abgeordneten mit Abstimmungsverhalten, Anwesenheit, Linientreue
+- `/parties` - Übersicht aller Fraktionen
+- `/parties/{slug}` - Detail einer Fraktion mit Anträgen, Mitgliedern, Geschlossenheit, Alignment zu anderen Fraktionen, optional gefiltert via `?result=`, `?vote=`
+
+## Daten
+
+- [Sitemap (alle URLs)](https://machtblick.de/sitemap.xml)

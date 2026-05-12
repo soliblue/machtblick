@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "280284",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/781",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "8e84ff506a12ff61b36ffe5ed949ea8b",
+      "aktualisiert": "2025-07-08T12:40:24+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "323372",
+          "titel": "Gesetz zur Beschleunigung des Wohnungsbaus und zur Wohnraumsicherung",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "CDU/CSU",
+          "titel": "Fraktion der CDU/CSU"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "SPD",
+          "titel": "Fraktion der SPD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/007/2100781.pdf",
+        "id": "280284",
+        "dokumentnummer": "21/781",
+        "datum": "2025-07-07",
+        "verteildatum": "2025-07-07",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der CDU/CSU",
+          "Fraktion der SPD"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Beschleunigung des Wohnungsbaus und zur Wohnraumsicherung",
+      "datum": "2025-07-07"
+    }
+  ],
+  "cursor": "AoJwkICV8pcDMURydWNrc2FjaGUtMjgwMjg0"
+}

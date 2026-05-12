@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "284230",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/3484",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "15145b3725a93ba1e7b047f177f50b27",
+      "aktualisiert": "2026-01-06T17:01:26+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "327989",
+          "titel": "Gesetz zur Durchführung einer Verordnung der Europäischen Union zum Datenaustausch bei Kurzzeitvermietungen sowie zur Durchsetzung von Diskriminierungsverboten der Europäischen Union",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Wirtschaft und Energie"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/034/2103484.pdf",
+        "id": "284230",
+        "dokumentnummer": "21/3484",
+        "datum": "2026-01-06",
+        "verteildatum": "2026-01-06",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Durchführung einer Verordnung der Europäischen Union zum Datenaustausch bei Kurzzeitvermietungen sowie zur Durchsetzung von Diskriminierungsverboten der Europäischen Union",
+      "datum": "2026-01-06"
+    }
+  ],
+  "cursor": "AoJwuNa9yZsDMURydWNrc2FjaGUtMjg0MjMw"
+}

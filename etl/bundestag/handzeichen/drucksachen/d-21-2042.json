@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282084",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 14,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2042",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "10053c10d8cb74b2ea2d4d7593bdcc10",
+      "aktualisiert": "2025-10-09T14:33:33+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "326597",
+          "titel": "Bewährte Praxis im Weinbau erhalten - Backpulver wieder als Grundstoff im Pflanzenschutz zulassen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/020/2102042.pdf",
+        "id": "282084",
+        "dokumentnummer": "21/2042",
+        "datum": "2025-10-07",
+        "verteildatum": "2025-10-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7399",
+          "titel": "Bernd Schattner, MdB, AfD",
+          "autor_titel": "Bernd Schattner"
+        },
+        {
+          "id": "2049",
+          "titel": "Stephan Protschka, MdB, AfD",
+          "autor_titel": "Stephan Protschka"
+        }
+      ],
+      "titel": "Bewährte Praxis im Weinbau erhalten - Backpulver wieder als Grundstoff im Pflanzenschutz zulassen",
+      "datum": "2025-10-07"
+    }
+  ],
+  "cursor": "AoJwkKKH35kDMURydWNrc2FjaGUtMjgyMDg0"
+}

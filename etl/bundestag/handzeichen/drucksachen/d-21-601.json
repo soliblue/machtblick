@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "281115",
+      "drucksachetyp": "Unterrichtung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/601",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "c23d93074cd1eac951fc212eac3ffca2",
+      "aktualisiert": "2025-09-02T15:51:17+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "325160",
+          "titel": "Finanzplan des Bundes 2025 bis 2029",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundeskanzleramt"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/006/2100601.pdf",
+        "id": "281115",
+        "dokumentnummer": "21/601",
+        "datum": "2025-09-01",
+        "verteildatum": "2025-09-01",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Unterrichtung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Finanzplan des Bundes 2025 bis 2029",
+      "datum": "2025-09-01"
+    }
+  ],
+  "cursor": "AoJwkISugpkDMURydWNrc2FjaGUtMjgxMTE1"
+}

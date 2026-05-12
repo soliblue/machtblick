@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "286714",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/5356",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "c1e33b8c2b3a6fc7cf0333bc19a96b0a",
+      "aktualisiert": "2026-04-16T10:23:17+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "333741",
+          "titel": "Sammelübersicht 226 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/053/2105356.pdf",
+        "id": "286714",
+        "dokumentnummer": "21/5356",
+        "datum": "2026-04-15",
+        "verteildatum": "2026-04-15",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 226 zu Petitionen -",
+      "datum": "2026-04-15"
+    }
+  ],
+  "cursor": "AoJwkKulyJ0DMURydWNrc2FjaGUtMjg2NzE0"
+}

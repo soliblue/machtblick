@@ -1,0 +1,1 @@
+- [DIP rate-limit gateway quirk](dip_rate_limit.md) — DIP returns HTML browser-challenge pages, not JSON 429s, when over quota; client retries 30× with backoff

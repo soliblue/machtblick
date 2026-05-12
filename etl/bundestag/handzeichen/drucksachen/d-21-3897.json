@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "284734",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/3897",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "921aa46e008a0b365f4c787deb321194",
+      "aktualisiert": "2026-01-29T09:43:56+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "326804",
+          "titel": "Gesetz zur Umsetzung der Richtlinie (EU) 2024/1619 des Europäischen Parlaments und des Rates vom 31. Mai 2024 zur Änderung der Richtlinie 2013/36/EU im Hinblick auf Aufsichtsbefugnisse, Sanktionen, Zweigstellen aus Drittländern sowie Umwelt-, Sozial- und Unternehmensführungsrisiken und zur Entlastung der Kreditinstitute von Bürokratie (Bankenrichtlinienumsetzungs- und Bürokratieentlastungsgesetz - BRUBEG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FinanzA",
+          "titel": "Finanzausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/038/2103897.pdf",
+        "id": "284734",
+        "dokumentnummer": "21/3897",
+        "datum": "2026-01-28",
+        "verteildatum": "2026-01-28",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Finanzausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7914",
+          "titel": "Rainer Groß, MdB, AfD",
+          "autor_titel": "Rainer Groß, Berichterstattung"
+        },
+        {
+          "id": "2117",
+          "titel": "Johannes Schraps, MdB, SPD",
+          "autor_titel": "Johannes Schraps, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksache 21/3058 -\r\nEntwurf eines Gesetzes zur Umsetzung der Richtlinie (EU) 2024/1619 des Europäischen Parlaments und des Rates vom 31. Mai 2024 zur Änderung der Richtlinie 2013/36/EU im Hinblick auf Aufsichtsbefugnisse, Sanktionen, Zweigstellen aus Drittländern sowie Umwelt-, Sozial- und Unternehmensführungsrisiken und zur Entlastung der Kreditinstitute von Bürokratie (Bankenrichtlinienumsetzungs- und Bürokratieentlastungsgesetz - BRUBEG)",
+      "datum": "2026-01-28"
+    }
+  ],
+  "cursor": "AoJwuNOQgpwDMURydWNrc2FjaGUtMjg0NzM0"
+}

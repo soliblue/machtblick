@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "283167",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2826",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "f590ff22bf3fcfacb454de9e12922256",
+      "aktualisiert": "2025-11-14T14:10:53+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "327798",
+          "titel": "Düngeverordnung reformieren - Bedarfsgerechte Düngung nach guter fachlicher Praxis wieder ermöglichen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfLEH",
+          "titel": "Ausschuss für Landwirtschaft, Ernährung und Heimat"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/028/2102826.pdf",
+        "id": "283167",
+        "dokumentnummer": "21/2826",
+        "datum": "2025-11-14",
+        "verteildatum": "2025-11-14",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Landwirtschaft, Ernährung und Heimat"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7225",
+          "titel": "Karl Bär, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Karl Bär, Berichterstattung"
+        },
+        {
+          "id": "7998",
+          "titel": "Benedikt Büdenbender, MdB, CDU/CSU",
+          "autor_titel": "Benedikt Büdenbender, Berichterstattung"
+        },
+        {
+          "id": "7325",
+          "titel": "Dr. Franziska Kersten, MdB, SPD",
+          "autor_titel": "Dr. Franziska Kersten, Berichterstattung"
+        },
+        {
+          "id": "7874",
+          "titel": "Ina Latendorf, MdB, DIE LINKE",
+          "autor_titel": "Ina Latendorf, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Antrag der Abgeordneten Stephan Protschka, Peter Felser, Danny Meiners, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 21/2547 -\r\nDüngeverordnung reformieren - Bedarfsgerechte Düngung nach guter fachlicher Praxis wieder ermöglichen",
+      "datum": "2025-11-14"
+    }
+  ],
+  "cursor": "AoJw-LSBwZoDMURydWNrc2FjaGUtMjgzMTY3"
+}

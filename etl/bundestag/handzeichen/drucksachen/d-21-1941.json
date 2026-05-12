@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "281931",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme der BRg zur Stellungnahme des Nationalen Normenkontrollrates; Stellungnahme des BR und Gegenäußerung der BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/1941",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "ed3e515f4291bd43f3ebee4b83b2a206",
+      "aktualisiert": "2025-10-02T12:16:56+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "324929",
+          "titel": "Gesetz zur Stärkung der Tarifautonomie durch die Sicherung von Tariftreue bei der Vergabe öffentlicher Aufträge des Bundes (Tariftreuegesetz)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Arbeit und Soziales"
+        },
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Wirtschaft und Energie"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/019/2101941.pdf",
+        "id": "281931",
+        "dokumentnummer": "21/1941",
+        "datum": "2025-10-01",
+        "verteildatum": "2025-10-01",
+        "anlagen": "Stellungnahme der BRg zur Stellungnahme des Nationalen Normenkontrollrates; Stellungnahme des BR und Gegenäußerung der BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Stärkung der Tarifautonomie durch die Sicherung von Tariftreue bei der Vergabe öffentlicher Aufträge des Bundes (Tariftreuegesetz)",
+      "datum": "2025-10-01"
+    }
+  ],
+  "cursor": "AoJwkN3Nz5kDMURydWNrc2FjaGUtMjgxOTMx"
+}

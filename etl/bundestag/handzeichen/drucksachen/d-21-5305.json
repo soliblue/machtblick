@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "286656",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/5305",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "da4f39bcb2d12246f1abbf692c524acb",
+      "aktualisiert": "2026-04-14T16:57:43+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "333686",
+          "titel": "Abberufung eines Mitglieds des Verwaltungsrates der Kreditanstalt für Wiederaufbau gemäß § 7 Absatz 2 Satz 3 des Gesetzes über die Kreditanstalt für Wiederaufbau in Verbindung mit § 7 Absatz 7 Satz 2 der Satzung der \r\nKreditanstalt für Wiederaufbau",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/053/2105305.pdf",
+        "id": "286656",
+        "dokumentnummer": "21/5305",
+        "datum": "2026-04-14",
+        "verteildatum": "2026-04-14",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "titel": "Abberufung eines Mitglieds des Verwaltungsrates der Kreditanstalt für Wiederaufbau gemäß § 7 Absatz 2 Satz 3 des Gesetzes über die Kreditanstalt für Wiederaufbau in Verbindung mit § 7 Absatz 7 Satz 2 der Satzung der \r\nKreditanstalt für Wiederaufbau",
+      "datum": "2026-04-14"
+    }
+  ],
+  "cursor": "AoJw0N_bxZ0DMURydWNrc2FjaGUtMjg2NjU2"
+}

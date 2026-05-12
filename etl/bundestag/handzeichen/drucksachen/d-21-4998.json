@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "286246",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4998",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "21b16eb8dec65f85e711713e184bc3ad",
+      "aktualisiert": "2026-03-26T10:28:21+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "327975",
+          "titel": "Gesetz zur Durchführung der Verordnung (EU) 2023/2854 des Europäischen Parlaments und des Rates vom 13. Dezember 2023 über harmonisierte Vorschriften für einen fairen Datenzugang und eine faire Datennutzung sowie zur Änderung der Verordnung (EU) 2017/2394 und der Richtlinie (EU) 2020/1828",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "ADi",
+          "titel": "Ausschuss für Digitales und Staatsmodernisierung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/049/2104998.pdf",
+        "id": "286246",
+        "dokumentnummer": "21/4998",
+        "datum": "2026-03-25",
+        "verteildatum": "2026-03-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Digitales und Staatsmodernisierung"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "8004",
+          "titel": "Jeanne Dillschneider, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Jeanne Dillschneider, Berichterstattung"
+        },
+        {
+          "id": "7322",
+          "titel": "Dr. Michael Kaufmann, MdB, AfD",
+          "autor_titel": "Dr. Michael Kaufmann, Berichterstattung"
+        },
+        {
+          "id": "8053",
+          "titel": "Dr. Konrad Körner, MdB, CDU/CSU",
+          "autor_titel": "Dr. Konrad Körner, Berichterstattung"
+        },
+        {
+          "id": "8061",
+          "titel": "Sonja Lemke, MdB, DIE LINKE",
+          "autor_titel": "Sonja Lemke, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksachen 21/2998, 21/3508 -\r\nEntwurf eines Gesetzes zur Durchführung der Verordnung (EU) 2023/2854 des Europäischen Parlaments und des Rates vom 13. Dezember 2023 über harmonisierte Vorschriften für einen fairen Datenzugang und eine faire Datennutzung sowie zur Änderung der Verordnung (EU) 2017/2394 und der Richtlinie (EU) 2020/1828",
+      "datum": "2026-03-25"
+    }
+  ],
+  "cursor": "AoJwuNepkp0DMURydWNrc2FjaGUtMjg2MjQ2"
+}

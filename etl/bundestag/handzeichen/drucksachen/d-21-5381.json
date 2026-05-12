@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "286728",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/5381",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "ccce2a06a20e08cd75cd5e683ef3d970",
+      "aktualisiert": "2026-04-16T10:45:05+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "325529",
+          "titel": "Gesetz zur Umsetzung der Richtlinie (EU) 2023/2225 über Verbraucherkreditverträge und zur Regelung der Förderung klimaneutraler Mobilität",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfRechtVer",
+          "titel": "Ausschuss für Recht und Verbraucherschutz"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/053/2105381.pdf",
+        "id": "286728",
+        "dokumentnummer": "21/5381",
+        "datum": "2026-04-15",
+        "verteildatum": "2026-04-15",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Recht und Verbraucherschutz"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7304",
+          "titel": "Nadine Heselhaus, MdB, SPD",
+          "autor_titel": "Nadine Heselhaus, Berichterstattung"
+        },
+        {
+          "id": "8076",
+          "titel": "Stefan Möller, MdB, AfD",
+          "autor_titel": "Stefan Möller, Berichterstattung"
+        },
+        {
+          "id": "2114",
+          "titel": "Stefan Schmidt, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Stefan Schmidt, Berichterstattung"
+        },
+        {
+          "id": "1623",
+          "titel": "Sebastian Steineke, MdB, CDU/CSU",
+          "autor_titel": "Sebastian Steineke, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksachen 21/1851, 21/2459, 21/2669 Nr. 16 -\r\nEntwurf eines Gesetzes zur Umsetzung der Richtlinie (EU) 2023/2225 über Verbraucherkreditverträge",
+      "datum": "2026-04-15"
+    }
+  ],
+  "cursor": "AoJwkKulyJ0DMURydWNrc2FjaGUtMjg2NzI4"
+}

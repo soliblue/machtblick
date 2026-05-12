@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "287564",
+      "drucksachetyp": "Entschließungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 25,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/5808",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "014eba0f7f3d4ea60ee3e5b9b6cff849",
+      "aktualisiert": "2026-05-07T10:24:47+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334633",
+          "titel": "Entschließungsantrag zum Gesetz zur Digitalisierung des Vollzugs von Immobilienverträgen, der gerichtlichen Genehmigungen von notariellen Rechtsgeschäften und der steuerlichen Anzeigen der Notare",
+          "vorgangstyp": "Entschließungsantrag BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/058/2105808.pdf",
+        "id": "287564",
+        "dokumentnummer": "21/5808",
+        "datum": "2026-05-06",
+        "verteildatum": "2026-05-06",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Entschließungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7892",
+          "titel": "Thomas Fetsch, MdB, AfD",
+          "autor_titel": "Thomas Fetsch"
+        },
+        {
+          "id": "7920",
+          "titel": "Alexander Arpaschi, MdB, AfD",
+          "autor_titel": "Alexander Arpaschi"
+        }
+      ],
+      "titel": "zu der dritten Beratung des Gesetzentwurfs der Bundesregierung\r\n- Drucksachen 21/3735, 21/5806 -\r\nEntwurf eines Gesetzes zur Digitalisierung des Vollzugs von Immobilienverträgen, der gerichtlichen Genehmigungen von notariellen Rechtsgeschäften und der steuerlichen Anzeigen der Notare",
+      "datum": "2026-05-06"
+    }
+  ],
+  "cursor": "AoJw0Nyu_p0DMURydWNrc2FjaGUtMjg3NTY0"
+}

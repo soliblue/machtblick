@@ -1,0 +1,75 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "287563",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 2,
+      "dokumentnummer": "21/5809",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "d65f42ebda857702c9d818b32e031527",
+      "aktualisiert": "2026-05-07T10:26:53+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "330694",
+          "titel": "Für eine Gesamtstrategie zum Schutz vor häuslicher und geschlechtsspezifischer Gewalt anstelle von isolierten Einzelmaßnahmen",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "329548",
+          "titel": "Gesetz zur Einführung der elektronischen Aufenthaltsüberwachung und der Täterarbeit im Gewaltschutzgesetz",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfRechtVer",
+          "titel": "Ausschuss für Recht und Verbraucherschutz"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/058/2105809.pdf",
+        "id": "287563",
+        "dokumentnummer": "21/5809",
+        "datum": "2026-05-06",
+        "verteildatum": "2026-05-06",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Recht und Verbraucherschutz"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7900",
+          "titel": "Rainer Galla, MdB, AfD",
+          "autor_titel": "Rainer Galla, Berichterstattung"
+        },
+        {
+          "id": "7365",
+          "titel": "Helge Limburg, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Helge Limburg, Berichterstattung"
+        },
+        {
+          "id": "198",
+          "titel": "Carsten Müller (Braunschweig), MdB, CDU/CSU",
+          "autor_titel": "Carsten Müller (Braunschweig), Berichterstattung"
+        },
+        {
+          "id": "8013",
+          "titel": "Aaron Valent, MdB, DIE LINKE",
+          "autor_titel": "Aaron Valent, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksache 21/4082 -\r\nEntwurf eines Gesetzes zur Einführung der elektronischen Aufenthaltsüberwachung und der Täterarbeit im Gewaltschutzgesetz\r\n\r\nb) zu dem Antrag der Abgeordneten Kathrin Gebel, Aaron Valent, Clara Bünger, weiterer Abgeordneter und der Fraktion Die Linke\r\n- Drucksache 21/3918 -\r\nFür eine Gesamtstrategie zum Schutz vor häuslicher und geschlechtsspezifischer Gewalt anstelle von isolierten Einzelmaßnahmen",
+      "datum": "2026-05-06"
+    }
+  ],
+  "cursor": "AoJw0Nyu_p0DMURydWNrc2FjaGUtMjg3NTYz"
+}

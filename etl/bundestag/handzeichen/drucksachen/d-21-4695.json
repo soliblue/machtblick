@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285875",
+      "drucksachetyp": "Wahlvorschlag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4695",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "c7a8a0b7cf72dbf3ffdc67a5948594db",
+      "aktualisiert": "2026-03-16T15:58:53+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "332467",
+          "titel": "Wahl eines Mitglieds des Stiftungsrates der Stiftung \"Zentrum für Osteuropa- und internationale Studien (ZOiS)\"",
+          "vorgangstyp": "Besetzung externer Gremien durch BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/046/2104695.pdf",
+        "id": "285875",
+        "dokumentnummer": "21/4695",
+        "datum": "2026-03-16",
+        "verteildatum": "2026-03-16",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Wahlvorschlag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "titel": "Wahl eines Mitglieds des Stiftungsrates der Stiftung \"Zentrum für Osteuropa- und internationale Studien (ZOiS)\"",
+      "datum": "2026-03-16"
+    }
+  ],
+  "cursor": "AoJw-K-T-5wDMURydWNrc2FjaGUtMjg1ODc1"
+}

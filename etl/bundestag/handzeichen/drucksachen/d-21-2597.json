@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282836",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2597",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "e18c194cd23a4b55de343eb2c37e871d",
+      "aktualisiert": "2025-11-06T10:22:10+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "324930",
+          "titel": "Gesetz zur Änderung des Energiewirtschaftsgesetzes sowie zur Änderung des Kohleverstromungsbeendigungsgesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfWE",
+          "titel": "Ausschuss für Wirtschaft und Energie"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/025/2102597.pdf",
+        "id": "282836",
+        "dokumentnummer": "21/2597",
+        "datum": "2025-11-05",
+        "verteildatum": "2025-11-05",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Wirtschaft und Energie"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2259",
+          "titel": "Steffen Kotré, MdB, AfD",
+          "autor_titel": "Steffen Kotré, Berichterstattung"
+        },
+        {
+          "id": "8021",
+          "titel": "Daniel Walter, MdB, SPD",
+          "autor_titel": "Daniel Walter, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksachen 21/1496, 21/2078, 21/2146 Nr. 1.17 -\r\nEntwurf eines Vierten Gesetzes zur Änderung des Energiewirtschaftsgesetzes",
+      "datum": "2025-11-05"
+    }
+  ],
+  "cursor": "AoJwuI3rqZoDMURydWNrc2FjaGUtMjgyODM2"
+}

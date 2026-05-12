@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "286419",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/5070",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "310c5a38e3cc0caec718b95f19ea78a0",
+      "aktualisiert": "2026-03-30T16:52:47+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "331146",
+          "titel": "Gesetz zu dem Vertrag vom 12. März 2025 zwischen der Bundesrepublik Deutschland und der Tschechischen Republik über die gemeinsame Staatsgrenze",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium des Innern"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/050/2105070.pdf",
+        "id": "286419",
+        "dokumentnummer": "21/5070",
+        "datum": "2026-03-30",
+        "verteildatum": "2026-03-30",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zu dem Vertrag vom 12. März 2025 zwischen der Bundesrepublik Deutschland und der Tschechischen Republik über die gemeinsame Staatsgrenze",
+      "datum": "2026-03-30"
+    }
+  ],
+  "cursor": "AoJwkPOLn50DMURydWNrc2FjaGUtMjg2NDE5"
+}

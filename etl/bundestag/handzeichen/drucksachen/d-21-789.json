@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "280328",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 21,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/789",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "d42870d1df00544c305fcc155e572593",
+      "aktualisiert": "2025-07-09T16:11:04+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "323515",
+          "titel": "Klimageld - Sofort und sozial gerecht",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/007/2100789.pdf",
+        "id": "280328",
+        "dokumentnummer": "21/789",
+        "datum": "2025-07-08",
+        "verteildatum": "2025-07-09",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2095",
+          "titel": "Jörg Cezanne, MdB, DIE LINKE",
+          "autor_titel": "Jörg Cezanne"
+        },
+        {
+          "id": "7888",
+          "titel": "Dr. Fabian Fahl, MdB, DIE LINKE",
+          "autor_titel": "Dr. Fabian Fahl"
+        }
+      ],
+      "titel": "Klimageld - Sofort und sozial gerecht",
+      "datum": "2025-07-08"
+    }
+  ],
+  "cursor": "AoJw0Mve9JcDMURydWNrc2FjaGUtMjgwMzI4"
+}

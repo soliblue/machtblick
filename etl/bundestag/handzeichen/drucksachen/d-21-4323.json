@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285347",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4323",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "b279c92d0e2157e1560a8a4f84a5e036",
+      "aktualisiert": "2026-02-26T09:40:00+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "327968",
+          "titel": "Gesetz zur Umsetzung des Urteils des Bundesverfassungsgerichts zur Vaterschaftsanfechtung",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfRechtVer",
+          "titel": "Ausschuss für Recht und Verbraucherschutz"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/043/2104323.pdf",
+        "id": "285347",
+        "dokumentnummer": "21/4323",
+        "datum": "2026-02-25",
+        "verteildatum": "2026-02-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Recht und Verbraucherschutz"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7258",
+          "titel": "Hakan Demir, MdB, SPD",
+          "autor_titel": "Hakan Demir, Berichterstattung"
+        },
+        {
+          "id": "7900",
+          "titel": "Rainer Galla, MdB, AfD",
+          "autor_titel": "Rainer Galla, Berichterstattung"
+        },
+        {
+          "id": "1061",
+          "titel": "Ansgar Heveling, MdB, CDU/CSU",
+          "autor_titel": "Ansgar Heveling, Berichterstattung"
+        },
+        {
+          "id": "7365",
+          "titel": "Helge Limburg, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Helge Limburg, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksachen 21/2997, 21/3487 -\r\nEntwurf eines Gesetzes zur Umsetzung des Urteils des Bundesverfassungsgerichts zur Vaterschaftsanfechtung",
+      "datum": "2026-02-25"
+    }
+  ],
+  "cursor": "AoJwuJWdypwDMURydWNrc2FjaGUtMjg1MzQ3"
+}

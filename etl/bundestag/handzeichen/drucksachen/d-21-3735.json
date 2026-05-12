@@ -1,0 +1,56 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "284542",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme des BR und Gegenäußerung der BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/3735",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "4c16d93507cecc24c24f16cbec6d2f07",
+      "aktualisiert": "2026-01-21T16:04:59+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "327990",
+          "titel": "Gesetz zur Digitalisierung des Vollzugs von Immobilienverträgen, der gerichtlichen Genehmigungen von notariellen Rechtsgeschäften und der steuerlichen Anzeigen der Notare",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Justiz und für Verbraucherschutz"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/037/2103735.pdf",
+        "id": "284542",
+        "dokumentnummer": "21/3735",
+        "datum": "2026-01-21",
+        "verteildatum": "2026-01-21",
+        "anlagen": "Stellungnahme des BR und Gegenäußerung der BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Digitalisierung des Vollzugs von Immobilienverträgen, der gerichtlichen Genehmigungen von notariellen Rechtsgeschäften und der steuerlichen Anzeigen der Notare",
+      "datum": "2026-01-21"
+    }
+  ],
+  "cursor": "AoJw-MKN8JsDMURydWNrc2FjaGUtMjg0NTQy"
+}

@@ -1,0 +1,129 @@
+@import "tailwindcss";
+@import url('https://fonts.bunny.net/css?family=fraunces:600,700');
+
+@theme {
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --color-background: #FFFFFF;
+  --color-surface: #F7F7F7;
+  --color-elevated: #EDEDED;
+  --color-fg: #0A0A0A;
+
+  --color-blue: #6E9BF0;
+  --color-green: #34C759;
+  --color-red: #FF3B30;
+  --color-purple: #B98AEF;
+  --color-orange: #DB9A6A;
+  --color-cyan: #78CCE1;
+  --color-pink: #DE97BE;
+  --color-yellow: #D2BF72;
+  --color-teal: #71C4B4;
+  --color-indigo: #98A3F1;
+  --color-mint: #93D4B6;
+  --color-brown: #B89073;
+  --color-gray: #828CA0;
+  --color-rust: #DE7630;
+  --color-success: #7AB87A;
+  --color-danger: #B54E5E;
+
+  --color-spd: var(--color-red);
+  --color-cdu: var(--color-gray);
+  --color-gruene: var(--color-green);
+  --color-afd: var(--color-blue);
+  --color-fdp: var(--color-yellow);
+  --color-linke: var(--color-purple);
+  --color-bsw: var(--color-pink);
+  --color-fraktionslos: var(--color-brown);
+
+  --text-xxl: 24px;
+  --text-xxl--line-height: 1.2;
+  --text-xl: 22px;
+  --text-xl--line-height: 1.25;
+  --text-l: 16px;
+  --text-l--line-height: 1.5;
+  --text-m: 14px;
+  --text-m--line-height: 1.5;
+  --text-s: 12px;
+  --text-s--line-height: 1.4;
+
+  --font-weight-*: initial;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+
+  --spacing-xs: 4px;
+  --spacing-s: 8px;
+  --spacing-m: 12px;
+  --spacing-l: 16px;
+  --spacing-xl: 24px;
+
+  --radius-s: 8px;
+  --radius-m: 14px;
+  --radius-l: 20px;
+
+  --border-width-s: 1px;
+  --border-width-m: 1.5px;
+  --border-width-l: 2px;
+
+  --opacity-s: 0.15;
+  --opacity-m: 0.4;
+  --opacity-l: 0.7;
+}
+
+@layer base {
+  html, body { background: var(--color-background); color: var(--color-fg); }
+  body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 400; }
+}
+
+.mb-scroll-wordmark {
+  --mb-eye-opacity: 0;
+  --mb-eye-scale: 0.78;
+  --mb-eye-pupil-x: 0px;
+  --mb-eye-pupil-y: 0px;
+  --mb-wordmark-text-opacity: 1;
+  --mb-wordmark-text-scale: 1;
+  --mb-wordmark-text-x: 0rem;
+  --mb-wordmark-height: 1.75rem;
+  --mb-wordmark-width: 7rem;
+  align-items: center;
+  color: currentColor;
+  display: inline-flex;
+  height: var(--mb-wordmark-height);
+  overflow: visible;
+  position: relative;
+  width: var(--mb-wordmark-width);
+}
+.mb-scroll-wordmark__text {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1;
+  opacity: var(--mb-wordmark-text-opacity);
+  transform: translateX(var(--mb-wordmark-text-x)) scale(var(--mb-wordmark-text-scale));
+  transform-origin: left center;
+  white-space: nowrap;
+}
+.mb-eye-logo {
+  color: currentColor;
+  height: 1.4rem;
+  left: 0;
+  opacity: var(--mb-eye-opacity);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%) scale(var(--mb-eye-scale));
+  transform-origin: left center;
+  width: 3.2rem;
+}
+.mb-eye-logo__pupils {
+  transform: translate(var(--mb-eye-pupil-x), var(--mb-eye-pupil-y));
+  transition: transform 80ms linear;
+}
+.mb-eye-logo__brows {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 4;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mb-scroll-wordmark { width: auto; }
+  .mb-scroll-wordmark__text { opacity: 1; transform: none; }
+  .mb-eye-logo { display: none; }
+}

@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282876",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 1,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2639",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "ce7088b609cacf0d0b6b9cfca28e7c5d",
+      "aktualisiert": "2025-11-06T11:40:31+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "324969",
+          "titel": "Elftes Gesetz zur Änderung des Regionalisierungsgesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "VerkA",
+          "titel": "Verkehrsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/026/2102639.pdf",
+        "id": "282876",
+        "dokumentnummer": "21/2639",
+        "datum": "2025-11-05",
+        "verteildatum": "2025-11-05",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Verkehrsausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2196",
+          "titel": "Wolfgang Wiehle, MdB, AfD",
+          "autor_titel": "Wolfgang Wiehle, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksache 21/1495, 21/1932, 21/2146 Nr. 1. 5 -\r\nEntwurf eines Elften Gesetzes zur Änderung des Regionalisierungsgesetzes",
+      "datum": "2025-11-05"
+    }
+  ],
+  "cursor": "AoJwuI3rqZoDMURydWNrc2FjaGUtMjgyODc2"
+}

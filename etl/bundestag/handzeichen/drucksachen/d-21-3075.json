@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "283636",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 1,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/3075",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "f2db23e1d836d1adc273483bf41e8ab3",
+      "aktualisiert": "2026-01-08T15:03:22+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "325806",
+          "titel": "Medizinische Versorgungszentren reformieren",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfG",
+          "titel": "Ausschuss für Gesundheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/030/2103075.pdf",
+        "id": "283636",
+        "dokumentnummer": "21/3075",
+        "datum": "2025-12-03",
+        "verteildatum": "2025-12-04",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Gesundheit"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7313",
+          "titel": "Anne Janssen, MdB, CDU/CSU",
+          "autor_titel": "Anne Janssen, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Antrag der Abgeordneten Dr. Armin Grau, Dr. Janosch Dahmen, Dr. Kirsten Kappert-Gonther, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 21/1667 -\r\nMedizinische Versorgungszentren reformieren",
+      "datum": "2025-12-03"
+    }
+  ],
+  "cursor": "AoJwuM_38ZoDMURydWNrc2FjaGUtMjgzNjM2"
+}

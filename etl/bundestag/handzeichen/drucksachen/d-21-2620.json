@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282857",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2620",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "1408eb619348c6e68bbfbde773880690",
+      "aktualisiert": "2025-11-07T09:56:18+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "327857",
+          "titel": "Sammelübersicht 90 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/026/2102620.pdf",
+        "id": "282857",
+        "dokumentnummer": "21/2620",
+        "datum": "2025-11-05",
+        "verteildatum": "2025-11-05",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 90 zu Petitionen -",
+      "datum": "2025-11-05"
+    }
+  ],
+  "cursor": "AoJwuI3rqZoDMURydWNrc2FjaGUtMjgyODU3"
+}

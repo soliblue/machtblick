@@ -1,0 +1,180 @@
+import { createServerFn } from '@tanstack/react-start'
+import { db } from '@machtblick/db/client'
+import { members, voteMembers, votes, votePartySummaries, speeches } from '@machtblick/db/schema'
+import { eq, desc, and, asc } from 'drizzle-orm'
+import { getCurrentPartyMap, loadAffiliationsByMember, partyAt } from './memberParty'
+import type { SpeechResult } from './speeches'
+
+const SPEECH_PARTY_NORMALIZE: Record<string, string> = {
+  'BÜNDNIS 90/DIE GRÜNEN': 'B90/Grüne',
+  'DIE LINKE': 'Die Linke',
+}
+
+export type MemberListItem = {
+  id: string
+  name: string
+  party: string
+  state: string
+  votesAppeared: number
+  attendance: number
+  loyalty: number
+}
+
+function majorityChoice(s: typeof votePartySummaries.$inferSelect): string {
+  const c = [
+    ['ja', s.yes ?? 0],
+    ['nein', s.no ?? 0],
+    ['enthalten', s.abstain ?? 0],
+    ['nicht_abgegeben', s.absent ?? 0],
+  ] as const
+  return c.reduce((a, b) => (b[1] > a[1] ? b : a), c[0])[0]
+}
+
+export const listMembers = createServerFn({ method: 'GET' }).handler(async (): Promise<MemberListItem[]> => {
+  const allMembers = db.select().from(members).all()
+  const nonProceduralVotes = db.select({ id: votes.id, date: votes.date }).from(votes).where(eq(votes.procedural, false)).all()
+  const dateByVote = new Map(nonProceduralVotes.map((v) => [v.id, v.date]))
+  const vmRows = db.select().from(voteMembers).all().filter((r) => dateByVote.has(r.voteId))
+  const summaries = db.select().from(votePartySummaries).all().filter((s) => dateByVote.has(s.voteId))
+  const majByVoteParty = new Map<string, string>()
+  for (const s of summaries) majByVoteParty.set(`${s.voteId} ${s.party}`, majorityChoice(s))
+  const affByMember = loadAffiliationsByMember()
+  const currentPartyByMember = getCurrentPartyMap()
+  const stats = new Map<string, { name: string; party: string; state: string; total: number; absent: number; loyalMatches: number; loyalEligible: number }>()
+  for (const m of allMembers) stats.set(m.id, { name: m.name, party: currentPartyByMember.get(m.id) ?? '', state: '', total: 0, absent: 0, loyalMatches: 0, loyalEligible: 0 })
+  for (const r of vmRows) {
+    const s = stats.get(r.memberId)
+    if (!s) continue
+    s.state = r.state
+    s.total++
+    if (r.choice === 'nicht_abgegeben') s.absent++
+    else {
+      s.loyalEligible++
+      const partyAtVote = partyAt(affByMember.get(r.memberId), dateByVote.get(r.voteId)!)
+      const maj = majByVoteParty.get(`${r.voteId} ${partyAtVote}`)
+      if (maj && maj === r.choice) s.loyalMatches++
+    }
+  }
+  const out: MemberListItem[] = []
+  for (const [id, s] of stats) {
+    if (!s.total) continue
+    out.push({
+      id,
+      name: s.name,
+      party: s.party,
+      state: s.state,
+      votesAppeared: s.total,
+      attendance: 1 - s.absent / s.total,
+      loyalty: s.loyalEligible ? s.loyalMatches / s.loyalEligible : 0,
+    })
+  }
+  out.sort((a, b) => a.name.localeCompare(b.name, 'de'))
+  return out
+})
+
+export type MemberVoteRow = {
+  voteId: string
+  date: string
+  title: string
+  result: 'angenommen' | 'abgelehnt'
+  choice: 'ja' | 'nein' | 'enthalten' | 'nicht_abgegeben'
+  party: string
+  partyMajority: string
+  defected: boolean
+}
+
+export type MemberDetail = {
+  id: string
+  name: string
+  party: string
+  state: string
+  attendance: number
+  loyalty: number
+  votesAppeared: number
+  defections: number
+  history: MemberVoteRow[]
+  speeches: SpeechResult[]
+}
+
+export const getMember = createServerFn({ method: 'GET' })
+  .inputValidator((id: string) => id)
+  .handler(async ({ data: id }): Promise<MemberDetail> => {
+    const m = db.select().from(members).where(eq(members.id, id)).get()
+    if (!m) throw new Error(`member not found: ${id}`)
+    const vmRows = db
+      .select({
+        voteId: voteMembers.voteId,
+        state: voteMembers.state,
+        choice: voteMembers.choice,
+        date: votes.date,
+        title: votes.title,
+        result: votes.result,
+      })
+      .from(voteMembers)
+      .innerJoin(votes, eq(votes.id, voteMembers.voteId))
+      .where(and(eq(voteMembers.memberId, id), eq(votes.procedural, false)))
+      .orderBy(desc(votes.date))
+      .all()
+    const affList = loadAffiliationsByMember().get(id) ?? []
+    const summaries = db.select().from(votePartySummaries).all()
+    const majByVoteParty = new Map<string, string>()
+    for (const s of summaries) majByVoteParty.set(`${s.voteId} ${s.party}`, majorityChoice(s))
+    let absent = 0
+    let loyalMatches = 0
+    let loyalEligible = 0
+    let defections = 0
+    const history: MemberVoteRow[] = vmRows.map((r) => {
+      const party = partyAt(affList, r.date)
+      const maj = majByVoteParty.get(`${r.voteId} ${party}`) ?? ''
+      const defected = r.choice !== 'nicht_abgegeben' && r.choice !== maj
+      if (r.choice === 'nicht_abgegeben') absent++
+      else {
+        loyalEligible++
+        if (r.choice === maj) loyalMatches++
+        else defections++
+      }
+      return {
+        voteId: r.voteId,
+        date: r.date,
+        title: r.title,
+        result: r.result,
+        choice: r.choice,
+        party,
+        partyMajority: maj,
+        defected,
+      }
+    })
+    const currentParty = affList.find((a) => a.validTo === null)?.party ?? ''
+    const memberSpeeches = db
+      .select({ speech: speeches, voteTitle: votes.title })
+      .from(speeches)
+      .leftJoin(votes, eq(votes.id, speeches.voteId))
+      .where(eq(speeches.speakerMemberId, id))
+      .orderBy(desc(speeches.date), asc(speeches.position))
+      .all()
+    const speechResults: SpeechResult[] = memberSpeeches.map(({ speech: row, voteTitle }) => ({
+      id: row.id,
+      speakerName: row.speakerName,
+      speakerMemberId: row.speakerMemberId,
+      speakerRole: row.speakerRole,
+      party: row.party ? (SPEECH_PARTY_NORMALIZE[row.party] ?? row.party) : null,
+      position: row.position,
+      excerpt: row.textExcerpt,
+      date: row.date,
+      voteId: row.voteId,
+      voteTitle,
+      snippet: null,
+    }))
+    return {
+      id,
+      name: m.name,
+      party: currentParty,
+      state: vmRows[0]?.state ?? '',
+      attendance: vmRows.length ? 1 - absent / vmRows.length : 0,
+      loyalty: loyalEligible ? loyalMatches / loyalEligible : 0,
+      votesAppeared: vmRows.length,
+      defections,
+      history,
+      speeches: speechResults,
+    }
+  })

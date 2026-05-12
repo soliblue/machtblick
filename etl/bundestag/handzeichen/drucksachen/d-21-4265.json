@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285295",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 37,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4265",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "895b571bdeb2eba6e74cca34c5272d02",
+      "aktualisiert": "2026-02-25T08:54:38+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "331617",
+          "titel": "Wahlversprechen einhalten - Heizungsgesetz abschaffen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/042/2104265.pdf",
+        "id": "285295",
+        "dokumentnummer": "21/4265",
+        "datum": "2026-02-24",
+        "verteildatum": "2026-02-24",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2066",
+          "titel": "Marc Bernhard, MdB, AfD",
+          "autor_titel": "Marc Bernhard"
+        },
+        {
+          "id": "7222",
+          "titel": "Carolin Bachmann, MdB, AfD",
+          "autor_titel": "Carolin Bachmann"
+        }
+      ],
+      "titel": "Wahlversprechen einhalten - Heizungsgesetz abschaffen",
+      "datum": "2026-02-24"
+    }
+  ],
+  "cursor": "AoJw-MnTx5wDMURydWNrc2FjaGUtMjg1Mjk1"
+}

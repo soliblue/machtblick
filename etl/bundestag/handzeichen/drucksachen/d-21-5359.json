@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "286717",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/5359",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "51c8754a6d31bc5273d11f2d7b9a9f17",
+      "aktualisiert": "2026-04-16T10:28:14+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "333744",
+          "titel": "Sammelübersicht 229 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/053/2105359.pdf",
+        "id": "286717",
+        "dokumentnummer": "21/5359",
+        "datum": "2026-04-15",
+        "verteildatum": "2026-04-15",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 229 zu Petitionen -",
+      "datum": "2026-04-15"
+    }
+  ],
+  "cursor": "AoJwkKulyJ0DMURydWNrc2FjaGUtMjg2NzE3"
+}

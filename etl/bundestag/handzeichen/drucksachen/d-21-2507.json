@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282743",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2507",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "7d3103797d9ad36429546e4b0d7dea7c",
+      "aktualisiert": "2025-11-03T17:17:33+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "326693",
+          "titel": "Gesetz zur Förderung privater Investitionen und des Finanzstandorts (Standortfördergesetz - StoFöG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/025/2102507.pdf",
+        "id": "282743",
+        "dokumentnummer": "21/2507",
+        "datum": "2025-11-03",
+        "verteildatum": "2025-11-03",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Förderung privater Investitionen und des Finanzstandorts (Standortfördergesetz - StoFöG)",
+      "datum": "2025-11-03"
+    }
+  ],
+  "cursor": "AoJwuPbXpJoDMURydWNrc2FjaGUtMjgyNzQz"
+}

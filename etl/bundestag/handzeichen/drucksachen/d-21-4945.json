@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "286163",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 32,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4945",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "2748ae122cfe8fb1553e0c7345cd4a13",
+      "aktualisiert": "2026-03-25T12:32:26+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "333010",
+          "titel": "Erhalt des Ackerstatus landwirtschaftlicher Flächen rechtssicher gewährleisten, unionsrechtliche Spielräume ausschöpfen und Fehlsteuerungen im Dauergrünlandschutz beseitigen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/049/2104945.pdf",
+        "id": "286163",
+        "dokumentnummer": "21/4945",
+        "datum": "2026-03-24",
+        "verteildatum": "2026-03-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "8103",
+          "titel": "Julian Schmidt, MdB, AfD",
+          "autor_titel": "Julian Schmidt"
+        },
+        {
+          "id": "2049",
+          "titel": "Stephan Protschka, MdB, AfD",
+          "autor_titel": "Stephan Protschka"
+        }
+      ],
+      "titel": "Erhalt des Ackerstatus landwirtschaftlicher Flächen rechtssicher gewährleisten, unionsrechtliche Spielräume ausschöpfen und Fehlsteuerungen im Dauergrünlandschutz beseitigen",
+      "datum": "2026-03-24"
+    }
+  ],
+  "cursor": "AoJw-Ivgj50DMURydWNrc2FjaGUtMjg2MTYz"
+}

@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "283575",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/3073",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "ce3d17edde99744c7e8a414462d2df86",
+      "aktualisiert": "2025-12-04T09:53:46+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "325527",
+          "titel": "Gesetz zur Stärkung der Militärischen Sicherheit in der Bundeswehr",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "VgA",
+          "titel": "Verteidigungsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/030/2103073.pdf",
+        "id": "283575",
+        "dokumentnummer": "21/3073",
+        "datum": "2025-12-03",
+        "verteildatum": "2025-12-03",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Verteidigungsausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1722",
+          "titel": "Agnieszka Brugger, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Agnieszka Brugger, Berichterstattung"
+        },
+        {
+          "id": "2030",
+          "titel": "Jan Ralf Nolte, MdB, AfD",
+          "autor_titel": "Jan Ralf Nolte, Berichterstattung"
+        },
+        {
+          "id": "8000",
+          "titel": "Jan-Wilhelm Pohlmann, MdB, CDU/CSU",
+          "autor_titel": "Jan-Wilhelm Pohlmann, Berichterstattung"
+        },
+        {
+          "id": "8094",
+          "titel": "Zada Salihovic, MdB, DIE LINKE",
+          "autor_titel": "Zada Salihovic, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksachen 21/1846, 21/2580 -\r\nEntwurf eines Gesetzes zur Stärkung der Militärischen Sicherheit in der Bundeswehr",
+      "datum": "2025-12-03"
+    }
+  ],
+  "cursor": "AoJwuM_38ZoDMURydWNrc2FjaGUtMjgzNTc1"
+}

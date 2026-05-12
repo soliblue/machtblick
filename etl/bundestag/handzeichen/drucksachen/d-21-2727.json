@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "283071",
+      "drucksachetyp": "Wahlvorschlag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2727",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "a6be41ae5b38efd07573ad4eef0a84a5",
+      "aktualisiert": "2025-11-12T15:09:08+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "328111",
+          "titel": "Wahl von Mitgliedern des Beirates der Stiftung Datenschutz",
+          "vorgangstyp": "Besetzung externer Gremien durch BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "CDU/CSU",
+          "titel": "Fraktion der CDU/CSU"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "SPD",
+          "titel": "Fraktion der SPD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/027/2102727.pdf",
+        "id": "283071",
+        "dokumentnummer": "21/2727",
+        "datum": "2025-11-12",
+        "verteildatum": "2025-11-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Wahlvorschlag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD",
+          "Fraktion der CDU/CSU",
+          "Fraktion der SPD"
+        ]
+      },
+      "titel": "Wahl von Mitgliedern des Beirates der Stiftung Datenschutz",
+      "datum": "2025-11-12"
+    }
+  ],
+  "cursor": "AoJw-J3uu5oDMURydWNrc2FjaGUtMjgzMDcx"
+}

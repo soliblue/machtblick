@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "284901",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/3944",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "2e261053d27b6896ffffc75d0e9b6d2f",
+      "aktualisiert": "2026-02-04T15:13:18+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "329545",
+          "titel": "Gesetz zur Änderung des Gesetzes zu dem Mehrseitigen Übereinkommen vom 24. November 2016 zur Umsetzung steuerabkommensbezogener Maßnahmen zur Verhinderung der Gewinnverkürzung und Gewinnverlagerung",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/039/2103944.pdf",
+        "id": "284901",
+        "dokumentnummer": "21/3944",
+        "datum": "2026-02-02",
+        "verteildatum": "2026-02-02",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Änderung des Gesetzes zu dem Mehrseitigen Übereinkommen vom 24. November 2016 zur Umsetzung steuerabkommensbezogener Maßnahmen zur Verhinderung der Gewinnverkürzung und Gewinnverlagerung",
+      "datum": "2026-02-02"
+    }
+  ],
+  "cursor": "AoJw-MyAj5wDMURydWNrc2FjaGUtMjg0OTAx"
+}

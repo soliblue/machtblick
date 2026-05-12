@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "286201",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4967",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "e1507c2b4788aeafbe8032a05c7441fe",
+      "aktualisiert": "2026-03-25T17:18:33+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "333047",
+          "titel": "Beschlussempfehlung und Bericht des Ausschusses für Recht und Verbraucherschutz (6. Ausschuss) zu dem Streitverfahren vor dem Bundesverfassungsgericht 2 BvE 1/26",
+          "vorgangstyp": "Verfahren vor dem Bundesverfassungsgericht"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfRechtVer",
+          "titel": "Ausschuss für Recht und Verbraucherschutz"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/049/2104967.pdf",
+        "id": "286201",
+        "dokumentnummer": "21/4967",
+        "datum": "2026-03-25",
+        "verteildatum": "2026-03-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Recht und Verbraucherschutz"
+        ]
+      },
+      "titel": "zu dem Streitverfahren vor dem Bundesverfassungsgericht 2 BvE 1/26",
+      "datum": "2026-03-25"
+    }
+  ],
+  "cursor": "AoJwuNepkp0DMURydWNrc2FjaGUtMjg2MjAx"
+}

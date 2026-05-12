@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285870",
+      "drucksachetyp": "Wahlvorschlag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4690",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "f42fc9bcf9bc71336853bbde86c134f8",
+      "aktualisiert": "2026-03-16T15:49:32+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "332461",
+          "titel": "Wahl von Mitgliedern des Stiftungsrates der \"Deutschen Stiftung Friedensforschung (DSF)\"",
+          "vorgangstyp": "Besetzung externer Gremien durch BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "CDU/CSU",
+          "titel": "Fraktion der CDU/CSU"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "SPD",
+          "titel": "Fraktion der SPD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/046/2104690.pdf",
+        "id": "285870",
+        "dokumentnummer": "21/4690",
+        "datum": "2026-03-16",
+        "verteildatum": "2026-03-16",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Wahlvorschlag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der CDU/CSU",
+          "Fraktion der SPD"
+        ]
+      },
+      "titel": "Wahl von Mitgliedern des Stiftungsrates der \"Deutschen Stiftung Friedensforschung (DSF)\"",
+      "datum": "2026-03-16"
+    }
+  ],
+  "cursor": "AoJw-K-T-5wDMURydWNrc2FjaGUtMjg1ODcw"
+}

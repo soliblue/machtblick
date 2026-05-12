@@ -1,0 +1,14 @@
+{
+  "name": "@machtblick/db",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./client": "./client.ts",
+    "./schema": "./schema/index.ts"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.5.0",
+    "drizzle-orm": "^0.36.0"
+  }
+}

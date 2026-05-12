@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "281886",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/1894",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "0d3a735a2a8b29bea6c683ebcd92f124",
+      "aktualisiert": "2025-09-30T15:43:47+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "324956",
+          "titel": "Gesetz zu den Änderungen der Anlagen I und III der Vereinbarung vom 25. November 1986 über die Bereitstellung und den Betrieb von Flugsicherungseinrichtungen und -diensten durch EUROCONTROL in der Bezirkskontrollzentrale Maastricht",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Verkehr"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/018/2101894.pdf",
+        "id": "281886",
+        "dokumentnummer": "21/1894",
+        "datum": "2025-09-29",
+        "verteildatum": "2025-09-30",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zu den Änderungen der Anlagen I und III der Vereinbarung vom 25. November 1986 über die Bereitstellung und den Betrieb von Flugsicherungseinrichtungen und -diensten durch EUROCONTROL in der Bezirkskontrollzentrale Maastricht",
+      "datum": "2025-09-29"
+    }
+  ],
+  "cursor": "AoJwkMa6ypkDMURydWNrc2FjaGUtMjgxODg2"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "@machtblick/etl-bundestag-spenden",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "dependencies": {
+    "@machtblick/db": "*",
+    "cheerio": "^1.0.0",
+    "drizzle-orm": "^0.36.0"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282845",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2608",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "adf9baa6e2efa70c01dee40c076917af",
+      "aktualisiert": "2025-11-07T09:34:00+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "327842",
+          "titel": "Sammelübersicht 78 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/026/2102608.pdf",
+        "id": "282845",
+        "dokumentnummer": "21/2608",
+        "datum": "2025-11-05",
+        "verteildatum": "2025-11-05",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 78 zu Petitionen -",
+      "datum": "2025-11-05"
+    }
+  ],
+  "cursor": "AoJwuI3rqZoDMURydWNrc2FjaGUtMjgyODQ1"
+}

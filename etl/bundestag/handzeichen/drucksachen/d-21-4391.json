@@ -1,0 +1,65 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285481",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 2,
+      "dokumentnummer": "21/4391",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "4f16fad3b794c979f22041e4df8ec2f3",
+      "aktualisiert": "2026-04-15T15:12:22+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "329402",
+          "titel": "Wärmepumpenoffensive - Heizungsindustrie und Zukunftstechnologien in Deutschland halten",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "328116",
+          "titel": "Heizkostenfalle verhindern - Wärmewende weiterführen für ein warmes und bezahlbares Zuhause",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfWE",
+          "titel": "Ausschuss für Wirtschaft und Energie"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/043/2104391.pdf",
+        "id": "285481",
+        "dokumentnummer": "21/4391",
+        "datum": "2026-02-27",
+        "verteildatum": "2026-03-03",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Wirtschaft und Energie"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7903",
+          "titel": "Wilhelm Gebhard, MdB, CDU/CSU",
+          "autor_titel": "Wilhelm Gebhard, Berichterstattung"
+        },
+        {
+          "id": "2259",
+          "titel": "Steffen Kotré, MdB, AfD",
+          "autor_titel": "Steffen Kotré, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Antrag der Abgeordneten Dr. Alaa Alhamwi, Kassem Taher Saleh, Dr. Julia Verlinden, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 21/2724 -\r\nHeizkostenfalle verhindern - Wärmewende weiterführen für ein warmes und bezahlbares Zuhause\r\nb) zu dem Antrag der Abgeordneten Dr. Alaa Alhamwi, Dr. Sandra Detzer, Sandra Stein, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 21/3317 -\r\nWärmepumpenoffensive - Heizungsindustrie und Zukunftstechnologien in Deutschland halten",
+      "datum": "2026-02-27"
+    }
+  ],
+  "cursor": "AoJwuKywz5wDMURydWNrc2FjaGUtMjg1NDgx"
+}

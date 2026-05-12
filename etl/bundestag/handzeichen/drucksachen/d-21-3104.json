@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "283613",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 3,
+      "dokumentnummer": "21/3104",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "a4d0c41b6ddc4b310742a888ffb5b415",
+      "aktualisiert": "2025-12-04T10:37:56+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "327780",
+          "titel": "Steuergerechtigkeit stärken und Steuerbürokratie abbauen",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "328113",
+          "titel": "Rückforderungslücken bei Cum-Ex und Cum-Cum schließen",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "325663",
+          "titel": "Steueränderungsgesetz 2025",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FinanzA",
+          "titel": "Finanzausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/031/2103104.pdf",
+        "id": "283613",
+        "dokumentnummer": "21/3104",
+        "datum": "2025-12-03",
+        "verteildatum": "2025-12-03",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Finanzausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1969",
+          "titel": "Doris Achelwilm, MdB, DIE LINKE",
+          "autor_titel": "Doris Achelwilm, Berichterstattung"
+        },
+        {
+          "id": "1599",
+          "titel": "Fritz Güntzler, MdB, CDU/CSU",
+          "autor_titel": "Fritz Güntzler, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksache 21/1974, 21/2470, 21/2669 Nr. 26 -\r\nEntwurf eines Steueränderungsgesetzes 2025\r\nb) zu dem Antrag der Abgeordneten Kay Gottschalk, Hauke Finger, TorbenBraga, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 21/2720 -\r\nRückforderungslücken bei Cum-Ex und Cum-Cum schließen\r\nc) zu dem Antrag der Abgeordneten Sascha Müller, Karoline Otte, Stefan Schmidt, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIEGRÜNEN\r\n- Drucksache 21/2558 -\r\nSteuergerechtigkeit stärken und Steuerbürokratie abbauen",
+      "datum": "2025-12-03"
+    }
+  ],
+  "cursor": "AoJwuM_38ZoDMURydWNrc2FjaGUtMjgzNjEz"
+}

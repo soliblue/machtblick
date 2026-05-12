@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "287056",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/5538",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "6d3c326a906f899e1ff38c3c43a7ea1c",
+      "aktualisiert": "2026-04-23T09:13:28+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334104",
+          "titel": "Sammelübersicht 238 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/055/2105538.pdf",
+        "id": "287056",
+        "dokumentnummer": "21/5538",
+        "datum": "2026-04-22",
+        "verteildatum": "2026-04-22",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 238 zu Petitionen -",
+      "datum": "2026-04-22"
+    }
+  ],
+  "cursor": "AoJw0Luo2p0DMURydWNrc2FjaGUtMjg3MDU2"
+}

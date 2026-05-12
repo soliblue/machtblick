@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282071",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 35,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2031",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "99960cfe3345f42bd0536fefa60c4d8b",
+      "aktualisiert": "2025-10-09T08:39:39+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "326561",
+          "titel": "35 Jahre Deutsche Einheit - Gleichwertige Lebensverhältnisse in Ost wie West jetzt umsetzen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/020/2102031.pdf",
+        "id": "282071",
+        "dokumentnummer": "21/2031",
+        "datum": "2025-10-07",
+        "verteildatum": "2025-10-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7884",
+          "titel": "Mandy Eißing, MdB, DIE LINKE",
+          "autor_titel": "Mandy Eißing"
+        },
+        {
+          "id": "8094",
+          "titel": "Zada Salihovic, MdB, DIE LINKE",
+          "autor_titel": "Zada Salihovic"
+        }
+      ],
+      "titel": "35 Jahre Deutsche Einheit - Gleichwertige Lebensverhältnisse in Ost wie West jetzt umsetzen",
+      "datum": "2025-10-07"
+    }
+  ],
+  "cursor": "AoJwkKKH35kDMURydWNrc2FjaGUtMjgyMDcx"
+}

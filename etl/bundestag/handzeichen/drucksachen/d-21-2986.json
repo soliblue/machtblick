@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "283466",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2986",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "8f3a99f503d8e4e1988560364d91bd07",
+      "aktualisiert": "2025-11-28T09:57:19+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "324698",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2026 (Haushaltsgesetz 2026 - HG 2026)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/029/2102986.pdf",
+        "id": "283466",
+        "dokumentnummer": "21/2986",
+        "datum": "2025-11-27",
+        "verteildatum": "2025-11-27",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2142",
+          "titel": "Dr. Michael Espendiller, MdB, AfD",
+          "autor_titel": "Dr. Michael Espendiller"
+        },
+        {
+          "id": "7912",
+          "titel": "Georg Schroeter, MdB, AfD",
+          "autor_titel": "Georg Schroeter"
+        }
+      ],
+      "titel": "zu der zweiten Beratung des Gesetzentwurfs der Bundesregierung\r\n- Drucksachen 21/600, 21/602, 21/2669 Nr. 1, 21/2061, 21/2062, 21/2063 -\r\nEntwurf eines Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2026 \r\n(Haushaltsgesetz 2026 - HG 2026)",
+      "datum": "2025-11-27"
+    }
+  ],
+  "cursor": "AoJwuIq-4poDMURydWNrc2FjaGUtMjgzNDY2"
+}

@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282922",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 3,
+      "dokumentnummer": "21/2670",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "8f5aa83146886041553e1795786b7a85",
+      "aktualisiert": "2025-11-07T10:50:14+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "326586",
+          "titel": "Finanzkriminalität wirksam bekämpfen - Behörden stärken, Finanzlobby eindämmen, Gesetze nachschärfen",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "326563",
+          "titel": "Faire Arbeit sichern",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "324744",
+          "titel": "Gesetz zur Modernisierung und Digitalisierung der Schwarzarbeitsbekämpfung",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FinanzA",
+          "titel": "Finanzausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/026/2102670.pdf",
+        "id": "282922",
+        "dokumentnummer": "21/2670",
+        "datum": "2025-11-06",
+        "verteildatum": "2025-11-07",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Finanzausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2191",
+          "titel": "Kay Gottschalk, MdB, AfD",
+          "autor_titel": "Kay Gottschalk, Berichterstattung"
+        },
+        {
+          "id": "1701",
+          "titel": "Anja Karliczek, MdB, CDU/CSU",
+          "autor_titel": "Anja Karliczek, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksache 21/1930 -\r\nEntwurf eines Gesetzes zur Modernisierung und Digitalisierung der Schwarzarbeitsbekämpfung\r\n\r\nb) zu dem Antrag der Abgeordneten Max Lucks, Katharina Beck, Dr. Moritz Heuberger, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 21/2033 -\r\nFaire Arbeit sichern\r\n\r\nc) zu dem Antrag der Abgeordneten Isabelle Vandre, Janine Wissler, Clara Bünger, weiterer Abgeordneter und der Fraktion Die Linke\r\n- Drucksache 21/2037 -\r\nFinanzkriminalität wirksam bekämpfen - Behörden stärken, Finanzlobby eindämmen, Gesetze nachschärfen",
+      "datum": "2025-11-06"
+    }
+  ],
+  "cursor": "AoJw-Ni0rJoDMURydWNrc2FjaGUtMjgyOTIy"
+}

@@ -1,0 +1,80 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "286110",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 3,
+      "dokumentnummer": "21/4890",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "dfaf418a1d042a38e1dd2269a13a572d",
+      "aktualisiert": "2026-03-23T17:19:05+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "328897",
+          "titel": "Rückbau der EU-Klimapolitik stoppen - Deutschlands Klimaschutzlücke jetzt schließen",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "331633",
+          "titel": "Nach Urteil des Bundesverwaltungsgerichts - Ein Klima-Turbo für Deutschland",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "328847",
+          "titel": "Klimagerechtigkeit - CO2 bepreisen und das Leben für alle Menschen bezahlbar machen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfU",
+          "titel": "Ausschuss für Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/048/2104890.pdf",
+        "id": "286110",
+        "dokumentnummer": "21/4890",
+        "datum": "2026-03-23",
+        "verteildatum": "2026-03-23",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1983",
+          "titel": "Lisa Badum, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Lisa Badum, Berichterstattung"
+        },
+        {
+          "id": "7243",
+          "titel": "Jakob Blankenburg, MdB, SPD",
+          "autor_titel": "Jakob Blankenburg, Berichterstattung"
+        },
+        {
+          "id": "7888",
+          "titel": "Dr. Fabian Fahl, MdB, DIE LINKE",
+          "autor_titel": "Dr. Fabian Fahl, Berichterstattung"
+        },
+        {
+          "id": "1043",
+          "titel": "Dr. Thomas Gebhart, MdB, CDU/CSU",
+          "autor_titel": "Dr. Thomas Gebhart, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Antrag der Abgeordneten Lisa Badum, Andreas Audretsch, Dr. Julia Verlinden, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 21/3034 -\r\nKlimagerechtigkeit - CO2 bepreisen und das Leben für alle Menschen bezahlbar machen\r\nb) zu dem Antrag der Abgeordneten Lisa Badum, Dr. Jan-Niclas Gesenhues, Julia Schneider, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIEGRÜNEN\r\n- Drucksache 21/3033 -\r\nRückbau der EU-Klimapolitik stoppen - Deutschlands Klimaschutzlücke jetzt schließen\r\nc) zu dem Antrag der Abgeordneten Lisa Badum, Swantje Henrike Michaelsen, Dr. Julia Verlinden, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 21/4271 -\r\nNach Urteil des Bundesverwaltungsgerichts - Ein Klima-Turbo für Deutschland",
+      "datum": "2026-03-23"
+    }
+  ],
+  "cursor": "AoJwuMCWjZ0DMURydWNrc2FjaGUtMjg2MTEw"
+}

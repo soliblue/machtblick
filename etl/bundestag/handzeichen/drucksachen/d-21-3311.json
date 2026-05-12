@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "283938",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/3311",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "a739754ff057d0f329080bba4e5b26b6",
+      "aktualisiert": "2025-12-18T10:32:32+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "324802",
+          "titel": "Gesetz zur Befugniserweiterung und Entbürokratisierung in der Pflege",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "VermA",
+          "titel": "Vermittlungsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/033/2103311.pdf",
+        "id": "283938",
+        "dokumentnummer": "21/3311",
+        "datum": "2025-12-17",
+        "verteildatum": "2025-12-17",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Vermittlungsausschuss"
+        ]
+      },
+      "titel": "zu dem Gesetz zur Befugniserweiterung und Entbürokratisierung in der Pflege\r\n- Drucksachen 21/1511, 21/1935, 21/2641, 21/2893 -",
+      "datum": "2025-12-17"
+    }
+  ],
+  "cursor": "AoJwuPD9lZsDMURydWNrc2FjaGUtMjgzOTM4"
+}

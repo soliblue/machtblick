@@ -1,0 +1,48 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1778521060076,
+      "tag": "0000_initial",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1778537577269,
+      "tag": "0001_modern_tigra",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1778640000000,
+      "tag": "0002_procedural_flag",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1778590492870,
+      "tag": "0003_neat_marten_broadcloak",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1778592321269,
+      "tag": "0004_mean_punisher",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1778593531247,
+      "tag": "0005_clammy_carlie_cooper",
+      "breakpoints": true
+    }
+  ]
+}

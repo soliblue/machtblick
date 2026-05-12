@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282131",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2107",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "e4f38aab7b8860866b81612e7901723a",
+      "aktualisiert": "2025-10-09T10:05:40+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "323276",
+          "titel": "Gesetz zur Ausführung von Artikel 109 Absatz 3 Satz 6 und Satz 7 des Grundgesetzes und zur Änderung anderer Gesetze",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "HaushA",
+          "titel": "Haushaltsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/021/2102107.pdf",
+        "id": "282131",
+        "dokumentnummer": "21/2107",
+        "datum": "2025-10-08",
+        "verteildatum": "2025-10-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Haushaltsausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "437",
+          "titel": "Dr. Dietmar Bartsch, MdB, DIE LINKE",
+          "autor_titel": "Dr. Dietmar Bartsch, Berichterstattung"
+        },
+        {
+          "id": "2142",
+          "titel": "Dr. Michael Espendiller, MdB, AfD",
+          "autor_titel": "Dr. Michael Espendiller, Berichterstattung"
+        },
+        {
+          "id": "1604",
+          "titel": "Christian Haase, MdB, CDU/CSU",
+          "autor_titel": "Christian Haase, Berichterstattung"
+        },
+        {
+          "id": "7390",
+          "titel": "Dr. Thorsten Rudolph, MdB, SPD",
+          "autor_titel": "Dr. Thorsten Rudolph, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksache 21/1087 -\r\nEntwurf eines Gesetzes zur Ausführung von Artikel 109 Absatz 3 Satz 6 und Satz 7 des Grundgesetzes und zur Änderung anderer Gesetze",
+      "datum": "2025-10-08"
+    }
+  ],
+  "cursor": "AoJw0O3Q4ZkDMURydWNrc2FjaGUtMjgyMTMx"
+}

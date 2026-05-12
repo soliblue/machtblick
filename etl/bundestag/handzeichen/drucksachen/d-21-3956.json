@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "284873",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/3956",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "14068199d647c92d143c96d5910ba259",
+      "aktualisiert": "2026-02-04T15:10:36+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "330070",
+          "titel": "Bundeskaderathletinnen und -athleten finanziell und sozial absichern sowie anschließende Berufsperspektiven ermöglichen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "HaushA",
+          "titel": "Haushaltsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/039/2103956.pdf",
+        "id": "284873",
+        "dokumentnummer": "21/3956",
+        "datum": "2026-01-30",
+        "verteildatum": "2026-02-02",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Haushaltsausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2088",
+          "titel": "Marcus Bühl, MdB, AfD",
+          "autor_titel": "Marcus Bühl, Berichterstattung"
+        },
+        {
+          "id": "7267",
+          "titel": "Leon Eckert, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Leon Eckert, Berichterstattung"
+        },
+        {
+          "id": "1581",
+          "titel": "Kerstin Radomski, MdB, CDU/CSU",
+          "autor_titel": "Kerstin Radomski, Berichterstattung"
+        },
+        {
+          "id": "7390",
+          "titel": "Dr. Thorsten Rudolph, MdB, SPD",
+          "autor_titel": "Dr. Thorsten Rudolph, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Antrag der Abgeordneten Christian Görke, Nicole Gohlke, Doris Achelwilm, weiterer Abgeordneter und der Fraktion Die Linke\r\n- Drucksache 21/3616 -\r\nBundeskaderathletinnen und -athleten finanziell und sozial absichern sowie anschließende Berufsperspektiven ermöglichen",
+      "datum": "2026-01-30"
+    }
+  ],
+  "cursor": "AoJwuOqjh5wDMURydWNrc2FjaGUtMjg0ODcz"
+}

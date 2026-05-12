@@ -1,0 +1,24 @@
+import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
+
+export const votes = sqliteTable('votes', {
+  id: text('id').primaryKey(),
+  bundestagId: integer('bundestag_id').unique(),
+  voteType: text('vote_type', { enum: ['namentlich', 'handzeichen', 'hammelsprung'] }).notNull().default('namentlich'),
+  date: text('date').notNull(),
+  title: text('title').notNull(),
+  topic: text('topic'),
+  subject: text('subject'),
+  summary: text('summary'),
+  document: text('document'),
+  result: text('result', { enum: ['angenommen', 'abgelehnt'] }).notNull(),
+  procedural: integer('procedural', { mode: 'boolean' }).notNull().default(false),
+  totalMembers: integer('total_members'),
+  yes: integer('yes'),
+  no: integer('no'),
+  abstain: integer('abstain'),
+  absent: integer('absent'),
+  sourceUrl: text('source_url').notNull(),
+  contextJson: text('context_json'),
+  procedureJson: text('procedure_json'),
+  fetchedAt: text('fetched_at').notNull(),
+})

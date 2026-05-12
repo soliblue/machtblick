@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "286240",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 3,
+      "dokumentnummer": "21/4984",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "a278359725dffd6a6dd4af3e5aa9e5e8",
+      "aktualisiert": "2026-03-26T09:39:34+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "332627",
+          "titel": "Energiepreisschocks durch Irankrieg ernst nehmen - Unternehmen und Verbraucher nachhaltig und dauerhaft entlasten",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "332608",
+          "titel": "Gesetz zur Einführung eines Gesetzes zur Anpassung von Kraftstoffpreisen und zur Änderung des Gesetzes gegen Wettbewerbsbeschränkungen (Kraftstoffmaßnahmenpaket)",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "332626",
+          "titel": "Sofortige Entlastung der Bevölkerung wegen des Anstiegs der Energiepreise",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfWE",
+          "titel": "Ausschuss für Wirtschaft und Energie"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/049/2104984.pdf",
+        "id": "286240",
+        "dokumentnummer": "21/4984",
+        "datum": "2026-03-25",
+        "verteildatum": "2026-03-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Wirtschaft und Energie"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7259",
+          "titel": "Dr. Sandra Detzer, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Sandra Detzer, Berichterstattung"
+        },
+        {
+          "id": "7458",
+          "titel": "Dr. Klaus Wiener, MdB, CDU/CSU",
+          "autor_titel": "Dr. Klaus Wiener, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Gesetzentwurf der Fraktionen der CDU/CSU und SPD\r\n- Drucksache 21/4744 -\r\nEntwurf eines Gesetzes zur Einführung eines Gesetzes zur Anpassung von Kraftstoffpreisen und zur Änderung des Gesetzes gegen Wettbewerbsbeschränkungen (Kraftstoffmaßnahmenpaket)\r\nb) zu dem Antrag der Abgeordneten Bernd Schattner, Dr. Christina Baum, Joachim Bloch, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 21/4750 -\r\nEnergiepreisschocks durch Irankrieg ernst nehmen - Unternehmen und Verbraucher nachhaltig und dauerhaft entlasten\r\nc) zu dem Antrag der Abgeordneten Christian Görke, Ines Schwerdtner, Janine Wissler, weiterer Abgeordneter und der Fraktion Die Linke\r\n- Drucksache 21/4748 -\r\nSofortige Entlastung der Bevölkerung wegen des Anstiegs der Energiepreise",
+      "datum": "2026-03-25"
+    }
+  ],
+  "cursor": "AoJwuNepkp0DMURydWNrc2FjaGUtMjg2MjQw"
+}

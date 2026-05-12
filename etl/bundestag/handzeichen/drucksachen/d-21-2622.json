@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282859",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2622",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "9d9e9ec266e53130d2d6f6ef4998beea",
+      "aktualisiert": "2025-11-06T10:56:40+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "324801",
+          "titel": "Gesetz zur Umsetzung der Richtlinie (EU) 2023/2226",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FinanzA",
+          "titel": "Finanzausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/026/2102622.pdf",
+        "id": "282859",
+        "dokumentnummer": "21/2622",
+        "datum": "2025-11-05",
+        "verteildatum": "2025-11-05",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Finanzausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7928",
+          "titel": "Georg Günther, MdB, CDU/CSU",
+          "autor_titel": "Georg Günther, Berichterstattung"
+        },
+        {
+          "id": "8014",
+          "titel": "Isabelle Vandre, MdB, DIE LINKE",
+          "autor_titel": "Isabelle Vandre, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksachen 21/1937 -\r\nEntwurf eines Gesetzes zur Umsetzung der Richtlinie (EU) 2023/2226",
+      "datum": "2025-11-05"
+    }
+  ],
+  "cursor": "AoJwuI3rqZoDMURydWNrc2FjaGUtMjgyODU5"
+}

@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285874",
+      "drucksachetyp": "Wahlvorschlag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4694",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "0b2fb804e17af782c681c064554944c3",
+      "aktualisiert": "2026-03-16T15:57:07+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "332466",
+          "titel": "Wahl eines Mitglieds des Stiftungsrates der Stiftung \"Zentrum für Osteuropa- und internationale Studien (ZOiS)\"",
+          "vorgangstyp": "Besetzung externer Gremien durch BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "CDU/CSU",
+          "titel": "Fraktion der CDU/CSU"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/046/2104694.pdf",
+        "id": "285874",
+        "dokumentnummer": "21/4694",
+        "datum": "2026-03-16",
+        "verteildatum": "2026-03-16",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Wahlvorschlag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der CDU/CSU"
+        ]
+      },
+      "titel": "Wahl eines Mitglieds des Stiftungsrates der Stiftung \"Zentrum für Osteuropa- und internationale Studien (ZOiS)\"",
+      "datum": "2026-03-16"
+    }
+  ],
+  "cursor": "AoJw-K-T-5wDMURydWNrc2FjaGUtMjg1ODc0"
+}

@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285324",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 8,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4285",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "0b247801ef6d89597a5f715531c8a410",
+      "aktualisiert": "2026-02-25T17:03:16+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "331652",
+          "titel": "Empfehlung des Bürgerrates \"Ernährung im Wandel: Zwischen Privatangelegenheit und staatlichen Aufgaben\" zur Altersgrenze für Energydrinks umsetzen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/042/2104285.pdf",
+        "id": "285324",
+        "dokumentnummer": "21/4285",
+        "datum": "2026-02-24",
+        "verteildatum": "2026-02-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7334",
+          "titel": "Dr. Zoe Mayer, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Zoe Mayer"
+        },
+        {
+          "id": "7225",
+          "titel": "Karl Bär, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Karl Bär"
+        }
+      ],
+      "titel": "Empfehlung des Bürgerrates \"Ernährung im Wandel: Zwischen Privatangelegenheit und staatlichen Aufgaben\" zur Altersgrenze für Energydrinks umsetzen",
+      "datum": "2026-02-24"
+    }
+  ],
+  "cursor": "AoJw-MnTx5wDMURydWNrc2FjaGUtMjg1MzI0"
+}

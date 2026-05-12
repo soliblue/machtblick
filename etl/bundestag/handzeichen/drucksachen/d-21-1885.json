@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "281877",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/1885",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "bffc6b57b428f8b7bdafe5dce29a940e",
+      "aktualisiert": "2025-09-30T16:19:55+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "324964",
+          "titel": "Gesetz zu dem Interims-Wirtschaftspartnerschaftsabkommen vom 26. November 2008 zwischen Côte d'Ivoire einerseits und der Europäischen Union und ihren Mitgliedstaaten andererseits",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/018/2101885.pdf",
+        "id": "281877",
+        "dokumentnummer": "21/1885",
+        "datum": "2025-09-29",
+        "verteildatum": "2025-09-29",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zu dem Interims-Wirtschaftspartnerschaftsabkommen vom 26. November 2008 zwischen Côte d’Ivoire einerseits und der Europäischen Union und ihren Mitgliedstaaten andererseits",
+      "datum": "2025-09-29"
+    }
+  ],
+  "cursor": "AoJwkMa6ypkDMURydWNrc2FjaGUtMjgxODc3"
+}

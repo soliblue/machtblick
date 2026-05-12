@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285574",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4515",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "f84270c2864df80dd0389a52af2a56a0",
+      "aktualisiert": "2026-03-05T10:29:33+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "332073",
+          "titel": "Sammelübersicht 195 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/045/2104515.pdf",
+        "id": "285574",
+        "dokumentnummer": "21/4515",
+        "datum": "2026-03-04",
+        "verteildatum": "2026-03-04",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 195 zu Petitionen -",
+      "datum": "2026-03-04"
+    }
+  ],
+  "cursor": "AoJw-KWg3JwDMURydWNrc2FjaGUtMjg1NTc0"
+}

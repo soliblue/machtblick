@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "283608",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/3096",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "b34feffc6fc1179961de42d508a67361",
+      "aktualisiert": "2025-12-04T16:49:15+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "328933",
+          "titel": "Sammelübersicht 126 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/030/2103096.pdf",
+        "id": "283608",
+        "dokumentnummer": "21/3096",
+        "datum": "2025-12-03",
+        "verteildatum": "2025-12-03",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 126 zu Petitionen -",
+      "datum": "2025-12-03"
+    }
+  ],
+  "cursor": "AoJwuM_38ZoDMURydWNrc2FjaGUtMjgzNjA4"
+}

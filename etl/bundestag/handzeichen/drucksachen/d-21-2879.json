@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "283266",
+      "drucksachetyp": "Verordnung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2879",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "0de9c9693169e6cec8aea07d09dac263",
+      "aktualisiert": "2025-11-24T15:12:35+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "328422",
+          "titel": "Zweiundzwanzigste Verordnung zur Änderung der Außenwirtschaftsverordnung - aufhebbare Verordnung",
+          "vorgangstyp": "Rechtsverordnung (Außenwirtschaftsrecht)"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Wirtschaft und Energie"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/028/2102879.pdf",
+        "id": "283266",
+        "dokumentnummer": "21/2879",
+        "datum": "2025-11-21",
+        "verteildatum": "2025-11-21",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Verordnung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Zweiundzwanzigste Verordnung zur Änderung der Außenwirtschaftsverordnung",
+      "datum": "2025-11-21"
+    }
+  ],
+  "cursor": "AoJwuMWE05oDMURydWNrc2FjaGUtMjgzMjY2"
+}

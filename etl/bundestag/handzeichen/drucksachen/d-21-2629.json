@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282866",
+      "drucksachetyp": "Entschließungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 12,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2629",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "5204b0551f848752021e7b992bfbbaf3",
+      "aktualisiert": "2025-11-06T13:17:18+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "327814",
+          "titel": "Entschließungsantrag zum Gesetz zur Änderung des Kohlendioxid-Speicherungsgesetzes",
+          "vorgangstyp": "Entschließungsantrag BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/026/2102629.pdf",
+        "id": "282866",
+        "dokumentnummer": "21/2629",
+        "datum": "2025-11-05",
+        "verteildatum": "2025-11-05",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Entschließungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7528",
+          "titel": "Michael Kellner, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Michael Kellner"
+        },
+        {
+          "id": "1983",
+          "titel": "Lisa Badum, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Lisa Badum"
+        }
+      ],
+      "titel": "zu der dritten Beratung des Gesetzentwurfs der Bundesregierung\r\n- Drucksachen 21/1494, 21/2077, 21/2146 Nr. 1.16, 21/2594 -\r\nEntwurf eines Gesetzes zur Änderung des Kohlendioxid-Speicherungsgesetzes",
+      "datum": "2025-11-05"
+    }
+  ],
+  "cursor": "AoJwuI3rqZoDMURydWNrc2FjaGUtMjgyODY2"
+}

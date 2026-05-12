@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285361",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4334",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "eda7ad58c474b6db66d46dbdb9bf4e07",
+      "aktualisiert": "2026-02-27T10:22:40+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "331716",
+          "titel": "Sammelübersicht 174 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/043/2104334.pdf",
+        "id": "285361",
+        "dokumentnummer": "21/4334",
+        "datum": "2026-02-25",
+        "verteildatum": "2026-02-26",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübericht 174 zu Petitionen -",
+      "datum": "2026-02-25"
+    }
+  ],
+  "cursor": "AoJwuJWdypwDMURydWNrc2FjaGUtMjg1MzYx"
+}

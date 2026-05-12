@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285562",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4497",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "8b4e9605ad0776cc0e69bd4e6f7dca59",
+      "aktualisiert": "2026-03-05T09:32:59+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "327969",
+          "titel": "Gesetz zur Begrenzung der Risiken durch Investmentfonds und zur Umsetzung der Richtlinie (EU) 2024/927 im Hinblick auf Übertragungsvereinbarungen, Liquiditätsrisikomanagement, die aufsichtliche Berichterstattung, die Erbringung von Verwahr- und Hinterlegungsdienstleistungen und die Kreditvergabe durch alternative Investmentfonds sowie zur Umsetzung der Richtlinie (EU) 2024/2994 im Hinblick auf die Behandlung des Konzentrationsrisikos, das aus Risikopositionen gegenüber zentralen Gegenparteien erwächst, und des Ausfallrisikos bei zentral geclearten Derivategeschäften und zur Änderung weiterer Vorschriften (Fondsrisikobegrenzungsgesetz)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FinanzA",
+          "titel": "Finanzausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/044/2104497.pdf",
+        "id": "285562",
+        "dokumentnummer": "21/4497",
+        "datum": "2026-03-04",
+        "verteildatum": "2026-03-04",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Finanzausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7896",
+          "titel": "Hauke Finger, MdB, AfD",
+          "autor_titel": "Hauke Finger, Berichterstattung"
+        },
+        {
+          "id": "8090",
+          "titel": "Dr. Philipp Rottwilm, MdB, SPD",
+          "autor_titel": "Dr. Philipp Rottwilm, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksache 21/3510 -\r\nEntwurf eines Gesetzes zur Begrenzung der Risiken durch Investmentfonds und zur Umsetzung der Richtlinie (EU) 2024/927 im Hinblick auf Übertragungsvereinbarungen, Liquiditätsrisikomanagement, die aufsichtliche Berichterstattung, die Erbringung von Verwahr- und Hinterlegungsdienstleistungen und die Kreditvergabe durch alternative Investmentfonds sowie zur Umsetzung der Richtlinie (EU) 2024/2994 im Hinblick auf die Behandlung des Konzentrationsrisikos, das aus Risikopositionen gegenüber zentralen Gegenparteien erwächst, und des Ausfallrisikos bei zentral geclearten Derivategeschäften und zur Änderung weiterer Vorschriften (Fondsrisikobegrenzungsgesetz)",
+      "datum": "2026-03-04"
+    }
+  ],
+  "cursor": "AoJw-KWg3JwDMURydWNrc2FjaGUtMjg1NTYy"
+}

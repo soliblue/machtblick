@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "283168",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2827",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "b8fc0b59f4a1a76319c0569f2b6fda3d",
+      "aktualisiert": "2025-11-14T14:14:55+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "327794",
+          "titel": "Ideologiefreien, innovativen Pflanzenschutz gewährleisten - Wettbewerbsfähigkeit der heimischen Landwirtschaft sichern",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfLEH",
+          "titel": "Ausschuss für Landwirtschaft, Ernährung und Heimat"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/028/2102827.pdf",
+        "id": "283168",
+        "dokumentnummer": "21/2827",
+        "datum": "2025-11-14",
+        "verteildatum": "2025-11-14",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Landwirtschaft, Ernährung und Heimat"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7225",
+          "titel": "Karl Bär, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Karl Bär, Berichterstattung"
+        },
+        {
+          "id": "7325",
+          "titel": "Dr. Franziska Kersten, MdB, SPD",
+          "autor_titel": "Dr. Franziska Kersten, Berichterstattung"
+        },
+        {
+          "id": "7874",
+          "titel": "Ina Latendorf, MdB, DIE LINKE",
+          "autor_titel": "Ina Latendorf, Berichterstattung"
+        },
+        {
+          "id": "8082",
+          "titel": "Christian Reck, MdB, AfD",
+          "autor_titel": "Christian Reck, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Antrag der Abgeordneten Stephan Protschka, Peter Felser, Danny Meiners, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 21/2546 -\r\nIdeologiefreien, innovativen Pflanzenschutz gewährleisten - Wettbewerbsfähigkeit der heimischen Landwirtschaft sichern",
+      "datum": "2025-11-14"
+    }
+  ],
+  "cursor": "AoJw-LSBwZoDMURydWNrc2FjaGUtMjgzMTY4"
+}

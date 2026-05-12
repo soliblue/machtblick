@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "287052",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/5542",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "bc58922d176f5e5469024eabe8d99da1",
+      "aktualisiert": "2026-04-23T09:38:29+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334109",
+          "titel": "Sammelübersicht 242 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/055/2105542.pdf",
+        "id": "287052",
+        "dokumentnummer": "21/5542",
+        "datum": "2026-04-22",
+        "verteildatum": "2026-04-22",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 242 zu Petitionen -",
+      "datum": "2026-04-22"
+    }
+  ],
+  "cursor": "AoJw0Luo2p0DMURydWNrc2FjaGUtMjg3MDUy"
+}

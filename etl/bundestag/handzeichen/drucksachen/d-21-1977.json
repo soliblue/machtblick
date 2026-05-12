@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282789",
+      "drucksachetyp": "Wahlvorschlag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/1977",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "981ece01e8faa4408fec64f08e247930",
+      "aktualisiert": "2025-11-05T12:52:04+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "327762",
+          "titel": "Wahl von Mitgliedern des Kuratoriums der Stiftung \"Deutsches Historisches Museum\"",
+          "vorgangstyp": "Besetzung externer Gremien durch BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "CDU/CSU",
+          "titel": "Fraktion der CDU/CSU"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/019/2101977.pdf",
+        "id": "282789",
+        "dokumentnummer": "21/1977",
+        "datum": "2025-11-05",
+        "verteildatum": "2025-11-05",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Wahlvorschlag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der CDU/CSU"
+        ]
+      },
+      "titel": "Wahl von Mitgliedern des Kuratoriums der Stiftung \"Deutsches Historisches Museum\"",
+      "datum": "2025-11-05"
+    }
+  ],
+  "cursor": "AoJwuI3rqZoDMURydWNrc2FjaGUtMjgyNzg5"
+}

@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282120",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2102",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "577e002fa54cfd79197e1213aeb0bc33",
+      "aktualisiert": "2025-10-09T15:35:13+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "326613",
+          "titel": "Sammelübersicht 62 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/021/2102102.pdf",
+        "id": "282120",
+        "dokumentnummer": "21/2102",
+        "datum": "2025-10-08",
+        "verteildatum": "2025-10-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 62 zu Petitionen -",
+      "datum": "2025-10-08"
+    }
+  ],
+  "cursor": "AoJw0O3Q4ZkDMURydWNrc2FjaGUtMjgyMTIw"
+}

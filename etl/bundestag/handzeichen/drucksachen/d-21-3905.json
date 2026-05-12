@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "284733",
+      "drucksachetyp": "Entschließungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 7,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/3905",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "4b4e1b104aef1c362d2f942ae373fa41",
+      "aktualisiert": "2026-01-29T08:06:50+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "330622",
+          "titel": "Entschließungsantrag zum Gesetz zur Umsetzung der Richtlinie (EU) 2023/1544 und zur Durchführung der Verordnung (EU) 2023/1543 über die grenzüberschreitende Sicherung und Herausgabe elektronischer Beweismittel in Strafverfahren innerhalb der Europäischen Union",
+          "vorgangstyp": "Entschließungsantrag BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/039/2103905.pdf",
+        "id": "284733",
+        "dokumentnummer": "21/3905",
+        "datum": "2026-01-28",
+        "verteildatum": "2026-01-28",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Entschließungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7926",
+          "titel": "Dr. Lena Gumnior, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Lena Gumnior"
+        },
+        {
+          "id": "7365",
+          "titel": "Helge Limburg, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Helge Limburg"
+        }
+      ],
+      "titel": "zu der dritten Beratung des Gesetzentwurfs der Bundesregierung\r\n- Drucksachen 21/3192, 21/3904 -\r\nEntwurf eines Gesetzes zur Umsetzung der Richtlinie (EU) 2023/1544 und zur Durchführung der Verordnung (EU) 2023/1543 über die grenzüberschreitende Sicherung und Herausgabe elektronischer Beweismittel in Strafverfahren innerhalb der Europäischen Union",
+      "datum": "2026-01-28"
+    }
+  ],
+  "cursor": "AoJwuNOQgpwDMURydWNrc2FjaGUtMjg0NzMz"
+}

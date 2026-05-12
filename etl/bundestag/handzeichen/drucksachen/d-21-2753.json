@@ -1,0 +1,65 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "283085",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 2,
+      "dokumentnummer": "21/2753",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "43bb50dc58c4a1a90f2f85c7cba59748",
+      "aktualisiert": "2025-11-13T10:20:21+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "325333",
+          "titel": "Drittes Gesetz zur Änderung des Energiesteuer- und des Stromsteuergesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "326599",
+          "titel": "Bürger, Mittelstand und Industrie entlasten - Stromsteuer für alle dauerhaft auf europäisches Mindestmaß absenken",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FinanzA",
+          "titel": "Finanzausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/027/2102753.pdf",
+        "id": "283085",
+        "dokumentnummer": "21/2753",
+        "datum": "2025-11-12",
+        "verteildatum": "2025-11-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Finanzausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "8005",
+          "titel": "Dr. Florian Dorn, MdB, CDU/CSU",
+          "autor_titel": "Dr. Florian Dorn, Berichterstattung"
+        },
+        {
+          "id": "7387",
+          "titel": "Sascha Müller, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Sascha Müller, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksachen 21/1866, 21/2469, 21/2669 Nr. 25 -\r\nEntwurf eines Dritten Gesetzes zur Änderung des Energiesteuer- und des Stromsteuergesetzes\r\nb) zu dem Antrag der Abgeordneten Jan Wenzel Schmidt, Kay Gottschalk, Hauke Finger, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 21/2086 -\r\nBürger, Mittelstand und Industrie entlasten - Stromsteuer für alle dauerhaft auf europäisches Mindestmaß absenken",
+      "datum": "2025-11-12"
+    }
+  ],
+  "cursor": "AoJw-J3uu5oDMURydWNrc2FjaGUtMjgzMDg1"
+}

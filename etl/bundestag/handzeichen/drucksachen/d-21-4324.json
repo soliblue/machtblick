@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285351",
+      "drucksachetyp": "Entschließungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 7,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4324",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "08d1dfe83a6534831f355304d4c319e3",
+      "aktualisiert": "2026-02-26T09:31:52+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "331661",
+          "titel": "Entschließungsantrag zum Gesetz zur Umsetzung des Urteils des Bundesverfassungsgerichts zur Vaterschaftsanfechtung",
+          "vorgangstyp": "Entschließungsantrag BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/043/2104324.pdf",
+        "id": "285351",
+        "dokumentnummer": "21/4324",
+        "datum": "2026-02-25",
+        "verteildatum": "2026-02-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Entschließungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7365",
+          "titel": "Helge Limburg, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Helge Limburg"
+        },
+        {
+          "id": "1600",
+          "titel": "Ulle Schauws, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Ulle Schauws"
+        }
+      ],
+      "titel": "zu der dritten Beratung des Gesetzentwurfs der Bundesregierung\r\n- Drucksachen 21/2997, 21/3487, 21/4323 -\r\nEntwurf eines Gesetzes zur Umsetzung des Urteils des Bundesverfassungsgerichts zur Vaterschaftsanfechtung",
+      "datum": "2026-02-25"
+    }
+  ],
+  "cursor": "AoJwuJWdypwDMURydWNrc2FjaGUtMjg1MzUx"
+}

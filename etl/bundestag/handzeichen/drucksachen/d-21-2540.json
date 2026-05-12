@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282770",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2540",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "a614d75a09c99da9615f50fcec67ff6c",
+      "aktualisiert": "2025-11-05T12:36:32+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "327757",
+          "titel": "Klimakonferenz in Belém - Neuer Schwung für den internationalen Klimaschutz",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "CDU/CSU",
+          "titel": "Fraktion der CDU/CSU"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "SPD",
+          "titel": "Fraktion der SPD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/025/2102540.pdf",
+        "id": "282770",
+        "dokumentnummer": "21/2540",
+        "datum": "2025-11-04",
+        "verteildatum": "2025-11-04",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der CDU/CSU",
+          "Fraktion der SPD"
+        ]
+      },
+      "titel": "Klimakonferenz in Belém - Neuer Schwung für den internationalen Klimaschutz",
+      "datum": "2025-11-04"
+    }
+  ],
+  "cursor": "AoJw-MGhp5oDMURydWNrc2FjaGUtMjgyNzcw"
+}

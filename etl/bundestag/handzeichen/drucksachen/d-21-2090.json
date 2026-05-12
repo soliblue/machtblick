@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282128",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2090",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "6de6294b4c653a2e662cc50b70dc52c2",
+      "aktualisiert": "2025-10-31T15:50:35+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "324927",
+          "titel": "Gesetz über die Einführung einer bundeseinheitlichen Pflegefachassistenzausbildung und zur Änderung weiterer Gesetze",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfBFSFJ",
+          "titel": "Ausschuss für Bildung, Familie, Senioren, Frauen und Jugend"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/020/2102090.pdf",
+        "id": "282128",
+        "dokumentnummer": "21/2090",
+        "datum": "2025-10-08",
+        "verteildatum": "2025-10-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Bildung, Familie, Senioren, Frauen und Jugend"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1541",
+          "titel": "Sabine Dittmar, MdB, SPD",
+          "autor_titel": "Sabine Dittmar, Berichterstattung"
+        },
+        {
+          "id": "8037",
+          "titel": "Maren Kaminski, MdB, DIE LINKE",
+          "autor_titel": "Maren Kaminski, Berichterstattung"
+        },
+        {
+          "id": "2055",
+          "titel": "Martin Reichardt, MdB, AfD",
+          "autor_titel": "Martin Reichardt, Berichterstattung"
+        },
+        {
+          "id": "7420",
+          "titel": "Nyke Slawik, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Nyke Slawik, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksachen 21/1493, 21/1940 -\r\nEntwurf eines Gesetzes über die Einführung einer bundeseinheitlichen Pflegefachassistenzausbildung",
+      "datum": "2025-10-08"
+    }
+  ],
+  "cursor": "AoJw0O3Q4ZkDMURydWNrc2FjaGUtMjgyMTI4"
+}

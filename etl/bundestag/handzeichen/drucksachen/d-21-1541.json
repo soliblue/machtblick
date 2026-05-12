@@ -1,0 +1,69 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "281261",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 82,
+      "dokumentnummer": "21/1541",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "78cfd75e2164256f130dd5795438b89d",
+      "aktualisiert": "2025-09-12T13:05:38+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "325497",
+          "titel": "Bericht der Bundesregierung über die Wirkungen der Reform des Unterhaltsvorschussgesetzes ein Jahr nach dem Inkrafttreten zum 1. Juli 2017",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        },
+        {
+          "id": "325498",
+          "titel": "Abschlussbericht der Lenkungsausschüsse der Fonds \"Heimerziehung in der Bundesrepublik Deutschland in den Jahren 1949 bis 1975\" und \"Heimerziehung in der DDR in den Jahren 1949 bis 1990\"\r\nmit Stellungnahme der Bundesregierung",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        },
+        {
+          "id": "325499",
+          "titel": "Abschlussbericht der Arbeitsgruppe \"Kinder psychisch- und suchterkrankter Eltern\"",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        },
+        {
+          "id": "325500",
+          "titel": "Achter Bericht zur Lage der älteren Generation in der Bundesrepublik Deutschland\r\nÄltere Menschen und Digitalisierung\r\nund Stellungnahme der Bundesregierung",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "CDU/CSU",
+          "titel": "Fraktion der CDU/CSU"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "SPD",
+          "titel": "Fraktion der SPD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/015/2101541.pdf",
+        "id": "281261",
+        "dokumentnummer": "21/1541",
+        "datum": "2025-09-09",
+        "verteildatum": "2025-09-09",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der CDU/CSU",
+          "Fraktion der SPD"
+        ]
+      },
+      "titel": "Erneute Überweisung von Vorlagen aus früheren Wahlperioden",
+      "datum": "2025-09-09"
+    }
+  ],
+  "cursor": "AoJwkOD6lpkDMURydWNrc2FjaGUtMjgxMjYx"
+}

@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "284412",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/3635",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "e55eb4fc7a7d2f345309b3124e98faae",
+      "aktualisiert": "2026-01-15T09:39:11+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "324833",
+          "titel": "Gesetz zur beschleunigten Planung und Beschaffung für die Bundeswehr",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfWE",
+          "titel": "Ausschuss für Wirtschaft und Energie"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/036/2103635.pdf",
+        "id": "284412",
+        "dokumentnummer": "21/3635",
+        "datum": "2026-01-14",
+        "verteildatum": "2026-01-14",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Wirtschaft und Energie"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7950",
+          "titel": "Julian Joswig, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Julian Joswig, Berichterstattung"
+        },
+        {
+          "id": "8035",
+          "titel": "Vanessa Zobel, MdB, CDU/CSU",
+          "autor_titel": "Vanessa Zobel, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksache 21/1931 -\r\nEntwurf eines Gesetzes zur beschleunigten Planung und Beschaffung für die Bundeswehr",
+      "datum": "2026-01-14"
+    }
+  ],
+  "cursor": "AoJwuLKK3psDMURydWNrc2FjaGUtMjg0NDEy"
+}

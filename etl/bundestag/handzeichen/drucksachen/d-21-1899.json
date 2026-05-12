@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "281888",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/1899",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "1929739bcbe915ef8b407ca71d8ce8c6",
+      "aktualisiert": "2025-09-30T15:53:47+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "324835",
+          "titel": "Gesetz über die Feststellung des Wirtschaftsplans des ERP-Sondervermögens für das Jahr 2026 (ERP-Wirtschaftsplangesetz 2026 - ERPWiPlanG 2026)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Wirtschaft und Energie"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/018/2101899.pdf",
+        "id": "281888",
+        "dokumentnummer": "21/1899",
+        "datum": "2025-09-29",
+        "verteildatum": "2025-09-30",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes über die Feststellung des Wirtschaftsplans des ERP-Sondervermögens für das Jahr 2026 (ERP-Wirtschaftsplangesetz 2026 - ERPWiPlanG 2026)",
+      "datum": "2025-09-29"
+    }
+  ],
+  "cursor": "AoJwkMa6ypkDMURydWNrc2FjaGUtMjgxODg4"
+}

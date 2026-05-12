@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285587",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4520",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "66e1c792eb5b52165eac5a2f2281c58b",
+      "aktualisiert": "2026-03-26T11:10:15+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "329513",
+          "titel": "Gesetz zu dem Vertrag vom 17. Juli 2025 zwischen der Bundesrepublik Deutschland und dem Vereinigten Königreich Großbritannien und Nordirland über Freundschaft und bilaterale Zusammenarbeit",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AuswA",
+          "titel": "Auswärtiger Ausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/045/2104520.pdf",
+        "id": "285587",
+        "dokumentnummer": "21/4520",
+        "datum": "2026-03-04",
+        "verteildatum": "2026-03-04",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Auswärtiger Ausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7265",
+          "titel": "Deborah Düring, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Deborah Düring, Berichterstattung"
+        },
+        {
+          "id": "7905",
+          "titel": "Vinzenz Glaser, MdB, DIE LINKE",
+          "autor_titel": "Vinzenz Glaser, Berichterstattung"
+        },
+        {
+          "id": "1055",
+          "titel": "Jürgen Hardt, MdB, CDU/CSU",
+          "autor_titel": "Jürgen Hardt, Berichterstattung"
+        },
+        {
+          "id": "1268",
+          "titel": "Hubertus Heil (Peine), MdB, SPD",
+          "autor_titel": "Hubertus Heil (Peine), Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksache 21/3945 -\r\nEntwurf eines Gesetzes zu dem Vertrag vom 17. Juli 2025 zwischen der Bundesrepublik Deutschland und dem Vereinigten Königreich Großbritannien und Nordirland über Freundschaft und bilaterale Zusammenarbeit",
+      "datum": "2026-03-04"
+    }
+  ],
+  "cursor": "AoJw-KWg3JwDMURydWNrc2FjaGUtMjg1NTg3"
+}

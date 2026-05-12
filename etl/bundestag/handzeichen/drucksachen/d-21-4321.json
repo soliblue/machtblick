@@ -1,0 +1,75 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285356",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 2,
+      "dokumentnummer": "21/4321",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "a95af208547013c5e62345bc9dc277e3",
+      "aktualisiert": "2026-02-26T09:42:40+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "325560",
+          "titel": "Gesetz zur Anpassung des nationalen Rechts an die Reform des Gemeinsamen Europäischen Asylsystems (GEAS-Anpassungsgesetz)",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "325562",
+          "titel": "Gesetz zur Änderung des AZR-Gesetzes und weiterer Gesetze in Folge der Anpassung des nationalen Rechts an das Gemeinsame Europäische Asylsystem (GEAS-Anpassungsfolgegesetz)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "InnenA",
+          "titel": "Innenausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/043/2104321.pdf",
+        "id": "285356",
+        "dokumentnummer": "21/4321",
+        "datum": "2026-02-25",
+        "verteildatum": "2026-02-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Innenausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7230",
+          "titel": "Lukas Benner, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Lukas Benner, Berichterstattung"
+        },
+        {
+          "id": "7559",
+          "titel": "Clara Bünger, MdB, DIE LINKE",
+          "autor_titel": "Clara Bünger, Berichterstattung"
+        },
+        {
+          "id": "7258",
+          "titel": "Hakan Demir, MdB, SPD",
+          "autor_titel": "Hakan Demir, Berichterstattung"
+        },
+        {
+          "id": "1106",
+          "titel": "Detlef Seif, MdB, CDU/CSU",
+          "autor_titel": "Detlef Seif, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksachen 21/1848, 21/2460, 21/2669 Nr. 17 -\r\nEntwurf eines Gesetzes zur Anpassung des nationalen Rechts an die Reform des Gemeinsamen Europäischen Asylsystems (GEAS-Anpassungsgesetz)\r\n\r\nb) zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksachen 21/1850, 21/2462, 21/2669 Nr. 19 -\r\nEntwurf eines Gesetzes zur Änderung des AZRG und weiterer Gesetze in Folge der Anpassung des nationalen Rechts an das Gemeinsame Europäische Asylsystem (GEAS-Anpassungsfolgegesetz)",
+      "datum": "2026-02-25"
+    }
+  ],
+  "cursor": "AoJwuJWdypwDMURydWNrc2FjaGUtMjg1MzU2"
+}

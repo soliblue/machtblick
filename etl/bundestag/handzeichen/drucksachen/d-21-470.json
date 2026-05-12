@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "279902",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/470",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "9c3d105b8ae81aba5d875d053089aeb4",
+      "aktualisiert": "2025-06-17T13:13:02+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "322516",
+          "titel": "Rechnung des Bundesrechnungshofes für das Haushaltsjahr 2024\r\n- Einzelplan 20 -",
+          "vorgangstyp": "Entlastung des Bundesrechnungshofes"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRHPräs",
+          "titel": "Präsident des Bundesrechnungshofes"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/004/2100470.pdf",
+        "id": "279902",
+        "dokumentnummer": "21/470",
+        "datum": "2025-06-12",
+        "verteildatum": "2025-06-17",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Präsident des Bundesrechnungshofes"
+        ]
+      },
+      "titel": "Rechnung des Bundesrechnungshofes für das Haushaltsjahr 2024 \r\n- Einzelplan 20 -",
+      "datum": "2025-06-12"
+    }
+  ],
+  "cursor": "AoJw0KDlsZcDMURydWNrc2FjaGUtMjc5OTAy"
+}

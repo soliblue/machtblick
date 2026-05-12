@@ -1,0 +1,10 @@
+{
+  "name": "@machtblick/etl-dip",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "dependencies": {
+    "@machtblick/db": "*",
+    "drizzle-orm": "^0.36.0"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "286193",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 44,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4939",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "d8cb7e90d5c16f10b1c3d690270c2549",
+      "aktualisiert": "2026-03-25T16:45:37+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "333043",
+          "titel": "Antrag auf abstrakte Normenkontrolle beim Bundesverfassungsgericht gemäß Artikel 94 Absatz 1 Nummer 2 des Grundgesetzes wegen des Bundeshaushaltsgesetzes 2025, des Bundeshaushaltsgesetzes 2026 und des Gesetzes zur Errichtung eines Sondervermögens Infrastruktur und Klimaneutralität",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/049/2104939.pdf",
+        "id": "286193",
+        "dokumentnummer": "21/4939",
+        "datum": "2026-03-24",
+        "verteildatum": "2026-03-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2075",
+          "titel": "Stephan Brandner, MdB, AfD",
+          "autor_titel": "Stephan Brandner"
+        },
+        {
+          "id": "2142",
+          "titel": "Dr. Michael Espendiller, MdB, AfD",
+          "autor_titel": "Dr. Michael Espendiller"
+        }
+      ],
+      "titel": "Antrag auf abstrakte Normenkontrolle beim Bundesverfassungsgericht gemäß Artikel 94 Absatz 1 Nummer 2 des Grundgesetzes wegen des Bundeshaushaltsgesetzes 2025, des Bundeshaushaltsgesetzes 2026 und des Gesetzes zur Errichtung eines Sondervermögens Infrastruktur und Klimaneutralität",
+      "datum": "2026-03-24"
+    }
+  ],
+  "cursor": "AoJw-Ivgj50DMURydWNrc2FjaGUtMjg2MTkz"
+}

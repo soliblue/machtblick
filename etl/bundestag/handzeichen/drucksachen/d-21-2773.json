@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "283108",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2773",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "fdb54ec3c6958804501c691455145ee6",
+      "aktualisiert": "2025-11-13T10:13:41+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "328145",
+          "titel": "Sammelübersicht 103 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/027/2102773.pdf",
+        "id": "283108",
+        "dokumentnummer": "21/2773",
+        "datum": "2025-11-12",
+        "verteildatum": "2025-11-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 103 zu Petitionen -",
+      "datum": "2025-11-12"
+    }
+  ],
+  "cursor": "AoJw-J3uu5oDMURydWNrc2FjaGUtMjgzMTA4"
+}

@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "284413",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/3637",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "122cf98dc87e5f527706dddff3874b95",
+      "aktualisiert": "2026-01-15T09:34:13+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "326710",
+          "titel": "Gesetz zur Anpassung von Straftatbeständen und Sanktionen bei Verstößen gegen restriktive Maßnahmen der Europäischen Union",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfWE",
+          "titel": "Ausschuss für Wirtschaft und Energie"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/036/2103637.pdf",
+        "id": "284413",
+        "dokumentnummer": "21/3637",
+        "datum": "2026-01-14",
+        "verteildatum": "2026-01-14",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Wirtschaft und Energie"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7321",
+          "titel": "Dr. Malte Kaufmann, MdB, AfD",
+          "autor_titel": "Dr. Malte Kaufmann, Berichterstattung"
+        },
+        {
+          "id": "8021",
+          "titel": "Daniel Walter, MdB, SPD",
+          "autor_titel": "Daniel Walter, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksachen 21/2508, 21/3205 -\r\nEntwurf eines Gesetzes zur Anpassung von Straftatbeständen und Sanktionen bei Verstößen gegen restriktive Maßnahmen der Europäischen Union",
+      "datum": "2026-01-14"
+    }
+  ],
+  "cursor": "AoJwuLKK3psDMURydWNrc2FjaGUtMjg0NDEz"
+}

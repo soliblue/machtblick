@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "284737",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/3904",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "3b19df292f656fbf2ae27cd8376b08e1",
+      "aktualisiert": "2026-01-29T09:14:47+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "326831",
+          "titel": "Gesetz zur Umsetzung der Richtlinie (EU) 2023/1544 und zur Durchführung der Verordnung (EU) 2023/1543 über die grenzüberschreitende Sicherung und Herausgabe elektronischer Beweismittel in Strafverfahren innerhalb der Europäischen Union",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfRechtVer",
+          "titel": "Ausschuss für Recht und Verbraucherschutz"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/039/2103904.pdf",
+        "id": "284737",
+        "dokumentnummer": "21/3904",
+        "datum": "2026-01-28",
+        "verteildatum": "2026-01-28",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Recht und Verbraucherschutz"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7926",
+          "titel": "Dr. Lena Gumnior, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Lena Gumnior, Berichterstattung"
+        },
+        {
+          "id": "7946",
+          "titel": "Luke Hoß, MdB, DIE LINKE",
+          "autor_titel": "Luke Hoß, Berichterstattung"
+        },
+        {
+          "id": "8071",
+          "titel": "Knuth Meyer-Soltau, MdB, AfD",
+          "autor_titel": "Knuth Meyer-Soltau, Berichterstattung"
+        },
+        {
+          "id": "7886",
+          "titel": "Christian Moser, MdB, CDU/CSU",
+          "autor_titel": "Christian Moser, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksache 21/3192 -\r\nEntwurf eines Gesetzes zur Umsetzung der Richtlinie (EU) 2023/1544 und zur Durchführung der Verordnung (EU) 2023/1543 über die grenzüberschreitende Sicherung und Herausgabe elektronischer Beweismittel in Strafverfahren innerhalb der Europäischen Union",
+      "datum": "2026-01-28"
+    }
+  ],
+  "cursor": "AoJwuNOQgpwDMURydWNrc2FjaGUtMjg0NzM3"
+}

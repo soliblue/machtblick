@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "287059",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/5535",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "a744248e7800fccc1d5eb4fc7587205b",
+      "aktualisiert": "2026-04-23T08:58:12+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334097",
+          "titel": "Sammelübersicht 235 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/055/2105535.pdf",
+        "id": "287059",
+        "dokumentnummer": "21/5535",
+        "datum": "2026-04-22",
+        "verteildatum": "2026-04-22",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 235 zu Petitionen -",
+      "datum": "2026-04-22"
+    }
+  ],
+  "cursor": "AoJw0Luo2p0DMURydWNrc2FjaGUtMjg3MDU5"
+}

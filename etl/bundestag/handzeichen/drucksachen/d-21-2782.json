@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "283117",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2782",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "49ed211a8a42cbfc6ebfaa76e9ff90bc",
+      "aktualisiert": "2025-11-13T10:55:42+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "324803",
+          "titel": "Gesetz zur Umsetzung der NIS-2-Richtlinie und zur Regelung wesentlicher Grundzüge des Informationssicherheitsmanagements in der Bundesverwaltung",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "InnenA",
+          "titel": "Innenausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/027/2102782.pdf",
+        "id": "283117",
+        "dokumentnummer": "21/2782",
+        "datum": "2025-11-12",
+        "verteildatum": "2025-11-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Innenausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2214",
+          "titel": "Marc Henrichmann, MdB, CDU/CSU",
+          "autor_titel": "Marc Henrichmann, Berichterstattung"
+        },
+        {
+          "id": "7312",
+          "titel": "Steffen Janich, MdB, AfD",
+          "autor_titel": "Steffen Janich, Berichterstattung"
+        },
+        {
+          "id": "8054",
+          "titel": "Jan Köstering, MdB, DIE LINKE",
+          "autor_titel": "Jan Köstering, Berichterstattung"
+        },
+        {
+          "id": "1191",
+          "titel": "Dr. Konstantin von Notz, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Konstantin von Notz, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n Drucksachen 21/1501, 21/2072, 21/2146 Nr. 1.11 -\r\nEntwurf eines Gesetzes zur Umsetzung der NIS-2-Richtlinie und zur Regelung wesentlicher Grundzüge des Informationssicherheitsmanagements in der Bundesverwaltung",
+      "datum": "2025-11-12"
+    }
+  ],
+  "cursor": "AoJw-J3uu5oDMURydWNrc2FjaGUtMjgzMTE3"
+}

@@ -1,0 +1,65 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282869",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 2,
+      "dokumentnummer": "21/2632",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "9581af165e88d83620edc161a348a0e1",
+      "aktualisiert": "2026-02-20T10:56:43+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "322840",
+          "titel": "Spürbare Entlastung der heimischen Landwirtschaft - Agrardieselrückerstattung sofort rückwirkend einführen",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "325662",
+          "titel": "Gesetz zur Aufhebung der Freizone Cuxhaven und zur Änderung weiterer Vorschriften",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FinanzA",
+          "titel": "Finanzausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/026/2102632.pdf",
+        "id": "282869",
+        "dokumentnummer": "21/2632",
+        "datum": "2025-11-05",
+        "verteildatum": "2025-11-05",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Finanzausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7387",
+          "titel": "Sascha Müller, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Sascha Müller, Berichterstattung"
+        },
+        {
+          "id": "1630",
+          "titel": "Michael Thews, MdB, SPD",
+          "autor_titel": "Michael Thews, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksache 21/1975, 21/2468 -\r\nEntwurf eines Gesetzes zur Aufhebung der Freizone Cuxhaven und zur Änderung weiterer Vorschriften\r\n\r\nb) zu dem Antrag der Abgeordneten Bernd Schattner, Stephan Protschka, Peter Felser, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 21/604 -\r\nSpürbare Entlastung der heimischen Landwirtschaft - Agrardieselrückerstattung sofort rückwirkend einführen",
+      "datum": "2025-11-05"
+    }
+  ],
+  "cursor": "AoJwuI3rqZoDMURydWNrc2FjaGUtMjgyODY5"
+}

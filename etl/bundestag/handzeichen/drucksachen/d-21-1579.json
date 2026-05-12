@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "281353",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/1579",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "6768689fb5a54ffa19ece9037b885869",
+      "aktualisiert": "2025-10-20T17:39:24+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "323368",
+          "titel": "Haushaltsbegleitgesetz 2025",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "HaushA",
+          "titel": "Haushaltsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/015/2101579.pdf",
+        "id": "281353",
+        "dokumentnummer": "21/1579",
+        "datum": "2025-09-10",
+        "verteildatum": "2025-09-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Haushaltsausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2142",
+          "titel": "Dr. Michael Espendiller, MdB, AfD",
+          "autor_titel": "Dr. Michael Espendiller, Berichterstattung"
+        },
+        {
+          "id": "1604",
+          "titel": "Christian Haase, MdB, CDU/CSU",
+          "autor_titel": "Christian Haase, Berichterstattung"
+        },
+        {
+          "id": "7390",
+          "titel": "Dr. Thorsten Rudolph, MdB, SPD",
+          "autor_titel": "Dr. Thorsten Rudolph, Berichterstattung"
+        },
+        {
+          "id": "7397",
+          "titel": "Dr. Sebastian Schäfer, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Sebastian Schäfer, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Fraktionen der CDU/CSU und SPD\r\n- Drucksache 21/778 -\r\nEntwurf eines Haushaltsbegleitgesetzes 2025",
+      "datum": "2025-09-10"
+    }
+  ],
+  "cursor": "AoJw0KvEmZkDMURydWNrc2FjaGUtMjgxMzUz"
+}

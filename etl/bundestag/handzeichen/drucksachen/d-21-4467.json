@@ -1,0 +1,65 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285544",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 17,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 2,
+      "dokumentnummer": "21/4467",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "f4eda30eb2e86e19ea39d3e6a538f7cd",
+      "aktualisiert": "2026-03-04T17:57:39+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "329303",
+          "titel": "Vorschlag für eine Verordnung des europäischen Parlaments und des Rates zur Änderung der Verordnungen (EU) Nr. 1095/2010, (EU) Nr. 648/2012, (EU) Nr. 600/2014, (EU) Nr. 909/2014, (EU) 2015/2365, (EU) 2019/1156, (EU) 2021/23, (EU) 2022/858, (EU) 2023/1114, (EU) Nr. 1060/2009, (EU) 2016/1011, (EU) 2017/2402, (EU) 2023/2631 und (EU) 2024/3005 im Hinblick auf die Weiterentwicklung der Kapitalmarktintegration und der Aufsicht in der Union\r\nKOM(2025) 943 endg.; Ratsdok. 16345/25",
+          "vorgangstyp": "EU-Vorlage"
+        },
+        {
+          "id": "332045",
+          "titel": "zu dem Vorschlag für eine Verordnung des Europäischen Parlaments und des Rates zur Änderung der Verordnungen (EU) Nr. 1095/2010, (EU) Nr. 648/2012, (EU) Nr. 600/2014, (EU) Nr. 909/2014, (EU) 2015/2365, (EU) 2019/1156, (EU) 2021/23, (EU) 2022/858, (EU) 2023/1114, (EU) Nr. 1060/2009, (EU) 2016/1011, (EU) 2017/2402, (EU) 2023/2631 und (EU) 2024/3005 im Hinblick auf die Weiterentwicklung der Kapitalmarktintegration und der Aufsicht in der Union\r\nKOM(2025)943 endg.; Ratsdok. 16345/25",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/044/2104467.pdf",
+        "id": "285544",
+        "dokumentnummer": "21/4467",
+        "datum": "2026-03-03",
+        "verteildatum": "2026-03-04",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7914",
+          "titel": "Rainer Groß, MdB, AfD",
+          "autor_titel": "Rainer Groß"
+        },
+        {
+          "id": "7962",
+          "titel": "Joachim Bloch, MdB, AfD",
+          "autor_titel": "Joachim Bloch"
+        }
+      ],
+      "titel": "zu dem Vorschlag für eine Verordnung des Europäischen Parlaments und des Rates zur Änderung der Verordnungen (EU) Nr. 1095/2010, (EU) Nr. 648/2012, (EU) Nr. 600/2014, (EU) Nr. 909/2014, (EU) 2015/2365, (EU) 2019/1156, (EU) 2021/23, (EU) 2022/858, (EU) 2023/1114, (EU) Nr. 1060/2009, (EU) 2016/1011, (EU) 2017/2402, (EU) 2023/2631 und (EU) 2024/3005 im Hinblick auf die Weiterentwicklung der Kapitalmarktintegration und der Aufsicht in der Union\r\nKOM(2025)943 endg.; Ratsdok. 16345/25\r\nhier: Stellungnahme gemäß Artikel 6 des Protokolls Nummer 2 zum Vertrag von Lissabon (Grundsätze der Subsidiarität und der Verhältnismäßigkeit)",
+      "datum": "2026-03-03"
+    }
+  ],
+  "cursor": "AoJwuNrW2ZwDMURydWNrc2FjaGUtMjg1NTQ0"
+}

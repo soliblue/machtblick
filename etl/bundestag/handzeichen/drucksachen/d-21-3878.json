@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "284765",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/3878",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "7bea4012da8e68a5c6eddc0fbed48a39",
+      "aktualisiert": "2026-01-30T09:16:30+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "330653",
+          "titel": "Sammelübersicht 158 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/038/2103878.pdf",
+        "id": "284765",
+        "dokumentnummer": "21/3878",
+        "datum": "2026-01-28",
+        "verteildatum": "2026-01-29",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 158 zu Petitionen -",
+      "datum": "2026-01-28"
+    }
+  ],
+  "cursor": "AoJwuNOQgpwDMURydWNrc2FjaGUtMjg0NzY1"
+}

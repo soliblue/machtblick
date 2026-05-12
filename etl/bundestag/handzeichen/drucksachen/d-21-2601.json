@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282838",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 1,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2601",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "7376262db5bc828ffb841187515920e9",
+      "aktualisiert": "2025-11-06T10:31:47+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "322836",
+          "titel": "Familien entlasten - Das Ehegattensplitting zu einer umfassenden Familienförderung umbauen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FinanzA",
+          "titel": "Finanzausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/026/2102601.pdf",
+        "id": "282838",
+        "dokumentnummer": "21/2601",
+        "datum": "2025-11-05",
+        "verteildatum": "2025-11-05",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Finanzausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2191",
+          "titel": "Kay Gottschalk, MdB, AfD",
+          "autor_titel": "Kay Gottschalk, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Antrag der Abgeordneten Martin Reichardt, Kay Gottschalk, Jan Wenzel Schmidt, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 21/590 -\r\nFamilien entlasten - Das Ehegattensplitting zu einer umfassenden Familienförderung umbauen",
+      "datum": "2025-11-05"
+    }
+  ],
+  "cursor": "AoJwuI3rqZoDMURydWNrc2FjaGUtMjgyODM4"
+}

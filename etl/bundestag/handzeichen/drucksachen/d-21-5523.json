@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "287060",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/5523",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "09e5ba1475503814368fe12474c0e9bc",
+      "aktualisiert": "2026-04-23T09:55:53+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "332010",
+          "titel": "Gesetz zur Änderung des Bundesrechnungshofgesetzes (BRH-Unabhängigkeitsgesetz)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "HaushA",
+          "titel": "Haushaltsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/055/2105523.pdf",
+        "id": "287060",
+        "dokumentnummer": "21/5523",
+        "datum": "2026-04-22",
+        "verteildatum": "2026-04-22",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Haushaltsausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7267",
+          "titel": "Leon Eckert, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Leon Eckert, Berichterstattung"
+        },
+        {
+          "id": "1519",
+          "titel": "Jan Metzler, MdB, CDU/CSU",
+          "autor_titel": "Jan Metzler, Berichterstattung"
+        },
+        {
+          "id": "7390",
+          "titel": "Dr. Thorsten Rudolph, MdB, SPD",
+          "autor_titel": "Dr. Thorsten Rudolph, Berichterstattung"
+        },
+        {
+          "id": "7912",
+          "titel": "Georg Schroeter, MdB, AfD",
+          "autor_titel": "Georg Schroeter, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Abgeordneten Dr. Michael Espendiller, Ulrich von Zons, Georg Schroeter, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 21/4454 -\r\nEntwurf eines Gesetzes zur Änderung des Bundesrechnungshofgesetzes (BRH-Unabhängigkeitsgesetz)",
+      "datum": "2026-04-22"
+    }
+  ],
+  "cursor": "AoJw0Luo2p0DMURydWNrc2FjaGUtMjg3MDYw"
+}

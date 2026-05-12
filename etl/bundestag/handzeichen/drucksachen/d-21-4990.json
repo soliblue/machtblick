@@ -1,0 +1,85 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "286241",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 4,
+      "dokumentnummer": "21/4990",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "702d0903b23d3491bc89316c8c605da7",
+      "aktualisiert": "2026-03-26T09:50:29+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "326691",
+          "titel": "Gesetz zur Beschleunigung der Anerkennungsverfahren ausländischer Berufsqualifikationen in Heilberufen",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "328115",
+          "titel": "Obligatorische Kenntnisse zum deutschen Gesundheitswesen auch für alle Ärzte mit ausländischem Studienabschluss sicherstellen",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "328103",
+          "titel": "Gefälschte Berufsausbildungszeugnisse bei Pflegepersonal bekämpfen",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "325586",
+          "titel": "Verbesserung der Überprüfungsverfahren zur Approbation von Ärzten aus Drittstaaten zur Gewährleistung der öffentlichen Sicherheit und Qualität der medizinischen Versorgung",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfG",
+          "titel": "Ausschuss für Gesundheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/049/2104990.pdf",
+        "id": "286241",
+        "dokumentnummer": "21/4990",
+        "datum": "2026-03-25",
+        "verteildatum": "2026-03-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Gesundheit"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7484",
+          "titel": "Dr. Paula Piechotta, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Paula Piechotta, Berichterstattung"
+        },
+        {
+          "id": "2134",
+          "titel": "Martin Sichert, MdB, AfD",
+          "autor_titel": "Martin Sichert, Berichterstattung"
+        },
+        {
+          "id": "7927",
+          "titel": "Julia-Christina Stange, MdB, DIE LINKE",
+          "autor_titel": "Julia-Christina Stange, Berichterstattung"
+        },
+        {
+          "id": "7980",
+          "titel": "Dr. Hans Theiss, MdB, CDU/CSU",
+          "autor_titel": "Dr. Hans Theiss, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksache 21/3207 -\r\nEntwurf eines Gesetzes zur Beschleunigung der Anerkennungsverfahren ausländischer Berufsqualifikationen in Heilberufen\r\nb) zu dem Antrag der Abgeordneten Martin Sichert, Dr. Christina Baum, Carina Schießl, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 21/1565 -\r\nVerbesserung der Überprüfungsverfahren zur Approbation von Ärzten aus Drittstaaten zur Gewährleistung der öffentlichen Sicherheit und Qualität der medizinischen Versorgung \r\nc) zu dem Antrag der Abgeordneten Martin Sichert, Dr. Christina Baum, Carina Schießl, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 21/2710 -\r\nGefälschte Berufsausbildungszeugnisse bei Pflegepersonal bekämpfen\r\nd) zu dem Antrag der Abgeordneten Martin Sichert, Dr. Christina Baum, Carina Schießl, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 21/2715 -\r\nObligatorische Kenntnisse zum deutschen Gesundheitswesen auch für alle Ärzte mit ausländischem Studienabschluss sicherstellen",
+      "datum": "2026-03-25"
+    }
+  ],
+  "cursor": "AoJwuNepkp0DMURydWNrc2FjaGUtMjg2MjQx"
+}

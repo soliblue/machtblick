@@ -1,0 +1,75 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282878",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 2,
+      "dokumentnummer": "21/2641",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "c5c6d44fa809f6a1b787ac7466c04868",
+      "aktualisiert": "2025-11-06T11:47:38+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "324802",
+          "titel": "Gesetz zur Befugniserweiterung und Entbürokratisierung in der Pflege",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "322830",
+          "titel": "Priorität für Pflege - Jetzt Sofortmaßnahmen ergreifen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfG",
+          "titel": "Ausschuss für Gesundheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/026/2102641.pdf",
+        "id": "282878",
+        "dokumentnummer": "21/2641",
+        "datum": "2025-11-05",
+        "verteildatum": "2025-11-05",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Gesundheit"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7897",
+          "titel": "Simone Fischer, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Simone Fischer, Berichterstattung"
+        },
+        {
+          "id": "7313",
+          "titel": "Anne Janssen, MdB, CDU/CSU",
+          "autor_titel": "Anne Janssen, Berichterstattung"
+        },
+        {
+          "id": "2010",
+          "titel": "Claudia Moll, MdB, SPD",
+          "autor_titel": "Claudia Moll, Berichterstattung"
+        },
+        {
+          "id": "7880",
+          "titel": "Evelyn Schötz, MdB, DIE LINKE",
+          "autor_titel": "Evelyn Schötz, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksachen 21/1511, 21/1935, 21/2146 Nr. 1.6 -\r\nEntwurf eines Gesetzes zur Befugniserweiterung und Entbürokratisierung in der Pflege\r\n\r\nb) zu dem Antrag der Abgeordneten Simone Fischer, Dr. Janosch Dahmen, Linda Heitmann, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 21/583 -\r\nPriorität für Pflege - Jetzt Sofortmaßnahmen ergreifen",
+      "datum": "2025-11-05"
+    }
+  ],
+  "cursor": "AoJwuI3rqZoDMURydWNrc2FjaGUtMjgyODc4"
+}

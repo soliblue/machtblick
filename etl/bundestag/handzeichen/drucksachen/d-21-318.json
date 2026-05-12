@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "279675",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 33,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/318",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "d14d16b9f62ce5fcdedcb71136972438",
+      "aktualisiert": "2025-06-04T08:15:07+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "322236",
+          "titel": "Ausreisegewahrsam und Abschiebehaft für ausreisepflichtige Personen, insbesondere für Straftäter und Gefährder, wirksam umsetzen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/003/2100318.pdf",
+        "id": "279675",
+        "dokumentnummer": "21/318",
+        "datum": "2025-06-03",
+        "verteildatum": "2025-06-03",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2212",
+          "titel": "Martin Hess, MdB, AfD",
+          "autor_titel": "Martin Hess"
+        },
+        {
+          "id": "2059",
+          "titel": "Dr. Bernd Baumann, MdB, AfD",
+          "autor_titel": "Dr. Bernd Baumann"
+        }
+      ],
+      "titel": "Ausreisegewahrsam und Abschiebehaft für ausreisepflichtige Personen, insbesondere für Straftäter und Gefährder, wirksam umsetzen",
+      "datum": "2025-06-03"
+    }
+  ],
+  "cursor": "AoJwkPnOmpcDMURydWNrc2FjaGUtMjc5Njc1"
+}

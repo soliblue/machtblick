@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282412",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 15,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2246",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "9c860348a879a097bb3b513eb1cd9794",
+      "aktualisiert": "2025-10-24T14:25:03+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "327031",
+          "titel": "Klimawende statt Klimakollaps - Europa muss bei der UN-Klimakonferenz in Belém globale Führung übernehmen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/022/2102246.pdf",
+        "id": "282412",
+        "dokumentnummer": "21/2246",
+        "datum": "2025-10-15",
+        "verteildatum": "2025-10-17",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1983",
+          "titel": "Lisa Badum, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Lisa Badum"
+        },
+        {
+          "id": "7285",
+          "titel": "Dr. Jan-Niclas Gesenhues, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Jan-Niclas Gesenhues"
+        }
+      ],
+      "titel": "Klimawende statt Klimakollaps - Europa muss bei der UN-Klimakonferenz in Belém globale Führung übernehmen",
+      "datum": "2025-10-15"
+    }
+  ],
+  "cursor": "AoJwkP7T85kDMURydWNrc2FjaGUtMjgyNDEy"
+}

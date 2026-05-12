@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "286003",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4803",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "0374ea13efb13e6cb2b9b8ed3b48099e",
+      "aktualisiert": "2026-03-19T09:51:30+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "332669",
+          "titel": "Sammelübersicht 203 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/048/2104803.pdf",
+        "id": "286003",
+        "dokumentnummer": "21/4803",
+        "datum": "2026-03-18",
+        "verteildatum": "2026-03-18",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 203 zu Petitionen -\r\n",
+      "datum": "2026-03-18"
+    }
+  ],
+  "cursor": "AoJw-MamgJ0DMURydWNrc2FjaGUtMjg2MDAz"
+}

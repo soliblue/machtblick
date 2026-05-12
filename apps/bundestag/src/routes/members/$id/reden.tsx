@@ -1,0 +1,17 @@
+import { createFileRoute, useLoaderData } from '@tanstack/react-router'
+import { MemberSpeechesSection } from '@/views/memberDetail/MemberSpeechesSection'
+
+export const Route = createFileRoute('/members/$id/reden')({
+  component: RedenRoute,
+})
+
+function RedenRoute() {
+  const data = useLoaderData({ from: '/members/$id' })
+  return data.speeches.length > 0 ? (
+    <MemberSpeechesSection speeches={data.speeches} />
+  ) : (
+    <div className="border p-xl text-center text-m opacity-l" style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}>
+      <div className="font-semibold opacity-100">Keine Reden in WP21</div>
+    </div>
+  )
+}

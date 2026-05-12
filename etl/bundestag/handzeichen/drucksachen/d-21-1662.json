@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "281435",
+      "drucksachetyp": "Entschließungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 34,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/1662",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "cac5b80bebbfae81c1448bca8c7472fb",
+      "aktualisiert": "2025-09-16T14:32:10+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "325739",
+          "titel": "Entschließungsantrag zur dritten Beratung des Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2025 (Haushaltsgesetz 2025 - HG 2025)\r\nhier:\tEinzelplan 09\r\nGeschäftsbereich des Bundesministeriums für Wirtschaft und Energie",
+          "vorgangstyp": "Entschließungsantrag BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/016/2101662.pdf",
+        "id": "281435",
+        "dokumentnummer": "21/1662",
+        "datum": "2025-09-15",
+        "verteildatum": "2025-09-15",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Entschließungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2230",
+          "titel": "Leif-Erik Holm, MdB, AfD",
+          "autor_titel": "Leif-Erik Holm"
+        },
+        {
+          "id": "2259",
+          "titel": "Steffen Kotré, MdB, AfD",
+          "autor_titel": "Steffen Kotré"
+        }
+      ],
+      "titel": "zu der dritten Beratung des Gesetzentwurfs der Bundesregierung\r\n- Drucksachen 21/500, 21/501, 21/1064, 21/1061, 21/1062 -\r\nEntwurf eines Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2025 (Haushaltsgesetz 2025 - HG 2025)\r\nhier:\tEinzelplan 09\r\nGeschäftsbereich des Bundesministeriums für Wirtschaft und Energie",
+      "datum": "2025-09-15"
+    }
+  ],
+  "cursor": "AoJwkKW0ppkDMURydWNrc2FjaGUtMjgxNDM1"
+}

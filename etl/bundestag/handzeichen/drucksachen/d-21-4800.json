@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "286000",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4800",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "54236b606c48ec1250a39cc259e9360e",
+      "aktualisiert": "2026-03-19T09:43:02+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "332666",
+          "titel": "Sammelübersicht 200 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/048/2104800.pdf",
+        "id": "286000",
+        "dokumentnummer": "21/4800",
+        "datum": "2026-03-18",
+        "verteildatum": "2026-03-18",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 200 zu Petitionen -\r\n",
+      "datum": "2026-03-18"
+    }
+  ],
+  "cursor": "AoJw-MamgJ0DMURydWNrc2FjaGUtMjg2MDAw"
+}

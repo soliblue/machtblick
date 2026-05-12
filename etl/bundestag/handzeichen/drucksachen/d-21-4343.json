@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285370",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4343",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "feb54c593b0397833ae45895934063dc",
+      "aktualisiert": "2026-02-27T10:38:04+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "331725",
+          "titel": "Sammelübersicht 183 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/043/2104343.pdf",
+        "id": "285370",
+        "dokumentnummer": "21/4343",
+        "datum": "2026-02-25",
+        "verteildatum": "2026-02-26",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübericht 183 zu Petitionen -",
+      "datum": "2026-02-25"
+    }
+  ],
+  "cursor": "AoJwuJWdypwDMURydWNrc2FjaGUtMjg1Mzcw"
+}

@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "279704",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/322",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "0af741c0e5156e914f9c11781b1c067e",
+      "aktualisiert": "2025-06-04T14:44:16+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "322261",
+          "titel": "Gesetz zur Änderung der Regelungen über die zulässige Miethöhe bei Mietbeginn und zur Änderung anderer Gesetze",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "CDU/CSU",
+          "titel": "Fraktion der CDU/CSU"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "SPD",
+          "titel": "Fraktion der SPD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/003/2100322.pdf",
+        "id": "279704",
+        "dokumentnummer": "21/322",
+        "datum": "2025-06-03",
+        "verteildatum": "2025-06-03",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der CDU/CSU",
+          "Fraktion der SPD"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Änderung der Regelungen über die zulässige Miethöhe bei Mietbeginn",
+      "datum": "2025-06-03"
+    }
+  ],
+  "cursor": "AoJwkPnOmpcDMURydWNrc2FjaGUtMjc5NzA0"
+}

@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "281920",
+      "drucksachetyp": "Verordnung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/1925",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "45bd53af3a3e9a7efeda6d9ff085d6d3",
+      "aktualisiert": "2025-10-01T18:09:49+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "326354",
+          "titel": "Zweite Verordnung zur Änderung der Kassensicherungsverordnung",
+          "vorgangstyp": "Rechtsverordnung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BMF",
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/019/2101925.pdf",
+        "id": "281920",
+        "dokumentnummer": "21/1925",
+        "datum": "2025-10-01",
+        "verteildatum": "2025-10-01",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Verordnung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesministerium der Finanzen"
+        ]
+      },
+      "titel": "Zweite Verordnung zur Änderung der Kassensicherungsverordnung",
+      "datum": "2025-10-01"
+    }
+  ],
+  "cursor": "AoJwkN3Nz5kDMURydWNrc2FjaGUtMjgxOTIw"
+}
