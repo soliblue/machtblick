@@ -39,3 +39,4 @@ etl/**/samples/
 .idea
 
 .claude/scheduled_tasks.lock
+.claude/agent-memory/
