@@ -1,6 +1,7 @@
 import { SlidersHorizontal, Vote, Flag, Scale, Search, Tag } from 'lucide-react'
 import type { VoteListItem } from '@/server/votes'
 import type { VoteTypeFilter, VoteResultFilter } from '@/hooks/useVoteListFilters'
+import { VISIBLE_VOTE_TYPES } from '@/lib/voteTypes'
 import { VoteRow } from './VoteRow'
 import { FilterPill } from './FilterPill'
 
@@ -52,7 +53,7 @@ export function VotesList({ votes, proposingParty, onProposingPartyChange, avail
         <FilterPill
           label="Typ"
           icon={Vote}
-          options={['namentlich', 'handzeichen', 'hammelsprung']}
+          options={VISIBLE_VOTE_TYPES}
           value={voteType}
           onChange={(v) => onVoteTypeChange(v as VoteTypeFilter | null)}
           formatOption={(o) => TYPE_LABELS[o as VoteTypeFilter]}

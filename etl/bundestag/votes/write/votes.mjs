@@ -6,6 +6,7 @@ export function writeVote(tx, vote, fetchedAt) {
     bundestagId: vote.bundestagId,
     date: vote.date,
     title: vote.title,
+    isPetitionBundle: vote.title.startsWith('Sammelübersicht '),
     topic: vote.topic,
     subject: vote.subject,
     summary: vote.summary,

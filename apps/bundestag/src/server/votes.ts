@@ -6,6 +6,7 @@ import { parseProposingParty } from './proposingParty'
 import { pickAntragFromRows } from './lib/pickAntrag'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
 import { hasPartyLine } from '../lib/parties'
+import { SHOW_HAMMELSPRUNG } from '../lib/voteTypes'
 import type { SpeechSummary } from './speeches'
 
 const SPEECH_PARTY_NORMALIZE: Record<string, string> = {
@@ -44,7 +45,8 @@ export type VoteListItem = {
 }
 
 export const listVotes = createServerFn({ method: 'GET' }).handler(async (): Promise<VoteListItem[]> => {
-  const rows = db.select().from(votes).where(eq(votes.procedural, false)).orderBy(desc(votes.date), desc(votes.bundestagId)).all()
+  const allRows = db.select().from(votes).where(eq(votes.procedural, false)).orderBy(desc(votes.date), desc(votes.bundestagId)).all()
+  const rows = SHOW_HAMMELSPRUNG ? allRows : allRows.filter((r) => r.voteType !== 'hammelsprung')
   const allSummaries = db.select().from(votePartySummaries).all()
   const byVote = new Map<string, typeof allSummaries>()
   for (const s of allSummaries) {
@@ -124,6 +126,7 @@ export const getVote = createServerFn({ method: 'GET' })
   .handler(async ({ data: id }): Promise<VoteDetail> => {
     const voteRow = db.select().from(votes).where(eq(votes.id, id)).get()
     if (!voteRow) throw new Error(`vote not found: ${id}`)
+    if (!SHOW_HAMMELSPRUNG && voteRow.voteType === 'hammelsprung') throw new Error(`vote not found: ${id}`)
     const documents = db.select().from(voteDocuments).where(eq(voteDocuments.voteId, id)).all()
     const summaryRows = db.select().from(votePartySummaries).where(eq(votePartySummaries.voteId, id)).all()
     const seats = getSeatsByParty()

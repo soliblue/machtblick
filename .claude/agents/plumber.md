@@ -147,6 +147,10 @@ The procedural flag is applied by migration `0002_procedural_flag.sql` for the i
 
 We tried. App-side compensation looks tidy on day one and rots fast: every consumer of `result` (stamps, bar charts, success-rate stats, OG images) needs the same flip, drift is silent, and new contributors trip the same wire. The rule in `CLAUDE.md` is: **fix data, not symptoms.** ETL and `db:normalize` own this; the app reads `result` and trusts it.
 
+### `is_petition_bundle` flag
+
+`votes.is_petition_bundle` is true for Sammelübersicht votes, where one plenary vote bundles the committee's per-petition recommendations for dozens of unrelated petitions. `result = angenommen` on these rows means "the bundle of recommendations was accepted", not "every petition won" — individual petitions inside may have been recommended for closure, referral, or rejection. The frontend uses this flag to render a disclaimer banner without title-string-matching at render time. Set at ingest by `title.startsWith('Sammelübersicht ')` in both `etl/bundestag/votes/write/votes.mjs` (namentlich) and `etl/bundestag/handzeichen/write.mjs` (handzeichen). Backfilled once in migration `0015_votes_is_petition_bundle.sql`.
+
 ## Bundestag vote description simplification — data notes
 
 Two AI-generated markdown fields populate `votes.summary_simplified` (2–6 sentences, inline emphasis only) and `votes.summary_detail` (`## Was geändert würde` + `## Hintergrund`). Source: the underlying Antrag PDF, not the Beschlussempfehlung. Worker lives at `etl/bundestag/descriptions/`, exposed as `npm run etl:descriptions` and chained into `handzeichen/refresh.mjs` after polarity.

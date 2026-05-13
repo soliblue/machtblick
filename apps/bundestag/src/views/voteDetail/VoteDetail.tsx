@@ -37,6 +37,11 @@ export function VoteDetail({ data, activeTab, onTabChange }: Props) {
           Wir haben das Vorzeichen dieser Abstimmung umgedreht, damit das Ergebnis klar lesbar ist. Im Original ging es um die <em>Ablehnung</em> dieses Antrags. Wir zeigen das Ergebnis so, als wäre direkt über den Antrag abgestimmt worden.
         </div>
       )}
+      {vote.isPetitionBundle && (
+        <div className="mb-l bg-surface p-m text-s">
+          Diese Abstimmung bündelt mehrere Petitionen in einer Sammelübersicht. Das Plenum stimmt über alle enthaltenen Empfehlungen des Petitionsausschusses gemeinsam ab. Ein "angenommen" bedeutet, dass die Empfehlungen so beschlossen wurden, die einzelnen Petitionen können dabei sehr unterschiedlich behandelt worden sein (z.B. an die Bundesregierung weitergeleitet, als Material überwiesen, oder abschließend behandelt).
+        </div>
+      )}
       <h1 className="text-xxl font-semibold">{vote.cleanTitle ?? vote.title}</h1>
       {vote.cleanTitle && vote.cleanTitle !== vote.title && (
         <div className="mt-s text-s opacity-l">Offizieller Titel: {vote.title}</div>

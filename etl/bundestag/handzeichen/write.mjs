@@ -35,6 +35,7 @@ for (const f of files) {
         voteType: v.vote_type,
         date: data.date,
         title: v.title,
+        isPetitionBundle: v.title.startsWith('Sammelübersicht '),
         document: (v.drucksache ?? []).join(', ') || null,
         result: v.outcome === 'unklar' ? 'angenommen' : v.outcome,
         sourceUrl: `https://search.dip.bundestag.de/api/v1/plenarprotokoll/${data.number}`,

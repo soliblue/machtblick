@@ -17,6 +17,7 @@ export const votes = sqliteTable('votes', {
   result: text('result', { enum: ['angenommen', 'abgelehnt'] }).notNull(),
   procedural: integer('procedural', { mode: 'boolean' }).notNull().default(false),
   inverted: integer('inverted', { mode: 'boolean' }).notNull().default(false),
+  isPetitionBundle: integer('is_petition_bundle', { mode: 'boolean' }).notNull().default(false),
   totalMembers: integer('total_members'),
   yes: integer('yes'),
   no: integer('no'),
