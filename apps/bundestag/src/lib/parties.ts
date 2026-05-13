@@ -16,7 +16,6 @@ export const PARTY_LOGO: Record<string, string> = {
   AfD: '/parties/afd.svg',
   'B90/Grüne': '/parties/gruene.svg',
   'Die Linke': '/parties/linke.svg',
-  Bundesregierung: '/parties/bundesregierung.svg',
 }
 
 export const PARTY_COLOR: Record<string, string> = {

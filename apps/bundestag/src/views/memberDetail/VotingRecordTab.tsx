@@ -59,7 +59,7 @@ export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilt
           to="/votes/$id/"
           params={{ id: r.voteId }}
           className="flex flex-col border-t py-m transition-opacity hover:opacity-80"
-          style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
+          style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 8%, transparent)' }}
         >
           <span className="text-m" style={{ overflowWrap: 'anywhere' }}>{r.title}</span>
           <div className="mt-s flex flex-wrap items-center justify-between gap-x-m gap-y-s">

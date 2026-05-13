@@ -20,7 +20,7 @@ export function VoteRow({ vote }: Props) {
   return (
     <div
       className="relative border-t py-m first:border-t-0 sm:py-l"
-      style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
+      style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 8%, transparent)' }}
     >
       <Link
         to="/votes/$id/"
@@ -36,11 +36,11 @@ export function VoteRow({ vote }: Props) {
         <span>{VOTE_TYPE_LABEL[vote.voteType]}</span>
       </div>
       <div className="mt-s grid grid-cols-[auto_1fr] items-center gap-x-m gap-y-s sm:gap-x-l">
-        <div className="row-span-1 shrink-0 [&_svg]:!h-[88px] [&_svg]:!w-[88px] sm:row-span-2 sm:[&_svg]:!h-[160px] sm:[&_svg]:!w-[160px]">
+        <div className="row-span-2 shrink-0 [&_svg]:!h-[88px] [&_svg]:!w-[88px] sm:[&_svg]:!h-[160px] sm:[&_svg]:!w-[160px]">
           <VoteDistributionDonut yes={vote.yes} no={vote.no} abstain={vote.abstain} absent={vote.absent} size={88} />
         </div>
         <VoteTitle title={vote.title} />
-        <div className="col-span-2 flex flex-wrap items-center justify-center gap-s sm:col-span-1 sm:col-start-2 sm:justify-start">
+        <div className="col-start-2 flex flex-wrap items-center justify-start gap-s">
           {stamps.map((s) => (
             <Stamp key={s} variant={s} />
           ))}
