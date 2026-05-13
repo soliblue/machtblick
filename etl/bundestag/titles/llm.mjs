@@ -26,8 +26,8 @@ function extractJson(raw) {
   return JSON.parse(match[0])
 }
 
-export async function cleanTitleWithLLM({ title, summary, drucksacheTitle }) {
-  const prompt = buildPrompt({ title, summary, drucksacheTitle })
+export async function cleanTitleWithLLM({ title, summary, drucksacheTitle, isSammelubersicht = false }) {
+  const prompt = buildPrompt({ title, summary, drucksacheTitle, isSammelubersicht })
   const raw = await runClaude(prompt, 'sonnet')
   const obj = extractJson(raw)
   const cleanTitle = typeof obj.clean_title === 'string' ? obj.clean_title.trim() : null

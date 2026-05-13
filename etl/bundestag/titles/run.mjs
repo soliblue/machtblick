@@ -38,6 +38,13 @@ const VACUOUS_PATTERNS = [
 
 const isVacuous = (title) => VACUOUS_PATTERNS.some((re) => re.test(title))
 
+const SAMMEL_RE = /^(?:Sammelübersicht\s+(\d+)\s+zu\s+Petitionen|Petitionsausschuss\s+Sammelübersicht\s+(\d+))/i
+
+const sammelNumber = (title) => {
+  const m = title.match(SAMMEL_RE)
+  return m ? (m[1] ?? m[2]) : null
+}
+
 const db = new Database(DB_PATH)
 const whereClean = force ? '' : 'AND clean_title IS NULL'
 const rows = db.prepare(`
@@ -72,12 +79,18 @@ let failed = 0
 const tasks = work.map((row) =>
   limit(async () => {
     const drucksacheTitle = await resolveDrucksacheTitle(row.document)
+    const nnn = sammelNumber(row.title)
     try {
       const result = await cleanTitleWithLLM({
         title: row.title,
         summary: row.summary_simplified,
         drucksacheTitle,
+        isSammelubersicht: nnn !== null,
       })
+      if (nnn !== null && result.clean_title) {
+        const combined = `Sammelübersicht ${nnn}: ${result.clean_title}`
+        result.clean_title = combined.length > 90 ? combined.slice(0, 89) + '…' : combined
+      }
       return { row, result }
     } catch (e) {
       failed++
