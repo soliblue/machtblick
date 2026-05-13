@@ -1,4 +1,4 @@
-import { PARTY_LABEL, PARTY_ORDER } from '@/lib/parties'
+import { PARTY_LABEL, PARTY_LOGO, PARTY_ORDER, PARTY_SLUG } from '@/lib/parties'
 import type { VoteChoice } from '@/views/votesList/VoteDistributionDonut'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
@@ -60,7 +60,17 @@ export function PartyWaffle({ summaries, highlight, memberBallots }: Props) {
           const cells = buildCells(s, memberBallots)
           return (
             <div key={s.party} className="contents">
-              <div className="self-center pr-m text-m font-semibold">{PARTY_LABEL[s.party] ?? s.party}</div>
+              <a
+                href={`/parties/${PARTY_SLUG[s.party] ?? s.party}/`}
+                className="self-center pr-m"
+                aria-label={PARTY_LABEL[s.party] ?? s.party}
+              >
+                {PARTY_LOGO[s.party] ? (
+                  <img src={PARTY_LOGO[s.party]} alt={PARTY_LABEL[s.party] ?? s.party} style={{ height: 24, width: 'auto' }} />
+                ) : (
+                  <span className="text-m font-semibold">{PARTY_LABEL[s.party] ?? s.party}</span>
+                )}
+              </a>
               <div className="flex flex-wrap gap-[2px]">
                 {cells.map((c, i) => {
                   const style = {
