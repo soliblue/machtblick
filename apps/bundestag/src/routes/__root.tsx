@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Menu, X } from 'lucide-react'
 import { Link } from '../lib/Link'
 import { TooltipProvider } from '@/components/ui/tooltip'
-import { useScrollRestore } from '@/hooks/useScrollRestore'
 
 const queryClient = new QueryClient()
 import { StampFilter } from '@/views/votesList/StampFilter'
@@ -55,7 +54,6 @@ export const Route = createRootRoute({
 })
 
 function RootComponent() {
-  useScrollRestore()
   return (
     <html lang="de">
       <head>

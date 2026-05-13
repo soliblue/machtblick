@@ -50,7 +50,7 @@ function VoteDetailRoute() {
     <VoteDetail
       data={data}
       activeTab={active}
-      onTabChange={(t) => navigate({ search: (s) => ({ ...s, tab: t === 'ergebnis' ? undefined : t }) })}
+      onTabChange={(t) => navigate({ search: (s) => ({ ...s, tab: t === 'ergebnis' ? undefined : t }), resetScroll: false, replace: true })}
     />
   )
 }

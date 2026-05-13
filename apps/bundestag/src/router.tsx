@@ -4,7 +4,7 @@ import { routeTree } from './routeTree.gen'
 export function getRouter() {
   return createRouter({
     routeTree,
-    scrollRestoration: false,
+    scrollRestoration: true,
     trailingSlash: 'always',
     defaultStaleTime: Infinity,
     defaultPreloadStaleTime: Infinity,
