@@ -4,7 +4,6 @@ export type StampVariant =
   | 'knapp'
   | 'einstimmig'
   | 'fast-einstimmig'
-  | 'fraktion-geschlossen'
   | 'abweichler'
 
 const config: Record<StampVariant, { label: string; color: string; rotate: number; opacity?: number }> = {
@@ -13,7 +12,6 @@ const config: Record<StampVariant, { label: string; color: string; rotate: numbe
   knapp: { label: 'Knapp', color: 'var(--color-orange)', rotate: 6, opacity: 0.85 },
   einstimmig: { label: 'Einstimmig', color: 'var(--color-purple)', rotate: 3, opacity: 0.85 },
   'fast-einstimmig': { label: 'Fast einstimmig', color: 'var(--color-purple)', rotate: 3, opacity: 0.85 },
-  'fraktion-geschlossen': { label: 'Fraktion geschlossen', color: 'var(--color-gray)', rotate: -7, opacity: 0.85 },
   abweichler: { label: 'Abweichler', color: 'var(--color-fg)', rotate: 5, opacity: 0.75 },
 }
 

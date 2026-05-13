@@ -28,12 +28,6 @@ export function deriveStamps(vote: {
     else if (top / cast >= 0.95) stamps.push('fast-einstimmig')
   }
   const lineParties = vote.partySummaries.filter((p) => hasPartyLine(p.party))
-  const largest = [...lineParties].sort((a, b) => b.members - a.members)[0]
-  if (largest) {
-    const decided = largest.yes + largest.no + largest.abstain
-    const majority = Math.max(largest.yes, largest.no, largest.abstain)
-    if (decided > 0 && majority / decided >= 0.98) stamps.push('fraktion-geschlossen')
-  }
   const hasSplit = lineParties.some((p) => Math.min(p.yes, p.no) >= 1)
   if (hasSplit) stamps.push('abweichler')
   return stamps
