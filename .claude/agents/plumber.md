@@ -125,6 +125,18 @@ When a member silently disappears from roll calls (e.g. `foullong-uwe` — votes
 
 ETL TODO: the affiliation worker should detect long gaps automatically rather than rely on hand-written one-shots.
 
+### Handzeichen — proposer enrichment is mandatory
+
+`etl/bundestag/handzeichen/write.mjs` only writes the bare Drucksache numbers (e.g. `21/322, 21/631`) into `votes.document`. The app's `parseProposingParty()` (see `apps/bundestag/src/server/proposingParty.ts`) needs the proposer-string form `"Antrag der Fraktion der SPD (Drucksache 21/322)"` produced by the Namentlich ETL — without enrichment, every handzeichen row reads as `Sonstige` (the catch-all fallback) on the votes list.
+
+`etl/bundestag/handzeichen/proposers.mjs` fixes this: it walks every handzeichen/hammelsprung row whose `document` is not already proposer-prefixed, looks the Drucksache up via DIP (`f.dokumentnummer` then `f.vorgang` fallback for Beschlussempfehlungen), maps `urheber.bezeichnung` to a party label via `PROPOSER_MAP`, and rewrites `document` to the canonical form. Responses cached to `etl/bundestag/handzeichen/drucksachen/` (gitignored), so re-runs are cheap. Idempotent: the row filter excludes already-prefixed documents.
+
+The script is chained into `refresh.mjs` after `write.mjs` and exposed at the repo root as `npm run etl:handzeichen:proposers`. Run it after every handzeichen ingest. Initial coverage on 21. BT (May 2026): 218/218 rows with a Drucksache resolved to a known proposer; 31 handzeichen rows have `document=NULL` (no Drucksache extracted from the protocol) and stay `Sonstige` on the read side — that's an upstream-extraction gap, not a proposer-resolution one.
+
+If a future run prints `⚠ unmapped bezeichnungen encountered: …`, add the new codes to `PROPOSER_MAP` (fraction/government urheber) or `KNOWN_COMMITTEES` (committee-internal codes that don't denote a proposer) and re-run. The script exits non-zero in that case so cron will surface it.
+
+DIP rate-limit handling: the script goes through a local `dipFetch` wrapper that mirrors `etl/dip/client.ts` (non-JSON detection, 30× exponential backoff to 5 min, User-Agent header). Don't drop these — the gateway returns HTML challenge pages on quota exhaustion, not JSON 429s.
+
 ### Normalization (run after every ingest)
 
 `npm run db:normalize` (script: `db/normalize-results.ts`) flips `result` from `angenommen` to `abgelehnt` for every vote where the proposing party voted `no`. This catches the handzeichen procedural-result cases. It is idempotent.

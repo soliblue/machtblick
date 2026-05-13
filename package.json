@@ -22,7 +22,9 @@
     "etl:dip:answers:extract": "tsx etl/dip/answers/extract.ts",
     "etl:dip:answers:ingest": "tsx etl/dip/answers/ingest.ts",
     "etl:dip:answers": "npm run etl:dip:answers:fetch && npm run etl:dip:answers:extract && npm run etl:dip:answers:ingest",
-    "etl:portraits": "tsx etl/wikidata-portraits/ingest.ts"
+    "etl:portraits": "tsx etl/wikidata-portraits/ingest.ts",
+    "etl:handzeichen:refresh": "node etl/bundestag/handzeichen/refresh.mjs",
+    "etl:handzeichen:proposers": "node etl/bundestag/handzeichen/proposers.mjs"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.11",

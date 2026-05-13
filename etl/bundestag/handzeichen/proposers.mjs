@@ -30,23 +30,38 @@ function proposerFromUrheber(urheber) {
   return null
 }
 
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+
+async function dipFetch(url) {
+  let attempt = 0
+  while (true) {
+    const res = await fetch(url, { headers: { accept: 'application/json', 'user-agent': 'machtblick-etl/0.1 (https://github.com/soli/machtblick)' } })
+    const text = await res.text()
+    if (text.startsWith('{')) return JSON.parse(text)
+    attempt++
+    if (attempt > 30) throw new Error(`DIP non-JSON after ${attempt} retries: ${url}`)
+    await sleep(Math.min(300000, 10000 * attempt))
+  }
+}
+
 async function getCached(name, fetcher) {
   const path = join(CACHE, `${name}.json`)
   try { return JSON.parse(await readFile(path, 'utf8')) } catch {}
   const data = await fetcher()
   await writeFile(path, JSON.stringify(data, null, 2))
+  await sleep(120)
   return data
 }
 
 async function fetchDrucksache(dnr) {
   return getCached(`d-${dnr.replace('/', '-')}`, () =>
-    fetch(`${API}/drucksache?apikey=${KEY}&f.dokumentnummer=${encodeURIComponent(dnr)}&format=json`).then((r) => r.json()),
+    dipFetch(`${API}/drucksache?apikey=${KEY}&f.dokumentnummer=${encodeURIComponent(dnr)}&format=json`),
   )
 }
 
 async function fetchVorgangDrucksachen(vId) {
   return getCached(`v-${vId}`, () =>
-    fetch(`${API}/drucksache?apikey=${KEY}&f.vorgang=${vId}&format=json`).then((r) => r.json()),
+    dipFetch(`${API}/drucksache?apikey=${KEY}&f.vorgang=${vId}&format=json`),
   )
 }
 
@@ -69,7 +84,7 @@ async function resolveProposer(dnr) {
 }
 
 const db = new Database('/Users/soli/machtblick/db/machtblick.sqlite')
-const rows = db.prepare("SELECT id, document FROM votes WHERE vote_type IN ('handzeichen','hammelsprung') AND document IS NOT NULL").all()
+const rows = db.prepare("SELECT id, document FROM votes WHERE vote_type IN ('handzeichen','hammelsprung') AND document IS NOT NULL AND document NOT LIKE 'Antrag%' AND document NOT LIKE 'Gesetzentwurf%'").all()
 console.log(`processing ${rows.length} votes`)
 
 const upd = db.prepare('UPDATE votes SET document = ? WHERE id = ?')

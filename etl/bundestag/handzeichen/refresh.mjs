@@ -23,4 +23,7 @@ await run('node', [join(HERE, 'extract.mjs')])
 console.log('→ write to db')
 await run('npx', ['tsx', join(HERE, 'write.mjs')])
 
+console.log('→ resolve proposers via DIP')
+await run('node', [join(HERE, 'proposers.mjs')])
+
 console.log('✓ refresh complete')
