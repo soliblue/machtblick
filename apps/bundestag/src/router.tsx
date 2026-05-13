@@ -2,5 +2,11 @@ import { createRouter } from '@tanstack/react-router'
 import { routeTree } from './routeTree.gen'
 
 export function getRouter() {
-  return createRouter({ routeTree, scrollRestoration: true, trailingSlash: 'always' })
+  return createRouter({
+    routeTree,
+    scrollRestoration: false,
+    trailingSlash: 'always',
+    defaultStaleTime: Infinity,
+    defaultPreloadStaleTime: Infinity,
+  })
 }
