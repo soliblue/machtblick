@@ -29,6 +29,21 @@ await run('node', [join(HERE, 'proposers.mjs')])
 console.log('→ polarity normalization')
 await run('node', [join(HERE, '..', 'polarity', 'run.mjs')])
 
+console.log('→ procedural flagger (title-pattern → procedural=1)')
+await run('node', [join(HERE, '..', 'votes', 'procedural', 'run.mjs')])
+
+console.log('→ initiator backfill from plenarprotokoll XML')
+await run('node', [join(HERE, '..', 'votes', 'initiator', 'run.mjs')])
+
+console.log('→ self-no escalation (initiator voted NO → re-check polarity via LLM)')
+await run('node', [join(HERE, '..', 'polarity', 'self-no-escalate.mjs')])
+
+console.log('→ self-no audit (must be clean)')
+await run('node', [join(HERE, '..', 'votes', 'initiator', 'audit-self-no.mjs')])
+
+console.log('→ suspicious-initiator audit (Fraktion initiator with procedural-shape title)')
+await run('node', [join(HERE, '..', 'votes', 'initiator', 'audit-suspicious-initiator.mjs')])
+
 console.log('→ descriptions (Antrag → simplified)')
 await run('node', [join(HERE, '..', 'descriptions', 'run.mjs')])
 

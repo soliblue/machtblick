@@ -65,8 +65,11 @@ After our normalization, **`votes.result` always means the substantive outcome f
 
 - `Federführung*`, `Überweisung*`, `Ausschussüberweisung*`, `Überweisungsvorschlag*`, `Erneute Überweisung*` — committee assignment / referral
 - `Wahl *`, `Bestellung *`, `Benennung *`, `Abberufung *` — appointments to advisory boards, foundation councils, etc.
+- `Genehmigung zur Durchführung eines Straf-/Ermittlungsverfahrens*`, `Aufhebung der Immunität*` — chamber-level Geschäftsordnungsausschuss decisions about individual MdBs. These come as `Antrag der Bundesregierung` in the teaser even though they are not Fraktion- or BReg-proposed substantive policy. The Bundestag's Geschäftsordnungsausschuss recommends, the chamber votes; treat as procedural.
 
 These are filtered out of all listings and not prerendered. They remain in the DB so direct URLs and ETL idempotency aren't broken.
+
+The procedural flag is applied by **`etl/bundestag/votes/procedural/run.mjs`** on every refresh (idempotent: `UPDATE votes SET procedural = 1 WHERE procedural = 0 AND title LIKE …`). Originally only run by migration `0002_procedural_flag.sql` on the initial dataset, now chained into `handzeichen/refresh.mjs` before the initiator backfill so newly-ingested procedural rows get flagged before initiator inference runs. When a new procedural shape surfaces, add it to **both** `etl/bundestag/votes/procedural/run.mjs` (PATTERNS) and `etl/bundestag/votes/initiator/audit-suspicious-initiator.mjs` (SUSPICIOUS_TITLE_PATTERNS). The audit also serves as a watchdog: it flags substantive Fraktion-initiator rows whose title looks procedural (case: title-pattern updated but flagger not re-run, or new shape we haven't seen).
 
 ### Proposing party
 
@@ -474,3 +477,56 @@ The mandate list endpoint caps at 100 results per response regardless of `range_
 ### What we don't backfill (yet)
 
 `members` could pick up `year_of_birth`, `occupation`, `residence`, `qid_wikidata` from the raw JSON. We deliberately don't — the table is presentational. When a view needs one of these, expose it through `member_abgeordnetenwatch.raw_json` reads (it's stored as JSON-text and SQLite has `json_extract`). Don't denormalize until a consumer exists.
+
+## Vote `initiator` extractor — data notes
+
+`votes.initiator` is the proposing party for substantive votes (one of `CDU/CSU`, `B90/Grüne`, `Die Linke`, `AfD`, `SPD`, `FDP`, `BSW`, `Bundesregierung`, `Bundesrat`, `Sonstige`). Worker: `etl/bundestag/votes/initiator/run.mjs` (script: `npm run etl:votes:initiator`, chained into `handzeichen/refresh.mjs` after polarity). Source order: plenarprotokoll XML (authoritative), DIP teaser fallback (`parseProposingParty(document)`), NULL.
+
+### Extraction architecture
+
+The XML extractor (`extract.mjs`) walks **`<tagesordnungspunkt>` blocks** as the unit of context, because Bundestag plenary protocols cluster everything for one agenda item — the T_fett title, the T_NaS proposer paragraphs, the T_Drs Drucksache references, and the J-class running prose announcement — inside one block. Cross-block contamination is the #1 source of wrong-initiator bugs; never resolve a Drucksache by scanning the entire XML.
+
+Resolution order inside the extractor (`extractInitiatorClause`):
+1. **Side motions (Änderungsantrag/Entschließungsantrag)**: if the DB title contains `Änderungsantrag` or `Entschließungsantrag`, scan J-class prose for the per-Drucksache announcement `"<motion> der Fraktion … auf der Drucksache <N>"`. Side motions sit *inside* a host bill's TOP block, so walking T_NaS headers gives the host bill's proposer instead. J-prose is per-motion.
+2. **Title-fett match**: locate the `<p klasse="T_fett">` whose text matches the DB title (under `normalize()` quote/dash folding, falling back to `fold()` alphanumeric-only) and walk back over `T_NaS` / `T_ZP_NaS` paragraphs in the same block, skipping `Beschlussempfehlung und Bericht` headers (they describe the committee, not the proposer).
+3. **Structured Drucksache walk**: for each Drucksache in the document teaser, find the block containing it, scan its J-class running prose for an explicit `"X auf Drucksache <target>"` line first (handles per-Buchstabe Beschlussempfehlung citations and joint-Fraktion Wahlvorschläge), then fall back to walking back from the T_Drs paragraph.
+4. **Loose Drucksache walk**: window-based regex scan as a last resort.
+
+### Last-Drucksache-first convention
+
+A vote's document teaser often lists multiple Drucksachen like `Drucksache 21/2753, 21/2470`. By convention the **last** Drucksache is the underlying Antrag, and earlier ones are the Beschlussempfehlung / host bill. The extractor iterates `[...nums].reverse()` so the underlying Antrag wins. Without this, bundled Beschlussempfehlungen (Buchstabe a + Buchstabe b sharing one Drucksache) consistently resolved to the wrong party (the host bill's proposer instead of the AfD-Antrag's Buchstabe-b).
+
+### Plural Fraktionen / joint proposers
+
+`Fraktionen der CDU/CSU und SPD` (plural) and `Fraktion der Bündnis 90/Die Grünen und der Fraktion Die Linke` (joint) both occur. The proposer regex tolerates both: `Fraktion(?:en)?` for plural, `[^.]*?` between fraction-name groups for joint headers. When a TOP block has a joint header naming multiple fractions but the vote is on one specific Drucksache, the J-class prose lookup disambiguates: each Drucksache gets its own announcement `"X auf Drucksache <N>"` line.
+
+### Title normalization for fett-match
+
+DB titles are summarized by the namentlich/handzeichen ETL, so a DB title might differ from the XML T_fett text by quote style (`Corona-Pandemie` vs `Coronapandemie`), dash variants, smart vs straight quotes, or trailing parenthesized labels like `(AfD)`. The matcher applies two passes:
+- `normalize()`: fold dash family, NBSP/thin/em-spaces, all smart-quote variants → straight; lowercase, collapse whitespace
+- `fold()`: strip everything except `[a-z0-9]` after diacritic decomposition; used only as a fallback fuzzy match
+A trailing parenthesized suffix is stripped before matching via `stripTitleSuffix`.
+
+### Petition bundles and procedural votes → initiator NULL
+
+`is_petition_bundle=1` (Sammelübersicht) and `procedural=1` (Federführung, Überweisung, Wahlen, Bestellungen, …) rows always get `initiator=NULL`. They're not Fraktion-proposed substantive votes. Skipping them at the runner level (rather than trusting the XML extractor to return null) is more robust: the teaser-fallback for `Überweisung Drucksache 21/X` would otherwise inherit a misleading proposer from the Drucksache.
+
+### Self-NO audit and polarity escalation
+
+After initiator backfill we run `etl/bundestag/polarity/self-no-escalate.mjs`. It selects every vote where the initiator party's own `vote_party_summaries.position = 'no'` (excluding inverted and procedural rows) and re-feeds them to the LLM with a dedicated prompt that explains the inversion-by-procedural-form pattern: a Fraktion almost never votes against its own Antrag, so a self-NO is the signature of a Beschlussempfehlung-zur-Ablehnung vote that the title-based polarity pass missed.
+
+Critical: this LLM channel uses a **different prompt** from `polarity/llm.mjs`. The general polarity prompt requires the title to literally contain "Ablehnung des Antrags …"; missed-inversion candidates have already-clean Antrag titles (the protocol announces the vote with a clean title; only the Buchstabe-b procedural form makes it an inverted question). The self-NO prompt accepts clean titles as input and asks "given the voting pattern, was the procedural form an Ablehnungs-Beschlussempfehlung?" — title stays as-is on inversion, only yes/no/result/positions flip.
+
+`etl/bundestag/votes/initiator/audit-self-no.mjs` runs after escalation and exits nonzero if any self-NO row remains. Chained into `handzeichen/refresh.mjs` to catch drift on future ingests. Initial WP21 run inverted 14 substantive missed-inversion votes (9 AfD, 3 B90/Grüne, 1 Die Linke, 1 mix). Audit is clean (0 hits).
+
+### Order of operations matters
+
+```
+handzeichen ingest → namentlich ingest → db:normalize-results (legacy result flip)
+→ polarity (title-based inversion) → procedural flagger → initiator backfill
+→ self-no-escalate (procedural-form inversion) → audit-self-no → audit-suspicious-initiator
+```
+
+`db:normalize-results` flips `votes.result` only when the proposer voted NO and result was `angenommen`. It pre-dates the polarity ETL and is partially redundant. We keep it because some old rows it touched never had a `vote_polarity_decisions` entry; running it before polarity-self-no-escalate is safe (polarity flips full polarity including yes/no counts and member ballots, and the apply path recomputes `result` from post-flip data, so a previous `result` flip by db:normalize is overwritten coherently).
+
+Do not run `db:normalize-results` after polarity — it could re-flip rows where the post-inversion proposer is also voting NO (rare, but possible if the proposer is a coalition party voting against a coalition compromise).
