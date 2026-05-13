@@ -7,6 +7,7 @@ export const votes = sqliteTable('votes', {
   date: text('date').notNull(),
   agendaItem: text('agenda_item'),
   title: text('title').notNull(),
+  cleanTitle: text('clean_title'),
   topic: text('topic'),
   subject: text('subject'),
   summary: text('summary'),

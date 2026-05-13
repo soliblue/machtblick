@@ -23,10 +23,12 @@
     "etl:dip:answers:ingest": "tsx etl/dip/answers/ingest.ts",
     "etl:dip:answers": "npm run etl:dip:answers:fetch && npm run etl:dip:answers:extract && npm run etl:dip:answers:ingest",
     "etl:portraits": "tsx etl/wikidata-portraits/ingest.ts",
+    "etl:abgeordnetenwatch": "tsx etl/abgeordnetenwatch-members/ingest.ts",
     "etl:handzeichen:refresh": "node etl/bundestag/handzeichen/refresh.mjs",
     "etl:handzeichen:proposers": "node etl/bundestag/handzeichen/proposers.mjs",
     "etl:polarity": "node etl/bundestag/polarity/run.mjs",
-    "etl:descriptions": "node etl/bundestag/descriptions/run.mjs"
+    "etl:descriptions": "node etl/bundestag/descriptions/run.mjs",
+    "etl:titles": "node etl/bundestag/titles/run.mjs"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.11",
