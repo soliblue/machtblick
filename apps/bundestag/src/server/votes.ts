@@ -101,7 +101,7 @@ export type VoteDetail = {
   documents: Array<typeof voteDocuments.$inferSelect>
   partySummaries: Array<typeof votePartySummaries.$inferSelect & { yes: number; no: number; abstain: number; absent: number; members: number }>
   proposingParty: string | null
-  defectors: Array<{ party: string; majority: string; count: number; members: Array<{ id: string; name: string; choice: string }> }>
+  defectors: Array<{ party: string; majority: string; count: number; members: Array<{ id: string; name: string; choice: string; pictureUrl: string | null }> }>
   memberBallots: Array<{ memberId: string; name: string; party: string; choice: string }>
   debate: SpeechSummary[]
   antragPdfUrl: string | null
@@ -152,6 +152,7 @@ export const getVote = createServerFn({ method: 'GET' })
         memberId: voteMembers.memberId,
         choice: voteMembers.choice,
         name: members.name,
+        pictureUrl: members.pictureUrl,
       })
       .from(voteMembers)
       .innerJoin(members, eq(members.id, voteMembers.memberId))
@@ -170,13 +171,13 @@ export const getVote = createServerFn({ method: 'GET' })
       const top = choices.reduce((a, b) => (b[1] > a[1] ? b : a))
       majorityByParty.set(s.party, top[0])
     }
-    const defectorsByParty = new Map<string, Array<{ id: string; name: string; choice: string }>>()
+    const defectorsByParty = new Map<string, Array<{ id: string; name: string; choice: string; pictureUrl: string | null }>>()
     for (const r of vmRows) {
       if (!hasPartyLine(r.party)) continue
       const maj = majorityByParty.get(r.party)
       if (!maj || r.choice === maj || r.choice === 'nicht_abgegeben') continue
       const arr = defectorsByParty.get(r.party) ?? []
-      arr.push({ id: r.memberId, name: r.name, choice: r.choice })
+      arr.push({ id: r.memberId, name: r.name, choice: r.choice, pictureUrl: r.pictureUrl })
       defectorsByParty.set(r.party, arr)
     }
     const defectors = Array.from(defectorsByParty.entries())
