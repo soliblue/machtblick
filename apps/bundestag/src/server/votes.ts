@@ -30,6 +30,7 @@ export type VoteListItem = {
   id: string
   date: string
   title: string
+  cleanTitle: string | null
   topic: string | null
   voteType: 'namentlich' | 'handzeichen' | 'hammelsprung'
   proposingParty: string | null
@@ -63,7 +64,7 @@ export const listVotes = createServerFn({ method: 'GET' }).handler(async (): Pro
     const summaries = byVote.get(v.id) ?? []
     if (v.voteType === 'namentlich' && v.yes != null) {
       return {
-        id: v.id, date: v.date, title: v.title, topic: v.topic, voteType: v.voteType,
+        id: v.id, date: v.date, title: v.title, cleanTitle: v.cleanTitle, topic: v.topic, voteType: v.voteType,
         proposingParty: parseProposingParty(v.document), result: v.result,
         yes: v.yes, no: v.no!, abstain: v.abstain!, absent: v.absent!, totalMembers: v.totalMembers!,
         partySummaries: summaries.map((s) => ({
@@ -88,7 +89,7 @@ export const listVotes = createServerFn({ method: 'GET' }).handler(async (): Pro
       }
     })
     return {
-      id: v.id, date: v.date, title: v.title, topic: v.topic, voteType: v.voteType,
+      id: v.id, date: v.date, title: v.title, cleanTitle: v.cleanTitle, topic: v.topic, voteType: v.voteType,
       proposingParty: parseProposingParty(v.document), result: v.result,
       yes, no, abstain, absent: 0, totalMembers: yes + no + abstain,
       partySummaries: enriched,

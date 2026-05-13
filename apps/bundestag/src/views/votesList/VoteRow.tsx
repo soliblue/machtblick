@@ -16,6 +16,7 @@ type Props = { vote: VoteListItem }
 
 export function VoteRow({ vote }: Props) {
   const stamps = deriveStamps(vote)
+  const heading = vote.cleanTitle ?? vote.title
   return (
     <div
       className="relative border-t py-m first:border-t-0 sm:py-l"
@@ -25,7 +26,7 @@ export function VoteRow({ vote }: Props) {
         to="/votes/$id/"
         params={{ id: vote.id }}
         className="absolute inset-0"
-        aria-label={vote.title}
+        aria-label={heading}
       />
       <div className="flex flex-wrap items-center gap-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>
         <PartyBadge party={vote.proposingParty} />
@@ -38,7 +39,7 @@ export function VoteRow({ vote }: Props) {
         <div className="row-span-2 shrink-0 [&_svg]:!h-[88px] [&_svg]:!w-[88px] sm:[&_svg]:!h-[160px] sm:[&_svg]:!w-[160px]">
           <VoteDistributionDonut yes={vote.yes} no={vote.no} abstain={vote.abstain} absent={vote.absent} size={88} />
         </div>
-        <div className="font-display text-[18px] leading-snug sm:text-[21px]" style={{ fontWeight: 500 }}>{vote.title}</div>
+        <div className="font-display text-[18px] leading-snug sm:text-[21px]" style={{ fontWeight: 500 }}>{heading}</div>
         <div className="col-start-2 flex flex-wrap items-center justify-start gap-s">
           {stamps.map((s) => (
             <Stamp key={s} variant={s} />

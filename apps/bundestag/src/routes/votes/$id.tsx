@@ -14,9 +14,10 @@ export const Route = createFileRoute('/votes/$id')({
   head: ({ loaderData, params }) => {
     const path = `/votes/${params.id}`
     const v = loaderData?.vote
-    const title = v?.title ?? 'Abstimmung'
-    const desc = v
-      ? `${v.title} — Abstimmung im Bundestag am ${v.date}: ${v.result}. Antragsteller: ${loaderData?.proposingParty ?? 'unbekannt'}.`
+    const headline = v ? (v.cleanTitle ?? v.title) : null
+    const title = headline ?? 'Abstimmung'
+    const desc = v && headline
+      ? `${headline}. Abstimmung im Bundestag am ${v.date}: ${v.result}. Antragsteller: ${loaderData?.proposingParty ?? 'unbekannt'}.`
       : 'Namentliche Abstimmung im Deutschen Bundestag.'
     return {
       meta: seoMeta({ title, description: desc, canonical: path, type: 'article' }),
@@ -27,11 +28,11 @@ export const Route = createFileRoute('/votes/$id')({
             children: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Article',
-              headline: v.title,
+              headline: headline,
               datePublished: v.date,
               inLanguage: 'de-DE',
               url: `${SITE_URL}${path}`,
-              about: { '@type': 'VoteAction', name: v.title, result: v.result },
+              about: { '@type': 'VoteAction', name: headline, result: v.result },
               author: { '@type': 'Organization', name: 'Deutscher Bundestag' },
               publisher: { '@type': 'Organization', name: 'Machtblick', url: SITE_URL },
             }),

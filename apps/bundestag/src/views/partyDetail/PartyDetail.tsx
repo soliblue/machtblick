@@ -105,7 +105,7 @@ export function PartyDetail({ data, result, onResultChange, partyVote, onPartyVo
             style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
           >
             <div className="flex min-w-0 flex-col">
-              <span style={{ overflowWrap: 'anywhere' }}>{v.title}</span>
+              <span style={{ overflowWrap: 'anywhere' }}>{v.cleanTitle ?? v.title}</span>
               <span className="text-s opacity-l">{formatDate(v.date)}</span>
             </div>
             <VoteChip vote={v.partyVote} />

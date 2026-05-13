@@ -25,11 +25,11 @@ export function ProposalsBar({ proposals }: Props) {
                 style={{
                   background: p.result === 'angenommen' ? 'var(--color-success)' : 'var(--color-danger)',
                 }}
-                aria-label={`${p.title} · ${p.result}`}
+                aria-label={`${p.cleanTitle ?? p.title} · ${p.result}`}
               />
             </TooltipTrigger>
             <TooltipContent>
-              <div className="font-semibold">{p.title}</div>
+              <div className="font-semibold">{p.cleanTitle ?? p.title}</div>
               <div className="opacity-l">{formatDate(p.date)} · {p.result}</div>
             </TooltipContent>
           </Tooltip>

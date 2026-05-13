@@ -79,6 +79,7 @@ export type MemberVoteRow = {
   voteId: string
   date: string
   title: string
+  cleanTitle: string | null
   result: 'angenommen' | 'abgelehnt'
   choice: 'ja' | 'nein' | 'enthalten' | 'nicht_abgegeben'
   party: string
@@ -115,6 +116,7 @@ export const getMember = createServerFn({ method: 'GET' })
         choice: voteMembers.choice,
         date: votes.date,
         title: votes.title,
+        cleanTitle: votes.cleanTitle,
         result: votes.result,
       })
       .from(voteMembers)
@@ -145,6 +147,7 @@ export const getMember = createServerFn({ method: 'GET' })
         voteId: r.voteId,
         date: r.date,
         title: r.title,
+        cleanTitle: r.cleanTitle,
         result: r.result,
         choice: r.choice,
         party,
@@ -154,13 +157,13 @@ export const getMember = createServerFn({ method: 'GET' })
     })
     const currentParty = affList.find((a) => a.validTo === null)?.party ?? ''
     const memberSpeeches = db
-      .select({ speech: speeches, voteTitle: votes.title })
+      .select({ speech: speeches, voteTitle: votes.title, voteCleanTitle: votes.cleanTitle })
       .from(speeches)
       .leftJoin(votes, eq(votes.id, speeches.voteId))
       .where(eq(speeches.speakerMemberId, id))
       .orderBy(desc(speeches.date), asc(speeches.position))
       .all()
-    const speechResults: SpeechResult[] = memberSpeeches.map(({ speech: row, voteTitle }) => ({
+    const speechResults: SpeechResult[] = memberSpeeches.map(({ speech: row, voteTitle, voteCleanTitle }) => ({
       id: row.id,
       speakerName: row.speakerName,
       speakerMemberId: row.speakerMemberId,
@@ -170,7 +173,7 @@ export const getMember = createServerFn({ method: 'GET' })
       excerpt: row.textExcerpt,
       date: row.date,
       voteId: row.voteId,
-      voteTitle,
+      voteTitle: voteCleanTitle ?? voteTitle,
       snippet: null,
     }))
     return {

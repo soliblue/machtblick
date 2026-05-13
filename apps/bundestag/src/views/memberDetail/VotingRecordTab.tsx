@@ -61,7 +61,7 @@ export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilt
           className="flex flex-col border-t py-m transition-opacity hover:opacity-80"
           style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 8%, transparent)' }}
         >
-          <span className="text-m" style={{ overflowWrap: 'anywhere' }}>{r.title}</span>
+          <span className="text-m" style={{ overflowWrap: 'anywhere' }}>{r.cleanTitle ?? r.title}</span>
           <div className="mt-s flex flex-wrap items-center justify-between gap-x-m gap-y-s">
             <span className="flex flex-wrap items-center gap-s text-s opacity-l">
               <span className="whitespace-nowrap">{formatDate(r.date)}</span>

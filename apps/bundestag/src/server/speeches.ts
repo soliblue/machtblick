@@ -173,7 +173,7 @@ export const searchSpeeches = createServerFn({ method: 'GET' })
       ? sql`snippet(speeches_fts, 1, '<<<', '>>>', '…', 24)`
       : sql`NULL`
     const items = db.all(sql`
-      SELECT s.*, v.title AS vote_title, ${snippetExpr} AS snippet FROM speeches s
+      SELECT s.*, COALESCE(v.clean_title, v.title) AS vote_title, ${snippetExpr} AS snippet FROM speeches s
       ${ftsJoin}
       LEFT JOIN votes v ON v.id = s.vote_id
       ${whereSql}
@@ -202,12 +202,12 @@ export const listSpeechesForMember = createServerFn({ method: 'GET' })
   .inputValidator((memberId: string) => memberId)
   .handler(async ({ data: memberId }): Promise<MemberSpeechSummary[]> => {
     const rows = db
-      .select({ speech: speeches, voteTitle: votes.title })
+      .select({ speech: speeches, voteTitle: votes.title, voteCleanTitle: votes.cleanTitle })
       .from(speeches)
       .leftJoin(votes, eq(votes.id, speeches.voteId))
       .where(eq(speeches.speakerMemberId, memberId))
       .orderBy(desc(speeches.date), asc(speeches.position))
       .all()
-    return rows.map((r) => toResult(r.speech, r.voteTitle))
+    return rows.map((r) => toResult(r.speech, r.voteCleanTitle ?? r.voteTitle))
   })
 

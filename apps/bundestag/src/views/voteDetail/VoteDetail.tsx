@@ -37,7 +37,10 @@ export function VoteDetail({ data, activeTab, onTabChange }: Props) {
           Wir haben das Vorzeichen dieser Abstimmung umgedreht, damit das Ergebnis klar lesbar ist. Im Original ging es um die <em>Ablehnung</em> dieses Antrags. Wir zeigen das Ergebnis so, als wäre direkt über den Antrag abgestimmt worden.
         </div>
       )}
-      <h1 className="text-xxl font-semibold">{vote.title}</h1>
+      <h1 className="text-xxl font-semibold">{vote.cleanTitle ?? vote.title}</h1>
+      {vote.cleanTitle && vote.cleanTitle !== vote.title && (
+        <div className="mt-s text-s opacity-l">Offizieller Titel: {vote.title}</div>
+      )}
       <div className="mt-s flex items-center gap-m text-m">
         <PartyBadge party={proposingParty} />
         <span className="opacity-l">{formatDate(vote.date)}</span>

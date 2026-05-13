@@ -63,6 +63,7 @@ export type PartyVoteRow = {
   voteId: string
   date: string
   title: string
+  cleanTitle: string | null
   result: 'angenommen' | 'abgelehnt'
   partyVote: PartyVote
   cohesion: number
@@ -89,6 +90,7 @@ export type PartyProposal = {
   voteId: string
   date: string
   title: string
+  cleanTitle: string | null
   result: 'angenommen' | 'abgelehnt'
 }
 
@@ -146,6 +148,7 @@ export const getParty = createServerFn({ method: 'GET' })
         absent: votePartySummaries.absent,
         date: votes.date,
         title: votes.title,
+        cleanTitle: votes.cleanTitle,
         result: votes.result,
         document: votes.document,
         voteType: votes.voteType,
@@ -155,7 +158,7 @@ export const getParty = createServerFn({ method: 'GET' })
       .where(and(eq(votePartySummaries.party, party), eq(votes.procedural, false)))
       .orderBy(desc(votes.date))
       .all()
-      .filter((s) => s.yes != null) as Array<{ voteId: string; members: number; yes: number; no: number; abstain: number; absent: number; date: string; title: string; result: 'angenommen' | 'abgelehnt'; document: string | null; voteType: string }>
+      .filter((s) => s.yes != null) as Array<{ voteId: string; members: number; yes: number; no: number; abstain: number; absent: number; date: string; title: string; cleanTitle: string | null; result: 'angenommen' | 'abgelehnt'; document: string | null; voteType: string }>
     const voteRows: PartyVoteRow[] = summaries.filter((s) => s.voteType === 'namentlich').map((s) => {
       const top = Math.max(s.yes, s.no, s.abstain)
       const partyVote: PartyVote =
@@ -167,6 +170,7 @@ export const getParty = createServerFn({ method: 'GET' })
         voteId: s.voteId,
         date: s.date,
         title: s.title,
+        cleanTitle: s.cleanTitle,
         result: s.result,
         partyVote,
         cohesion: hasPartyLine(party) ? cohesion(s) : null,
@@ -236,15 +240,15 @@ export const getParty = createServerFn({ method: 'GET' })
     let proposalsAccepted = 0
     const proposals: PartyProposal[] = []
     const allVotes = db
-      .select({ id: votes.id, document: votes.document, result: votes.result, date: votes.date, title: votes.title })
+      .select({ id: votes.id, document: votes.document, result: votes.result, date: votes.date, title: votes.title, cleanTitle: votes.cleanTitle })
       .from(votes)
       .where(eq(votes.procedural, false))
-      .all() as Array<{ id: string; document: string | null; result: 'angenommen' | 'abgelehnt'; date: string; title: string }>
+      .all() as Array<{ id: string; document: string | null; result: 'angenommen' | 'abgelehnt'; date: string; title: string; cleanTitle: string | null }>
     for (const v of allVotes) {
       if (parseProposingParty(v.document) !== party) continue
       proposalsTotal += 1
       if (v.result === 'angenommen') proposalsAccepted += 1
-      proposals.push({ voteId: v.id, date: v.date, title: v.title, result: v.result })
+      proposals.push({ voteId: v.id, date: v.date, title: v.title, cleanTitle: v.cleanTitle, result: v.result })
     }
     proposals.sort((a, b) => b.date.localeCompare(a.date))
     const donationNames = DONATION_PARTY_NAMES[party] ?? [party]
