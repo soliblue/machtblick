@@ -8,7 +8,7 @@ const VOTE_TYPES: VoteTypeFilter[] = ['namentlich', 'handzeichen', 'hammelsprung
 const isVoteType = (v: unknown): v is VoteTypeFilter => typeof v === 'string' && (VOTE_TYPES as string[]).includes(v)
 const isResult = (v: unknown): v is VoteResultFilter => v === 'angenommen' || v === 'abgelehnt'
 
-type Search = { party?: string; type?: VoteTypeFilter; result?: VoteResultFilter; q?: string }
+type Search = { party?: string; type?: VoteTypeFilter; result?: VoteResultFilter; topic?: string; q?: string }
 
 export const Route = createFileRoute('/votes/')({
   component: VotesRoute,
@@ -25,19 +25,21 @@ export const Route = createFileRoute('/votes/')({
     party: typeof search.party === 'string' ? search.party : undefined,
     type: isVoteType(search.type) ? search.type : undefined,
     result: isResult(search.result) ? search.result : undefined,
+    topic: typeof search.topic === 'string' ? search.topic : undefined,
     q: typeof search.q === 'string' ? search.q : undefined,
   }),
 })
 
 function VotesRoute() {
   const votes = Route.useLoaderData()
-  const { party, type, result, q } = Route.useSearch()
+  const { party, type, result, topic, q } = Route.useSearch()
   const navigate = useNavigate({ from: Route.fullPath })
   const proposingParty = party ?? null
   const voteType = type ?? 'namentlich'
   const resultValue = result ?? null
+  const topicValue = topic ?? null
   const query = q ?? ''
-  const { filtered, availableParties } = useVoteListFilters(votes, proposingParty, voteType, resultValue, query)
+  const { filtered, availableParties, availableTopics } = useVoteListFilters(votes, proposingParty, voteType, resultValue, topicValue, query)
   return (
     <VotesList
       votes={filtered}
@@ -48,6 +50,9 @@ function VotesRoute() {
       onVoteTypeChange={(v) => navigate({ search: (s) => ({ ...s, type: v ?? undefined }) })}
       result={resultValue}
       onResultChange={(v) => navigate({ search: (s) => ({ ...s, result: v ?? undefined }) })}
+      topic={topicValue}
+      onTopicChange={(v) => navigate({ search: (s) => ({ ...s, topic: v ?? undefined }) })}
+      availableTopics={availableTopics}
       query={query}
       onQueryChange={(v) => navigate({ search: (s) => ({ ...s, q: v.trim() ? v : undefined }) })}
     />

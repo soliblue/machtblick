@@ -1,4 +1,4 @@
-import { SlidersHorizontal, Vote, Flag, Scale, Search } from 'lucide-react'
+import { SlidersHorizontal, Vote, Flag, Scale, Search, Tag } from 'lucide-react'
 import type { VoteListItem } from '@/server/votes'
 import type { VoteTypeFilter, VoteResultFilter } from '@/hooks/useVoteListFilters'
 import { VoteRow } from './VoteRow'
@@ -26,11 +26,14 @@ type Props = {
   onVoteTypeChange: (value: VoteTypeFilter | null) => void
   result: VoteResultFilter | null
   onResultChange: (value: VoteResultFilter | null) => void
+  topic: string | null
+  onTopicChange: (value: string | null) => void
+  availableTopics: string[]
   query: string
   onQueryChange: (value: string) => void
 }
 
-export function VotesList({ votes, proposingParty, onProposingPartyChange, availableParties, voteType, onVoteTypeChange, result, onResultChange, query, onQueryChange }: Props) {
+export function VotesList({ votes, proposingParty, onProposingPartyChange, availableParties, voteType, onVoteTypeChange, result, onResultChange, topic, onTopicChange, availableTopics, query, onQueryChange }: Props) {
   return (
     <main className="mx-auto max-w-3xl p-l">
       <div className="mb-m relative min-w-[12rem]">
@@ -69,6 +72,15 @@ export function VotesList({ votes, proposingParty, onProposingPartyChange, avail
           onChange={(v) => onResultChange(v as VoteResultFilter | null)}
           formatOption={(o) => RESULT_LABELS[o as VoteResultFilter]}
         />
+        {availableTopics.length > 0 && (
+          <FilterPill
+            label="Kategorie"
+            icon={Tag}
+            options={availableTopics}
+            value={topic}
+            onChange={onTopicChange}
+          />
+        )}
       </div>
       <div className="flex flex-col">
         {votes.map((v) => (

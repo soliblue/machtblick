@@ -9,12 +9,20 @@ export function useVoteListFilters(
   proposingParty: string | null,
   voteType: VoteTypeFilter | null,
   result: VoteResultFilter | null,
+  topic: string | null,
   query: string = '',
 ) {
   const availableParties = useMemo(() => {
     const set = new Set<string>()
     for (const v of votes) if (v.proposingParty) set.add(v.proposingParty)
     return Array.from(set).sort()
+  }, [votes])
+  const availableTopics = useMemo(() => {
+    const counts = new Map<string, number>()
+    for (const v of votes) if (v.topic) counts.set(v.topic, (counts.get(v.topic) ?? 0) + 1)
+    return Array.from(counts.entries())
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de'))
+      .map(([t]) => t)
   }, [votes])
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -23,8 +31,9 @@ export function useVoteListFilters(
       if (proposingParty && v.proposingParty !== proposingParty) return false
       if (voteType && v.voteType !== voteType) return false
       if (result && v.result !== result) return false
+      if (topic && v.topic !== topic) return false
       return true
     })
-  }, [votes, proposingParty, voteType, result, query])
-  return { filtered, availableParties }
+  }, [votes, proposingParty, voteType, result, topic, query])
+  return { filtered, availableParties, availableTopics }
 }
