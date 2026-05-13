@@ -436,3 +436,37 @@ Concurrency: roll-our-own `pLimit(4)`. No external deps.
 Chained at the end of `etl/bundestag/handzeichen/refresh.mjs` (after the proposer enrichment step) so newly-ingested handzeichen + namentlich votes get classified the same night. Also exposed as `npm run etl:polarity` for ad-hoc runs.
 
 Initial run on WP21 (2026-05-13): scanned 281 unchecked votes, rule_hits=0, llm_hits=20, llm_low_skipped=0, inverted_total=20, defection_mismatch=0. The 20 inverted breakdown: 15 namentlich (all `Ablehnung eines Antrags zu …` LLM-summarized titles), 5 handzeichen with explicit `ablehnen` in the title.
+
+## abgeordnetenwatch politicians — data notes
+
+Upstream: `https://www.abgeordnetenwatch.de/api/v2/`. Feeds `member_abgeordnetenwatch` (one row per matched member, full politician JSON archived) and backfills `members.picture_url` where Wikidata left it NULL. Script: `etl/abgeordnetenwatch-members/ingest.ts`, exposed as `npm run etl:abgeordnetenwatch`.
+
+### Endpoints we use
+
+- `parliament-periods?type=legislature` — the 21. BT is **id 161** (`Bundestag 2025 - 2029`, `start_date_period=2025-03-25`).
+- `candidacies-mandates?parliament_period=161&type=mandate` — lists every mandate ever held in WP21, including Nachrücker and members who already left. Returns ~860 rows for 630 unique politicians (one MP can have multiple mandate entries when seat type changed).
+- `politicians/{id}` — full politician detail: `first_name`, `last_name`, `birth_name`, `sex`, `year_of_birth`, `party`, `party_past`, `education`, `residence`, `occupation`, `ext_id_bundestagsverwaltung` (the 8-digit Stammdaten ID!), `qid_wikidata`, `statistic_questions`, `statistic_questions_answered`, `field_title`. We store the entire `data` object as `raw_json` so future enrichments don't need to re-fetch.
+
+### `ext_id_bundestagsverwaltung` is the join key
+
+Abgeordnetenwatch's politicians payload exposes the **8-digit Bundestags-MdB-Stammdaten-ID** as `ext_id_bundestagsverwaltung`. This is exactly `members.bt_mdb_id`. After the Stammdaten ingest filled `bt_mdb_id` on every member, primary matching here is a direct ID lookup — no name fuzz needed. Name-key fallback (firstToken + last, German normalization, honorific/particle stripping) exists for safety but is rarely needed.
+
+### No `profile_picture_url` in the API
+
+Plan 18 (and the documentation) suggested the politicians endpoint carries a `profile_picture_url`. It does not. Pictures are only on the public **profile HTML page** at `https://www.abgeordnetenwatch.de/profile/<slug>`. The slug is `politicians/{id}.abgeordnetenwatch_url.split('/').pop()`. We scrape `politicians-profile-pictures/<filename>` out of the HTML and rebuild the canonical URL as `https://www.abgeordnetenwatch.de/sites/default/files/politicians-profile-pictures/<filename>` (dropping the style prefix Drupal injects). Coverage is high (>90% of matched politicians have a picture); for the rest, abgeordnetenwatch has no portrait either.
+
+### Rate limit is real
+
+The politicians endpoint throttles **aggressively** — concurrency 3 with 400ms delays triggers constant 429s on individual politician IDs (the same ID keeps 429ing while others succeed, so it's per-resource-key, not global). Concurrency 2 with 600ms delay between record-pair fetches is the sweet spot we landed on. Mandate list endpoint and profile HTML are unthrottled. Backoff is exponential `1500 × 2^attempt` capped at 60s. We also retry on socket errors (the API drops connections occasionally — `UND_ERR_SOCKET`, "other side closed"). End-to-end runtime: ~30 min for 630 politicians.
+
+### Resumable and idempotent
+
+The ETL queries `member_abgeordnetenwatch.aw_politician_id` at startup and filters those out of the work list. Re-running after a partial failure picks up where it stopped. Final upsert + the `UPDATE members SET picture_url = …` backfill always run, so reaching the end is what publishes the picture changes. The backfill **only fills NULLs** — it never overwrites a Wikidata-sourced picture, keeping Wikidata as the primary source.
+
+### Mandate list pagination quirk
+
+The mandate list endpoint caps at 100 results per response regardless of `range_end`. Our paginator steps by 200 anyway because the API still returns subsequent pages with offset-aligned data (we asked for 0-200, got 100 records starting at 0; asked for 200-400, got 100 records starting at 200; etc.). Net result: 860 raw mandates → 630 unique politicians after dedupe by politician.id. Don't tighten this unless you want to debug whether the cap is actually 100 or whether it depends on parliament_period size.
+
+### What we don't backfill (yet)
+
+`members` could pick up `year_of_birth`, `occupation`, `residence`, `qid_wikidata` from the raw JSON. We deliberately don't — the table is presentational. When a view needs one of these, expose it through `member_abgeordnetenwatch.raw_json` reads (it's stored as JSON-text and SQLite has `json_extract`). Don't denormalize until a consumer exists.
