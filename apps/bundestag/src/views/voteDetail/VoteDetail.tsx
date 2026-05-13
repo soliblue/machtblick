@@ -1,25 +1,43 @@
-import { useState } from 'react'
+import type { ReactElement } from 'react'
 import type { VoteDetail as VoteDetailData } from '@/server/votes'
 import { formatDate } from '@/lib/format'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { Stamp } from '@/views/votesList/Stamp'
 import { deriveStamps } from '@/views/votesList/deriveStamps'
-import { VoteTitle } from '@/views/votesList/VoteTitle'
-import { VoteDistributionDonut, type VoteChoice } from '@/views/votesList/VoteDistributionDonut'
-import { PartyWaffle } from './PartyWaffle'
-import { DebateList } from './DebateList'
-import { DefectorList } from './DefectorList'
+import { MarkdownInline } from '@/lib/MarkdownInline'
+import { VoteDetailTabs } from './VoteDetailTabs'
+import { ResultTab } from './ResultTab'
+import { DetailTab } from './DetailTab'
+import { SpeechesTab } from './SpeechesTab'
 
-type Props = { data: VoteDetailData }
+export type VoteTab = 'ergebnis' | 'details' | 'reden'
 
-export function VoteDetail({ data }: Props) {
-  const { vote, documents, partySummaries, proposingParty, defectors, memberBallots } = data
+export const isVoteTab = (v: unknown): v is VoteTab =>
+  v === 'ergebnis' || v === 'details' || v === 'reden'
+
+type Props = {
+  data: VoteDetailData
+  activeTab: VoteTab
+  onTabChange: (t: VoteTab) => void
+}
+
+const TAB_PANELS: Record<VoteTab, (data: VoteDetailData) => ReactElement> = {
+  ergebnis: (data) => <ResultTab data={data} />,
+  details: (data) => <DetailTab data={data} />,
+  reden: (data) => <SpeechesTab data={data} />,
+}
+
+export function VoteDetail({ data, activeTab, onTabChange }: Props) {
+  const { vote, partySummaries, proposingParty } = data
   const stamps = deriveStamps({ ...vote, partySummaries })
-  const [filter, setFilter] = useState<VoteChoice | null>(null)
-  const toggle = (c: VoteChoice) => setFilter((prev) => (prev === c ? null : c))
   return (
     <main className="mx-auto max-w-3xl p-l">
-      <VoteTitle title={vote.title} as="h1" className="text-xxl font-semibold" style={{}} iconSize={18} />
+      {vote.inverted && (
+        <div className="mb-l bg-surface p-m text-s">
+          Wir haben das Vorzeichen dieser Abstimmung umgedreht, damit das Ergebnis klar lesbar ist. Im Original ging es um die <em>Ablehnung</em> dieses Antrags. Wir zeigen das Ergebnis so, als wäre direkt über den Antrag abgestimmt worden.
+        </div>
+      )}
+      <h1 className="text-xxl font-semibold">{vote.title}</h1>
       <div className="mt-s flex items-center gap-m text-m">
         <PartyBadge party={proposingParty} />
         <span className="opacity-l">{formatDate(vote.date)}</span>
@@ -31,51 +49,17 @@ export function VoteDetail({ data }: Props) {
         ))}
       </div>
 
-      {vote.summary && <p className="mb-l text-m">{vote.summary}</p>}
-
-      <section className="mb-l grid items-start gap-l md:grid-cols-[auto_1fr] md:items-center">
-        <div className="flex justify-center md:justify-start">
-          <VoteDistributionDonut
-            yes={vote.yes}
-            no={vote.no}
-            abstain={vote.abstain}
-            absent={vote.absent}
-            size={240}
-            selected={filter}
-            onSelect={toggle}
-            showLabel
-          />
+      {(vote.summarySimplified || vote.summary) && (
+        <div className="mb-l">
+          <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>Zusammenfassung des Antrags</div>
+          {vote.summarySimplified
+            ? <p className="text-m"><MarkdownInline>{vote.summarySimplified}</MarkdownInline></p>
+            : <p className="text-m">{vote.summary}</p>}
         </div>
-        <PartyWaffle summaries={partySummaries} highlight={filter} memberBallots={memberBallots} />
-      </section>
-
-      {data.debate.length > 0 && <DebateList speeches={data.debate} />}
-
-      {defectors.length > 0 && (
-        <section className="mb-l">
-          <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>Abweichler</div>
-          <DefectorList defectors={defectors} />
-        </section>
       )}
 
-      {documents.length > 0 && (
-        <section>
-          <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>Dokumente</div>
-          <div className="flex flex-col gap-s">
-            {documents.map((d) => (
-              <a
-                key={d.id}
-                href={d.url}
-                target="_blank"
-                rel="noreferrer"
-                className="text-m hover:underline"
-              >
-                {d.label} – {d.title}
-              </a>
-            ))}
-          </div>
-        </section>
-      )}
+      <VoteDetailTabs active={activeTab} onChange={onTabChange} />
+      {TAB_PANELS[activeTab](data)}
     </main>
   )
 }

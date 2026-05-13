@@ -147,6 +147,50 @@ The procedural flag is applied by migration `0002_procedural_flag.sql` for the i
 
 We tried. App-side compensation looks tidy on day one and rots fast: every consumer of `result` (stamps, bar charts, success-rate stats, OG images) needs the same flip, drift is silent, and new contributors trip the same wire. The rule in `CLAUDE.md` is: **fix data, not symptoms.** ETL and `db:normalize` own this; the app reads `result` and trusts it.
 
+## Bundestag vote description simplification — data notes
+
+Two AI-generated markdown fields populate `votes.summary_simplified` (2–6 sentences, inline emphasis only) and `votes.summary_detail` (`## Was geändert würde` + `## Hintergrund`). Source: the underlying Antrag PDF, not the Beschlussempfehlung. Worker lives at `etl/bundestag/descriptions/`, exposed as `npm run etl:descriptions` and chained into `handzeichen/refresh.mjs` after polarity.
+
+### Antrag picker contract
+
+The plan originally specified reading from the DIP JSON cache (`etl/bundestag/handzeichen/drucksachen/`) for dokumentart classification. **We use `vote_documents` directly instead.** Each row's `label` carries the Drucksache number and `title` is upstream-prefixed with the document type (`Antrag:`, `Gesetzentwurf:`, `Beschlussempfehlung:`, `Bericht:`, `Wahlvorschlag:`, etc.). That's enough to pick — no DIP lookup needed. Priority: `Antrag` / `Gesetzentwurf` / `Entschließungsantrag` / `Änderungsantrag`; exclude `Beschlussempfehlung` / `Bericht` / `Ergänzung` / `Wahlvorschlag` / `Unterrichtung` / `Verordnung`. Tie-break on lowest Drucksache number. Pure function in `pickAntrag.mjs`, accepts a `Database` handle so server can reuse it.
+
+### Beschlussempfehlung fallback
+
+Many non-procedural WP21 votes (Haushaltsgesetz, Enquete-Kommission, large Gesetzentwürfe rolled up into one Beschlussempfehlung) have **only the Beschlussempfehlung** in `vote_documents`, no Antrag/Gesetzentwurf row. Upstream extraction never captured the underlying Drucksache as a sibling row. The picker therefore has a fallback path: `pickAntragWithFallback(voteId, db)` (async, in `pickAntrag.mjs`).
+
+Steps:
+
+1. Try `pickAntragFromRows` first (sync, the primary path — picks an `Antrag:` / `Gesetzentwurf:` row from vote_documents).
+2. If primary returns null, find the Beschlussempfehlung / Ergänzung row in vote_documents.
+3. Regex-scan its `title` for `Drucksachen? 21/XXXX(, ...)?` references. For each, inspect the preceding ~100 chars for `gesetzentwurf` vs `\bantrag\b`. Prefer Gesetzentwurf over Antrag (bills are canonical; Anträge inside a rollup are usually opposition counter-motions). Tie-break: lowest Drucksache number.
+4. Resolve the chosen Drucksache via DIP API (`f.dokumentnummer=21/XXXX`) and return `fundstelle.pdf_url`. Cache lookup order: shared `etl/bundestag/handzeichen/drucksachen/d-21-XXXX.json` (handzeichen ETL fills this for the same dataset), then local `etl/bundestag/descriptions/dip-cache/`, then live `dipFetch` with 30× exponential backoff (mirrors `proposers.mjs`).
+
+Coverage after fallback landed (2026-05-13): 156/281 non-procedural votes (≈55%) have summaries, up from 107/281. Fallback resolved 48 of 173 previously-skipped rows in one pass. The remaining 125 skips are votes whose Beschlussempfehlung title carries no parseable Drucksache reference: empty titles (vote_documents-side extraction gap, e.g. `2026-02-27-994-geas-anpassungsgesetz`), Petitionen Sammelübersichten, Verordnungen, and procedural Beschlussempfehlungen (`zu Einsprüchen ...`). Those are out of scope for this worker.
+
+Backend: `apps/bundestag/src/server/votes.ts` reads `vote_description_decisions.source_pdf_url` first for `antragPdfUrl`, so fallback PDFs surface in the "Den vollständigen Antrag findest du hier" callout. Sync `pickAntragFromRows` remains as fallback for votes without a decision row yet.
+
+### PDF text cleaning
+
+`pdftotext -layout` is good enough; the haiku OCR fallback never triggered in the WP21 run. Three header patterns get stripped:
+- `Deutscher Bundestag ... Drucksache N/M` joined on one line (the `-layout` flag collapses columns).
+- `21. Wahlperiode ...` standalone lines.
+- `- N -` page-number lines.
+
+PDFs cached under `etl/bundestag/descriptions/pdf/<dnr>.pdf`, extracted text under `text/<dnr>.txt`. Both gitignored. Idempotent: re-running skips already-extracted Drucksachen.
+
+### Prompt versioning
+
+`prompt.mjs` exports `PROMPT_VERSION` (currently `1`). Bump it whenever you edit the prompt. The runner re-generates only rows where `vote_description_decisions.prompt_version != PROMPT_VERSION` (or no decision row). No need to manually delete rows.
+
+### LLM JSON parse failures
+
+Sonnet occasionally emits markdown with unescaped quotes inside JSON string values; we hit one failure in 108 (`pp21-51-1-standortfordergesetz`). Not worth a retry loop — re-running the script after `PROMPT_VERSION` bump (or after manually deleting the decision row) will retry. If failure rate climbs, switch to requesting a fenced block and parsing it, but right now ~1% loss is acceptable.
+
+### Why we don't use `votes.summary` for the simplified field
+
+`votes.summary` is the upstream-provided `contextJson` blurb, kept as-is for archival. The frontend reads `summary_simplified` and falls back to `summary` only when AI generation skipped or failed (Haushalt votes, malformed JSON).
+
 ## Bundestag party donations (Großspenden) — data notes
 
 Upstream: HTML tables at `bundestag.de/parlament/praesidium/parteienfinanzierung/fundstellen50000/<year>`. One subpage per calendar year. Each row is a single Anzeige of a donation > 35.000 EUR.
@@ -325,3 +369,70 @@ Wikidata SPARQL: 60 s query timeout, 5 concurrent queries per IP. One bulk query
 ### Idempotent
 
 Re-running `npm run etl:portraits` updates every matched row with the freshest URL + author + license. Members that lose their match (e.g. Wikidata image deleted) will retain stale data — the script does not null out rows that no longer match. If we ever need to invalidate, do it via one-shot SQL.
+
+## Vote polarity normalization — data notes
+
+Some Bundestag votes are framed as "Beschlussempfehlung … zur **Ablehnung** des Antrags X". The chamber votes on a recommendation to *reject* the underlying Antrag, so Ja means "yes, reject" and the bare title is misleading. We rewrite these in place: substantive title, flipped yes/no, flipped member choices, flipped party-summary positions. The `votes.inverted` boolean flags rows we touched so the frontend can disclose what we did.
+
+### Contract
+
+Tables touched per inverted vote:
+
+| Table.column | Change |
+|---|---|
+| `votes.title` | rewritten to the underlying Antrag wording (LLM-supplied or rule-stripped) |
+| `votes.yes` ↔ `votes.no` | swapped |
+| `votes.result` | recomputed from post-flip data, never blindly flipped (see below) |
+| `votes.inverted` | set to 1 |
+| `vote_members.choice` | `ja` ↔ `nein`; `enthalten`/`nicht_abgegeben` untouched |
+| `vote_party_summaries.yes`/`no` | swapped (namentlich only) |
+| `vote_party_summaries.position` | `yes` ↔ `no`; `abstain`/`mixed` untouched |
+
+A side table `vote_polarity_decisions` (one row per vote we've examined) records the decision, source (`rule`/`llm`), confidence, reason, and the rewritten + original title. This is the audit trail and the idempotency guard: rows in this table are not re-examined.
+
+### Why result is recomputed, not flipped
+
+`db:normalize-results` already flipped `result` to substantive for some rows (those where the proposing party voted `no`). Other rows in the same shape were never touched (proposer couldn't be resolved). Blindly flipping `result` on top would double-flip the db:normalize cases. So:
+
+- For namentlich (we have counts): `result = newYes > newNo ? angenommen : abgelehnt`.
+- For handzeichen (no counts): seat-weighted majority across post-flip party positions decides the result.
+
+This is invariant to whether db:normalize touched the row.
+
+### Detection — rule pass
+
+`etl/bundestag/polarity/rule.mjs` matches title patterns:
+
+- `^Ablehnung\s+(?:eines|des|der)\s+Antrags?\b`
+- `^Ablehnung\s+der\s+Streichung\b`
+- `\bAntrag\b[^.]*?\s+ablehnen\b` / `abzulehnen`
+- `^Beschlussempfehlung\b[^.]*?\bablehnen\b`
+- `\bEmpfehlung\s+(?:zur|der)\s+Ablehnung\b`
+
+Plus DIP confirmation: look up the Drucksache numbers in `etl/bundestag/handzeichen/drucksachen/` cache; accept if `drucksachetyp === 'Beschlussempfehlung'`. Rule pass writes the underlying-Antrag titel from `vorgangsbezug[0].titel`.
+
+In practice rule pass currently hits 0 on the WP21 dataset because the namentlich Drucksachen aren't pre-cached (the cache was built by the handzeichen proposer worker). The LLM pass catches everything. The rule code is still in place — it'll pay off once the cache covers namentlich documents too.
+
+### Detection — LLM pass
+
+Shell out to `claude -p --model sonnet --output-format json` (per CLAUDE.md: no SDK, no API keys). Prompt receives `title + document + proposingParty`. Strict JSON response:
+
+```
+{ inverted: boolean, rewrittenTitle: string|null, confidence: "high"|"medium"|"low", reason: string }
+```
+
+Reject `confidence: low` — leave the row un-inverted, record the decision so we don't re-LLM it. The model gets `low` candidates *only* if their title shape suggests inversion but rule pass declined; everything else is rejected without an LLM call.
+
+Concurrency: roll-our-own `pLimit(4)`. No external deps.
+
+### What NOT to do
+
+- **Don't re-flip already-inverted rows.** The `votes.inverted = 1` guard in `run.mjs` (plus the side-table presence) prevents this. If you ever need to re-flip (bad decision discovered), first reset both: `UPDATE votes SET inverted = 0 …; DELETE FROM vote_polarity_decisions WHERE vote_id IN (…)`. Then re-run.
+- **Don't run db:normalize-results AFTER polarity.** db:normalize looks at `result = 'angenommen'` rows. After polarity, the substantive result is already there; running db:normalize on top would mis-flip rows whose proposer (post-flip) now votes yes. Keep the cron order: namentlich/handzeichen ingest → db:normalize → polarity.
+- **Don't ship a rule-only mode for production.** Title patterns will miss novel framings. The LLM pass is load-bearing.
+
+### Cron wiring
+
+Chained at the end of `etl/bundestag/handzeichen/refresh.mjs` (after the proposer enrichment step) so newly-ingested handzeichen + namentlich votes get classified the same night. Also exposed as `npm run etl:polarity` for ad-hoc runs.
+
+Initial run on WP21 (2026-05-13): scanned 281 unchecked votes, rule_hits=0, llm_hits=20, llm_low_skipped=0, inverted_total=20, defection_mismatch=0. The 20 inverted breakdown: 15 namentlich (all `Ablehnung eines Antrags zu …` LLM-summarized titles), 5 handzeichen with explicit `ablehnen` in the title.

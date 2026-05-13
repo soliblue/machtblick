@@ -1,11 +1,16 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { getVote } from '@/server/votes'
-import { VoteDetail } from '@/views/voteDetail/VoteDetail'
+import { VoteDetail, type VoteTab, isVoteTab } from '@/views/voteDetail/VoteDetail'
 import { seoMeta, canonicalLink, SITE_URL } from '@/lib/seo'
+
+type Search = { tab?: VoteTab }
 
 export const Route = createFileRoute('/votes/$id')({
   component: VoteDetailRoute,
   loader: ({ params }) => getVote({ data: params.id }),
+  validateSearch: (search: Record<string, unknown>): Search => ({
+    tab: isVoteTab(search.tab) ? search.tab : undefined,
+  }),
   head: ({ loaderData, params }) => {
     const path = `/votes/${params.id}`
     const v = loaderData?.vote
@@ -38,5 +43,14 @@ export const Route = createFileRoute('/votes/$id')({
 
 function VoteDetailRoute() {
   const data = Route.useLoaderData()
-  return <VoteDetail data={data} />
+  const { tab } = Route.useSearch()
+  const navigate = useNavigate({ from: Route.fullPath })
+  const active = tab ?? 'ergebnis'
+  return (
+    <VoteDetail
+      data={data}
+      activeTab={active}
+      onTabChange={(t) => navigate({ search: (s) => ({ ...s, tab: t === 'ergebnis' ? undefined : t }) })}
+    />
+  )
 }

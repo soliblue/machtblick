@@ -26,4 +26,10 @@ await run('npx', ['tsx', join(HERE, 'write.mjs')])
 console.log('→ resolve proposers via DIP')
 await run('node', [join(HERE, 'proposers.mjs')])
 
+console.log('→ polarity normalization')
+await run('node', [join(HERE, '..', 'polarity', 'run.mjs')])
+
+console.log('→ descriptions (Antrag → simplified)')
+await run('node', [join(HERE, '..', 'descriptions', 'run.mjs')])
+
 console.log('✓ refresh complete')

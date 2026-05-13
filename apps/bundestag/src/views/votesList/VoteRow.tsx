@@ -5,7 +5,6 @@ import { PartyBadge } from './PartyBadge'
 import { Stamp } from './Stamp'
 import { deriveStamps } from './deriveStamps'
 import { VoteDistributionDonut } from './VoteDistributionDonut'
-import { VoteTitle } from './VoteTitle'
 
 const VOTE_TYPE_LABEL: Record<VoteListItem['voteType'], string> = {
   namentlich: 'Namentlich',
@@ -39,7 +38,7 @@ export function VoteRow({ vote }: Props) {
         <div className="row-span-2 shrink-0 [&_svg]:!h-[88px] [&_svg]:!w-[88px] sm:[&_svg]:!h-[160px] sm:[&_svg]:!w-[160px]">
           <VoteDistributionDonut yes={vote.yes} no={vote.no} abstain={vote.abstain} absent={vote.absent} size={88} />
         </div>
-        <VoteTitle title={vote.title} />
+        <div className="font-display text-[18px] leading-snug sm:text-[21px]" style={{ fontWeight: 500 }}>{vote.title}</div>
         <div className="col-start-2 flex flex-wrap items-center justify-start gap-s">
           {stamps.map((s) => (
             <Stamp key={s} variant={s} />

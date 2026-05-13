@@ -23,6 +23,7 @@ db/*.sqlite
 db/*.sqlite-journal
 db/*.sqlite-wal
 db/*.sqlite-shm
+db/*.db
 
 apps/bundestag/public/speeches-index.json
 apps/bundestag/public/speeches/

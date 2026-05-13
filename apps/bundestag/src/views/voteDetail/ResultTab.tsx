@@ -1,0 +1,39 @@
+import { useState } from 'react'
+import type { VoteDetail as VoteDetailData } from '@/server/votes'
+import { VoteDistributionDonut, type VoteChoice } from '@/views/votesList/VoteDistributionDonut'
+import { PartyWaffle } from './PartyWaffle'
+import { DefectorList } from './DefectorList'
+
+type Props = { data: VoteDetailData }
+
+export function ResultTab({ data }: Props) {
+  const { vote, partySummaries, defectors, memberBallots } = data
+  const [filter, setFilter] = useState<VoteChoice | null>(null)
+  const toggle = (c: VoteChoice) => setFilter((prev) => (prev === c ? null : c))
+  return (
+    <>
+      <section className="mb-l grid items-start gap-l md:grid-cols-[auto_1fr] md:items-center">
+        <div className="flex justify-center md:justify-start">
+          <VoteDistributionDonut
+            yes={vote.yes}
+            no={vote.no}
+            abstain={vote.abstain}
+            absent={vote.absent}
+            size={240}
+            selected={filter}
+            onSelect={toggle}
+            showLabel
+          />
+        </div>
+        <PartyWaffle summaries={partySummaries} highlight={filter} memberBallots={memberBallots} />
+      </section>
+
+      {defectors.length > 0 && (
+        <section>
+          <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>Abweichler</div>
+          <DefectorList defectors={defectors} />
+        </section>
+      )}
+    </>
+  )
+}

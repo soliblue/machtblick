@@ -1,4 +1,6 @@
 export { votes } from './votes'
+export { votePolarityDecisions } from './votePolarityDecisions'
+export { voteDescriptionDecisions } from './voteDescriptionDecisions'
 export { members } from './members'
 export { voteMembers } from './voteMembers'
 export { voteDocuments } from './voteDocuments'

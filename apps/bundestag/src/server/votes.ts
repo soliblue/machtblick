@@ -1,8 +1,9 @@
 import { createServerFn } from '@tanstack/react-start'
 import { db } from '@machtblick/db/client'
-import { votes, voteDocuments, votePartySummaries, voteMembers, members, speeches } from '@machtblick/db/schema'
+import { votes, voteDocuments, votePartySummaries, voteMembers, members, speeches, voteDescriptionDecisions } from '@machtblick/db/schema'
 import { eq, desc, sql, asc } from 'drizzle-orm'
 import { parseProposingParty } from './proposingParty'
+import { pickAntragFromRows } from './lib/pickAntrag'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
 import { hasPartyLine } from '../lib/parties'
 import type { SpeechSummary } from './speeches'
@@ -103,6 +104,7 @@ export type VoteDetail = {
   defectors: Array<{ party: string; majority: string; count: number; members: Array<{ id: string; name: string; choice: string }> }>
   memberBallots: Array<{ memberId: string; name: string; party: string; choice: string }>
   debate: SpeechSummary[]
+  antragPdfUrl: string | null
 }
 
 function getSeatsByParty(): Map<string, number> {
@@ -188,5 +190,8 @@ export const getVote = createServerFn({ method: 'GET' })
       defectors,
       memberBallots: vmRows.map((r) => ({ memberId: r.memberId, name: r.name, party: r.party, choice: r.choice })),
       debate: loadDebateForVote(voteRow.id),
+      antragPdfUrl: db.select({ url: voteDescriptionDecisions.sourcePdfUrl }).from(voteDescriptionDecisions).where(eq(voteDescriptionDecisions.voteId, id)).get()?.url
+        ?? pickAntragFromRows(documents.map((d) => ({ label: d.label, title: d.title, url: d.url })))?.pdfUrl
+        ?? null,
     }
   })
