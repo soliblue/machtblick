@@ -3,6 +3,8 @@ import { Link } from '../../lib/Link'
 import type { MemberVoteRow } from '@/server/members'
 import { formatDate } from '@/lib/format'
 import { FilterPill } from '@/views/votesList/FilterPill'
+import { Stamp } from '@/views/votesList/Stamp'
+import { VoteChoicePill } from './VoteChoicePill'
 
 const CHOICE_LABEL: Record<string, string> = {
   ja: 'Ja',
@@ -51,29 +53,23 @@ export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilt
           formatOption={(o) => CHOICE_LABEL[o] ?? o}
         />
       </div>
-      <div
-        className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] gap-m py-s text-s uppercase opacity-l"
-        style={{ letterSpacing: '0.08em' }}
-      >
-        <span className="min-w-0">Abstimmung</span>
-        <span className="w-24">Datum</span>
-        <span className="w-24">Stimme</span>
-        <span className="w-16">Linie</span>
-      </div>
       {filtered.map((r) => (
         <Link
           key={r.voteId}
           to="/votes/$id/"
           params={{ id: r.voteId }}
-          className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] items-center gap-m border-t py-m text-m transition-opacity hover:opacity-80"
+          className="flex flex-col border-t py-m transition-opacity hover:opacity-80"
           style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
         >
-          <span className="min-w-0" style={{ overflowWrap: 'anywhere' }}>{r.title}</span>
-          <span className="w-24 text-s opacity-l">{formatDate(r.date)}</span>
-          <span className="w-24">{CHOICE_LABEL[r.choice]}</span>
-          <span className="w-16 text-s" style={{ color: r.defected ? 'var(--color-danger)' : undefined, opacity: r.defected ? 1 : 0.7 }}>
-            {r.defected === null ? '–' : r.defected ? 'Abw' : 'Linie'}
-          </span>
+          <span className="text-m" style={{ overflowWrap: 'anywhere' }}>{r.title}</span>
+          <div className="mt-s flex flex-wrap items-center justify-between gap-x-m gap-y-s">
+            <span className="flex flex-wrap items-center gap-s text-s opacity-l">
+              <span className="whitespace-nowrap">{formatDate(r.date)}</span>
+              <Stamp variant={r.result} size="s" />
+              {r.defected === true ? <Stamp variant="abweichler" size="s" /> : null}
+            </span>
+            <VoteChoicePill choice={r.choice} />
+          </div>
         </Link>
       ))}
     </div>

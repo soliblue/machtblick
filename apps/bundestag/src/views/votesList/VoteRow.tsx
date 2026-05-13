@@ -19,7 +19,7 @@ export function VoteRow({ vote }: Props) {
   const stamps = deriveStamps(vote)
   return (
     <div
-      className="relative border-t py-xl first:border-t-0"
+      className="relative border-t py-m first:border-t-0 sm:py-l"
       style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
     >
       <Link
@@ -35,12 +35,12 @@ export function VoteRow({ vote }: Props) {
         <span>·</span>
         <span>{VOTE_TYPE_LABEL[vote.voteType]}</span>
       </div>
-      <div className="mt-m grid grid-cols-[auto_1fr] items-center gap-x-l gap-y-m">
-        <div className="row-span-1 shrink-0 [&_svg]:!h-[120px] [&_svg]:!w-[120px] sm:row-span-2 sm:[&_svg]:!h-[160px] sm:[&_svg]:!w-[160px]">
-          <VoteDistributionDonut yes={vote.yes} no={vote.no} abstain={vote.abstain} absent={vote.absent} size={96} />
+      <div className="mt-s grid grid-cols-[auto_1fr] items-center gap-x-m gap-y-s sm:gap-x-l">
+        <div className="row-span-1 shrink-0 [&_svg]:!h-[88px] [&_svg]:!w-[88px] sm:row-span-2 sm:[&_svg]:!h-[160px] sm:[&_svg]:!w-[160px]">
+          <VoteDistributionDonut yes={vote.yes} no={vote.no} abstain={vote.abstain} absent={vote.absent} size={88} />
         </div>
         <VoteTitle title={vote.title} />
-        <div className="col-span-2 mb-xs flex flex-wrap items-center justify-center gap-s sm:col-span-1 sm:col-start-2 sm:justify-start">
+        <div className="col-span-2 flex flex-wrap items-center justify-center gap-s sm:col-span-1 sm:col-start-2 sm:justify-start">
           {stamps.map((s) => (
             <Stamp key={s} variant={s} />
           ))}

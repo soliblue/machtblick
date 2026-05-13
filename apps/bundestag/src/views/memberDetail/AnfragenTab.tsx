@@ -72,15 +72,6 @@ export function AnfragenTab({ data }: Props) {
             )}
           </div>
           <div className="flex flex-col">
-            <div
-              className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] gap-m py-s text-s uppercase opacity-l"
-              style={{ letterSpacing: '0.08em' }}
-            >
-              <span>Anfrage</span>
-              <span className="w-24">Datum</span>
-              <span className="w-16">Typ</span>
-              <span className="w-24">Status</span>
-            </div>
             {filtered.map((r) => <AnfrageRow key={r.id} row={r} />)}
           </div>
         </>

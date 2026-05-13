@@ -5,6 +5,8 @@ export type StampVariant =
   | 'einstimmig'
   | 'fast-einstimmig'
   | 'abweichler'
+  | 'beantwortet'
+  | 'offen'
 
 const config: Record<StampVariant, { label: string; color: string; rotate: number; opacity?: number }> = {
   angenommen: { label: 'Angenommen', color: 'var(--color-success)', rotate: -4, opacity: 0.85 },
@@ -13,6 +15,8 @@ const config: Record<StampVariant, { label: string; color: string; rotate: numbe
   einstimmig: { label: 'Einstimmig', color: 'var(--color-purple)', rotate: 3, opacity: 0.85 },
   'fast-einstimmig': { label: 'Fast einstimmig', color: 'var(--color-purple)', rotate: 3, opacity: 0.85 },
   abweichler: { label: 'Abweichler', color: 'var(--color-fg)', rotate: 5, opacity: 0.75 },
+  beantwortet: { label: 'Beantwortet', color: 'var(--color-success)', rotate: -3, opacity: 0.85 },
+  offen: { label: 'Offen', color: 'var(--color-danger)', rotate: 4, opacity: 0.85 },
 }
 
 type Props = { variant: StampVariant; size?: 's' | 'm' }

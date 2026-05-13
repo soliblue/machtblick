@@ -278,3 +278,38 @@ DIP exposes `answer_pdf_url` but not the answer body. We download every PDF and 
 
 `members.dip_person_id` exists in the DB but not in `db/schema/members.ts` (deliberate, see plan 06 log — added by raw SQL during the earlier ingest). When `drizzle-kit generate` is run, it will try to drop the column. Strip the `ALTER TABLE members DROP COLUMN` from the generated migration before applying it manually with `sqlite3 db/machtblick.sqlite < db/migrations/<file>.sql`. Update `meta/_journal.json` to point at the renamed migration if you renumbered. Until someone reconciles the schema, this is the documented workaround. Do not regenerate migrations without re-checking the diff.
 
+
+## Member portraits (Wikidata + Wikimedia Commons) — data notes
+
+Upstream: Wikidata SPARQL endpoint (`https://query.wikidata.org/sparql`) for image filenames; Commons MediaWiki API (`https://commons.wikimedia.org/w/api.php`) for author + license extmetadata. Feeds `members.picture_url / picture_author / picture_license / picture_source_url`.
+
+### Required: User-Agent
+
+Both Wikimedia endpoints **require a descriptive User-Agent** with a contact URL or email — anonymous or default-UA requests get 403. We send `machtblick-bundestag/0.1 (https://github.com/soli/machtblick; asoliman96@gmail.com)`. If you ever see a sudden 403 spike on the portraits ETL, the UA policy is the first place to check.
+
+### P11597 coverage is sparse
+
+Plan 15 assumed `P11597` (Bundestag MdB ID) would be the primary join key. Reality: only ~5.9k Wikidata items carry P11597 globally, and almost none of the WP21 MPs we care about do. In the first run, P11597 matched **zero** of our 636 members. Don't trust this property as a load-bearing join key — it's aspirational.
+
+The actual matcher falls back to **first-token + last-name** (with German diacritic folding, honorific/particle dropping — same `nameKey` recipe as `etl/bundestag-stammdaten/ingest.ts`). When P735/P734 (given/family name properties) are missing on the Wikidata item, we split the de-label as `[first ... last]` and match that. This is safe-by-construction because we only accept matches that resolve to exactly one of our members **and** we mark each used member ID so the same human can't be double-claimed by two Wikidata items.
+
+Current coverage on WP21: 306 / 636 ≈ 48%. The remaining MPs genuinely lack a Wikidata portrait — many Nachrücker / first-term MPs aren't on Wikidata at all. Frontend renders an initials fallback for these.
+
+### Image URL contract
+
+We do not store the original Commons filename. We store a **thumbnail URL**:
+`https://commons.wikimedia.org/wiki/Special:FilePath/<urlencoded filename>?width=400`. Special:FilePath redirects to the actual upload URL and respects the `width` query param to serve a resized thumbnail. The `pictureSourceUrl` always points at `wiki/File:<name>` (the description page) so users can find author + license themselves.
+
+### License + author from extmetadata
+
+The Commons API call (`prop=imageinfo&iiprop=extmetadata`) returns `Artist` and `LicenseShortName` per file. `Artist` is **HTML** — typically `<a href="...">User:Foo</a>` or richer markup with credits. We strip tags with a regex and decode the five usual entities. Don't try to parse this into structured fields; the upstream is inconsistent (some are bare names, some are templates rendered to nested links). Keep it as plain text; let the frontend display it raw.
+
+`LicenseShortName` is the short code (`CC BY-SA 4.0`, `Public domain`, `CC0`, …). We do not whitelist licenses — every Commons file is at minimum public-domain-or-free; if extmetadata reports something unexpected, that's a Wikimedia-side curation issue, not ours to filter.
+
+### Rate limits
+
+Wikidata SPARQL: 60 s query timeout, 5 concurrent queries per IP. One bulk query is fine. Commons API: no documented hard limit for `prop=imageinfo`, but be polite. We batch 25 file titles per request (the API supports up to 50) and serialize the batches.
+
+### Idempotent
+
+Re-running `npm run etl:portraits` updates every matched row with the freshest URL + author + license. Members that lose their match (e.g. Wikidata image deleted) will retain stale data — the script does not null out rows that no longer match. If we ever need to invalidate, do it via one-shot SQL.

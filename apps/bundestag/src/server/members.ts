@@ -97,6 +97,10 @@ export type MemberDetail = {
   defections: number
   history: MemberVoteRow[]
   speeches: SpeechResult[]
+  pictureUrl: string | null
+  pictureAuthor: string | null
+  pictureLicense: string | null
+  pictureSourceUrl: string | null
 }
 
 export const getMember = createServerFn({ method: 'GET' })
@@ -180,5 +184,9 @@ export const getMember = createServerFn({ method: 'GET' })
       defections,
       history,
       speeches: speechResults,
+      pictureUrl: m.pictureUrl,
+      pictureAuthor: m.pictureAuthor,
+      pictureLicense: m.pictureLicense,
+      pictureSourceUrl: m.pictureSourceUrl,
     }
   })

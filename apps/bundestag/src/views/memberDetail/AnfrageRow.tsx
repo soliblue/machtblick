@@ -1,16 +1,11 @@
 import type { AnfrageRow as AnfrageRowData } from '@/server/anfragen'
 import { formatDate } from '@/lib/format'
+import { Stamp } from '@/views/votesList/Stamp'
 
-const TYPE_LABEL: Record<AnfrageRowData['type'], string> = {
-  kleine: 'KL',
-  grosse: 'GR',
-  schriftlich: 'SF',
-}
-
-const TYPE_TITLE: Record<AnfrageRowData['type'], string> = {
-  kleine: 'Kleine Anfrage',
-  grosse: 'Große Anfrage',
-  schriftlich: 'Schriftliche Frage',
+const TYPE_LABEL_FULL: Record<AnfrageRowData['type'], string> = {
+  kleine: 'Kleine',
+  grosse: 'Große',
+  schriftlich: 'Schriftlich',
 }
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
@@ -20,33 +15,31 @@ type Props = { row: AnfrageRowData }
 export function AnfrageRow({ row }: Props) {
   const href = row.questionPdfUrl ?? row.answerPdfUrl ?? undefined
   const answered = row.beratungsstand === 'Beantwortet'
-  const statusColor = answered ? 'var(--color-success)' : 'var(--color-danger)'
   const Wrap = href ? 'a' : 'div'
+  const segments = [
+    row.questionDate ? formatDate(row.questionDate) : null,
+    TYPE_LABEL_FULL[row.type],
+    row.cosignerCount > 0 ? `+${row.cosignerCount} Mitzeichner` : null,
+  ].filter((s): s is string => Boolean(s))
   return (
     <Wrap
       {...(href ? { href, target: '_blank', rel: 'noreferrer' } : {})}
-      className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] items-start gap-m border-t py-s transition-opacity hover:opacity-80"
+      className="flex flex-col border-t py-m transition-opacity hover:opacity-80"
       style={{ borderColor: ROW_BORDER }}
     >
-      <div className="flex min-w-0 flex-col gap-xs">
-        <span className="text-m font-semibold" style={{ overflowWrap: 'anywhere' }}>{row.title}</span>
-        <span className="text-s opacity-l">
-          {row.answerRessort ? row.answerRessort : null}
-          {row.answerRessort && row.cosignerCount > 0 ? ' · ' : null}
-          {row.cosignerCount > 0 ? <>+{row.cosignerCount} Mitzeichner</> : null}
+      <span className="text-m font-semibold" style={{ overflowWrap: 'anywhere' }}>{row.title}</span>
+      {row.answerRessort ? (
+        <span className="mt-xs text-s opacity-l" style={{ overflowWrap: 'anywhere' }}>{row.answerRessort}</span>
+      ) : null}
+      <div className="mt-s flex flex-wrap items-center justify-between gap-x-m gap-y-s">
+        <span className="flex flex-wrap items-center gap-s text-s opacity-l">
+          {segments.flatMap((seg, i) => [
+            i > 0 ? <span key={`d${i}`}>·</span> : null,
+            <span key={`s${i}`} className="whitespace-nowrap">{seg}</span>,
+          ])}
         </span>
+        <Stamp variant={answered ? 'beantwortet' : 'offen'} size="s" />
       </div>
-      <span className="w-24 pt-xs text-s opacity-l tabular-nums">{row.questionDate ? formatDate(row.questionDate) : ''}</span>
-      <span
-        className="w-16 px-s py-xs text-s font-semibold tabular-nums"
-        title={TYPE_TITLE[row.type]}
-        style={{ background: 'color-mix(in oklab, var(--color-fg) 8%, transparent)' }}
-      >
-        {TYPE_LABEL[row.type]}
-      </span>
-      <span className="w-24 pt-xs text-s font-semibold" style={{ color: statusColor }}>
-        {answered ? 'Beantwortet' : 'Offen'}
-      </span>
     </Wrap>
   )
 }

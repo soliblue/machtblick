@@ -1,0 +1,40 @@
+type Props = {
+  name: string
+  pictureUrl: string | null
+  pictureAuthor: string | null
+  pictureLicense: string | null
+  pictureSourceUrl: string | null
+}
+
+function initials(name: string) {
+  const parts = name.trim().split(/\s+/)
+  const first = parts[0]?.[0] ?? ''
+  const last = parts.length > 1 ? parts[parts.length - 1][0] : ''
+  return (first + last).toUpperCase()
+}
+
+export function MemberPortrait({ name, pictureUrl, pictureAuthor, pictureLicense, pictureSourceUrl }: Props) {
+  return (
+    <div className="flex shrink-0 flex-col gap-xs">
+      {pictureUrl ? (
+        <img src={pictureUrl} alt={name} className="h-[120px] w-[120px] rounded-full object-cover" />
+      ) : (
+        <div className="flex h-[120px] w-[120px] items-center justify-center rounded-full bg-surface text-xxl font-semibold opacity-l">
+          {initials(name)}
+        </div>
+      )}
+      {pictureUrl && (
+        <div
+          className="w-[120px] truncate text-[10px] opacity-l"
+          title={`Foto: ${pictureAuthor}, ${pictureLicense}`}
+        >
+          Foto:{' '}
+          <a href={pictureSourceUrl ?? '#'} target="_blank" rel="noreferrer" className="underline">
+            {pictureAuthor}
+          </a>
+          , {pictureLicense}
+        </div>
+      )}
+    </div>
+  )
+}

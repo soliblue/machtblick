@@ -57,6 +57,13 @@
       "when": 1778623992734,
       "tag": "0008_bt_mdb_id",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1778665907833,
+      "tag": "0010_member_portraits",
+      "breakpoints": true
     }
   ]
 }
