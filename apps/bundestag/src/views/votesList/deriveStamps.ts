@@ -24,7 +24,7 @@ export function deriveStamps(vote: {
     const margin = Math.abs(vote.yes - vote.no) / cast
     if (margin < 0.05) stamps.push('knapp')
     const top = Math.max(vote.yes, vote.no)
-    if (vote.yes === cast || vote.no === cast) stamps.push('einstimmig')
+    if (vote.abstain === 0 && (vote.yes === cast || vote.no === cast)) stamps.push('einstimmig')
     else if (top / cast >= 0.95) stamps.push('fast-einstimmig')
   }
   const lineParties = vote.partySummaries.filter((p) => hasPartyLine(p.party))
