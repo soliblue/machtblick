@@ -44,7 +44,7 @@ export function DebateList({ speeches }: Props) {
   const reset = <T,>(setter: (v: T) => void) => (v: T) => { setter(v); setPage(0) }
   return (
     <section className="mb-l">
-      <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>Reden am Sitzungstag</div>
+      <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>Reden zur Abstimmung</div>
       <div className="mb-m flex flex-wrap items-center gap-m">
         <div className="relative flex-1 min-w-[12rem]">
           <Search size={14} className="absolute left-s top-1/2 -translate-y-1/2 opacity-l" />

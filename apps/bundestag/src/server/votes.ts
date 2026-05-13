@@ -12,8 +12,8 @@ const SPEECH_PARTY_NORMALIZE: Record<string, string> = {
   'DIE LINKE': 'Die Linke',
 }
 
-function loadDebateForVoteDate(date: string): SpeechSummary[] {
-  const rows = db.select().from(speeches).where(eq(speeches.date, date)).orderBy(asc(speeches.position)).all()
+function loadDebateForVote(voteId: string): SpeechSummary[] {
+  const rows = db.select().from(speeches).where(eq(speeches.voteId, voteId)).orderBy(asc(speeches.position)).all()
   return rows.map((row) => ({
     id: row.id,
     speakerName: row.speakerName,
@@ -187,6 +187,6 @@ export const getVote = createServerFn({ method: 'GET' })
       proposingParty: parseProposingParty(vote.document),
       defectors,
       memberBallots: vmRows.map((r) => ({ memberId: r.memberId, name: r.name, party: r.party, choice: r.choice })),
-      debate: loadDebateForVoteDate(voteRow.date),
+      debate: loadDebateForVote(voteRow.id),
     }
   })
