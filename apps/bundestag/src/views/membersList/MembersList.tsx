@@ -4,11 +4,14 @@ import { MemberRow } from './MemberRow'
 import { FilterPill } from '@/views/votesList/FilterPill'
 import type { MemberSortKey, SortDir } from '@/hooks/useMemberListFilters'
 import { AGE_BUCKET_LABEL, MANDATE_LABEL, SEX_LABEL, isAgeBucket, isMandateType, isSex, type AgeBucket } from '@/lib/ageBuckets'
+import { MembersStatsStrip } from './MembersStatsStrip'
+import type { MemberStats } from '@/hooks/useMemberStats'
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 
 type Props = {
   members: MemberListItem[]
+  stats: MemberStats
   party: string | null
   onPartyChange: (value: string | null) => void
   availableParties: string[]
@@ -33,6 +36,7 @@ type Props = {
 
 export function MembersList({
   members,
+  stats,
   party,
   onPartyChange,
   availableParties,
@@ -68,7 +72,7 @@ export function MembersList({
           style={{ borderColor: ROW_BORDER }}
         />
       </div>
-      <div className="mb-s -mx-l flex items-center gap-s overflow-x-auto px-l [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="mb-l -mx-l flex items-center gap-s overflow-x-auto px-l [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <SlidersHorizontal size={17} className="shrink-0 opacity-l" />
         <FilterPill label="Fraktion" icon={Users} options={availableParties} value={party} onChange={onPartyChange} />
         <FilterPill label="Bundesland" icon={MapPin} options={availableStates} value={state} onChange={onStateChange} />
@@ -96,6 +100,9 @@ export function MembersList({
           onChange={(v) => onMandateTypeChange(isMandateType(v) ? v : null)}
           formatOption={(v) => (isMandateType(v) ? MANDATE_LABEL[v] : v)}
         />
+      </div>
+      <div className="mb-l">
+        <MembersStatsStrip stats={stats} />
       </div>
       <div className="mb-l flex justify-end">
         <span className="text-s opacity-l">{members.length} Personen</span>
