@@ -1,18 +1,21 @@
 import { createFileRoute, useLoaderData } from '@tanstack/react-router'
 import { PartyHistoryPanel } from '@/views/partyDetail/PartyHistoryPanel'
 import { PARTY_COLOR, PARTY_LABEL } from '@/lib/parties'
+import { getPartyHistory } from '@/server/getPartyHistory'
 
 export const Route = createFileRoute('/parties/$id/verlauf')({
+  loader: ({ params }) => getPartyHistory({ data: params.id }),
   component: VerlaufRoute,
 })
 
 function VerlaufRoute() {
-  const data = useLoaderData({ from: '/parties/$id' })
-  return data ? (
+  const parent = useLoaderData({ from: '/parties/$id' })
+  const history = Route.useLoaderData()
+  return parent ? (
     <PartyHistoryPanel
-      slug={data.slug}
-      partyLabel={PARTY_LABEL[data.party] ?? data.party}
-      partyColor={PARTY_COLOR[data.party] ?? 'var(--color-gray)'}
+      history={history}
+      partyLabel={PARTY_LABEL[parent.party] ?? parent.party}
+      partyColor={PARTY_COLOR[parent.party] ?? 'var(--color-gray)'}
     />
   ) : null
 }
