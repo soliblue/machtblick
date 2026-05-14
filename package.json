@@ -24,6 +24,8 @@
     "etl:dip:answers": "npm run etl:dip:answers:fetch && npm run etl:dip:answers:extract && npm run etl:dip:answers:ingest",
     "etl:portraits": "tsx etl/wikidata-portraits/ingest.ts",
     "etl:abgeordnetenwatch": "tsx etl/abgeordnetenwatch-members/ingest.ts",
+    "etl:terms": "tsx etl/abgeordnetenwatch-terms/ingest.ts",
+    "etl:lineage-seed": "tsx etl/party-lineage-seed/lineage-seed.ts",
     "etl:handzeichen:refresh": "node etl/bundestag/handzeichen/refresh.mjs",
     "etl:handzeichen:proposers": "node etl/bundestag/handzeichen/proposers.mjs",
     "etl:polarity": "node etl/bundestag/polarity/run.mjs",

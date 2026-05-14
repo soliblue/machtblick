@@ -17,7 +17,7 @@ export function VoteDetailTabs({ active, onChange }: Props) {
   const border = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
   return (
     <nav
-      className="mt-l mb-l grid grid-cols-3 border-y"
+      className="-mx-l mt-l mb-l grid grid-cols-3 border-y"
       style={{ borderColor: border }}
     >
       {TABS.map((t, i) => {

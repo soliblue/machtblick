@@ -530,3 +530,70 @@ handzeichen ingest → namentlich ingest → db:normalize-results (legacy result
 `db:normalize-results` flips `votes.result` only when the proposer voted NO and result was `angenommen`. It pre-dates the polarity ETL and is partially redundant. We keep it because some old rows it touched never had a `vote_polarity_decisions` entry; running it before polarity-self-no-escalate is safe (polarity flips full polarity including yes/no counts and member ballots, and the apply path recomputes `result` from post-flip data, so a previous `result` flip by db:normalize is overwritten coherently).
 
 Do not run `db:normalize-results` after polarity — it could re-flip rows where the post-inversion proposer is also voting NO (rare, but possible if the proposer is a coalition party voting against a coalition compromise).
+
+## Historical Bundestag composition — data notes
+
+Two sources feed the `bundestag_terms`, `party_seat_history`, `party_lineages`, `party_lineage_members`, `party_lineage_events` tables.
+
+### `etl/abgeordnetenwatch-terms/` (seat counts + term metadata)
+
+Endpoint: `https://www.abgeordnetenwatch.de/api/v2/parliament-periods?type=legislature&parliament=5`. Six legislatures available (BT16-21, 2005-current). **Pre-2005 terms (BT1-15) are not in AW** — anything older has to come from a hand-curated source. v1 ships with BT16-21 only.
+
+Per-term composition comes from `candidacies-mandates?parliament_period=<id>&type=mandate`. We count mandates by `fraction_membership[0].fraction.label` (deduped by mandate id). Each mandate is one seat-slot; AW keeps the latest holder if a seat changed hands during the term, so we don't double-count. Constitutive-vs-end-of-term composition is roughly the same (small AW drift: BT16 -3, BT17 -1, BT19 0, BT20 -3, BT21 0 vs Wikipedia).
+
+#### Pagination quirk
+
+The `candidacies-mandates` endpoint has a `range_end` magic cap at **1000**. Asking for `range_end > 1000` (e.g. 2000) silently falls back to the default page size of 100. We send a single request with `range_end=1000` and throw if `meta.result.total > 1000` — all WP16-21 terms fit. If a future term ever has >1000 mandate-records (massive overhang situation), pagination would need redesign (the `range_start` parameter is effectively ignored; the API just returns `[0, range_end)`).
+
+#### Why we don't filter by `seit`
+
+`fraction_membership[0].label` is either `"<Fraktion>"` or `"<Fraktion> seit DD.MM.YYYY"`. The `seit` variant is used for **both** Nachrücker (joined mid-term) and mid-term fraction switchers — they're indistinguishable from this field. Filtering out `seit` cases drops Nachrücker too, undercounting every term by 5-30 seats. The correct approach is "count every mandate, period." Each mandate = one seat-slot regardless of who held it.
+
+This means our BT20 seat row for "Die Linke" is **28**, not the 39 from constitutive session — because 10 of those mandates switched to BSW in 2024 and one became fraktionslos. For the timeline visualization this is actually what we want: it shows the BSW lineage line starting in BT20 with 10 seats, and the Linke line dipping at BT20. Matches the lineage-event annotation perfectly.
+
+#### Fraction-label normalization
+
+`parties.ts > normalizeFractionLabel()` strips the trailing `(Bundestag YYYY - YYYY)` suffix and the soft-hyphen (`U+00AD`) inside `BÜNDNIS 90/­DIE GRÜNEN`. Then lowercase + diacritic-fold lookup against:
+
+| Upstream label | Canonical |
+|---|---|
+| `CDU/CSU`, `CDU`, `CSU` | `CDU/CSU`, `CDU`, `CSU` (separate where AW provides) |
+| `SPD`, `FDP`, `AfD` | same |
+| `DIE LINKE`, `Die Linke`, `Die Linke. (Gruppe)`, `Die Linke (Gruppe)` | `Die Linke` |
+| `DIE GRÜNEN`, `BÜNDNIS 90/DIE GRÜNEN` (with or without soft-hyphen) | `B90/Grüne` |
+| `BSW`, `BSW (Gruppe)` | `BSW` |
+| `fraktionslos` | `fraktionslos` |
+
+The `(Gruppe)` suffix on Die Linke and BSW in WP20 is the post-Auflösung downgrade (Feb 2024). We collapse it into the parent party — the chart visualizes the lineage event marker, not a "Gruppe" tier.
+
+The single `CDU` (not `CDU/CSU`) row at BT18 is one MdB whose AW record lists `CDU` alone, not the combined fraction. Map all three (`CDU/CSU`, `CDU`, `CSU`) onto the `cdu_csu` lineage so the seat-history row still resolves.
+
+### `etl/party-lineage-seed/` (logical party identities + transition events)
+
+Hand-curated `lineage.json`. ~14 lineages, ~8 events. Idempotent (upserts lineages, replaces members + events). Run before `etl:terms` so `party_seat_history.lineage_id` resolves on first ingest.
+
+Key judgment calls (worth surfacing to lead):
+
+- **Bündnis 90 (East)** has no BT seats of its own. We don't create a separate lineage for it; the 1993 merger appears as a `renamed` event on the `gruene` lineage (`Fusion mit Bündnis 90 zu Bündnis 90/Die Grünen`).
+- **WASG** never had BT seats. Same treatment: 2007 fusion appears as a `renamed` event on `linke`, not as an inbound lineage.
+- **SED-PDS → PDS** rename in 1990 is recorded as a `renamed` event on `linke` with `validFrom=1990-02-04`. We do not represent SED or SED-PDS as separate lineages because they never sat in the Bundestag. The frontend can render the Linke line starting from 1990 even without pre-2005 seat data.
+- **BSW split (2024-01-08)** is recorded as **two** events (one on each lineage): a `split_out` on `bsw` with `relatedLineageId=linke`, and a `merged_out` on `linke` with `relatedLineageId=bsw`. This duplication is intentional — the backend's `getPartyHistory(partyId)` will surface inbound events on one lineage and outbound on the related one without joining.
+- **KPD banned 1956** is the only `dissolved` event we ship. We don't add `dissolved` markers for parties that just stopped winning seats (BP, DP, Zentrum, WAV, GB/BHE) because they weren't legally dissolved on a specific date — they faded.
+- **SSW** is included as a live lineage because they have a seat in BT20 and BT21 (Stefan Seidler, 1 seat each). They were also seated in BT1 but not BT2-19.
+- **Historical short-lived parties** included as standalone lineages without events: `kpd`, `zentrum`, `bp`, `dp`, `wav`, `gb_bhe`. These exist so future hand-curated pre-2005 seat history can attach to them.
+
+### `partyLineages.currentPartyId` shape
+
+There is no `parties` table in the schema (parties live as string columns: `votes.initiator`, `member_affiliations.party`, etc.). `currentPartyId` is a **plain text** column carrying the canonical party label (e.g. `'CDU/CSU'`, `'B90/Grüne'`, `'Die Linke'`) — same vocabulary used elsewhere. Nullable for extinct lineages (KPD, Zentrum, BP, DP, WAV, GB/BHE). No FK.
+
+### Lineage lookup contract
+
+`buildLineageLookup(periodStart, periodEnd)` in `etl/abgeordnetenwatch-terms/ingest.ts` matches a party-name observed in a term to a lineage by overlapping `validFrom..validTo` window with `[periodStart, periodEnd]`. We deliberately do NOT match by `periodStart` alone — BSW didn't exist at BT20's constitutive session (2021-09-29) but did exist by the end of the term (2025-03-24). Matching on period-end-or-during keeps the BSW seat row attached to its lineage.
+
+### Schema migration drift
+
+The new tables (`bundestag_terms`, `party_lineages`, `party_lineage_members`, `party_seat_history`, `party_lineage_events`) were added in `db/migrations/0017_historical_composition.sql`. Drizzle assigned the migration `0015_historical_composition` (numbering picks the highest journal idx and increments — our journal has duplicate `0015_*` entries from earlier merges, so the numbering was off). I renamed both the SQL file and the `meta/<n>_snapshot.json` to `0017_*` to avoid colliding with the existing `0015_votes_is_petition_bundle.sql`, and updated the journal's last `tag` accordingly. If you regenerate, expect drizzle to clobber the rename — keep the same workaround as for `members.dip_person_id`.
+
+### Cron cadence
+
+Quarterly is fine. Term metadata only changes when a new Bundestag constitutes; seat composition drifts a few seats per year as MdBs die/resign/switch. Re-running mid-term will refresh the latest fractions.

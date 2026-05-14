@@ -1,15 +1,9 @@
-import { Filter, Users, Vote, Scale } from 'lucide-react'
+import { Filter, Vote, Scale } from 'lucide-react'
 import { Link } from '../../lib/Link'
 import type { PartyDetail as PartyDetailData, PartyVote } from '@/server/parties'
-import { PARTY_COLOR, PARTY_LABEL, PARTY_LOGO } from '@/lib/parties'
 import { formatDate } from '@/lib/format'
 import { FilterPill } from '@/views/votesList/FilterPill'
 import { Stamp } from '@/views/votesList/Stamp'
-import { PartyLogo } from '@/views/votesList/PartyLogo'
-import { AlignmentList } from './AlignmentList'
-import { DonationsBar } from './DonationsBar'
-import { ProposalsBar } from './ProposalsBar'
-import { StatPie } from './StatPie'
 
 type Result = 'angenommen' | 'abgelehnt'
 const RESULT_LABELS: Record<Result, string> = { angenommen: 'Akzeptiert', abgelehnt: 'Abgelehnt' }
@@ -29,53 +23,10 @@ type Props = {
   onPartyVoteChange: (value: PartyVote | null) => void
 }
 
-export function PartyDetail({ data, result, onResultChange, partyVote, onPartyVoteChange }: Props) {
-  const color = PARTY_COLOR[data.party] ?? 'var(--color-gray)'
+export function PartyVotesPanel({ data, result, onResultChange, partyVote, onPartyVoteChange }: Props) {
   const votes = data.votes.filter((v) => (!result || v.result === result) && (!partyVote || v.partyVote === partyVote))
   return (
-    <main className="mx-auto max-w-3xl p-l">
-      <h1 className="flex items-center gap-m text-xxl font-semibold">
-        {PARTY_LOGO[data.party] ? (
-          <PartyLogo party={data.party} size={44} decorative />
-        ) : (
-          <span className="inline-block size-6" style={{ background: color }} />
-        )}
-        {PARTY_LABEL[data.party] ?? data.party}
-        <Link
-          to="/members/"
-          search={{ party: data.party }}
-          className="ml-auto flex items-center gap-xs text-l font-regular opacity-l hover:opacity-100"
-          aria-label={`${data.seats} Sitze`}
-        >
-          <Users size={19} />
-          <span>{data.seats}</span>
-        </Link>
-      </h1>
-
-      <div className="mt-xl grid gap-x-xl gap-y-l md:grid-cols-2">
-        <div className="flex justify-around gap-l">
-          <StatPie
-            label="Geschlossenheit"
-            value={data.cohesion}
-            info="Anteil der Fraktion, der bei einer Abstimmung dieselbe Position einnimmt. Berechnet über alle Abstimmungen (namentlich, Handzeichen, Hammelsprung), bei denen eine Fraktionsabstimmung erfasst ist."
-          />
-          <StatPie
-            label="Anwesenheit"
-            value={data.attendance}
-            info="Anteil der Fraktionsmitglieder, die bei einer Abstimmung anwesend waren. Berechnet über alle Abstimmungen, bei denen eine Fraktionsabstimmung erfasst ist."
-          />
-        </div>
-        {data.alignments.length > 0 ? (
-          <div>
-            <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>Übereinstimmung</div>
-            <AlignmentList alignments={data.alignments} party={data.party} />
-          </div>
-        ) : <div />}
-        {data.proposals.length > 0 ? <ProposalsBar proposals={data.proposals} /> : <div />}
-        {data.donations.length > 0 ? <DonationsBar donations={data.donations} totalEur={data.donationsTotalEur} /> : <div />}
-      </div>
-
-      <div className="mt-xl mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>Abstimmungen</div>
+    <div>
       <div className="mb-l flex flex-wrap items-center gap-s">
         <Filter size={14} className="opacity-l" />
         <FilterPill
@@ -113,7 +64,7 @@ export function PartyDetail({ data, result, onResultChange, partyVote, onPartyVo
           </Link>
         ))}
       </div>
-    </main>
+    </div>
   )
 }
 
@@ -128,4 +79,3 @@ function VoteChip({ vote }: { vote: PartyVote }) {
     </span>
   )
 }
-

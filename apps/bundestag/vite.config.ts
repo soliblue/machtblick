@@ -105,6 +105,9 @@ function prerenderPaths(): string[] {
     const slug = slugMap[p.party]
     if (!slug) continue
     paths.push(`/parties/${slug}/`)
+    paths.push(`/parties/${slug}/profil/`)
+    paths.push(`/parties/${slug}/abstimmungen/`)
+    paths.push(`/parties/${slug}/verlauf/`)
     paths.push(`/members/?party=${encodeURIComponent(p.party)}`)
   }
   db.close()

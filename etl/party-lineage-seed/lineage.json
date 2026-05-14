@@ -1,0 +1,184 @@
+{
+  "lineages": [
+    {
+      "id": "cdu_csu",
+      "displayName": "CDU/CSU",
+      "currentPartyId": "CDU/CSU",
+      "members": [
+        { "partyName": "CDU/CSU", "validFrom": "1949-09-07", "validTo": null },
+        { "partyName": "CDU", "validFrom": "1949-09-07", "validTo": null },
+        { "partyName": "CSU", "validFrom": "1949-09-07", "validTo": null }
+      ]
+    },
+    {
+      "id": "spd",
+      "displayName": "SPD",
+      "currentPartyId": "SPD",
+      "members": [
+        { "partyName": "SPD", "validFrom": "1949-09-07", "validTo": null }
+      ]
+    },
+    {
+      "id": "fdp",
+      "displayName": "FDP",
+      "currentPartyId": "FDP",
+      "members": [
+        { "partyName": "FDP", "validFrom": "1949-09-07", "validTo": null }
+      ]
+    },
+    {
+      "id": "gruene",
+      "displayName": "Bündnis 90/Die Grünen",
+      "currentPartyId": "B90/Grüne",
+      "members": [
+        { "partyName": "B90/Grüne", "validFrom": "1983-03-29", "validTo": null }
+      ]
+    },
+    {
+      "id": "linke",
+      "displayName": "Die Linke",
+      "currentPartyId": "Die Linke",
+      "members": [
+        { "partyName": "Die Linke", "validFrom": "1990-02-04", "validTo": null }
+      ]
+    },
+    {
+      "id": "afd",
+      "displayName": "AfD",
+      "currentPartyId": "AfD",
+      "members": [
+        { "partyName": "AfD", "validFrom": "2013-04-14", "validTo": null }
+      ]
+    },
+    {
+      "id": "bsw",
+      "displayName": "BSW",
+      "currentPartyId": "BSW",
+      "members": [
+        { "partyName": "BSW", "validFrom": "2024-01-08", "validTo": null }
+      ]
+    },
+    {
+      "id": "ssw",
+      "displayName": "SSW",
+      "currentPartyId": "SSW",
+      "members": [
+        { "partyName": "SSW", "validFrom": "1948-06-22", "validTo": null }
+      ]
+    },
+    {
+      "id": "kpd",
+      "displayName": "KPD",
+      "currentPartyId": null,
+      "members": [
+        { "partyName": "KPD", "validFrom": "1945-06-11", "validTo": "1956-08-17" }
+      ]
+    },
+    {
+      "id": "zentrum",
+      "displayName": "Deutsche Zentrumspartei",
+      "currentPartyId": null,
+      "members": [
+        { "partyName": "Zentrum", "validFrom": "1945-10-14", "validTo": null }
+      ]
+    },
+    {
+      "id": "bp",
+      "displayName": "Bayernpartei",
+      "currentPartyId": null,
+      "members": [
+        { "partyName": "BP", "validFrom": "1946-10-28", "validTo": null }
+      ]
+    },
+    {
+      "id": "dp",
+      "displayName": "Deutsche Partei",
+      "currentPartyId": null,
+      "members": [
+        { "partyName": "DP", "validFrom": "1947-06-29", "validTo": "1961-07-17" }
+      ]
+    },
+    {
+      "id": "wav",
+      "displayName": "Wirtschaftliche Aufbau-Vereinigung",
+      "currentPartyId": null,
+      "members": [
+        { "partyName": "WAV", "validFrom": "1945-10-13", "validTo": null }
+      ]
+    },
+    {
+      "id": "gb_bhe",
+      "displayName": "Gesamtdeutscher Block / BHE",
+      "currentPartyId": null,
+      "members": [
+        { "partyName": "GB/BHE", "validFrom": "1950-01-08", "validTo": "1961-04-14" }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "id": "gruene_founded",
+      "date": "1980-01-13",
+      "type": "founded",
+      "labelDe": "Gründung Die Grünen",
+      "lineageId": "gruene",
+      "relatedLineageId": null
+    },
+    {
+      "id": "gruene_buendnis90_merger",
+      "date": "1993-05-14",
+      "type": "renamed",
+      "labelDe": "Fusion mit Bündnis 90 zu Bündnis 90/Die Grünen",
+      "lineageId": "gruene",
+      "relatedLineageId": null
+    },
+    {
+      "id": "linke_sed_pds_rename",
+      "date": "1990-02-04",
+      "type": "renamed",
+      "labelDe": "Umbenennung SED-PDS zu PDS",
+      "lineageId": "linke",
+      "relatedLineageId": null
+    },
+    {
+      "id": "linke_wasg_merger",
+      "date": "2007-06-16",
+      "type": "renamed",
+      "labelDe": "Fusion mit WASG zu Die Linke",
+      "lineageId": "linke",
+      "relatedLineageId": null
+    },
+    {
+      "id": "afd_founded",
+      "date": "2013-04-14",
+      "type": "founded",
+      "labelDe": "Gründung AfD",
+      "lineageId": "afd",
+      "relatedLineageId": null
+    },
+    {
+      "id": "bsw_founded",
+      "date": "2024-01-08",
+      "type": "split_out",
+      "labelDe": "Abspaltung von Die Linke",
+      "lineageId": "bsw",
+      "relatedLineageId": "linke"
+    },
+    {
+      "id": "linke_bsw_split",
+      "date": "2024-01-08",
+      "type": "merged_out",
+      "labelDe": "Abspaltung BSW",
+      "lineageId": "linke",
+      "relatedLineageId": "bsw"
+    },
+    {
+      "id": "kpd_banned",
+      "date": "1956-08-17",
+      "type": "dissolved",
+      "labelDe": "KPD-Verbot durch Bundesverfassungsgericht",
+      "lineageId": "kpd",
+      "relatedLineageId": null
+    }
+  ]
+}

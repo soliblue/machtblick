@@ -1,14 +1,14 @@
 import { Link } from '../../lib/Link'
 
-type Props = { memberId: string }
+type Props = { partyId: string }
 
 const TABS = [
-  { to: '/members/$id/abstimmungen/', label: 'Abstimmungen' },
-  { to: '/members/$id/reden/', label: 'Reden' },
-  { to: '/members/$id/anfragen/', label: 'Anfragen' },
+  { to: '/parties/$id/profil/', label: 'Profil' },
+  { to: '/parties/$id/abstimmungen/', label: 'Abstimmungen' },
+  { to: '/parties/$id/verlauf/', label: 'Verlauf' },
 ] as const
 
-export function MemberDetailTabs({ memberId }: Props) {
+export function PartyDetailTabs({ partyId }: Props) {
   return (
     <nav
       className="-mx-l mt-l mb-l grid grid-cols-3 border-y"
@@ -18,7 +18,7 @@ export function MemberDetailTabs({ memberId }: Props) {
         <Link
           key={t.to}
           to={t.to}
-          params={{ id: memberId }}
+          params={{ id: partyId }}
           className="-mb-px border-b-2 border-transparent py-m text-center text-l font-regular opacity-l transition-opacity hover:opacity-100"
           style={i > 0 ? { borderLeft: '1px solid color-mix(in oklab, var(--color-fg) 15%, transparent)' } : undefined}
           activeProps={{

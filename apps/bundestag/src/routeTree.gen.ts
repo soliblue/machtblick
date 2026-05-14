@@ -15,9 +15,13 @@ import { Route as RedenIndexRouteImport } from './routes/reden/index'
 import { Route as PartiesIndexRouteImport } from './routes/parties/index'
 import { Route as MembersIndexRouteImport } from './routes/members/index'
 import { Route as VotesIdRouteImport } from './routes/votes/$id'
-import { Route as PartiesIdRouteImport } from './routes/parties/$id'
+import { Route as PartiesIdRouteRouteImport } from './routes/parties/$id/route'
 import { Route as MembersIdRouteRouteImport } from './routes/members/$id/route'
+import { Route as PartiesIdIndexRouteImport } from './routes/parties/$id/index'
 import { Route as MembersIdIndexRouteImport } from './routes/members/$id/index'
+import { Route as PartiesIdVerlaufRouteImport } from './routes/parties/$id/verlauf'
+import { Route as PartiesIdProfilRouteImport } from './routes/parties/$id/profil'
+import { Route as PartiesIdAbstimmungenRouteImport } from './routes/parties/$id/abstimmungen'
 import { Route as MembersIdRedenRouteImport } from './routes/members/$id/reden'
 import { Route as MembersIdAnfragenRouteImport } from './routes/members/$id/anfragen'
 import { Route as MembersIdAbstimmungenRouteImport } from './routes/members/$id/abstimmungen'
@@ -52,7 +56,7 @@ const VotesIdRoute = VotesIdRouteImport.update({
   path: '/votes/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PartiesIdRoute = PartiesIdRouteImport.update({
+const PartiesIdRouteRoute = PartiesIdRouteRouteImport.update({
   id: '/parties/$id',
   path: '/parties/$id',
   getParentRoute: () => rootRouteImport,
@@ -62,10 +66,30 @@ const MembersIdRouteRoute = MembersIdRouteRouteImport.update({
   path: '/members/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PartiesIdIndexRoute = PartiesIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PartiesIdRouteRoute,
+} as any)
 const MembersIdIndexRoute = MembersIdIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => MembersIdRouteRoute,
+} as any)
+const PartiesIdVerlaufRoute = PartiesIdVerlaufRouteImport.update({
+  id: '/verlauf',
+  path: '/verlauf',
+  getParentRoute: () => PartiesIdRouteRoute,
+} as any)
+const PartiesIdProfilRoute = PartiesIdProfilRouteImport.update({
+  id: '/profil',
+  path: '/profil',
+  getParentRoute: () => PartiesIdRouteRoute,
+} as any)
+const PartiesIdAbstimmungenRoute = PartiesIdAbstimmungenRouteImport.update({
+  id: '/abstimmungen',
+  path: '/abstimmungen',
+  getParentRoute: () => PartiesIdRouteRoute,
 } as any)
 const MembersIdRedenRoute = MembersIdRedenRouteImport.update({
   id: '/reden',
@@ -86,7 +110,7 @@ const MembersIdAbstimmungenRoute = MembersIdAbstimmungenRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/members/$id': typeof MembersIdRouteRouteWithChildren
-  '/parties/$id': typeof PartiesIdRoute
+  '/parties/$id': typeof PartiesIdRouteRouteWithChildren
   '/votes/$id': typeof VotesIdRoute
   '/members/': typeof MembersIndexRoute
   '/parties/': typeof PartiesIndexRoute
@@ -95,11 +119,14 @@ export interface FileRoutesByFullPath {
   '/members/$id/abstimmungen': typeof MembersIdAbstimmungenRoute
   '/members/$id/anfragen': typeof MembersIdAnfragenRoute
   '/members/$id/reden': typeof MembersIdRedenRoute
+  '/parties/$id/abstimmungen': typeof PartiesIdAbstimmungenRoute
+  '/parties/$id/profil': typeof PartiesIdProfilRoute
+  '/parties/$id/verlauf': typeof PartiesIdVerlaufRoute
   '/members/$id/': typeof MembersIdIndexRoute
+  '/parties/$id/': typeof PartiesIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/parties/$id': typeof PartiesIdRoute
   '/votes/$id': typeof VotesIdRoute
   '/members': typeof MembersIndexRoute
   '/parties': typeof PartiesIndexRoute
@@ -108,13 +135,17 @@ export interface FileRoutesByTo {
   '/members/$id/abstimmungen': typeof MembersIdAbstimmungenRoute
   '/members/$id/anfragen': typeof MembersIdAnfragenRoute
   '/members/$id/reden': typeof MembersIdRedenRoute
+  '/parties/$id/abstimmungen': typeof PartiesIdAbstimmungenRoute
+  '/parties/$id/profil': typeof PartiesIdProfilRoute
+  '/parties/$id/verlauf': typeof PartiesIdVerlaufRoute
   '/members/$id': typeof MembersIdIndexRoute
+  '/parties/$id': typeof PartiesIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/members/$id': typeof MembersIdRouteRouteWithChildren
-  '/parties/$id': typeof PartiesIdRoute
+  '/parties/$id': typeof PartiesIdRouteRouteWithChildren
   '/votes/$id': typeof VotesIdRoute
   '/members/': typeof MembersIndexRoute
   '/parties/': typeof PartiesIndexRoute
@@ -123,7 +154,11 @@ export interface FileRoutesById {
   '/members/$id/abstimmungen': typeof MembersIdAbstimmungenRoute
   '/members/$id/anfragen': typeof MembersIdAnfragenRoute
   '/members/$id/reden': typeof MembersIdRedenRoute
+  '/parties/$id/abstimmungen': typeof PartiesIdAbstimmungenRoute
+  '/parties/$id/profil': typeof PartiesIdProfilRoute
+  '/parties/$id/verlauf': typeof PartiesIdVerlaufRoute
   '/members/$id/': typeof MembersIdIndexRoute
+  '/parties/$id/': typeof PartiesIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -139,11 +174,14 @@ export interface FileRouteTypes {
     | '/members/$id/abstimmungen'
     | '/members/$id/anfragen'
     | '/members/$id/reden'
+    | '/parties/$id/abstimmungen'
+    | '/parties/$id/profil'
+    | '/parties/$id/verlauf'
     | '/members/$id/'
+    | '/parties/$id/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/parties/$id'
     | '/votes/$id'
     | '/members'
     | '/parties'
@@ -152,7 +190,11 @@ export interface FileRouteTypes {
     | '/members/$id/abstimmungen'
     | '/members/$id/anfragen'
     | '/members/$id/reden'
+    | '/parties/$id/abstimmungen'
+    | '/parties/$id/profil'
+    | '/parties/$id/verlauf'
     | '/members/$id'
+    | '/parties/$id'
   id:
     | '__root__'
     | '/'
@@ -166,13 +208,17 @@ export interface FileRouteTypes {
     | '/members/$id/abstimmungen'
     | '/members/$id/anfragen'
     | '/members/$id/reden'
+    | '/parties/$id/abstimmungen'
+    | '/parties/$id/profil'
+    | '/parties/$id/verlauf'
     | '/members/$id/'
+    | '/parties/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MembersIdRouteRoute: typeof MembersIdRouteRouteWithChildren
-  PartiesIdRoute: typeof PartiesIdRoute
+  PartiesIdRouteRoute: typeof PartiesIdRouteRouteWithChildren
   VotesIdRoute: typeof VotesIdRoute
   MembersIndexRoute: typeof MembersIndexRoute
   PartiesIndexRoute: typeof PartiesIndexRoute
@@ -228,7 +274,7 @@ declare module '@tanstack/react-router' {
       id: '/parties/$id'
       path: '/parties/$id'
       fullPath: '/parties/$id'
-      preLoaderRoute: typeof PartiesIdRouteImport
+      preLoaderRoute: typeof PartiesIdRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/members/$id': {
@@ -238,12 +284,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MembersIdRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/parties/$id/': {
+      id: '/parties/$id/'
+      path: '/'
+      fullPath: '/parties/$id/'
+      preLoaderRoute: typeof PartiesIdIndexRouteImport
+      parentRoute: typeof PartiesIdRouteRoute
+    }
     '/members/$id/': {
       id: '/members/$id/'
       path: '/'
       fullPath: '/members/$id/'
       preLoaderRoute: typeof MembersIdIndexRouteImport
       parentRoute: typeof MembersIdRouteRoute
+    }
+    '/parties/$id/verlauf': {
+      id: '/parties/$id/verlauf'
+      path: '/verlauf'
+      fullPath: '/parties/$id/verlauf'
+      preLoaderRoute: typeof PartiesIdVerlaufRouteImport
+      parentRoute: typeof PartiesIdRouteRoute
+    }
+    '/parties/$id/profil': {
+      id: '/parties/$id/profil'
+      path: '/profil'
+      fullPath: '/parties/$id/profil'
+      preLoaderRoute: typeof PartiesIdProfilRouteImport
+      parentRoute: typeof PartiesIdRouteRoute
+    }
+    '/parties/$id/abstimmungen': {
+      id: '/parties/$id/abstimmungen'
+      path: '/abstimmungen'
+      fullPath: '/parties/$id/abstimmungen'
+      preLoaderRoute: typeof PartiesIdAbstimmungenRouteImport
+      parentRoute: typeof PartiesIdRouteRoute
     }
     '/members/$id/reden': {
       id: '/members/$id/reden'
@@ -287,10 +361,28 @@ const MembersIdRouteRouteWithChildren = MembersIdRouteRoute._addFileChildren(
   MembersIdRouteRouteChildren,
 )
 
+interface PartiesIdRouteRouteChildren {
+  PartiesIdAbstimmungenRoute: typeof PartiesIdAbstimmungenRoute
+  PartiesIdProfilRoute: typeof PartiesIdProfilRoute
+  PartiesIdVerlaufRoute: typeof PartiesIdVerlaufRoute
+  PartiesIdIndexRoute: typeof PartiesIdIndexRoute
+}
+
+const PartiesIdRouteRouteChildren: PartiesIdRouteRouteChildren = {
+  PartiesIdAbstimmungenRoute: PartiesIdAbstimmungenRoute,
+  PartiesIdProfilRoute: PartiesIdProfilRoute,
+  PartiesIdVerlaufRoute: PartiesIdVerlaufRoute,
+  PartiesIdIndexRoute: PartiesIdIndexRoute,
+}
+
+const PartiesIdRouteRouteWithChildren = PartiesIdRouteRoute._addFileChildren(
+  PartiesIdRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MembersIdRouteRoute: MembersIdRouteRouteWithChildren,
-  PartiesIdRoute: PartiesIdRoute,
+  PartiesIdRouteRoute: PartiesIdRouteRouteWithChildren,
   VotesIdRoute: VotesIdRoute,
   MembersIndexRoute: MembersIndexRoute,
   PartiesIndexRoute: PartiesIndexRoute,
