@@ -16,10 +16,15 @@ for (const m of db.select({ id: members.id, firstName: members.firstName, lastNa
   if (m.btMdbId) membersByMdbId.set(m.btMdbId, m.id)
 }
 
+const files = readdirSync(rawDir).filter((f) => f.endsWith('.xml')).sort()
+const parsedProtocols: SpeechRow[][] = []
 const sessionByDate = new Map<string, string>()
-for (const v of db.select({ id: votes.id, date: votes.date }).from(votes).all()) {
-  const m = v.id.match(/^pp21-(\d+)-/)
-  if (m) sessionByDate.set(v.date, `21-${Number(m[1])}`)
+for (const file of files) {
+  const xml = readFileSync(join(rawDir, file), 'utf8')
+  const rows = parseProtocol(xml)
+  parsedProtocols.push(rows)
+  const first = rows[0]
+  if (first) sessionByDate.set(first.date, first.sessionId)
 }
 
 const votesBySession = new Map<string, { id: string; date: string }[]>()
@@ -27,8 +32,7 @@ const votesByDate = new Map<string, { id: string; date: string }[]>()
 const votesByTop = new Map<string, string[]>()
 for (const v of db.select({ id: votes.id, date: votes.date, agendaItem: votes.agendaItem }).from(votes).all()) {
   if (v.date < '2025-03-25') continue
-  const m = v.id.match(/^pp21-(\d+)-/)
-  const sessionId = m ? `21-${Number(m[1])}` : sessionByDate.get(v.date) ?? null
+  const sessionId = sessionByDate.get(v.date) ?? null
   if (sessionId) {
     const arr = votesBySession.get(sessionId) ?? []
     arr.push(v)
@@ -53,7 +57,6 @@ for (const arr of votesByTop.values()) {
   })
 }
 
-const files = readdirSync(rawDir).filter((f) => f.endsWith('.xml')).sort()
 const inserts: typeof speeches.$inferInsert[] = []
 const unmatchedSpeakers = new Map<string, number>()
 let matchedMember = 0
@@ -62,9 +65,7 @@ let matchedViaName = 0
 let matchedVote = 0
 let topPopulated = 0
 
-for (const file of files) {
-  const xml = readFileSync(join(rawDir, file), 'utf8')
-  const rows = parseProtocol(xml)
+for (const rows of parsedProtocols) {
   for (const r of rows) {
     const hasRole = r.speakerRoleLang || r.speakerRoleKurz
     const mdbHit = hasRole || !r.speakerDipId || r.speakerDipId.startsWith('999') ? null : membersByMdbId.get(r.speakerDipId) ?? null
