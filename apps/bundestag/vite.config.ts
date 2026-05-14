@@ -160,7 +160,7 @@ writeSpeechesStatic()
 writeJsonEndpoints()
 
 export default defineConfig({
-  server: { port: 3000, host: true },
+  server: { port: 3000, host: true, allowedHosts: ['dev.machtblick.de'] },
   resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
   plugins: [
     tailwindcss(),
