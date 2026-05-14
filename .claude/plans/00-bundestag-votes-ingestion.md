@@ -2,14 +2,14 @@
 
 Get every roll-call vote (Namentliche Abstimmung) from the current Bundestag into a queryable SQLite database in this repo, with the per-member vote, party totals, and source metadata preserved. Foundation for the `/votes` and `/votes/:id` views.
 
-Prior art: `~/Desktop/CODING/German-Politics/app/scripts/extract-bundestag-votes.mjs`. Port the logic (URL discovery, HTML parsing, totals sanity check), rewrite the shape (small files, view/logic split for ETL too).
+Port the logic (URL discovery, HTML parsing, totals sanity check), rewrite the shape (small files, view/logic split for ETL too).
 
 ## Status
 
 | Workstream | Owner | State |
 |---|---|---|
 | Schema (`db/schema/*.ts`) | lead | done |
-| Importer from `~/Desktop/CODING/German-Politics` (seed.ts + per-vote JSONs) | plumber | done |
+| Initial seed importer (seed.ts + per-vote JSONs) | plumber | done |
 | Fetcher (list + detail + namensliste, with caching) — for new votes only | plumber | todo |
 | Parsers (teasers, detail, member votes, totals) — for new votes only | plumber | todo |
 | Writer (parsed records → SQLite) | plumber | todo |
