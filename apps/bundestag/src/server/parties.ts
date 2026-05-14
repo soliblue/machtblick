@@ -3,7 +3,6 @@ import { db } from '@machtblick/db/client'
 import { votes, votePartySummaries, voteMembers, members, partyDonations } from '@machtblick/db/schema'
 import { desc, eq, and, inArray } from 'drizzle-orm'
 import { SLUG_TO_PARTY, hasPartyLine } from '@/lib/parties'
-import { parseProposingParty } from './proposingParty'
 import { getCurrentPartyMap } from './memberParty'
 
 function cohesion(s: { yes: number; no: number; abstain: number; members: number; absent: number }) {
@@ -240,12 +239,12 @@ export const getParty = createServerFn({ method: 'GET' })
     let proposalsAccepted = 0
     const proposals: PartyProposal[] = []
     const allVotes = db
-      .select({ id: votes.id, document: votes.document, result: votes.result, date: votes.date, title: votes.title, cleanTitle: votes.cleanTitle })
+      .select({ id: votes.id, initiator: votes.initiator, result: votes.result, date: votes.date, title: votes.title, cleanTitle: votes.cleanTitle })
       .from(votes)
       .where(eq(votes.procedural, false))
-      .all() as Array<{ id: string; document: string | null; result: 'angenommen' | 'abgelehnt'; date: string; title: string; cleanTitle: string | null }>
+      .all() as Array<{ id: string; initiator: string | null; result: 'angenommen' | 'abgelehnt'; date: string; title: string; cleanTitle: string | null }>
     for (const v of allVotes) {
-      if (parseProposingParty(v.document) !== party) continue
+      if (v.initiator !== party) continue
       proposalsTotal += 1
       if (v.result === 'angenommen') proposalsAccepted += 1
       proposals.push({ voteId: v.id, date: v.date, title: v.title, cleanTitle: v.cleanTitle, result: v.result })

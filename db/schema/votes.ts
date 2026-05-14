@@ -14,6 +14,7 @@ export const votes = sqliteTable('votes', {
   summarySimplified: text('summary_simplified'),
   summaryDetail: text('summary_detail'),
   document: text('document'),
+  initiator: text('initiator'),
   result: text('result', { enum: ['angenommen', 'abgelehnt'] }).notNull(),
   procedural: integer('procedural', { mode: 'boolean' }).notNull().default(false),
   inverted: integer('inverted', { mode: 'boolean' }).notNull().default(false),

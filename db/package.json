@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     "./client": "./client.ts",
-    "./schema": "./schema/index.ts"
+    "./schema": "./schema/index.ts",
+    "./parseProposingParty": "./parseProposingParty.ts"
   },
   "dependencies": {
     "better-sqlite3": "^11.5.0",

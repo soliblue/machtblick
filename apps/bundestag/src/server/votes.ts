@@ -2,7 +2,6 @@ import { createServerFn } from '@tanstack/react-start'
 import { db } from '@machtblick/db/client'
 import { votes, voteDocuments, votePartySummaries, voteMembers, members, speeches, voteDescriptionDecisions } from '@machtblick/db/schema'
 import { eq, desc, sql, asc } from 'drizzle-orm'
-import { parseProposingParty } from './proposingParty'
 import { pickAntragFromRows } from './lib/pickAntrag'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
 import { hasPartyLine } from '../lib/parties'
@@ -67,7 +66,7 @@ export const listVotes = createServerFn({ method: 'GET' }).handler(async (): Pro
     if (v.voteType === 'namentlich' && v.yes != null) {
       return {
         id: v.id, date: v.date, title: v.title, cleanTitle: v.cleanTitle, topic: v.topic, voteType: v.voteType,
-        proposingParty: parseProposingParty(v.document), result: v.result,
+        proposingParty: v.initiator, result: v.result,
         yes: v.yes, no: v.no!, abstain: v.abstain!, absent: v.absent!, totalMembers: v.totalMembers!,
         partySummaries: summaries.map((s) => ({
           party: s.party, position: s.position, members: s.members ?? 0,
@@ -92,7 +91,7 @@ export const listVotes = createServerFn({ method: 'GET' }).handler(async (): Pro
     })
     return {
       id: v.id, date: v.date, title: v.title, cleanTitle: v.cleanTitle, topic: v.topic, voteType: v.voteType,
-      proposingParty: parseProposingParty(v.document), result: v.result,
+      proposingParty: v.initiator, result: v.result,
       yes, no, abstain, absent: 0, totalMembers: yes + no + abstain,
       partySummaries: enriched,
     }
@@ -191,7 +190,7 @@ export const getVote = createServerFn({ method: 'GET' })
       vote,
       documents,
       partySummaries,
-      proposingParty: parseProposingParty(vote.document),
+      proposingParty: vote.initiator,
       defectors,
       memberBallots: vmRows.map((r) => ({ memberId: r.memberId, name: r.name, party: r.party, choice: r.choice })),
       debate: loadDebateForVote(voteRow.id),
