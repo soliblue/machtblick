@@ -85,7 +85,7 @@ function writeSpeechesStatic() {
 
 function prerenderPaths(): string[] {
   const db = new Database(fileURLToPath(new URL('../../db/machtblick.sqlite', import.meta.url)), { readonly: true })
-  const paths = ['/', '/votes/', '/members/', '/parties/', '/reden/']
+  const paths = ['/', '/votes/', '/members/', '/parties/', '/reden/', '/impressum/', '/datenschutz/']
   const votes = db.prepare("SELECT id FROM votes WHERE procedural = 0 AND vote_type != 'hammelsprung'").all() as Array<{ id: string }>
   for (const v of votes) paths.push(`/votes/${v.id}/`)
   const members = db.prepare('SELECT id FROM members').all() as Array<{ id: string }>

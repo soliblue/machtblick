@@ -24,11 +24,15 @@ machtblick/
     plans/            # numbered plan files (00-, 01-, ...) for multi-agent work
 ```
 
+## Dev URL
+
+Live preview of the local checkout is at `https://dev.machtblick.de`, served by a named cloudflared tunnel pointed at `vite dev`. Noindexed (`robots: noindex, nofollow` is injected when `import.meta.env.DEV`), not for sharing. Use it to verify changes on a phone or share a screenshot with the operator before deploying to `machtblick.de`. Bring-up commands and tunnel metadata live in `lead`'s agent memory, not here, because they are machine-specific.
+
 ## Code Style
 
 - **Less is more.** Prefer deleting over adding; if it isn't load-bearing, remove it
 - **No comments.** No inline, no docstrings, no headers
-- **No em dashes.** Anywhere, including code, commits, and generated text
+- **No em dashes, in any variant.** Not the `—` (U+2014), not `–` (U+2013), not ` -- ` as a typed substitute, not anywhere. Reach for commas, parentheses, line breaks, or periods instead. Hyphens in compound words, CLI flags (`--port`), and CSS custom properties (`--color-fg`) are unrelated and fine
 - **No try-catch** unless explicitly requested; let errors propagate
 - **No single-use variables or functions.** Inline the expression. Confirm before extracting new helpers
 - **No large files.** Split aggressively; a filename is a promise about what's inside, placing a new file should be mechanical

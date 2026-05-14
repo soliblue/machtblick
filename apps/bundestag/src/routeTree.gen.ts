@@ -9,6 +9,8 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ImpressumRouteImport } from './routes/impressum'
+import { Route as DatenschutzRouteImport } from './routes/datenschutz'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VotesIndexRouteImport } from './routes/votes/index'
 import { Route as RedenIndexRouteImport } from './routes/reden/index'
@@ -26,6 +28,16 @@ import { Route as MembersIdRedenRouteImport } from './routes/members/$id/reden'
 import { Route as MembersIdAnfragenRouteImport } from './routes/members/$id/anfragen'
 import { Route as MembersIdAbstimmungenRouteImport } from './routes/members/$id/abstimmungen'
 
+const ImpressumRoute = ImpressumRouteImport.update({
+  id: '/impressum',
+  path: '/impressum',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DatenschutzRoute = DatenschutzRouteImport.update({
+  id: '/datenschutz',
+  path: '/datenschutz',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -109,6 +121,8 @@ const MembersIdAbstimmungenRoute = MembersIdAbstimmungenRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/datenschutz': typeof DatenschutzRoute
+  '/impressum': typeof ImpressumRoute
   '/members/$id': typeof MembersIdRouteRouteWithChildren
   '/parties/$id': typeof PartiesIdRouteRouteWithChildren
   '/votes/$id': typeof VotesIdRoute
@@ -127,6 +141,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/datenschutz': typeof DatenschutzRoute
+  '/impressum': typeof ImpressumRoute
   '/votes/$id': typeof VotesIdRoute
   '/members': typeof MembersIndexRoute
   '/parties': typeof PartiesIndexRoute
@@ -144,6 +160,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/datenschutz': typeof DatenschutzRoute
+  '/impressum': typeof ImpressumRoute
   '/members/$id': typeof MembersIdRouteRouteWithChildren
   '/parties/$id': typeof PartiesIdRouteRouteWithChildren
   '/votes/$id': typeof VotesIdRoute
@@ -164,6 +182,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/datenschutz'
+    | '/impressum'
     | '/members/$id'
     | '/parties/$id'
     | '/votes/$id'
@@ -182,6 +202,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/datenschutz'
+    | '/impressum'
     | '/votes/$id'
     | '/members'
     | '/parties'
@@ -198,6 +220,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/datenschutz'
+    | '/impressum'
     | '/members/$id'
     | '/parties/$id'
     | '/votes/$id'
@@ -217,6 +241,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DatenschutzRoute: typeof DatenschutzRoute
+  ImpressumRoute: typeof ImpressumRoute
   MembersIdRouteRoute: typeof MembersIdRouteRouteWithChildren
   PartiesIdRouteRoute: typeof PartiesIdRouteRouteWithChildren
   VotesIdRoute: typeof VotesIdRoute
@@ -228,6 +254,20 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/impressum': {
+      id: '/impressum'
+      path: '/impressum'
+      fullPath: '/impressum'
+      preLoaderRoute: typeof ImpressumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/datenschutz': {
+      id: '/datenschutz'
+      path: '/datenschutz'
+      fullPath: '/datenschutz'
+      preLoaderRoute: typeof DatenschutzRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -381,6 +421,8 @@ const PartiesIdRouteRouteWithChildren = PartiesIdRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DatenschutzRoute: DatenschutzRoute,
+  ImpressumRoute: ImpressumRoute,
   MembersIdRouteRoute: MembersIdRouteRouteWithChildren,
   PartiesIdRouteRoute: PartiesIdRouteRouteWithChildren,
   VotesIdRoute: VotesIdRoute,

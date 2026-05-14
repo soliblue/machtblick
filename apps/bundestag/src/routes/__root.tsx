@@ -8,6 +8,7 @@ import { TooltipProvider } from '@/components/ui/tooltip'
 const queryClient = new QueryClient()
 import { StampFilter } from '@/views/votesList/StampFilter'
 import { ScrollEyeWordmark } from '@/views/nav/ScrollEyeWordmark'
+import { Footer } from '@/views/nav/Footer'
 import globalsCss from '../styles/globals.css?url'
 import { seoMeta, SITE_NAME, SITE_URL } from '@/lib/seo'
 
@@ -22,6 +23,7 @@ export const Route = createRootRoute({
       { name: 'msapplication-TileColor', content: '#ffffff' },
       { name: 'msapplication-config', content: '/browserconfig.xml' },
       { httpEquiv: 'content-language', content: 'de' },
+      ...(import.meta.env.DEV ? [{ name: 'robots', content: 'noindex, nofollow' }] : []),
       ...seoMeta({}),
     ],
     links: [
@@ -65,6 +67,7 @@ function RootComponent() {
             <StampFilter />
             <Nav />
             <Outlet />
+            <Footer />
           </TooltipProvider>
         </QueryClientProvider>
         <Scripts />

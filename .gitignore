@@ -33,6 +33,7 @@ apps/bundestag/public/members/*.json
 apps/bundestag/public/parties/*.json
 
 apps/bundestag/.tanstack/
+apps/bundestag/test-results/
 
 etl/**/raw/
 etl/**/extracted/
