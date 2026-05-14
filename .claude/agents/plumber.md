@@ -342,6 +342,73 @@ DIP exposes `answer_pdf_url` but not the answer body. We download every PDF and 
 `members.dip_person_id` exists in the DB but not in `db/schema/members.ts` (deliberate, see plan 06 log — added by raw SQL during the earlier ingest). When `drizzle-kit generate` is run, it will try to drop the column. Strip the `ALTER TABLE members DROP COLUMN` from the generated migration before applying it manually with `sqlite3 db/machtblick.sqlite < db/migrations/<file>.sql`. Update `meta/_journal.json` to point at the renamed migration if you renumbered. Until someone reconciles the schema, this is the documented workaround. Do not regenerate migrations without re-checking the diff.
 
 
+## DIP Anträge & Gesetzentwürfe — data notes
+
+Upstream: same DIP search API as Anfragen. **Two new vorgangstypen:** `Antrag` and **`Gesetzgebung`** — note: the bill vorgangstyp is `Gesetzgebung`, NOT `Gesetzentwurf`. `Gesetzentwurf` is the *position-step* name (the introducing Drucksache on a Gesetzgebung-vorgang). The plan and the schema enum use `gesetzentwurf` as the slug because that reads cleanly, but DIP queries must filter `f.vorgangstyp=Gesetzgebung`. Full spike findings, picker rules and the 20-vote audit live in `.claude/plans/26-antraege.md`.
+
+### Tables this source feeds
+
+- `antraege` — one row per DIP vorgang of type Antrag or Gesetzgebung. `type` is the slug, `drucksache` is the introducing-position Drucksache (preferring the BT-zuordnung `21/N` form), `initiative_fraktion` is the joined `initiative[]` array (so coalition motions land as `"Fraktion der CDU/CSU, Fraktion der SPD"`).
+- `antrag_signatories` — `(antrag_id, member_id)` composite PK. Resolved via `aktivitaet.person_id → members.dip_person_id` exactly like Anfragen. No role/order column; DIP doesn't expose lead-vs-co-signer.
+- `antraege_raw` — sidecar with full vorgang + positions JSON, matches the votes/anfragen raw pattern.
+- `vote_antraege` — many-to-many join table linking `votes.id` to `antraege.id` by Drucksache match.
+
+### Introducing-position picker
+
+For Antrag vorgaenge: the `Antrag`-step position. Always `21/N`.
+
+For Gesetzgebung vorgaenge: prefer the `Gesetzentwurf`-step position with **`zuordnung=BT`** Drucksache (form `21/N`). Bundesregierungs-bills are tabled in the Bundesrat first (`zuordnung=BR`, Drucksache form `N/YY` like `436/25`) before being re-introduced to the Bundestag (`zuordnung=BT`, `21/N`); the BT one is what matches `vote_documents`. If only a BR-zuordnung exists (Länder-initiated bills that never reach BT, ~24 rows in WP21), the BR Drucksache is stored — those rows simply don't link to any vote, which is correct.
+
+Pick logic lives in `etl/dip/buildAntraege.ts > pickIntroducingPosition`. The BT-vs-BR preference uses a `21/N` regex on `fundstelle.dokumentnummer`.
+
+### Aktivitaetsart whitelist for signatories
+
+Confirmed by cache scan (65,542 WP21 aktivitaeten): **only `Antrag` and `Gesetzentwurf` aktivitaetsart values map to signatories** for Antrag and Gesetzgebung vorgaenge respectively. There is **no `Urheberschaft` art and no separate `Mitunterzeichnung` art** — the plan-26 sketch's guesses were wrong, the spike's findings are authoritative. The `Berichterstattung` aktivitaet (committee rapporteur, ~1.4k rows) is **not** a signatory and is excluded.
+
+`buildSignatories.ts` carries a `kind: 'anfrage' | 'antrag'` discriminator so `process.ts` can route each signatory row to the right table without re-scanning the aktivitaet cache.
+
+### Zero-signer rows are correct
+
+About 274/326 Gesetzgebung rows and 58/507 Antrag rows have zero MdB signatories. Two legitimate cases:
+
+- **Bundesregierungs-Gesetzentwürfe** (the bulk): government bills are signed by ministry officials, not MdBs. `aktivitaet_anzahl=0` on the Gesetzentwurf position. `initiative_fraktion="Bundesregierung"`.
+- **Coalition jointly-signed motions** (`initiative_fraktion="Fraktion der CDU/CSU, Fraktion der SPD"`): upstream attributes these to "die Fraktion", not individual MdBs. `aktivitaet_anzahl=0` on the Antrag/Gesetzentwurf position. Confirmed via cache scan on vorgang 334544 — no `Antrag` aktivitaeten exist for this vorgang.
+
+Don't add fallback heuristics; the lack of per-MdB attribution is upstream truth. Audit doesn't flag these.
+
+### Vote linkage: Drucksache match
+
+`etl/dip/linkVotes.ts` regex-extracts `\b21/\d{1,6}\b` from `votes.document`, `vote_documents.label`, `vote_documents.title`, joins to `antraege.drucksache`, truncates and rewrites `vote_antraege`. Idempotent.
+
+Baseline coverage on WP21 (2026-05-14):
+- 248 link rows across 180 of 300 votes (60% of all votes have ≥1 linked Antrag).
+- On substantive votes only (procedural=0): 172/280 = **61% linked**, of which **69 votes have at least one MdB-signed Antrag** (the rest link only to Bundesregierungs-Gesetzentwürfe with zero signers).
+- 8 procedural votes ARE legitimately linked (Federführung, Überweisung, Abberufung) — the procedural-vote document explicitly names a specific Antrag; the link is correct.
+
+### Known unlinkable
+
+- **`Untersuchungsausschuss` and `Enquete-Kommission` vorgangstypen** are out of scope (separate vorgangstyp values with their own "Antrag auf Einsetzung eines …"-style position-step names). A future plan can add them. Example missing in WP21 audit: the Corona-Untersuchungsausschuss (Drs 21/573, vorgang 322800) and the Corona-Enquete-Kommission (Drs 21/562, vorgang 322796).
+- **Handzeichen votes with `document=NULL`** — upstream extraction gap (same root cause as the 31 unmapped handzeichen rows in `etl/bundestag/handzeichen/`). Nothing to match on. Re-running the linker won't fix these; the upstream extractor has to capture the Drucksache first.
+
+### Idempotency + cron wiring
+
+`npm run etl:dip` chains `fetch → process` (with the linker baked into `process.ts`'s tail). For partial runs use `npm run etl:dip:fetch` or `npm run etl:dip:process` independently. The Anfragen + Antraege/Gesetzentwürfe + signatories + vote-linkage all run in one `process.ts` invocation. Fetch is resumable per-endpoint via `_cursor.txt` + `_done` markers. Process re-runs are idempotent:
+- `antraege` / `anfragen` rows upsert by id.
+- `antrag_signatories` / `anfrage_signatories` are per-target delete-and-rewrite.
+- `vote_antraege` is truncate-and-rewrite.
+
+Re-fetch is needed when new positions or aktivitaeten arrive upstream (delete the `_done` markers under `etl/dip/cache/<endpoint>/`). The aktivitaet endpoint takes ~657 pages × 100 docs/page, so on a weekly cron prefer incremental sync via `DIP_UPDATED_START=YYYY-MM-DD` (then the new `f.aktualisiert.start` filter is honored on every endpoint).
+
+### Volume baseline (WP21, 2026-05-14)
+
+```
+Antrag vorgaenge:       507
+Gesetzgebung vorgaenge: 326   (of which ~270 Bundesregierung, ~20 Länder, ~30 Fraktion)
+antrag_signatories rows: 12,122  (mostly Antrag; only 52 Gesetzentwurf vorgaenge have MdB signers)
+vote_antraege rows:      248  across 180 votes
+```
+
+
 ## Member portraits (Wikidata + Wikimedia Commons) — data notes
 
 Upstream: Wikidata SPARQL endpoint (`https://query.wikidata.org/sparql`) for image filenames; Commons MediaWiki API (`https://commons.wikimedia.org/w/api.php`) for author + license extmetadata. Feeds `members.picture_url / picture_author / picture_license / picture_source_url`.

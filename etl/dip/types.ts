@@ -34,6 +34,7 @@ export type Vorgangsposition = {
   vorgangsposition: string
   titel: string
   datum: string
+  zuordnung?: string
   urheber?: Urheber[]
   fundstelle?: Fundstelle
   ressort?: Ressort[]
