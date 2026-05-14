@@ -43,7 +43,7 @@ export function VoteDistributionDonut({
   const cy = 50
   const r = 46
   return (
-    <svg width={size} height={size} viewBox="0 0 100 100">
+    <svg width={size} height={size} viewBox="0 0 100 100" role="img" aria-label={`Ja ${yes}, Nein ${no}, Enthalten ${abstain}, Nicht abgegeben ${absent}`}>
       {SEGMENTS.map((s) => {
         const v = values[s.key]
         if (v === 0) return null

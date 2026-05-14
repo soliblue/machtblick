@@ -37,6 +37,7 @@ type Props = {
 export function VotesList({ votes, proposingParty, onProposingPartyChange, availableParties, voteType, onVoteTypeChange, result, onResultChange, topic, onTopicChange, availableTopics, query, onQueryChange }: Props) {
   return (
     <main className="mx-auto max-w-3xl p-l">
+      <h1 className="sr-only">Abstimmungen</h1>
       <div className="mb-m relative min-w-[12rem]">
         <Search size={14} className="absolute left-s top-1/2 -translate-y-1/2 opacity-l" />
         <input

@@ -24,6 +24,7 @@ type Props = {
 export function MembersList({ members, party, onPartyChange, availableParties, state, onStateChange, availableStates, query, onQueryChange, sortKey, sortDir, onSort }: Props) {
   return (
     <main className="mx-auto max-w-3xl p-l">
+      <h1 className="sr-only">Abgeordnete</h1>
       <div className="mb-m relative min-w-[12rem]">
         <Search size={14} className="absolute left-s top-1/2 -translate-y-1/2 opacity-l" />
         <input
@@ -82,6 +83,7 @@ function SortHeader({
     <button
       type="button"
       onClick={() => onSort(k)}
+      aria-label={`Sortieren nach ${label}${active ? (sortDir === 'asc' ? ', aufsteigend' : ', absteigend') : ''}`}
       className={`flex items-center gap-xs hover:opacity-100 ${width ?? ''} ${align === 'right' ? 'justify-end' : ''}`}
       style={{ opacity: active ? 1 : undefined, fontWeight: active ? 600 : undefined }}
     >

@@ -48,6 +48,8 @@ export function FilterPill({ label, options, value, onChange, formatOption, icon
         ref={buttonRef}
         type="button"
         onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-haspopup="listbox"
         className="inline-flex shrink-0 items-center gap-s border px-m py-xs text-m transition-colors hover:bg-surface"
         style={{
           borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)',
@@ -55,7 +57,7 @@ export function FilterPill({ label, options, value, onChange, formatOption, icon
         }}
       >
         {value && PARTY_LOGO[value] ? (
-          <PartyLogo party={value} size={14} />
+          <PartyLogo party={value} size={14} decorative />
         ) : Icon ? (
           <Icon size={14} className="opacity-l" />
         ) : null}
@@ -64,10 +66,12 @@ export function FilterPill({ label, options, value, onChange, formatOption, icon
           <span
             role="button"
             tabIndex={0}
+            aria-label="Filter zurücksetzen"
             onClick={(e) => {
               e.stopPropagation()
               onChange(null)
             }}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.stopPropagation(); onChange(null) } }}
             className="opacity-l hover:opacity-100"
           >
             ×
@@ -77,6 +81,7 @@ export function FilterPill({ label, options, value, onChange, formatOption, icon
       {open && pos && createPortal(
         <div
           ref={menuRef}
+          role="listbox"
           className="fixed z-50 flex min-w-[180px] flex-col bg-background p-xs shadow-lg"
           style={{ left: pos.left, top: pos.top, border: '1px solid color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
         >
@@ -84,6 +89,8 @@ export function FilterPill({ label, options, value, onChange, formatOption, icon
             <button
               key={opt}
               type="button"
+              role="option"
+              aria-selected={opt === value}
               onClick={() => {
                 onChange(opt === value ? null : opt)
                 setOpen(false)
@@ -91,7 +98,7 @@ export function FilterPill({ label, options, value, onChange, formatOption, icon
               className="flex items-center gap-s px-s py-xs text-left text-m hover:bg-surface"
               style={{ background: opt === value ? 'var(--color-surface)' : 'transparent' }}
             >
-              {PARTY_LOGO[opt] && <PartyLogo party={opt} size={14} />}
+              {PARTY_LOGO[opt] && <PartyLogo party={opt} size={14} decorative />}
               <span>{fmt(opt)}</span>
             </button>
           ))}

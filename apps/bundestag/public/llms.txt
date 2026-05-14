@@ -22,3 +22,11 @@ Die Inhalte stammen aus offenen Datenquellen (Bundestag Open Data, abgeordnetenw
 ## Daten
 
 - [Sitemap (alle URLs)](https://machtblick.de/sitemap.xml)
+
+## JSON API
+- /api/votes.json — all non-procedural votes (lean)
+- /api/members.json — all members (lean)
+- /api/parties.json — all parties (lean)
+- /votes/{id}.json — single vote with full details
+- /members/{slug}.json — single member with full details
+- /parties/{slug}.json — single party with full details

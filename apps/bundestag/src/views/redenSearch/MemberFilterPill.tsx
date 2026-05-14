@@ -54,6 +54,8 @@ export function MemberFilterPill({ label, options, value, onChange, icon: Icon }
         ref={buttonRef}
         type="button"
         onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-haspopup="listbox"
         className="inline-flex shrink-0 items-center gap-s border px-m py-xs text-m transition-colors hover:bg-surface"
         style={{ borderColor: BORDER, background: value ? 'var(--color-surface)' : 'transparent' }}
       >
@@ -63,10 +65,12 @@ export function MemberFilterPill({ label, options, value, onChange, icon: Icon }
           <span
             role="button"
             tabIndex={0}
+            aria-label="Filter zurücksetzen"
             onClick={(e) => {
               e.stopPropagation()
               onChange(null)
             }}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.stopPropagation(); onChange(null) } }}
             className="opacity-l hover:opacity-100"
           >
             ×
@@ -76,6 +80,7 @@ export function MemberFilterPill({ label, options, value, onChange, icon: Icon }
       {open && pos && createPortal(
         <div
           ref={menuRef}
+          role="listbox"
           className="fixed z-50 flex w-[260px] flex-col bg-background p-xs shadow-lg"
           style={{ left: pos.left, top: pos.top, border: `1px solid ${BORDER}` }}
         >
@@ -85,6 +90,7 @@ export function MemberFilterPill({ label, options, value, onChange, icon: Icon }
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Suchen"
+            aria-label="Abgeordnete suchen"
             className="mb-xs w-full border bg-transparent px-s py-xs text-m outline-none focus:border-fg"
             style={{ borderColor: BORDER }}
           />
@@ -96,6 +102,8 @@ export function MemberFilterPill({ label, options, value, onChange, icon: Icon }
                 <button
                   key={o.id}
                   type="button"
+                  role="option"
+                  aria-selected={o.id === value}
                   onClick={() => {
                     onChange(o.id === value ? null : o.id)
                     setOpen(false)

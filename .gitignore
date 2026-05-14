@@ -27,6 +27,10 @@ db/*.db
 
 apps/bundestag/public/speeches-index.json
 apps/bundestag/public/speeches/
+apps/bundestag/public/api/
+apps/bundestag/public/votes/*.json
+apps/bundestag/public/members/*.json
+apps/bundestag/public/parties/*.json
 
 apps/bundestag/.tanstack/
 

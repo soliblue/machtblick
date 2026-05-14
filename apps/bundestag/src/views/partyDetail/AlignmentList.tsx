@@ -14,7 +14,7 @@ export function AlignmentList({ alignments }: Props) {
         const row = (
           <div className="grid grid-cols-[10rem_1fr_3rem] items-center gap-m py-s">
             <div className="flex items-center gap-s">
-              <PartyLogo party={a.party} size={20} />
+              <PartyLogo party={a.party} size={20} decorative />
               <span className="text-m font-semibold">{PARTY_LABEL[a.party] ?? a.party}</span>
             </div>
             <div className="relative h-2" style={{ background: 'color-mix(in oklab, var(--color-fg) 6%, transparent)' }}>

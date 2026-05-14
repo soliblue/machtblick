@@ -3,8 +3,11 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath } from 'node:url'
-import { writeFileSync, rmSync } from 'node:fs'
+import { writeFileSync, mkdirSync, rmSync } from 'node:fs'
 import Database from 'better-sqlite3'
+import { leanVotes, fullVote } from './vite-data/votes'
+import { leanMembers, fullMember } from './vite-data/members'
+import { leanParties, fullParty } from './vite-data/parties'
 
 const SITE_URL = 'https://machtblick.de'
 
@@ -122,9 +125,36 @@ function writeSitemap(paths: string[]) {
   writeFileSync(fileURLToPath(new URL('./public/sitemap.xml', import.meta.url)), xml)
 }
 
+function writeJsonEndpoints() {
+  const db = new Database(fileURLToPath(new URL('../../db/machtblick.sqlite', import.meta.url)), { readonly: true })
+  const publicDir = fileURLToPath(new URL('./public', import.meta.url))
+  mkdirSync(`${publicDir}/api`, { recursive: true })
+  writeFileSync(`${publicDir}/api/votes.json`, JSON.stringify(leanVotes(db)))
+  writeFileSync(`${publicDir}/api/members.json`, JSON.stringify(leanMembers(db)))
+  writeFileSync(`${publicDir}/api/parties.json`, JSON.stringify(leanParties(db)))
+  const voteIds = db.prepare("SELECT id FROM votes WHERE procedural = 0 AND vote_type != 'hammelsprung'").all() as Array<{ id: string }>
+  mkdirSync(`${publicDir}/votes`, { recursive: true })
+  for (const { id } of voteIds) writeFileSync(`${publicDir}/votes/${id}.json`, JSON.stringify(fullVote(db, id)))
+  const memberIds = db.prepare('SELECT id FROM members').all() as Array<{ id: string }>
+  mkdirSync(`${publicDir}/members`, { recursive: true })
+  for (const { id } of memberIds) writeFileSync(`${publicDir}/members/${id}.json`, JSON.stringify(fullMember(db, id)))
+  const slugMap: Record<string, string> = { 'CDU/CSU': 'cdu-csu', SPD: 'spd', AfD: 'afd', 'B90/Grüne': 'gruene', 'Die Linke': 'linke', fraktionslos: 'fraktionslos' }
+  const parties = db.prepare(`
+    SELECT DISTINCT s.party FROM vote_party_summaries s
+    INNER JOIN votes v ON v.id = s.vote_id WHERE v.vote_type = 'namentlich'
+  `).all() as Array<{ party: string }>
+  mkdirSync(`${publicDir}/parties`, { recursive: true })
+  for (const { party } of parties) {
+    const slug = slugMap[party]
+    if (slug) writeFileSync(`${publicDir}/parties/${slug}.json`, JSON.stringify(fullParty(db, slug)))
+  }
+  db.close()
+}
+
 const prerenderedPaths = prerenderPaths()
 writeSitemap(prerenderedPaths)
 writeSpeechesStatic()
+writeJsonEndpoints()
 
 export default defineConfig({
   server: { port: 3000, host: true },

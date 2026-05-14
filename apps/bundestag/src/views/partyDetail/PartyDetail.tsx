@@ -36,7 +36,7 @@ export function PartyDetail({ data, result, onResultChange, partyVote, onPartyVo
     <main className="mx-auto max-w-3xl p-l">
       <h1 className="flex items-center gap-m text-xxl font-semibold">
         {PARTY_LOGO[data.party] ? (
-          <PartyLogo party={data.party} size={44} />
+          <PartyLogo party={data.party} size={44} decorative />
         ) : (
           <span className="inline-block size-6" style={{ background: color }} />
         )}

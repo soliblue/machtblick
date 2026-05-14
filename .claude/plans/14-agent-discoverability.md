@@ -103,7 +103,58 @@ Pick one convention. We currently prerender `path/` (trailing slash). Stick with
 - Add `_redirects` entries to 301 non-trailing-slash variants to the canonical form.
 - Lowercase everywhere (party slugs already are; double-check member slugs).
 
-### 7. Accessibility baseline
+### 7. Link response headers (RFC 8288)
+
+Add to `_headers` on `/`:
+
+```
+/
+  Link: </.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="service-doc"
+```
+
+Points agents at the API catalog and llms.txt from the homepage response itself.
+
+Docs: https://www.rfc-editor.org/rfc/rfc8288
+
+### 8. Markdown for Agents (Cloudflare native)
+
+Cloudflare Pages supports `Accept: text/markdown` content negotiation out of the box. Enable via `wrangler.jsonc` or dashboard. When an agent sends `Accept: text/markdown`, Cloudflare returns a markdown rendering of the HTML page automatically.
+
+Docs: https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/
+
+### 9. Content Signals in robots.txt
+
+Append to robots.txt:
+
+```
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+```
+
+We want agents to read and cite our data, but not train on it.
+
+Docs: https://contentsignals.org/
+
+### 10. API catalog (RFC 9727)
+
+Serve `/.well-known/api-catalog` as a static JSON file (`application/linkset+json`):
+
+```json
+{
+  "linkset": [
+    {
+      "anchor": "https://machtblick.de/",
+      "service-desc": [{ "href": "/api/votes.json", "type": "application/json" }],
+      "service-doc": [{ "href": "/llms.txt", "type": "text/plain" }]
+    }
+  ]
+}
+```
+
+Lists all our JSON endpoints for programmatic discovery. Needs a `_headers` entry to set the correct content type.
+
+Docs: https://www.rfc-editor.org/rfc/rfc9727
+
+### 11. Accessibility baseline
 
 | Check | Fix |
 |---|---|
@@ -144,18 +195,29 @@ Pick one convention. We currently prerender `path/` (trailing slash). Stick with
 | Lighthouse a11y ≥ 95 on `/`, `/votes/`, a vote detail, a member detail, `/parties/spd/` | Lighthouse CLI |
 | File count still well under 20k | `find apps/bundestag/public -type f \| wc -l` |
 | No file over 25 MiB | `find apps/bundestag/public -type f -size +25M` empty |
+| Homepage response has `Link` header with `rel="api-catalog"` | curl -I |
+| `/.well-known/api-catalog` returns valid `application/linkset+json` | curl |
+| `robots.txt` contains `Content-Signal:` directive | curl |
+| `Accept: text/markdown` returns markdown on deployed site | curl -H 'Accept: text/markdown' |
 
 ## Status
 
-- todo: lead — assign workstreams.
-
-## Suggested workstream split
-
-1. **plumber/backend**: extract `vite-data/` shared loaders. (One commit.)
-2. **frontend**: wire `head` hooks for `<link rel=alternate>` + JSON-LD on member/party routes. (One commit.)
-3. **frontend**: write the JSON endpoints into `vite.config.ts`. (One commit.)
-4. **frontend**: a11y sweep + canonical/trailing-slash + `_headers` + `_redirects` + `llms.txt` + `robots.txt`. (One commit — they're all small.)
+| Step | Owner | State |
+|---|---|---|
+| 1. Extract `vite-data/` shared loaders | backend | done |
+| 2. JSON endpoints in `vite.config.ts` | backend | done |
+| 3. `head` hooks: `<link rel=alternate>` + JSON-LD (member/party) | frontend | done |
+| 4. `robots.txt` + Content Signals + `llms.txt` update | frontend | done |
+| 5. `_headers` (caching + Link headers) | frontend | done |
+| 6. `/.well-known/api-catalog` (RFC 9727) | frontend | done |
+| 7. Markdown for Agents (Cloudflare config) | frontend | todo |
+| 8. Canonical URLs + trailing-slash `_redirects` | frontend | done |
+| 9. a11y sweep (ARIA, headings, contrast) | frontend | done |
 
 ## Log
 
-(append notes here as workstreams land)
+- **lead**: updated plan with 4 new agent discoverability items from isitagentready.com feedback (Link headers, Markdown for Agents, Content Signals, API catalog). Dropped OAuth, MCP, WebMCP, agent-skills as not applicable to a static read-only site.
+- **backend**: created `vite-data/` module (votes.ts, members.ts, parties.ts) with lean + full query functions. Wired `writeJsonEndpoints()` into vite.config.ts generating /api/*.json and per-entity *.json files. Added generated paths to .gitignore.
+- **frontend**: shipped static discovery files: updated robots.txt with Content-Signal, appended JSON API section to llms.txt, created _headers (caching + Link response headers), _redirects (trailing-slash 301s), .well-known/api-catalog (RFC 9727).
+- **frontend**: added <link rel="alternate" type="application/json"> to all three detail routes. Enhanced member JSON-LD with worksFor and image. Enhanced party JSON-LD with QuantitativeValue seats and member array. Removed incorrect Article JSON-LD from vote detail per plan.
+- **frontend**: a11y sweep complete. PartyLogo now exposes alt text (decorative prop for cases next to party name). FilterPill/MemberFilterPill clear buttons got aria-label + keyboard handler, dropdowns got role=listbox/option + aria-expanded. SortHeader buttons got aria-label. VoteDistributionDonut, Hemicycle, StatPie SVGs got role=img + aria-label. Added sr-only h1 to VotesList, MembersList, PartiesList, RedenSearch. No opacity-s contrast issues found on text.

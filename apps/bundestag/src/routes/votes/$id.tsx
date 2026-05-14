@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { getVote } from '@/server/votes'
 import { VoteDetail, type VoteTab, isVoteTab } from '@/views/voteDetail/VoteDetail'
-import { seoMeta, canonicalLink, SITE_URL } from '@/lib/seo'
+import { seoMeta, canonicalLink, alternateJsonLink } from '@/lib/seo'
 
 type Search = { tab?: VoteTab }
 
@@ -21,23 +21,7 @@ export const Route = createFileRoute('/votes/$id')({
       : 'Namentliche Abstimmung im Deutschen Bundestag.'
     return {
       meta: seoMeta({ title, description: desc, canonical: path, type: 'article' }),
-      links: canonicalLink(path),
-      scripts: v
-        ? [{
-            type: 'application/ld+json',
-            children: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'Article',
-              headline: headline,
-              datePublished: v.date,
-              inLanguage: 'de-DE',
-              url: `${SITE_URL}${path}`,
-              about: { '@type': 'VoteAction', name: headline, result: v.result },
-              author: { '@type': 'Organization', name: 'Deutscher Bundestag' },
-              publisher: { '@type': 'Organization', name: 'Machtblick', url: SITE_URL },
-            }),
-          }]
-        : [],
+      links: [...canonicalLink(path), ...alternateJsonLink(path)],
     }
   },
 })

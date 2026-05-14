@@ -37,6 +37,7 @@ export function RedenSearch({ data, query, party, date, memberId, page, textsLoa
   const pageCount = Math.max(1, Math.ceil(data.total / data.pageSize))
   return (
     <main className="mx-auto max-w-3xl p-l">
+      <h1 className="sr-only">Reden</h1>
       <p className="mb-l text-m opacity-l">Plenarreden des 21. Deutschen Bundestags durchsuchen.</p>
       <div className="mb-s relative">
         <Search size={14} className="absolute left-s top-1/2 -translate-y-1/2 opacity-l" />

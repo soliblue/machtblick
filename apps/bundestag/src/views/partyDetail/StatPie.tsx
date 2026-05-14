@@ -27,7 +27,7 @@ export function StatPie({ label, value, color = 'var(--color-success)', info }: 
         )}
       </div>
       <div className="relative size-[120px]">
-        <svg viewBox="0 0 100 100" className="size-full">
+        <svg viewBox="0 0 100 100" className="size-full" role="img" aria-label={`${label} ${Math.round(safe * 100)}%`}>
           <circle cx={50} cy={50} r={42} fill={trackColor} stroke="var(--color-background)" strokeWidth={2} />
           {safe >= 0.999 ? (
             <circle cx={50} cy={50} r={42} fill={color} stroke="var(--color-background)" strokeWidth={2} />

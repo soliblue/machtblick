@@ -39,7 +39,7 @@ export function Hemicycle({ parties, width = 720 }: Props) {
   const dotR = (drawR * 0.45) / rows / 2.4
 
   return (
-    <svg width="100%" viewBox={`0 0 ${width} ${height}`}>
+    <svg width="100%" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Sitzverteilung im Bundestag">
       {seats.map((s, i) => (
         <circle
           key={i}

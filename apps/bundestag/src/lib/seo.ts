@@ -29,3 +29,7 @@ export function canonicalLink(path: string) {
 export function jsonLd(data: object) {
   return [{ type: 'application/ld+json', children: JSON.stringify(data) }]
 }
+
+export function alternateJsonLink(path: string) {
+  return [{ rel: 'alternate', type: 'application/json', href: `${path}.json` }]
+}

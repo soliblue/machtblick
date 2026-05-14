@@ -10,7 +10,7 @@ export function PartyBadge({ party, compact = false }: Props) {
   const color = PARTY_COLOR[party] ?? 'var(--color-gray)'
   const slug = party === 'Bundesregierung' ? undefined : PARTY_SLUG[party]
   if (compact && PARTY_LOGO[party]) {
-    const logo = <PartyLogo party={party} size={20} />
+    const logo = <PartyLogo party={party} size={20} decorative />
     return slug ? (
       <Link
         to="/parties/$id/"
@@ -38,7 +38,7 @@ export function PartyBadge({ party, compact = false }: Props) {
     <span className="inline-flex items-center gap-s">
       {PARTY_LOGO[party] && (
         <>
-          <PartyLogo party={party} size={16} />
+          <PartyLogo party={party} size={16} decorative />
           <span>·</span>
         </>
       )}

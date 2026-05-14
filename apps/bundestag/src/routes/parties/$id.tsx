@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { getParty, type PartyVote } from '@/server/parties'
 import { PartyDetail } from '@/views/partyDetail/PartyDetail'
-import { seoMeta, canonicalLink, SITE_URL } from '@/lib/seo'
+import { seoMeta, canonicalLink, alternateJsonLink, jsonLd, SITE_URL } from '@/lib/seo'
 import { PARTY_LABEL, hasPartyLine } from '@/lib/parties'
 
 type Result = 'angenommen' | 'abgelehnt'
@@ -27,19 +27,21 @@ export const Route = createFileRoute('/parties/$id')({
           : `${name} im Deutschen Bundestag: Sitze, Mitglieder, Anwesenheit und Abstimmungen.`,
         canonical: path,
       }),
-      links: canonicalLink(path),
-      scripts: loaderData && showPartyLine
-        ? [{
-            type: 'application/ld+json',
-            children: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'PoliticalParty',
-              name: loaderData.party,
-              numberOfEmployees: loaderData.seats,
-              url: `${SITE_URL}${path}`,
-              memberOf: { '@type': 'GovernmentOrganization', name: 'Deutscher Bundestag' },
-            }),
-          }]
+      links: [...canonicalLink(path), ...alternateJsonLink(path)],
+      scripts: loaderData
+        ? jsonLd({
+            '@context': 'https://schema.org',
+            '@type': showPartyLine ? 'PoliticalParty' : 'Organization',
+            name: PARTY_LABEL[loaderData.party] ?? loaderData.party,
+            numberOfEmployees: { '@type': 'QuantitativeValue', value: loaderData.seats },
+            url: `${SITE_URL}${path}`,
+            memberOf: { '@type': 'GovernmentOrganization', name: 'Deutscher Bundestag' },
+            member: loaderData.members.map((m) => ({
+              '@type': 'Person',
+              name: m.name,
+              url: `${SITE_URL}/members/${m.id}/`,
+            })),
+          })
         : [],
     }
   },

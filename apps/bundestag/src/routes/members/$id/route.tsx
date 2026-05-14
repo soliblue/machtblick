@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { getMember } from '@/server/members'
 import { MemberDetailShell } from '@/views/memberDetail/MemberDetailShell'
-import { seoMeta, canonicalLink, SITE_URL } from '@/lib/seo'
+import { seoMeta, canonicalLink, alternateJsonLink, jsonLd, SITE_URL } from '@/lib/seo'
 import { hasPartyLine } from '@/lib/parties'
 
 export const Route = createFileRoute('/members/$id')({
@@ -22,23 +22,22 @@ export const Route = createFileRoute('/members/$id')({
         canonical: path,
         type: 'profile',
       }),
-      links: canonicalLink(path),
+      links: [...canonicalLink(path), ...alternateJsonLink(path)],
       scripts: loaderData
-        ? [{
-            type: 'application/ld+json',
-            children: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'Person',
-              name: loaderData.name,
-              affiliation: {
-                '@type': hasPartyLine(loaderData.party) ? 'PoliticalParty' : 'Organization',
-                name: loaderData.party,
-              },
-              homeLocation: { '@type': 'AdministrativeArea', name: loaderData.state },
-              jobTitle: 'Mitglied des Deutschen Bundestages',
-              url: `${SITE_URL}${path}`,
-            }),
-          }]
+        ? jsonLd({
+            '@context': 'https://schema.org',
+            '@type': 'Person',
+            name: loaderData.name,
+            jobTitle: 'Mitglied des Deutschen Bundestages',
+            worksFor: { '@type': 'GovernmentOrganization', name: 'Deutscher Bundestag' },
+            affiliation: {
+              '@type': hasPartyLine(loaderData.party) ? 'PoliticalParty' : 'Organization',
+              name: loaderData.party,
+            },
+            homeLocation: { '@type': 'AdministrativeArea', name: loaderData.state },
+            url: `${SITE_URL}${path}`,
+            ...(loaderData.pictureUrl ? { image: loaderData.pictureUrl } : {}),
+          })
         : [],
     }
   },

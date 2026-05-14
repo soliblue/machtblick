@@ -7,6 +7,7 @@ type Props = { parties: PartyListItem[] }
 export function PartiesList({ parties }: Props) {
   return (
     <main className="mx-auto max-w-3xl p-l">
+      <h1 className="sr-only">Fraktionen</h1>
       <div className="mb-xl">
         <Hemicycle parties={parties} />
       </div>

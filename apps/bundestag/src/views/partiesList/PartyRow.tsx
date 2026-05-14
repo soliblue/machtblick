@@ -16,7 +16,7 @@ export function PartyRow({ party }: Props) {
     >
       <div className="flex items-center gap-m">
         {PARTY_LOGO[party.party] ? (
-          <PartyLogo party={party.party} size={24} />
+          <PartyLogo party={party.party} size={24} decorative />
         ) : (
           <span className="inline-block size-4" style={{ background: color }} />
         )}
