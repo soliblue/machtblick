@@ -26,6 +26,8 @@ db/*.sqlite-shm
 db/*.db
 
 apps/bundestag/public/speeches-index.json
+apps/bundestag/public/speeches-meta.json
+apps/bundestag/public/speeches-search-*.json
 apps/bundestag/public/speeches/
 apps/bundestag/public/api/
 apps/bundestag/public/votes/*.json
