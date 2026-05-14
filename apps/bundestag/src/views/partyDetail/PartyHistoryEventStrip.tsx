@@ -2,7 +2,7 @@ import { ArrowDownLeft, ArrowDownRight, Replace, Plus, X } from 'lucide-react'
 import type { PartyHistoryEvent } from '@/server/getPartyHistory'
 import { formatDate } from '@/lib/format'
 
-export type StripEvent = PartyHistoryEvent & { anchorTerm: number; leading: boolean }
+export type StripEvent = PartyHistoryEvent & { anchorTerm: number; leading: boolean; color: string }
 
 type Props = {
   events: StripEvent[]
@@ -36,22 +36,23 @@ export function PartyHistoryEventStrip({ events, xMin, xMax, leftPad, rightPad }
     >
       {[...stacks.entries()].map(([term, group]) => {
         const pct = ((term - xMin) / range) * 100
+        const leftHalf = pct < 50
         return (
           <div
             key={term}
-            className="pointer-events-auto absolute top-0 flex flex-col items-center gap-xs"
-            style={{ left: `${pct}%`, transform: 'translateX(-50%)' }}
+            className={`pointer-events-auto absolute top-0 flex max-w-[160px] flex-col gap-xs ${leftHalf ? 'items-start text-left' : 'items-end text-right'}`}
+            style={{ left: `${pct}%`, transform: leftHalf ? undefined : 'translateX(-100%)' }}
           >
             {group.map((e, i) => {
               const Icon = ICONS[e.type]
               return (
                 <div
                   key={`${e.date}-${i}`}
-                  className="flex max-w-[140px] flex-col items-center gap-xs text-center"
+                  className={`flex flex-col gap-xs ${leftHalf ? 'items-start' : 'items-end'}`}
                   title={`${formatDate(e.date)} - ${e.labelDe}${e.leading ? ' (vor dem Erfassungszeitraum)' : ''}`}
                 >
-                  <Icon size={14} strokeWidth={1.5} style={{ color: 'var(--color-fg)' }} />
-                  <span className="text-s leading-tight" style={{ color: 'var(--color-fg)' }}>
+                  <Icon size={14} strokeWidth={1.5} style={{ color: e.color }} />
+                  <span className="text-s leading-tight" style={{ color: e.color }}>
                     {e.labelDe}
                   </span>
                 </div>

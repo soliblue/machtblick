@@ -24,6 +24,7 @@ type ChartPoint = {
 const MARGIN = { top: 56, right: 8, bottom: 8, left: 8 }
 const X_PADDING = 24
 const GRADIENT_ID_PREFIX = 'party-history-gradient-'
+const EVENT_PALETTE = ['var(--color-rust)', 'var(--color-teal)', 'var(--color-indigo)', 'var(--color-brown)']
 
 function dedupePoints(points: PartyHistoryPoint[]): PartyHistoryPoint[] {
   const byTerm = new Map<number, PartyHistoryPoint>()
@@ -53,19 +54,24 @@ function toChartPoints(points: PartyHistoryPoint[]): ChartPoint[] {
 function anchorEvents(events: PartyHistory['events'], points: PartyHistoryPoint[]): StripEvent[] {
   const firstTerm = points[0].termNumber
   const lastTerm = points[points.length - 1].termNumber
-  return events.map((e) => {
+  return events.map((e, i) => {
     const eventYear = Number(e.date.slice(0, 4))
     const leading = eventYear < points[0].year
     let anchor = firstTerm
     if (!leading) {
-      for (let i = points.length - 1; i >= 0; i--) {
-        if (eventYear >= points[i].year) {
-          anchor = points[i].termNumber
+      for (let j = points.length - 1; j >= 0; j--) {
+        if (eventYear >= points[j].year) {
+          anchor = points[j].termNumber
           break
         }
       }
     }
-    return { ...e, anchorTerm: Math.min(Math.max(anchor, firstTerm), lastTerm), leading }
+    return {
+      ...e,
+      anchorTerm: Math.min(Math.max(anchor, firstTerm), lastTerm),
+      leading,
+      color: EVENT_PALETTE[i % EVENT_PALETTE.length],
+    }
   })
 }
 
@@ -127,8 +133,8 @@ export function PartyHistoryChart({ history, partyLabel, partyColor }: Props) {
             <ReferenceLine
               key={`ref-${e.date}-${i}`}
               x={e.anchorTerm}
-              stroke="var(--color-fg)"
-              strokeOpacity={0.4}
+              stroke={e.color}
+              strokeOpacity={0.7}
               strokeDasharray="4 4"
               strokeWidth={1}
             />
