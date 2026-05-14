@@ -2,9 +2,12 @@ import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { Link } from '@/lib/Link'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
+import { VoteChoicePill } from '@/views/memberDetail/VoteChoicePill'
 import { useSpeechBody } from '@/hooks/useSpeechBody'
 import { highlight, tokenize } from '@/lib/highlight'
+import { initials } from '@/lib/initials'
 import { renderSnippet } from '@/lib/snippet'
+import type { MemberVoteRow } from '@/server/members'
 import type { SpeechResult, SpeechSummary } from '@/server/speeches'
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
@@ -19,12 +22,15 @@ type Props = {
   speech: RowSpeech
   query?: string
   showVoteLink?: boolean
+  pictureUrl?: string | null
+  choice?: MemberVoteRow['choice'] | null
 }
 
-export function SpeechRow({ speech, query = '', showVoteLink = true }: Props) {
+export function SpeechRow({ speech, query = '', showVoteLink = true, pictureUrl, choice }: Props) {
   const terms = tokenize(query)
   const [open, setOpen] = useState(false)
   const body = useSpeechBody(speech.id, open)
+  const withAvatar = pictureUrl !== undefined || choice !== undefined
   return (
     <div
       role="button"
@@ -39,7 +45,22 @@ export function SpeechRow({ speech, query = '', showVoteLink = true }: Props) {
       className="cursor-pointer border-t py-m"
       style={{ borderColor: ROW_BORDER }}
     >
-      <div className="grid grid-cols-[1fr_auto] items-start gap-m">
+      <div
+        className={
+          withAvatar
+            ? 'grid grid-cols-[36px_1fr_auto_auto] items-start gap-m'
+            : 'grid grid-cols-[1fr_auto] items-start gap-m'
+        }
+      >
+        {withAvatar && (
+          pictureUrl ? (
+            <img src={pictureUrl} alt={speech.speakerName} className="h-[36px] w-[36px] rounded-full object-cover" />
+          ) : (
+            <div className="flex h-[36px] w-[36px] items-center justify-center rounded-full bg-surface text-s font-semibold opacity-l">
+              {initials(speech.speakerName)}
+            </div>
+          )
+        )}
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-s">
             <SpeakerName speech={speech} />
@@ -67,6 +88,7 @@ export function SpeechRow({ speech, query = '', showVoteLink = true }: Props) {
             </div>
           )}
         </div>
+        {withAvatar && (choice ? <VoteChoicePill choice={choice} /> : <span />)}
         <ChevronDown
           size={17}
           className="opacity-l transition-transform"

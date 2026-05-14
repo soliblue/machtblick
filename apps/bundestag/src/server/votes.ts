@@ -107,7 +107,7 @@ export type VoteDetail = {
   partySummaries: Array<typeof votePartySummaries.$inferSelect & { yes: number; no: number; abstain: number; absent: number; members: number }>
   proposingParty: string | null
   defectors: Array<{ party: string; majority: string; count: number; members: Array<{ id: string; name: string; choice: string; pictureUrl: string | null }> }>
-  memberBallots: Array<{ memberId: string; name: string; party: string; choice: string }>
+  memberBallots: Array<{ memberId: string; name: string; party: string; choice: string; pictureUrl: string | null }>
   debate: SpeechSummary[]
   antragPdfUrl: string | null
 }
@@ -195,7 +195,7 @@ export const getVote = createServerFn({ method: 'GET' })
       partySummaries,
       proposingParty: vote.initiator,
       defectors,
-      memberBallots: vmRows.map((r) => ({ memberId: r.memberId, name: r.name, party: r.party, choice: r.choice })),
+      memberBallots: vmRows.map((r) => ({ memberId: r.memberId, name: r.name, party: r.party, choice: r.choice, pictureUrl: r.pictureUrl })),
       debate: loadDebateForVote(voteRow.id, voteRow.date, voteRow.agendaItem),
       antragPdfUrl: db.select({ url: voteDescriptionDecisions.sourcePdfUrl }).from(voteDescriptionDecisions).where(eq(voteDescriptionDecisions.voteId, id)).get()?.url
         ?? pickAntragFromRows(documents.map((d) => ({ label: d.label, title: d.title, url: d.url })))?.pdfUrl

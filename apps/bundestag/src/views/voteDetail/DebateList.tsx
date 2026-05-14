@@ -6,14 +6,16 @@ import { tokenize } from '@/lib/highlight'
 import { makeSnippet } from '@/lib/snippet'
 import { loadSpeechTexts, speechTextsLoaded } from '@/lib/speechesStatic'
 import { useQuery } from '@tanstack/react-query'
+import type { MemberVoteRow } from '@/server/members'
 import type { SpeechSummary } from '@/server/speeches'
 
-type Props = { speeches: SpeechSummary[] }
+type BallotEntry = { choice: MemberVoteRow['choice']; pictureUrl: string | null }
+type Props = { speeches: SpeechSummary[]; ballotByMember: Map<string, BallotEntry> }
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 const PAGE_SIZE = 5
 
-export function DebateList({ speeches }: Props) {
+export function DebateList({ speeches, ballotByMember }: Props) {
   const [query, setQuery] = useState('')
   const [party, setParty] = useState<string | null>(null)
   const [page, setPage] = useState(0)
@@ -69,7 +71,17 @@ export function DebateList({ speeches }: Props) {
           {slice.map((s) => {
             const body = texts.data?.[s.id] ?? s.excerpt
             const snippet = terms.length ? makeSnippet(body, terms) : null
-            return <SpeechRow key={s.id} speech={{ ...s, snippet }} query={query} showVoteLink={false} />
+            const ballot = s.speakerMemberId ? ballotByMember.get(s.speakerMemberId) : undefined
+            return (
+              <SpeechRow
+                key={s.id}
+                speech={{ ...s, snippet }}
+                query={query}
+                showVoteLink={false}
+                pictureUrl={ballot?.pictureUrl ?? null}
+                choice={ballot?.choice ?? null}
+              />
+            )
           })}
         </div>
       )}
