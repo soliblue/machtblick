@@ -48,8 +48,8 @@ export function SpeechRow({ speech, query = '', showVoteLink = true, pictureUrl,
       <div
         className={
           withAvatar
-            ? 'grid grid-cols-[36px_1fr_auto_auto] items-start gap-m'
-            : 'grid grid-cols-[1fr_auto] items-start gap-m'
+            ? 'grid grid-cols-[36px_1fr_auto_auto] items-center gap-m'
+            : 'grid grid-cols-[1fr_auto] items-center gap-m'
         }
       >
         {withAvatar && (
@@ -78,15 +78,6 @@ export function SpeechRow({ speech, query = '', showVoteLink = true, pictureUrl,
               Abstimmung: {speech.voteTitle}
             </Link>
           )}
-          {open && body.data ? (
-            <div className="mt-s text-m opacity-l whitespace-pre-wrap">{highlight(body.data.text, terms)}</div>
-          ) : speech.snippet ? (
-            <div className="mt-s text-m opacity-l">{renderSnippet(speech.snippet)}</div>
-          ) : (
-            <div className={open ? 'mt-s text-m opacity-l' : 'mt-s text-m opacity-l line-clamp-2'}>
-              {highlight(speech.excerpt, terms)}
-            </div>
-          )}
         </div>
         {withAvatar && (choice ? <VoteChoicePill choice={choice} /> : <span />)}
         <ChevronDown
@@ -95,6 +86,15 @@ export function SpeechRow({ speech, query = '', showVoteLink = true, pictureUrl,
           style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
         />
       </div>
+      {open && body.data ? (
+        <div className="mt-s text-m opacity-l whitespace-pre-wrap">{highlight(body.data.text, terms)}</div>
+      ) : speech.snippet ? (
+        <div className="mt-s text-m opacity-l">{renderSnippet(speech.snippet)}</div>
+      ) : (
+        <div className={open ? 'mt-s text-m opacity-l' : 'mt-s text-m opacity-l line-clamp-2'}>
+          {highlight(speech.excerpt, terms)}
+        </div>
+      )}
     </div>
   )
 }
