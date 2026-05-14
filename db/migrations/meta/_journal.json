@@ -120,6 +120,13 @@
       "when": 1778765088082,
       "tag": "0018_antraege",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "6",
+      "when": 1778768562776,
+      "tag": "0019_member_mandate",
+      "breakpoints": true
     }
   ]
 }

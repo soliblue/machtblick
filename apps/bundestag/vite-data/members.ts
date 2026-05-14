@@ -9,6 +9,40 @@ type MemberRow = {
   picture_author: string | null
   picture_license: string | null
   picture_source_url: string | null
+  mandate_type: string | null
+  list_state: string | null
+  constituency_number: string | null
+  constituency_name: string | null
+}
+
+type MandateType = 'direkt' | 'liste'
+
+function normalizeMandate(raw: string | null): MandateType | null {
+  return raw === 'direkt' || raw === 'liste' ? raw : null
+}
+
+type DemographicsRow = {
+  member_id: string
+  year_of_birth: number | null
+  sex: string | null
+}
+
+type Sex = 'm' | 'f' | 'd'
+
+function normalizeSex(raw: string | null): Sex | null {
+  return raw === 'm' || raw === 'f' || raw === 'd' ? raw : null
+}
+
+function loadDemographicsMap(db: Database.Database) {
+  const rows = db.prepare(`
+    SELECT member_id,
+           json_extract(raw_json, '$.year_of_birth') AS year_of_birth,
+           json_extract(raw_json, '$.sex') AS sex
+    FROM member_abgeordnetenwatch
+  `).all() as DemographicsRow[]
+  const out = new Map<string, { yearOfBirth: number | null; sex: Sex | null }>()
+  for (const r of rows) out.set(r.member_id, { yearOfBirth: r.year_of_birth ?? null, sex: normalizeSex(r.sex) })
+  return out
 }
 
 type VoteMemberRow = {
@@ -79,7 +113,7 @@ function majorityChoice(s: SummaryRow): string {
 }
 
 export function leanMembers(db: Database.Database) {
-  const allMembers = db.prepare('SELECT id, name FROM members').all() as Array<Pick<MemberRow, 'id' | 'name'>>
+  const allMembers = db.prepare('SELECT id, name, mandate_type FROM members').all() as Array<Pick<MemberRow, 'id' | 'name' | 'mandate_type'>>
   const nonProceduralVoteIds = new Set(
     (db.prepare("SELECT id FROM votes WHERE procedural = 0").all() as Array<{ id: string }>).map((v) => v.id),
   )
@@ -90,19 +124,34 @@ export function leanMembers(db: Database.Database) {
   const stateByMember = new Map<string, string>()
   for (const r of vmRows) if (!stateByMember.has(r.member_id)) stateByMember.set(r.member_id, r.state)
   const hasVotes = new Set(vmRows.map((r) => r.member_id))
+  const demographics = loadDemographicsMap(db)
   return allMembers
     .filter((m) => hasVotes.has(m.id))
-    .map((m) => ({
-      id: m.id,
-      name: m.name,
-      party: currentParty.get(m.id) ?? '',
-      state: stateByMember.get(m.id) ?? '',
-    }))
+    .map((m) => {
+      const demo = demographics.get(m.id)
+      return {
+        id: m.id,
+        name: m.name,
+        party: currentParty.get(m.id) ?? '',
+        state: stateByMember.get(m.id) ?? '',
+        yearOfBirth: demo?.yearOfBirth ?? null,
+        sex: demo?.sex ?? null,
+        mandateType: normalizeMandate(m.mandate_type),
+      }
+    })
     .sort((a, b) => a.name.localeCompare(b.name, 'de'))
 }
 
 export function fullMember(db: Database.Database, id: string) {
   const m = db.prepare('SELECT * FROM members WHERE id = ?').get(id) as MemberRow
+  const demoRow = db.prepare(`
+    SELECT json_extract(raw_json, '$.year_of_birth') AS year_of_birth,
+           json_extract(raw_json, '$.sex') AS sex
+    FROM member_abgeordnetenwatch
+    WHERE member_id = ?
+  `).get(id) as { year_of_birth: number | null; sex: string | null } | undefined
+  const yearOfBirth = demoRow?.year_of_birth ?? null
+  const sex = normalizeSex(demoRow?.sex ?? null)
   const vmRows = db.prepare(`
     SELECT vm.vote_id, vm.state, vm.choice, v.date, v.title, v.clean_title, v.result
     FROM vote_members vm
@@ -178,5 +227,11 @@ export function fullMember(db: Database.Database, id: string) {
     pictureAuthor: m.picture_author,
     pictureLicense: m.picture_license,
     pictureSourceUrl: m.picture_source_url,
+    yearOfBirth,
+    sex,
+    mandateType: normalizeMandate(m.mandate_type),
+    listState: m.list_state,
+    constituencyNumber: m.constituency_number,
+    constituencyName: m.constituency_name,
   }
 }

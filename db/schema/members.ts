@@ -14,6 +14,10 @@ export const members = sqliteTable(
     pictureAuthor: text('picture_author'),
     pictureLicense: text('picture_license'),
     pictureSourceUrl: text('picture_source_url'),
+    mandateType: text('mandate_type'),
+    listState: text('list_state'),
+    constituencyNumber: text('constituency_number'),
+    constituencyName: text('constituency_name'),
   },
   (t) => ({
     btMdbIdIdx: index('members_bt_mdb_id_idx').on(t.btMdbId),

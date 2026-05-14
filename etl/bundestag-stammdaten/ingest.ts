@@ -16,15 +16,48 @@ const allMdbs = Array.isArray(tree.DOCUMENT.MDB) ? tree.DOCUMENT.MDB : [tree.DOC
 
 type MdbXml = { ID: string | number; NAMEN: { NAME: NameXml | NameXml[] }; WAHLPERIODEN: { WAHLPERIODE: WpXml | WpXml[] } }
 type NameXml = { NACHNAME: string; VORNAME: string }
-type WpXml = { WP: string | number }
+type WpXml = {
+  WP: string | number
+  MANDATSART?: string
+  LISTE?: string
+  WKR_NUMMER?: string | number
+  WKR_NAME?: string
+}
 
 const wp21Feed = allMdbs.filter((m) => {
   const wps = Array.isArray(m.WAHLPERIODEN.WAHLPERIODE) ? m.WAHLPERIODEN.WAHLPERIODE : [m.WAHLPERIODEN.WAHLPERIODE]
   return wps.some((w) => String(w.WP) === '21')
 })
 
+type Mandate = {
+  mandateType: 'direkt' | 'liste' | null
+  listState: string | null
+  constituencyNumber: string | null
+  constituencyName: string | null
+}
+
+const STATE_BY_LISTE: Record<string, string> = {
+  BW: 'Baden-Württemberg',
+  BY: 'Bayern',
+  BE: 'Berlin',
+  BB: 'Brandenburg',
+  HB: 'Bremen',
+  HH: 'Hamburg',
+  HE: 'Hessen',
+  MV: 'Mecklenburg-Vorpommern',
+  NI: 'Niedersachsen',
+  NW: 'Nordrhein-Westfalen',
+  RP: 'Rheinland-Pfalz',
+  SL: 'Saarland',
+  SN: 'Sachsen',
+  ST: 'Sachsen-Anhalt',
+  SH: 'Schleswig-Holstein',
+  TH: 'Thüringen',
+}
+
 const byKey = new Map<string, { id: string; first: string; last: string }[]>()
 const byFirstTokenKey = new Map<string, { id: string; first: string; last: string }[]>()
+const mandateByMdbId = new Map<string, Mandate>()
 for (const m of wp21Feed) {
   const id = String(m.ID).padStart(8, '0')
   const names = Array.isArray(m.NAMEN.NAME) ? m.NAMEN.NAME : [m.NAMEN.NAME]
@@ -32,6 +65,19 @@ for (const m of wp21Feed) {
     const entry = { id, first: n.VORNAME, last: n.NACHNAME }
     push(byKey, nameKey(n.VORNAME, n.NACHNAME), entry)
     push(byFirstTokenKey, nameKey(firstToken(n.VORNAME), n.NACHNAME), entry)
+  }
+  const wps = Array.isArray(m.WAHLPERIODEN.WAHLPERIODE) ? m.WAHLPERIODEN.WAHLPERIODE : [m.WAHLPERIODEN.WAHLPERIODE]
+  const wp21 = wps.find((w) => String(w.WP) === '21')
+  if (wp21) {
+    const ma = (wp21.MANDATSART ?? '').toLowerCase()
+    const mandateType: Mandate['mandateType'] = ma === 'direktwahl' ? 'direkt' : ma === 'landesliste' ? 'liste' : null
+    const listeCode = wp21.LISTE ? String(wp21.LISTE) : null
+    mandateByMdbId.set(id, {
+      mandateType,
+      listState: listeCode && STATE_BY_LISTE[listeCode] ? STATE_BY_LISTE[listeCode] : listeCode,
+      constituencyNumber: wp21.WKR_NUMMER ? String(wp21.WKR_NUMMER) : null,
+      constituencyName: wp21.WKR_NAME ? String(wp21.WKR_NAME) : null,
+    })
   }
 }
 
@@ -53,6 +99,7 @@ let alreadySet = 0
 const unmatchedOurs: { id: string; first: string; last: string }[] = []
 const matchedIds = new Set<string>()
 
+let mandatesWritten = 0
 db.transaction((tx) => {
   for (const m of ourMembers) {
     const hits = byKey.get(nameKey(m.first, m.last)) ?? byFirstTokenKey.get(nameKey(firstToken(m.first), m.last))
@@ -68,12 +115,22 @@ db.transaction((tx) => {
     }
     const btMdbId = uniqueIds[0]
     matchedIds.add(btMdbId)
-    if (m.btMdbId === btMdbId) {
+    if (m.btMdbId !== btMdbId) {
+      tx.update(members).set({ btMdbId }).where(sql`${members.id} = ${m.id}`).run()
+      matched++
+    } else {
       alreadySet++
-      continue
     }
-    tx.update(members).set({ btMdbId }).where(sql`${members.id} = ${m.id}`).run()
-    matched++
+    const mandate = mandateByMdbId.get(btMdbId)
+    if (mandate) {
+      tx.update(members).set({
+        mandateType: mandate.mandateType,
+        listState: mandate.listState,
+        constituencyNumber: mandate.constituencyNumber,
+        constituencyName: mandate.constituencyName,
+      }).where(sql`${members.id} = ${m.id}`).run()
+      mandatesWritten++
+    }
   }
 })
 
@@ -86,6 +143,7 @@ console.log(`  feed WP21 MdBs:           ${wp21Feed.length}`)
 console.log(`  our members:              ${ourMembers.length}`)
 console.log(`  matched (newly set):      ${matched}`)
 console.log(`  matched (already set):    ${alreadySet}`)
+console.log(`  mandate rows written:     ${mandatesWritten}`)
 console.log(`  conflicts (skipped):      ${conflicts}`)
 console.log(`  unmatched our-side:       ${unmatchedOurs.length}`)
 console.log(`  unmatched feed-side:      ${feedUnmatched.length}`)

@@ -1,10 +1,30 @@
 import { createServerFn } from '@tanstack/react-start'
 import { db } from '@machtblick/db/client'
-import { members, voteMembers, votes, votePartySummaries, speeches } from '@machtblick/db/schema'
-import { eq, desc, and, asc } from 'drizzle-orm'
+import { members, memberAbgeordnetenwatch, voteMembers, votes, votePartySummaries, speeches } from '@machtblick/db/schema'
+import { eq, desc, and, asc, sql } from 'drizzle-orm'
 import { getCurrentPartyMap, loadAffiliationsByMember, partyAt } from './memberParty'
 import { hasPartyLine } from '../lib/parties'
 import type { SpeechResult } from './speeches'
+
+export type MemberSex = 'm' | 'f' | 'd'
+export type MandateType = 'direkt' | 'liste'
+
+function loadDemographics(): Map<string, { yearOfBirth: number | null; sex: MemberSex | null }> {
+  const rows = db
+    .select({
+      memberId: memberAbgeordnetenwatch.memberId,
+      yearOfBirth: sql<number | null>`json_extract(${memberAbgeordnetenwatch.rawJson}, '$.year_of_birth')`,
+      sex: sql<string | null>`json_extract(${memberAbgeordnetenwatch.rawJson}, '$.sex')`,
+    })
+    .from(memberAbgeordnetenwatch)
+    .all()
+  const out = new Map<string, { yearOfBirth: number | null; sex: MemberSex | null }>()
+  for (const r of rows) {
+    const sex = r.sex === 'm' || r.sex === 'f' || r.sex === 'd' ? r.sex : null
+    out.set(r.memberId, { yearOfBirth: r.yearOfBirth ?? null, sex })
+  }
+  return out
+}
 
 const SPEECH_PARTY_NORMALIZE: Record<string, string> = {
   'BÜNDNIS 90/DIE GRÜNEN': 'B90/Grüne',
@@ -19,6 +39,9 @@ export type MemberListItem = {
   votesAppeared: number
   attendance: number
   loyalty: number | null
+  yearOfBirth: number | null
+  sex: MemberSex | null
+  mandateType: MandateType | null
 }
 
 function majorityChoice(s: typeof votePartySummaries.$inferSelect): string {
@@ -41,6 +64,8 @@ export const listMembers = createServerFn({ method: 'GET' }).handler(async (): P
   for (const s of summaries) majByVoteParty.set(`${s.voteId} ${s.party}`, majorityChoice(s))
   const affByMember = loadAffiliationsByMember()
   const currentPartyByMember = getCurrentPartyMap()
+  const demographics = loadDemographics()
+  const mandateByMember = new Map(allMembers.map((m) => [m.id, m.mandateType]))
   const stats = new Map<string, { name: string; party: string; state: string; total: number; absent: number; loyalMatches: number; loyalEligible: number }>()
   for (const m of allMembers) stats.set(m.id, { name: m.name, party: currentPartyByMember.get(m.id) ?? '', state: '', total: 0, absent: 0, loyalMatches: 0, loyalEligible: 0 })
   for (const r of vmRows) {
@@ -61,6 +86,7 @@ export const listMembers = createServerFn({ method: 'GET' }).handler(async (): P
   const out: MemberListItem[] = []
   for (const [id, s] of stats) {
     if (!s.total) continue
+    const demo = demographics.get(id)
     out.push({
       id,
       name: s.name,
@@ -69,6 +95,9 @@ export const listMembers = createServerFn({ method: 'GET' }).handler(async (): P
       votesAppeared: s.total,
       attendance: 1 - s.absent / s.total,
       loyalty: s.loyalEligible > 0 ? s.loyalMatches / s.loyalEligible : null,
+      yearOfBirth: demo?.yearOfBirth ?? null,
+      sex: demo?.sex ?? null,
+      mandateType: mandateByMember.get(id) === 'direkt' || mandateByMember.get(id) === 'liste' ? (mandateByMember.get(id) as MandateType) : null,
     })
   }
   out.sort((a, b) => a.name.localeCompare(b.name, 'de'))
@@ -102,6 +131,12 @@ export type MemberDetail = {
   pictureAuthor: string | null
   pictureLicense: string | null
   pictureSourceUrl: string | null
+  yearOfBirth: number | null
+  sex: MemberSex | null
+  mandateType: MandateType | null
+  listState: string | null
+  constituencyNumber: string | null
+  constituencyName: string | null
 }
 
 export const getMember = createServerFn({ method: 'GET' })
@@ -109,6 +144,16 @@ export const getMember = createServerFn({ method: 'GET' })
   .handler(async ({ data: id }): Promise<MemberDetail> => {
     const m = db.select().from(members).where(eq(members.id, id)).get()
     if (!m) throw new Error(`member not found: ${id}`)
+    const demoRow = db
+      .select({
+        yearOfBirth: sql<number | null>`json_extract(${memberAbgeordnetenwatch.rawJson}, '$.year_of_birth')`,
+        sex: sql<string | null>`json_extract(${memberAbgeordnetenwatch.rawJson}, '$.sex')`,
+      })
+      .from(memberAbgeordnetenwatch)
+      .where(eq(memberAbgeordnetenwatch.memberId, id))
+      .get()
+    const sex = demoRow?.sex === 'm' || demoRow?.sex === 'f' || demoRow?.sex === 'd' ? (demoRow.sex as MemberSex) : null
+    const yearOfBirth = demoRow?.yearOfBirth ?? null
     const vmRows = db
       .select({
         voteId: voteMembers.voteId,
@@ -191,5 +236,11 @@ export const getMember = createServerFn({ method: 'GET' })
       pictureAuthor: m.pictureAuthor,
       pictureLicense: m.pictureLicense,
       pictureSourceUrl: m.pictureSourceUrl,
+      yearOfBirth,
+      sex,
+      mandateType: m.mandateType === 'direkt' || m.mandateType === 'liste' ? m.mandateType : null,
+      listState: m.listState,
+      constituencyNumber: m.constituencyNumber,
+      constituencyName: m.constituencyName,
     }
   })

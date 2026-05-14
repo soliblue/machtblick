@@ -1,11 +1,12 @@
 import type { ReactNode } from 'react'
-import { CalendarCheck, Heart, Vote, UserX } from 'lucide-react'
+import { CalendarCheck, Heart, Vote, UserX, Cake } from 'lucide-react'
 import type { MemberDetail as MemberDetailData } from '@/server/members'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { pct } from '@/lib/format'
 import { StatTiles } from './StatTiles'
 import { MemberDetailTabs } from './MemberDetailTabs'
 import { MemberPortrait } from './MemberPortrait'
+import { MandateBadge } from './MandateBadge'
 
 type Props = {
   data: MemberDetailData
@@ -34,6 +35,21 @@ export function MemberDetailShell({ data, children }: Props) {
           <div className="mt-s flex flex-wrap items-center gap-m text-m">
             <PartyBadge party={data.party} />
             <span className="opacity-l">{data.state}</span>
+          </div>
+          <div className="mt-s flex flex-wrap items-center gap-m">
+            {data.yearOfBirth && (
+              <span className="inline-flex items-center gap-xs text-s opacity-l">
+                <Cake size={14} />
+                <span>{new Date().getFullYear() - data.yearOfBirth} Jahre</span>
+              </span>
+            )}
+            {data.mandateType && (
+              <MandateBadge
+                mandateType={data.mandateType}
+                constituencyNumber={data.constituencyNumber}
+                constituencyName={data.constituencyName}
+              />
+            )}
           </div>
         </div>
       </div>

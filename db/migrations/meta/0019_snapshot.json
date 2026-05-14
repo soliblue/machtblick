@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "94e25bcc-5e43-4aa0-84f2-f1833d98b7af",
-  "prevId": "ef4befe7-5dee-44ef-8ef2-653a0c9844d2",
+  "id": "99015f91-0447-4b29-a4d8-ec8955052055",
+  "prevId": "aea19d92-71ec-48bd-9192-81d6254ff34e",
   "tables": {
     "anfrage_signatories": {
       "name": "anfrage_signatories",
@@ -312,6 +312,241 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
+    "antraege": {
+      "name": "antraege",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "abstract": {
+          "name": "abstract",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "beratungsstand": {
+          "name": "beratungsstand",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "wahlperiode": {
+          "name": "wahlperiode",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "initiative_fraktion": {
+          "name": "initiative_fraktion",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "introduced_date": {
+          "name": "introduced_date",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "drucksache": {
+          "name": "drucksache",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "drucksache_pdf_url": {
+          "name": "drucksache_pdf_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sachgebiet": {
+          "name": "sachgebiet",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "deskriptor": {
+          "name": "deskriptor",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "antraege_type_idx": {
+          "name": "antraege_type_idx",
+          "columns": [
+            "type"
+          ],
+          "isUnique": false
+        },
+        "antraege_introduced_date_idx": {
+          "name": "antraege_introduced_date_idx",
+          "columns": [
+            "introduced_date"
+          ],
+          "isUnique": false
+        },
+        "antraege_drucksache_idx": {
+          "name": "antraege_drucksache_idx",
+          "columns": [
+            "drucksache"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "antraege_raw": {
+      "name": "antraege_raw",
+      "columns": {
+        "antrag_id": {
+          "name": "antrag_id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "vorgang_json": {
+          "name": "vorgang_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "positions_json": {
+          "name": "positions_json",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "fetched_at": {
+          "name": "fetched_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "antrag_signatories": {
+      "name": "antrag_signatories",
+      "columns": {
+        "antrag_id": {
+          "name": "antrag_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "member_id": {
+          "name": "member_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "dip_person_id": {
+          "name": "dip_person_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "antrag_signatories_member_idx": {
+          "name": "antrag_signatories_member_idx",
+          "columns": [
+            "member_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "antrag_signatories_antrag_id_antraege_id_fk": {
+          "name": "antrag_signatories_antrag_id_antraege_id_fk",
+          "tableFrom": "antrag_signatories",
+          "tableTo": "antraege",
+          "columnsFrom": [
+            "antrag_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "antrag_signatories_member_id_members_id_fk": {
+          "name": "antrag_signatories_member_id_members_id_fk",
+          "tableFrom": "antrag_signatories",
+          "tableTo": "members",
+          "columnsFrom": [
+            "member_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "antrag_signatories_antrag_id_member_id_pk": {
+          "columns": [
+            "antrag_id",
+            "member_id"
+          ],
+          "name": "antrag_signatories_antrag_id_member_id_pk"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
     "bundestag_terms": {
       "name": "bundestag_terms",
       "columns": {
@@ -561,6 +796,34 @@
         },
         "picture_source_url": {
           "name": "picture_source_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "mandate_type": {
+          "name": "mandate_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "list_state": {
+          "name": "list_state",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "constituency_number": {
+          "name": "constituency_number",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "constituency_name": {
+          "name": "constituency_name",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -1070,6 +1333,73 @@
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "vote_antraege": {
+      "name": "vote_antraege",
+      "columns": {
+        "vote_id": {
+          "name": "vote_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "antrag_id": {
+          "name": "antrag_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "vote_antraege_antrag_idx": {
+          "name": "vote_antraege_antrag_idx",
+          "columns": [
+            "antrag_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "vote_antraege_vote_id_votes_id_fk": {
+          "name": "vote_antraege_vote_id_votes_id_fk",
+          "tableFrom": "vote_antraege",
+          "tableTo": "votes",
+          "columnsFrom": [
+            "vote_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "vote_antraege_antrag_id_antraege_id_fk": {
+          "name": "vote_antraege_antrag_id_antraege_id_fk",
+          "tableFrom": "vote_antraege",
+          "tableTo": "antraege",
+          "columnsFrom": [
+            "antrag_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "vote_antraege_vote_id_antrag_id_pk": {
+          "columns": [
+            "vote_id",
+            "antrag_id"
+          ],
+          "name": "vote_antraege_vote_id_antrag_id_pk"
+        }
+      },
       "uniqueConstraints": {},
       "checkConstraints": {}
     },

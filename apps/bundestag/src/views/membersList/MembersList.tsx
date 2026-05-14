@@ -1,8 +1,9 @@
-import { SlidersHorizontal, Users, MapPin, Search } from 'lucide-react'
-import type { MemberListItem } from '@/server/members'
+import { SlidersHorizontal, Users, MapPin, Search, User, Cake, Vote } from 'lucide-react'
+import type { MandateType, MemberListItem, MemberSex } from '@/server/members'
 import { MemberRow } from './MemberRow'
 import { FilterPill } from '@/views/votesList/FilterPill'
 import type { MemberSortKey, SortDir } from '@/hooks/useMemberListFilters'
+import { AGE_BUCKET_LABEL, MANDATE_LABEL, SEX_LABEL, isAgeBucket, isMandateType, isSex, type AgeBucket } from '@/lib/ageBuckets'
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 
@@ -14,6 +15,15 @@ type Props = {
   state: string | null
   onStateChange: (value: string | null) => void
   availableStates: string[]
+  sex: MemberSex | null
+  onSexChange: (value: MemberSex | null) => void
+  availableSexes: MemberSex[]
+  ageBucket: AgeBucket | null
+  onAgeBucketChange: (value: AgeBucket | null) => void
+  availableAgeBuckets: AgeBucket[]
+  mandateType: MandateType | null
+  onMandateTypeChange: (value: MandateType | null) => void
+  availableMandateTypes: MandateType[]
   query: string
   onQueryChange: (value: string) => void
   sortKey: MemberSortKey
@@ -21,7 +31,29 @@ type Props = {
   onSort: (key: MemberSortKey) => void
 }
 
-export function MembersList({ members, party, onPartyChange, availableParties, state, onStateChange, availableStates, query, onQueryChange, sortKey, sortDir, onSort }: Props) {
+export function MembersList({
+  members,
+  party,
+  onPartyChange,
+  availableParties,
+  state,
+  onStateChange,
+  availableStates,
+  sex,
+  onSexChange,
+  availableSexes,
+  ageBucket,
+  onAgeBucketChange,
+  availableAgeBuckets,
+  mandateType,
+  onMandateTypeChange,
+  availableMandateTypes,
+  query,
+  onQueryChange,
+  sortKey,
+  sortDir,
+  onSort,
+}: Props) {
   return (
     <main className="mx-auto max-w-3xl p-l">
       <h1 className="sr-only">Abgeordnete</h1>
@@ -36,12 +68,36 @@ export function MembersList({ members, party, onPartyChange, availableParties, s
           style={{ borderColor: ROW_BORDER }}
         />
       </div>
-      <div className="mb-l flex flex-wrap items-center justify-between gap-m">
-        <div className="flex flex-wrap items-center gap-s">
-          <SlidersHorizontal size={17} className="opacity-l" />
-          <FilterPill label="Fraktion" icon={Users} options={availableParties} value={party} onChange={onPartyChange} />
-          <FilterPill label="Bundesland" icon={MapPin} options={availableStates} value={state} onChange={onStateChange} />
-        </div>
+      <div className="mb-s -mx-l flex items-center gap-s overflow-x-auto px-l [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <SlidersHorizontal size={17} className="shrink-0 opacity-l" />
+        <FilterPill label="Fraktion" icon={Users} options={availableParties} value={party} onChange={onPartyChange} />
+        <FilterPill label="Bundesland" icon={MapPin} options={availableStates} value={state} onChange={onStateChange} />
+        <FilterPill
+          label="Geschlecht"
+          icon={User}
+          options={availableSexes}
+          value={sex}
+          onChange={(v) => onSexChange(isSex(v) ? v : null)}
+          formatOption={(v) => (isSex(v) ? SEX_LABEL[v] : v)}
+        />
+        <FilterPill
+          label="Alter"
+          icon={Cake}
+          options={availableAgeBuckets}
+          value={ageBucket}
+          onChange={(v) => onAgeBucketChange(isAgeBucket(v) ? v : null)}
+          formatOption={(v) => (isAgeBucket(v) ? AGE_BUCKET_LABEL[v] : v)}
+        />
+        <FilterPill
+          label="Mandat"
+          icon={Vote}
+          options={availableMandateTypes}
+          value={mandateType}
+          onChange={(v) => onMandateTypeChange(isMandateType(v) ? v : null)}
+          formatOption={(v) => (isMandateType(v) ? MANDATE_LABEL[v] : v)}
+        />
+      </div>
+      <div className="mb-l flex justify-end">
         <span className="text-s opacity-l">{members.length} Personen</span>
       </div>
       <div className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] gap-m text-s uppercase opacity-l sm:grid-cols-[minmax(0,1fr)_auto_auto_auto_auto]" style={{ letterSpacing: '0.08em' }}>
