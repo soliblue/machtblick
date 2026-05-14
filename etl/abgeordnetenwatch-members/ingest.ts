@@ -129,7 +129,7 @@ function scrapePicture(html: string): string | null {
   const match = html.match(/sites\/default\/files\/styles\/[a-z_]+\/public\/politicians-profile-pictures\/[^"?]+/)
   if (!match) return null
   const path = match[0].replace(/styles\/[a-z_]+\/public\//, '')
-  return `https://www.abgeordnetenwatch.de/sites/default/files/${path}`
+  return `https://www.abgeordnetenwatch.de/${path}`
 }
 
 async function fetchWithRetry(url: string, headers: Record<string, string>): Promise<Response | null> {

@@ -18,7 +18,7 @@ export function MemberPortrait({ name, pictureUrl, pictureAuthor, pictureLicense
           {initials(name)}
         </div>
       )}
-      {pictureUrl && (
+      {pictureUrl && pictureAuthor && pictureLicense && (
         <div
           className="w-[120px] truncate text-[10px] opacity-l"
           title={`Foto: ${pictureAuthor}, ${pictureLicense}`}
