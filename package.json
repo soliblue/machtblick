@@ -5,6 +5,7 @@
   "type": "module",
   "workspaces": ["db", "etl/*", "apps/*"],
   "scripts": {
+    "agents:sync": "node scripts/sync-codex-agents.mjs",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
