@@ -1,7 +1,8 @@
-import { Link } from '@/lib/Link'
 import { initials } from '@/lib/initials'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import type { VoteSponsorMember } from '@/server/voteSponsors'
+import { useLocale } from '@/lib/i18n'
+import { withLocale } from '@/lib/locale'
 
 type Props = {
   member: VoteSponsorMember
@@ -10,15 +11,15 @@ type Props = {
 }
 
 export function SponsorPortrait({ member, zIndex, overlap }: Props) {
+  const locale = useLocale()
   const label = member.partyAtDate
     ? `${member.displayName} · ${member.partyAtDate}`
     : member.displayName
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Link
-          to="/members/$id/"
-          params={{ id: member.memberId }}
+        <a
+          href={withLocale(`/members/${member.memberId}/`, locale)}
           aria-label={label}
           className="block size-[32px] shrink-0 overflow-hidden rounded-full ring-[1.5px] ring-background"
           style={{ zIndex, marginLeft: overlap ? -12 : 0 }}
@@ -35,7 +36,7 @@ export function SponsorPortrait({ member, zIndex, overlap }: Props) {
               {initials(member.displayName)}
             </div>
           )}
-        </Link>
+        </a>
       </TooltipTrigger>
       <TooltipContent>{label}</TooltipContent>
     </Tooltip>

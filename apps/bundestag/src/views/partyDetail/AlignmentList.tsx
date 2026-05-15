@@ -1,9 +1,9 @@
 import type { PartyAlignment } from '@/server/parties'
 import { PARTY_SLUG, partyLabel } from '@/lib/parties'
 import { PartyLogo } from '@/views/votesList/PartyLogo'
-import { Link } from '@/lib/Link'
 import { pct } from '@/lib/format'
 import { useLocale } from '@/lib/i18n'
+import { withLocale } from '@/lib/locale'
 
 type Props = { alignments: PartyAlignment[]; party: string }
 
@@ -26,14 +26,13 @@ export function AlignmentList({ alignments }: Props) {
           </div>
         )
         return slug ? (
-          <Link
+          <a
             key={a.party}
-            to="/parties/$id/"
-            params={{ id: slug }}
+            href={withLocale(`/parties/${slug}/`, locale)}
             className="block transition-opacity hover:opacity-80"
           >
             {row}
-          </Link>
+          </a>
         ) : (
           <div key={a.party}>{row}</div>
         )
