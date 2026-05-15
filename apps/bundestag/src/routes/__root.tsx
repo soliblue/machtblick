@@ -97,7 +97,7 @@ function Nav() {
       style={{ borderBottom: '1px solid color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
     >
       <div className="mx-auto flex max-w-3xl items-center gap-l px-l py-m text-m">
-        <a href={href('/')} onClick={() => setOpen(false)} aria-label="Machtblick"><ScrollEyeWordmark /></a>
+        <a href={href('/votes/')} onClick={() => setOpen(false)} aria-label="Machtblick"><ScrollEyeWordmark /></a>
         <div className="ml-auto hidden gap-l opacity-l sm:flex">
           <a href={href('/votes/')} className={linkClass}>{t.navVotes}</a>
           <a href={href('/members/')} className={linkClass}>{t.navMembers}</a>
