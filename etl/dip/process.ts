@@ -92,10 +92,12 @@ console.log(`Aktivitaet scanned ${scanned}, kept ${relevantAkt.length}`)
 
 const anfrageIds = new Set((db.all(sql`SELECT id FROM ${anfragen}`) as Array<{ id: number }>).map((r) => r.id))
 const antragIds = new Set((db.all(sql`SELECT id FROM ${antraege}`) as Array<{ id: number }>).map((r) => r.id))
-const relevant = relevantAkt.filter((a) => {
-  const tid = Number(a.vorgangsbezug?.[0]?.id ?? 0)
-  return anfrageIds.has(tid) || antragIds.has(tid)
-})
+const relevant = relevantAkt.filter((a) =>
+  (a.vorgangsbezug ?? []).some((vb) => {
+    const tid = Number(vb.id)
+    return anfrageIds.has(tid) || antragIds.has(tid)
+  })
+)
 const sigRows = buildSignatoryRows(relevant)
 const anfrageSigs = sigRows.filter((r) => r.kind === 'anfrage' && anfrageIds.has(r.targetId))
 const antragSigs = sigRows.filter((r) => r.kind === 'antrag' && antragIds.has(r.targetId))

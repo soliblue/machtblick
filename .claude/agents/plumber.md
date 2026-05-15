@@ -369,21 +369,48 @@ Confirmed by cache scan (65,542 WP21 aktivitaeten): **only `Antrag` and `Gesetze
 
 ### Zero-signer rows are correct
 
-About 274/326 Gesetzgebung rows and 58/507 Antrag rows have zero MdB signatories. Two legitimate cases:
+About 274/326 Gesetzgebung rows and ~10 Antrag rows have zero MdB signatories. Three legitimate cases, all upstream truth:
 
 - **Bundesregierungs-Gesetzentwürfe** (the bulk): government bills are signed by ministry officials, not MdBs. `aktivitaet_anzahl=0` on the Gesetzentwurf position. `initiative_fraktion="Bundesregierung"`.
-- **Coalition jointly-signed motions** (`initiative_fraktion="Fraktion der CDU/CSU, Fraktion der SPD"`): upstream attributes these to "die Fraktion", not individual MdBs. `aktivitaet_anzahl=0` on the Antrag/Gesetzentwurf position. Confirmed via cache scan on vorgang 334544 — no `Antrag` aktivitaeten exist for this vorgang.
+- **Coalition jointly-signed motions** (`initiative_fraktion="Fraktion der CDU/CSU, Fraktion der SPD"`): upstream attributes these to "die Fraktion", not individual MdBs. `aktivitaet_anzahl=0` on the introducing position. Confirmed via sweep on 2026-05-15: **43/43 coalition Anträge/Gesetzentwürfe in WP21 have `aktivitaet_anzahl=0`** on their introducing-position. DIP also returns 0 results when filtered by `f.dokumentnummer` for any of these Drucksachen. Not a whitelist gap, not a `vorgangsbezug` ordering bug — DIP simply does not expose per-MdB signers for coalition bills.
+- **A small handful of single-Fraktion motions** (currently 7 WP21 rows across AfD/Linke/Grüne) where DIP also attributes to the Fraktion only with `aktivitaet_anzahl=0`. Same shape as coalition rows. Sample Drucksachen: 21/133, 21/134, 21/350, 21/5305, 21/5588 (all Linke), 21/5305 (AfD). Probed direct on 2026-05-15: DIP returns 0 aktivitaet records for each. These are NOT data lag — they're the same upstream "Fraktion-attributed, no per-MdB rows" pattern.
 
 Don't add fallback heuristics; the lack of per-MdB attribution is upstream truth. Audit doesn't flag these.
 
-### Vote linkage: Drucksache match
+### `vorgangsbezug` is multi-valued — scan all entries, not just `[0]`
 
-`etl/dip/linkVotes.ts` regex-extracts `\b21/\d{1,6}\b` from `votes.document`, `vote_documents.label`, `vote_documents.title`, joins to `antraege.drucksache`, truncates and rewrites `vote_antraege`. Idempotent.
+About 2.2% of Antrag/Gesetzentwurf aktivitaeten (286/13,159 in WP21) reference **more than one** vorgang. Pattern: an Antrag is filed both as a free-standing Antrag AND as a "Mitwirkung in EU-Angelegenheiten" referral attached to a corresponding EU-Vorlage vorgang. DIP orders the EU-Vorlage first in `vorgangsbezug`, the actual Antrag second.
 
-Baseline coverage on WP21 (2026-05-14):
-- 248 link rows across 180 of 300 votes (60% of all votes have ≥1 linked Antrag).
-- On substantive votes only (procedural=0): 172/280 = **61% linked**, of which **69 votes have at least one MdB-signed Antrag** (the rest link only to Bundesregierungs-Gesetzentwürfe with zero signers).
-- 8 procedural votes ARE legitimately linked (Federführung, Überweisung, Abberufung) — the procedural-vote document explicitly names a specific Antrag; the link is correct.
+The original `buildSignatories.ts` + the pre-filter in `process.ts` both indexed `vorgangsbezug[0]` and silently dropped these. Fix landed 2026-05-15:
+
+- `buildSignatories.ts > buildSignatoryRows`: iterates **all** `vorgangsbezug` entries, emits one candidate row per (kind, targetId, memberId). Per-row dedupe via `kind|targetId|memberId` Set.
+- `process.ts` aktivitaet pre-filter: `.some()` over all `vorgangsbezug` entries, not `[0]`.
+
+Membership filter (`anfrageIds.has(tid) || antragIds.has(tid)`) does the final selection — non-target vorgangsbezug entries (e.g. the EU-Vorlage) drop because they're not in `antraege`. Both fixes are required: the pre-filter prevented the aktivitaet from reaching `buildSignatoryRows` in the first place.
+
+Impact: 24 LEADER-Programm signers recovered, 8 AfD + 6 Grüne + 1 Linke single-Fraktion zero-signer rows recovered (total +295 signatory rows on WP21, 12122 → 12417, taking covered Antraege from 507 to 517). Coalition Gesetzentwürfe were **not** affected — they're upstream-empty regardless of `vorgangsbezug` order.
+
+If a future scan shows the multi-vorgangsbezug count climbing past 5–10%, consider promoting this to a separate stat in the run log.
+
+### Vote linkage: Drucksache match + initiator alignment
+
+`etl/dip/linkVotes.ts` runs two passes:
+
+1. Regex-extract `\b21/\d{1,6}\b` from `votes.document`, `vote_documents.label`, `vote_documents.title`. Each Drucksache that exists in `antraege.drucksache` is a **candidate** link.
+2. **Alignment filter** (`etl/dip/initiatorAligns.ts`): drop the candidate unless `votes.initiator` normalizes to at least one party in `antraege.initiative_fraktion`'s normalized set. Coalition handling: comma-split both sides, accept on any intersection. `Bundesregierung` vote ↔ `Bundesregierung` Antrag only. `Bundesministerium *` → `Bundesregierung`. 16 Länder names → `Bundesrat`. If either side can't normalize (e.g. `votes.initiator IS NULL`), drop the link.
+
+Why the alignment filter exists: Beschlussempfehlungen often quote multiple Drucksachen in their committee-report text (the actual proposed bill plus opposition counter-Anträge that were debated alongside). Without alignment, a Bundesregierungs-Gesetzentwurf vote would falsely surface Linke/Grüne MdBs under "Eingebracht von" because their counter-Antrag was bundled into the Beschlussempfehlung text. Rule operator gave us: "for any linked Antrag, the vote's initiator should align with the Antrag's `initiativeFraktion`."
+
+Truncates and rewrites `vote_antraege`. Idempotent.
+
+Baseline coverage on WP21 (2026-05-14, post-alignment-filter):
+- 171 link rows across 156 of 300 votes (52% of all votes).
+- Pre-filter was 248/180; the filter dropped 77 links (69 misalign bundle-text false positives, 8 NULL-initiator procedural votes).
+- Procedural votes (Federführung/Überweisung/Abberufung) are now consistently unlinked. They were previously kept as "legitimately linked"; the alignment filter drops them because their `votes.initiator IS NULL` can't be verified. Since procedural votes are filtered out of all listings (`procedural=1`), the practical impact on the read side is zero.
+
+The alignment filter is **load-bearing for read quality.** Don't disable it without a replacement; the read-side `voteSponsors.ts` would otherwise show wrong portraits.
+
+**Adding party patterns.** `db/partyPatterns.ts` is the single source of truth for fraction-name normalization, shared between `parseProposingParty.ts` and `initiatorAligns.ts`. When a novel `votes.initiator` form or `initiative_fraktion` upstream label appears, add a regex there — both consumers pick it up.
 
 ### Known unlinkable
 
@@ -397,15 +424,18 @@ Baseline coverage on WP21 (2026-05-14):
 - `antrag_signatories` / `anfrage_signatories` are per-target delete-and-rewrite.
 - `vote_antraege` is truncate-and-rewrite.
 
-Re-fetch is needed when new positions or aktivitaeten arrive upstream (delete the `_done` markers under `etl/dip/cache/<endpoint>/`). The aktivitaet endpoint takes ~657 pages × 100 docs/page, so on a weekly cron prefer incremental sync via `DIP_UPDATED_START=YYYY-MM-DD` (then the new `f.aktualisiert.start` filter is honored on every endpoint).
+Re-fetch is needed when new positions or aktivitaeten arrive upstream (delete the `_done` markers under `etl/dip/cache/<endpoint>/`). The aktivitaet endpoint takes ~657 pages × 100 docs/page, so on a weekly cron prefer incremental sync via `DIP_UPDATED_START=2026-MM-DDTHH:MM:SS` (then the `f.aktualisiert.start` filter is honored on every endpoint).
 
-### Volume baseline (WP21, 2026-05-14)
+**Gotcha — `f.aktualisiert.start` requires ISO datetime, not bare date.** A bare `2026-05-12` value makes DIP return an **empty envelope with no error** (`numFound` undefined, zero docs). The full ISO form `2026-05-12T00:00:00` is required. `etl/dip/fetch.ts` passes the env var through verbatim, so the env var itself must carry the timestamp portion. Confirmed 2026-05-15 against the live `/aktivitaet` endpoint. The aktivitaet-only delta refresh worker `etl/dip/refreshAktivitaet.ts` defaults to `2026-05-12T00:00:00` and appends fresh pages onto the existing `aktivitaet/` cache folder; existing pages, `_cursor.txt`, and `_done` marker stay untouched (process.ts reads all pages regardless and dedupes by aktivitaet id implicitly via the `kind|targetId|memberId` Set in buildSignatories).
+
+### Volume baseline (WP21, 2026-05-15)
 
 ```
 Antrag vorgaenge:       507
 Gesetzgebung vorgaenge: 326   (of which ~270 Bundesregierung, ~20 Länder, ~30 Fraktion)
-antrag_signatories rows: 12,122  (mostly Antrag; only 52 Gesetzentwurf vorgaenge have MdB signers)
-vote_antraege rows:      248  across 180 votes
+antrag_signatories rows: 12,417  (517/833 antraege have ≥1 signer)
+                                  was 12,122 / 507 covered before multi-vorgangsbezug fix
+vote_antraege rows:      157  across 156 votes  (after initiator-alignment filter)
 ```
 
 

@@ -18,16 +18,19 @@ export function buildSignatoryRows(aktivitaeten: Aktivitaet[]) {
     const isAnfrage = ANFRAGE_ARTEN.has(a.aktivitaetsart)
     const isAntrag = ANTRAG_ARTEN.has(a.aktivitaetsart)
     if (!isAnfrage && !isAntrag) continue
-    if (!a.person_id || !a.vorgangsbezug?.[0]) continue
+    if (!a.person_id || !a.vorgangsbezug?.length) continue
     const dipPersonId = Number(a.person_id)
     const memberId = memberIdForDipPerson(dipPersonId)
     if (!memberId) continue
-    const targetId = Number(a.vorgangsbezug[0].id)
     const kind: 'anfrage' | 'antrag' = isAnfrage ? 'anfrage' : 'antrag'
-    const key = `${kind}|${targetId}|${memberId}`
-    if (seen.has(key)) continue
-    seen.add(key)
-    rows.push({ kind, targetId, memberId, dipPersonId })
+    for (const vb of a.vorgangsbezug) {
+      const targetId = Number(vb.id)
+      if (!targetId) continue
+      const key = `${kind}|${targetId}|${memberId}`
+      if (seen.has(key)) continue
+      seen.add(key)
+      rows.push({ kind, targetId, memberId, dipPersonId })
+    }
   }
   return rows
 }

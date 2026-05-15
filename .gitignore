@@ -45,6 +45,7 @@ etl/**/cache/
 etl/**/samples/
 
 .idea
+.git.bak/
 
 .claude/scheduled_tasks.lock
 .claude/agent-memory/

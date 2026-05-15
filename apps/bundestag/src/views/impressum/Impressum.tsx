@@ -60,7 +60,7 @@ export function Impressum() {
         Machtblick ist das Projekt eines einzelnen deutschen Bürgers, der mit Hilfe von KI Werkzeuge baut,
         die die Arbeit des Bundestages und der Regierung zugänglicher machen. Keine Kommentare, keine
         politische Position, kein Aktivismus. Es geht darum, öffentliche Quellen in eine Oberfläche zu
-        übersetzen, die für den durchschnittlichen Bürger nutzbar ist.
+        übersetzen, die für die Allgemeinheit nutzbar ist.
       </p>
 
       <h2 className={CAPTION} style={{ letterSpacing: '0.08em' }}>Datenquellen</h2>

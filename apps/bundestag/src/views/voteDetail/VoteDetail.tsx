@@ -9,6 +9,8 @@ import { VoteDetailTabs } from './VoteDetailTabs'
 import { ResultTab } from './ResultTab'
 import { DetailTab } from './DetailTab'
 import { SpeechesTab } from './SpeechesTab'
+import { SponsorStrip } from './SponsorStrip'
+import type { VoteSponsors } from '@/server/voteSponsors'
 
 export type VoteTab = 'ergebnis' | 'details' | 'reden'
 
@@ -16,7 +18,7 @@ export const isVoteTab = (v: unknown): v is VoteTab =>
   v === 'ergebnis' || v === 'details' || v === 'reden'
 
 type Props = {
-  data: VoteDetailData
+  data: VoteDetailData & { sponsors: VoteSponsors }
   activeTab: VoteTab
   onTabChange: (t: VoteTab) => void
 }
@@ -28,7 +30,7 @@ const TAB_PANELS: Record<VoteTab, (data: VoteDetailData) => ReactElement> = {
 }
 
 export function VoteDetail({ data, activeTab, onTabChange }: Props) {
-  const { vote, partySummaries, proposingParty } = data
+  const { vote, partySummaries, proposingParty, sponsors } = data
   const stamps = deriveStamps({ ...vote, partySummaries })
   return (
     <main className="mx-auto max-w-3xl p-l">
@@ -56,6 +58,8 @@ export function VoteDetail({ data, activeTab, onTabChange }: Props) {
           <Stamp key={s} variant={s} size="m" />
         ))}
       </div>
+
+      <SponsorStrip antraege={sponsors.antraege} />
 
       {(vote.summarySimplified || vote.summary) && (
         <div className="mb-l">

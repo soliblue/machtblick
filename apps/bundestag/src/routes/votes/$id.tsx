@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { getVote } from '@/server/votes'
+import { getVoteSponsors } from '@/server/voteSponsors'
 import { VoteDetail, type VoteTab, isVoteTab } from '@/views/voteDetail/VoteDetail'
 import { seoMeta, canonicalLink, alternateJsonLink } from '@/lib/seo'
 
@@ -7,7 +8,13 @@ type Search = { tab?: VoteTab }
 
 export const Route = createFileRoute('/votes/$id')({
   component: VoteDetailRoute,
-  loader: ({ params }) => getVote({ data: params.id }),
+  loader: async ({ params }) => {
+    const [detail, sponsors] = await Promise.all([
+      getVote({ data: params.id }),
+      getVoteSponsors({ data: params.id }),
+    ])
+    return { ...detail, sponsors }
+  },
   validateSearch: (search: Record<string, unknown>): Search => ({
     tab: isVoteTab(search.tab) ? search.tab : undefined,
   }),
