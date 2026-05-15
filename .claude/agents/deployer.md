@@ -16,11 +16,33 @@ All paths below are relative to the repo root. `cd` to the repo root first.
    (cd apps/bundestag && npm run build && wrangler pages deploy dist/client --project-name=machtblick-bundestag --branch=main --commit-dirty=true)
    ```
 3. After deploy completes, query Cloudflare for this month's deploy count:
-   ```
-   curl -s -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
-     "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/pages/projects/machtblick-bundestag/deployments?per_page=25" \
-     | python3 -c 'import json,sys; d=json.load(sys.stdin); from collections import Counter; c=Counter(x["created_on"][:7] for x in (d.get("result") or [])); m=sorted(c.items())[-1] if c else ("",0); print(f"{m[1]}/500 this month ({m[0]})")'
-   ```
+```
+python3 - <<'PY'
+import datetime as dt
+import json
+import os
+import urllib.request
+account = os.environ["CLOUDFLARE_ACCOUNT_ID"]
+token = os.environ["CLOUDFLARE_API_TOKEN"]
+month = dt.datetime.now(dt.UTC).strftime("%Y-%m")
+count = 0
+page = 1
+while True:
+    req = urllib.request.Request(
+        f"https://api.cloudflare.com/client/v4/accounts/{account}/pages/projects/machtblick-bundestag/deployments?per_page=25&page={page}",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    with urllib.request.urlopen(req) as r:
+        data = json.load(r)
+    rows = data.get("result") or []
+    count += sum((x.get("created_on") or "").startswith(month) for x in rows)
+    info = data.get("result_info") or {}
+    if page >= int(info.get("total_pages") or page) or not rows:
+        break
+    page += 1
+print(f"{count}/500 this month ({month})")
+PY
+```
 4. Count files in `dist/client`: `find apps/bundestag/dist/client -type f | wc -l` (limit 20000)
 
 Project: `machtblick-bundestag`. Production: https://machtblick.de.
