@@ -9,6 +9,7 @@ import { initials } from '@/lib/initials'
 import { renderSnippet } from '@/lib/snippet'
 import type { MemberVoteRow } from '@/server/members'
 import type { SpeechResult, SpeechSummary } from '@/server/speeches'
+import { useLocale } from '@/lib/i18n'
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 
@@ -29,7 +30,8 @@ type Props = {
 export function SpeechRow({ speech, query = '', showVoteLink = true, pictureUrl, choice }: Props) {
   const terms = tokenize(query)
   const [open, setOpen] = useState(false)
-  const body = useSpeechBody(speech.id, open)
+  const locale = useLocale()
+  const body = useSpeechBody(speech.id, open, locale)
   const withAvatar = pictureUrl !== undefined || choice !== undefined
   return (
     <div

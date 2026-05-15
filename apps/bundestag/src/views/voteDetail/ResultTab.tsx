@@ -3,12 +3,14 @@ import type { VoteDetail as VoteDetailData } from '@/server/votes'
 import { VoteDistributionDonut, type VoteChoice } from '@/views/votesList/VoteDistributionDonut'
 import { PartyWaffle } from './PartyWaffle'
 import { DefectorList } from './DefectorList'
+import { useCopy } from '@/lib/i18n'
 
 type Props = { data: VoteDetailData }
 
 export function ResultTab({ data }: Props) {
   const { vote, partySummaries, defectors, memberBallots } = data
   const [filter, setFilter] = useState<VoteChoice | null>(null)
+  const t = useCopy()
   const toggle = (c: VoteChoice) => setFilter((prev) => (prev === c ? null : c))
   return (
     <>
@@ -30,7 +32,7 @@ export function ResultTab({ data }: Props) {
 
       {defectors.length > 0 && (
         <section>
-          <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>Abweichler</div>
+          <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{t.deviations}</div>
           <DefectorList defectors={defectors} />
         </section>
       )}

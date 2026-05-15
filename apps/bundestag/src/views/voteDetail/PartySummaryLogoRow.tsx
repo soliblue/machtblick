@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react'
-import { PARTY_LABEL, PARTY_LOGO, PARTY_ORDER } from '@/lib/parties'
+import { PARTY_LOGO, PARTY_ORDER, partyLabel } from '@/lib/parties'
 import { PartyLogo } from '@/views/votesList/PartyLogo'
 import { PartySummaryModal, type PartySummary } from './PartySummaryModal'
+import { useCopy, useLocale } from '@/lib/i18n'
 
 type Props = {
   summaries: PartySummary[]
@@ -9,6 +10,8 @@ type Props = {
 
 export function PartySummaryLogoRow({ summaries }: Props) {
   const [active, setActive] = useState<PartySummary | null>(null)
+  const t = useCopy()
+  const locale = useLocale()
   const available = useMemo(() => {
     const byParty = new Map(summaries.filter((s) => s.positionSummary).map((s) => [s.party, s]))
     const ordered = PARTY_ORDER.map((p) => byParty.get(p)).filter((s): s is PartySummary => Boolean(s))
@@ -23,12 +26,12 @@ export function PartySummaryLogoRow({ summaries }: Props) {
           key={s.party}
           type="button"
           onClick={() => setActive(s)}
-          aria-label={`Zusammenfassung ${PARTY_LABEL[s.party] ?? s.party}`}
+          aria-label={`${t.partySummaryAria} ${partyLabel(s.party, locale)}`}
           className="px-s py-xs opacity-l transition-opacity hover:opacity-100"
         >
           {PARTY_LOGO[s.party]
             ? <PartyLogo party={s.party} size={22} decorative />
-            : <span className="text-s font-semibold">{PARTY_LABEL[s.party] ?? s.party}</span>}
+            : <span className="text-s font-semibold">{partyLabel(s.party, locale)}</span>}
         </button>
       ))}
       {active && <PartySummaryModal summary={active} onClose={() => setActive(null)} />}

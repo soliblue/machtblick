@@ -1,26 +1,28 @@
 import { Badge } from '@/components/ui/badge'
-import { Link } from '../../lib/Link'
-import { PARTY_COLOR, PARTY_LABEL, PARTY_LOGO, PARTY_SLUG } from '@/lib/parties'
+import { useCopy, useLocale } from '@/lib/i18n'
+import { withLocale } from '@/lib/locale'
+import { PARTY_COLOR, PARTY_LOGO, PARTY_SLUG, partyLabel } from '@/lib/parties'
 import { PartyLogo } from './PartyLogo'
 
 type Props = { party: string | null; compact?: boolean }
 
 export function PartyBadge({ party, compact = false }: Props) {
-  if (!party) return <span className="text-s opacity-l">Sonstige</span>
+  const locale = useLocale()
+  const t = useCopy()
+  if (!party) return <span className="text-s opacity-l">{t.other}</span>
   const color = PARTY_COLOR[party] ?? 'var(--color-gray)'
   const slug = party === 'Bundesregierung' ? undefined : PARTY_SLUG[party]
   if (compact && PARTY_LOGO[party]) {
     const logo = <PartyLogo party={party} size={20} decorative />
     return slug ? (
-      <Link
-        to="/parties/$id/"
-        params={{ id: slug }}
+      <a
+        href={withLocale(`/parties/${slug}/`, locale)}
         onClick={(e) => e.stopPropagation()}
-        aria-label={PARTY_LABEL[party] ?? party}
+        aria-label={partyLabel(party, locale)}
         className="relative z-10 inline-flex hover:opacity-80"
       >
         {logo}
-      </Link>
+      </a>
     ) : logo
   }
   const badge = (
@@ -31,7 +33,7 @@ export function PartyBadge({ party, compact = false }: Props) {
         color,
       }}
     >
-      {PARTY_LABEL[party] ?? party}
+      {partyLabel(party, locale)}
     </Badge>
   )
   return (
@@ -43,14 +45,13 @@ export function PartyBadge({ party, compact = false }: Props) {
         </>
       )}
       {slug ? (
-        <Link
-          to="/parties/$id/"
-          params={{ id: slug }}
+        <a
+          href={withLocale(`/parties/${slug}/`, locale)}
           onClick={(e) => e.stopPropagation()}
           className="relative z-10 hover:opacity-80"
         >
           {badge}
-        </Link>
+        </a>
       ) : (
         badge
       )}

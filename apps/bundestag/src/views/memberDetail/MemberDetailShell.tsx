@@ -7,6 +7,7 @@ import { StatTiles } from './StatTiles'
 import { MemberDetailTabs } from './MemberDetailTabs'
 import { MemberPortrait } from './MemberPortrait'
 import { MandateBadge } from './MandateBadge'
+import { useCopy } from '@/lib/i18n'
 
 type Props = {
   data: MemberDetailData
@@ -14,11 +15,12 @@ type Props = {
 }
 
 export function MemberDetailShell({ data, children }: Props) {
+  const t = useCopy()
   const tiles = [
-    { label: 'Anwesenheit', value: pct(data.attendance), icon: CalendarCheck },
-    { label: 'Linientreue', value: data.loyalty === null ? '–' : pct(data.loyalty), icon: Heart },
-    { label: 'Abweichungen', value: String(data.defections), icon: UserX },
-    { label: 'Abstimmungen', value: String(data.votesAppeared), icon: Vote },
+    { label: t.attendance, value: pct(data.attendance), icon: CalendarCheck },
+    { label: t.loyalty, value: data.loyalty === null ? '-' : pct(data.loyalty), icon: Heart },
+    { label: t.deviations, value: String(data.defections), icon: UserX },
+    { label: t.votes, value: String(data.votesAppeared), icon: Vote },
   ]
   return (
     <main className="mx-auto max-w-3xl p-l">
@@ -40,7 +42,7 @@ export function MemberDetailShell({ data, children }: Props) {
             {data.yearOfBirth && (
               <span className="inline-flex items-center gap-xs text-s opacity-l">
                 <Cake size={14} />
-                <span>{new Date().getFullYear() - data.yearOfBirth} Jahre</span>
+                <span>{new Date().getFullYear() - data.yearOfBirth} {t.years}</span>
               </span>
             )}
             {data.mandateType && (

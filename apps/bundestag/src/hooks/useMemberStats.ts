@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 import type { MemberListItem, MemberSex } from '@/server/members'
 import { AGE_BUCKETS, AGE_BUCKET_LABEL, SEX_LABEL, ageBucketFor, type AgeBucket } from '@/lib/ageBuckets'
-import { PARTY_COLOR, PARTY_LABEL } from '@/lib/parties'
+import { PARTY_COLOR, partyLabel } from '@/lib/parties'
+import { useLocale } from '@/lib/i18n'
 
 export type MemberStats = {
   gender: Array<{ key: MemberSex | 'unbekannt'; label: string; count: number }>
@@ -17,6 +18,7 @@ const SEX_LABEL_WITH_UNKNOWN: Record<MemberSex | 'unbekannt', string> = {
 }
 
 export function useMemberStats(members: MemberListItem[]): MemberStats {
+  const locale = useLocale()
   return useMemo(() => {
     const genderCounts: Record<MemberSex | 'unbekannt', number> = { m: 0, f: 0, d: 0, unbekannt: 0 }
     const ageCounts: Record<AgeBucket, number> = {
@@ -43,11 +45,11 @@ export function useMemberStats(members: MemberListItem[]): MemberStats {
     const party = Array.from(partyCounts.entries())
       .map(([key, count]) => ({
         key,
-        label: PARTY_LABEL[key] ?? key,
+        label: partyLabel(key, locale),
         color: PARTY_COLOR[key] ?? 'var(--color-fg)',
         count,
       }))
       .sort((a, b) => b.count - a.count)
     return { gender, age, party }
-  }, [members])
+  }, [locale, members])
 }

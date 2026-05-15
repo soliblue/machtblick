@@ -1,4 +1,5 @@
 import { initials } from '@/lib/initials'
+import { useCopy } from '@/lib/i18n'
 
 type Props = {
   name: string
@@ -9,6 +10,7 @@ type Props = {
 }
 
 export function MemberPortrait({ name, pictureUrl, pictureAuthor, pictureLicense, pictureSourceUrl }: Props) {
+  const t = useCopy()
   return (
     <div className="flex shrink-0 flex-col gap-xs">
       {pictureUrl ? (
@@ -21,9 +23,9 @@ export function MemberPortrait({ name, pictureUrl, pictureAuthor, pictureLicense
       {pictureUrl && pictureAuthor && pictureLicense && (
         <div
           className="w-[120px] truncate text-[10px] opacity-l"
-          title={`Foto: ${pictureAuthor}, ${pictureLicense}`}
+          title={`${t.photo}: ${pictureAuthor}, ${pictureLicense}`}
         >
-          Foto:{' '}
+          {t.photo}:{' '}
           <a href={pictureSourceUrl ?? '#'} target="_blank" rel="noreferrer" className="underline">
             {pictureAuthor}
           </a>

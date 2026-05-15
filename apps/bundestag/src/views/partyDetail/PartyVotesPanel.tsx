@@ -1,13 +1,12 @@
 import { Filter, Vote, Scale } from 'lucide-react'
-import { Link } from '../../lib/Link'
 import type { PartyDetail as PartyDetailData, PartyVote } from '@/server/parties'
 import { formatDate } from '@/lib/format'
 import { FilterPill } from '@/views/votesList/FilterPill'
 import { Stamp } from '@/views/votesList/Stamp'
+import { useCopy, useLocale } from '@/lib/i18n'
+import { withLocale } from '@/lib/locale'
 
 type Result = 'angenommen' | 'abgelehnt'
-const RESULT_LABELS: Record<Result, string> = { angenommen: 'Akzeptiert', abgelehnt: 'Abgelehnt' }
-const VOTE_LABELS: Record<PartyVote, string> = { yes: 'Ja', no: 'Nein', abstain: 'Enthalten', split: 'Geteilt' }
 const VOTE_COLOR: Record<PartyVote, string> = {
   yes: 'var(--color-success)',
   no: 'var(--color-danger)',
@@ -25,33 +24,36 @@ type Props = {
 
 export function PartyVotesPanel({ data, result, onResultChange, partyVote, onPartyVoteChange }: Props) {
   const votes = data.votes.filter((v) => (!result || v.result === result) && (!partyVote || v.partyVote === partyVote))
+  const locale = useLocale()
+  const t = useCopy()
+  const resultLabels: Record<Result, string> = { angenommen: t.accepted, abgelehnt: t.rejected }
+  const voteLabels: Record<PartyVote, string> = { yes: t.yes, no: t.no, abstain: t.abstain, split: t.split }
   return (
     <div>
       <div className="mb-l flex flex-wrap items-center gap-s">
         <Filter size={14} className="opacity-l" />
         <FilterPill
-          label="Fraktion stimmte"
+          label={t.partyVoted}
           icon={Vote}
           options={['yes', 'no', 'abstain', 'split']}
           value={partyVote}
           onChange={(v) => onPartyVoteChange(v as PartyVote | null)}
-          formatOption={(o) => VOTE_LABELS[o as PartyVote]}
+          formatOption={(o) => voteLabels[o as PartyVote]}
         />
         <FilterPill
-          label="Ergebnis"
+          label={t.result}
           icon={Scale}
           options={['angenommen', 'abgelehnt']}
           value={result}
           onChange={(v) => onResultChange(v as Result | null)}
-          formatOption={(o) => RESULT_LABELS[o as Result]}
+          formatOption={(o) => resultLabels[o as Result]}
         />
       </div>
       <div className="flex flex-col">
         {votes.map((v) => (
-          <Link
+          <a
             key={v.voteId}
-            to="/votes/$id/"
-            params={{ id: v.voteId }}
+            href={withLocale(`/votes/${v.voteId}/`, locale)}
             className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-l border-t py-m text-m transition-opacity first:border-t-0 hover:opacity-80"
             style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
           >
@@ -59,23 +61,23 @@ export function PartyVotesPanel({ data, result, onResultChange, partyVote, onPar
               <span style={{ overflowWrap: 'anywhere' }}>{v.cleanTitle ?? v.title}</span>
               <span className="text-s opacity-l">{formatDate(v.date)}</span>
             </div>
-            <VoteChip vote={v.partyVote} />
+            <VoteChip vote={v.partyVote} label={voteLabels[v.partyVote]} />
             <Stamp variant={v.result} />
-          </Link>
+          </a>
         ))}
       </div>
     </div>
   )
 }
 
-function VoteChip({ vote }: { vote: PartyVote }) {
+function VoteChip({ vote, label }: { vote: PartyVote; label: string }) {
   const color = VOTE_COLOR[vote]
   return (
     <span
       className="px-s py-xs text-s font-semibold"
       style={{ background: `color-mix(in oklab, ${color} 18%, transparent)`, color }}
     >
-      {VOTE_LABELS[vote]}
+      {label}
     </span>
   )
 }

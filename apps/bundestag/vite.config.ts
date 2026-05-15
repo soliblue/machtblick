@@ -29,6 +29,8 @@ type SpeechRow = {
   position: number
   text_excerpt: string
   text_full: string
+  text_excerpt_en: string | null
+  text_full_en: string | null
   date: string
   vote_id: string | null
   vote_title: string | null
@@ -47,9 +49,11 @@ function writeSpeechesStatic() {
   const db = new Database(fileURLToPath(new URL('../../db/machtblick.sqlite', import.meta.url)), { readonly: true })
   const rows = db.prepare(`
     SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party, s.position,
-           s.text_excerpt, s.text_full, s.date, s.vote_id, v.title AS vote_title
+           s.text_excerpt, s.text_full, st.text_excerpt AS text_excerpt_en, st.text_full AS text_full_en,
+           s.date, s.vote_id, v.title AS vote_title
     FROM speeches s
     LEFT JOIN votes v ON v.id = s.vote_id
+    LEFT JOIN speech_translations st ON st.speech_id = s.id AND st.locale = 'en'
     ORDER BY s.date DESC, s.position ASC
   `).all() as SpeechRow[]
   db.close()
@@ -71,29 +75,38 @@ function writeSpeechesStatic() {
   rmSync(`${publicDir}/speeches-search.json`, { force: true })
   const SHARD_COUNT = 4
   const shards: Array<Record<string, string>> = Array.from({ length: SHARD_COUNT }, () => ({}))
+  const englishShards: Array<Record<string, string>> = Array.from({ length: SHARD_COUNT }, () => ({}))
   for (const r of rows) {
     if (r.speaker_role && CHAIR_ROLES.has(r.speaker_role)) continue
     let h = 0
     for (let i = 0; i < r.id.length; i++) h = (h * 31 + r.id.charCodeAt(i)) | 0
-    shards[Math.abs(h) % SHARD_COUNT][r.id] = r.text_full
+    const shard = Math.abs(h) % SHARD_COUNT
+    shards[shard][r.id] = r.text_full
+    if (r.text_full_en) englishShards[shard][r.id] = r.text_full_en
   }
   writeFileSync(`${publicDir}/speeches-meta.json`, JSON.stringify(meta))
   for (let i = 0; i < SHARD_COUNT; i++) {
     writeFileSync(`${publicDir}/speeches-search-${i}.json`, JSON.stringify(shards[i]))
+    writeFileSync(`${publicDir}/speeches-search-en-${i}.json`, JSON.stringify(englishShards[i]))
   }
 }
 
 function prerenderPaths(): string[] {
   const db = new Database(fileURLToPath(new URL('../../db/machtblick.sqlite', import.meta.url)), { readonly: true })
-  const paths = ['/', '/votes/', '/members/', '/parties/', '/reden/', '/impressum/', '/datenschutz/']
+  const paths = ['/', '/votes/', '/members/', '/parties/', '/reden/', '/impressum/', '/datenschutz/', '/en/', '/en/votes/', '/en/members/', '/en/parties/', '/en/impressum/', '/en/datenschutz/']
   const votes = db.prepare("SELECT id FROM votes WHERE procedural = 0 AND vote_type != 'hammelsprung'").all() as Array<{ id: string }>
-  for (const v of votes) paths.push(`/votes/${v.id}/`)
+  for (const v of votes) {
+    paths.push(`/votes/${v.id}/`)
+    paths.push(`/en/votes/${v.id}/`)
+  }
   const members = db.prepare('SELECT id FROM members').all() as Array<{ id: string }>
   for (const m of members) {
     paths.push(`/members/${m.id}/`)
     paths.push(`/members/${m.id}/abstimmungen/`)
     paths.push(`/members/${m.id}/reden/`)
     paths.push(`/members/${m.id}/anfragen/`)
+    paths.push(`/en/members/${m.id}/`)
+    paths.push(`/en/members/${m.id}/abstimmungen/`)
   }
   const parties = db.prepare(`
     SELECT DISTINCT s.party FROM vote_party_summaries s
@@ -108,6 +121,10 @@ function prerenderPaths(): string[] {
     paths.push(`/parties/${slug}/profil/`)
     paths.push(`/parties/${slug}/abstimmungen/`)
     paths.push(`/parties/${slug}/verlauf/`)
+    paths.push(`/en/parties/${slug}/`)
+    paths.push(`/en/parties/${slug}/profil/`)
+    paths.push(`/en/parties/${slug}/abstimmungen/`)
+    paths.push(`/en/parties/${slug}/verlauf/`)
   }
   db.close()
   return paths

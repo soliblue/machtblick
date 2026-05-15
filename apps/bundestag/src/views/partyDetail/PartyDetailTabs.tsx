@@ -1,4 +1,5 @@
 import { Link } from '../../lib/Link'
+import { useCopy, useLocale } from '@/lib/i18n'
 
 type Props = { partyId: string }
 
@@ -9,12 +10,22 @@ const TABS = [
 ] as const
 
 export function PartyDetailTabs({ partyId }: Props) {
+  const locale = useLocale()
+  const t = useCopy()
+  const tabs = TABS.map((tab) => ({
+    ...tab,
+    to: locale === 'en' ? (`/en${tab.to}` as typeof tab.to) : tab.to,
+    label:
+      tab.to === '/parties/$id/profil/' ? t.profile
+      : tab.to === '/parties/$id/abstimmungen/' ? t.votes
+      : t.history,
+  }))
   return (
     <nav
       className="-mx-l mt-l mb-l grid grid-cols-3 border-y"
       style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
     >
-      {TABS.map((t, i) => (
+      {tabs.map((t, i) => (
         <Link
           key={t.to}
           to={t.to}

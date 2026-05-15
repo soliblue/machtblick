@@ -16,17 +16,32 @@ import { Route as VotesIndexRouteImport } from './routes/votes/index'
 import { Route as RedenIndexRouteImport } from './routes/reden/index'
 import { Route as PartiesIndexRouteImport } from './routes/parties/index'
 import { Route as MembersIndexRouteImport } from './routes/members/index'
+import { Route as EnIndexRouteImport } from './routes/en/index'
 import { Route as VotesIdRouteImport } from './routes/votes/$id'
+import { Route as EnImpressumRouteImport } from './routes/en/impressum'
+import { Route as EnDatenschutzRouteImport } from './routes/en/datenschutz'
 import { Route as PartiesIdRouteRouteImport } from './routes/parties/$id/route'
 import { Route as MembersIdRouteRouteImport } from './routes/members/$id/route'
 import { Route as PartiesIdIndexRouteImport } from './routes/parties/$id/index'
 import { Route as MembersIdIndexRouteImport } from './routes/members/$id/index'
+import { Route as EnVotesIndexRouteImport } from './routes/en/votes/index'
+import { Route as EnPartiesIndexRouteImport } from './routes/en/parties/index'
+import { Route as EnMembersIndexRouteImport } from './routes/en/members/index'
 import { Route as PartiesIdVerlaufRouteImport } from './routes/parties/$id/verlauf'
 import { Route as PartiesIdProfilRouteImport } from './routes/parties/$id/profil'
 import { Route as PartiesIdAbstimmungenRouteImport } from './routes/parties/$id/abstimmungen'
 import { Route as MembersIdRedenRouteImport } from './routes/members/$id/reden'
 import { Route as MembersIdAnfragenRouteImport } from './routes/members/$id/anfragen'
 import { Route as MembersIdAbstimmungenRouteImport } from './routes/members/$id/abstimmungen'
+import { Route as EnVotesIdRouteImport } from './routes/en/votes/$id'
+import { Route as EnPartiesIdRouteRouteImport } from './routes/en/parties/$id/route'
+import { Route as EnMembersIdRouteRouteImport } from './routes/en/members/$id/route'
+import { Route as EnPartiesIdIndexRouteImport } from './routes/en/parties/$id/index'
+import { Route as EnMembersIdIndexRouteImport } from './routes/en/members/$id/index'
+import { Route as EnPartiesIdVerlaufRouteImport } from './routes/en/parties/$id/verlauf'
+import { Route as EnPartiesIdProfilRouteImport } from './routes/en/parties/$id/profil'
+import { Route as EnPartiesIdAbstimmungenRouteImport } from './routes/en/parties/$id/abstimmungen'
+import { Route as EnMembersIdAbstimmungenRouteImport } from './routes/en/members/$id/abstimmungen'
 
 const ImpressumRoute = ImpressumRouteImport.update({
   id: '/impressum',
@@ -63,9 +78,24 @@ const MembersIndexRoute = MembersIndexRouteImport.update({
   path: '/members/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EnIndexRoute = EnIndexRouteImport.update({
+  id: '/en/',
+  path: '/en/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VotesIdRoute = VotesIdRouteImport.update({
   id: '/votes/$id',
   path: '/votes/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnImpressumRoute = EnImpressumRouteImport.update({
+  id: '/en/impressum',
+  path: '/en/impressum',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnDatenschutzRoute = EnDatenschutzRouteImport.update({
+  id: '/en/datenschutz',
+  path: '/en/datenschutz',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PartiesIdRouteRoute = PartiesIdRouteRouteImport.update({
@@ -87,6 +117,21 @@ const MembersIdIndexRoute = MembersIdIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => MembersIdRouteRoute,
+} as any)
+const EnVotesIndexRoute = EnVotesIndexRouteImport.update({
+  id: '/en/votes/',
+  path: '/en/votes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnPartiesIndexRoute = EnPartiesIndexRouteImport.update({
+  id: '/en/parties/',
+  path: '/en/parties/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnMembersIndexRoute = EnMembersIndexRouteImport.update({
+  id: '/en/members/',
+  path: '/en/members/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const PartiesIdVerlaufRoute = PartiesIdVerlaufRouteImport.update({
   id: '/verlauf',
@@ -118,6 +163,51 @@ const MembersIdAbstimmungenRoute = MembersIdAbstimmungenRouteImport.update({
   path: '/abstimmungen',
   getParentRoute: () => MembersIdRouteRoute,
 } as any)
+const EnVotesIdRoute = EnVotesIdRouteImport.update({
+  id: '/en/votes/$id',
+  path: '/en/votes/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnPartiesIdRouteRoute = EnPartiesIdRouteRouteImport.update({
+  id: '/en/parties/$id',
+  path: '/en/parties/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnMembersIdRouteRoute = EnMembersIdRouteRouteImport.update({
+  id: '/en/members/$id',
+  path: '/en/members/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnPartiesIdIndexRoute = EnPartiesIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EnPartiesIdRouteRoute,
+} as any)
+const EnMembersIdIndexRoute = EnMembersIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EnMembersIdRouteRoute,
+} as any)
+const EnPartiesIdVerlaufRoute = EnPartiesIdVerlaufRouteImport.update({
+  id: '/verlauf',
+  path: '/verlauf',
+  getParentRoute: () => EnPartiesIdRouteRoute,
+} as any)
+const EnPartiesIdProfilRoute = EnPartiesIdProfilRouteImport.update({
+  id: '/profil',
+  path: '/profil',
+  getParentRoute: () => EnPartiesIdRouteRoute,
+} as any)
+const EnPartiesIdAbstimmungenRoute = EnPartiesIdAbstimmungenRouteImport.update({
+  id: '/abstimmungen',
+  path: '/abstimmungen',
+  getParentRoute: () => EnPartiesIdRouteRoute,
+} as any)
+const EnMembersIdAbstimmungenRoute = EnMembersIdAbstimmungenRouteImport.update({
+  id: '/abstimmungen',
+  path: '/abstimmungen',
+  getParentRoute: () => EnMembersIdRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -125,37 +215,65 @@ export interface FileRoutesByFullPath {
   '/impressum': typeof ImpressumRoute
   '/members/$id': typeof MembersIdRouteRouteWithChildren
   '/parties/$id': typeof PartiesIdRouteRouteWithChildren
+  '/en/datenschutz': typeof EnDatenschutzRoute
+  '/en/impressum': typeof EnImpressumRoute
   '/votes/$id': typeof VotesIdRoute
+  '/en/': typeof EnIndexRoute
   '/members/': typeof MembersIndexRoute
   '/parties/': typeof PartiesIndexRoute
   '/reden/': typeof RedenIndexRoute
   '/votes/': typeof VotesIndexRoute
+  '/en/members/$id': typeof EnMembersIdRouteRouteWithChildren
+  '/en/parties/$id': typeof EnPartiesIdRouteRouteWithChildren
+  '/en/votes/$id': typeof EnVotesIdRoute
   '/members/$id/abstimmungen': typeof MembersIdAbstimmungenRoute
   '/members/$id/anfragen': typeof MembersIdAnfragenRoute
   '/members/$id/reden': typeof MembersIdRedenRoute
   '/parties/$id/abstimmungen': typeof PartiesIdAbstimmungenRoute
   '/parties/$id/profil': typeof PartiesIdProfilRoute
   '/parties/$id/verlauf': typeof PartiesIdVerlaufRoute
+  '/en/members/': typeof EnMembersIndexRoute
+  '/en/parties/': typeof EnPartiesIndexRoute
+  '/en/votes/': typeof EnVotesIndexRoute
   '/members/$id/': typeof MembersIdIndexRoute
   '/parties/$id/': typeof PartiesIdIndexRoute
+  '/en/members/$id/abstimmungen': typeof EnMembersIdAbstimmungenRoute
+  '/en/parties/$id/abstimmungen': typeof EnPartiesIdAbstimmungenRoute
+  '/en/parties/$id/profil': typeof EnPartiesIdProfilRoute
+  '/en/parties/$id/verlauf': typeof EnPartiesIdVerlaufRoute
+  '/en/members/$id/': typeof EnMembersIdIndexRoute
+  '/en/parties/$id/': typeof EnPartiesIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/datenschutz': typeof DatenschutzRoute
   '/impressum': typeof ImpressumRoute
+  '/en/datenschutz': typeof EnDatenschutzRoute
+  '/en/impressum': typeof EnImpressumRoute
   '/votes/$id': typeof VotesIdRoute
+  '/en': typeof EnIndexRoute
   '/members': typeof MembersIndexRoute
   '/parties': typeof PartiesIndexRoute
   '/reden': typeof RedenIndexRoute
   '/votes': typeof VotesIndexRoute
+  '/en/votes/$id': typeof EnVotesIdRoute
   '/members/$id/abstimmungen': typeof MembersIdAbstimmungenRoute
   '/members/$id/anfragen': typeof MembersIdAnfragenRoute
   '/members/$id/reden': typeof MembersIdRedenRoute
   '/parties/$id/abstimmungen': typeof PartiesIdAbstimmungenRoute
   '/parties/$id/profil': typeof PartiesIdProfilRoute
   '/parties/$id/verlauf': typeof PartiesIdVerlaufRoute
+  '/en/members': typeof EnMembersIndexRoute
+  '/en/parties': typeof EnPartiesIndexRoute
+  '/en/votes': typeof EnVotesIndexRoute
   '/members/$id': typeof MembersIdIndexRoute
   '/parties/$id': typeof PartiesIdIndexRoute
+  '/en/members/$id/abstimmungen': typeof EnMembersIdAbstimmungenRoute
+  '/en/parties/$id/abstimmungen': typeof EnPartiesIdAbstimmungenRoute
+  '/en/parties/$id/profil': typeof EnPartiesIdProfilRoute
+  '/en/parties/$id/verlauf': typeof EnPartiesIdVerlaufRoute
+  '/en/members/$id': typeof EnMembersIdIndexRoute
+  '/en/parties/$id': typeof EnPartiesIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -164,19 +282,34 @@ export interface FileRoutesById {
   '/impressum': typeof ImpressumRoute
   '/members/$id': typeof MembersIdRouteRouteWithChildren
   '/parties/$id': typeof PartiesIdRouteRouteWithChildren
+  '/en/datenschutz': typeof EnDatenschutzRoute
+  '/en/impressum': typeof EnImpressumRoute
   '/votes/$id': typeof VotesIdRoute
+  '/en/': typeof EnIndexRoute
   '/members/': typeof MembersIndexRoute
   '/parties/': typeof PartiesIndexRoute
   '/reden/': typeof RedenIndexRoute
   '/votes/': typeof VotesIndexRoute
+  '/en/members/$id': typeof EnMembersIdRouteRouteWithChildren
+  '/en/parties/$id': typeof EnPartiesIdRouteRouteWithChildren
+  '/en/votes/$id': typeof EnVotesIdRoute
   '/members/$id/abstimmungen': typeof MembersIdAbstimmungenRoute
   '/members/$id/anfragen': typeof MembersIdAnfragenRoute
   '/members/$id/reden': typeof MembersIdRedenRoute
   '/parties/$id/abstimmungen': typeof PartiesIdAbstimmungenRoute
   '/parties/$id/profil': typeof PartiesIdProfilRoute
   '/parties/$id/verlauf': typeof PartiesIdVerlaufRoute
+  '/en/members/': typeof EnMembersIndexRoute
+  '/en/parties/': typeof EnPartiesIndexRoute
+  '/en/votes/': typeof EnVotesIndexRoute
   '/members/$id/': typeof MembersIdIndexRoute
   '/parties/$id/': typeof PartiesIdIndexRoute
+  '/en/members/$id/abstimmungen': typeof EnMembersIdAbstimmungenRoute
+  '/en/parties/$id/abstimmungen': typeof EnPartiesIdAbstimmungenRoute
+  '/en/parties/$id/profil': typeof EnPartiesIdProfilRoute
+  '/en/parties/$id/verlauf': typeof EnPartiesIdVerlaufRoute
+  '/en/members/$id/': typeof EnMembersIdIndexRoute
+  '/en/parties/$id/': typeof EnPartiesIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -186,37 +319,65 @@ export interface FileRouteTypes {
     | '/impressum'
     | '/members/$id'
     | '/parties/$id'
+    | '/en/datenschutz'
+    | '/en/impressum'
     | '/votes/$id'
+    | '/en/'
     | '/members/'
     | '/parties/'
     | '/reden/'
     | '/votes/'
+    | '/en/members/$id'
+    | '/en/parties/$id'
+    | '/en/votes/$id'
     | '/members/$id/abstimmungen'
     | '/members/$id/anfragen'
     | '/members/$id/reden'
     | '/parties/$id/abstimmungen'
     | '/parties/$id/profil'
     | '/parties/$id/verlauf'
+    | '/en/members/'
+    | '/en/parties/'
+    | '/en/votes/'
     | '/members/$id/'
     | '/parties/$id/'
+    | '/en/members/$id/abstimmungen'
+    | '/en/parties/$id/abstimmungen'
+    | '/en/parties/$id/profil'
+    | '/en/parties/$id/verlauf'
+    | '/en/members/$id/'
+    | '/en/parties/$id/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/datenschutz'
     | '/impressum'
+    | '/en/datenschutz'
+    | '/en/impressum'
     | '/votes/$id'
+    | '/en'
     | '/members'
     | '/parties'
     | '/reden'
     | '/votes'
+    | '/en/votes/$id'
     | '/members/$id/abstimmungen'
     | '/members/$id/anfragen'
     | '/members/$id/reden'
     | '/parties/$id/abstimmungen'
     | '/parties/$id/profil'
     | '/parties/$id/verlauf'
+    | '/en/members'
+    | '/en/parties'
+    | '/en/votes'
     | '/members/$id'
     | '/parties/$id'
+    | '/en/members/$id/abstimmungen'
+    | '/en/parties/$id/abstimmungen'
+    | '/en/parties/$id/profil'
+    | '/en/parties/$id/verlauf'
+    | '/en/members/$id'
+    | '/en/parties/$id'
   id:
     | '__root__'
     | '/'
@@ -224,19 +385,34 @@ export interface FileRouteTypes {
     | '/impressum'
     | '/members/$id'
     | '/parties/$id'
+    | '/en/datenschutz'
+    | '/en/impressum'
     | '/votes/$id'
+    | '/en/'
     | '/members/'
     | '/parties/'
     | '/reden/'
     | '/votes/'
+    | '/en/members/$id'
+    | '/en/parties/$id'
+    | '/en/votes/$id'
     | '/members/$id/abstimmungen'
     | '/members/$id/anfragen'
     | '/members/$id/reden'
     | '/parties/$id/abstimmungen'
     | '/parties/$id/profil'
     | '/parties/$id/verlauf'
+    | '/en/members/'
+    | '/en/parties/'
+    | '/en/votes/'
     | '/members/$id/'
     | '/parties/$id/'
+    | '/en/members/$id/abstimmungen'
+    | '/en/parties/$id/abstimmungen'
+    | '/en/parties/$id/profil'
+    | '/en/parties/$id/verlauf'
+    | '/en/members/$id/'
+    | '/en/parties/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -245,11 +421,20 @@ export interface RootRouteChildren {
   ImpressumRoute: typeof ImpressumRoute
   MembersIdRouteRoute: typeof MembersIdRouteRouteWithChildren
   PartiesIdRouteRoute: typeof PartiesIdRouteRouteWithChildren
+  EnDatenschutzRoute: typeof EnDatenschutzRoute
+  EnImpressumRoute: typeof EnImpressumRoute
   VotesIdRoute: typeof VotesIdRoute
+  EnIndexRoute: typeof EnIndexRoute
   MembersIndexRoute: typeof MembersIndexRoute
   PartiesIndexRoute: typeof PartiesIndexRoute
   RedenIndexRoute: typeof RedenIndexRoute
   VotesIndexRoute: typeof VotesIndexRoute
+  EnMembersIdRouteRoute: typeof EnMembersIdRouteRouteWithChildren
+  EnPartiesIdRouteRoute: typeof EnPartiesIdRouteRouteWithChildren
+  EnVotesIdRoute: typeof EnVotesIdRoute
+  EnMembersIndexRoute: typeof EnMembersIndexRoute
+  EnPartiesIndexRoute: typeof EnPartiesIndexRoute
+  EnVotesIndexRoute: typeof EnVotesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -303,11 +488,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MembersIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/en/': {
+      id: '/en/'
+      path: '/en'
+      fullPath: '/en/'
+      preLoaderRoute: typeof EnIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/votes/$id': {
       id: '/votes/$id'
       path: '/votes/$id'
       fullPath: '/votes/$id'
       preLoaderRoute: typeof VotesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/impressum': {
+      id: '/en/impressum'
+      path: '/en/impressum'
+      fullPath: '/en/impressum'
+      preLoaderRoute: typeof EnImpressumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/datenschutz': {
+      id: '/en/datenschutz'
+      path: '/en/datenschutz'
+      fullPath: '/en/datenschutz'
+      preLoaderRoute: typeof EnDatenschutzRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/parties/$id': {
@@ -337,6 +543,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/members/$id/'
       preLoaderRoute: typeof MembersIdIndexRouteImport
       parentRoute: typeof MembersIdRouteRoute
+    }
+    '/en/votes/': {
+      id: '/en/votes/'
+      path: '/en/votes'
+      fullPath: '/en/votes/'
+      preLoaderRoute: typeof EnVotesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/parties/': {
+      id: '/en/parties/'
+      path: '/en/parties'
+      fullPath: '/en/parties/'
+      preLoaderRoute: typeof EnPartiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/members/': {
+      id: '/en/members/'
+      path: '/en/members'
+      fullPath: '/en/members/'
+      preLoaderRoute: typeof EnMembersIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/parties/$id/verlauf': {
       id: '/parties/$id/verlauf'
@@ -380,6 +607,69 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MembersIdAbstimmungenRouteImport
       parentRoute: typeof MembersIdRouteRoute
     }
+    '/en/votes/$id': {
+      id: '/en/votes/$id'
+      path: '/en/votes/$id'
+      fullPath: '/en/votes/$id'
+      preLoaderRoute: typeof EnVotesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/parties/$id': {
+      id: '/en/parties/$id'
+      path: '/en/parties/$id'
+      fullPath: '/en/parties/$id'
+      preLoaderRoute: typeof EnPartiesIdRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/members/$id': {
+      id: '/en/members/$id'
+      path: '/en/members/$id'
+      fullPath: '/en/members/$id'
+      preLoaderRoute: typeof EnMembersIdRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/parties/$id/': {
+      id: '/en/parties/$id/'
+      path: '/'
+      fullPath: '/en/parties/$id/'
+      preLoaderRoute: typeof EnPartiesIdIndexRouteImport
+      parentRoute: typeof EnPartiesIdRouteRoute
+    }
+    '/en/members/$id/': {
+      id: '/en/members/$id/'
+      path: '/'
+      fullPath: '/en/members/$id/'
+      preLoaderRoute: typeof EnMembersIdIndexRouteImport
+      parentRoute: typeof EnMembersIdRouteRoute
+    }
+    '/en/parties/$id/verlauf': {
+      id: '/en/parties/$id/verlauf'
+      path: '/verlauf'
+      fullPath: '/en/parties/$id/verlauf'
+      preLoaderRoute: typeof EnPartiesIdVerlaufRouteImport
+      parentRoute: typeof EnPartiesIdRouteRoute
+    }
+    '/en/parties/$id/profil': {
+      id: '/en/parties/$id/profil'
+      path: '/profil'
+      fullPath: '/en/parties/$id/profil'
+      preLoaderRoute: typeof EnPartiesIdProfilRouteImport
+      parentRoute: typeof EnPartiesIdRouteRoute
+    }
+    '/en/parties/$id/abstimmungen': {
+      id: '/en/parties/$id/abstimmungen'
+      path: '/abstimmungen'
+      fullPath: '/en/parties/$id/abstimmungen'
+      preLoaderRoute: typeof EnPartiesIdAbstimmungenRouteImport
+      parentRoute: typeof EnPartiesIdRouteRoute
+    }
+    '/en/members/$id/abstimmungen': {
+      id: '/en/members/$id/abstimmungen'
+      path: '/abstimmungen'
+      fullPath: '/en/members/$id/abstimmungen'
+      preLoaderRoute: typeof EnMembersIdAbstimmungenRouteImport
+      parentRoute: typeof EnMembersIdRouteRoute
+    }
   }
 }
 
@@ -419,17 +709,56 @@ const PartiesIdRouteRouteWithChildren = PartiesIdRouteRoute._addFileChildren(
   PartiesIdRouteRouteChildren,
 )
 
+interface EnMembersIdRouteRouteChildren {
+  EnMembersIdAbstimmungenRoute: typeof EnMembersIdAbstimmungenRoute
+  EnMembersIdIndexRoute: typeof EnMembersIdIndexRoute
+}
+
+const EnMembersIdRouteRouteChildren: EnMembersIdRouteRouteChildren = {
+  EnMembersIdAbstimmungenRoute: EnMembersIdAbstimmungenRoute,
+  EnMembersIdIndexRoute: EnMembersIdIndexRoute,
+}
+
+const EnMembersIdRouteRouteWithChildren =
+  EnMembersIdRouteRoute._addFileChildren(EnMembersIdRouteRouteChildren)
+
+interface EnPartiesIdRouteRouteChildren {
+  EnPartiesIdAbstimmungenRoute: typeof EnPartiesIdAbstimmungenRoute
+  EnPartiesIdProfilRoute: typeof EnPartiesIdProfilRoute
+  EnPartiesIdVerlaufRoute: typeof EnPartiesIdVerlaufRoute
+  EnPartiesIdIndexRoute: typeof EnPartiesIdIndexRoute
+}
+
+const EnPartiesIdRouteRouteChildren: EnPartiesIdRouteRouteChildren = {
+  EnPartiesIdAbstimmungenRoute: EnPartiesIdAbstimmungenRoute,
+  EnPartiesIdProfilRoute: EnPartiesIdProfilRoute,
+  EnPartiesIdVerlaufRoute: EnPartiesIdVerlaufRoute,
+  EnPartiesIdIndexRoute: EnPartiesIdIndexRoute,
+}
+
+const EnPartiesIdRouteRouteWithChildren =
+  EnPartiesIdRouteRoute._addFileChildren(EnPartiesIdRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DatenschutzRoute: DatenschutzRoute,
   ImpressumRoute: ImpressumRoute,
   MembersIdRouteRoute: MembersIdRouteRouteWithChildren,
   PartiesIdRouteRoute: PartiesIdRouteRouteWithChildren,
+  EnDatenschutzRoute: EnDatenschutzRoute,
+  EnImpressumRoute: EnImpressumRoute,
   VotesIdRoute: VotesIdRoute,
+  EnIndexRoute: EnIndexRoute,
   MembersIndexRoute: MembersIndexRoute,
   PartiesIndexRoute: PartiesIndexRoute,
   RedenIndexRoute: RedenIndexRoute,
   VotesIndexRoute: VotesIndexRoute,
+  EnMembersIdRouteRoute: EnMembersIdRouteRouteWithChildren,
+  EnPartiesIdRouteRoute: EnPartiesIdRouteRouteWithChildren,
+  EnVotesIdRoute: EnVotesIdRoute,
+  EnMembersIndexRoute: EnMembersIndexRoute,
+  EnPartiesIndexRoute: EnPartiesIndexRoute,
+  EnVotesIndexRoute: EnVotesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

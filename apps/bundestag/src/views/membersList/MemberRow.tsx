@@ -1,19 +1,20 @@
-import { Link } from '../../lib/Link'
 import type { MemberListItem } from '@/server/members'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { pct } from '@/lib/format'
+import { useLocale } from '@/lib/i18n'
+import { withLocale } from '@/lib/locale'
 
 type Props = { member: MemberListItem }
 
 export function MemberRow({ member }: Props) {
+  const locale = useLocale()
   return (
     <div
       className="relative grid grid-cols-[minmax(0,1fr)_auto_auto_auto] items-center gap-m border-t py-m text-m transition-opacity hover:opacity-80 first:border-t-0 sm:grid-cols-[minmax(0,1fr)_auto_auto_auto_auto]"
       style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
     >
-      <Link
-        to="/members/$id/"
-        params={{ id: member.id }}
+      <a
+        href={withLocale(`/members/${member.id}/`, locale)}
         className="absolute inset-0"
         aria-label={member.name}
       />

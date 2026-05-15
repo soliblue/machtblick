@@ -1,20 +1,30 @@
 import { createServerFn } from '@tanstack/react-start'
 import { db } from '@machtblick/db/client'
-import { votes, voteDocuments, votePartySummaries, voteMembers, members, speeches, voteDescriptionDecisions } from '@machtblick/db/schema'
-import { eq, desc, sql, asc } from 'drizzle-orm'
+import { votes, voteDocuments, votePartySummaries, voteMembers, members, speeches, speechTranslations, voteDescriptionDecisions, voteTranslations, votePartySummaryTranslations } from '@machtblick/db/schema'
+import { eq, desc, asc, inArray, and } from 'drizzle-orm'
 import { pickAntragFromRows } from './lib/pickAntrag'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
 import { hasPartyLine } from '../lib/parties'
 import { SHOW_HAMMELSPRUNG } from '../lib/voteTypes'
 import type { SpeechSummary } from './speeches'
+import { normalizeLocale, type Locale } from '../lib/locale'
 
 const SPEECH_PARTY_NORMALIZE: Record<string, string> = {
   'BÜNDNIS 90/DIE GRÜNEN': 'B90/Grüne',
   'DIE LINKE': 'Die Linke',
 }
 
-function loadDebateForVote(voteId: string): SpeechSummary[] {
+function speechTranslationMap(ids: string[], locale: Locale) {
+  return new Map(
+    locale === 'en' && ids.length
+      ? db.select().from(speechTranslations).where(and(eq(speechTranslations.locale, 'en'), inArray(speechTranslations.speechId, ids))).all().map((t) => [t.speechId, t])
+      : [],
+  )
+}
+
+function loadDebateForVote(voteId: string, locale: Locale): SpeechSummary[] {
   const rows = db.select().from(speeches).where(eq(speeches.voteId, voteId)).orderBy(asc(speeches.position)).all()
+  const translations = speechTranslationMap(rows.map((row) => row.id), locale)
   return rows.map((row) => ({
     id: row.id,
     speakerName: row.speakerName,
@@ -22,7 +32,7 @@ function loadDebateForVote(voteId: string): SpeechSummary[] {
     speakerRole: row.speakerRole,
     party: row.party ? (SPEECH_PARTY_NORMALIZE[row.party] ?? row.party) : null,
     position: row.position,
-    excerpt: row.textExcerpt,
+    excerpt: translations.get(row.id)?.textExcerpt ?? row.textExcerpt,
   }))
 }
 
@@ -43,9 +53,53 @@ export type VoteListItem = {
   partySummaries: Array<{ party: string; position: 'yes' | 'no' | 'abstain' | 'mixed'; members: number; yes: number; no: number; abstain: number; absent: number }>
 }
 
-export const listVotes = createServerFn({ method: 'GET' }).handler(async (): Promise<VoteListItem[]> => {
+type LocalizedVoteFields = {
+  id: string
+  title: string
+  cleanTitle: string | null
+  topic: string | null
+  subject: string | null
+  summary: string | null
+  summarySimplified: string | null
+  summaryDetail: string | null
+}
+
+function translationMap(ids: string[], locale: Locale) {
+  return new Map(
+    locale === 'en' && ids.length
+      ? db.select().from(voteTranslations).where(and(eq(voteTranslations.locale, 'en'), inArray(voteTranslations.voteId, ids))).all().map((t) => [t.voteId, t])
+      : [],
+  )
+}
+
+function overlayVote<T extends LocalizedVoteFields>(vote: T, translations: Map<string, typeof voteTranslations.$inferSelect>): T {
+  const t = translations.get(vote.id)
+  return t ? {
+    ...vote,
+    title: t.title,
+    cleanTitle: t.cleanTitle,
+    topic: t.topic,
+    subject: t.subject,
+    summary: t.summary,
+    summarySimplified: t.summarySimplified,
+    summaryDetail: t.summaryDetail,
+  } : vote
+}
+
+function partySummaryTranslationMap(voteId: string, locale: Locale) {
+  return new Map(
+    locale === 'en'
+      ? db.select().from(votePartySummaryTranslations).where(and(eq(votePartySummaryTranslations.locale, 'en'), eq(votePartySummaryTranslations.voteId, voteId))).all().map((t) => [t.party, t])
+      : [],
+  )
+}
+
+export const listVotes = createServerFn({ method: 'GET' })
+  .inputValidator(normalizeLocale)
+  .handler(async ({ data: locale }): Promise<VoteListItem[]> => {
   const allRows = db.select().from(votes).where(eq(votes.procedural, false)).orderBy(desc(votes.date), desc(votes.bundestagId)).all()
   const rows = SHOW_HAMMELSPRUNG ? allRows : allRows.filter((r) => r.voteType !== 'hammelsprung')
+  const translations = translationMap(rows.map((r) => r.id), locale)
   const allSummaries = db.select().from(votePartySummaries).all()
   const byVote = new Map<string, typeof allSummaries>()
   for (const s of allSummaries) {
@@ -62,10 +116,11 @@ export const listVotes = createServerFn({ method: 'GET' }).handler(async (): Pro
     if (seatsByParty.size >= 6) break
   }
   return rows.map((v) => {
+    const localized = overlayVote(v, translations)
     const summaries = byVote.get(v.id) ?? []
     if (v.voteType === 'namentlich' && v.yes != null) {
       return {
-        id: v.id, date: v.date, title: v.title, cleanTitle: v.cleanTitle, topic: v.topic, voteType: v.voteType,
+        id: v.id, date: v.date, title: localized.title, cleanTitle: localized.cleanTitle, topic: localized.topic, voteType: v.voteType,
         proposingParty: v.initiator, result: v.result,
         yes: v.yes, no: v.no!, abstain: v.abstain!, absent: v.absent!, totalMembers: v.totalMembers!,
         partySummaries: summaries.map((s) => ({
@@ -90,7 +145,7 @@ export const listVotes = createServerFn({ method: 'GET' }).handler(async (): Pro
       }
     })
     return {
-      id: v.id, date: v.date, title: v.title, cleanTitle: v.cleanTitle, topic: v.topic, voteType: v.voteType,
+      id: v.id, date: v.date, title: localized.title, cleanTitle: localized.cleanTitle, topic: localized.topic, voteType: v.voteType,
       proposingParty: v.initiator, result: v.result,
       yes, no, abstain, absent: 0, totalMembers: yes + no + abstain,
       partySummaries: enriched,
@@ -121,34 +176,39 @@ function getSeatsByParty(): Map<string, number> {
 }
 
 export const getVote = createServerFn({ method: 'GET' })
-  .inputValidator((id: string) => id)
-  .handler(async ({ data: id }): Promise<VoteDetail> => {
+  .inputValidator((input: string | { id: string; locale?: Locale }) => typeof input === 'string' ? { id: input, locale: 'de' as Locale } : { id: input.id, locale: normalizeLocale(input.locale) })
+  .handler(async ({ data }): Promise<VoteDetail> => {
+    const { id, locale } = data
     const voteRow = db.select().from(votes).where(eq(votes.id, id)).get()
     if (!voteRow) throw new Error(`vote not found: ${id}`)
     if (!SHOW_HAMMELSPRUNG && voteRow.voteType === 'hammelsprung') throw new Error(`vote not found: ${id}`)
+    const translations = translationMap([id], locale)
+    const summaryTranslations = partySummaryTranslationMap(id, locale)
     const documents = db.select().from(voteDocuments).where(eq(voteDocuments.voteId, id)).all()
     const summaryRows = db.select().from(votePartySummaries).where(eq(votePartySummaries.voteId, id)).all()
     const seats = getSeatsByParty()
     const partySummaries = summaryRows.map((s) => {
+      const t = summaryTranslations.get(s.party)
       if (voteRow.voteType === 'namentlich') {
-        return { ...s, members: s.members ?? 0, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0 }
+        return { ...s, positionSummary: t?.positionSummary ?? s.positionSummary, keyPoints: t?.keyPoints ?? s.keyPoints, dissentNote: t?.dissentNote ?? s.dissentNote, members: s.members ?? 0, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0 }
       }
       const m = seats.get(s.party) ?? 0
       return {
-        ...s, members: m,
+        ...s, positionSummary: t?.positionSummary ?? s.positionSummary, keyPoints: t?.keyPoints ?? s.keyPoints, dissentNote: t?.dissentNote ?? s.dissentNote, members: m,
         yes: s.position === 'yes' ? m : 0,
         no: s.position === 'no' ? m : 0,
         abstain: s.position === 'abstain' ? m : 0,
         absent: 0,
       }
     })
+    const localizedVote = overlayVote(voteRow, translations)
     const vote = voteRow.voteType === 'namentlich'
-      ? { ...voteRow, yes: voteRow.yes ?? 0, no: voteRow.no ?? 0, abstain: voteRow.abstain ?? 0, absent: voteRow.absent ?? 0, totalMembers: voteRow.totalMembers ?? 0 }
+      ? { ...localizedVote, yes: voteRow.yes ?? 0, no: voteRow.no ?? 0, abstain: voteRow.abstain ?? 0, absent: voteRow.absent ?? 0, totalMembers: voteRow.totalMembers ?? 0 }
       : (() => {
           const yes = partySummaries.reduce((a, s) => a + s.yes, 0)
           const no = partySummaries.reduce((a, s) => a + s.no, 0)
           const abstain = partySummaries.reduce((a, s) => a + s.abstain, 0)
-          return { ...voteRow, yes, no, abstain, absent: 0, totalMembers: yes + no + abstain }
+          return { ...localizedVote, yes, no, abstain, absent: 0, totalMembers: yes + no + abstain }
         })()
     const rawVmRows = db
       .select({
@@ -193,7 +253,7 @@ export const getVote = createServerFn({ method: 'GET' })
       proposingParty: vote.initiator,
       defectors,
       memberBallots: vmRows.map((r) => ({ memberId: r.memberId, name: r.name, party: r.party, choice: r.choice, pictureUrl: r.pictureUrl })),
-      debate: loadDebateForVote(voteRow.id),
+      debate: loadDebateForVote(voteRow.id, locale),
       antragPdfUrl: db.select({ url: voteDescriptionDecisions.sourcePdfUrl }).from(voteDescriptionDecisions).where(eq(voteDescriptionDecisions.voteId, id)).get()?.url
         ?? pickAntragFromRows(documents.map((d) => ({ label: d.label, title: d.title, url: d.url })))?.pdfUrl
         ?? null,

@@ -10,6 +10,7 @@ import type { MemberVoteRow } from '@/server/members'
 import type { SpeechSummary } from '@/server/speeches'
 import { PartySummaryLogoRow } from './PartySummaryLogoRow'
 import type { PartySummary } from './PartySummaryModal'
+import { useCopy, useLocale } from '@/lib/i18n'
 
 type BallotEntry = { choice: MemberVoteRow['choice']; pictureUrl: string | null }
 type Props = { speeches: SpeechSummary[]; ballotByMember: Map<string, BallotEntry>; partySummaries: PartySummary[] }
@@ -21,14 +22,16 @@ export function DebateList({ speeches, ballotByMember, partySummaries }: Props) 
   const [query, setQuery] = useState('')
   const [party, setParty] = useState<string | null>(null)
   const [page, setPage] = useState(0)
+  const locale = useLocale()
+  const t = useCopy()
   const terms = tokenize(query)
   const texts = useQuery({
-    queryKey: ['speech-texts'],
-    queryFn: () => loadSpeechTexts(),
+    queryKey: ['speech-texts', locale],
+    queryFn: () => loadSpeechTexts(locale),
     enabled: terms.length > 0,
     staleTime: Infinity,
   })
-  const textsLoading = terms.length > 0 && !speechTextsLoaded()
+  const textsLoading = terms.length > 0 && !speechTextsLoaded(locale)
   const parties = useMemo(
     () => Array.from(new Set(speeches.map((s) => s.party).filter((p): p is string => !!p))).sort(),
     [speeches],
@@ -48,7 +51,7 @@ export function DebateList({ speeches, ballotByMember, partySummaries }: Props) 
   const reset = <T,>(setter: (v: T) => void) => (v: T) => { setter(v); setPage(0) }
   return (
     <section className="mb-l">
-      <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>Reden zur Abstimmung</div>
+      <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{t.speechesForVote}</div>
       <PartySummaryLogoRow summaries={partySummaries} />
       <div className="mb-m flex flex-wrap items-center gap-m">
         <div className="relative flex-1 min-w-[12rem]">
@@ -57,18 +60,18 @@ export function DebateList({ speeches, ballotByMember, partySummaries }: Props) 
             type="text"
             value={query}
             onChange={(e) => reset(setQuery)(e.target.value)}
-            placeholder="Reden durchsuchen"
+            placeholder={t.searchSpeeches}
             className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
             style={{ borderColor: ROW_BORDER }}
           />
-          {textsLoading && <div className="mt-xs text-s opacity-l">Suchindex wird geladen…</div>}
+          {textsLoading && <div className="mt-xs text-s opacity-l">{t.searchIndexLoading}</div>}
         </div>
-        <FilterPill label="Fraktion" icon={Users} options={parties} value={party} onChange={reset(setParty)} />
+        <FilterPill label={t.parliamentaryGroup} icon={Users} options={parties} value={party} onChange={reset(setParty)} />
       </div>
       {textsLoading ? (
-        <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>Suche wird vorbereitet…</div>
+        <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>{t.searchPreparing}</div>
       ) : filtered.length === 0 ? (
-        <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>Keine Reden gefunden.</div>
+        <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>{t.noSpeechesFound}</div>
       ) : (
         <div className="flex flex-col">
           {slice.map((s) => {
@@ -105,13 +108,14 @@ function windowedPages(page: number, pageCount: number): Array<number | 'ellipsi
 }
 
 function Pager({ page, pageCount, onPage }: { page: number; pageCount: number; onPage: (p: number) => void }) {
+  const t = useCopy()
   return (
     <div className="mt-m flex items-center justify-center gap-xs text-s">
       <button
         type="button"
         onClick={() => onPage(page - 1)}
         disabled={page === 0}
-        aria-label="Vorherige Seite"
+        aria-label={t.previousPage}
         className="px-s py-xs opacity-l hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed"
       >
         <ChevronLeft size={14} />
@@ -132,7 +136,7 @@ function Pager({ page, pageCount, onPage }: { page: number; pageCount: number; o
         type="button"
         onClick={() => onPage(page + 1)}
         disabled={page === pageCount - 1}
-        aria-label="Nächste Seite"
+        aria-label={t.nextPage}
         className="px-s py-xs opacity-l hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed"
       >
         <ChevronRight size={14} />

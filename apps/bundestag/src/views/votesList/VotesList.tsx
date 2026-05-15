@@ -2,21 +2,11 @@ import { SlidersHorizontal, Vote, Flag, Scale, Search, Tag } from 'lucide-react'
 import type { VoteListItem } from '@/server/votes'
 import type { VoteTypeFilter, VoteResultFilter } from '@/hooks/useVoteListFilters'
 import { VISIBLE_VOTE_TYPES } from '@/lib/voteTypes'
+import { useCopy } from '@/lib/i18n'
 import { VoteRow } from './VoteRow'
 import { FilterPill } from './FilterPill'
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
-
-const TYPE_LABELS: Record<VoteTypeFilter, string> = {
-  namentlich: 'Namentlich',
-  handzeichen: 'Handzeichen',
-  hammelsprung: 'Hammelsprung',
-}
-
-const RESULT_LABELS: Record<VoteResultFilter, string> = {
-  angenommen: 'Angenommen',
-  abgelehnt: 'Abgelehnt',
-}
 
 type Props = {
   votes: VoteListItem[]
@@ -35,16 +25,26 @@ type Props = {
 }
 
 export function VotesList({ votes, proposingParty, onProposingPartyChange, availableParties, voteType, onVoteTypeChange, result, onResultChange, topic, onTopicChange, availableTopics, query, onQueryChange }: Props) {
+  const t = useCopy()
+  const typeLabels: Record<VoteTypeFilter, string> = {
+    namentlich: t.namedVote,
+    handzeichen: t.showOfHands,
+    hammelsprung: t.division,
+  }
+  const resultLabels: Record<VoteResultFilter, string> = {
+    angenommen: t.accepted,
+    abgelehnt: t.rejected,
+  }
   return (
     <main className="mx-auto max-w-3xl p-l">
-      <h1 className="sr-only">Abstimmungen</h1>
+      <h1 className="sr-only">{t.votes}</h1>
       <div className="mb-m relative min-w-[12rem]">
         <Search size={14} className="absolute left-s top-1/2 -translate-y-1/2 opacity-l" />
         <input
           type="text"
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
-          placeholder="Abstimmungen durchsuchen"
+          placeholder={t.searchVotes}
           className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
           style={{ borderColor: ROW_BORDER }}
         />
@@ -52,31 +52,31 @@ export function VotesList({ votes, proposingParty, onProposingPartyChange, avail
       <div className="mb-l -mx-l flex items-center gap-s overflow-x-auto px-l [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <SlidersHorizontal size={17} className="shrink-0 opacity-l" />
         <FilterPill
-          label="Typ"
+          label={t.type}
           icon={Vote}
           options={VISIBLE_VOTE_TYPES}
           value={voteType}
           onChange={(v) => onVoteTypeChange(v as VoteTypeFilter | null)}
-          formatOption={(o) => TYPE_LABELS[o as VoteTypeFilter]}
+          formatOption={(o) => typeLabels[o as VoteTypeFilter]}
         />
         <FilterPill
-          label="Antragsteller"
+          label={t.proposer}
           icon={Flag}
           options={availableParties}
           value={proposingParty}
           onChange={onProposingPartyChange}
         />
         <FilterPill
-          label="Ergebnis"
+          label={t.result}
           icon={Scale}
           options={['angenommen', 'abgelehnt']}
           value={result}
           onChange={(v) => onResultChange(v as VoteResultFilter | null)}
-          formatOption={(o) => RESULT_LABELS[o as VoteResultFilter]}
+          formatOption={(o) => resultLabels[o as VoteResultFilter]}
         />
         {availableTopics.length > 0 && (
           <FilterPill
-            label="Kategorie"
+            label={t.category}
             icon={Tag}
             options={availableTopics}
             value={topic}

@@ -4,6 +4,7 @@ import type { PartyHistory, PartyHistoryPoint } from '@/server/getPartyHistory'
 import { PartyHistoryTooltip } from './PartyHistoryTooltip'
 import { PartyHistoryEventStrip, type StripEvent } from './PartyHistoryEventStrip'
 import { PartyHistoryEmpty } from './PartyHistoryEmpty'
+import { useCopy, useLocale } from '@/lib/i18n'
 
 type Props = {
   history: PartyHistory
@@ -35,10 +36,10 @@ function dedupePoints(points: PartyHistoryPoint[]): PartyHistoryPoint[] {
   return [...byTerm.values()].sort((a, b) => a.termNumber - b.termNumber)
 }
 
-function toChartPoints(points: PartyHistoryPoint[]): ChartPoint[] {
+function toChartPoints(points: PartyHistoryPoint[], today: string): ChartPoint[] {
   return points.map((p, i) => {
     const next = points[i + 1]
-    const termLabel = next ? `${p.year} - ${next.year - 1}` : `${p.year} - heute`
+    const termLabel = next ? `${p.year} - ${next.year - 1}` : `${p.year} - ${today}`
     return {
       termNumber: p.termNumber,
       termLabel,
@@ -76,8 +77,10 @@ function anchorEvents(events: PartyHistory['events'], points: PartyHistoryPoint[
 }
 
 export function PartyHistoryChart({ history, partyLabel, partyColor }: Props) {
+  const locale = useLocale()
+  const t = useCopy()
   const points = useMemo(() => dedupePoints(history.points), [history.points])
-  const data = useMemo(() => toChartPoints(points), [points])
+  const data = useMemo(() => toChartPoints(points, t.sinceToday), [points, t.sinceToday])
   if (data.length === 0) return null
   if (data.length === 1) {
     return (
@@ -153,7 +156,7 @@ export function PartyHistoryChart({ history, partyLabel, partyColor }: Props) {
               dataKey="pctValue"
               position="top"
               offset={10}
-              formatter={(v) => `${Number(v).toFixed(1).replace('.', ',')}%`}
+              formatter={(v) => `${Number(v).toFixed(1).replace('.', locale === 'de' ? ',' : '.')}%`}
               style={{ fontSize: 12, fill: 'var(--color-fg)', opacity: 0.7 }}
             />
           </Area>

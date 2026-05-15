@@ -1,3 +1,5 @@
+import { useCopy } from '@/lib/i18n'
+
 export type StampVariant =
   | 'angenommen'
   | 'abgelehnt'
@@ -8,21 +10,22 @@ export type StampVariant =
   | 'beantwortet'
   | 'offen'
 
-const config: Record<StampVariant, { label: string; color: string; rotate: number; opacity?: number }> = {
-  angenommen: { label: 'Angenommen', color: 'var(--color-success)', rotate: -4, opacity: 0.85 },
-  abgelehnt: { label: 'Abgelehnt', color: 'var(--color-danger)', rotate: -5, opacity: 0.85 },
-  knapp: { label: 'Knapp', color: 'var(--color-orange)', rotate: 6, opacity: 0.85 },
-  einstimmig: { label: 'Einstimmig', color: 'var(--color-purple)', rotate: 3, opacity: 0.85 },
-  'fast-einstimmig': { label: 'Fast einstimmig', color: 'var(--color-purple)', rotate: 3, opacity: 0.85 },
-  abweichler: { label: 'Abweichler', color: 'var(--color-fg)', rotate: 5, opacity: 0.75 },
-  beantwortet: { label: 'Beantwortet', color: 'var(--color-success)', rotate: -3, opacity: 0.85 },
-  offen: { label: 'Offen', color: 'var(--color-danger)', rotate: 4, opacity: 0.85 },
+const config: Record<StampVariant, { color: string; rotate: number; opacity?: number }> = {
+  angenommen: { color: 'var(--color-success)', rotate: -4, opacity: 0.85 },
+  abgelehnt: { color: 'var(--color-danger)', rotate: -5, opacity: 0.85 },
+  knapp: { color: 'var(--color-orange)', rotate: 6, opacity: 0.85 },
+  einstimmig: { color: 'var(--color-purple)', rotate: 3, opacity: 0.85 },
+  'fast-einstimmig': { color: 'var(--color-purple)', rotate: 3, opacity: 0.85 },
+  abweichler: { color: 'var(--color-fg)', rotate: 5, opacity: 0.75 },
+  beantwortet: { color: 'var(--color-success)', rotate: -3, opacity: 0.85 },
+  offen: { color: 'var(--color-danger)', rotate: 4, opacity: 0.85 },
 }
 
 type Props = { variant: StampVariant; size?: 's' | 'm' }
 
 export function Stamp({ variant, size = 's' }: Props) {
-  const { label, color, rotate, opacity = 0.85 } = config[variant]
+  const t = useCopy()
+  const { color, rotate, opacity = 0.85 } = config[variant]
   const sizeClass =
     size === 'm'
       ? 'px-[10px] py-[6px] text-[12px] sm:px-[12px] sm:py-[8px] sm:text-[14px]'
@@ -43,7 +46,7 @@ export function Stamp({ variant, size = 's' }: Props) {
         filter: 'url(#stamp-grunge) contrast(1.1)',
       }}
     >
-      {label}
+      {t.stampClose[variant]}
     </span>
   )
 }

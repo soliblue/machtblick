@@ -8,12 +8,12 @@ Offer the whole bundestag app in English so a non-German-speaking visitor can na
 
 | Workstream | Owner | State |
 |---|---|---|
-| Routing: `/en/...` prefix, language detection, hreflang | frontend | todo |
-| UI string layer (`de.json` / `en.json`) | frontend | todo |
-| Schema: `*_en` columns on votes, antraege, anfragen, speeches | plumber | todo |
-| ETL: batched Sonnet translation runner (`etl/translate/`) | plumber | todo |
-| Backend: pass through `_en` fields and pick by request locale | backend | todo |
-| ASCII mock for the language switcher | designer | todo |
+| Routing: `/en/...` prefix, language detection, hreflang | frontend | done |
+| UI string layer (`de.json` / `en.json`) | frontend | done |
+| Schema: translation tables for votes, party summaries and speeches | plumber | done |
+| ETL: batched Codex translation runners | plumber | done |
+| Backend: pass through English fields and pick by request locale | backend | done |
+| Language switcher | frontend | done |
 
 ## Approach
 
@@ -148,3 +148,4 @@ Priority 1 fits inside two or three Max-tier daily windows. Priority 2 is the bi
 ## Log
 
 - 2026-05-14 lead: plan created at user's request — feature parked, not started.
+- 2026-05-15 lead: completed English routing, UI copy, legal pages, vote text, party summary text and linked vote speech translations. German remains default, English lives under `/en`. PDFs, Anfragen and the full unlinked speech archive remain out of scope.

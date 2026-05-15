@@ -8,11 +8,11 @@ For every namentlich vote that has plenary speeches attached, generate a per-par
 
 | Workstream | Owner | State |
 |---|---|---|
-| Designer mock for the per-party summary block | designer | todo |
-| Schema: extend `vote_party_summaries` with narrative fields | plumber | todo |
-| ETL: `etl/party-positions/` Sonnet runner | plumber | todo |
-| Backend: expose narrative fields on `VoteDetail` | backend | todo |
-| Frontend: render the new block in `ResultTab` | frontend | todo |
+| Designer mock for the per-party summary block | designer | done |
+| Schema: extend `vote_party_summaries` with narrative fields | plumber | done |
+| ETL: `etl/party-positions/` runner | plumber | done |
+| Backend: expose narrative fields on `VoteDetail` | backend | done |
+| Frontend: render narrative summaries in vote detail | frontend | done |
 
 ## Approach
 
@@ -164,3 +164,4 @@ ASCII mock at `apps/bundestag/src/views/voteDetail/PartyPositionsBlock.mock.md` 
 ## Log
 
 - 2026-05-14 lead: plan created at user's request — feature parked, not started.
+- 2026-05-15 lead: completed party position summaries for linked debate votes, translated the generated summaries to English and surfaced them from the vote detail party summary modal.

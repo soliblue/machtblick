@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "99015f91-0447-4b29-a4d8-ec8955052055",
-  "prevId": "aea19d92-71ec-48bd-9192-81d6254ff34e",
+  "id": "66a74164-4cf4-4b3f-8145-aef30df2f5c8",
+  "prevId": "99015f91-0447-4b29-a4d8-ec8955052055",
   "tables": {
     "anfrage_signatories": {
       "name": "anfrage_signatories",
@@ -1667,6 +1667,27 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
+        },
+        "position_summary": {
+          "name": "position_summary",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "key_points": {
+          "name": "key_points",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dissent_note": {
+          "name": "dissent_note",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {},
@@ -1692,6 +1713,185 @@
             "party"
           ],
           "name": "vote_party_summaries_vote_id_party_pk"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "vote_party_summary_decisions": {
+      "name": "vote_party_summary_decisions",
+      "columns": {
+        "vote_id": {
+          "name": "vote_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "party": {
+          "name": "party",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "source_speech_ids": {
+          "name": "source_speech_ids",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "model": {
+          "name": "model",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "prompt_version": {
+          "name": "prompt_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "generated_at": {
+          "name": "generated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "vote_party_summary_decisions_vote_id_party_vote_party_summaries_vote_id_party_fk": {
+          "name": "vote_party_summary_decisions_vote_id_party_vote_party_summaries_vote_id_party_fk",
+          "tableFrom": "vote_party_summary_decisions",
+          "tableTo": "vote_party_summaries",
+          "columnsFrom": [
+            "vote_id",
+            "party"
+          ],
+          "columnsTo": [
+            "vote_id",
+            "party"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "vote_party_summary_decisions_vote_id_party_pk": {
+          "columns": [
+            "vote_id",
+            "party"
+          ],
+          "name": "vote_party_summary_decisions_vote_id_party_pk"
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "vote_party_summary_translations": {
+      "name": "vote_party_summary_translations",
+      "columns": {
+        "vote_id": {
+          "name": "vote_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "party": {
+          "name": "party",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "locale": {
+          "name": "locale",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "position_summary": {
+          "name": "position_summary",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "key_points": {
+          "name": "key_points",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dissent_note": {
+          "name": "dissent_note",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "source_hash": {
+          "name": "source_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "model": {
+          "name": "model",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "prompt_version": {
+          "name": "prompt_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "translated_at": {
+          "name": "translated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "vote_party_summary_translations_vote_id_votes_id_fk": {
+          "name": "vote_party_summary_translations_vote_id_votes_id_fk",
+          "tableFrom": "vote_party_summary_translations",
+          "tableTo": "votes",
+          "columnsFrom": [
+            "vote_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "vote_party_summary_translations_vote_id_party_locale_pk": {
+          "columns": [
+            "vote_id",
+            "party",
+            "locale"
+          ],
+          "name": "vote_party_summary_translations_vote_id_party_locale_pk"
         }
       },
       "uniqueConstraints": {},
@@ -1774,6 +1974,129 @@
         }
       },
       "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "vote_translations": {
+      "name": "vote_translations",
+      "columns": {
+        "vote_id": {
+          "name": "vote_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "locale": {
+          "name": "locale",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "clean_title": {
+          "name": "clean_title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "topic": {
+          "name": "topic",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "subject": {
+          "name": "subject",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "summary": {
+          "name": "summary",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "summary_simplified": {
+          "name": "summary_simplified",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "summary_detail": {
+          "name": "summary_detail",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "source_hash": {
+          "name": "source_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "model": {
+          "name": "model",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "prompt_version": {
+          "name": "prompt_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "translated_at": {
+          "name": "translated_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "vote_translations_vote_id_votes_id_fk": {
+          "name": "vote_translations_vote_id_votes_id_fk",
+          "tableFrom": "vote_translations",
+          "tableTo": "votes",
+          "columnsFrom": [
+            "vote_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "vote_translations_vote_id_locale_pk": {
+          "columns": [
+            "vote_id",
+            "locale"
+          ],
+          "name": "vote_translations_vote_id_locale_pk"
+        }
+      },
       "uniqueConstraints": {},
       "checkConstraints": {}
     },

@@ -1,10 +1,6 @@
 import type { VoteSponsors, VoteSponsorAntrag, VoteSponsorMember } from '@/server/voteSponsors'
 import { SponsorPile } from './SponsorPile'
-
-const ANTRAG_TYPE_LABEL: Record<VoteSponsorAntrag['type'], string> = {
-  antrag: 'Antrag',
-  gesetzentwurf: 'Gesetzentwurf',
-}
+import { useCopy } from '@/lib/i18n'
 
 function mergeSignatories(antraege: VoteSponsorAntrag[]): VoteSponsorMember[] {
   const seen = new Set<string>()
@@ -20,13 +16,18 @@ function mergeSignatories(antraege: VoteSponsorAntrag[]): VoteSponsorMember[] {
 }
 
 export function SponsorStrip({ antraege }: VoteSponsors) {
+  const t = useCopy()
+  const typeLabel: Record<VoteSponsorAntrag['type'], string> = {
+    antrag: t.motion,
+    gesetzentwurf: t.bill,
+  }
   const withSignatories = antraege.filter((a) => a.signatories.length > 0)
   if (withSignatories.length === 0) return null
   if (withSignatories.length > 3) {
     const merged = mergeSignatories(withSignatories)
     return (
       <div className="mb-l flex h-[32px] items-center gap-s">
-        <span className="text-s opacity-l">Anträge: {withSignatories.length}</span>
+        <span className="text-s opacity-l">{t.motionsCount}: {withSignatories.length}</span>
         <SponsorPile signatories={merged} />
       </div>
     )
@@ -34,7 +35,7 @@ export function SponsorStrip({ antraege }: VoteSponsors) {
   if (withSignatories.length === 1) {
     return (
       <div className="mb-l flex h-[32px] items-center gap-s">
-        <span className="text-s opacity-l">Eingebracht von</span>
+        <span className="text-s opacity-l">{t.broughtBy}</span>
         <SponsorPile signatories={withSignatories[0].signatories} />
       </div>
     )
@@ -44,7 +45,7 @@ export function SponsorStrip({ antraege }: VoteSponsors) {
       {withSignatories.map((a) => (
         <div key={a.antragId} className="flex flex-col gap-xs">
           <div className="text-s opacity-l">
-            <span className="uppercase" style={{ letterSpacing: '0.08em' }}>{ANTRAG_TYPE_LABEL[a.type]}</span>
+            <span className="uppercase" style={{ letterSpacing: '0.08em' }}>{typeLabel[a.type]}</span>
             {a.drucksache && <span className="ml-s">Drs. {a.drucksache}</span>}
           </div>
           <SponsorPile signatories={a.signatories} />

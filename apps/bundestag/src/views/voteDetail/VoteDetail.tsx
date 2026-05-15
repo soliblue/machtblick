@@ -11,6 +11,7 @@ import { DetailTab } from './DetailTab'
 import { SpeechesTab } from './SpeechesTab'
 import { SponsorStrip } from './SponsorStrip'
 import type { VoteSponsors } from '@/server/voteSponsors'
+import { useCopy, useLocale } from '@/lib/i18n'
 
 export type VoteTab = 'ergebnis' | 'details' | 'reden'
 
@@ -32,21 +33,27 @@ const TAB_PANELS: Record<VoteTab, (data: VoteDetailData) => ReactElement> = {
 export function VoteDetail({ data, activeTab, onTabChange }: Props) {
   const { vote, partySummaries, proposingParty, sponsors } = data
   const stamps = deriveStamps({ ...vote, partySummaries })
+  const locale = useLocale()
+  const t = useCopy()
   return (
     <main className="mx-auto max-w-3xl p-l">
       {vote.inverted && (
         <div className="mb-l bg-surface p-m text-s">
-          Wir haben das Vorzeichen dieser Abstimmung umgedreht, damit das Ergebnis klar lesbar ist. Im Original ging es um die <em>Ablehnung</em> dieses Antrags. Wir zeigen das Ergebnis so, als wäre direkt über den Antrag abgestimmt worden.
+          {locale === 'en'
+            ? <>We flipped the sign of this vote so the result is easier to read. The original vote was about <em>rejecting</em> this motion. We show the result as if the motion itself had been voted on directly.</>
+            : <>Wir haben das Vorzeichen dieser Abstimmung umgedreht, damit das Ergebnis klar lesbar ist. Im Original ging es um die <em>Ablehnung</em> dieses Antrags. Wir zeigen das Ergebnis so, als wäre direkt über den Antrag abgestimmt worden.</>}
         </div>
       )}
       {vote.isPetitionBundle && (
         <div className="mb-l bg-surface p-m text-s">
-          Diese Abstimmung bündelt mehrere Petitionen in einer Sammelübersicht. Das Plenum stimmt über alle enthaltenen Empfehlungen des Petitionsausschusses gemeinsam ab. Ein "angenommen" bedeutet, dass die Empfehlungen so beschlossen wurden, die einzelnen Petitionen können dabei sehr unterschiedlich behandelt worden sein (z.B. an die Bundesregierung weitergeleitet, als Material überwiesen, oder abschließend behandelt).
+          {locale === 'en'
+            ? 'This vote bundles several petitions into one overview. Parliament votes on all included committee recommendations together. Accepted means the recommendations were adopted as presented, while the individual petitions may have been handled very differently.'
+            : 'Diese Abstimmung bündelt mehrere Petitionen in einer Sammelübersicht. Das Plenum stimmt über alle enthaltenen Empfehlungen des Petitionsausschusses gemeinsam ab. Ein "angenommen" bedeutet, dass die Empfehlungen so beschlossen wurden, die einzelnen Petitionen können dabei sehr unterschiedlich behandelt worden sein (z.B. an die Bundesregierung weitergeleitet, als Material überwiesen, oder abschließend behandelt).'}
         </div>
       )}
       <h1 className="text-xxl font-semibold">{vote.cleanTitle ?? vote.title}</h1>
       {vote.cleanTitle && vote.cleanTitle !== vote.title && (
-        <div className="mt-s text-s opacity-l">Offizieller Titel: {vote.title}</div>
+        <div className="mt-s text-s opacity-l">{t.officialTitle}: {vote.title}</div>
       )}
       <div className="mt-s flex items-center gap-m text-m">
         <PartyBadge party={proposingParty} />
@@ -63,7 +70,7 @@ export function VoteDetail({ data, activeTab, onTabChange }: Props) {
 
       {(vote.summarySimplified || vote.summary) && (
         <div className="mb-l">
-          <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>Zusammenfassung des Antrags</div>
+          <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{t.proposalSummary}</div>
           {vote.summarySimplified
             ? <p className="text-m"><MarkdownInline>{vote.summarySimplified}</MarkdownInline></p>
             : <p className="text-m">{vote.summary}</p>}

@@ -5,14 +5,15 @@ import type {
   SpeechSearchResponse,
 } from '@/server/speeches'
 import { makeSnippet } from './snippet'
+import type { Locale } from './locale'
 
 export type SpeechMetaEntry = Omit<SpeechResult, 'snippet'>
 
 const PAGE_SIZE = 5
 
 let metaCache: Promise<SpeechMetaEntry[]> | null = null
-let textCache: Promise<Record<string, string>> | null = null
-let textsResolved = false
+let textCache: Partial<Record<Locale, Promise<Record<string, string>>>> = {}
+let textsResolved: Partial<Record<Locale, boolean>> = {}
 
 export function loadSpeechMeta(): Promise<SpeechMetaEntry[]> {
   metaCache ??= fetchJson<SpeechMetaEntry[]>('/speeches-meta.json')
@@ -21,20 +22,24 @@ export function loadSpeechMeta(): Promise<SpeechMetaEntry[]> {
 
 const SHARD_COUNT = 4
 
-export function loadSpeechTexts(): Promise<Record<string, string>> {
-  textCache ??= Promise.all(
-    Array.from({ length: SHARD_COUNT }, (_, i) => fetchJson<Record<string, string>>(`/speeches-search-${i}.json`)),
+export function loadSpeechTexts(locale: Locale = 'de'): Promise<Record<string, string>> {
+  textCache[locale] ??= Promise.all(
+    Array.from({ length: SHARD_COUNT }, (_, i) => fetchJson<Record<string, string>>(speechShardPath(locale, i))),
   ).then((parts) => {
     const merged: Record<string, string> = {}
     for (const p of parts) Object.assign(merged, p)
-    textsResolved = true
+    textsResolved[locale] = true
     return merged
   })
-  return textCache
+  return textCache[locale]
 }
 
-export function speechTextsLoaded(): boolean {
-  return textsResolved
+export function speechTextsLoaded(locale: Locale = 'de'): boolean {
+  return textsResolved[locale] === true
+}
+
+function speechShardPath(locale: Locale, shard: number): string {
+  return locale === 'en' ? `/speeches-search-en-${shard}.json` : `/speeches-search-${shard}.json`
 }
 
 async function fetchJson<T>(path: string): Promise<T> {

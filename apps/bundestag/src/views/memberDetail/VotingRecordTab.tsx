@@ -1,22 +1,11 @@
 import { Filter, GitBranch, Vote } from 'lucide-react'
-import { Link } from '../../lib/Link'
 import type { MemberVoteRow } from '@/server/members'
 import { formatDate } from '@/lib/format'
 import { FilterPill } from '@/views/votesList/FilterPill'
 import { Stamp } from '@/views/votesList/Stamp'
 import { VoteChoicePill } from './VoteChoicePill'
-
-const CHOICE_LABEL: Record<string, string> = {
-  ja: 'Ja',
-  nein: 'Nein',
-  enthalten: 'Enthalten',
-  nicht_abgegeben: '–',
-}
-
-const LINE_LABEL: Record<string, string> = {
-  linie: 'Linie',
-  abw: 'Abw',
-}
+import { useCopy, useLocale } from '@/lib/i18n'
+import { withLocale } from '@/lib/locale'
 
 type Props = {
   history: MemberVoteRow[]
@@ -27,6 +16,18 @@ type Props = {
 }
 
 export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilter, setChoiceFilter }: Props) {
+  const locale = useLocale()
+  const t = useCopy()
+  const choiceLabel: Record<string, string> = {
+    ja: t.yes,
+    nein: t.no,
+    enthalten: t.abstain,
+    nicht_abgegeben: '-',
+  }
+  const lineLabel: Record<string, string> = {
+    linie: t.line,
+    abw: t.deviations,
+  }
   const filtered = history.filter((r) => {
     const lineOk = lineFilter ? (r.defected !== null && (lineFilter === 'abw' ? r.defected : !r.defected)) : true
     const choiceOk = choiceFilter ? r.choice === choiceFilter : true
@@ -37,27 +38,26 @@ export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilt
       <div className="mb-m flex flex-wrap items-center gap-s">
         <Filter size={14} className="opacity-l" />
         <FilterPill
-          label="Linie"
+          label={t.line}
           icon={GitBranch}
           options={['linie', 'abw']}
           value={lineFilter}
           onChange={setLineFilter}
-          formatOption={(o) => LINE_LABEL[o] ?? o}
+          formatOption={(o) => lineLabel[o] ?? o}
         />
         <FilterPill
-          label="Stimme"
+          label={t.vote}
           icon={Vote}
           options={['ja', 'nein', 'enthalten', 'nicht_abgegeben']}
           value={choiceFilter}
           onChange={setChoiceFilter}
-          formatOption={(o) => CHOICE_LABEL[o] ?? o}
+          formatOption={(o) => choiceLabel[o] ?? o}
         />
       </div>
       {filtered.map((r) => (
-        <Link
+        <a
           key={r.voteId}
-          to="/votes/$id/"
-          params={{ id: r.voteId }}
+          href={withLocale(`/votes/${r.voteId}/`, locale)}
           className="flex flex-col border-t py-m transition-opacity hover:opacity-80"
           style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 8%, transparent)' }}
         >
@@ -70,7 +70,7 @@ export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilt
             </span>
             <VoteChoicePill choice={r.choice} />
           </div>
-        </Link>
+        </a>
       ))}
     </div>
   )

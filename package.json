@@ -37,7 +37,9 @@
     "etl:initiator": "node etl/bundestag/votes/initiator/run.mjs",
     "etl:descriptions": "node etl/bundestag/descriptions/run.mjs",
     "etl:titles": "node etl/bundestag/titles/run.mjs",
-    "etl:party-positions": "node etl/bundestag/party-positions/run.mjs"
+    "etl:party-positions": "node etl/bundestag/party-positions/run.mjs",
+    "etl:translations": "node etl/bundestag/translations/run.mjs",
+    "etl:speech-translations": "node etl/bundestag/speech-translations/run.mjs"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.11",

@@ -3,27 +3,29 @@ import { AlignmentList } from './AlignmentList'
 import { DonationsBar } from './DonationsBar'
 import { ProposalsBar } from './ProposalsBar'
 import { StatPie } from './StatPie'
+import { useCopy } from '@/lib/i18n'
 
 type Props = { data: PartyDetailData }
 
 export function PartyProfilePanel({ data }: Props) {
+  const t = useCopy()
   return (
     <div className="grid gap-x-xl gap-y-l md:grid-cols-2">
       <div className="flex justify-around gap-l">
         <StatPie
-          label="Geschlossenheit"
+          label={t.cohesion}
           value={data.cohesion}
-          info="Anteil der Fraktion, der bei einer Abstimmung dieselbe Position einnimmt. Berechnet über alle Abstimmungen (namentlich, Handzeichen, Hammelsprung), bei denen eine Fraktionsabstimmung erfasst ist."
+          info={t.cohesionInfo}
         />
         <StatPie
-          label="Anwesenheit"
+          label={t.attendance}
           value={data.attendance}
-          info="Anteil der Fraktionsmitglieder, die bei einer Abstimmung anwesend waren. Berechnet über alle Abstimmungen, bei denen eine Fraktionsabstimmung erfasst ist."
+          info={t.attendanceInfo}
         />
       </div>
       {data.alignments.length > 0 ? (
         <div>
-          <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>Übereinstimmung</div>
+          <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{t.agreement}</div>
           <AlignmentList alignments={data.alignments} party={data.party} />
         </div>
       ) : <div />}

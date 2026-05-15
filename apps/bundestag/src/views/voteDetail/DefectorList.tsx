@@ -1,5 +1,6 @@
 import { DefectorRow } from './DefectorRow'
 import type { MemberVoteRow } from '@/server/members'
+import { useCopy } from '@/lib/i18n'
 
 type Defectors = Array<{
   party: string
@@ -11,8 +12,9 @@ type Defectors = Array<{
 type Props = { defectors: Defectors }
 
 export function DefectorList({ defectors }: Props) {
+  const t = useCopy()
   if (!defectors.length) {
-    return <div className="text-m opacity-l">Keine Abweichler.</div>
+    return <div className="text-m opacity-l">{t.noDefectors}</div>
   }
   return (
     <div className="flex flex-col">

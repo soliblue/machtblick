@@ -1,5 +1,6 @@
 import type { PartyListItem } from '@/server/parties'
-import { PARTY_COLOR, PARTY_LABEL } from '@/lib/parties'
+import { PARTY_COLOR, partyLabel } from '@/lib/parties'
+import { useLocale } from '@/lib/i18n'
 
 type Props = { parties: PartyListItem[]; width?: number }
 
@@ -54,12 +55,13 @@ export function Hemicycle({ parties, width = 720 }: Props) {
 }
 
 export function HemicycleLegend({ parties }: { parties: PartyListItem[] }) {
+  const locale = useLocale()
   return (
     <div className="mt-s flex flex-wrap justify-center gap-l text-s">
       {parties.map((p) => (
         <span key={p.slug} className="flex items-center gap-xs">
           <span className="inline-block size-2" style={{ background: PARTY_COLOR[p.party] ?? 'var(--color-gray)' }} />
-          {PARTY_LABEL[p.party] ?? p.party} {p.seats}
+          {partyLabel(p.party, locale)} {p.seats}
         </span>
       ))}
     </div>

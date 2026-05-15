@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "required": ["translations"],
+  "additionalProperties": false,
+  "properties": {
+    "translations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["speech_id", "text_full"],
+        "additionalProperties": false,
+        "properties": {
+          "speech_id": { "type": "string" },
+          "text_full": { "type": "string" }
+        }
+      }
+    }
+  }
+}

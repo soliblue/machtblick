@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "required": ["translations"],
+  "additionalProperties": false,
+  "properties": {
+    "translations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["vote_id", "vote", "party_summaries"],
+        "additionalProperties": false,
+        "properties": {
+          "vote_id": { "type": "string" },
+          "vote": {
+            "type": "object",
+            "required": ["title", "clean_title", "topic", "subject", "summary", "summary_simplified", "summary_detail"],
+            "additionalProperties": false,
+            "properties": {
+              "title": { "type": "string" },
+              "clean_title": { "type": ["string", "null"] },
+              "topic": { "type": ["string", "null"] },
+              "subject": { "type": ["string", "null"] },
+              "summary": { "type": ["string", "null"] },
+              "summary_simplified": { "type": ["string", "null"] },
+              "summary_detail": { "type": ["string", "null"] }
+            }
+          },
+          "party_summaries": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["party", "position_summary", "key_points", "dissent_note"],
+              "additionalProperties": false,
+              "properties": {
+                "party": { "type": "string" },
+                "position_summary": { "type": ["string", "null"] },
+                "key_points": { "type": ["string", "null"] },
+                "dissent_note": { "type": ["string", "null"] }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

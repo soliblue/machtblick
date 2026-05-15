@@ -1,8 +1,9 @@
-import { Link } from '../../lib/Link'
 import { initials } from '@/lib/initials'
 import { VoteChoicePill } from '../memberDetail/VoteChoicePill'
 import { PartyLogo } from '../votesList/PartyLogo'
 import type { MemberVoteRow } from '@/server/members'
+import { useLocale } from '@/lib/i18n'
+import { withLocale } from '@/lib/locale'
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 8%, transparent)'
 
@@ -15,10 +16,10 @@ type Props = {
 }
 
 export function DefectorRow({ id, name, choice, pictureUrl, party }: Props) {
+  const locale = useLocale()
   return (
-    <Link
-      to="/members/$id/"
-      params={{ id }}
+    <a
+      href={withLocale(`/members/${id}/`, locale)}
       className="grid grid-cols-[36px_1fr_auto] items-center gap-m border-t py-s opacity-100 hover:bg-surface"
       style={{ borderColor: ROW_BORDER }}
     >
@@ -34,6 +35,6 @@ export function DefectorRow({ id, name, choice, pictureUrl, party }: Props) {
         <VoteChoicePill choice={choice} />
       </div>
       <PartyLogo party={party} size={36} />
-    </Link>
+    </a>
   )
 }

@@ -1,30 +1,31 @@
-import { Link } from '../../lib/Link'
 import type { VoteListItem } from '@/server/votes'
 import { formatDate } from '@/lib/format'
+import { useCopy, useLocale } from '@/lib/i18n'
+import { withLocale } from '@/lib/locale'
 import { PartyBadge } from './PartyBadge'
 import { Stamp } from './Stamp'
 import { deriveStamps } from './deriveStamps'
 import { VoteDistributionDonut } from './VoteDistributionDonut'
-
-const VOTE_TYPE_LABEL: Record<VoteListItem['voteType'], string> = {
-  namentlich: 'Namentlich',
-  handzeichen: 'Handzeichen',
-  hammelsprung: 'Hammelsprung',
-}
 
 type Props = { vote: VoteListItem }
 
 export function VoteRow({ vote }: Props) {
   const stamps = deriveStamps(vote)
   const heading = vote.cleanTitle ?? vote.title
+  const locale = useLocale()
+  const t = useCopy()
+  const typeLabels: Record<VoteListItem['voteType'], string> = {
+    namentlich: t.namedVote,
+    handzeichen: t.showOfHands,
+    hammelsprung: t.division,
+  }
   return (
     <div
       className="relative border-t py-m first:border-t-0 sm:py-l"
       style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 8%, transparent)' }}
     >
-      <Link
-        to="/votes/$id/"
-        params={{ id: vote.id }}
+      <a
+        href={withLocale(`/votes/${vote.id}/`, locale)}
         className="absolute inset-0"
         aria-label={heading}
       />
@@ -33,7 +34,7 @@ export function VoteRow({ vote }: Props) {
         <span>·</span>
         <span>{formatDate(vote.date)}</span>
         <span>·</span>
-        <span>{VOTE_TYPE_LABEL[vote.voteType]}</span>
+        <span>{typeLabels[vote.voteType]}</span>
       </div>
       <div className="mt-s grid grid-cols-[auto_1fr] items-center gap-x-m gap-y-s sm:gap-x-l">
         <div className="row-span-2 shrink-0 [&_svg]:!h-[88px] [&_svg]:!w-[88px] sm:[&_svg]:!h-[160px] sm:[&_svg]:!w-[160px]">

@@ -3,23 +3,25 @@ import type { MemberStats } from '@/hooks/useMemberStats'
 import { GenderPie } from './GenderPie'
 import { AgePie } from './AgePie'
 import { PartyPie } from './PartyPie'
+import { useCopy } from '@/lib/i18n'
 
 type Props = { stats: MemberStats }
 
 export function MembersStatsStrip({ stats }: Props) {
+  const t = useCopy()
   return (
     <div
       role="group"
-      aria-label="Zusammenfassung der gefilterten Auswahl"
+      aria-label={t.filteredSummary}
       className="grid grid-cols-2 gap-m md:grid-cols-3"
     >
-      <Tile label="Geschlecht">
+      <Tile label={t.sex}>
         <GenderPie data={stats.gender} />
       </Tile>
-      <Tile label="Alter">
+      <Tile label={t.age}>
         <AgePie data={stats.age} />
       </Tile>
-      <Tile label="Partei" hideOnMobile>
+      <Tile label={t.party} hideOnMobile>
         <PartyPie data={stats.party} />
       </Tile>
     </div>

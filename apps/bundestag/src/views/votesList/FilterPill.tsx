@@ -1,7 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ComponentType } from 'react'
 import { createPortal } from 'react-dom'
-import { PARTY_LABEL, PARTY_LOGO } from '@/lib/parties'
+import { PARTY_LOGO, partyLabel } from '@/lib/parties'
 import { PartyLogo } from './PartyLogo'
+import { useCopy, useLocale } from '@/lib/i18n'
 
 type IconProps = { size?: number; className?: string }
 type Props = {
@@ -14,7 +15,9 @@ type Props = {
 }
 
 export function FilterPill({ label, options, value, onChange, formatOption, icon: Icon }: Props) {
-  const fmt = (opt: string) => formatOption?.(opt) ?? PARTY_LABEL[opt] ?? opt
+  const t = useCopy()
+  const locale = useLocale()
+  const fmt = (opt: string) => formatOption?.(opt) ?? partyLabel(opt, locale)
   const [open, setOpen] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -66,7 +69,7 @@ export function FilterPill({ label, options, value, onChange, formatOption, icon
           <span
             role="button"
             tabIndex={0}
-            aria-label="Filter zurücksetzen"
+            aria-label={t.resetFilter}
             onClick={(e) => {
               e.stopPropagation()
               onChange(null)

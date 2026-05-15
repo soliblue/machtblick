@@ -1,9 +1,10 @@
 import { createServerFn } from '@tanstack/react-start'
 import { db } from '@machtblick/db/client'
-import { votes, votePartySummaries, voteMembers, members, partyDonations } from '@machtblick/db/schema'
+import { votes, votePartySummaries, voteMembers, members, partyDonations, voteTranslations } from '@machtblick/db/schema'
 import { desc, eq, and, inArray } from 'drizzle-orm'
 import { SLUG_TO_PARTY, hasPartyLine } from '@/lib/parties'
 import { getCurrentPartyMap } from './memberParty'
+import { normalizeLocale, type Locale } from '@/lib/locale'
 
 function cohesion(s: { yes: number; no: number; abstain: number; members: number; absent: number }) {
   const decided = s.yes + s.no + s.abstain
@@ -126,6 +127,14 @@ export type PartyDetail = {
   alignments: PartyAlignment[]
 }
 
+function translationMap(ids: string[], locale: Locale) {
+  return new Map(
+    locale === 'en' && ids.length
+      ? db.select().from(voteTranslations).where(and(eq(voteTranslations.locale, 'en'), inArray(voteTranslations.voteId, ids))).all().map((t) => [t.voteId, t])
+      : [],
+  )
+}
+
 function majorityPosition(s: { yes: number; no: number; abstain: number }): 'yes' | 'no' | null {
   if (s.yes > s.no && s.yes > s.abstain) return 'yes'
   if (s.no > s.yes && s.no > s.abstain) return 'no'
@@ -133,8 +142,9 @@ function majorityPosition(s: { yes: number; no: number; abstain: number }): 'yes
 }
 
 export const getParty = createServerFn({ method: 'GET' })
-  .inputValidator((slug: string) => slug)
-  .handler(async ({ data: slug }): Promise<PartyDetail> => {
+  .inputValidator((input: string | { slug: string; locale?: Locale }) => typeof input === 'string' ? { slug: input, locale: 'de' as Locale } : { slug: input.slug, locale: normalizeLocale(input.locale) })
+  .handler(async ({ data }): Promise<PartyDetail> => {
+    const { slug, locale } = data
     const party = SLUG_TO_PARTY[slug]
     if (!party) throw new Error(`party not found: ${slug}`)
     const summaries = db
@@ -158,7 +168,9 @@ export const getParty = createServerFn({ method: 'GET' })
       .orderBy(desc(votes.date))
       .all()
       .filter((s) => s.yes != null) as Array<{ voteId: string; members: number; yes: number; no: number; abstain: number; absent: number; date: string; title: string; cleanTitle: string | null; result: 'angenommen' | 'abgelehnt'; document: string | null; voteType: string }>
+    const summaryTranslations = translationMap(summaries.map((s) => s.voteId), locale)
     const voteRows: PartyVoteRow[] = summaries.filter((s) => s.voteType === 'namentlich').map((s) => {
+      const t = summaryTranslations.get(s.voteId)
       const top = Math.max(s.yes, s.no, s.abstain)
       const partyVote: PartyVote =
         s.yes === top && s.yes > s.no && s.yes > s.abstain ? 'yes'
@@ -168,8 +180,8 @@ export const getParty = createServerFn({ method: 'GET' })
       return {
         voteId: s.voteId,
         date: s.date,
-        title: s.title,
-        cleanTitle: s.cleanTitle,
+        title: t?.title ?? s.title,
+        cleanTitle: t?.cleanTitle ?? s.cleanTitle,
         result: s.result,
         partyVote,
         cohesion: hasPartyLine(party) ? cohesion(s) : null,
@@ -243,11 +255,13 @@ export const getParty = createServerFn({ method: 'GET' })
       .from(votes)
       .where(eq(votes.procedural, false))
       .all() as Array<{ id: string; initiator: string | null; result: 'angenommen' | 'abgelehnt'; date: string; title: string; cleanTitle: string | null }>
+    const proposalTranslations = translationMap(allVotes.map((v) => v.id), locale)
     for (const v of allVotes) {
       if (v.initiator !== party) continue
+      const t = proposalTranslations.get(v.id)
       proposalsTotal += 1
       if (v.result === 'angenommen') proposalsAccepted += 1
-      proposals.push({ voteId: v.id, date: v.date, title: v.title, cleanTitle: v.cleanTitle, result: v.result })
+      proposals.push({ voteId: v.id, date: v.date, title: t?.title ?? v.title, cleanTitle: t?.cleanTitle ?? v.cleanTitle, result: v.result })
     }
     proposals.sort((a, b) => b.date.localeCompare(a.date))
     const donationNames = DONATION_PARTY_NAMES[party] ?? [party]

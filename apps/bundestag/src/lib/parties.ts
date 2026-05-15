@@ -1,3 +1,5 @@
+import type { Locale } from './locale'
+
 export const PARTY_ORDER = ['CDU/CSU', 'SPD', 'AfD', 'B90/Grüne', 'Die Linke', 'fraktionslos'] as const
 
 export const PARTY_LABEL: Record<string, string> = {
@@ -9,6 +11,19 @@ export const PARTY_LABEL: Record<string, string> = {
   fraktionslos: 'Fraktionslos',
   Bundesregierung: 'Bundesregierung',
 }
+
+const PARTY_LABEL_EN: Record<string, string> = {
+  'CDU/CSU': 'CDU/CSU',
+  SPD: 'SPD',
+  AfD: 'AfD',
+  'B90/Grüne': 'Greens',
+  'Die Linke': 'The Left',
+  fraktionslos: 'Independent',
+  Bundesregierung: 'Government',
+}
+
+export const partyLabel = (party: string | null | undefined, locale: Locale = 'de') =>
+  party ? (locale === 'en' ? PARTY_LABEL_EN[party] : PARTY_LABEL[party]) ?? party : ''
 
 export const PARTY_LOGO: Record<string, string> = {
   'CDU/CSU': '/parties/cdu-csu.svg',

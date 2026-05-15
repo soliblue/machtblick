@@ -1,10 +1,11 @@
 import { createServerFn } from '@tanstack/react-start'
 import { db } from '@machtblick/db/client'
-import { members, memberAbgeordnetenwatch, voteMembers, votes, votePartySummaries, speeches } from '@machtblick/db/schema'
-import { eq, desc, and, asc, sql } from 'drizzle-orm'
+import { members, memberAbgeordnetenwatch, voteMembers, votes, votePartySummaries, speeches, voteTranslations } from '@machtblick/db/schema'
+import { eq, desc, and, asc, sql, inArray } from 'drizzle-orm'
 import { getCurrentPartyMap, loadAffiliationsByMember, partyAt } from './memberParty'
 import { hasPartyLine } from '../lib/parties'
 import type { SpeechResult } from './speeches'
+import { normalizeLocale, type Locale } from '../lib/locale'
 
 export type MemberSex = 'm' | 'f' | 'd'
 export type MandateType = 'direkt' | 'liste'
@@ -139,9 +140,18 @@ export type MemberDetail = {
   constituencyName: string | null
 }
 
+function translationMap(ids: string[], locale: Locale) {
+  return new Map(
+    locale === 'en' && ids.length
+      ? db.select().from(voteTranslations).where(and(eq(voteTranslations.locale, 'en'), inArray(voteTranslations.voteId, ids))).all().map((t) => [t.voteId, t])
+      : [],
+  )
+}
+
 export const getMember = createServerFn({ method: 'GET' })
-  .inputValidator((id: string) => id)
-  .handler(async ({ data: id }): Promise<MemberDetail> => {
+  .inputValidator((input: string | { id: string; locale?: Locale }) => typeof input === 'string' ? { id: input, locale: 'de' as Locale } : { id: input.id, locale: normalizeLocale(input.locale) })
+  .handler(async ({ data }): Promise<MemberDetail> => {
+    const { id, locale } = data
     const m = db.select().from(members).where(eq(members.id, id)).get()
     if (!m) throw new Error(`member not found: ${id}`)
     const demoRow = db
@@ -169,6 +179,7 @@ export const getMember = createServerFn({ method: 'GET' })
       .where(and(eq(voteMembers.memberId, id), eq(votes.procedural, false)))
       .orderBy(desc(votes.date))
       .all()
+    const historyTranslations = translationMap(vmRows.map((r) => r.voteId), locale)
     const affList = loadAffiliationsByMember().get(id) ?? []
     const summaries = db.select().from(votePartySummaries).all()
     const majByVoteParty = new Map<string, string>()
@@ -178,6 +189,7 @@ export const getMember = createServerFn({ method: 'GET' })
     let loyalEligible = 0
     let defections = 0
     const history: MemberVoteRow[] = vmRows.map((r) => {
+      const t = historyTranslations.get(r.voteId)
       const party = partyAt(affList, r.date)
       const maj = majByVoteParty.get(`${r.voteId} ${party}`) ?? ''
       const eligible = hasPartyLine(party)
@@ -191,8 +203,8 @@ export const getMember = createServerFn({ method: 'GET' })
       return {
         voteId: r.voteId,
         date: r.date,
-        title: r.title,
-        cleanTitle: r.cleanTitle,
+        title: t?.title ?? r.title,
+        cleanTitle: t?.cleanTitle ?? r.cleanTitle,
         result: r.result,
         choice: r.choice,
         party,
@@ -208,19 +220,23 @@ export const getMember = createServerFn({ method: 'GET' })
       .where(eq(speeches.speakerMemberId, id))
       .orderBy(desc(speeches.date), asc(speeches.position))
       .all()
-    const speechResults: SpeechResult[] = memberSpeeches.map(({ speech: row, voteTitle, voteCleanTitle }) => ({
-      id: row.id,
-      speakerName: row.speakerName,
-      speakerMemberId: row.speakerMemberId,
-      speakerRole: row.speakerRole,
-      party: row.party ? (SPEECH_PARTY_NORMALIZE[row.party] ?? row.party) : null,
-      position: row.position,
-      excerpt: row.textExcerpt,
-      date: row.date,
-      voteId: row.voteId,
-      voteTitle: voteCleanTitle ?? voteTitle,
-      snippet: null,
-    }))
+    const speechTranslations = translationMap(memberSpeeches.map(({ speech }) => speech.voteId).filter((id): id is string => !!id), locale)
+    const speechResults: SpeechResult[] = memberSpeeches.map(({ speech: row, voteTitle, voteCleanTitle }) => {
+      const t = row.voteId ? speechTranslations.get(row.voteId) : null
+      return {
+        id: row.id,
+        speakerName: row.speakerName,
+        speakerMemberId: row.speakerMemberId,
+        speakerRole: row.speakerRole,
+        party: row.party ? (SPEECH_PARTY_NORMALIZE[row.party] ?? row.party) : null,
+        position: row.position,
+        excerpt: row.textExcerpt,
+        date: row.date,
+        voteId: row.voteId,
+        voteTitle: t?.cleanTitle ?? t?.title ?? voteCleanTitle ?? voteTitle,
+        snippet: null,
+      }
+    })
     return {
       id,
       name: m.name,

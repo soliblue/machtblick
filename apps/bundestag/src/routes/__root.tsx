@@ -1,8 +1,7 @@
 import { useState, type ReactNode } from 'react'
-import { Outlet, createRootRoute, HeadContent, Scripts } from '@tanstack/react-router'
+import { Outlet, createRootRoute, HeadContent, Scripts, useRouterState } from '@tanstack/react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Menu, X } from 'lucide-react'
-import { Link } from '../lib/Link'
 import { TooltipProvider } from '@/components/ui/tooltip'
 
 const queryClient = new QueryClient()
@@ -11,6 +10,8 @@ import { ScrollEyeWordmark } from '@/views/nav/ScrollEyeWordmark'
 import { Footer } from '@/views/nav/Footer'
 import globalsCss from '../styles/globals.css?url'
 import { seoMeta, SITE_NAME, SITE_URL } from '@/lib/seo'
+import { LocaleProvider, useCopy } from '@/lib/i18n'
+import { localeFromPath, withoutLocale, withLocale } from '@/lib/locale'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -56,19 +57,23 @@ export const Route = createRootRoute({
 })
 
 function RootComponent() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname })
+  const locale = localeFromPath(pathname)
   return (
-    <html lang="de">
+    <html lang={locale}>
       <head>
         <HeadContent />
       </head>
       <body className="bg-background text-fg">
         <QueryClientProvider client={queryClient}>
-          <TooltipProvider delayDuration={200}>
-            <StampFilter />
-            <Nav />
-            <Outlet />
-            <Footer />
-          </TooltipProvider>
+          <LocaleProvider locale={locale}>
+            <TooltipProvider delayDuration={200}>
+              <StampFilter />
+              <Nav />
+              <Outlet />
+              <Footer />
+            </TooltipProvider>
+          </LocaleProvider>
         </QueryClientProvider>
         <Scripts />
       </body>
@@ -78,23 +83,59 @@ function RootComponent() {
 
 function Nav() {
   const [open, setOpen] = useState(false)
-  const linkClass = 'hover:opacity-100 [&.active]:font-semibold [&.active]:opacity-100'
+  const pathname = useRouterState({ select: (s) => s.location.pathname })
+  const locale = localeFromPath(pathname)
+  const t = useCopy()
+  const current = withoutLocale(pathname)
+  const linkClass = 'hover:opacity-100'
+  const href = (path: string) => withLocale(path, locale)
+  const deHref = current
+  const enHref = withLocale(current, 'en')
   return (
     <nav
       className="sticky top-0 z-50 bg-background/85 backdrop-blur-md"
       style={{ borderBottom: '1px solid color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
     >
       <div className="mx-auto flex max-w-3xl items-center gap-l px-l py-m text-m">
-        <Link to="/" onClick={() => setOpen(false)} aria-label="Machtblick"><ScrollEyeWordmark /></Link>
+        <a href={href('/')} onClick={() => setOpen(false)} aria-label="Machtblick"><ScrollEyeWordmark /></a>
         <div className="ml-auto hidden gap-l opacity-l sm:flex">
-          <Link to="/votes/" className={linkClass}>Abstimmungen</Link>
-          <Link to="/members/" className={linkClass}>Abgeordnete</Link>
-          <Link to="/reden/" className={linkClass}>Reden</Link>
-          <Link to="/parties/" className={linkClass}>Fraktionen</Link>
+          <a href={href('/votes/')} className={linkClass}>{t.navVotes}</a>
+          <a href={href('/members/')} className={linkClass}>{t.navMembers}</a>
+          {locale === 'de' && <a href="/reden/" className={linkClass}>{t.navSpeeches}</a>}
+          <a href={href('/parties/')} className={linkClass}>{t.navParties}</a>
+        </div>
+        <div
+          aria-label={t.language}
+          className="group relative hidden h-[32px] w-[120px] overflow-hidden rounded-full border bg-background text-s transition-[height] duration-200 focus-within:h-[72px] hover:h-[72px] sm:block"
+          style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
+        >
+          {locale === 'en' ? (
+            <>
+              <a href={enHref} aria-current="page" className="flex h-[32px] items-center justify-center gap-xs px-s">
+                <span aria-hidden="true">🇬🇧</span>
+                <span>{t.english}</span>
+              </a>
+              <a href={deHref} className="flex h-[40px] items-center justify-center gap-xs px-s opacity-l transition-opacity hover:bg-surface hover:opacity-100 focus:bg-surface focus:opacity-100">
+                <span aria-hidden="true">🇩🇪</span>
+                <span>{t.german}</span>
+              </a>
+            </>
+          ) : (
+            <>
+              <a href={deHref} aria-current="page" className="flex h-[32px] items-center justify-center gap-xs px-s">
+                <span aria-hidden="true">🇩🇪</span>
+                <span>{t.german}</span>
+              </a>
+              <a href={enHref} className="flex h-[40px] items-center justify-center gap-xs px-s opacity-l transition-opacity hover:bg-surface hover:opacity-100 focus:bg-surface focus:opacity-100">
+                <span aria-hidden="true">🇬🇧</span>
+                <span>{t.english}</span>
+              </a>
+            </>
+          )}
         </div>
         <button
           type="button"
-          aria-label={open ? 'Menü schließen' : 'Menü öffnen'}
+          aria-label={open ? t.menuClose : t.menuOpen}
           onClick={() => setOpen((v) => !v)}
           className="ml-auto sm:hidden"
         >
@@ -103,10 +144,28 @@ function Nav() {
       </div>
       {open && (
         <div className="flex flex-col gap-m px-l pb-m text-m opacity-l sm:hidden">
-          <Link to="/votes/" className={linkClass} onClick={() => setOpen(false)}>Abstimmungen</Link>
-          <Link to="/members/" className={linkClass} onClick={() => setOpen(false)}>Abgeordnete</Link>
-          <Link to="/reden/" className={linkClass} onClick={() => setOpen(false)}>Reden</Link>
-          <Link to="/parties/" className={linkClass} onClick={() => setOpen(false)}>Fraktionen</Link>
+          <a href={href('/votes/')} className={linkClass} onClick={() => setOpen(false)}>{t.navVotes}</a>
+          <a href={href('/members/')} className={linkClass} onClick={() => setOpen(false)}>{t.navMembers}</a>
+          {locale === 'de' && <a href="/reden/" className={linkClass} onClick={() => setOpen(false)}>{t.navSpeeches}</a>}
+          <a href={href('/parties/')} className={linkClass} onClick={() => setOpen(false)}>{t.navParties}</a>
+          <div className="flex gap-s">
+            <a
+              href={deHref}
+              className={`rounded-full border px-m py-xs ${locale === 'de' ? 'opacity-100' : 'opacity-l'}`}
+              style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
+              onClick={() => setOpen(false)}
+            >
+              🇩🇪 {t.german}
+            </a>
+            <a
+              href={enHref}
+              className={`rounded-full border px-m py-xs ${locale === 'en' ? 'opacity-100' : 'opacity-l'}`}
+              style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
+              onClick={() => setOpen(false)}
+            >
+              🇬🇧 {t.english}
+            </a>
+          </div>
         </div>
       )}
     </nav>

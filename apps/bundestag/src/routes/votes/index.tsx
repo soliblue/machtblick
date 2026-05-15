@@ -12,7 +12,7 @@ type Search = { party?: string; type?: VoteTypeFilter; result?: VoteResultFilter
 
 export const Route = createFileRoute('/votes/')({
   component: VotesRoute,
-  loader: () => listVotes(),
+  loader: () => listVotes({ data: 'de' }),
   head: () => ({
     meta: seoMeta({
       title: 'Abstimmungen',

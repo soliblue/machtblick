@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useCopy } from '@/lib/i18n'
 
 export type VoteChoice = 'yes' | 'no' | 'abstain' | 'absent'
 
@@ -13,11 +14,11 @@ type Props = {
   showLabel?: boolean
 }
 
-const SEGMENTS: Array<{ key: VoteChoice; color: string; label: string }> = [
-  { key: 'yes', color: 'var(--color-success)', label: 'Ja' },
-  { key: 'no', color: 'var(--color-danger)', label: 'Nein' },
-  { key: 'abstain', color: 'var(--color-yellow)', label: 'Enthalten' },
-  { key: 'absent', color: 'color-mix(in oklab, var(--color-fg) 25%, var(--color-background))', label: 'Nicht abgegeben' },
+const SEGMENTS: Array<{ key: VoteChoice; color: string }> = [
+  { key: 'yes', color: 'var(--color-success)' },
+  { key: 'no', color: 'var(--color-danger)' },
+  { key: 'abstain', color: 'var(--color-yellow)' },
+  { key: 'absent', color: 'color-mix(in oklab, var(--color-fg) 25%, var(--color-background))' },
 ]
 
 export function VoteDistributionDonut({
@@ -30,6 +31,7 @@ export function VoteDistributionDonut({
   onSelect,
   showLabel = false,
 }: Props) {
+  const t = useCopy()
   const [hovered, setHovered] = useState<VoteChoice | null>(null)
   const values = { yes, no, abstain, absent }
   const total = yes + no + abstain + absent || 1
@@ -43,7 +45,7 @@ export function VoteDistributionDonut({
   const cy = 50
   const r = 46
   return (
-    <svg width={size} height={size} viewBox="0 0 100 100" role="img" aria-label={`Ja ${yes}, Nein ${no}, Enthalten ${abstain}, Nicht abgegeben ${absent}`}>
+    <svg width={size} height={size} viewBox="0 0 100 100" role="img" aria-label={`${t.yes} ${yes}, ${t.no} ${no}, ${t.abstain} ${abstain}, ${t.absent} ${absent}`}>
       {SEGMENTS.map((s) => {
         const v = values[s.key]
         if (v === 0) return null
@@ -85,7 +87,7 @@ export function VoteDistributionDonut({
             textAnchor="middle"
             style={{ fontSize: 9, fontWeight: 600, fill: 'var(--color-fg)' }}
           >
-            {activeSeg ? activeSeg.label : total}
+            {activeSeg ? ({ yes: t.yes, no: t.no, abstain: t.abstain, absent: t.absent }[activeSeg.key]) : total}
           </text>
           {activeSeg && (
             <text
