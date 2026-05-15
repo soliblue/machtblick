@@ -27,34 +27,16 @@ for (const file of files) {
   if (first) sessionByDate.set(first.date, first.sessionId)
 }
 
-const votesBySession = new Map<string, { id: string; date: string }[]>()
-const votesByDate = new Map<string, { id: string; date: string }[]>()
 const votesByTop = new Map<string, string[]>()
 for (const v of db.select({ id: votes.id, date: votes.date, agendaItem: votes.agendaItem }).from(votes).all()) {
   if (v.date < '2025-03-25') continue
   const sessionId = sessionByDate.get(v.date) ?? null
-  if (sessionId) {
-    const arr = votesBySession.get(sessionId) ?? []
-    arr.push(v)
-    votesBySession.set(sessionId, arr)
-  }
-  const dateArr = votesByDate.get(v.date) ?? []
-  dateArr.push(v)
-  votesByDate.set(v.date, dateArr)
   if (sessionId && v.agendaItem) {
     const k = `${sessionId}|${v.agendaItem}`
     const arr = votesByTop.get(k) ?? []
     arr.push(v.id)
     votesByTop.set(k, arr)
   }
-}
-
-for (const arr of votesByTop.values()) {
-  arr.sort((a, b) => {
-    const aNam = /^\d{4}-/.test(a) ? 0 : 1
-    const bNam = /^\d{4}-/.test(b) ? 0 : 1
-    return aNam - bNam || a.localeCompare(b)
-  })
 }
 
 const inserts: typeof speeches.$inferInsert[] = []
@@ -79,7 +61,7 @@ for (const rows of parsedProtocols) {
       unmatchedSpeakers.set(key, (unmatchedSpeakers.get(key) ?? 0) + 1)
     }
 
-    const voteId = resolveVoteId(r.sessionId, r.agendaItem, r.date)
+    const voteId = resolveVoteId(r.sessionId, r.agendaItem)
     if (voteId) matchedVote++
     if (r.agendaItem) topPopulated++
 
@@ -150,14 +132,10 @@ function strip(s: string) {
   return ascii.split(' ').filter((t) => t && !HONORIFICS.has(t)).join(' ')
 }
 
-function resolveVoteId(sessionId: string, agendaItem: string | null, date: string) {
+function resolveVoteId(sessionId: string, agendaItem: string | null) {
   if (agendaItem) {
     const top = votesByTop.get(`${sessionId}|${agendaItem}`)
-    if (top && top.length >= 1) return top[0]
+    if (top && top.length === 1) return top[0]
   }
-  const sess = votesBySession.get(sessionId)
-  if (sess && sess.length === 1) return sess[0].id
-  const byDate = votesByDate.get(date)
-  if (byDate && byDate.length === 1) return byDate[0].id
   return null
 }

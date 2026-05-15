@@ -12,6 +12,9 @@ export const votePartySummaries = sqliteTable(
     no: integer('no'),
     abstain: integer('abstain'),
     absent: integer('absent'),
+    positionSummary: text('position_summary'),
+    keyPoints: text('key_points'),
+    dissentNote: text('dissent_note'),
   },
   (t) => ({
     pk: primaryKey({ columns: [t.voteId, t.party] }),

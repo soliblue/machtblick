@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["position_summary", "key_points", "dissent_note"],
+  "properties": {
+    "position_summary": {
+      "type": "string"
+    },
+    "key_points": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 5,
+      "items": {
+        "type": "string"
+      }
+    },
+    "dissent_note": {
+      "type": ["string", "null"]
+    }
+  }
+}

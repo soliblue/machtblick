@@ -36,7 +36,8 @@
     "etl:polarity": "node etl/bundestag/polarity/run.mjs",
     "etl:initiator": "node etl/bundestag/votes/initiator/run.mjs",
     "etl:descriptions": "node etl/bundestag/descriptions/run.mjs",
-    "etl:titles": "node etl/bundestag/titles/run.mjs"
+    "etl:titles": "node etl/bundestag/titles/run.mjs",
+    "etl:party-positions": "node etl/bundestag/party-positions/run.mjs"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.11",

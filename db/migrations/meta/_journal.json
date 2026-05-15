@@ -127,6 +127,13 @@
       "when": 1778768562776,
       "tag": "0019_member_mandate",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "6",
+      "when": 1778853245823,
+      "tag": "0020_party_position_summaries",
+      "breakpoints": true
     }
   ]
 }

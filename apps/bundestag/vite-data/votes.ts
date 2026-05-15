@@ -35,6 +35,9 @@ type SummaryRow = {
   no: number | null
   abstain: number | null
   absent: number | null
+  position_summary: string | null
+  key_points: string | null
+  dissent_note: string | null
 }
 
 type DocumentRow = {
@@ -160,6 +163,7 @@ export function fullVote(db: Database.Database, id: string) {
       return {
         voteId: s.vote_id, party: s.party, position: s.position,
         members: s.members ?? 0, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0,
+        positionSummary: s.position_summary, keyPoints: s.key_points, dissentNote: s.dissent_note,
       }
     }
     const m = seats.get(s.party) ?? 0
@@ -169,6 +173,7 @@ export function fullVote(db: Database.Database, id: string) {
       no: s.position === 'no' ? m : 0,
       abstain: s.position === 'abstain' ? m : 0,
       absent: 0,
+      positionSummary: s.position_summary, keyPoints: s.key_points, dissentNote: s.dissent_note,
     }
   })
   const vote = voteRow.vote_type === 'namentlich'

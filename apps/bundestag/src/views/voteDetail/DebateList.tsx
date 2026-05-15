@@ -8,14 +8,16 @@ import { loadSpeechTexts, speechTextsLoaded } from '@/lib/speechesStatic'
 import { useQuery } from '@tanstack/react-query'
 import type { MemberVoteRow } from '@/server/members'
 import type { SpeechSummary } from '@/server/speeches'
+import { PartySummaryLogoRow } from './PartySummaryLogoRow'
+import type { PartySummary } from './PartySummaryModal'
 
 type BallotEntry = { choice: MemberVoteRow['choice']; pictureUrl: string | null }
-type Props = { speeches: SpeechSummary[]; ballotByMember: Map<string, BallotEntry> }
+type Props = { speeches: SpeechSummary[]; ballotByMember: Map<string, BallotEntry>; partySummaries: PartySummary[] }
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 const PAGE_SIZE = 5
 
-export function DebateList({ speeches, ballotByMember }: Props) {
+export function DebateList({ speeches, ballotByMember, partySummaries }: Props) {
   const [query, setQuery] = useState('')
   const [party, setParty] = useState<string | null>(null)
   const [page, setPage] = useState(0)
@@ -47,6 +49,7 @@ export function DebateList({ speeches, ballotByMember }: Props) {
   return (
     <section className="mb-l">
       <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>Reden zur Abstimmung</div>
+      <PartySummaryLogoRow summaries={partySummaries} />
       <div className="mb-m flex flex-wrap items-center gap-m">
         <div className="relative flex-1 min-w-[12rem]">
           <Search size={14} className="absolute left-s top-1/2 -translate-y-1/2 opacity-l" />
