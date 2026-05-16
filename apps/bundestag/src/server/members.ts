@@ -32,6 +32,8 @@ const SPEECH_PARTY_NORMALIZE: Record<string, string> = {
   'DIE LINKE': 'Die Linke',
 }
 
+const CURRENT_TERM = 21
+
 export type MemberListItem = {
   id: string
   name: string
@@ -57,7 +59,7 @@ function majorityChoice(s: typeof votePartySummaries.$inferSelect): string {
 
 export const listMembers = createServerFn({ method: 'GET' }).handler(async (): Promise<MemberListItem[]> => {
   const allMembers = db.select().from(members).all()
-  const nonProceduralVotes = db.select({ id: votes.id, date: votes.date }).from(votes).where(eq(votes.procedural, false)).all()
+  const nonProceduralVotes = db.select({ id: votes.id, date: votes.date }).from(votes).where(and(eq(votes.termId, CURRENT_TERM), eq(votes.procedural, false))).all()
   const dateByVote = new Map(nonProceduralVotes.map((v) => [v.id, v.date]))
   const vmRows = db.select().from(voteMembers).all().filter((r) => dateByVote.has(r.voteId))
   const summaries = db.select().from(votePartySummaries).all().filter((s) => dateByVote.has(s.voteId))
@@ -176,7 +178,7 @@ export const getMember = createServerFn({ method: 'GET' })
       })
       .from(voteMembers)
       .innerJoin(votes, eq(votes.id, voteMembers.voteId))
-      .where(and(eq(voteMembers.memberId, id), eq(votes.procedural, false)))
+      .where(and(eq(voteMembers.memberId, id), eq(votes.termId, CURRENT_TERM), eq(votes.procedural, false)))
       .orderBy(desc(votes.date))
       .all()
     const historyTranslations = translationMap(vmRows.map((r) => r.voteId), locale)

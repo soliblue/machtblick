@@ -96,6 +96,7 @@ const SPEECH_PARTY_NORMALIZE: Record<string, string> = {
 }
 
 const PARTY_LINE_EXCLUDED = new Set(['fraktionslos', 'Bundesregierung'])
+const CURRENT_TERM = 21
 
 function partyAt(affiliations: AffiliationRow[], date: string): string {
   const hit = affiliations.find((a) => a.valid_from <= date && (a.valid_to === null || a.valid_to >= date))
@@ -115,11 +116,11 @@ function majorityChoice(s: SummaryRow): string {
 export function leanMembers(db: Database.Database) {
   const allMembers = db.prepare('SELECT id, name, mandate_type FROM members').all() as Array<Pick<MemberRow, 'id' | 'name' | 'mandate_type'>>
   const nonProceduralVoteIds = new Set(
-    (db.prepare("SELECT id FROM votes WHERE procedural = 0").all() as Array<{ id: string }>).map((v) => v.id),
+    (db.prepare(`SELECT id FROM votes WHERE term_id = ${CURRENT_TERM} AND procedural = 0`).all() as Array<{ id: string }>).map((v) => v.id),
   )
   const vmRows = (db.prepare('SELECT vote_id, member_id, state FROM vote_members').all() as VoteMemberRow[])
     .filter((r) => nonProceduralVoteIds.has(r.vote_id))
-  const affiliations = db.prepare('SELECT member_id, party, valid_from, valid_to FROM member_affiliations WHERE valid_to IS NULL').all() as AffiliationRow[]
+  const affiliations = db.prepare(`SELECT member_id, party, valid_from, valid_to FROM member_affiliations WHERE term_id = ${CURRENT_TERM} AND valid_to IS NULL`).all() as AffiliationRow[]
   const currentParty = new Map(affiliations.map((a) => [a.member_id, a.party]))
   const stateByMember = new Map<string, string>()
   for (const r of vmRows) if (!stateByMember.has(r.member_id)) stateByMember.set(r.member_id, r.state)
@@ -156,11 +157,16 @@ export function fullMember(db: Database.Database, id: string) {
     SELECT vm.vote_id, vm.state, vm.choice, v.date, v.title, v.clean_title, v.result
     FROM vote_members vm
     INNER JOIN votes v ON v.id = vm.vote_id
-    WHERE vm.member_id = ? AND v.procedural = 0
+    WHERE vm.member_id = ? AND v.term_id = ${CURRENT_TERM} AND v.procedural = 0
     ORDER BY v.date DESC
   `).all(id) as Array<{ vote_id: string; state: string; choice: string; date: string; title: string; clean_title: string | null; result: 'angenommen' | 'abgelehnt' }>
-  const affiliations = db.prepare('SELECT member_id, party, valid_from, valid_to FROM member_affiliations WHERE member_id = ?').all(id) as AffiliationRow[]
-  const allSummaries = db.prepare('SELECT vote_id, party, yes, no, abstain, absent FROM vote_party_summaries').all() as SummaryRow[]
+  const affiliations = db.prepare(`SELECT member_id, party, valid_from, valid_to FROM member_affiliations WHERE term_id = ${CURRENT_TERM} AND member_id = ?`).all(id) as AffiliationRow[]
+  const allSummaries = db.prepare(`
+    SELECT vps.vote_id, vps.party, vps.yes, vps.no, vps.abstain, vps.absent
+    FROM vote_party_summaries vps
+    INNER JOIN votes v ON v.id = vps.vote_id
+    WHERE v.term_id = ${CURRENT_TERM}
+  `).all() as SummaryRow[]
   const majByVoteParty = new Map<string, string>()
   for (const s of allSummaries) majByVoteParty.set(`${s.vote_id} ${s.party}`, majorityChoice(s))
   let absent = 0

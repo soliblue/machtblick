@@ -10,6 +10,7 @@ import { leanMembers, fullMember } from './vite-data/members'
 import { leanParties, fullParty } from './vite-data/parties'
 
 const SITE_URL = 'https://machtblick.de'
+const CURRENT_TERM = 21
 
 const PARTY_NORMALIZE: Record<string, string> = {
   'BÜNDNIS 90/DIE GRÜNEN': 'B90/Grüne',
@@ -94,12 +95,19 @@ function writeSpeechesStatic() {
 function prerenderPaths(): string[] {
   const db = new Database(fileURLToPath(new URL('../../db/machtblick.sqlite', import.meta.url)), { readonly: true })
   const paths = ['/', '/votes/', '/members/', '/parties/', '/reden/', '/impressum/', '/datenschutz/', '/en/', '/en/votes/', '/en/members/', '/en/parties/', '/en/impressum/', '/en/datenschutz/']
-  const votes = db.prepare("SELECT id FROM votes WHERE procedural = 0 AND vote_type != 'hammelsprung'").all() as Array<{ id: string }>
+  const votes = db.prepare("SELECT id FROM votes WHERE term_id = ? AND procedural = 0 AND vote_type != 'hammelsprung'").all(CURRENT_TERM) as Array<{ id: string }>
   for (const v of votes) {
     paths.push(`/votes/${v.id}/`)
     paths.push(`/en/votes/${v.id}/`)
   }
-  const members = db.prepare('SELECT id FROM members').all() as Array<{ id: string }>
+  const members = db.prepare(`
+    SELECT DISTINCT m.rowid, m.id
+    FROM members m
+    INNER JOIN vote_members vm ON vm.member_id = m.id
+    INNER JOIN votes v ON v.id = vm.vote_id
+    WHERE v.term_id = ?
+    ORDER BY m.rowid
+  `).all(CURRENT_TERM) as Array<{ id: string }>
   for (const m of members) {
     paths.push(`/members/${m.id}/`)
     paths.push(`/members/${m.id}/abstimmungen/`)
@@ -111,8 +119,8 @@ function prerenderPaths(): string[] {
   const parties = db.prepare(`
     SELECT DISTINCT s.party FROM vote_party_summaries s
     INNER JOIN votes v ON v.id = s.vote_id
-    WHERE v.vote_type = 'namentlich'
-  `).all() as Array<{ party: string }>
+    WHERE v.term_id = ? AND v.vote_type = 'namentlich'
+  `).all(CURRENT_TERM) as Array<{ party: string }>
   const slugMap: Record<string, string> = { 'CDU/CSU': 'cdu-csu', SPD: 'spd', AfD: 'afd', 'B90/Grüne': 'gruene', 'Die Linke': 'linke', fraktionslos: 'fraktionslos' }
   for (const p of parties) {
     const slug = slugMap[p.party]
@@ -151,17 +159,24 @@ function writeJsonEndpoints() {
   writeFileSync(`${publicDir}/api/votes.json`, JSON.stringify(leanVotes(db)))
   writeFileSync(`${publicDir}/api/members.json`, JSON.stringify(leanMembers(db)))
   writeFileSync(`${publicDir}/api/parties.json`, JSON.stringify(leanParties(db)))
-  const voteIds = db.prepare("SELECT id FROM votes WHERE procedural = 0 AND vote_type != 'hammelsprung'").all() as Array<{ id: string }>
+  const voteIds = db.prepare("SELECT id FROM votes WHERE term_id = ? AND procedural = 0 AND vote_type != 'hammelsprung'").all(CURRENT_TERM) as Array<{ id: string }>
   mkdirSync(`${publicDir}/votes`, { recursive: true })
   for (const { id } of voteIds) writeFileSync(`${publicDir}/votes/${id}.json`, JSON.stringify(fullVote(db, id)))
-  const memberIds = db.prepare('SELECT id FROM members').all() as Array<{ id: string }>
+  const memberIds = db.prepare(`
+    SELECT DISTINCT m.rowid, m.id
+    FROM members m
+    INNER JOIN vote_members vm ON vm.member_id = m.id
+    INNER JOIN votes v ON v.id = vm.vote_id
+    WHERE v.term_id = ?
+    ORDER BY m.rowid
+  `).all(CURRENT_TERM) as Array<{ id: string }>
   mkdirSync(`${publicDir}/members`, { recursive: true })
   for (const { id } of memberIds) writeFileSync(`${publicDir}/members/${id}.json`, JSON.stringify(fullMember(db, id)))
   const slugMap: Record<string, string> = { 'CDU/CSU': 'cdu-csu', SPD: 'spd', AfD: 'afd', 'B90/Grüne': 'gruene', 'Die Linke': 'linke', fraktionslos: 'fraktionslos' }
   const parties = db.prepare(`
     SELECT DISTINCT s.party FROM vote_party_summaries s
-    INNER JOIN votes v ON v.id = s.vote_id WHERE v.vote_type = 'namentlich'
-  `).all() as Array<{ party: string }>
+    INNER JOIN votes v ON v.id = s.vote_id WHERE v.term_id = ? AND v.vote_type = 'namentlich'
+  `).all(CURRENT_TERM) as Array<{ party: string }>
   mkdirSync(`${publicDir}/parties`, { recursive: true })
   for (const { party } of parties) {
     const slug = slugMap[party]

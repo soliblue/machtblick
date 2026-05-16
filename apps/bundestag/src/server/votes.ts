@@ -14,6 +14,8 @@ const SPEECH_PARTY_NORMALIZE: Record<string, string> = {
   'DIE LINKE': 'Die Linke',
 }
 
+const CURRENT_TERM = 21
+
 function speechTranslationMap(ids: string[], locale: Locale) {
   return new Map(
     locale === 'en' && ids.length
@@ -97,7 +99,7 @@ function partySummaryTranslationMap(voteId: string, locale: Locale) {
 export const listVotes = createServerFn({ method: 'GET' })
   .inputValidator(normalizeLocale)
   .handler(async ({ data: locale }): Promise<VoteListItem[]> => {
-  const allRows = db.select().from(votes).where(eq(votes.procedural, false)).orderBy(desc(votes.date), desc(votes.bundestagId)).all()
+  const allRows = db.select().from(votes).where(and(eq(votes.termId, CURRENT_TERM), eq(votes.procedural, false))).orderBy(desc(votes.date), desc(votes.bundestagId)).all()
   const rows = SHOW_HAMMELSPRUNG ? allRows : allRows.filter((r) => r.voteType !== 'hammelsprung')
   const translations = translationMap(rows.map((r) => r.id), locale)
   const allSummaries = db.select().from(votePartySummaries).all()
@@ -166,7 +168,7 @@ export type VoteDetail = {
 
 function getSeatsByParty(): Map<string, number> {
   const out = new Map<string, number>()
-  const namentlich = db.select().from(votes).where(eq(votes.voteType, 'namentlich')).orderBy(desc(votes.date)).limit(20).all()
+  const namentlich = db.select().from(votes).where(and(eq(votes.termId, CURRENT_TERM), eq(votes.voteType, 'namentlich'))).orderBy(desc(votes.date)).limit(20).all()
   for (const v of namentlich) {
     const rows = db.select().from(votePartySummaries).where(eq(votePartySummaries.voteId, v.id)).all()
     for (const r of rows) if (r.members && !out.has(r.party)) out.set(r.party, r.members)

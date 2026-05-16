@@ -83,6 +83,7 @@ const SPEECH_PARTY_NORMALIZE: Record<string, string> = {
 }
 
 const PARTY_LINE_EXCLUDED = new Set(['fraktionslos', 'Bundesregierung'])
+const CURRENT_TERM = 21
 
 const ANTRAG_FLAVORED = ['Antrag:', 'Gesetzentwurf:', 'Entschließungsantrag:', 'Änderungsantrag:']
 const ANTRAG_EXCLUDED = ['Beschlussempfehlung', 'Bericht:', 'Ergänzung', 'Wahlvorschlag', 'Unterrichtung', 'Verordnung']
@@ -111,7 +112,7 @@ function normalizeSpeechParty(raw: string | null): string | null {
 export function leanVotes(db: Database.Database) {
   const rows = db.prepare(`
     SELECT id, date, title, clean_title, initiator, result, yes, no, abstain, absent, vote_type
-    FROM votes WHERE procedural = 0 AND vote_type != 'hammelsprung'
+    FROM votes WHERE term_id = ${CURRENT_TERM} AND procedural = 0 AND vote_type != 'hammelsprung'
     ORDER BY date DESC, bundestag_id DESC
   `).all() as Array<Pick<VoteRow, 'id' | 'date' | 'title' | 'clean_title' | 'initiator' | 'result' | 'yes' | 'no' | 'abstain' | 'absent' | 'vote_type'>>
   const allSummaries = db.prepare('SELECT vote_id, party, position, members FROM vote_party_summaries').all() as SummaryRow[]
@@ -271,7 +272,7 @@ export function fullVote(db: Database.Database, id: string) {
 function latestSeatsByParty(db: Database.Database): Map<string, number> {
   const out = new Map<string, number>()
   const namentlich = db.prepare(`
-    SELECT id FROM votes WHERE vote_type = 'namentlich' ORDER BY date DESC LIMIT 20
+    SELECT id FROM votes WHERE term_id = ${CURRENT_TERM} AND vote_type = 'namentlich' ORDER BY date DESC LIMIT 20
   `).all() as Array<{ id: string }>
   for (const v of namentlich) {
     const rows = db.prepare('SELECT party, members FROM vote_party_summaries WHERE vote_id = ?').all(v.id) as Array<{ party: string; members: number | null }>

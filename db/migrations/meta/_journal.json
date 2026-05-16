@@ -141,6 +141,13 @@
       "when": 1778868437241,
       "tag": "0021_vote_translations",
       "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "6",
+      "when": 1778921951908,
+      "tag": "0023_bt20_archive_foundation",
+      "breakpoints": true
     }
   ]
 }

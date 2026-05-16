@@ -32,6 +32,7 @@
     "etl:terms": "tsx etl/abgeordnetenwatch-terms/ingest.ts",
     "etl:lineage-seed": "tsx etl/party-lineage-seed/lineage-seed.ts",
     "etl:handzeichen:refresh": "node etl/bundestag/handzeichen/refresh.mjs",
+    "etl:votes:namentlich": "tsx etl/bundestag/votes/import-namentlich.ts",
     "etl:handzeichen:proposers": "node etl/bundestag/handzeichen/proposers.mjs",
     "etl:polarity": "node etl/bundestag/polarity/run.mjs",
     "etl:initiator": "node etl/bundestag/votes/initiator/run.mjs",
@@ -46,6 +47,7 @@
     "@types/node": "^22.9.0",
     "drizzle-kit": "^0.28.0",
     "tsx": "^4.19.0",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "xlsx": "^0.18.5"
   }
 }

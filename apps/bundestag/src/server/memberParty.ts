@@ -2,6 +2,8 @@ import { db } from '@machtblick/db/client'
 import { memberAffiliations } from '@machtblick/db/schema'
 import { and, eq, isNull, lte, or, gte } from 'drizzle-orm'
 
+const CURRENT_TERM = 21
+
 export function getMemberPartyAt(memberId: string, date: string): string {
   const row = db
     .select({ party: memberAffiliations.party })
@@ -9,6 +11,7 @@ export function getMemberPartyAt(memberId: string, date: string): string {
     .where(
       and(
         eq(memberAffiliations.memberId, memberId),
+        eq(memberAffiliations.termId, CURRENT_TERM),
         lte(memberAffiliations.validFrom, date),
         or(isNull(memberAffiliations.validTo), gte(memberAffiliations.validTo, date)),
       ),
@@ -21,7 +24,7 @@ export function getCurrentParty(memberId: string): string {
   const row = db
     .select({ party: memberAffiliations.party })
     .from(memberAffiliations)
-    .where(and(eq(memberAffiliations.memberId, memberId), isNull(memberAffiliations.validTo)))
+    .where(and(eq(memberAffiliations.memberId, memberId), eq(memberAffiliations.termId, CURRENT_TERM), isNull(memberAffiliations.validTo)))
     .get()
   return row?.party ?? ''
 }
@@ -30,7 +33,7 @@ export function getCurrentPartyMap(): Map<string, string> {
   const rows = db
     .select({ memberId: memberAffiliations.memberId, party: memberAffiliations.party })
     .from(memberAffiliations)
-    .where(isNull(memberAffiliations.validTo))
+    .where(and(eq(memberAffiliations.termId, CURRENT_TERM), isNull(memberAffiliations.validTo)))
     .all()
   return new Map(rows.map((r) => [r.memberId, r.party]))
 }
@@ -38,7 +41,7 @@ export function getCurrentPartyMap(): Map<string, string> {
 export type AffiliationRow = { memberId: string; party: string; validFrom: string; validTo: string | null }
 
 export function loadAffiliationsByMember(): Map<string, AffiliationRow[]> {
-  const rows = db.select().from(memberAffiliations).all() as AffiliationRow[]
+  const rows = db.select().from(memberAffiliations).where(eq(memberAffiliations.termId, CURRENT_TERM)).all() as AffiliationRow[]
   const byMember = new Map<string, AffiliationRow[]>()
   for (const r of rows) {
     const arr = byMember.get(r.memberId) ?? []

@@ -30,6 +30,7 @@ const SLUG_TO_PARTY: Record<string, string> = {
 const PARTY_TO_SLUG: Record<string, string> = Object.fromEntries(Object.entries(SLUG_TO_PARTY).map(([k, v]) => [v, k]))
 
 const PARTY_LINE_EXCLUDED = new Set(['fraktionslos', 'Bundesregierung'])
+const CURRENT_TERM = 21
 
 const DONATION_PARTY_NAMES: Record<string, string[]> = {
   'CDU/CSU': ['CDU', 'CSU'],
@@ -56,7 +57,7 @@ function majorityPosition(s: { yes: number; no: number; abstain: number }): 'yes
 
 export function leanParties(db: Database.Database) {
   const namentlichVotes = db.prepare(`
-    SELECT id FROM votes WHERE vote_type = 'namentlich' AND procedural = 0 ORDER BY date DESC, bundestag_id DESC
+    SELECT id FROM votes WHERE term_id = ${CURRENT_TERM} AND vote_type = 'namentlich' AND procedural = 0 ORDER BY date DESC, bundestag_id DESC
   `).all() as Array<{ id: string }>
   const namentlichIds = new Set(namentlichVotes.map((v) => v.id))
   const summaries = (db.prepare('SELECT vote_id, party, members, yes, no, abstain, absent FROM vote_party_summaries').all() as SummaryRow[])
@@ -94,7 +95,7 @@ export function fullParty(db: Database.Database, slug: string) {
            v.date, v.title, v.clean_title, v.result, v.document, v.vote_type
     FROM vote_party_summaries vps
     INNER JOIN votes v ON v.id = vps.vote_id
-    WHERE vps.party = ? AND v.procedural = 0
+    WHERE vps.party = ? AND v.term_id = ${CURRENT_TERM} AND v.procedural = 0
     ORDER BY v.date DESC
   `).all(party) as Array<SummaryRow & { date: string; title: string; clean_title: string | null; result: 'angenommen' | 'abgelehnt'; document: string | null; vote_type: string }>
   const namentlich = summaries.filter((s) => s.vote_type === 'namentlich' && s.yes != null)
@@ -121,11 +122,16 @@ export function fullParty(db: Database.Database, slug: string) {
     }
   })
   const currentPartyMembers = db.prepare(`
-    SELECT ma.member_id FROM member_affiliations ma WHERE ma.party = ? AND ma.valid_to IS NULL
+    SELECT ma.member_id FROM member_affiliations ma WHERE ma.term_id = ${CURRENT_TERM} AND ma.party = ? AND ma.valid_to IS NULL
   `).all(party) as Array<{ member_id: string }>
   const memberIds = new Set(currentPartyMembers.map((r) => r.member_id))
   const allMemberRows = db.prepare('SELECT id, name FROM members').all() as Array<{ id: string; name: string }>
-  const stateRows = db.prepare('SELECT member_id, state FROM vote_members').all() as Array<{ member_id: string; state: string }>
+  const stateRows = db.prepare(`
+    SELECT vm.member_id, vm.state
+    FROM vote_members vm
+    INNER JOIN votes v ON v.id = vm.vote_id
+    WHERE v.term_id = ${CURRENT_TERM}
+  `).all() as Array<{ member_id: string; state: string }>
   const stateByMember = new Map<string, string>()
   for (const r of stateRows) if (!stateByMember.has(r.member_id)) stateByMember.set(r.member_id, r.state)
   const memberRows = allMemberRows
@@ -136,7 +142,7 @@ export function fullParty(db: Database.Database, slug: string) {
     SELECT vps.vote_id, vps.party, vps.yes, vps.no, vps.abstain
     FROM vote_party_summaries vps
     INNER JOIN votes v ON v.id = vps.vote_id
-    WHERE v.vote_type = 'namentlich' AND v.procedural = 0
+    WHERE v.term_id = ${CURRENT_TERM} AND v.vote_type = 'namentlich' AND v.procedural = 0
   `).all() as Array<{ vote_id: string; party: string; yes: number; no: number; abstain: number }>
   const byVote = new Map<string, Map<string, 'yes' | 'no' | null>>()
   for (const s of allSummaries) {
@@ -168,7 +174,7 @@ export function fullParty(db: Database.Database, slug: string) {
     }
   }
   const allVotes = db.prepare(`
-    SELECT id, initiator, result, date, title, clean_title FROM votes WHERE procedural = 0
+    SELECT id, initiator, result, date, title, clean_title FROM votes WHERE term_id = ${CURRENT_TERM} AND procedural = 0
   `).all() as Array<{ id: string; initiator: string | null; result: 'angenommen' | 'abgelehnt'; date: string; title: string; clean_title: string | null }>
   let proposalsTotal = 0
   let proposalsAccepted = 0

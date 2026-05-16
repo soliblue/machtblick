@@ -6,6 +6,8 @@ import { SLUG_TO_PARTY, hasPartyLine } from '@/lib/parties'
 import { getCurrentPartyMap } from './memberParty'
 import { normalizeLocale, type Locale } from '@/lib/locale'
 
+const CURRENT_TERM = 21
+
 function cohesion(s: { yes: number; no: number; abstain: number; members: number; absent: number }) {
   const decided = s.yes + s.no + s.abstain
   if (!decided) return 0
@@ -26,7 +28,7 @@ export type PartyListItem = {
 }
 
 export const listParties = createServerFn({ method: 'GET' }).handler(async (): Promise<PartyListItem[]> => {
-  const namentlichVotes = db.select().from(votes).where(and(eq(votes.voteType, 'namentlich'), eq(votes.procedural, false))).orderBy(desc(votes.date), desc(votes.bundestagId)).all()
+  const namentlichVotes = db.select().from(votes).where(and(eq(votes.termId, CURRENT_TERM), eq(votes.voteType, 'namentlich'), eq(votes.procedural, false))).orderBy(desc(votes.date), desc(votes.bundestagId)).all()
   const namentlichIds = new Set(namentlichVotes.map((v) => v.id))
   const summaries = db.select().from(votePartySummaries).all().filter((s) => namentlichIds.has(s.voteId)) as Array<{ party: string; members: number; yes: number; no: number; abstain: number; absent: number; voteId: string }>
   const byParty = new Map<string, typeof summaries>()
@@ -164,7 +166,7 @@ export const getParty = createServerFn({ method: 'GET' })
       })
       .from(votePartySummaries)
       .innerJoin(votes, eq(votes.id, votePartySummaries.voteId))
-      .where(and(eq(votePartySummaries.party, party), eq(votes.procedural, false)))
+      .where(and(eq(votePartySummaries.party, party), eq(votes.termId, CURRENT_TERM), eq(votes.procedural, false)))
       .orderBy(desc(votes.date))
       .all()
       .filter((s) => s.yes != null) as Array<{ voteId: string; members: number; yes: number; no: number; abstain: number; absent: number; date: string; title: string; cleanTitle: string | null; result: 'angenommen' | 'abgelehnt'; document: string | null; voteType: string }>
@@ -194,7 +196,12 @@ export const getParty = createServerFn({ method: 'GET' })
     })
     const currentPartyByMember = getCurrentPartyMap()
     const stateByMember = new Map<string, string>()
-    const stateRows = db.select({ memberId: voteMembers.memberId, state: voteMembers.state }).from(voteMembers).all()
+    const stateRows = db
+      .select({ memberId: voteMembers.memberId, state: voteMembers.state })
+      .from(voteMembers)
+      .innerJoin(votes, eq(votes.id, voteMembers.voteId))
+      .where(eq(votes.termId, CURRENT_TERM))
+      .all()
     for (const r of stateRows) if (!stateByMember.has(r.memberId)) stateByMember.set(r.memberId, r.state)
     const memberRows: PartyMemberRow[] = db
       .select({ id: members.id, name: members.name })
@@ -213,7 +220,7 @@ export const getParty = createServerFn({ method: 'GET' })
       })
       .from(votePartySummaries)
       .innerJoin(votes, eq(votes.id, votePartySummaries.voteId))
-      .where(and(eq(votes.voteType, 'namentlich'), eq(votes.procedural, false)))
+      .where(and(eq(votes.termId, CURRENT_TERM), eq(votes.voteType, 'namentlich'), eq(votes.procedural, false)))
       .all() as Array<{ voteId: string; party: string; yes: number; no: number; abstain: number }>
     const byVote = new Map<string, Map<string, 'yes' | 'no' | null>>()
     for (const s of allSummaries) {
@@ -253,7 +260,7 @@ export const getParty = createServerFn({ method: 'GET' })
     const allVotes = db
       .select({ id: votes.id, initiator: votes.initiator, result: votes.result, date: votes.date, title: votes.title, cleanTitle: votes.cleanTitle })
       .from(votes)
-      .where(eq(votes.procedural, false))
+      .where(and(eq(votes.termId, CURRENT_TERM), eq(votes.procedural, false)))
       .all() as Array<{ id: string; initiator: string | null; result: 'angenommen' | 'abgelehnt'; date: string; title: string; cleanTitle: string | null }>
     const proposalTranslations = translationMap(allVotes.map((v) => v.id), locale)
     for (const v of allVotes) {
