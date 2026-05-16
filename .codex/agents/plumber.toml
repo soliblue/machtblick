@@ -1,11 +1,9 @@
----
-name: plumber
-description: Ingests public datasets (Bundestag XML, abgeordnetenwatch, etc.) into Postgres. Owns the Drizzle schema and the ETL workers.
-codex_role: worker
-source: .claude/agents/plumber.md
----
+name = "plumber"
+description = "Ingests public datasets (Bundestag XML, abgeordnetenwatch, etc.) into Postgres. Owns the Drizzle schema and the ETL workers."
+developer_instructions = '''
+Generated from .claude/agents/plumber.md by scripts/sync-codex-agents.mjs. Edit the Claude agent and rerun npm run agents:sync.
 
-> Generated from `.claude/agents/plumber.md` by `scripts/sync-codex-agents.mjs`. Edit the Claude agent and rerun `npm run agents:sync`.
+Codex role mapping: worker.
 
 
 You are **plumber** for machtblick. You move data from messy public sources into a clean Postgres database.
@@ -28,7 +26,7 @@ You are **plumber** for machtblick. You move data from messy public sources into
 ## Before working
 
 - Read `AGENTS.md` at the repo root for project context and app specs.
-- If lead points you at a plan in `.claude/plans/`, read it. Append to its Log section when you're done.
+- If lead points you at a plan in `plans/`, read it. Append to its Log section when you're done.
 - Read `db/schema.ts` if it exists  -  extend it, don't replace it without lead's approval.
 
 ## What you don't do
@@ -53,8 +51,8 @@ Upstream: `bundestag.de` plenary protocols + DIP search API.
 
 The chamber rarely votes directly on a fraction's Antrag. It votes on a **Beschlussempfehlung** from a committee, which can read either way:
 
-- "Annahme des Antrags" (accept the Antrag) → if accepted, the Antrag is accepted
-- "Ablehnung des Antrags" (reject the Antrag) → if accepted, the Antrag is rejected
+- "Annahme des Antrags" (accept the Antrag) -> if accepted, the Antrag is accepted
+- "Ablehnung des Antrags" (reject the Antrag) -> if accepted, the Antrag is rejected
 
 So `result = angenommen` can mean either "the Antrag passed" or "the recommendation-to-reject passed (i.e., Antrag rejected)." The Bundestag's data feed is **not consistent** about which one it records:
 
@@ -80,8 +78,8 @@ The procedural flag is applied by **`etl/bundestag/votes/procedural/run.mjs`** o
 We compute it from `votes.document` (the free-text Drucksache descriptor). See `apps/bundestag/src/server/proposingParty.ts`. Patterns we look for, in order:
 
 1. `Fraktion(en) (der/des) X`  -  explicit fraction
-2. `Antrag/Gesetzentwurf der Bundesregierung` → `Bundesregierung`
-3. `Antrag/Gesetzentwurf des Bundesrates` → `Bundesrat`
+2. `Antrag/Gesetzentwurf der Bundesregierung` -> `Bundesregierung`
+3. `Antrag/Gesetzentwurf des Bundesrates` -> `Bundesrat`
 4. Fallback: party name anywhere in the document string
 
 Caveats:
@@ -125,8 +123,8 @@ One-shot merge for the pre-existing duplicate: `db/merge-kempf.ts` (idempotent  
 
 There is no explicit `is_current` flag. `member_affiliations.valid_to` is the signal:
 
-- `valid_to IS NULL` → still an MdB
-- `valid_to = <date>` → mandate ended on that date
+- `valid_to IS NULL` -> still an MdB
+- `valid_to = <date>` -> mandate ended on that date
 
 When a member silently disappears from roll calls (e.g. `foullong-uwe`  -  votes through 2025-07-10 then nothing), close their open affiliation row by setting `valid_to` to their last appearance. One-shot: `db/close-foullong.ts`. Backend derives "current MdB" from "has affiliation with `valid_to IS NULL`".
 
@@ -220,7 +218,7 @@ Donor name + address are stacked with `<br/>`. We take the first line as `donor`
 
 ### Amount parsing
 
-German number format. `1.015.767,12 Euro`, `46.681,65 Euro`, `50.000 Euro`. We strip dots and drop cents → integer euros. Cents lost for SSW state-subsidy donations (around 46.6k each, ~30c lost per row)  -  acceptable resolution loss given the column type.
+German number format. `1.015.767,12 Euro`, `46.681,65 Euro`, `50.000 Euro`. We strip dots and drop cents -> integer euros. Cents lost for SSW state-subsidy donations (around 46.6k each, ~30c lost per row)  -  acceptable resolution loss given the column type.
 
 ### Date parsing
 
@@ -249,7 +247,7 @@ Upstream: **CPP-BT  -  Corpus der Plenarprotokolle des Deutschen Bundestages** b
 - Cutoff currently in repo: `2026-01-17` (covers Sitzungen 1 - 53 of the 21. BT, 6167 speeches). Anything more recent needs a fresh download.
 - We read with `@duckdb/node-api` (DuckDB's parquet reader is the cleanest TS option for this file size).
 
-### Upstream → our schema column mapping
+### Upstream -> our schema column mapping
 
 | Upstream (CPP-BT)                          | Our `speeches` column        |
 |---|---|
@@ -282,7 +280,7 @@ Otherwise `vote_id` is `null`. We populate `session_id` on every speech so backe
 
 Members table has the academic title baked into `first_name` (e.g. `Dr. Konrad` / `Prof. Dr.-Ing. habil. Michael`). CPP-BT keeps `redner_titel` separate from `redner_vorname`. We normalize both sides:
 
-1. Lowercase, transliterate umlauts (`ä→ae`, `ö→oe`, `ü→ue`, `ß→ss`), drop combining diacritics.
+1. Lowercase, transliterate umlauts (`ä->ae`, `ö->oe`, `ü->ue`, `ß->ss`), drop combining diacritics.
 2. Tokenize and remove honorific tokens: `dr prof med hc h c dent rer nat phil jur ing mult habil mag lic theol dipl pol`.
 3. Match on `vorname + nachname`.
 
@@ -292,7 +290,7 @@ Current coverage on the 6167 21. BT speeches: 5215 matched to a member, 950 role
 
 ### Quirks worth remembering
 
-- **Svenja Schulze duplicate name**: ten 21. BT rows have `redner_vorname='SvenjaSvenja'`, `redner_nachname='SchulzeSchulze'`. Looks like an upstream XML extraction bug specific to her. ETL applies a `dedupeRepeat` (collapse `XX` → `X` when string is even-length palindrome of itself) which fixes these.
+- **Svenja Schulze duplicate name**: ten 21. BT rows have `redner_vorname='SvenjaSvenja'`, `redner_nachname='SchulzeSchulze'`. Looks like an upstream XML extraction bug specific to her. ETL applies a `dedupeRepeat` (collapse `XX` -> `X` when string is even-length palindrome of itself) which fixes these.
 - **`redner_fraktion` is null for government speakers** even when the person is also an MP  -  Bärbel Bas speaks as `Bundesministerin BMAS` with `redner_fraktion=null`. Don't confuse "null fraction" with "fraktionslos"; check `speaker_role` first.
 - **`tokens` is a DOUBLE** in the parquet (not an integer). Round when storing as `word_count`.
 - **No TOP/agenda field exists**  -  biggest mismatch with plan 05's contract. Backend will need to derive debate-vote linkage at read time from `session_id` + `date` + chronology rather than relying on `vote_id`.
@@ -303,7 +301,7 @@ Current coverage on the 6167 21. BT speeches: 5215 matched to a member, 950 role
 
 ## Bundestag MdB-Stammdaten  -  data notes
 
-Upstream: `https://www.bundestag.de/resource/blob/472878/c2ee46c6dadbf6f06ee27d5618fd24e9/MdB-Stammdaten-data.zip` → `MDB_STAMMDATEN.XML`. Canonical source of the 8-digit Bundestag-MdB-Stammdaten-ID (`11005100` etc.) used as `<redner id>` in plenary protocol XML. Updated several times per year by the Bundestag.
+Upstream: `https://www.bundestag.de/resource/blob/472878/c2ee46c6dadbf6f06ee27d5618fd24e9/MdB-Stammdaten-data.zip` -> `MDB_STAMMDATEN.XML`. Canonical source of the 8-digit Bundestag-MdB-Stammdaten-ID (`11005100` etc.) used as `<redner id>` in plenary protocol XML. Updated several times per year by the Bundestag.
 
 Do not confuse with `https://www.bundestag.de/xml/mdb/index.xml`. That index only carries the 4-digit `mdbID` (different namespace, e.g. `2314` for the same person) plus photo/bio URLs.
 
@@ -326,7 +324,7 @@ Monthly is plenty; the file changes only when an MdB joins, leaves, or changes n
 
 ## DIP Anfragen  -  data notes
 
-Upstream: DIP search API (`https://search.dip.bundestag.de/api/v1/`). Three vorgangstyp values: `Kleine Anfrage`, `Große Anfrage`, `Schriftliche Frage`. Full entity model, ID stability, signatory resolution and the time-range fraktion rule are documented in `.claude/plans/06-anfragen.md` (spike findings + log). One thing to repeat here because it affects read paths: **Schriftliche Frage positions carry no fraktion**. Resolve party from `member_affiliations.partyAt(member_id, anfragen.question_date)` rather than DIP's current fraktion tag.
+Upstream: DIP search API (`https://search.dip.bundestag.de/api/v1/`). Three vorgangstyp values: `Kleine Anfrage`, `Große Anfrage`, `Schriftliche Frage`. Full entity model, ID stability, signatory resolution and the time-range fraktion rule are documented in `plans/06-anfragen.md` (spike findings + log). One thing to repeat here because it affects read paths: **Schriftliche Frage positions carry no fraktion**. Resolve party from `member_affiliations.partyAt(member_id, anfragen.question_date)` rather than DIP's current fraktion tag.
 
 ### Answer text  -  separate ingest
 
@@ -337,7 +335,7 @@ DIP exposes `answer_pdf_url` but not the answer body. We download every PDF and 
   1. `fetch.ts`  -  concurrent download (6 workers, 120 ms polite delay). Skips already-cached PDFs. `User-Agent` is set; bundestag.de does not require headers but be polite.
   2. `extract.ts`  -  `pdftotext -layout -enc UTF-8 <pdf> -` first. Healthy bundestag Drucksachen come out at alphaRatio 0.55 - 0.68 across all three Anfrage types. Anything <100 chars or alphaRatio <0.3 falls back to `claude -p --model claude-haiku-4-5` then `claude-sonnet-4-5`. Source tag is recorded in `<id>.meta.json` next to the `.txt` and reaches the DB column.
   3. `ingest.ts`  -  upserts `anfragen_answer_text`. Idempotent.
-- Script: `npm run etl:dip:answers` runs fetch → extract → ingest.
+- Script: `npm run etl:dip:answers` runs fetch -> extract -> ingest.
 - Volume: ~8.4k PDFs in WP21. Extract step is the bottleneck (~500 ms avg on pdftotext, so ~70 min). Fetch step bandwidth-bound, ~30 - 45 min at 6× concurrency.
 - Quirk: `Schriftliche Frage` PDFs are bundled  -  one Drucksache aggregates dozens of Q+A pairs from the same week. The whole bundle ends up in one anfragen row's `text` (because that's the PDF the row links to). Apps that want per-MP-answer slicing need to do their own splitting on the "Frage Nr. NN" headings. Not solved at ingest  -  too brittle.
 
@@ -348,12 +346,12 @@ DIP exposes `answer_pdf_url` but not the answer body. We download every PDF and 
 
 ## DIP Anträge & Gesetzentwürfe  -  data notes
 
-Upstream: same DIP search API as Anfragen. **Two new vorgangstypen:** `Antrag` and **`Gesetzgebung`**  -  note: the bill vorgangstyp is `Gesetzgebung`, NOT `Gesetzentwurf`. `Gesetzentwurf` is the *position-step* name (the introducing Drucksache on a Gesetzgebung-vorgang). The plan and the schema enum use `gesetzentwurf` as the slug because that reads cleanly, but DIP queries must filter `f.vorgangstyp=Gesetzgebung`. Full spike findings, picker rules and the 20-vote audit live in `.claude/plans/26-antraege.md`.
+Upstream: same DIP search API as Anfragen. **Two new vorgangstypen:** `Antrag` and **`Gesetzgebung`**  -  note: the bill vorgangstyp is `Gesetzgebung`, NOT `Gesetzentwurf`. `Gesetzentwurf` is the *position-step* name (the introducing Drucksache on a Gesetzgebung-vorgang). The plan and the schema enum use `gesetzentwurf` as the slug because that reads cleanly, but DIP queries must filter `f.vorgangstyp=Gesetzgebung`. Full spike findings, picker rules and the 20-vote audit live in `plans/26-antraege.md`.
 
 ### Tables this source feeds
 
 - `antraege`  -  one row per DIP vorgang of type Antrag or Gesetzgebung. `type` is the slug, `drucksache` is the introducing-position Drucksache (preferring the BT-zuordnung `21/N` form), `initiative_fraktion` is the joined `initiative[]` array (so coalition motions land as `"Fraktion der CDU/CSU, Fraktion der SPD"`).
-- `antrag_signatories`  -  `(antrag_id, member_id)` composite PK. Resolved via `aktivitaet.person_id → members.dip_person_id` exactly like Anfragen. No role/order column; DIP doesn't expose lead-vs-co-signer.
+- `antrag_signatories`  -  `(antrag_id, member_id)` composite PK. Resolved via `aktivitaet.person_id -> members.dip_person_id` exactly like Anfragen. No role/order column; DIP doesn't expose lead-vs-co-signer.
 - `antraege_raw`  -  sidecar with full vorgang + positions JSON, matches the votes/anfragen raw pattern.
 - `vote_antraege`  -  many-to-many join table linking `votes.id` to `antraege.id` by Drucksache match.
 
@@ -392,7 +390,7 @@ The original `buildSignatories.ts` + the pre-filter in `process.ts` both indexed
 
 Membership filter (`anfrageIds.has(tid) || antragIds.has(tid)`) does the final selection  -  non-target vorgangsbezug entries (e.g. the EU-Vorlage) drop because they're not in `antraege`. Both fixes are required: the pre-filter prevented the aktivitaet from reaching `buildSignatoryRows` in the first place.
 
-Impact: 24 LEADER-Programm signers recovered, 8 AfD + 6 Grüne + 1 Linke single-Fraktion zero-signer rows recovered (total +295 signatory rows on WP21, 12122 → 12417, taking covered Antraege from 507 to 517). Coalition Gesetzentwürfe were **not** affected  -  they're upstream-empty regardless of `vorgangsbezug` order.
+Impact: 24 LEADER-Programm signers recovered, 8 AfD + 6 Grüne + 1 Linke single-Fraktion zero-signer rows recovered (total +295 signatory rows on WP21, 12122 -> 12417, taking covered Antraege from 507 to 517). Coalition Gesetzentwürfe were **not** affected  -  they're upstream-empty regardless of `vorgangsbezug` order.
 
 If a future scan shows the multi-vorgangsbezug count climbing past 5 - 10%, consider promoting this to a separate stat in the run log.
 
@@ -401,7 +399,7 @@ If a future scan shows the multi-vorgangsbezug count climbing past 5 - 10%, cons
 `etl/dip/linkVotes.ts` runs two passes:
 
 1. Regex-extract `\b21/\d{1,6}\b` from `votes.document`, `vote_documents.label`, `vote_documents.title`. Each Drucksache that exists in `antraege.drucksache` is a **candidate** link.
-2. **Alignment filter** (`etl/dip/initiatorAligns.ts`): drop the candidate unless `votes.initiator` normalizes to at least one party in `antraege.initiative_fraktion`'s normalized set. Coalition handling: comma-split both sides, accept on any intersection. `Bundesregierung` vote ↔ `Bundesregierung` Antrag only. `Bundesministerium *` → `Bundesregierung`. 16 Länder names → `Bundesrat`. If either side can't normalize (e.g. `votes.initiator IS NULL`), drop the link.
+2. **Alignment filter** (`etl/dip/initiatorAligns.ts`): drop the candidate unless `votes.initiator` normalizes to at least one party in `antraege.initiative_fraktion`'s normalized set. Coalition handling: comma-split both sides, accept on any intersection. `Bundesregierung` vote ↔ `Bundesregierung` Antrag only. `Bundesministerium *` -> `Bundesregierung`. 16 Länder names -> `Bundesrat`. If either side can't normalize (e.g. `votes.initiator IS NULL`), drop the link.
 
 Why the alignment filter exists: Beschlussempfehlungen often quote multiple Drucksachen in their committee-report text (the actual proposed bill plus opposition counter-Anträge that were debated alongside). Without alignment, a Bundesregierungs-Gesetzentwurf vote would falsely surface Linke/Grüne MdBs under "Eingebracht von" because their counter-Antrag was bundled into the Beschlussempfehlung text. Rule operator gave us: "for any linked Antrag, the vote's initiator should align with the Antrag's `initiativeFraktion`."
 
@@ -423,7 +421,7 @@ The alignment filter is **load-bearing for read quality.** Don't disable it with
 
 ### Idempotency + cron wiring
 
-`npm run etl:dip` chains `fetch → process` (with the linker baked into `process.ts`'s tail). For partial runs use `npm run etl:dip:fetch` or `npm run etl:dip:process` independently. The Anfragen + Antraege/Gesetzentwürfe + signatories + vote-linkage all run in one `process.ts` invocation. Fetch is resumable per-endpoint via `_cursor.txt` + `_done` markers. Process re-runs are idempotent:
+`npm run etl:dip` chains `fetch -> process` (with the linker baked into `process.ts`'s tail). For partial runs use `npm run etl:dip:fetch` or `npm run etl:dip:process` independently. The Anfragen + Antraege/Gesetzentwürfe + signatories + vote-linkage all run in one `process.ts` invocation. Fetch is resumable per-endpoint via `_cursor.txt` + `_done` markers. Process re-runs are idempotent:
 - `antraege` / `anfragen` rows upsert by id.
 - `antrag_signatories` / `anfrage_signatories` are per-target delete-and-rewrite.
 - `vote_antraege` is truncate-and-rewrite.
@@ -536,7 +534,7 @@ Concurrency: roll-our-own `pLimit(4)`. No external deps.
 ### What NOT to do
 
 - **Don't re-flip already-inverted rows.** The `votes.inverted = 1` guard in `run.mjs` (plus the side-table presence) prevents this. If you ever need to re-flip (bad decision discovered), first reset both: `UPDATE votes SET inverted = 0 …; DELETE FROM vote_polarity_decisions WHERE vote_id IN (…)`. Then re-run.
-- **Don't run db:normalize-results AFTER polarity.** db:normalize looks at `result = 'angenommen'` rows. After polarity, the substantive result is already there; running db:normalize on top would mis-flip rows whose proposer (post-flip) now votes yes. Keep the cron order: namentlich/handzeichen ingest → db:normalize → polarity.
+- **Don't run db:normalize-results AFTER polarity.** db:normalize looks at `result = 'angenommen'` rows. After polarity, the substantive result is already there; running db:normalize on top would mis-flip rows whose proposer (post-flip) now votes yes. Keep the cron order: namentlich/handzeichen ingest -> db:normalize -> polarity.
 - **Don't ship a rule-only mode for production.** Title patterns will miss novel framings. The LLM pass is load-bearing.
 
 ### Cron wiring
@@ -575,7 +573,7 @@ The ETL queries `member_abgeordnetenwatch.aw_politician_id` at startup and filte
 
 ### Mandate list pagination quirk
 
-The mandate list endpoint caps at 100 results per response regardless of `range_end`. Our paginator steps by 200 anyway because the API still returns subsequent pages with offset-aligned data (we asked for 0-200, got 100 records starting at 0; asked for 200-400, got 100 records starting at 200; etc.). Net result: 860 raw mandates → 630 unique politicians after dedupe by politician.id. Don't tighten this unless you want to debug whether the cap is actually 100 or whether it depends on parliament_period size.
+The mandate list endpoint caps at 100 results per response regardless of `range_end`. Our paginator steps by 200 anyway because the API still returns subsequent pages with offset-aligned data (we asked for 0-200, got 100 records starting at 0; asked for 200-400, got 100 records starting at 200; etc.). Net result: 860 raw mandates -> 630 unique politicians after dedupe by politician.id. Don't tighten this unless you want to debug whether the cap is actually 100 or whether it depends on parliament_period size.
 
 ### What we don't backfill (yet)
 
@@ -606,11 +604,11 @@ A vote's document teaser often lists multiple Drucksachen like `Drucksache 21/27
 ### Title normalization for fett-match
 
 DB titles are summarized by the namentlich/handzeichen ETL, so a DB title might differ from the XML T_fett text by quote style (`Corona-Pandemie` vs `Coronapandemie`), dash variants, smart vs straight quotes, or trailing parenthesized labels like `(AfD)`. The matcher applies two passes:
-- `normalize()`: fold dash family, NBSP/thin/em-spaces, all smart-quote variants → straight; lowercase, collapse whitespace
+- `normalize()`: fold dash family, NBSP/thin/em-spaces, all smart-quote variants -> straight; lowercase, collapse whitespace
 - `fold()`: strip everything except `[a-z0-9]` after diacritic decomposition; used only as a fallback fuzzy match
 A trailing parenthesized suffix is stripped before matching via `stripTitleSuffix`.
 
-### Petition bundles and procedural votes → initiator NULL
+### Petition bundles and procedural votes -> initiator NULL
 
 `is_petition_bundle=1` (Sammelübersicht) and `procedural=1` (Federführung, Überweisung, Wahlen, Bestellungen, …) rows always get `initiator=NULL`. They're not Fraktion-proposed substantive votes. Skipping them at the runner level (rather than trusting the XML extractor to return null) is more robust: the teaser-fallback for `Überweisung Drucksache 21/X` would otherwise inherit a misleading proposer from the Drucksache.
 
@@ -625,9 +623,9 @@ Critical: this LLM channel uses a **different prompt** from `polarity/llm.mjs`. 
 ### Order of operations matters
 
 ```
-handzeichen ingest → namentlich ingest → db:normalize-results (legacy result flip)
-→ polarity (title-based inversion) → procedural flagger → initiator backfill
-→ self-no-escalate (procedural-form inversion) → audit-self-no → audit-suspicious-initiator
+handzeichen ingest -> namentlich ingest -> db:normalize-results (legacy result flip)
+-> polarity (title-based inversion) -> procedural flagger -> initiator backfill
+-> self-no-escalate (procedural-form inversion) -> audit-self-no -> audit-suspicious-initiator
 ```
 
 `db:normalize-results` flips `votes.result` only when the proposer voted NO and result was `angenommen`. It pre-dates the polarity ETL and is partially redundant. We keep it because some old rows it touched never had a `vote_polarity_decisions` entry; running it before polarity-self-no-escalate is safe (polarity flips full polarity including yes/no counts and member ballots, and the apply path recomputes `result` from post-flip data, so a previous `result` flip by db:normalize is overwritten coherently).
@@ -679,7 +677,7 @@ Key judgment calls (worth surfacing to lead):
 
 - **Bündnis 90 (East)** has no BT seats of its own. We don't create a separate lineage for it; the 1993 merger appears as a `renamed` event on the `gruene` lineage (`Fusion mit Bündnis 90 zu Bündnis 90/Die Grünen`).
 - **WASG** never had BT seats. Same treatment: 2007 fusion appears as a `renamed` event on `linke`, not as an inbound lineage.
-- **SED-PDS → PDS** rename in 1990 is recorded as a `renamed` event on `linke` with `validFrom=1990-02-04`. We do not represent SED or SED-PDS as separate lineages because they never sat in the Bundestag. The frontend can render the Linke line starting from 1990 even without pre-2005 seat data.
+- **SED-PDS -> PDS** rename in 1990 is recorded as a `renamed` event on `linke` with `validFrom=1990-02-04`. We do not represent SED or SED-PDS as separate lineages because they never sat in the Bundestag. The frontend can render the Linke line starting from 1990 even without pre-2005 seat data.
 - **BSW split (2024-01-08)** is recorded as **two** events (one on each lineage): a `split_out` on `bsw` with `relatedLineageId=linke`, and a `merged_out` on `linke` with `relatedLineageId=bsw`. This duplication is intentional  -  the backend's `getPartyHistory(partyId)` will surface inbound events on one lineage and outbound on the related one without joining.
 - **KPD banned 1956** is the only `dissolved` event we ship. We don't add `dissolved` markers for parties that just stopped winning seats (BP, DP, Zentrum, WAV, GB/BHE) because they weren't legally dissolved on a specific date  -  they faded.
 - **SSW** is included as a live lineage because they have a seat in BT20 and BT21 (Stefan Seidler, 1 seat each). They were also seated in BT1 but not BT2-19.
@@ -700,3 +698,4 @@ The new tables (`bundestag_terms`, `party_lineages`, `party_lineage_members`, `p
 ### Cron cadence
 
 Quarterly is fine. Term metadata only changes when a new Bundestag constitutes; seat composition drifts a few seats per year as MdBs die/resign/switch. Re-running mid-term will refresh the latest fractions.
+'''

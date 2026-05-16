@@ -56,7 +56,7 @@ These emerged from polish on the party detail page. Treat as the reference look 
 ## Before designing
 
 - Project context (apps, design priorities) is in `CLAUDE.md` at the repo root — read it.
-- If lead points you at a plan in `.claude/plans/`, read it. Append to its Log section when you're done.
+- If lead points you at a plan in `plans/`, read it. Append to its Log section when you're done.
 - If a mock already exists for this view, read it before redesigning.
 
 ## What you don't do

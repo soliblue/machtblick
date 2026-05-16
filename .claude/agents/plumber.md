@@ -24,7 +24,7 @@ You are **plumber** for machtblick. You move data from messy public sources into
 ## Before working
 
 - Read `CLAUDE.md` at the repo root for project context and app specs.
-- If lead points you at a plan in `.claude/plans/`, read it. Append to its Log section when you're done.
+- If lead points you at a plan in `plans/`, read it. Append to its Log section when you're done.
 - Read `db/schema.ts` if it exists — extend it, don't replace it without lead's approval.
 
 ## What you don't do
@@ -322,7 +322,7 @@ Monthly is plenty; the file changes only when an MdB joins, leaves, or changes n
 
 ## DIP Anfragen — data notes
 
-Upstream: DIP search API (`https://search.dip.bundestag.de/api/v1/`). Three vorgangstyp values: `Kleine Anfrage`, `Große Anfrage`, `Schriftliche Frage`. Full entity model, ID stability, signatory resolution and the time-range fraktion rule are documented in `.claude/plans/06-anfragen.md` (spike findings + log). One thing to repeat here because it affects read paths: **Schriftliche Frage positions carry no fraktion**. Resolve party from `member_affiliations.partyAt(member_id, anfragen.question_date)` rather than DIP's current fraktion tag.
+Upstream: DIP search API (`https://search.dip.bundestag.de/api/v1/`). Three vorgangstyp values: `Kleine Anfrage`, `Große Anfrage`, `Schriftliche Frage`. Full entity model, ID stability, signatory resolution and the time-range fraktion rule are documented in `plans/06-anfragen.md` (spike findings + log). One thing to repeat here because it affects read paths: **Schriftliche Frage positions carry no fraktion**. Resolve party from `member_affiliations.partyAt(member_id, anfragen.question_date)` rather than DIP's current fraktion tag.
 
 ### Answer text — separate ingest
 
@@ -344,7 +344,7 @@ DIP exposes `answer_pdf_url` but not the answer body. We download every PDF and 
 
 ## DIP Anträge & Gesetzentwürfe — data notes
 
-Upstream: same DIP search API as Anfragen. **Two new vorgangstypen:** `Antrag` and **`Gesetzgebung`** — note: the bill vorgangstyp is `Gesetzgebung`, NOT `Gesetzentwurf`. `Gesetzentwurf` is the *position-step* name (the introducing Drucksache on a Gesetzgebung-vorgang). The plan and the schema enum use `gesetzentwurf` as the slug because that reads cleanly, but DIP queries must filter `f.vorgangstyp=Gesetzgebung`. Full spike findings, picker rules and the 20-vote audit live in `.claude/plans/26-antraege.md`.
+Upstream: same DIP search API as Anfragen. **Two new vorgangstypen:** `Antrag` and **`Gesetzgebung`** — note: the bill vorgangstyp is `Gesetzgebung`, NOT `Gesetzentwurf`. `Gesetzentwurf` is the *position-step* name (the introducing Drucksache on a Gesetzgebung-vorgang). The plan and the schema enum use `gesetzentwurf` as the slug because that reads cleanly, but DIP queries must filter `f.vorgangstyp=Gesetzgebung`. Full spike findings, picker rules and the 20-vote audit live in `plans/26-antraege.md`.
 
 ### Tables this source feeds
 

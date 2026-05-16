@@ -1,4 +1,4 @@
 {
   "agent": "lead",
-  "plansDirectory": "./.claude/plans"
+  "plansDirectory": "./plans"
 }

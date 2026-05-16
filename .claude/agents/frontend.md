@@ -26,7 +26,7 @@ Per app, under `apps/<app>/src/`:
 ## Before working
 
 - Read `CLAUDE.md` at the repo root for project context and conventions.
-- If lead points you at a plan in `.claude/plans/`, read it. Append to its Log section when you're done.
+- If lead points you at a plan in `plans/`, read it. Append to its Log section when you're done.
 - Read the ASCII mock for the view you're implementing.
 - Read the backend router types you'll consume.
 

@@ -21,7 +21,7 @@ machtblick/
   etl/                # Node workers, one folder per upstream source, run on cron
   .claude/
     agents/           # lead + designer + plumber + backend + frontend
-    plans/            # numbered plan files (00-, 01-, ...) for multi-agent work
+  plans/              # numbered plan files (00-, 01-, ...) for multi-agent work
 ```
 
 ## Dev URL
@@ -32,7 +32,7 @@ Live preview of the local checkout is at `https://dev.machtblick.de`, served by 
 
 - **Less is more.** Prefer deleting over adding; if it isn't load-bearing, remove it
 - **No comments.** No inline, no docstrings, no headers
-- **No em dashes, in any variant.** Not the `—` (U+2014), not `–` (U+2013), not ` -- ` as a typed substitute, not anywhere. Reach for commas, parentheses, line breaks, or periods instead. Hyphens in compound words, CLI flags (`--port`), and CSS custom properties (`--color-fg`) are unrelated and fine
+- **No em dashes, in any variant.** Not U+2014, not U+2013, not spaced double hyphen as a typed substitute, not anywhere. Reach for commas, parentheses, line breaks, or periods instead. Hyphens in compound words, CLI flags (`--port`), and CSS custom properties (`--color-fg`) are unrelated and fine
 - **No try-catch** unless explicitly requested; let errors propagate
 - **No single-use variables or functions.** Inline the expression. Confirm before extracting new helpers
 - **No large files.** Split aggressively; a filename is a promise about what's inside, placing a new file should be mechanical
@@ -88,4 +88,4 @@ UI primitives come from shadcn/ui, restricted to the curated set: Button, Input,
 | backend  | API, exported router types |
 | frontend | React + TanStack views and hooks |
 
-Every new app or big feature starts with a plan in `.claude/plans/NN-slug.md`. The plan is the only durable channel between subagents, so it carries the goal, status, shared contracts, open questions, and an append-only log per agent. Small fixes don't need a plan.
+Every change starts with a plan in `plans/NN-slug.md`, small or big. The plan is the only durable channel between sessions and subagents, so it carries the goal, status, shared contracts, open questions, and an append-only log per agent.
