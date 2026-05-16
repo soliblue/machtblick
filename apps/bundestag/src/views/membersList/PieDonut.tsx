@@ -18,7 +18,7 @@ export function PieDonut({ data }: Props) {
   return (
     <div className="flex h-full min-h-0 flex-col items-center justify-center">
       <div className="relative h-full max-h-[128px] w-[128px] md:max-h-[148px] md:w-[148px]">
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%" initialDimension={{ width: 148, height: 148 }}>
           <PieChart>
             <Pie
               data={data}

@@ -109,7 +109,7 @@ export function PartyHistoryChart({ history, partyLabel, partyColor }: Props) {
         leftPad={MARGIN.left + X_PADDING}
         rightPad={MARGIN.right + X_PADDING}
       />
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height="100%" initialDimension={{ width: 720, height: 320 }}>
         <AreaChart data={data} margin={MARGIN}>
           <defs>
             <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
