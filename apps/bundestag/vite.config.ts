@@ -152,7 +152,7 @@ function writeSitemap(paths: string[]) {
   const seen = new Set<string>()
   const urls = paths
     .filter((p) => !p.includes('?'))
-    .map((p) => p.replace(/\/$/, '') || '/')
+    .map((p) => (p === '/' || p.endsWith('/') ? p : `${p}/`))
     .filter((p) => (seen.has(p) ? false : (seen.add(p), true)))
   const today = new Date().toISOString().slice(0, 10)
   const body = urls

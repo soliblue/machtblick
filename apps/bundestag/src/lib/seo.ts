@@ -4,10 +4,11 @@ export const SITE_NAME = 'Machtblick'
 type Meta = { title?: string; description?: string; canonical?: string; type?: 'website' | 'article' | 'profile' }
 
 export function seoMeta({ title, description, canonical, type = 'website' }: Meta) {
-  const english = canonical === '/en' || canonical?.startsWith('/en/')
+  const canonicalPath = canonical ? pagePath(canonical) : null
+  const english = canonicalPath === '/en/' || canonicalPath?.startsWith('/en/')
   const fullTitle = title ? `${title} · ${SITE_NAME}` : SITE_NAME
   const desc = description ?? (english ? 'Transparency about votes, members, and parliamentary groups in the German Bundestag.' : 'Transparenz über Abstimmungen, Abgeordnete und Fraktionen des Deutschen Bundestags.')
-  const url = canonical ? `${SITE_URL}${canonical}` : SITE_URL
+  const url = canonicalPath ? `${SITE_URL}${canonicalPath}` : SITE_URL
   return [
     { title: fullTitle },
     { name: 'description', content: desc },
@@ -24,7 +25,7 @@ export function seoMeta({ title, description, canonical, type = 'website' }: Met
 }
 
 export function canonicalLink(path: string) {
-  return [{ rel: 'canonical', href: `${SITE_URL}${path}` }]
+  return [{ rel: 'canonical', href: `${SITE_URL}${pagePath(path)}` }]
 }
 
 export function jsonLd(data: object) {
@@ -32,6 +33,11 @@ export function jsonLd(data: object) {
 }
 
 export function alternateJsonLink(path: string) {
-  const normalized = path === '/en' ? '/' : path.startsWith('/en/') ? path.slice(3) : path
+  const base = path.length > 1 ? path.replace(/\/$/, '') : path
+  const normalized = base === '/en' ? '/' : base.startsWith('/en/') ? base.slice(3) : base
   return [{ rel: 'alternate', type: 'application/json', href: `${normalized}.json` }]
+}
+
+function pagePath(path: string): string {
+  return path === '/' || path.endsWith('/') ? path : `${path}/`
 }

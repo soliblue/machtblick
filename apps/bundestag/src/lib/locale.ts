@@ -36,5 +36,6 @@ export function localizedPath(pathname: string, locale: Locale): string {
     .replace(/\/reden(\/|$)/, '/speeches$1')
     .replace(/\/profil(\/|$)/, '/profile$1')
     .replace(/\/verlauf(\/|$)/, '/history$1')
-  return withLocale(canonical || '/', locale)
+  const path = canonical || '/'
+  return withLocale(path === '/' || path.endsWith('/') ? path : `${path}/`, locale)
 }
