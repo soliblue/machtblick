@@ -4,6 +4,7 @@ import { sql } from 'drizzle-orm'
 import { readAllPages } from './cache.ts'
 import { buildAnfrageRow } from './buildAnfragen.ts'
 import { buildAntragRow } from './buildAntraege.ts'
+import { buildPdfSignatoryRows, type AntragForPdfSignatures } from './buildPdfSignatories.ts'
 import { buildSignatoryRows } from './buildSignatories.ts'
 import type { Vorgang, Vorgangsposition, Aktivitaet } from './types.ts'
 
@@ -100,8 +101,11 @@ const relevant = relevantAkt.filter((a) =>
 )
 const sigRows = buildSignatoryRows(relevant)
 const anfrageSigs = sigRows.filter((r) => r.kind === 'anfrage' && anfrageIds.has(r.targetId))
-const antragSigs = sigRows.filter((r) => r.kind === 'antrag' && antragIds.has(r.targetId))
+const structuredAntragSigs = sigRows.filter((r) => r.kind === 'antrag' && antragIds.has(r.targetId))
+const pdfAntragSigs = await buildPdfSignatoryRows(antragRows.map(({ row }) => row as AntragForPdfSignatures), structuredAntragSigs)
+const antragSigs = [...structuredAntragSigs, ...pdfAntragSigs]
 console.log(`Resolved ${anfrageSigs.length} anfrage signatories, ${antragSigs.length} antrag signatories`)
+console.log(`Resolved ${pdfAntragSigs.length} antrag signatories from PDF signature blocks`)
 
 db.transaction((tx) => {
   const ids = [...new Set(anfrageSigs.map((r) => r.targetId))]
