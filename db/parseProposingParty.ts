@@ -13,5 +13,11 @@ export function parseProposingParty(document: string | null): string | null {
   if (/(?:Antrag|Gesetzentwurf)(?:es)?\s+des\s+Bundesrates/i.test(document)) {
     return 'Bundesrat'
   }
+  if (/Petitionsausschuss/i.test(document)) {
+    return 'Petitionsausschuss'
+  }
+  if (/Wahlprüfungsausschuss/i.test(document)) {
+    return 'Wahlprüfungsausschuss'
+  }
   return matchParty(document)
 }

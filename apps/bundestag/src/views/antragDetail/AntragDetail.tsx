@@ -103,7 +103,7 @@ export function AntragDetail({ data }: Props) {
       ) : null}
 
       {debate.length > 0 ? (
-        <DebateList speeches={debate} ballotByMember={ballotByMember} partySummaries={partySummaries} />
+        <DebateList speeches={debate} source={data.debateSource} ballotByMember={ballotByMember} partySummaries={partySummaries} />
       ) : null}
     </main>
   )

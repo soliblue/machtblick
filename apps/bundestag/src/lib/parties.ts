@@ -10,6 +10,8 @@ export const PARTY_LABEL: Record<string, string> = {
   'Die Linke': 'Linke',
   fraktionslos: 'Fraktionslos',
   Bundesregierung: 'Bundesregierung',
+  Petitionsausschuss: 'Petitionsausschuss',
+  Wahlprüfungsausschuss: 'Wahlprüfungsausschuss',
 }
 
 const PARTY_LABEL_EN: Record<string, string> = {
@@ -20,6 +22,8 @@ const PARTY_LABEL_EN: Record<string, string> = {
   'Die Linke': 'The Left',
   fraktionslos: 'Independent',
   Bundesregierung: 'Government',
+  Petitionsausschuss: 'Petitions Committee',
+  Wahlprüfungsausschuss: 'Election Review Committee',
 }
 
 export const partyLabel = (party: string | null | undefined, locale: Locale = 'de') =>
@@ -41,6 +45,8 @@ export const PARTY_COLOR: Record<string, string> = {
   'Die Linke': 'var(--color-purple)',
   fraktionslos: 'var(--color-brown)',
   Bundesregierung: 'var(--color-fg)',
+  Petitionsausschuss: 'var(--color-gray)',
+  Wahlprüfungsausschuss: 'var(--color-gray)',
 }
 
 export const PARTY_SLUG: Record<string, string> = {
@@ -58,7 +64,7 @@ export const SLUG_TO_PARTY: Record<string, string> = Object.fromEntries(
 )
 
 export const hasPartyLine = (party: string | null | undefined) =>
-  !!party && party !== 'fraktionslos' && party !== 'Bundesregierung'
+  !!party && party !== 'fraktionslos' && party !== 'Bundesregierung' && party !== 'Petitionsausschuss' && party !== 'Wahlprüfungsausschuss'
 
 const PARTY_NORMALIZE: Record<string, string> = {
   'Fraktion der CDU/CSU': 'CDU/CSU',

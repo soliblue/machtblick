@@ -1,12 +1,15 @@
 import type Database from 'better-sqlite3'
+import { compareVotesNewest } from '../src/lib/voteOrdering'
 
 type VoteRow = {
   id: string
   date: string
+  agenda_item: string | null
   title: string
   clean_title: string | null
   topic: string | null
   vote_type: 'namentlich' | 'handzeichen' | 'hammelsprung'
+  bundestag_id: number | null
   initiator: string | null
   result: 'angenommen' | 'abgelehnt'
   yes: number | null
@@ -69,6 +72,7 @@ type SpeechRow = {
   speaker_member_id: string | null
   speaker_role: string | null
   party: string | null
+  date: string
   position: number
   text_excerpt: string
 }
@@ -111,10 +115,11 @@ function normalizeSpeechParty(raw: string | null): string | null {
 
 export function leanVotes(db: Database.Database) {
   const rows = db.prepare(`
-    SELECT id, date, title, clean_title, initiator, result, yes, no, abstain, absent, vote_type
+    SELECT id, date, title, clean_title, initiator, result, yes, no, abstain, absent, vote_type, bundestag_id
     FROM votes WHERE term_id = ${CURRENT_TERM} AND procedural = 0 AND vote_type != 'hammelsprung'
     ORDER BY date DESC, bundestag_id DESC
-  `).all() as Array<Pick<VoteRow, 'id' | 'date' | 'title' | 'clean_title' | 'initiator' | 'result' | 'yes' | 'no' | 'abstain' | 'absent' | 'vote_type'>>
+  `).all() as Array<Pick<VoteRow, 'id' | 'date' | 'title' | 'clean_title' | 'initiator' | 'result' | 'yes' | 'no' | 'abstain' | 'absent' | 'vote_type' | 'bundestag_id'>>
+  rows.sort(compareVotesNewest)
   const allSummaries = db.prepare('SELECT vote_id, party, position, members FROM vote_party_summaries').all() as SummaryRow[]
   const seatsByParty = new Map<string, number>()
   const byVote = new Map<string, SummaryRow[]>()
@@ -180,7 +185,7 @@ export function fullVote(db: Database.Database, id: string) {
   const vote = voteRow.vote_type === 'namentlich'
     ? {
         id: voteRow.id, bundestagId: null as number | null, voteType: voteRow.vote_type, date: voteRow.date,
-        agendaItem: null as string | null, title: voteRow.title, cleanTitle: voteRow.clean_title, topic: voteRow.topic,
+        agendaItem: voteRow.agenda_item, title: voteRow.title, cleanTitle: voteRow.clean_title, topic: voteRow.topic,
         subject: voteRow.subject, summary: voteRow.summary, summarySimplified: voteRow.summary_simplified,
         summaryDetail: voteRow.summary_detail, document: voteRow.document, initiator: voteRow.initiator,
         result: voteRow.result, procedural: false, inverted: !!voteRow.inverted, isPetitionBundle: !!voteRow.is_petition_bundle,
@@ -194,7 +199,7 @@ export function fullVote(db: Database.Database, id: string) {
         const abstain = partySummaries.reduce((a, s) => a + s.abstain, 0)
         return {
           id: voteRow.id, bundestagId: null as number | null, voteType: voteRow.vote_type, date: voteRow.date,
-          agendaItem: null as string | null, title: voteRow.title, cleanTitle: voteRow.clean_title, topic: voteRow.topic,
+          agendaItem: voteRow.agenda_item, title: voteRow.title, cleanTitle: voteRow.clean_title, topic: voteRow.topic,
           subject: voteRow.subject, summary: voteRow.summary, summarySimplified: voteRow.summary_simplified,
           summaryDetail: voteRow.summary_detail, document: voteRow.document, initiator: voteRow.initiator,
           result: voteRow.result, procedural: false, inverted: !!voteRow.inverted, isPetitionBundle: !!voteRow.is_petition_bundle,
@@ -238,19 +243,29 @@ export function fullVote(db: Database.Database, id: string) {
   const defectors = Array.from(defectorsByParty.entries())
     .map(([party, list]) => ({ party, majority: majorityByParty.get(party)!, count: list.length, members: list }))
     .sort((a, b) => b.count - a.count)
-  const speechRows = db.prepare(`
-    SELECT id, speaker_name, speaker_member_id, speaker_role, party, position, text_excerpt
-    FROM speeches WHERE vote_id = ? ORDER BY position ASC
-  `).all(id) as SpeechRow[]
+  const speechRowsByAgenda = voteRow.agenda_item
+    ? db.prepare(`
+      SELECT id, speaker_name, speaker_member_id, speaker_role, party, date, position, text_excerpt
+      FROM speeches WHERE date = ? AND agenda_item = ? ORDER BY position ASC
+    `).all(voteRow.date, voteRow.agenda_item) as SpeechRow[]
+    : []
+  const speechRows = speechRowsByAgenda.length
+    ? speechRowsByAgenda
+    : db.prepare(`
+      SELECT id, speaker_name, speaker_member_id, speaker_role, party, date, position, text_excerpt
+      FROM speeches WHERE vote_id = ? ORDER BY position ASC
+    `).all(id) as SpeechRow[]
   const debate = speechRows.map((r) => ({
     id: r.id,
     speakerName: r.speaker_name,
     speakerMemberId: r.speaker_member_id,
     speakerRole: r.speaker_role,
     party: normalizeSpeechParty(r.party),
+    date: r.date,
     position: r.position,
     excerpt: r.text_excerpt,
   }))
+  const debateSource = speechRowsByAgenda.length || speechRows.every((r) => r.date === voteRow.date) ? 'direct' : 'related'
   const descRow = db.prepare('SELECT source_pdf_url FROM vote_description_decisions WHERE vote_id = ?').get(id) as DescriptionDecisionRow | undefined
   const antragPdfUrl = descRow?.source_pdf_url
     ?? pickAntragPdfUrl(documents)
@@ -265,6 +280,7 @@ export function fullVote(db: Database.Database, id: string) {
     defectors,
     memberBallots: vmRows.map((r) => ({ memberId: r.member_id, name: r.name, party: r.party, choice: r.choice })),
     debate,
+    debateSource,
     antragPdfUrl,
   }
 }

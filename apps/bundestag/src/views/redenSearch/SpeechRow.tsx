@@ -10,6 +10,7 @@ import type { MemberVoteRow } from '@/server/members'
 import type { SpeechResult, SpeechSummary } from '@/server/speeches'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
+import { formatDate } from '@/lib/format'
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 
@@ -23,11 +24,12 @@ type Props = {
   speech: RowSpeech
   query?: string
   showVoteLink?: boolean
+  showDate?: boolean
   pictureUrl?: string | null
   choice?: MemberVoteRow['choice'] | null
 }
 
-export function SpeechRow({ speech, query = '', showVoteLink = true, pictureUrl, choice }: Props) {
+export function SpeechRow({ speech, query = '', showVoteLink = true, showDate = false, pictureUrl, choice }: Props) {
   const terms = tokenize(query)
   const [open, setOpen] = useState(false)
   const locale = useLocale()
@@ -70,6 +72,7 @@ export function SpeechRow({ speech, query = '', showVoteLink = true, pictureUrl,
             {speech.speakerRole
               ? <span className="text-s opacity-l">{speech.speakerRole}</span>
               : <PartyBadge party={speech.party} compact />}
+            {showDate && <span className="text-s opacity-l">{formatDate(speech.date)}</span>}
           </div>
           {showVoteLink && speech.voteId && speech.voteTitle && (
             <a

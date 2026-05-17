@@ -9,6 +9,7 @@ import { hasPartyLine } from '../lib/parties'
 import { SHOW_HAMMELSPRUNG } from '../lib/voteTypes'
 import type { SpeechSummary } from './speeches'
 import { normalizeLocale, type Locale } from '../lib/locale'
+import { compareVotesNewest } from '../lib/voteOrdering'
 
 const SPEECH_PARTY_NORMALIZE: Record<string, string> = {
   'BÜNDNIS 90/DIE GRÜNEN': 'B90/Grüne',
@@ -25,18 +26,29 @@ function speechTranslationMap(ids: string[], locale: Locale) {
   )
 }
 
-function loadDebateForVote(voteId: string, locale: Locale): SpeechSummary[] {
-  const rows = db.select().from(speeches).where(eq(speeches.voteId, voteId)).orderBy(asc(speeches.position)).all()
+export type VoteDebateSource = 'direct' | 'related'
+
+function loadDebateForVote(voteId: string, date: string, agendaItem: string | null, locale: Locale): { speeches: SpeechSummary[]; source: VoteDebateSource } {
+  const rowsByAgenda = agendaItem
+    ? db.select().from(speeches).where(and(eq(speeches.date, date), eq(speeches.agendaItem, agendaItem))).orderBy(asc(speeches.position)).all()
+    : []
+  const rows = rowsByAgenda.length
+    ? rowsByAgenda
+    : db.select().from(speeches).where(eq(speeches.voteId, voteId)).orderBy(asc(speeches.position)).all()
   const translations = speechTranslationMap(rows.map((row) => row.id), locale)
-  return rows.map((row) => ({
-    id: row.id,
-    speakerName: row.speakerName,
-    speakerMemberId: row.speakerMemberId,
-    speakerRole: row.speakerRole,
-    party: row.party ? (SPEECH_PARTY_NORMALIZE[row.party] ?? row.party) : null,
-    position: row.position,
-    excerpt: translations.get(row.id)?.textExcerpt ?? row.textExcerpt,
-  }))
+  return {
+    speeches: rows.map((row) => ({
+      id: row.id,
+      speakerName: row.speakerName,
+      speakerMemberId: row.speakerMemberId,
+      speakerRole: row.speakerRole,
+      party: row.party ? (SPEECH_PARTY_NORMALIZE[row.party] ?? row.party) : null,
+      date: row.date,
+      position: row.position,
+      excerpt: translations.get(row.id)?.textExcerpt ?? row.textExcerpt,
+    })),
+    source: rowsByAgenda.length || rows.every((row) => row.date === date) ? 'direct' : 'related',
+  }
 }
 
 export type VoteListItem = {
@@ -101,7 +113,7 @@ export const listVotes = createServerFn({ method: 'GET' })
   .inputValidator(normalizeLocale)
   .handler(async ({ data: locale }): Promise<VoteListItem[]> => {
   const allRows = db.select().from(votes).where(and(eq(votes.termId, CURRENT_TERM), eq(votes.procedural, false))).orderBy(desc(votes.date), desc(votes.bundestagId)).all()
-  const rows = SHOW_HAMMELSPRUNG ? allRows : allRows.filter((r) => r.voteType !== 'hammelsprung')
+  const rows = (SHOW_HAMMELSPRUNG ? allRows : allRows.filter((r) => r.voteType !== 'hammelsprung')).sort(compareVotesNewest)
   const translations = translationMap(rows.map((r) => r.id), locale)
   const allSummaries = db.select().from(votePartySummaries).all()
   const byVote = new Map<string, typeof allSummaries>()
@@ -164,6 +176,7 @@ export type VoteDetail = {
   defectors: Array<{ party: string; majority: string; count: number; members: Array<{ id: string; name: string; choice: string; pictureUrl: string | null }> }>
   memberBallots: Array<{ memberId: string; name: string; party: string; choice: string; pictureUrl: string | null }>
   debate: SpeechSummary[]
+  debateSource: VoteDebateSource
   antragPdfUrl: string | null
 }
 
@@ -249,6 +262,7 @@ export const getVote = createServerFn({ method: 'GET' })
     const defectors = Array.from(defectorsByParty.entries())
       .map(([party, list]) => ({ party, majority: majorityByParty.get(party)!, count: list.length, members: list }))
       .sort((a, b) => b.count - a.count)
+    const debate = loadDebateForVote(voteRow.id, voteRow.date, voteRow.agendaItem, locale)
     return {
       vote,
       documents,
@@ -256,7 +270,8 @@ export const getVote = createServerFn({ method: 'GET' })
       proposingParty: vote.initiator,
       defectors,
       memberBallots: vmRows.map((r) => ({ memberId: r.memberId, name: r.name, party: r.party, choice: r.choice, pictureUrl: r.pictureUrl })),
-      debate: loadDebateForVote(voteRow.id, locale),
+      debate: debate.speeches,
+      debateSource: debate.source,
       antragPdfUrl: db.select({ url: voteDescriptionDecisions.sourcePdfUrl }).from(voteDescriptionDecisions).where(eq(voteDescriptionDecisions.voteId, id)).get()?.url
         ?? pickAntragFromRows(documents.map((d) => ({ label: d.label, title: d.title, url: d.url })))?.pdfUrl
         ?? null,

@@ -11,6 +11,6 @@ export function SpeechesTab({ data }: Props) {
     data.memberBallots.map((b) => [b.memberId, { choice: b.choice as MemberVoteRow['choice'], pictureUrl: b.pictureUrl }]),
   )
   return data.debate.length > 0
-    ? <DebateList speeches={data.debate} ballotByMember={ballotByMember} partySummaries={data.partySummaries} />
+    ? <DebateList speeches={data.debate} source={data.debateSource} ballotByMember={ballotByMember} partySummaries={data.partySummaries} />
     : <p className="text-m opacity-l">{t.noSpeechesAvailable}</p>
 }

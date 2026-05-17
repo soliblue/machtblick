@@ -13,12 +13,12 @@ import type { PartySummary } from './PartySummaryModal'
 import { useCopy, useLocale } from '@/lib/i18n'
 
 type BallotEntry = { choice: MemberVoteRow['choice']; pictureUrl: string | null }
-type Props = { speeches: SpeechSummary[]; ballotByMember: Map<string, BallotEntry>; partySummaries: PartySummary[] }
+type Props = { speeches: SpeechSummary[]; source: 'direct' | 'related'; ballotByMember: Map<string, BallotEntry>; partySummaries: PartySummary[] }
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 const PAGE_SIZE = 5
 
-export function DebateList({ speeches, ballotByMember, partySummaries }: Props) {
+export function DebateList({ speeches, source, ballotByMember, partySummaries }: Props) {
   const [query, setQuery] = useState('')
   const [party, setParty] = useState<string | null>(null)
   const [page, setPage] = useState(0)
@@ -51,7 +51,9 @@ export function DebateList({ speeches, ballotByMember, partySummaries }: Props) 
   const reset = <T,>(setter: (v: T) => void) => (v: T) => { setter(v); setPage(0) }
   return (
     <section className="mb-l">
-      <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{t.speechesForVote}</div>
+      <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>
+        {source === 'related' ? t.relatedSpeechesForVote : t.speechesForVote}
+      </div>
       <PartySummaryLogoRow summaries={partySummaries} />
       <div className="mb-m flex flex-wrap items-center gap-m">
         <div className="relative flex-1 min-w-[12rem]">
@@ -84,6 +86,7 @@ export function DebateList({ speeches, ballotByMember, partySummaries }: Props) 
                 speech={{ ...s, snippet }}
                 query={query}
                 showVoteLink={false}
+                showDate={source === 'related'}
                 pictureUrl={ballot?.pictureUrl ?? null}
                 choice={ballot?.choice ?? null}
               />

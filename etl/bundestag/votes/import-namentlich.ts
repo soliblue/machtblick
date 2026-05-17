@@ -11,9 +11,13 @@ const UA = 'machtblick-bundestag/0.1 (https://github.com/soli/machtblick; asolim
 const LIST_URL = 'https://www.bundestag.de/ajax/filterlist/de/parlament/plenum/abstimmung/liste/462112-462112'
 const AW = 'https://www.abgeordnetenwatch.de/api/v2'
 const NAME_PARTICLES = new Set(['von', 'van', 'de', 'der', 'den', 'dos', 'da', 'di', 'du', 'le', 'la', 'zu'])
+const MEMBER_ALIASES = new Map([
+  ['thomas max ladzinski', 'ladzinski-thomas'],
+  ['dr daniel zerbin', 'zerbin-prof-dr-daniel'],
+])
 let enodiaCookie = ''
 
-type LinkItem = { date: string; title: string; pdfUrl: string | null; xlsxUrl: string }
+type LinkItem = { date: string; title: string; pdfUrl: string | null; xlsxUrl: string; sourceId: number | null }
 type VoteRow = { party: string; last: string; first: string; yes: number; no: number; abstain: number; invalid: number; absent: number }
 type Mandate = {
   id: number
@@ -105,14 +109,17 @@ async function importVotes() {
     const rows = await fetchVoteRows(link.xlsxUrl)
     const first = rows[0]
     if (!first) continue
-    const voteId = `bt${TERM_ID}-${link.date}-${String(first.session).padStart(3, '0')}-${first.number}-${slugify(link.title)}`
+    const generatedVoteId = `bt${TERM_ID}-${link.date}-${String(first.session).padStart(3, '0')}-${first.number}-${slugify(link.title)}`
+    const existingVote = link.sourceId ? db.prepare('SELECT id FROM votes WHERE term_id = ? AND bundestag_id = ?').get(TERM_ID, link.sourceId) as { id: string } | undefined : null
+    const voteId = existingVote?.id ?? generatedVoteId
     const counts = countRows(rows)
     const partySummaries = summaries(rows)
     db.transaction(() => {
       db.prepare(`
         INSERT INTO votes (id, term_id, bundestag_id, vote_type, date, title, clean_title, summary, document, result, total_members, yes, no, abstain, absent, source_url, fetched_at)
-        VALUES (?, ?, NULL, 'namentlich', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, 'namentlich', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(id) DO UPDATE SET
+          bundestag_id = coalesce(votes.bundestag_id, excluded.bundestag_id),
           title = excluded.title,
           clean_title = excluded.clean_title,
           summary = excluded.summary,
@@ -128,6 +135,7 @@ async function importVotes() {
       `).run(
         voteId,
         TERM_ID,
+        link.sourceId,
         link.date,
         link.title,
         link.title,
@@ -199,7 +207,8 @@ async function fetchVoteLinks() {
       const label = text(body.match(/<strong>\s*([\s\S]*?)\s*<\/strong>/)?.[1] ?? '')
       const date = parseDate(label.match(/^(\d{2}\.\d{2}\.\d{4})/)?.[1] ?? text(body.match(/data-th="Veröffentlichung"[\s\S]*?<p>\s*([\s\S]*?)\s*<\/p>/)?.[1] ?? ''))
       const title = label.replace(/^\d{2}\.\d{2}\.\d{4,5}:\s*/, '').trim()
-      if (date && title) out.push({ date, title, pdfUrl, xlsxUrl })
+      const sourceId = Number(body.match(/abstimmung\?id=(\d+)/)?.[1] ?? 0) || null
+      if (date && title) out.push({ date, title, pdfUrl, xlsxUrl, sourceId })
     }
     if (offset + 30 >= hits) return out
   }
@@ -230,11 +239,12 @@ function summaries(rows: ReturnType<typeof countableRows>) {
   const byParty = new Map<string, { party: string; members: number; yes: number; no: number; abstain: number; absent: number }>()
   for (const row of rows) {
     const s = byParty.get(row.party) ?? { party: row.party, members: 0, yes: 0, no: 0, abstain: 0, absent: 0 }
+    const c = choice(row)
     s.members++
-    s.yes += row.yes
-    s.no += row.no
-    s.abstain += row.abstain
-    s.absent += row.absent + row.invalid
+    s.yes += c === 'ja' ? 1 : 0
+    s.no += c === 'nein' ? 1 : 0
+    s.abstain += c === 'enthalten' ? 1 : 0
+    s.absent += c === 'nicht_abgegeben' ? 1 : 0
     byParty.set(row.party, s)
   }
   return [...byParty.values()].map((s) => ({ ...s, position: position(s) }))
@@ -243,10 +253,10 @@ function summaries(rows: ReturnType<typeof countableRows>) {
 function countRows(rows: ReturnType<typeof countableRows>) {
   return rows.reduce((a, r) => ({
     total: a.total + 1,
-    yes: a.yes + r.yes,
-    no: a.no + r.no,
-    abstain: a.abstain + r.abstain,
-    absent: a.absent + r.absent + r.invalid,
+    yes: a.yes + (choice(r) === 'ja' ? 1 : 0),
+    no: a.no + (choice(r) === 'nein' ? 1 : 0),
+    abstain: a.abstain + (choice(r) === 'enthalten' ? 1 : 0),
+    absent: a.absent + (choice(r) === 'nicht_abgegeben' ? 1 : 0),
   }), { total: 0, yes: 0, no: 0, abstain: 0, absent: 0 })
 }
 
@@ -270,6 +280,8 @@ function position(s: { yes: number; no: number; abstain: number }) {
 
 function resolveMemberId(first: string, last: string) {
   const key = nameKey(first, last)
+  const alias = MEMBER_ALIASES.get(key)
+  if (alias) return alias
   const existing = memberIdByKey.get(key)
   if (existing) return existing
   const base = slugify(`${last}-${first.split(/\s+/)[0] ?? first}`)

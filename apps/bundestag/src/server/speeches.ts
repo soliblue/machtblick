@@ -9,17 +9,16 @@ export type SpeechSummary = {
   speakerMemberId: string | null
   speakerRole: string | null
   party: string | null
+  date: string
   position: number
   excerpt: string
 }
 
 export type SpeechFull = SpeechSummary & {
   text: string
-  date: string
 }
 
 export type SpeechResult = SpeechSummary & {
-  date: string
   voteId: string | null
   voteTitle: string | null
   snippet: string | null
@@ -52,6 +51,7 @@ function toSummary(row: typeof speeches.$inferSelect): SpeechSummary {
     speakerMemberId: row.speakerMemberId,
     speakerRole: row.speakerRole,
     party: normalizeParty(row.party),
+    date: row.date,
     position: row.position,
     excerpt: row.textExcerpt,
   }
@@ -210,4 +210,3 @@ export const listSpeechesForMember = createServerFn({ method: 'GET' })
       .all()
     return rows.map((r) => toResult(r.speech, r.voteCleanTitle ?? r.voteTitle))
   })
-

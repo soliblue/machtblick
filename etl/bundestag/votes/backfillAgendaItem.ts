@@ -14,6 +14,7 @@ const tDrsParaRe = /<p klasse="T_Drs"[^>]*>([\s\S]*?)<\/p>/g
 const sitzungsnrRe = /<sitzungsnr>(\d+)<\/sitzungsnr>/
 const verlaufOpenRe = /<sitzungsverlauf>/
 const verlaufCloseRe = /<\/sitzungsverlauf>/
+const sessionDateRe = /sitzung-datum="([^"]+)"/
 
 type TopBlock = {
   sessionId: string
@@ -22,15 +23,19 @@ type TopBlock = {
   drucksachen: Set<string>
   formalDrucksachen: Set<string>
   einzelplaene: Set<string>
+  plainText: string
 }
 
 const blocks: TopBlock[] = []
+const sessionByDate = new Map<string, string>()
 
 for (const file of readdirSync(rawDir).filter((f) => f.endsWith('.xml')).sort()) {
   const xml = readFileSync(join(rawDir, file), 'utf8')
   const sitMatch = xml.match(sitzungsnrRe)
   if (!sitMatch) continue
   const sessionId = `21-${Number(sitMatch[1])}`
+  const date = parseGermanDate(xml.match(sessionDateRe)?.[1])
+  if (date) sessionByDate.set(date, sessionId)
 
   const verlaufStart = xml.match(verlaufOpenRe)?.index ?? 0
   const verlaufEnd = xml.match(verlaufCloseRe)?.index ?? xml.length
@@ -51,6 +56,7 @@ for (const file of readdirSync(rawDir).filter((f) => f.endsWith('.xml')).sort())
     const top = stack.pop()
     if (!top) continue
     const segment = body.slice(top.from, ev.idx)
+    const plainText = textFromXml(segment)
     for (const dm of segment.matchAll(drucksacheRe)) top.drucksachen.add(dm[0])
     for (const tm of segment.matchAll(tDrsParaRe)) {
       for (const dm of tm[1].matchAll(drucksacheRe)) top.formal.add(dm[0])
@@ -58,28 +64,16 @@ for (const file of readdirSync(rawDir).filter((f) => f.endsWith('.xml')).sort())
     const epOwn = top.topId.match(/^Einzelplan\s+(\d+)$/i)
     if (epOwn) top.einzelplaene.add(epOwn[1].padStart(2, '0'))
     for (const epm of segment.matchAll(/Einzelplan\s+(\d{1,2})\b/g)) top.einzelplaene.add(epm[1].padStart(2, '0'))
-    blocks.push({ sessionId, topId: top.topId, order: order++, drucksachen: top.drucksachen, formalDrucksachen: top.formal, einzelplaene: top.einzelplaene })
+    blocks.push({ sessionId, topId: top.topId, order: order++, drucksachen: top.drucksachen, formalDrucksachen: top.formal, einzelplaene: top.einzelplaene, plainText })
   }
 }
 
 const voteRows = db.select({ id: votes.id, date: votes.date, title: votes.title, document: votes.document }).from(votes).where(sql`${votes.date} >= '2025-03-25'`).all()
 
-const dateBySession = new Map<string, string>()
-for (const row of voteRows) {
-  const m = row.id.match(/^pp21-(\d+)-/)
-  if (!m) continue
-  dateBySession.set(`21-${Number(m[1])}`, row.date)
-}
-
-const sessionByDate = new Map<string, string>()
-const datesPerSession = new Map<string, Set<string>>()
 for (const row of voteRows) {
   const m = row.id.match(/^pp21-(\d+)-/)
   if (!m) continue
   const sid = `21-${Number(m[1])}`
-  const set = datesPerSession.get(sid) ?? new Set()
-  set.add(row.date)
-  datesPerSession.set(sid, set)
   sessionByDate.set(row.date, sid)
 }
 
@@ -106,6 +100,11 @@ for (const row of voteRows) {
   }
 
   if (docDrucksachen.size === 0) {
+    const titleMatch = titleResolution(row.id, row.title, row.document ?? '', sessionId)
+    if (titleMatch) {
+      resolutions.push(titleMatch)
+      continue
+    }
     unresolved.push({ voteId: row.id, date: row.date, document: row.document ?? '', reason: 'no-drucksache' })
     continue
   }
@@ -117,6 +116,11 @@ for (const row of voteRows) {
   })
 
   if (candidates.length === 0) {
+    const titleMatch = titleResolution(row.id, row.title, row.document ?? '', sessionId)
+    if (titleMatch) {
+      resolutions.push(titleMatch)
+      continue
+    }
     unresolved.push({ voteId: row.id, date: row.date, document: row.document ?? '', reason: 'no-match' })
     continue
   }
@@ -141,7 +145,7 @@ const dryRun = process.argv.includes('--dry-run')
 if (!dryRun) {
   db.transaction((tx) => {
     for (const r of resolutions) {
-      tx.update(votes).set({ agendaItem: r.topId }).where(sql`${votes.id} = ${r.voteId}`).run()
+      tx.run(sql`UPDATE votes SET agenda_item = ${r.topId} WHERE id = ${r.voteId}`)
     }
   })
 }
@@ -167,3 +171,36 @@ console.log(`\ntiebroken samples:`)
 for (const r of resolutions.filter((r) => r.note).slice(0, 10)) console.log(`  ${r.voteId} -> ${r.topId} [${r.note}]`)
 
 if (dryRun) console.log(`\n(dry-run, no DB writes)`)
+
+function parseGermanDate(raw: string | null | undefined) {
+  const match = raw?.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/)
+  return match ? `${match[3]}-${match[2].padStart(2, '0')}-${match[1].padStart(2, '0')}` : null
+}
+
+function titleResolution(voteId: string, title: string, document: string, sessionId: string | null): Resolution | null {
+  if (!sessionId || !voteId.startsWith('pp21-')) return null
+  const tokens = keywordTokens(`${title} ${document}`)
+  if (tokens.length < 2) return null
+  const scored = blocks
+    .filter((b) => b.sessionId === sessionId)
+    .map((b) => ({ block: b, score: tokens.filter((token) => normalizeText(b.plainText).includes(token)).length }))
+    .filter((hit) => hit.score > 0)
+    .sort((a, b) => b.score - a.score || a.block.order - b.block.order)
+  const best = scored[0]
+  if (!best) return null
+  const next = scored[1]?.score ?? 0
+  return best.score >= Math.min(3, tokens.length) && best.score >= next + 2 ? { voteId, topId: best.block.topId, note: `title-match:${best.score}/${tokens.length}` } : null
+}
+
+function keywordTokens(input: string) {
+  const stop = new Set(['antrag', 'beratung', 'dritte', 'gesetz', 'gesetzentwurf', 'schlussabstimmung', 'tagesordnungspunkt', 'zweite', 'anderung', 'weiterer', 'weiteren'])
+  return [...new Set(normalizeText(input).split(/\s+/).filter((token) => token.length >= 3 && !stop.has(token)))]
+}
+
+function normalizeText(input: string) {
+  return input.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/ß/g, 'ss').replace(/[^a-z0-9]+/g, ' ').trim()
+}
+
+function textFromXml(input: string) {
+  return input.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim()
+}

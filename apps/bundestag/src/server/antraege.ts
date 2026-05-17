@@ -85,6 +85,7 @@ export type AntragDetail = {
   signatories: AntragSignatory[]
   linkedVotes: AntragLinkedVote[]
   debate: SpeechSummary[]
+  debateSource: 'direct' | 'related'
 }
 
 function voteTranslationMap(ids: string[], locale: Locale) {
@@ -230,9 +231,19 @@ export const getAntrag = createServerFn({ method: 'GET' })
         memberBallots: ballotsByVote.get(v.id) ?? [],
       }
     })
-    const speechRows = voteRows.length
-      ? db.select().from(speeches).where(inArray(speeches.voteId, voteRows.map((v) => v.id))).orderBy(desc(speeches.date), asc(speeches.position)).all()
-      : []
+    const speechRowsById = new Map<string, typeof speeches.$inferSelect>()
+    let hasRelatedDebate = false
+    for (const v of voteRows) {
+      const rowsByAgenda = v.agendaItem
+        ? db.select().from(speeches).where(and(eq(speeches.date, v.date), eq(speeches.agendaItem, v.agendaItem))).all()
+        : []
+      const rows = rowsByAgenda.length
+        ? rowsByAgenda
+        : db.select().from(speeches).where(eq(speeches.voteId, v.id)).all()
+      if (!rowsByAgenda.length && rows.some((s) => s.date !== v.date)) hasRelatedDebate = true
+      for (const s of rows) speechRowsById.set(s.id, s)
+    }
+    const speechRows = [...speechRowsById.values()].sort((a, b) => b.date.localeCompare(a.date) || a.position - b.position)
     const speechTranslationsById = speechTranslationMap(speechRows.map((s) => s.id), locale)
     const debate: SpeechSummary[] = speechRows.map((s) => ({
       id: s.id,
@@ -240,6 +251,7 @@ export const getAntrag = createServerFn({ method: 'GET' })
       speakerMemberId: s.speakerMemberId,
       speakerRole: s.speakerRole,
       party: s.party ? (SPEECH_PARTY_NORMALIZE[s.party] ?? s.party) : null,
+      date: s.date,
       position: s.position,
       excerpt: speechTranslationsById.get(s.id)?.textExcerpt ?? s.textExcerpt,
     }))
@@ -276,5 +288,6 @@ export const getAntrag = createServerFn({ method: 'GET' })
       signatories,
       linkedVotes,
       debate,
+      debateSource: hasRelatedDebate ? 'related' : 'direct',
     }
   })
