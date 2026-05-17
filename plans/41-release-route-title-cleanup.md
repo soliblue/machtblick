@@ -35,4 +35,5 @@ Finish the current Bundestag change set for release: English-only URL segments, 
 - Canonicalized visible route segments to English: `/motions`, `/speeches`, member `/votes` `/speeches` `/questions` `/motions`, party `/profile` `/votes` `/history`, `/imprint`, and `/privacy`.
 - Added `antraege.clean_title`, migration `0025_antraege_clean_title.sql`, Codex batch ETL, server/static wiring, and UI display with official title below when it differs.
 - Backfilled 822 term-21 Antrag titles from summaries and official titles. 804 differ from the official title.
-- Verified `npm --workspace @machtblick/bundestag run build`, `npx tsc -p apps/bundestag/tsconfig.json --noEmit`, `git diff --check`, changed-file dash scan, and dev URLs including `/motions/334637/`, `/members/amtsberg-luise/motions/`, `/speeches/`, `/imprint/`, `/privacy/`, and old `/antraege/334637/` returning the not-found page.
+- Verified `npm --workspace @machtblick/bundestag run build`, `npx tsc -p apps/bundestag/tsconfig.json --noEmit`, `git diff --check`, changed-file dash scan, and dev URLs including `/motions/334637/`, `/members/amtsberg-luise/motions/`, `/speeches/`, `/imprint/`, and `/privacy/`.
+- Added Cloudflare Pages redirects from legacy German segments to the new English segments and a static 404 page for genuinely missing static paths.
