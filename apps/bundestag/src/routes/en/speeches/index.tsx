@@ -6,7 +6,7 @@ import { seoMeta, canonicalLink } from '@/lib/seo'
 
 type Search = { q?: string; party?: string; date?: string; memberId?: string; page?: number }
 
-export const Route = createFileRoute('/reden/')({
+export const Route = createFileRoute('/en/speeches/')({
   component: RedenRoute,
   loaderDeps: ({ search }) => ({
     q: search.q ?? '',
@@ -15,14 +15,14 @@ export const Route = createFileRoute('/reden/')({
     memberId: search.memberId ?? '',
     page: search.page ?? 0,
   }),
-  loader: ({ deps }) => searchSpeechesStatic(deps),
+  loader: ({ deps }) => searchSpeechesStatic(deps, 'en'),
   head: () => ({
     meta: seoMeta({
-      title: 'Reden',
-      description: 'Reden des Deutschen Bundestags durchsuchen — nach Stichwort und Fraktion.',
-      canonical: '/reden',
+      title: 'Speeches',
+      description: 'Search speeches from the German Bundestag by keyword, parliamentary group, date, and member.',
+      canonical: '/en/speeches',
     }),
-    links: canonicalLink('/reden'),
+    links: canonicalLink('/en/speeches'),
   }),
   validateSearch: (s: Record<string, unknown>): Search => ({
     q: typeof s.q === 'string' && s.q ? s.q : undefined,
@@ -36,7 +36,7 @@ export const Route = createFileRoute('/reden/')({
 function RedenRoute() {
   const initialData = Route.useLoaderData()
   const { q, party, date, memberId, page } = Route.useSearch()
-  const search = useSpeechSearch({ q, party, date, memberId, page }, initialData)
+  const search = useSpeechSearch({ q, party, date, memberId, page }, initialData, 'en')
   const navigate = useNavigate({ from: Route.fullPath })
   return (
     <RedenSearch

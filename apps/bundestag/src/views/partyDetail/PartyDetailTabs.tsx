@@ -4,9 +4,9 @@ import { useCopy, useLocale } from '@/lib/i18n'
 type Props = { partyId: string }
 
 const TABS = [
-  { to: '/parties/$id/profil/', label: 'Profil' },
-  { to: '/parties/$id/abstimmungen/', label: 'Abstimmungen' },
-  { to: '/parties/$id/verlauf/', label: 'Verlauf' },
+  { to: '/parties/$id/profile/', label: 'Profil' },
+  { to: '/parties/$id/votes/', label: 'Abstimmungen' },
+  { to: '/parties/$id/history/', label: 'Verlauf' },
 ] as const
 
 export function PartyDetailTabs({ partyId }: Props) {
@@ -16,8 +16,8 @@ export function PartyDetailTabs({ partyId }: Props) {
     ...tab,
     to: locale === 'en' ? (`/en${tab.to}` as typeof tab.to) : tab.to,
     label:
-      tab.to === '/parties/$id/profil/' ? t.profile
-      : tab.to === '/parties/$id/abstimmungen/' ? t.votes
+      tab.to === '/parties/$id/profile/' ? t.profile
+      : tab.to === '/parties/$id/votes/' ? t.votes
       : t.history,
   }))
   return (

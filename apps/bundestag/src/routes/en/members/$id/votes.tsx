@@ -4,7 +4,7 @@ import { VotingRecordTab } from '@/views/memberDetail/VotingRecordTab'
 
 type Search = { line?: string }
 
-export const Route = createFileRoute('/en/members/$id/abstimmungen')({
+export const Route = createFileRoute('/en/members/$id/votes')({
   component: AbstimmungenRoute,
   validateSearch: (s: Record<string, unknown>): Search => ({
     line: typeof s.line === 'string' ? s.line : undefined,
@@ -18,7 +18,7 @@ function AbstimmungenRoute() {
   const params = Route.useParams()
   const [choiceFilter, setChoiceFilter] = useState<string | null>(null)
   const setLineFilter = (v: string | null) => {
-    navigate({ to: '/en/members/$id/abstimmungen/', params, search: { line: v ?? undefined } })
+    navigate({ to: '/en/members/$id/votes/', params, search: { line: v ?? undefined } })
   }
   return (
     <VotingRecordTab

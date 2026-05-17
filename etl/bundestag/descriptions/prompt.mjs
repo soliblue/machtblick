@@ -14,7 +14,7 @@ Allgemeine Regeln:
 - Keine §§-Zitate.
 - Keine Verfahrensformulierungen ("Der Antrag fordert...", "Die Fraktion XY möchte..."): nenne die Regel direkt.
 - Keine Erwähnung des Abstimmungsergebnisses, der Parteipolitik oder einer parteilichen Bewertung. Neutral bleiben.
-- Keine Gedankenstriche jeglicher Art: weder em dash (—), en dash (–), noch zwei Bindestriche (--) als Ersatz. Benutze stattdessen Komma, Klammern, Doppelpunkt oder einen neuen Satz.
+- Keine Gedankenstriche jeglicher Art: keine Unicode-Dash-Zeichen und nicht zwei Bindestriche als Ersatz. Benutze stattdessen Komma, Klammern, Doppelpunkt oder einen neuen Satz.
 - Keine erfundenen Fakten. Bleibe nah am Quelltext. Wenn unklar, weglassen.`
 
 const ANTRAG_TEMPLATE = `Du bist Redakteur für ein gemeinnütziges Transparenz-Portal über den Deutschen Bundestag. Du fasst einen Antragstext für die breite Öffentlichkeit zusammen. Deine Sprache ist klar, neutral, allgemeinverständlich (etwa 8. Klasse), ohne Fachjargon.

@@ -3,9 +3,12 @@ import { getMember } from '@/server/members'
 import { MemberDetailShell } from '@/views/memberDetail/MemberDetailShell'
 import { seoMeta, canonicalLink, alternateJsonLink, jsonLd, SITE_URL } from '@/lib/seo'
 import { hasPartyLine } from '@/lib/parties'
+import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 
 export const Route = createFileRoute('/en/members/$id')({
   component: MemberDetailLayout,
+  errorComponent: NotFoundPage,
+  notFoundComponent: NotFoundPage,
   loader: ({ params }) => getMember({ data: { id: params.id, locale: 'en' } }),
   staleTime: Infinity,
   shouldReload: false,

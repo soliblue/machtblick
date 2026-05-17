@@ -97,6 +97,9 @@ const copy = {
       abweichler: 'Abweichler',
       beantwortet: 'Beantwortet',
       offen: 'Offen',
+      ueberwiesen: 'Überwiesen',
+      beschlussempfehlung: 'Beschlussempfehlung',
+      'nicht-beraten': 'Nicht beraten',
     },
     ageLabels: {
       'unter-30': 'Unter 30',
@@ -219,6 +222,9 @@ const copy = {
       abweichler: 'Defectors',
       beantwortet: 'Answered',
       offen: 'Open',
+      ueberwiesen: 'Referred',
+      beschlussempfehlung: 'Recommendation',
+      'nicht-beraten': 'Not debated',
     },
     ageLabels: {
       'unter-30': 'Under 30',

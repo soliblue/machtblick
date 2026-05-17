@@ -11,13 +11,15 @@ const TABS: Tab[] = [
 
 type Props = {
   active: VoteTab
+  availableTabs: Record<VoteTab, boolean>
   onChange: (t: VoteTab) => void
 }
 
-export function VoteDetailTabs({ active, onChange }: Props) {
+export function VoteDetailTabs({ active, availableTabs, onChange }: Props) {
   const border = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
   const t = useCopy()
   const tabs = TABS
+    .filter((tab) => availableTabs[tab.id])
     .map((tab) => ({
       ...tab,
       label:

@@ -11,7 +11,8 @@ import { Footer } from '@/views/nav/Footer'
 import globalsCss from '../styles/globals.css?url'
 import { seoMeta, SITE_NAME, SITE_URL } from '@/lib/seo'
 import { LocaleProvider, useCopy } from '@/lib/i18n'
-import { localeFromPath, withoutLocale, withLocale } from '@/lib/locale'
+import { localeFromPath, localizedPath, withLocale } from '@/lib/locale'
+import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -23,7 +24,6 @@ export const Route = createRootRoute({
       { name: 'apple-mobile-web-app-title', content: SITE_NAME },
       { name: 'msapplication-TileColor', content: '#ffffff' },
       { name: 'msapplication-config', content: '/browserconfig.xml' },
-      { httpEquiv: 'content-language', content: 'de' },
       ...(import.meta.env.DEV ? [{ name: 'robots', content: 'noindex, nofollow' }] : []),
       ...seoMeta({}),
     ],
@@ -46,7 +46,7 @@ export const Route = createRootRoute({
           '@type': 'WebSite',
           name: SITE_NAME,
           url: SITE_URL,
-          inLanguage: 'de-DE',
+          inLanguage: ['de-DE', 'en-US'],
           description: 'Transparenz über Abstimmungen, Abgeordnete und Fraktionen des Deutschen Bundestags.',
           publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
         }),
@@ -54,6 +54,7 @@ export const Route = createRootRoute({
     ],
   }),
   component: RootComponent,
+  notFoundComponent: NotFoundPage,
 })
 
 function RootComponent() {
@@ -86,11 +87,10 @@ function Nav() {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
   const locale = localeFromPath(pathname)
   const t = useCopy()
-  const current = withoutLocale(pathname)
   const linkClass = 'hover:opacity-100'
   const href = (path: string) => withLocale(path, locale)
-  const deHref = current
-  const enHref = withLocale(current, 'en')
+  const deHref = localizedPath(pathname, 'de')
+  const enHref = localizedPath(pathname, 'en')
   return (
     <nav
       className="sticky top-0 z-50 bg-background/85 backdrop-blur-md"
@@ -101,7 +101,7 @@ function Nav() {
         <div className="ml-auto hidden gap-l opacity-l sm:flex">
           <a href={href('/votes/')} className={linkClass}>{t.navVotes}</a>
           <a href={href('/members/')} className={linkClass}>{t.navMembers}</a>
-          {locale === 'de' && <a href="/reden/" className={linkClass}>{t.navSpeeches}</a>}
+          <a href={href('/speeches/')} className={linkClass}>{t.navSpeeches}</a>
           <a href={href('/parties/')} className={linkClass}>{t.navParties}</a>
         </div>
         <div
@@ -146,7 +146,7 @@ function Nav() {
         <div className="flex flex-col gap-m px-l pb-m text-m opacity-l sm:hidden">
           <a href={href('/votes/')} className={linkClass} onClick={() => setOpen(false)}>{t.navVotes}</a>
           <a href={href('/members/')} className={linkClass} onClick={() => setOpen(false)}>{t.navMembers}</a>
-          {locale === 'de' && <a href="/reden/" className={linkClass} onClick={() => setOpen(false)}>{t.navSpeeches}</a>}
+          <a href={href('/speeches/')} className={linkClass} onClick={() => setOpen(false)}>{t.navSpeeches}</a>
           <a href={href('/parties/')} className={linkClass} onClick={() => setOpen(false)}>{t.navParties}</a>
           <div className="flex gap-s">
             <a

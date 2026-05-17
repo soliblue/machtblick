@@ -7,6 +7,7 @@ import { tokenize } from '@/lib/highlight'
 import { makeSnippet } from '@/lib/snippet'
 import { loadSpeechTexts, speechTextsLoaded } from '@/lib/speechesStatic'
 import type { SpeechResult } from '@/server/speeches'
+import { useCopy, useLocale } from '@/lib/i18n'
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 const PAGE_SIZE = 5
@@ -14,14 +15,16 @@ const PAGE_SIZE = 5
 export function MemberSpeechesSection({ speeches }: { speeches: SpeechResult[] }) {
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(0)
+  const locale = useLocale()
+  const t = useCopy()
   const terms = tokenize(query)
   const texts = useQuery({
-    queryKey: ['speech-texts'],
-    queryFn: () => loadSpeechTexts(),
+    queryKey: ['speech-texts', locale],
+    queryFn: () => loadSpeechTexts(locale),
     enabled: terms.length > 0,
     staleTime: Infinity,
   })
-  const textsLoading = terms.length > 0 && !speechTextsLoaded()
+  const textsLoading = terms.length > 0 && !speechTextsLoaded(locale)
   const filtered = useMemo(() => {
     if (!terms.length) return speeches
     return speeches.filter((s) => {
@@ -42,17 +45,17 @@ export function MemberSpeechesSection({ speeches }: { speeches: SpeechResult[] }
             type="text"
             value={query}
             onChange={(e) => { setQuery(e.target.value); setPage(0) }}
-            placeholder="Reden durchsuchen"
+            placeholder={t.searchSpeeches}
             className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
             style={{ borderColor: ROW_BORDER }}
           />
-          {textsLoading && <div className="mt-xs text-s opacity-l">Suchindex wird geladen…</div>}
+          {textsLoading && <div className="mt-xs text-s opacity-l">{t.searchIndexLoading}</div>}
         </div>
       </div>
       {textsLoading ? (
-        <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>Suche wird vorbereitet…</div>
+        <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>{t.searchPreparing}</div>
       ) : filtered.length === 0 ? (
-        <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>Keine Reden gefunden.</div>
+        <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>{t.noSpeechesFound}</div>
       ) : (
         <div className="flex flex-col">
           {slice.map((s) => {

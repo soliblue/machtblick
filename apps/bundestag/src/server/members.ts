@@ -1,6 +1,19 @@
 import { createServerFn } from '@tanstack/react-start'
+import { notFound } from '@tanstack/react-router'
 import { db } from '@machtblick/db/client'
-import { members, memberAbgeordnetenwatch, voteMembers, votes, votePartySummaries, speeches, voteTranslations } from '@machtblick/db/schema'
+import {
+  antraege,
+  antragSignatories,
+  memberAbgeordnetenwatch,
+  members,
+  speeches,
+  speechTranslations as speechTranslationRows,
+  voteAntraege,
+  voteMembers,
+  votePartySummaries,
+  votes,
+  voteTranslations,
+} from '@machtblick/db/schema'
 import { eq, desc, and, asc, sql, inArray } from 'drizzle-orm'
 import { getCurrentPartyMap, loadAffiliationsByMember, partyAt } from './memberParty'
 import { hasPartyLine } from '../lib/parties'
@@ -136,10 +149,32 @@ export type MemberDetail = {
   pictureSourceUrl: string | null
   yearOfBirth: number | null
   sex: MemberSex | null
+  education: string | null
+  initiatives: MemberInitiativeRow[]
   mandateType: MandateType | null
   listState: string | null
   constituencyNumber: string | null
   constituencyName: string | null
+}
+
+export type MemberInitiativeVote = {
+  voteId: string
+  date: string
+  title: string
+  cleanTitle: string | null
+  result: 'angenommen' | 'abgelehnt'
+}
+
+export type MemberInitiativeRow = {
+  antragId: number
+  title: string
+  cleanTitle: string | null
+  beratungsstand: string | null
+  introducedDate: string | null
+  drucksachePdfUrl: string | null
+  sachgebiet: string[]
+  signatoryCount: number
+  linkedVotes: MemberInitiativeVote[]
 }
 
 function translationMap(ids: string[], locale: Locale) {
@@ -150,22 +185,32 @@ function translationMap(ids: string[], locale: Locale) {
   )
 }
 
+function speechTextTranslationMap(ids: string[], locale: Locale) {
+  return new Map(
+    locale === 'en' && ids.length
+      ? db.select().from(speechTranslationRows).where(and(eq(speechTranslationRows.locale, 'en'), inArray(speechTranslationRows.speechId, ids))).all().map((t) => [t.speechId, t])
+      : [],
+  )
+}
+
 export const getMember = createServerFn({ method: 'GET' })
   .inputValidator((input: string | { id: string; locale?: Locale }) => typeof input === 'string' ? { id: input, locale: 'de' as Locale } : { id: input.id, locale: normalizeLocale(input.locale) })
   .handler(async ({ data }): Promise<MemberDetail> => {
     const { id, locale } = data
     const m = db.select().from(members).where(eq(members.id, id)).get()
-    if (!m) throw new Error(`member not found: ${id}`)
+    if (!m) throw notFound()
     const demoRow = db
       .select({
         yearOfBirth: sql<number | null>`json_extract(${memberAbgeordnetenwatch.rawJson}, '$.year_of_birth')`,
         sex: sql<string | null>`json_extract(${memberAbgeordnetenwatch.rawJson}, '$.sex')`,
+        education: sql<string | null>`json_extract(${memberAbgeordnetenwatch.rawJson}, '$.education')`,
       })
       .from(memberAbgeordnetenwatch)
       .where(eq(memberAbgeordnetenwatch.memberId, id))
       .get()
     const sex = demoRow?.sex === 'm' || demoRow?.sex === 'f' || demoRow?.sex === 'd' ? (demoRow.sex as MemberSex) : null
     const yearOfBirth = demoRow?.yearOfBirth ?? null
+    const education = demoRow?.education ?? null
     const vmRows = db
       .select({
         voteId: voteMembers.voteId,
@@ -222,9 +267,11 @@ export const getMember = createServerFn({ method: 'GET' })
       .where(eq(speeches.speakerMemberId, id))
       .orderBy(desc(speeches.date), asc(speeches.position))
       .all()
-    const speechTranslations = translationMap(memberSpeeches.map(({ speech }) => speech.voteId).filter((id): id is string => !!id), locale)
+    const speechVoteTranslations = translationMap(memberSpeeches.map(({ speech }) => speech.voteId).filter((id): id is string => !!id), locale)
+    const speechTextTranslations = speechTextTranslationMap(memberSpeeches.map(({ speech }) => speech.id), locale)
     const speechResults: SpeechResult[] = memberSpeeches.map(({ speech: row, voteTitle, voteCleanTitle }) => {
-      const t = row.voteId ? speechTranslations.get(row.voteId) : null
+      const t = row.voteId ? speechVoteTranslations.get(row.voteId) : null
+      const st = speechTextTranslations.get(row.id)
       return {
         id: row.id,
         speakerName: row.speakerName,
@@ -232,13 +279,83 @@ export const getMember = createServerFn({ method: 'GET' })
         speakerRole: row.speakerRole,
         party: row.party ? (SPEECH_PARTY_NORMALIZE[row.party] ?? row.party) : null,
         position: row.position,
-        excerpt: row.textExcerpt,
+        excerpt: st?.textExcerpt ?? row.textExcerpt,
         date: row.date,
         voteId: row.voteId,
         voteTitle: t?.cleanTitle ?? t?.title ?? voteCleanTitle ?? voteTitle,
         snippet: null,
       }
     })
+    const signedInitiatives = db
+      .select({ antragId: antragSignatories.antragId })
+      .from(antragSignatories)
+      .where(eq(antragSignatories.memberId, id))
+      .all()
+    const antragIds = signedInitiatives.map((s) => s.antragId)
+    const initiativeRows = antragIds.length
+      ? db
+          .select({
+            id: antraege.id,
+            title: antraege.title,
+            cleanTitle: antraege.cleanTitle,
+            beratungsstand: antraege.beratungsstand,
+            introducedDate: antraege.introducedDate,
+            drucksachePdfUrl: antraege.drucksachePdfUrl,
+            sachgebiet: antraege.sachgebiet,
+          })
+          .from(antraege)
+          .where(inArray(antraege.id, antragIds))
+          .orderBy(desc(antraege.introducedDate))
+          .all()
+      : []
+    const initiativeCounts = antragIds.length
+      ? db
+          .select({ antragId: antragSignatories.antragId, n: sql<number>`count(*)`.as('n') })
+          .from(antragSignatories)
+          .where(inArray(antragSignatories.antragId, antragIds))
+          .groupBy(antragSignatories.antragId)
+          .all()
+      : []
+    const initiativeVoteRows = antragIds.length
+      ? db
+          .select({
+            antragId: voteAntraege.antragId,
+            voteId: votes.id,
+            date: votes.date,
+            title: votes.title,
+            cleanTitle: votes.cleanTitle,
+            result: votes.result,
+          })
+          .from(voteAntraege)
+          .innerJoin(votes, eq(votes.id, voteAntraege.voteId))
+          .where(inArray(voteAntraege.antragId, antragIds))
+          .orderBy(desc(votes.date))
+          .all()
+      : []
+    const initiativeCountById = new Map(initiativeCounts.map((r) => [r.antragId, r.n]))
+    const initiativeVotesById = new Map<number, MemberInitiativeVote[]>()
+    for (const r of initiativeVoteRows) {
+      const list = initiativeVotesById.get(r.antragId) ?? []
+      list.push({
+        voteId: r.voteId,
+        date: r.date,
+        title: r.title,
+        cleanTitle: r.cleanTitle,
+        result: r.result,
+      })
+      initiativeVotesById.set(r.antragId, list)
+    }
+    const initiatives: MemberInitiativeRow[] = initiativeRows.map((r) => ({
+      antragId: r.id,
+      title: r.title,
+      cleanTitle: r.cleanTitle,
+      beratungsstand: r.beratungsstand,
+      introducedDate: r.introducedDate,
+      drucksachePdfUrl: r.drucksachePdfUrl,
+      sachgebiet: r.sachgebiet ?? [],
+      signatoryCount: initiativeCountById.get(r.id) ?? 1,
+      linkedVotes: initiativeVotesById.get(r.id) ?? [],
+    }))
     return {
       id,
       name: m.name,
@@ -256,6 +373,8 @@ export const getMember = createServerFn({ method: 'GET' })
       pictureSourceUrl: m.pictureSourceUrl,
       yearOfBirth,
       sex,
+      education,
+      initiatives,
       mandateType: m.mandateType === 'direkt' || m.mandateType === 'liste' ? m.mandateType : null,
       listState: m.listState,
       constituencyNumber: m.constituencyNumber,

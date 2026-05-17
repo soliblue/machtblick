@@ -1,28 +1,35 @@
 import { Link } from '../../lib/Link'
 import { useCopy, useLocale } from '@/lib/i18n'
 
-type Props = { memberId: string }
+type Props = {
+  memberId: string
+  votes: number
+  speeches: number
+  proposals: number
+}
 
 const TABS = [
-  { to: '/members/$id/abstimmungen/', label: 'Abstimmungen' },
-  { to: '/members/$id/reden/', label: 'Reden' },
-  { to: '/members/$id/anfragen/', label: 'Anfragen' },
+  { to: '/members/$id/votes/', enTo: '/en/members/$id/votes/', label: 'Abstimmungen', count: 'votes' },
+  { to: '/members/$id/speeches/', enTo: '/en/members/$id/speeches/', label: 'Reden', count: 'speeches' },
+  { to: '/members/$id/motions/', enTo: '/en/members/$id/motions/', label: 'Anträge', count: 'proposals' },
 ] as const
 
-export function MemberDetailTabs({ memberId }: Props) {
+export function MemberDetailTabs({ memberId, votes, speeches, proposals }: Props) {
   const locale = useLocale()
   const t = useCopy()
+  const counts = { votes, speeches, proposals }
   const tabs = TABS
-    .filter((tab) => locale === 'de' || tab.to === '/members/$id/abstimmungen/')
+    .filter((tab) => locale === 'de' || tab.enTo)
+    .filter((tab) => counts[tab.count] > 0)
     .map((tab) => ({
       ...tab,
-      to: locale === 'en' ? (`/en${tab.to}` as typeof tab.to) : tab.to,
+      to: locale === 'en' && tab.enTo ? tab.enTo : tab.to,
       label:
-        tab.to === '/members/$id/abstimmungen/' ? t.votes
-        : tab.to === '/members/$id/reden/' ? t.speeches
-        : 'Anfragen',
+        tab.to === '/members/$id/votes/' ? t.votes
+        : tab.to === '/members/$id/speeches/' ? t.speeches
+        : locale === 'en' ? 'Proposals' : 'Anträge',
     }))
-  return (
+  return tabs.length > 0 ? (
     <nav
       className="-mx-l mt-l mb-l grid border-y"
       style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)', gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }}
@@ -42,5 +49,5 @@ export function MemberDetailTabs({ memberId }: Props) {
         </Link>
       ))}
     </nav>
-  )
+  ) : null
 }

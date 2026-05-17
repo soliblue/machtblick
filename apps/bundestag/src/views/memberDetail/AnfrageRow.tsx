@@ -1,6 +1,7 @@
 import type { AnfrageRow as AnfrageRowData } from '@/server/anfragen'
 import { formatDate } from '@/lib/format'
 import { Stamp } from '@/views/votesList/Stamp'
+import { useLocale } from '@/lib/i18n'
 
 const TYPE_LABEL_FULL: Record<AnfrageRowData['type'], string> = {
   kleine: 'Kleine',
@@ -8,18 +9,25 @@ const TYPE_LABEL_FULL: Record<AnfrageRowData['type'], string> = {
   schriftlich: 'Schriftlich',
 }
 
+const TYPE_LABEL_FULL_EN: Record<AnfrageRowData['type'], string> = {
+  kleine: 'Minor',
+  grosse: 'Major',
+  schriftlich: 'Written',
+}
+
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 
 type Props = { row: AnfrageRowData }
 
 export function AnfrageRow({ row }: Props) {
+  const locale = useLocale()
   const href = row.questionPdfUrl ?? row.answerPdfUrl ?? undefined
   const answered = row.beratungsstand === 'Beantwortet'
   const Wrap = href ? 'a' : 'div'
   const segments = [
     row.questionDate ? formatDate(row.questionDate) : null,
-    TYPE_LABEL_FULL[row.type],
-    row.cosignerCount > 0 ? `+${row.cosignerCount} Mitzeichner` : null,
+    locale === 'en' ? TYPE_LABEL_FULL_EN[row.type] : TYPE_LABEL_FULL[row.type],
+    row.cosignerCount > 0 ? `+${row.cosignerCount} ${locale === 'en' ? 'cosigners' : 'Mitzeichner'}` : null,
   ].filter((s): s is string => Boolean(s))
   return (
     <Wrap

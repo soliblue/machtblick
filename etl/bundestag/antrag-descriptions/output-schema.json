@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "required": ["summary_simplified", "summary_detail"],
+  "additionalProperties": false,
+  "properties": {
+    "summary_simplified": { "type": "string" },
+    "summary_detail": { "type": "string" }
+  }
+}

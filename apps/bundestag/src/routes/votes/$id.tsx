@@ -3,11 +3,14 @@ import { getVote } from '@/server/votes'
 import { getVoteSponsors } from '@/server/voteSponsors'
 import { VoteDetail, type VoteTab, isVoteTab } from '@/views/voteDetail/VoteDetail'
 import { seoMeta, canonicalLink, alternateJsonLink } from '@/lib/seo'
+import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 
 type Search = { tab?: VoteTab }
 
 export const Route = createFileRoute('/votes/$id')({
   component: VoteDetailRoute,
+  errorComponent: NotFoundPage,
+  notFoundComponent: NotFoundPage,
   loader: async ({ params }) => {
     const [detail, sponsors] = await Promise.all([
       getVote({ data: params.id }),

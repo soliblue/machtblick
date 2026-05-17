@@ -18,3 +18,23 @@ export function withLocale(path: string, locale: Locale): string {
 export function withoutLocale(path: string): string {
   return path === '/en' ? '/' : path.startsWith('/en/') ? path.slice(3) : path
 }
+
+export function localizedPath(pathname: string, locale: Locale): string {
+  const current = withoutLocale(pathname)
+  const normalized = current.replace(/\/$/, '')
+  const canonical = normalized
+    .replace(/^\/antraege(\/|$)/, '/motions$1')
+    .replace(/^\/reden(\/|$)/, '/speeches$1')
+    .replace(/^\/impressum(\/|$)/, '/imprint$1')
+    .replace(/^\/datenschutz(\/|$)/, '/privacy$1')
+    .replace(/\/abstimmungen(\/|$)/, '/votes$1')
+    .replace(/\/anfragen(\/|$)/, '/questions$1')
+    .replace(/\/antraege(\/|$)/, '/motions$1')
+    .replace(/\/initiativen(\/|$)/, '/motions$1')
+    .replace(/\/proposals(\/|$)/, '/motions$1')
+    .replace(/\/initiatives(\/|$)/, '/motions$1')
+    .replace(/\/reden(\/|$)/, '/speeches$1')
+    .replace(/\/profil(\/|$)/, '/profile$1')
+    .replace(/\/verlauf(\/|$)/, '/history$1')
+  return withLocale(canonical || '/', locale)
+}

@@ -1,7 +1,7 @@
 import { createFileRoute, useLoaderData } from '@tanstack/react-router'
 import { MemberSpeechesSection } from '@/views/memberDetail/MemberSpeechesSection'
 
-export const Route = createFileRoute('/members/$id/reden')({
+export const Route = createFileRoute('/members/$id/speeches')({
   component: RedenRoute,
 })
 

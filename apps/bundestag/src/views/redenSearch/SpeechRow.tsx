@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { ChevronDown } from 'lucide-react'
-import { Link } from '@/lib/Link'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { VoteChoicePill } from '@/views/memberDetail/VoteChoicePill'
 import { useSpeechBody } from '@/hooks/useSpeechBody'
@@ -9,7 +8,8 @@ import { initials } from '@/lib/initials'
 import { renderSnippet } from '@/lib/snippet'
 import type { MemberVoteRow } from '@/server/members'
 import type { SpeechResult, SpeechSummary } from '@/server/speeches'
-import { useLocale } from '@/lib/i18n'
+import { useCopy, useLocale } from '@/lib/i18n'
+import { withLocale } from '@/lib/locale'
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 
@@ -31,6 +31,7 @@ export function SpeechRow({ speech, query = '', showVoteLink = true, pictureUrl,
   const terms = tokenize(query)
   const [open, setOpen] = useState(false)
   const locale = useLocale()
+  const t = useCopy()
   const body = useSpeechBody(speech.id, open, locale)
   const withAvatar = pictureUrl !== undefined || choice !== undefined
   return (
@@ -71,14 +72,13 @@ export function SpeechRow({ speech, query = '', showVoteLink = true, pictureUrl,
               : <PartyBadge party={speech.party} compact />}
           </div>
           {showVoteLink && speech.voteId && speech.voteTitle && (
-            <Link
-              to="/votes/$id/"
-              params={{ id: speech.voteId }}
+            <a
+              href={withLocale(`/votes/${speech.voteId}/`, locale)}
               onClick={(e) => e.stopPropagation()}
               className="relative z-10 mt-xs block text-s opacity-l hover:opacity-100"
             >
-              Abstimmung: {speech.voteTitle}
-            </Link>
+              {t.vote}: {speech.voteTitle}
+            </a>
           )}
         </div>
         {withAvatar && (choice ? <VoteChoicePill choice={choice} /> : <span />)}
@@ -102,16 +102,16 @@ export function SpeechRow({ speech, query = '', showVoteLink = true, pictureUrl,
 }
 
 function SpeakerName({ speech }: { speech: SpeechSummary }) {
+  const locale = useLocale()
   if (speech.speakerMemberId) {
     return (
-      <Link
-        to="/members/$id/"
-        params={{ id: speech.speakerMemberId }}
+      <a
+        href={withLocale(`/members/${speech.speakerMemberId}/`, locale)}
         onClick={(e) => e.stopPropagation()}
         className="relative z-10 font-semibold hover:opacity-80"
       >
         {speech.speakerName}
-      </Link>
+      </a>
     )
   }
   return <span className="font-semibold">{speech.speakerName}</span>

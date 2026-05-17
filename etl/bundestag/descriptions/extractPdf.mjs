@@ -16,7 +16,7 @@ const HEADER_PATTERNS = [
   /^Deutscher Bundestag.*Drucksache\s+\d+\/\d+\s*$/gim,
   /^\d+\.\s*Wahlperiode\b.*$/gim,
   /^Drucksache\s+\d+\/\d+\s*$/gim,
-  /^\s*[-–]\s*\d+\s*[-–]\s*$/gim,
+  /^\s*[-\u2013]\s*\d+\s*[-\u2013]\s*$/gim,
   /^\s*Seite\s+\d+(\s+von\s+\d+)?\s*$/gim,
 ]
 
@@ -62,7 +62,23 @@ function download(url, dest) {
 }
 
 function runPdftotext(pdf) {
-  return execFileSync('pdftotext', ['-layout', '-enc', 'UTF-8', pdf, '-'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+  try {
+    return execFileSync('pdftotext', ['-layout', '-enc', 'UTF-8', pdf, '-'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+  } catch {
+    return ''
+  }
+}
+
+async function runPdfjs(pdf) {
+  const { getDocument } = await import('pdfjs-dist/legacy/build/pdf.mjs')
+  const doc = await getDocument({ data: new Uint8Array(readFileSync(pdf)), disableWorker: true }).promise
+  const pages = []
+  for (let i = 1; i <= doc.numPages; i++) {
+    const page = await doc.getPage(i)
+    const content = await page.getTextContent()
+    pages.push(content.items.map((item) => typeof item.str === 'string' ? item.str : '').join(' '))
+  }
+  return pages.join('\n\n')
 }
 
 function runClaudeOcr(pdf) {
@@ -76,6 +92,7 @@ export async function extractPdf(drucksacheId, pdfUrl) {
   const pdf = pdfPath(drucksacheId)
   if (!existsSync(pdf)) await download(pdfUrl, pdf)
   let text = clean(runPdftotext(pdf))
+  if (text.length < MIN_CHARS) text = clean(await runPdfjs(pdf))
   if (text.length < MIN_CHARS) text = clean(runClaudeOcr(pdf))
   writeFileSync(cached, text)
   return text

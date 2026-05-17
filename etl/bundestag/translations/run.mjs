@@ -140,6 +140,20 @@ function ensureSchema() {
       FOREIGN KEY (vote_id) REFERENCES votes(id)
     )
   `).run()
+  db.prepare(`
+    CREATE TABLE IF NOT EXISTS antrag_description_translations (
+      antrag_id integer NOT NULL,
+      locale text NOT NULL,
+      summary_simplified text,
+      summary_detail text,
+      source_hash text,
+      model text,
+      prompt_version text,
+      translated_at text,
+      PRIMARY KEY(antrag_id, locale),
+      FOREIGN KEY (antrag_id) REFERENCES antraege(id)
+    )
+  `).run()
 }
 
 function sourceHash(value) {
@@ -212,6 +226,7 @@ function writeTranslations(job, output) {
     PROMPT_VERSION,
     now,
   )
+  syncAntragTranslation(job, vote, now)
   const byParty = new Map(output.party_summaries.map((s) => [s.party, s]))
   for (const source of job.summaries) {
     const translated = byParty.get(source.party)
@@ -237,6 +252,37 @@ function writeTranslations(job, output) {
       clean(translated.key_points),
       clean(translated.dissent_note),
       hash,
+      model,
+      PROMPT_VERSION,
+      now,
+    )
+  }
+}
+
+function syncAntragTranslation(job, vote, now) {
+  const matches = db.prepare(`
+    SELECT a.id
+    FROM antraege a
+    INNER JOIN vote_description_decisions vdd ON vdd.drucksache_id = a.drucksache
+    WHERE a.wahlperiode = 21 AND vdd.vote_id = ?
+  `).all(job.vote.id)
+  if (matches.length === 1) {
+    db.prepare(`
+      INSERT INTO antrag_description_translations (
+        antrag_id, locale, summary_simplified, summary_detail, source_hash, model, prompt_version, translated_at
+      ) VALUES (?, 'en', ?, ?, ?, ?, ?, ?)
+      ON CONFLICT(antrag_id, locale) DO UPDATE SET
+        summary_simplified = excluded.summary_simplified,
+        summary_detail = excluded.summary_detail,
+        source_hash = excluded.source_hash,
+        model = excluded.model,
+        prompt_version = excluded.prompt_version,
+        translated_at = excluded.translated_at
+    `).run(
+      matches[0].id,
+      clean(vote.summary_simplified),
+      clean(vote.summary_detail),
+      job.voteHash,
       model,
       PROMPT_VERSION,
       now,

@@ -35,6 +35,12 @@ export function VoteDetail({ data, activeTab, onTabChange }: Props) {
   const stamps = deriveStamps({ ...vote, partySummaries })
   const locale = useLocale()
   const t = useCopy()
+  const availableTabs: Record<VoteTab, boolean> = {
+    ergebnis: true,
+    details: Boolean(vote.summaryDetail),
+    reden: data.debate.length > 0,
+  }
+  const visibleActiveTab = availableTabs[activeTab] ? activeTab : 'ergebnis'
   return (
     <main className="mx-auto max-w-3xl p-l">
       {vote.inverted && (
@@ -77,8 +83,8 @@ export function VoteDetail({ data, activeTab, onTabChange }: Props) {
         </div>
       )}
 
-      <VoteDetailTabs active={activeTab} onChange={onTabChange} />
-      {TAB_PANELS[activeTab](data)}
+      <VoteDetailTabs active={visibleActiveTab} availableTabs={availableTabs} onChange={onTabChange} />
+      {TAB_PANELS[visibleActiveTab](data)}
     </main>
   )
 }

@@ -3,17 +3,21 @@ import { Filter, FileQuestion, CheckCircle2, Building2, Search } from 'lucide-re
 import type { MemberAnfragen, AnfrageRow as AnfrageRowData } from '@/server/anfragen'
 import { FilterPill } from '@/views/votesList/FilterPill'
 import { AnfrageRow } from './AnfrageRow'
+import { useLocale } from '@/lib/i18n'
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 
 const TYPE_OPTIONS = ['kleine', 'grosse', 'schriftlich']
 const TYPE_LABEL: Record<string, string> = { kleine: 'Kleine', grosse: 'Große', schriftlich: 'Schriftliche' }
+const TYPE_LABEL_EN: Record<string, string> = { kleine: 'Minor', grosse: 'Major', schriftlich: 'Written' }
 const STATUS_OPTIONS = ['beantwortet', 'offen']
 const STATUS_LABEL: Record<string, string> = { beantwortet: 'Beantwortet', offen: 'Offen' }
+const STATUS_LABEL_EN: Record<string, string> = { beantwortet: 'Answered', offen: 'Open' }
 
 type Props = { data: MemberAnfragen }
 
 export function AnfragenTab({ data }: Props) {
+  const locale = useLocale()
   const [typeFilter, setTypeFilter] = useState<string | null>(null)
   const [statusFilter, setStatusFilter] = useState<string | null>(null)
   const [ressortFilter, setRessortFilter] = useState<string | null>(null)
@@ -38,7 +42,7 @@ export function AnfragenTab({ data }: Props) {
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Anfragen durchsuchen"
+              placeholder={locale === 'en' ? 'Search questions' : 'Anfragen durchsuchen'}
               className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
               style={{ borderColor: ROW_BORDER }}
             />
@@ -46,12 +50,12 @@ export function AnfragenTab({ data }: Props) {
           <div className="mb-m flex flex-wrap items-center gap-s">
             <Filter size={14} className="opacity-l" />
             <FilterPill
-              label="Typ"
+              label={locale === 'en' ? 'Type' : 'Typ'}
               icon={FileQuestion}
               options={TYPE_OPTIONS}
               value={typeFilter}
               onChange={setTypeFilter}
-              formatOption={(o) => TYPE_LABEL[o]}
+              formatOption={(o) => locale === 'en' ? TYPE_LABEL_EN[o] : TYPE_LABEL[o]}
             />
             <FilterPill
               label="Status"
@@ -59,11 +63,11 @@ export function AnfragenTab({ data }: Props) {
               options={STATUS_OPTIONS}
               value={statusFilter}
               onChange={setStatusFilter}
-              formatOption={(o) => STATUS_LABEL[o]}
+              formatOption={(o) => locale === 'en' ? STATUS_LABEL_EN[o] : STATUS_LABEL[o]}
             />
             {topRessorts.length > 0 && (
               <FilterPill
-                label="Ressort"
+                label={locale === 'en' ? 'Ministry' : 'Ressort'}
                 icon={Building2}
                 options={topRessorts}
                 value={ressortFilter}
@@ -77,8 +81,8 @@ export function AnfragenTab({ data }: Props) {
         </>
       ) : (
         <div className="border p-xl text-center text-m opacity-l" style={{ borderColor: ROW_BORDER }}>
-          <div className="font-semibold opacity-100">Keine Anfragen in WP21</div>
-          <div className="mt-s">Diese Abgeordnete hat bisher keine Anfragen mitgezeichnet.</div>
+          <div className="font-semibold opacity-100">{locale === 'en' ? 'No questions in term 21' : 'Keine Anfragen in WP21'}</div>
+          <div className="mt-s">{locale === 'en' ? 'This member has not cosigned any questions yet.' : 'Diese Abgeordnete hat bisher keine Anfragen mitgezeichnet.'}</div>
         </div>
       )}
     </section>

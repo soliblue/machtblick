@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { CalendarCheck, Heart, Vote, UserX, Cake } from 'lucide-react'
+import { CalendarCheck, Heart, Vote, UserX, Cake, Mic2, ScrollText, GraduationCap } from 'lucide-react'
 import type { MemberDetail as MemberDetailData } from '@/server/members'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { pct } from '@/lib/format'
@@ -7,7 +7,7 @@ import { StatTiles } from './StatTiles'
 import { MemberDetailTabs } from './MemberDetailTabs'
 import { MemberPortrait } from './MemberPortrait'
 import { MandateBadge } from './MandateBadge'
-import { useCopy } from '@/lib/i18n'
+import { useCopy, useLocale } from '@/lib/i18n'
 
 type Props = {
   data: MemberDetailData
@@ -16,11 +16,14 @@ type Props = {
 
 export function MemberDetailShell({ data, children }: Props) {
   const t = useCopy()
+  const locale = useLocale()
   const tiles = [
     { label: t.attendance, value: pct(data.attendance), icon: CalendarCheck },
     { label: t.loyalty, value: data.loyalty === null ? '-' : pct(data.loyalty), icon: Heart },
     { label: t.deviations, value: String(data.defections), icon: UserX },
     { label: t.votes, value: String(data.votesAppeared), icon: Vote },
+    { label: locale === 'en' ? 'Speeches' : 'Reden', value: String(data.speeches.length), icon: Mic2 },
+    { label: locale === 'en' ? 'Proposals' : 'Anträge', value: String(data.initiatives.length), icon: ScrollText },
   ]
   return (
     <main className="mx-auto max-w-3xl p-l">
@@ -48,15 +51,24 @@ export function MemberDetailShell({ data, children }: Props) {
             {data.mandateType && (
               <MandateBadge
                 mandateType={data.mandateType}
+                listState={data.listState}
                 constituencyNumber={data.constituencyNumber}
                 constituencyName={data.constituencyName}
               />
             )}
+            {data.education && (
+              <span className="inline-flex min-w-0 items-center gap-xs text-s opacity-l">
+                <GraduationCap size={14} className="shrink-0" />
+                <span style={{ overflowWrap: 'anywhere' }}>{data.education}</span>
+              </span>
+            )}
           </div>
         </div>
       </div>
-      <StatTiles tiles={tiles} />
-      <MemberDetailTabs memberId={data.id} />
+      <div className="mt-l">
+        <StatTiles tiles={tiles} />
+      </div>
+      <MemberDetailTabs memberId={data.id} votes={data.history.length} speeches={data.speeches.length} proposals={data.initiatives.length} />
       {children}
     </main>
   )

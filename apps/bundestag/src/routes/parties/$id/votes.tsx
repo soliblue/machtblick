@@ -9,7 +9,7 @@ const isVote = (v: unknown): v is PartyVote => typeof v === 'string' && (VOTES a
 
 type Search = { result?: Result; vote?: PartyVote }
 
-export const Route = createFileRoute('/en/parties/$id/abstimmungen')({
+export const Route = createFileRoute('/parties/$id/votes')({
   component: AbstimmungenRoute,
   validateSearch: (search: Record<string, unknown>): Search => ({
     result: isResult(search.result) ? search.result : undefined,
@@ -18,7 +18,7 @@ export const Route = createFileRoute('/en/parties/$id/abstimmungen')({
 })
 
 function AbstimmungenRoute() {
-  const data = useLoaderData({ from: '/en/parties/$id' })
+  const data = useLoaderData({ from: '/parties/$id' })
   const { result, vote } = Route.useSearch()
   const navigate = useNavigate({ from: Route.fullPath })
   return data ? (

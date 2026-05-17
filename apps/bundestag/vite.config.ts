@@ -8,6 +8,7 @@ import Database from 'better-sqlite3'
 import { leanVotes, fullVote } from './vite-data/votes'
 import { leanMembers, fullMember } from './vite-data/members'
 import { leanParties, fullParty } from './vite-data/parties'
+import { fullAntrag } from './vite-data/antraege'
 
 const SITE_URL = 'https://machtblick.de'
 const CURRENT_TERM = 21
@@ -94,11 +95,16 @@ function writeSpeechesStatic() {
 
 function prerenderPaths(): string[] {
   const db = new Database(fileURLToPath(new URL('../../db/machtblick.sqlite', import.meta.url)), { readonly: true })
-  const paths = ['/', '/votes/', '/members/', '/parties/', '/reden/', '/impressum/', '/datenschutz/', '/en/', '/en/votes/', '/en/members/', '/en/parties/', '/en/impressum/', '/en/datenschutz/']
+  const paths = ['/', '/votes/', '/members/', '/parties/', '/speeches/', '/imprint/', '/privacy/', '/en/', '/en/votes/', '/en/members/', '/en/parties/', '/en/speeches/', '/en/imprint/', '/en/privacy/']
   const votes = db.prepare("SELECT id FROM votes WHERE term_id = ? AND procedural = 0 AND vote_type != 'hammelsprung'").all(CURRENT_TERM) as Array<{ id: string }>
   for (const v of votes) {
     paths.push(`/votes/${v.id}/`)
     paths.push(`/en/votes/${v.id}/`)
+  }
+  const antraege = db.prepare('SELECT id FROM antraege WHERE wahlperiode = ? ORDER BY id').all(CURRENT_TERM) as Array<{ id: number }>
+  for (const a of antraege) {
+    paths.push(`/motions/${a.id}/`)
+    paths.push(`/en/motions/${a.id}/`)
   }
   const members = db.prepare(`
     SELECT DISTINCT m.rowid, m.id
@@ -110,11 +116,15 @@ function prerenderPaths(): string[] {
   `).all(CURRENT_TERM) as Array<{ id: string }>
   for (const m of members) {
     paths.push(`/members/${m.id}/`)
-    paths.push(`/members/${m.id}/abstimmungen/`)
-    paths.push(`/members/${m.id}/reden/`)
-    paths.push(`/members/${m.id}/anfragen/`)
+    paths.push(`/members/${m.id}/votes/`)
+    paths.push(`/members/${m.id}/speeches/`)
+    paths.push(`/members/${m.id}/questions/`)
+    paths.push(`/members/${m.id}/motions/`)
     paths.push(`/en/members/${m.id}/`)
-    paths.push(`/en/members/${m.id}/abstimmungen/`)
+    paths.push(`/en/members/${m.id}/votes/`)
+    paths.push(`/en/members/${m.id}/speeches/`)
+    paths.push(`/en/members/${m.id}/questions/`)
+    paths.push(`/en/members/${m.id}/motions/`)
   }
   const parties = db.prepare(`
     SELECT DISTINCT s.party FROM vote_party_summaries s
@@ -126,13 +136,13 @@ function prerenderPaths(): string[] {
     const slug = slugMap[p.party]
     if (!slug) continue
     paths.push(`/parties/${slug}/`)
-    paths.push(`/parties/${slug}/profil/`)
-    paths.push(`/parties/${slug}/abstimmungen/`)
-    paths.push(`/parties/${slug}/verlauf/`)
+    paths.push(`/parties/${slug}/profile/`)
+    paths.push(`/parties/${slug}/votes/`)
+    paths.push(`/parties/${slug}/history/`)
     paths.push(`/en/parties/${slug}/`)
-    paths.push(`/en/parties/${slug}/profil/`)
-    paths.push(`/en/parties/${slug}/abstimmungen/`)
-    paths.push(`/en/parties/${slug}/verlauf/`)
+    paths.push(`/en/parties/${slug}/profile/`)
+    paths.push(`/en/parties/${slug}/votes/`)
+    paths.push(`/en/parties/${slug}/history/`)
   }
   db.close()
   return paths
@@ -162,6 +172,17 @@ function writeJsonEndpoints() {
   const voteIds = db.prepare("SELECT id FROM votes WHERE term_id = ? AND procedural = 0 AND vote_type != 'hammelsprung'").all(CURRENT_TERM) as Array<{ id: string }>
   mkdirSync(`${publicDir}/votes`, { recursive: true })
   for (const { id } of voteIds) writeFileSync(`${publicDir}/votes/${id}.json`, JSON.stringify(fullVote(db, id)))
+  const antragIds = db.prepare('SELECT id FROM antraege WHERE wahlperiode = ? ORDER BY id').all(CURRENT_TERM) as Array<{ id: number }>
+  rmSync(`${publicDir}/antraege`, { force: true, recursive: true })
+  rmSync(`${publicDir}/en/antraege`, { force: true, recursive: true })
+  rmSync(`${publicDir}/motions`, { force: true, recursive: true })
+  rmSync(`${publicDir}/en/motions`, { force: true, recursive: true })
+  mkdirSync(`${publicDir}/motions`, { recursive: true })
+  mkdirSync(`${publicDir}/en/motions`, { recursive: true })
+  for (const { id } of antragIds) {
+    writeFileSync(`${publicDir}/motions/${id}.json`, JSON.stringify(fullAntrag(db, id)))
+    writeFileSync(`${publicDir}/en/motions/${id}.json`, JSON.stringify(fullAntrag(db, id, 'en')))
+  }
   const memberIds = db.prepare(`
     SELECT DISTINCT m.rowid, m.id
     FROM members m

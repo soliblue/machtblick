@@ -3,9 +3,12 @@ import { getParty } from '@/server/parties'
 import { PartyDetailShell } from '@/views/partyDetail/PartyDetailShell'
 import { seoMeta, canonicalLink, alternateJsonLink, jsonLd, SITE_URL } from '@/lib/seo'
 import { PARTY_LABEL, hasPartyLine } from '@/lib/parties'
+import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 
 export const Route = createFileRoute('/parties/$id')({
   component: PartyDetailLayout,
+  errorComponent: NotFoundPage,
+  notFoundComponent: NotFoundPage,
   loader: ({ params }) => getParty({ data: params.id }),
   staleTime: Infinity,
   shouldReload: false,

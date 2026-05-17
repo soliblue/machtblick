@@ -38,9 +38,12 @@
     "etl:polarity": "node etl/bundestag/polarity/run.mjs",
     "etl:initiator": "node etl/bundestag/votes/initiator/run.mjs",
     "etl:descriptions": "node etl/bundestag/descriptions/run.mjs",
+    "etl:antrag-descriptions": "node etl/bundestag/antrag-descriptions/run.mjs",
+    "etl:antrag-titles": "node etl/bundestag/antrag-titles/run.mjs",
     "etl:titles": "node etl/bundestag/titles/run.mjs",
     "etl:party-positions": "node etl/bundestag/party-positions/run.mjs",
     "etl:translations": "node etl/bundestag/translations/run.mjs",
+    "etl:antrag-description-translations": "node etl/bundestag/antrag-description-translations/run.mjs",
     "etl:speech-translations": "node etl/bundestag/speech-translations/run.mjs"
   },
   "devDependencies": {

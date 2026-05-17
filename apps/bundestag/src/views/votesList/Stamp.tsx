@@ -9,6 +9,9 @@ export type StampVariant =
   | 'abweichler'
   | 'beantwortet'
   | 'offen'
+  | 'ueberwiesen'
+  | 'beschlussempfehlung'
+  | 'nicht-beraten'
 
 const config: Record<StampVariant, { color: string; rotate: number; opacity?: number }> = {
   angenommen: { color: 'var(--color-success)', rotate: -4, opacity: 0.85 },
@@ -19,6 +22,9 @@ const config: Record<StampVariant, { color: string; rotate: number; opacity?: nu
   abweichler: { color: 'var(--color-fg)', rotate: 5, opacity: 0.75 },
   beantwortet: { color: 'var(--color-success)', rotate: -3, opacity: 0.85 },
   offen: { color: 'var(--color-danger)', rotate: 4, opacity: 0.85 },
+  ueberwiesen: { color: 'var(--color-blue)', rotate: 4, opacity: 0.85 },
+  beschlussempfehlung: { color: 'var(--color-purple)', rotate: -3, opacity: 0.85 },
+  'nicht-beraten': { color: 'var(--color-fg)', rotate: 3, opacity: 0.7 },
 }
 
 type Props = { variant: StampVariant; size?: 's' | 'm' }

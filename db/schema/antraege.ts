@@ -7,6 +7,7 @@ export const antraege = sqliteTable(
     id: integer('id').primaryKey(),
     type: text('type', { enum: ['antrag', 'gesetzentwurf'] }).notNull(),
     title: text('title').notNull(),
+    cleanTitle: text('clean_title'),
     abstract: text('abstract'),
     beratungsstand: text('beratungsstand'),
     wahlperiode: integer('wahlperiode').notNull(),

@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "required": ["translations"],
+  "additionalProperties": false,
+  "properties": {
+    "translations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["antrag_id", "summary_simplified", "summary_detail"],
+        "additionalProperties": false,
+        "properties": {
+          "antrag_id": { "type": "integer" },
+          "summary_simplified": { "type": "string" },
+          "summary_detail": { "type": "string" }
+        }
+      }
+    }
+  }
+}

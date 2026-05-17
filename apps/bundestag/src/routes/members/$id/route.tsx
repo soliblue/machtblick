@@ -3,9 +3,12 @@ import { getMember } from '@/server/members'
 import { MemberDetailShell } from '@/views/memberDetail/MemberDetailShell'
 import { seoMeta, canonicalLink, alternateJsonLink, jsonLd, SITE_URL } from '@/lib/seo'
 import { hasPartyLine } from '@/lib/parties'
+import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 
 export const Route = createFileRoute('/members/$id')({
   component: MemberDetailLayout,
+  errorComponent: NotFoundPage,
+  notFoundComponent: NotFoundPage,
   loader: ({ params }) => getMember({ data: params.id }),
   staleTime: Infinity,
   shouldReload: false,
@@ -17,8 +20,8 @@ export const Route = createFileRoute('/members/$id')({
       meta: seoMeta({
         title: name,
         description: hasLineHistory
-          ? `${name} (${loaderData?.party ?? ''}, ${loaderData?.state ?? ''}) — Abstimmungsverhalten, Anwesenheit und Linientreue im Deutschen Bundestag.`
-          : `${name} (${loaderData?.party ?? ''}, ${loaderData?.state ?? ''}) — Abstimmungsverhalten und Anwesenheit im Deutschen Bundestag.`,
+          ? `${name} (${loaderData?.party ?? ''}, ${loaderData?.state ?? ''}), Abstimmungsverhalten, Anwesenheit und Linientreue im Deutschen Bundestag.`
+          : `${name} (${loaderData?.party ?? ''}, ${loaderData?.state ?? ''}), Abstimmungsverhalten und Anwesenheit im Deutschen Bundestag.`,
         canonical: path,
         type: 'profile',
       }),

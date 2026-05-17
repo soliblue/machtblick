@@ -1,4 +1,5 @@
 import { createServerFn } from '@tanstack/react-start'
+import { notFound } from '@tanstack/react-router'
 import { db } from '@machtblick/db/client'
 import { votes, votePartySummaries, voteMembers, members, partyDonations, voteTranslations } from '@machtblick/db/schema'
 import { desc, eq, and, inArray } from 'drizzle-orm'
@@ -68,7 +69,7 @@ export type PartyVoteRow = {
   cleanTitle: string | null
   result: 'angenommen' | 'abgelehnt'
   partyVote: PartyVote
-  cohesion: number
+  cohesion: number | null
   yes: number
   no: number
   abstain: number
@@ -148,7 +149,7 @@ export const getParty = createServerFn({ method: 'GET' })
   .handler(async ({ data }): Promise<PartyDetail> => {
     const { slug, locale } = data
     const party = SLUG_TO_PARTY[slug]
-    if (!party) throw new Error(`party not found: ${slug}`)
+    if (!party) throw notFound()
     const summaries = db
       .select({
         voteId: votePartySummaries.voteId,

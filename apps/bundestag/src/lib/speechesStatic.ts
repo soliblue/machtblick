@@ -63,7 +63,7 @@ function matches(speakerName: string, body: string, terms: string[]): boolean {
   return terms.every((t) => hay.includes(t))
 }
 
-export async function searchSpeechesStatic(params: SpeechSearchParams): Promise<SpeechSearchResponse> {
+export async function searchSpeechesStatic(params: SpeechSearchParams, locale: Locale = 'de'): Promise<SpeechSearchResponse> {
   const meta = await loadSpeechMeta()
   const q = params.q?.trim() ?? ''
   const party = params.party?.trim() ?? ''
@@ -71,7 +71,7 @@ export async function searchSpeechesStatic(params: SpeechSearchParams): Promise<
   const memberId = params.memberId?.trim() ?? ''
   const page = Math.max(0, params.page ?? 0)
   const terms = tokens(q)
-  const texts = terms.length ? await loadSpeechTexts() : null
+  const texts = terms.length || locale === 'en' ? await loadSpeechTexts(locale) : null
 
   const filtered = meta.filter((s) => {
     if (party && s.party !== party) return false
@@ -90,6 +90,7 @@ export async function searchSpeechesStatic(params: SpeechSearchParams): Promise<
 
   const items: SpeechResult[] = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map((s) => ({
     ...s,
+    excerpt: locale === 'en' && texts ? (texts[s.id] ?? s.excerpt).slice(0, 220) : s.excerpt,
     snippet: q && texts ? makeSnippet(texts[s.id] ?? s.excerpt, terms) : null,
   }))
 

@@ -1,4 +1,5 @@
 import { createServerFn } from '@tanstack/react-start'
+import { notFound } from '@tanstack/react-router'
 import { db } from '@machtblick/db/client'
 import { votes, voteDocuments, votePartySummaries, voteMembers, members, speeches, speechTranslations, voteDescriptionDecisions, voteTranslations, votePartySummaryTranslations } from '@machtblick/db/schema'
 import { eq, desc, asc, inArray, and } from 'drizzle-orm'
@@ -182,8 +183,8 @@ export const getVote = createServerFn({ method: 'GET' })
   .handler(async ({ data }): Promise<VoteDetail> => {
     const { id, locale } = data
     const voteRow = db.select().from(votes).where(eq(votes.id, id)).get()
-    if (!voteRow) throw new Error(`vote not found: ${id}`)
-    if (!SHOW_HAMMELSPRUNG && voteRow.voteType === 'hammelsprung') throw new Error(`vote not found: ${id}`)
+    if (!voteRow) throw notFound()
+    if (!SHOW_HAMMELSPRUNG && voteRow.voteType === 'hammelsprung') throw notFound()
     const translations = translationMap([id], locale)
     const summaryTranslations = partySummaryTranslationMap(id, locale)
     const documents = db.select().from(voteDocuments).where(eq(voteDocuments.voteId, id)).all()

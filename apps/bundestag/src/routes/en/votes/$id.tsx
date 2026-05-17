@@ -3,11 +3,14 @@ import { getVote } from '@/server/votes'
 import { getVoteSponsors } from '@/server/voteSponsors'
 import { VoteDetail, type VoteTab, isVoteTab } from '@/views/voteDetail/VoteDetail'
 import { seoMeta, canonicalLink, alternateJsonLink } from '@/lib/seo'
+import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 
 type Search = { tab?: VoteTab }
 
 export const Route = createFileRoute('/en/votes/$id')({
   component: VoteDetailRoute,
+  errorComponent: NotFoundPage,
+  notFoundComponent: NotFoundPage,
   loader: async ({ params }) => {
     const [detail, sponsors] = await Promise.all([
       getVote({ data: { id: params.id, locale: 'en' } }),
@@ -23,8 +26,9 @@ export const Route = createFileRoute('/en/votes/$id')({
     const v = loaderData?.vote
     const headline = v ? (v.cleanTitle ?? v.title) : null
     const title = headline ?? 'Vote'
+    const result = v?.result === 'angenommen' ? 'accepted' : v?.result === 'abgelehnt' ? 'rejected' : 'decided'
     const desc = v && headline
-      ? `${headline}. Bundestag vote on ${v.date}: ${v.result}. Sponsor: ${loaderData?.proposingParty ?? 'unknown'}.`
+      ? `${headline}. Bundestag vote on ${v.date}: ${result}. Sponsor: ${loaderData?.proposingParty ?? 'unknown'}.`
       : 'Vote in the German Bundestag.'
     return {
       meta: seoMeta({ title, description: desc, canonical: path, type: 'article' }),

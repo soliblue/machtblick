@@ -10,6 +10,14 @@ export function PartyBadge({ party, compact = false }: Props) {
   const locale = useLocale()
   const t = useCopy()
   if (!party) return <span className="text-s opacity-l">{t.other}</span>
+  const parties = party.split(',').map((part) => part.trim()).filter(Boolean)
+  if (parties.length > 1) {
+    return (
+      <span className="inline-flex flex-wrap items-center gap-xs">
+        {parties.map((part) => <PartyBadge key={part} party={part} compact={compact} />)}
+      </span>
+    )
+  }
   const color = PARTY_COLOR[party] ?? 'var(--color-gray)'
   const slug = party === 'Bundesregierung' ? undefined : PARTY_SLUG[party]
   if (compact && PARTY_LOGO[party]) {
