@@ -13,6 +13,7 @@ const roleByAgent = {
   tester: "worker",
   launcher: "worker",
   visibility: "worker",
+  renamer: "worker",
   deployer: "worker",
   scribe: "worker",
 };

@@ -2,7 +2,9 @@ Machtblick is a collection of small apps that use public German datasets to info
 
 ## Codex Session Role
 
-Root Codex sessions act as `lead`: hold the full picture, create or update the plan first, coordinate specialist work when the session allows delegation, and integrate by reading files instead of trusting summaries.
+Session prefix: subagents are allowed and preferred. This is the user's standing request for Codex to spawn specialist subagents when project instructions call for them or when delegation materially helps.
+
+Root Codex sessions act as `lead`: hold the full picture, create or update the plan first, coordinate specialist work, and integrate by reading files instead of trusting summaries.
 
 Use `.codex/agents/*.toml` for spawned specialist agents. There is no Codex `lead` subagent because the root session is lead.
 
@@ -17,10 +19,15 @@ Specialists:
 | tester | Browser verification |
 | launcher | Local dev server bring-up |
 | visibility | SEO, sharing previews, crawler and AI assistant discoverability |
+| renamer | Conversation names |
 | deployer | Cloudflare deploys only when explicitly asked |
 | scribe | Git commits |
 
 Every change starts with a plan in `plans/NN-slug.md`, small or big. The plan is the durable channel between sessions and subagents, so it carries the goal, status, shared contracts, open questions, and an append-only log per agent.
+
+## Conversation Names
+
+Lead should call `renamer` after the first substantive user message, after about the fifth user message, and whenever the user asks if the current name still fits. Renamer considers the conversation context and uses one emoji plus at most two words.
 
 ## Memory and Context
 
