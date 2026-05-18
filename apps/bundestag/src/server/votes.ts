@@ -44,6 +44,8 @@ function loadDebateForVote(voteId: string, date: string, agendaItem: string | nu
       speakerRole: row.speakerRole,
       party: row.party ? (SPEECH_PARTY_NORMALIZE[row.party] ?? row.party) : null,
       date: row.date,
+      agendaItem: row.agendaItem,
+      agendaTitle: null,
       position: row.position,
       excerpt: translations.get(row.id)?.textExcerpt ?? row.textExcerpt,
     })),

@@ -1,4 +1,5 @@
 import type Database from 'better-sqlite3'
+import { speechAgendaTitle } from '../src/server/speechAgendaTitles'
 
 type MemberRow = {
   id: string
@@ -85,6 +86,7 @@ type SpeechJoinRow = {
   position: number
   text_excerpt: string
   date: string
+  agenda_item: string | null
   vote_id: string | null
   vote_title: string | null
   vote_clean_title: string | null
@@ -199,9 +201,23 @@ export function fullMember(db: Database.Database, id: string) {
   const currentParty = affiliations.find((a) => a.valid_to === null)?.party ?? ''
   const speechRows = db.prepare(`
     SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party, s.position,
-           s.text_excerpt, s.date, s.vote_id, v.title AS vote_title, v.clean_title AS vote_clean_title
+           s.text_excerpt, s.date, s.agenda_item,
+           COALESCE(direct.id, agenda.id) AS vote_id,
+           COALESCE(direct.title, agenda.title) AS vote_title,
+           COALESCE(direct.clean_title, agenda.clean_title) AS vote_clean_title
     FROM speeches s
-    LEFT JOIN votes v ON v.id = s.vote_id
+    LEFT JOIN votes direct ON direct.id = s.vote_id
+    LEFT JOIN votes agenda ON agenda.id = (
+      SELECT av.id FROM votes av
+      WHERE av.term_id = ${CURRENT_TERM}
+        AND av.procedural = 0
+        AND av.vote_type != 'hammelsprung'
+        AND av.date = s.date
+        AND av.agenda_item = s.agenda_item
+        AND s.vote_id IS NULL
+      ORDER BY CASE av.vote_type WHEN 'namentlich' THEN 0 WHEN 'handzeichen' THEN 1 ELSE 2 END, av.id
+      LIMIT 1
+    )
     WHERE s.speaker_member_id = ?
     ORDER BY s.date DESC, s.position ASC
   `).all(id) as SpeechJoinRow[]
@@ -214,6 +230,8 @@ export function fullMember(db: Database.Database, id: string) {
     position: row.position,
     excerpt: row.text_excerpt,
     date: row.date,
+    agendaItem: row.agenda_item,
+    agendaTitle: speechAgendaTitle(row.date, row.agenda_item),
     voteId: row.vote_id,
     voteTitle: row.vote_clean_title ?? row.vote_title,
     snippet: null,

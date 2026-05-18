@@ -73,6 +73,7 @@ type SpeechRow = {
   speaker_role: string | null
   party: string | null
   date: string
+  agenda_item: string | null
   position: number
   text_excerpt: string
 }
@@ -245,14 +246,14 @@ export function fullVote(db: Database.Database, id: string) {
     .sort((a, b) => b.count - a.count)
   const speechRowsByAgenda = voteRow.agenda_item
     ? db.prepare(`
-      SELECT id, speaker_name, speaker_member_id, speaker_role, party, date, position, text_excerpt
+      SELECT id, speaker_name, speaker_member_id, speaker_role, party, date, agenda_item, position, text_excerpt
       FROM speeches WHERE date = ? AND agenda_item = ? ORDER BY position ASC
     `).all(voteRow.date, voteRow.agenda_item) as SpeechRow[]
     : []
   const speechRows = speechRowsByAgenda.length
     ? speechRowsByAgenda
     : db.prepare(`
-      SELECT id, speaker_name, speaker_member_id, speaker_role, party, date, position, text_excerpt
+      SELECT id, speaker_name, speaker_member_id, speaker_role, party, date, agenda_item, position, text_excerpt
       FROM speeches WHERE vote_id = ? ORDER BY position ASC
     `).all(id) as SpeechRow[]
   const debate = speechRows.map((r) => ({
@@ -262,6 +263,7 @@ export function fullVote(db: Database.Database, id: string) {
     speakerRole: r.speaker_role,
     party: normalizeSpeechParty(r.party),
     date: r.date,
+    agendaItem: r.agenda_item,
     position: r.position,
     excerpt: r.text_excerpt,
   }))

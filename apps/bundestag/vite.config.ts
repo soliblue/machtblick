@@ -9,6 +9,7 @@ import { leanVotes, fullVote } from './vite-data/votes'
 import { leanMembers, fullMember } from './vite-data/members'
 import { leanParties, fullParty } from './vite-data/parties'
 import { fullAntrag } from './vite-data/antraege'
+import { speechAgendaTitle } from './src/server/speechAgendaTitles'
 
 const SITE_URL = 'https://machtblick.de'
 const CURRENT_TERM = 21
@@ -34,6 +35,7 @@ type SpeechRow = {
   text_excerpt_en: string | null
   text_full_en: string | null
   date: string
+  agenda_item: string | null
   vote_id: string | null
   vote_title: string | null
 }
@@ -52,9 +54,22 @@ function writeSpeechesStatic() {
   const rows = db.prepare(`
     SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party, s.position,
            s.text_excerpt, s.text_full, st.text_excerpt AS text_excerpt_en, st.text_full AS text_full_en,
-           s.date, s.vote_id, v.title AS vote_title
+           s.date, s.agenda_item,
+           COALESCE(direct.id, agenda.id) AS vote_id,
+           COALESCE(direct.clean_title, direct.title, agenda.clean_title, agenda.title) AS vote_title
     FROM speeches s
-    LEFT JOIN votes v ON v.id = s.vote_id
+    LEFT JOIN votes direct ON direct.id = s.vote_id
+    LEFT JOIN votes agenda ON agenda.id = (
+      SELECT av.id FROM votes av
+      WHERE av.term_id = ${CURRENT_TERM}
+        AND av.procedural = 0
+        AND av.vote_type != 'hammelsprung'
+        AND av.date = s.date
+        AND av.agenda_item = s.agenda_item
+        AND s.vote_id IS NULL
+      ORDER BY CASE av.vote_type WHEN 'namentlich' THEN 0 WHEN 'handzeichen' THEN 1 ELSE 2 END, av.id
+      LIMIT 1
+    )
     LEFT JOIN speech_translations st ON st.speech_id = s.id AND st.locale = 'en'
     ORDER BY s.date DESC, s.position ASC
   `).all() as SpeechRow[]
@@ -71,6 +86,8 @@ function writeSpeechesStatic() {
     position: r.position,
     excerpt: r.text_full.slice(0, 160),
     date: r.date,
+    agendaItem: r.agenda_item,
+    agendaTitle: speechAgendaTitle(r.date, r.agenda_item),
     voteId: r.vote_id,
     voteTitle: r.vote_title,
   }))

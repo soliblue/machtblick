@@ -8,6 +8,7 @@ import { MemberDetailTabs } from './MemberDetailTabs'
 import { MemberPortrait } from './MemberPortrait'
 import { MandateBadge } from './MandateBadge'
 import { useCopy, useLocale } from '@/lib/i18n'
+import { groupMemberSpeeches } from '@/hooks/memberSpeechGroups'
 
 type Props = {
   data: MemberDetailData
@@ -17,12 +18,13 @@ type Props = {
 export function MemberDetailShell({ data, children }: Props) {
   const t = useCopy()
   const locale = useLocale()
+  const speechGroups = groupMemberSpeeches(data.speeches)
   const tiles = [
     { label: t.attendance, value: pct(data.attendance), icon: CalendarCheck },
     { label: t.loyalty, value: data.loyalty === null ? '-' : pct(data.loyalty), icon: Heart },
     { label: t.deviations, value: String(data.defections), icon: UserX },
     { label: t.votes, value: String(data.votesAppeared), icon: Vote },
-    { label: locale === 'en' ? 'Speeches' : 'Reden', value: String(data.speeches.length), icon: Mic2 },
+    { label: locale === 'en' ? 'Speeches' : 'Reden', value: String(speechGroups.length), icon: Mic2 },
     { label: locale === 'en' ? 'Proposals' : 'Anträge', value: String(data.initiatives.length), icon: ScrollText },
   ]
   return (
@@ -68,7 +70,7 @@ export function MemberDetailShell({ data, children }: Props) {
       <div className="mt-l">
         <StatTiles tiles={tiles} />
       </div>
-      <MemberDetailTabs memberId={data.id} votes={data.history.length} speeches={data.speeches.length} proposals={data.initiatives.length} />
+      <MemberDetailTabs memberId={data.id} votes={data.history.length} speeches={speechGroups.length} proposals={data.initiatives.length} />
       {children}
     </main>
   )

@@ -6,7 +6,6 @@ import {
   antragSignatories,
   memberAbgeordnetenwatch,
   members,
-  speeches,
   speechTranslations as speechTranslationRows,
   voteAntraege,
   voteMembers,
@@ -14,11 +13,12 @@ import {
   votes,
   voteTranslations,
 } from '@machtblick/db/schema'
-import { eq, desc, and, asc, sql, inArray } from 'drizzle-orm'
+import { eq, desc, and, sql, inArray } from 'drizzle-orm'
 import { getCurrentPartyMap, loadAffiliationsByMember, partyAt } from './memberParty'
 import { hasPartyLine } from '../lib/parties'
 import type { SpeechResult } from './speeches'
 import { normalizeLocale, type Locale } from '../lib/locale'
+import { speechAgendaTitle } from './speechAgendaTitles'
 
 export type MemberSex = 'm' | 'f' | 'd'
 export type MandateType = 'direkt' | 'liste'
@@ -177,6 +177,21 @@ export type MemberInitiativeRow = {
   linkedVotes: MemberInitiativeVote[]
 }
 
+type MemberSpeechJoinRow = {
+  id: string
+  speaker_name: string
+  speaker_member_id: string | null
+  speaker_role: string | null
+  party: string | null
+  position: number
+  text_excerpt: string
+  date: string
+  agenda_item: string | null
+  vote_id: string | null
+  vote_title: string | null
+  vote_clean_title: string | null
+}
+
 function translationMap(ids: string[], locale: Locale) {
   return new Map(
     locale === 'en' && ids.length
@@ -260,29 +275,46 @@ export const getMember = createServerFn({ method: 'GET' })
       }
     })
     const currentParty = affList.find((a) => a.validTo === null)?.party ?? ''
-    const memberSpeeches = db
-      .select({ speech: speeches, voteTitle: votes.title, voteCleanTitle: votes.cleanTitle })
-      .from(speeches)
-      .leftJoin(votes, eq(votes.id, speeches.voteId))
-      .where(eq(speeches.speakerMemberId, id))
-      .orderBy(desc(speeches.date), asc(speeches.position))
-      .all()
-    const speechVoteTranslations = translationMap(memberSpeeches.map(({ speech }) => speech.voteId).filter((id): id is string => !!id), locale)
-    const speechTextTranslations = speechTextTranslationMap(memberSpeeches.map(({ speech }) => speech.id), locale)
-    const speechResults: SpeechResult[] = memberSpeeches.map(({ speech: row, voteTitle, voteCleanTitle }) => {
-      const t = row.voteId ? speechVoteTranslations.get(row.voteId) : null
+    const memberSpeeches = db.all(sql`
+      SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party, s.position,
+             s.text_excerpt, s.date, s.agenda_item,
+             COALESCE(direct.id, agenda.id) AS vote_id,
+             COALESCE(direct.title, agenda.title) AS vote_title,
+             COALESCE(direct.clean_title, agenda.clean_title) AS vote_clean_title
+      FROM speeches s
+      LEFT JOIN votes direct ON direct.id = s.vote_id
+      LEFT JOIN votes agenda ON agenda.id = (
+        SELECT av.id FROM votes av
+        WHERE av.term_id = ${CURRENT_TERM}
+          AND av.procedural = 0
+          AND av.vote_type != 'hammelsprung'
+          AND av.date = s.date
+          AND av.agenda_item = s.agenda_item
+          AND s.vote_id IS NULL
+        ORDER BY CASE av.vote_type WHEN 'namentlich' THEN 0 WHEN 'handzeichen' THEN 1 ELSE 2 END, av.id
+        LIMIT 1
+      )
+      WHERE s.speaker_member_id = ${id}
+      ORDER BY s.date DESC, s.position ASC
+    `) as MemberSpeechJoinRow[]
+    const speechVoteTranslations = translationMap(memberSpeeches.map((row) => row.vote_id).filter((id): id is string => !!id), locale)
+    const speechTextTranslations = speechTextTranslationMap(memberSpeeches.map((row) => row.id), locale)
+    const speechResults: SpeechResult[] = memberSpeeches.map((row) => {
+      const t = row.vote_id ? speechVoteTranslations.get(row.vote_id) : null
       const st = speechTextTranslations.get(row.id)
       return {
         id: row.id,
-        speakerName: row.speakerName,
-        speakerMemberId: row.speakerMemberId,
-        speakerRole: row.speakerRole,
+        speakerName: row.speaker_name,
+        speakerMemberId: row.speaker_member_id,
+        speakerRole: row.speaker_role,
         party: row.party ? (SPEECH_PARTY_NORMALIZE[row.party] ?? row.party) : null,
         position: row.position,
-        excerpt: st?.textExcerpt ?? row.textExcerpt,
+        excerpt: st?.textExcerpt ?? row.text_excerpt,
         date: row.date,
-        voteId: row.voteId,
-        voteTitle: t?.cleanTitle ?? t?.title ?? voteCleanTitle ?? voteTitle,
+        agendaItem: row.agenda_item,
+        agendaTitle: speechAgendaTitle(row.date, row.agenda_item),
+        voteId: row.vote_id,
+        voteTitle: t?.cleanTitle ?? t?.title ?? row.vote_clean_title ?? row.vote_title,
         snippet: null,
       }
     })

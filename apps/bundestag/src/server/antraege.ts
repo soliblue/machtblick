@@ -252,6 +252,8 @@ export const getAntrag = createServerFn({ method: 'GET' })
       speakerRole: s.speakerRole,
       party: s.party ? (SPEECH_PARTY_NORMALIZE[s.party] ?? s.party) : null,
       date: s.date,
+      agendaItem: s.agendaItem,
+      agendaTitle: null,
       position: s.position,
       excerpt: speechTranslationsById.get(s.id)?.textExcerpt ?? s.textExcerpt,
     }))

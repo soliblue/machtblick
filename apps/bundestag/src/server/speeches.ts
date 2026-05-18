@@ -1,7 +1,8 @@
 import { createServerFn } from '@tanstack/react-start'
 import { db } from '@machtblick/db/client'
-import { speeches, votes } from '@machtblick/db/schema'
-import { asc, desc, eq, isNotNull, sql, type SQL } from 'drizzle-orm'
+import { speeches } from '@machtblick/db/schema'
+import { desc, eq, isNotNull, sql, type SQL } from 'drizzle-orm'
+import { speechAgendaTitle } from './speechAgendaTitles'
 
 export type SpeechSummary = {
   id: string
@@ -10,6 +11,8 @@ export type SpeechSummary = {
   speakerRole: string | null
   party: string | null
   date: string
+  agendaItem: string | null
+  agendaTitle: string | null
   position: number
   excerpt: string
 }
@@ -52,13 +55,11 @@ function toSummary(row: typeof speeches.$inferSelect): SpeechSummary {
     speakerRole: row.speakerRole,
     party: normalizeParty(row.party),
     date: row.date,
+    agendaItem: row.agendaItem,
+    agendaTitle: speechAgendaTitle(row.date, row.agendaItem),
     position: row.position,
     excerpt: row.textExcerpt,
   }
-}
-
-function toResult(row: typeof speeches.$inferSelect, voteTitle: string | null = null): SpeechResult {
-  return { ...toSummary(row), date: row.date, voteId: row.voteId, voteTitle, snippet: null }
 }
 
 type SpeechRawRow = {
@@ -70,6 +71,8 @@ type SpeechRawRow = {
   position: number
   text_excerpt: string
   date: string
+  agenda_item: string | null
+  agenda_title?: string | null
   vote_id: string | null
   vote_title: string | null
   snippet: string | null
@@ -85,6 +88,8 @@ function rawToResult(r: SpeechRawRow): SpeechResult {
     position: r.position,
     excerpt: r.text_excerpt,
     date: r.date,
+    agendaItem: r.agenda_item,
+    agendaTitle: r.agenda_title ?? speechAgendaTitle(r.date, r.agenda_item),
     voteId: r.vote_id,
     voteTitle: r.vote_title,
     snippet: r.snippet,
@@ -125,6 +130,7 @@ export type SpeechSearchParams = {
 }
 
 const PAGE_SIZE = 5
+const CURRENT_TERM = 21
 
 export const searchSpeeches = createServerFn({ method: 'GET' })
   .inputValidator((params: SpeechSearchParams) => params)
@@ -173,9 +179,25 @@ export const searchSpeeches = createServerFn({ method: 'GET' })
       ? sql`snippet(speeches_fts, 1, '<<<', '>>>', '…', 24)`
       : sql`NULL`
     const items = db.all(sql`
-      SELECT s.*, COALESCE(v.clean_title, v.title) AS vote_title, ${snippetExpr} AS snippet FROM speeches s
+      SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party, s.position,
+             s.text_excerpt, s.date, s.agenda_item,
+             COALESCE(direct.id, agenda.id) AS vote_id,
+             COALESCE(direct.clean_title, direct.title, agenda.clean_title, agenda.title) AS vote_title,
+             ${snippetExpr} AS snippet
+      FROM speeches s
       ${ftsJoin}
-      LEFT JOIN votes v ON v.id = s.vote_id
+      LEFT JOIN votes direct ON direct.id = s.vote_id
+      LEFT JOIN votes agenda ON agenda.id = (
+        SELECT av.id FROM votes av
+        WHERE av.term_id = ${CURRENT_TERM}
+          AND av.procedural = 0
+          AND av.vote_type != 'hammelsprung'
+          AND av.date = s.date
+          AND av.agenda_item = s.agenda_item
+          AND s.vote_id IS NULL
+        ORDER BY CASE av.vote_type WHEN 'namentlich' THEN 0 WHEN 'handzeichen' THEN 1 ELSE 2 END, av.id
+        LIMIT 1
+      )
       ${whereSql}
       ORDER BY s.date DESC, s.position ASC
       LIMIT ${PAGE_SIZE} OFFSET ${offset}
@@ -201,12 +223,27 @@ export type MemberSpeechSummary = SpeechResult
 export const listSpeechesForMember = createServerFn({ method: 'GET' })
   .inputValidator((memberId: string) => memberId)
   .handler(async ({ data: memberId }): Promise<MemberSpeechSummary[]> => {
-    const rows = db
-      .select({ speech: speeches, voteTitle: votes.title, voteCleanTitle: votes.cleanTitle })
-      .from(speeches)
-      .leftJoin(votes, eq(votes.id, speeches.voteId))
-      .where(eq(speeches.speakerMemberId, memberId))
-      .orderBy(desc(speeches.date), asc(speeches.position))
-      .all()
-    return rows.map((r) => toResult(r.speech, r.voteCleanTitle ?? r.voteTitle))
+    const rows = db.all(sql`
+      SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party, s.position,
+             s.text_excerpt, s.date, s.agenda_item,
+             COALESCE(direct.id, agenda.id) AS vote_id,
+             COALESCE(direct.clean_title, direct.title, agenda.clean_title, agenda.title) AS vote_title,
+             NULL AS snippet
+      FROM speeches s
+      LEFT JOIN votes direct ON direct.id = s.vote_id
+      LEFT JOIN votes agenda ON agenda.id = (
+        SELECT av.id FROM votes av
+        WHERE av.term_id = ${CURRENT_TERM}
+          AND av.procedural = 0
+          AND av.vote_type != 'hammelsprung'
+          AND av.date = s.date
+          AND av.agenda_item = s.agenda_item
+          AND s.vote_id IS NULL
+        ORDER BY CASE av.vote_type WHEN 'namentlich' THEN 0 WHEN 'handzeichen' THEN 1 ELSE 2 END, av.id
+        LIMIT 1
+      )
+      WHERE s.speaker_member_id = ${memberId}
+      ORDER BY s.date DESC, s.position ASC
+    `) as Array<SpeechRawRow>
+    return rows.map(rawToResult)
   })

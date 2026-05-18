@@ -1,41 +1,16 @@
-import { useMemo, useState } from 'react'
 import { Search } from 'lucide-react'
-import { useQuery } from '@tanstack/react-query'
-import { SpeechRow } from '@/views/redenSearch/SpeechRow'
 import { Pager } from '@/views/redenSearch/Pager'
-import { tokenize } from '@/lib/highlight'
-import { makeSnippet } from '@/lib/snippet'
-import { loadSpeechTexts, speechTextsLoaded } from '@/lib/speechesStatic'
 import type { SpeechResult } from '@/server/speeches'
 import { useCopy, useLocale } from '@/lib/i18n'
+import { useMemberSpeeches } from '@/hooks/useMemberSpeeches'
+import { MemberSpeechGroupRow } from './MemberSpeechGroupRow'
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
-const PAGE_SIZE = 5
 
 export function MemberSpeechesSection({ speeches }: { speeches: SpeechResult[] }) {
-  const [query, setQuery] = useState('')
-  const [page, setPage] = useState(0)
   const locale = useLocale()
   const t = useCopy()
-  const terms = tokenize(query)
-  const texts = useQuery({
-    queryKey: ['speech-texts', locale],
-    queryFn: () => loadSpeechTexts(locale),
-    enabled: terms.length > 0,
-    staleTime: Infinity,
-  })
-  const textsLoading = terms.length > 0 && !speechTextsLoaded(locale)
-  const filtered = useMemo(() => {
-    if (!terms.length) return speeches
-    return speeches.filter((s) => {
-      const body = texts.data?.[s.id] ?? s.excerpt
-      const hay = `${s.speakerName} ${body}`.toLowerCase()
-      return terms.every((t) => hay.includes(t))
-    })
-  }, [speeches, terms, texts.data])
-  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
-  const safePage = Math.min(page, pageCount - 1)
-  const slice = filtered.slice(safePage * PAGE_SIZE, (safePage + 1) * PAGE_SIZE)
+  const speechState = useMemberSpeeches(speeches, locale)
   return (
     <section>
       <div className="mb-m flex flex-wrap items-center gap-m">
@@ -43,29 +18,41 @@ export function MemberSpeechesSection({ speeches }: { speeches: SpeechResult[] }
           <Search size={14} className="absolute left-s top-1/2 -translate-y-1/2 opacity-l" />
           <input
             type="text"
-            value={query}
-            onChange={(e) => { setQuery(e.target.value); setPage(0) }}
+            value={speechState.query}
+            onChange={(e) => speechState.setQuery(e.target.value)}
             placeholder={t.searchSpeeches}
             className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
             style={{ borderColor: ROW_BORDER }}
           />
-          {textsLoading && <div className="mt-xs text-s opacity-l">{t.searchIndexLoading}</div>}
+          {speechState.textsLoading && <div className="mt-xs text-s opacity-l">{t.searchIndexLoading}</div>}
+        </div>
+        <div className="text-s opacity-l">
+          {locale === 'en'
+            ? `${speechState.filteredCount} speeches, ${speechState.contributionCount} contributions`
+            : `${speechState.filteredCount} Reden, ${speechState.contributionCount} Beiträge`}
         </div>
       </div>
-      {textsLoading ? (
+      {speechState.textsLoading ? (
         <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>{t.searchPreparing}</div>
-      ) : filtered.length === 0 ? (
+      ) : speechState.filteredCount === 0 ? (
         <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>{t.noSpeechesFound}</div>
       ) : (
         <div className="flex flex-col">
-          {slice.map((s) => {
-            const body = texts.data?.[s.id] ?? s.excerpt
-            const snippet = terms.length ? makeSnippet(body, terms) : null
-            return <SpeechRow key={s.id} speech={{ ...s, snippet }} query={query} />
-          })}
+          {speechState.slice.map((group) => (
+            <MemberSpeechGroupRow
+              key={group.id}
+              group={group}
+              open={speechState.openIds.has(group.id)}
+              onToggle={() => speechState.toggleOpen(group.id)}
+              terms={speechState.terms}
+              texts={speechState.texts}
+              contextRows={speechState.contextRowsFor(group)}
+              contextLoading={speechState.contextLoading}
+            />
+          ))}
         </div>
       )}
-      {pageCount > 1 && <Pager page={safePage} pageCount={pageCount} onPage={setPage} />}
+      {speechState.pageCount > 1 && <Pager page={speechState.safePage} pageCount={speechState.pageCount} onPage={speechState.setPage} />}
     </section>
   )
 }
