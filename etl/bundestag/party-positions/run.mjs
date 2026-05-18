@@ -33,7 +33,7 @@ const SPEECH_PARTY = {
 ensureSchema()
 
 const candidates = db.prepare(`
-  SELECT v.id AS vote_id, v.date, v.title, v.clean_title, v.summary, v.summary_simplified, v.result,
+  SELECT v.id AS vote_id, v.date, v.agenda_item, v.title, v.clean_title, v.summary, v.summary_simplified, v.result,
          s.party, s.position, s.members, s.yes, s.no, s.abstain, s.absent, s.position_summary
   FROM vote_party_summaries s
   INNER JOIN votes v ON v.id = s.vote_id
@@ -45,7 +45,7 @@ const candidates = db.prepare(`
 
 const jobs = []
 for (const row of candidates) {
-  const speeches = loadSpeeches(row.vote_id, SPEECH_PARTY[row.party] ?? row.party)
+  const speeches = loadSpeeches(row, SPEECH_PARTY[row.party] ?? row.party)
   const words = speeches.reduce((sum, s) => sum + s.word_count, 0)
   if (speeches.length > 0 && words >= minWords && (force || !row.position_summary)) jobs.push({ row, speeches })
 }
@@ -104,14 +104,28 @@ function ensureSchema() {
   `).run()
 }
 
-function loadSpeeches(voteId, party) {
-  return db.prepare(`
+function loadSpeeches(vote, party) {
+  const direct = filterSpeeches(db.prepare(`
     SELECT id, speaker_name, speaker_role, position, text_full, word_count
     FROM speeches
     WHERE vote_id = ?
       AND party = ?
     ORDER BY position ASC
-  `).all(voteId, party).filter((s) => !s.speaker_role || !CHAIR_ROLES.has(s.speaker_role))
+  `).all(vote.vote_id, party))
+  return direct.length || !vote.agenda_item
+    ? direct
+    : filterSpeeches(db.prepare(`
+      SELECT id, speaker_name, speaker_role, position, text_full, word_count
+      FROM speeches
+      WHERE date = ?
+        AND agenda_item = ?
+        AND party = ?
+      ORDER BY position ASC
+    `).all(vote.date, vote.agenda_item, party))
+}
+
+function filterSpeeches(rows) {
+  return rows.filter((s) => !s.speaker_role || !CHAIR_ROLES.has(s.speaker_role))
 }
 
 function runCodex(prompt) {

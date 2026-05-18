@@ -41,7 +41,7 @@ export function buildPrompt({ vote, speeches }) {
 Aufgabe:
 Fasse die Position der angegebenen Partei zu genau dieser Abstimmung zusammen.
 Nutze nur die Reden in der Eingabe.
-Die Reden wurden über speeches.vote_id der Abstimmung zugeordnet und nach derselben Partei gefiltert.
+Die Reden wurden direkt über speeches.vote_id oder über denselben Tagesordnungspunkt am Abstimmungstag zugeordnet und nach derselben Partei gefiltert.
 Wenn einzelne Zwischenrufe oder kurze Wortmeldungen nichts zur Sache beitragen, ignoriere sie.
 Erfinde keine Argumente, keine Motive und keine Fakten von außen.
 
