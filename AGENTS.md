@@ -16,6 +16,7 @@ Specialists:
 | frontend | React + TanStack views and hooks |
 | tester | Browser verification |
 | launcher | Local dev server bring-up |
+| visibility | SEO, sharing previews, crawler and AI assistant discoverability |
 | deployer | Cloudflare deploys only when explicitly asked |
 | scribe | Git commits |
 

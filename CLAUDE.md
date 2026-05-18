@@ -20,7 +20,7 @@ machtblick/
   db/                 # Drizzle schema and migrations, shared across apps
   etl/                # Node workers, one folder per upstream source, run on cron
   .claude/
-    agents/           # lead + designer + plumber + backend + frontend
+    agents/           # source specialist instructions
   plans/              # numbered plan files (00-, 01-, ...) for multi-agent work
 ```
 
@@ -87,5 +87,10 @@ UI primitives come from shadcn/ui, restricted to the curated set: Button, Input,
 | plumber  | ETL, `db/schema.ts` |
 | backend  | API, exported router types |
 | frontend | React + TanStack views and hooks |
+| tester | Browser verification |
+| launcher | Local dev server bring-up |
+| visibility | SEO, sharing previews, crawler and AI assistant discoverability |
+| deployer | Cloudflare deploys only when explicitly asked |
+| scribe | Git commits |
 
 Every change starts with a plan in `plans/NN-slug.md`, small or big. The plan is the only durable channel between sessions and subagents, so it carries the goal, status, shared contracts, open questions, and an append-only log per agent.

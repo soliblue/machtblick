@@ -19,7 +19,12 @@ Dispatch via the Agent tool with `subagent_type`:
 | designer | ASCII mocks, IA, layout decisions | Before any new view is built |
 | plumber  | ETL, `db/schema.ts`, source quirks | New data source or schema change |
 | backend  | API, exported router/contract types | Schema is ready and a view needs data |
-| frontend | React + TanStack views and hooks | Mock + types exist |
+| frontend | React + TanStack views and hooks | Mock and types exist |
+| tester | Browser verification | Before deploys that change user-visible behavior |
+| launcher | Local dev server bring-up | The user asks to launch or share locally |
+| visibility | SEO, sharing previews, crawler and AI assistant discoverability | Before deploys and after metadata or route changes |
+| deployer | Cloudflare deploys | The user explicitly asks to deploy, ship, or push to prod |
+| scribe | Git commits | The user asks to commit |
 
 ## Plans
 

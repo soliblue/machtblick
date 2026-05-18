@@ -3,11 +3,13 @@
   "short_name": "Machtblick",
   "description": "Transparenz über Abstimmungen, Abgeordnete und Fraktionen des Deutschen Bundestags.",
   "lang": "de-DE",
-  "start_url": "/",
+  "id": "/votes/",
+  "start_url": "/votes/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#ffffff",
+  "categories": ["government", "news", "education"],
   "icons": [
     {
       "src": "/android-chrome-192x192.png",

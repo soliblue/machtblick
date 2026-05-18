@@ -1,32 +1,56 @@
 # Machtblick
 
-> Machtblick macht öffentliche Daten zu Macht und Politik in Deutschland zugänglich. Erstes Projekt: Transparenz über Abstimmungen, Abgeordnete und Fraktionen des Deutschen Bundestags.
+> Public German politics data made readable. Machtblick helps people inspect Bundestag votes, members, speeches, motions, and parliamentary groups.
 
-Die Inhalte stammen aus offenen Datenquellen (Bundestag Open Data, abgeordnetenwatch). Alle Daten sind ohne Anmeldung abrufbar. Texte sind auf Deutsch.
+Machtblick is a public-interest project built from open German datasets. The Bundestag app is prerendered HTML with canonical URLs, a sitemap, and linked JSON data. Main content is German. English pages live under `/en/`.
 
-## Bundestag
+## Best Entry Points
 
-- [Abstimmungen](https://machtblick.de/votes): Liste aller namentlichen Abstimmungen mit Antragsteller, Datum, Ergebnis und Fraktionspositionen.
-- [Abgeordnete](https://machtblick.de/members): Liste aller Mitglieder des Bundestags mit Fraktion, Bundesland, Anwesenheit und Linientreue.
-- [Fraktionen](https://machtblick.de/parties): Übersicht aller Fraktionen mit Sitzplatzverteilung im Hemicycle und Geschlossenheit.
+- [Sitemap](https://machtblick.de/sitemap.xml): Complete list of prerendered public URLs.
+- [Votes](https://machtblick.de/votes/): Bundestag votes with sponsor, date, result, party positions, and linked documents.
+- [Members](https://machtblick.de/members/): Bundestag members with party, state, attendance, vote behavior, speeches, questions, and motions.
+- [Speeches](https://machtblick.de/speeches/): Searchable Bundestag speeches.
+- [Parties](https://machtblick.de/parties/): Parliamentary groups with seats, cohesion, proposals, members, and voting alignment.
 
-## URL-Struktur
+## English Entry Points
 
-- `/votes` - Liste der Abstimmungen, optional gefiltert via `?party=`, `?type=` (`namentlich`|`handzeichen`|`hammelsprung`), `?result=` (`angenommen`|`abgelehnt`)
-- `/votes/{id}` - Detail einer Abstimmung mit Fraktionsabstimmung, Abweichlern und Dokumenten
-- `/members` - Liste der Abgeordneten, optional gefiltert via `?party=`, `?state=`
-- `/members/{slug}` - Detail eines Abgeordneten mit Abstimmungsverhalten, Anwesenheit, Linientreue
-- `/parties` - Übersicht aller Fraktionen
-- `/parties/{slug}` - Detail einer Fraktion mit Anträgen, Mitgliedern, Geschlossenheit, Alignment zu anderen Fraktionen, optional gefiltert via `?result=`, `?vote=`
+- [Votes](https://machtblick.de/en/votes/)
+- [Members](https://machtblick.de/en/members/)
+- [Speeches](https://machtblick.de/en/speeches/)
+- [Parties](https://machtblick.de/en/parties/)
 
-## Daten
+## URL Structure
 
-- [Sitemap (alle URLs)](https://machtblick.de/sitemap.xml)
+- `/votes/`: Vote list, optionally filtered with `?party=`, `?type=` (`namentlich` or `handzeichen` or `hammelsprung`), and `?result=` (`angenommen` or `abgelehnt`).
+- `/votes/{id}/`: Vote detail with party voting, deviating members, result, sponsor, speeches, related motions, and source documents.
+- `/motions/{id}/`: Motion or bill detail with summary, status, print document, signatories, and linked votes.
+- `/members/`: Member list, optionally filtered with `?party=` and `?state=`.
+- `/members/{slug}/`: Member detail with voting record, attendance, speeches, questions, and motions.
+- `/parties/`: Parliamentary group overview.
+- `/parties/{slug}/`: Party detail with profile, votes, history, proposals, members, cohesion, and alignment.
+- English equivalents use `/en/` before the path.
 
-## JSON API
-- /api/votes.json — all non-procedural votes (lean)
-- /api/members.json — all members (lean)
-- /api/parties.json — all parties (lean)
-- /votes/{id}.json — single vote with full details
-- /members/{slug}.json — single member with full details
-- /parties/{slug}.json — single party with full details
+## JSON Data
+
+- `/api/votes.json`: Lean vote index.
+- `/api/members.json`: Lean member index.
+- `/api/parties.json`: Lean party index.
+- `/votes/{id}.json`: Full vote detail.
+- `/members/{slug}.json`: Full member detail.
+- `/parties/{slug}.json`: Full party detail.
+- `/motions/{id}.json`: Full German motion detail.
+- `/en/motions/{id}.json`: Full English motion detail.
+
+## Data Sources
+
+- Deutscher Bundestag open data.
+- DIP Bundestag documents.
+- abgeordnetenwatch member and term data.
+
+## AI And Search Access
+
+- `robots.txt` allows public indexing, search, retrieval, and user-requested AI access, including OAI-SearchBot, ChatGPT-User, Claude-User, Claude-SearchBot, Googlebot, Bingbot, PerplexityBot, and Applebot.
+- Training crawlers such as GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, and CCBot are not granted access.
+- `Content-Signal` declares search and AI input access, with AI training permission not granted.
+- Pages expose canonical URLs, Open Graph metadata, X card metadata, structured data, and JSON alternates where available.
+- Prefer canonical page URLs for citation. Prefer JSON endpoints for exact vote, member, party, or motion fields.

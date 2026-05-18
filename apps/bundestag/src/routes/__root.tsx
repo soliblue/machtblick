@@ -9,7 +9,7 @@ import { StampFilter } from '@/views/votesList/StampFilter'
 import { ScrollEyeWordmark } from '@/views/nav/ScrollEyeWordmark'
 import { Footer } from '@/views/nav/Footer'
 import globalsCss from '../styles/globals.css?url'
-import { seoMeta, SITE_NAME, SITE_URL } from '@/lib/seo'
+import { seoMeta, SITE_IMAGE, SITE_NAME, SITE_URL } from '@/lib/seo'
 import { LocaleProvider, useCopy } from '@/lib/i18n'
 import { localeFromPath, localizedPath, withLocale } from '@/lib/locale'
 import { NotFoundPage } from '@/views/notFound/NotFoundPage'
@@ -24,7 +24,7 @@ export const Route = createRootRoute({
       { name: 'apple-mobile-web-app-title', content: SITE_NAME },
       { name: 'msapplication-TileColor', content: '#ffffff' },
       { name: 'msapplication-config', content: '/browserconfig.xml' },
-      ...(import.meta.env.DEV ? [{ name: 'robots', content: 'noindex, nofollow' }] : []),
+      ...(import.meta.env.DEV ? [{ name: 'robots', content: 'noindex, nofollow' }] : [{ name: 'robots', content: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1' }]),
       ...seoMeta({}),
     ],
     links: [
@@ -36,19 +36,58 @@ export const Route = createRootRoute({
       { rel: 'apple-touch-icon', href: '/apple-touch-icon.png', sizes: '180x180' },
       { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#0A0A0A' },
       { rel: 'manifest', href: '/site.webmanifest' },
-      { rel: 'alternate', type: 'application/rss+xml', title: SITE_NAME, href: `${SITE_URL}/sitemap.xml` },
+      { rel: 'sitemap', type: 'application/xml', title: 'Sitemap', href: `${SITE_URL}/sitemap.xml` },
     ],
     scripts: [
       {
         type: 'application/ld+json',
         children: JSON.stringify({
           '@context': 'https://schema.org',
-          '@type': 'WebSite',
-          name: SITE_NAME,
-          url: SITE_URL,
-          inLanguage: ['de-DE', 'en-US'],
-          description: 'Transparenz über Abstimmungen, Abgeordnete und Fraktionen des Deutschen Bundestags.',
-          publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+          '@graph': [
+            {
+              '@type': 'Organization',
+              '@id': `${SITE_URL}/#organization`,
+              name: SITE_NAME,
+              url: SITE_URL,
+              logo: SITE_IMAGE,
+            },
+            {
+              '@type': 'WebSite',
+              '@id': `${SITE_URL}/#website`,
+              name: SITE_NAME,
+              url: SITE_URL,
+              inLanguage: ['de-DE', 'en-US'],
+              description: 'Transparenz über Abstimmungen, Abgeordnete und Fraktionen des Deutschen Bundestags.',
+              publisher: { '@id': `${SITE_URL}/#organization` },
+            },
+            {
+              '@type': 'DataCatalog',
+              '@id': `${SITE_URL}/#data-catalog`,
+              name: 'Machtblick Bundestag data',
+              url: SITE_URL,
+              inLanguage: ['de-DE', 'en-US'],
+              dataset: [
+                {
+                  '@type': 'Dataset',
+                  name: 'Bundestag votes',
+                  url: `${SITE_URL}/votes/`,
+                  distribution: { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${SITE_URL}/api/votes.json` },
+                },
+                {
+                  '@type': 'Dataset',
+                  name: 'Bundestag members',
+                  url: `${SITE_URL}/members/`,
+                  distribution: { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${SITE_URL}/api/members.json` },
+                },
+                {
+                  '@type': 'Dataset',
+                  name: 'Bundestag parliamentary groups',
+                  url: `${SITE_URL}/parties/`,
+                  distribution: { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${SITE_URL}/api/parties.json` },
+                },
+              ],
+            },
+          ],
         }),
       },
     ],
@@ -61,7 +100,7 @@ function RootComponent() {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
   const locale = localeFromPath(pathname)
   return (
-    <html lang={locale}>
+    <html lang={locale} prefix="og: https://ogp.me/ns#">
       <head>
         <HeadContent />
       </head>

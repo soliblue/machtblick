@@ -9,8 +9,6 @@
 
 /*
   Cache-Control: public, max-age=3600, s-maxage=86400
-
-/
   Link: </.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="service-doc"
 
 /.well-known/api-catalog

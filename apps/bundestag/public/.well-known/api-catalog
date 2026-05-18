@@ -3,12 +3,13 @@
     {
       "anchor": "https://machtblick.de/",
       "service-desc": [
-        { "href": "/api/votes.json", "type": "application/json" },
-        { "href": "/api/members.json", "type": "application/json" },
-        { "href": "/api/parties.json", "type": "application/json" }
+        { "href": "/api/votes.json", "type": "application/json", "title": "Lean vote index" },
+        { "href": "/api/members.json", "type": "application/json", "title": "Lean member index" },
+        { "href": "/api/parties.json", "type": "application/json", "title": "Lean party index" }
       ],
       "service-doc": [
-        { "href": "/llms.txt", "type": "text/plain" }
+        { "href": "/llms.txt", "type": "text/plain" },
+        { "href": "/sitemap.xml", "type": "application/xml" }
       ]
     }
   ]
