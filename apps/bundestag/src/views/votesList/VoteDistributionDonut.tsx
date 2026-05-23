@@ -21,6 +21,8 @@ const SEGMENTS: Array<{ key: VoteChoice; color: string }> = [
   { key: 'absent', color: 'color-mix(in oklab, var(--color-fg) 25%, var(--color-background))' },
 ]
 
+const coord = (value: number) => Math.round(value * 1000) / 1000
+
 export function VoteDistributionDonut({
   yes,
   no,
@@ -75,7 +77,7 @@ export function VoteDistributionDonut({
         const x2 = cx + r * Math.cos(angle + sweep) + ox
         const y2 = cy + r * Math.sin(angle + sweep) + oy
         const large = sweep > Math.PI ? 1 : 0
-        const d = `M ${cx + ox} ${cy + oy} L ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2} Z`
+        const d = `M ${coord(cx + ox)} ${coord(cy + oy)} L ${coord(x1)} ${coord(y1)} A ${r} ${r} 0 ${large} 1 ${coord(x2)} ${coord(y2)} Z`
         angle += sweep
         return <path key={s.key} d={d} {...common} />
       })}

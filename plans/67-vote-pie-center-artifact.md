@@ -31,3 +31,4 @@ Done.
 - Verified with `npx tsc -p apps/bundestag/tsconfig.json --noEmit` and a Playwright screenshot against the running Vite server on port 5174.
 - Made the center hole render without requiring the center label, so vote list charts use the same donut form as vote detail without showing a number.
 - Reduced vote list chart size from 88/160px to 80/144px while leaving detail chart sizes unchanged.
+- Reopened after pre-deploy smoke found React hydration mismatch on `/votes/` from SVG path floating point strings. Rounded donut path coordinates before serializing the `d` attribute.
