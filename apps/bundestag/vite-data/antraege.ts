@@ -17,20 +17,6 @@ type AntragRow = {
   summary_detail: string | null
 }
 
-const PARTY_NORMALIZE: Record<string, string> = {
-  'Fraktion der CDU/CSU': 'CDU/CSU',
-  'Fraktion der SPD': 'SPD',
-  'Fraktion der AfD': 'AfD',
-  'Fraktion BÜNDNIS 90/DIE GRÜNEN': 'B90/Grüne',
-  'Fraktion DIE LINKE': 'Die Linke',
-  'Bundesministerium der Finanzen': 'Bundesregierung',
-  'Bundesministerium für Wirtschaft und Energie': 'Bundesregierung',
-}
-
-function normalizePartyName(raw: string | null): string | null {
-  return raw ? raw.split(',').map((part) => PARTY_NORMALIZE[part.trim()] ?? part.trim()).filter(Boolean).join(', ') : null
-}
-
 type SignatoryRow = {
   member_id: string
   first_name: string
@@ -92,7 +78,7 @@ export function fullAntrag(db: Database.Database, id: number, locale: 'de' | 'en
       cleanTitle: row.clean_title,
       abstract: cleanAbstract(row.abstract),
       beratungsstand: row.beratungsstand,
-      initiativeFraktion: normalizePartyName(row.initiative_fraktion),
+      initiativeFraktion: row.initiative_fraktion,
       introducedDate: row.introduced_date,
       drucksache: row.drucksache,
       drucksachePdfUrl: row.drucksache_pdf_url,

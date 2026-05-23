@@ -1,8 +1,7 @@
 import { createServerFn } from '@tanstack/react-start'
 import { db } from '@machtblick/db/client'
 import { speeches } from '@machtblick/db/schema'
-import { desc, eq, isNotNull, sql, type SQL } from 'drizzle-orm'
-import { speechAgendaTitle } from './speechAgendaTitles'
+import { desc, isNotNull, sql, type SQL } from 'drizzle-orm'
 
 export type SpeechSummary = {
   id: string
@@ -13,6 +12,8 @@ export type SpeechSummary = {
   date: string
   agendaItem: string | null
   agendaTitle: string | null
+  debateGroupId: string | null
+  contributionType: string | null
   position: number
   excerpt: string
 }
@@ -38,30 +39,6 @@ export type SpeechSearchResponse = {
   pageSize: number
 }
 
-const PARTY_NORMALIZE: Record<string, string> = {
-  'BÜNDNIS 90/DIE GRÜNEN': 'B90/Grüne',
-  'DIE LINKE': 'Die Linke',
-}
-
-function normalizeParty(raw: string | null): string | null {
-  return raw ? (PARTY_NORMALIZE[raw] ?? raw) : null
-}
-
-function toSummary(row: typeof speeches.$inferSelect): SpeechSummary {
-  return {
-    id: row.id,
-    speakerName: row.speakerName,
-    speakerMemberId: row.speakerMemberId,
-    speakerRole: row.speakerRole,
-    party: normalizeParty(row.party),
-    date: row.date,
-    agendaItem: row.agendaItem,
-    agendaTitle: speechAgendaTitle(row.date, row.agendaItem),
-    position: row.position,
-    excerpt: row.textExcerpt,
-  }
-}
-
 type SpeechRawRow = {
   id: string
   speaker_name: string
@@ -72,10 +49,16 @@ type SpeechRawRow = {
   text_excerpt: string
   date: string
   agenda_item: string | null
-  agenda_title?: string | null
+  agenda_title: string | null
+  debate_group_id: string | null
+  contribution_type: string | null
   vote_id: string | null
   vote_title: string | null
   snippet: string | null
+}
+
+type SpeechFullRow = SpeechRawRow & {
+  text_full: string
 }
 
 function rawToResult(r: SpeechRawRow): SpeechResult {
@@ -84,25 +67,18 @@ function rawToResult(r: SpeechRawRow): SpeechResult {
     speakerName: r.speaker_name,
     speakerMemberId: r.speaker_member_id,
     speakerRole: r.speaker_role,
-    party: normalizeParty(r.party),
+    party: r.party,
     position: r.position,
     excerpt: r.text_excerpt,
     date: r.date,
     agendaItem: r.agenda_item,
-    agendaTitle: r.agenda_title ?? speechAgendaTitle(r.date, r.agenda_item),
+    agendaTitle: r.agenda_title,
+    debateGroupId: r.debate_group_id,
+    contributionType: r.contribution_type,
     voteId: r.vote_id,
     voteTitle: r.vote_title,
     snippet: r.snippet,
   }
-}
-
-const PARTY_DENORMALIZE: Record<string, string[]> = {
-  'B90/Grüne': ['B90/Grüne', 'BÜNDNIS 90/DIE GRÜNEN'],
-  'Die Linke': ['Die Linke', 'DIE LINKE'],
-}
-
-function partyMatchValues(party: string): string[] {
-  return PARTY_DENORMALIZE[party] ?? [party]
 }
 
 function escapeFts(q: string): string {
@@ -116,9 +92,32 @@ function escapeFts(q: string): string {
 export const getSpeech = createServerFn({ method: 'GET' })
   .inputValidator((speechId: string) => speechId)
   .handler(async ({ data: speechId }): Promise<SpeechFull> => {
-    const row = db.select().from(speeches).where(eq(speeches.id, speechId)).get()
+    const row = db.get(sql`
+      SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party,
+             COALESCE(sdgs.position, s.position) AS position,
+             s.text_excerpt, s.text_full, s.date, s.agenda_item,
+             COALESCE(sdg.title, pai.title) AS agenda_title,
+             sdgs.group_id AS debate_group_id,
+             sdgs.contribution_type AS contribution_type,
+             lv.vote_id AS vote_id,
+             COALESCE(v.clean_title, v.title) AS vote_title,
+             NULL AS snippet
+      FROM speeches s
+      LEFT JOIN (
+        SELECT speech_id, vote_id, row_number() OVER (
+          PARTITION BY speech_id
+          ORDER BY confidence DESC, CASE source WHEN 'direct' THEN 0 ELSE 1 END, vote_id
+        ) AS rn
+        FROM speech_vote_links
+      ) lv ON lv.speech_id = s.id AND lv.rn = 1
+      LEFT JOIN votes v ON v.id = lv.vote_id
+      LEFT JOIN speech_debate_group_speeches sdgs ON sdgs.speech_id = s.id
+      LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
+      LEFT JOIN plenary_agenda_items pai ON pai.session_id = s.session_id AND pai.date = s.date AND pai.agenda_item = s.agenda_item
+      WHERE s.id = ${speechId}
+    `) as SpeechFullRow | undefined
     if (!row) throw new Error(`speech not found: ${speechId}`)
-    return { ...toSummary(row), text: row.textFull, date: row.date }
+    return { ...rawToResult(row), text: row.text_full }
   })
 
 export type SpeechSearchParams = {
@@ -130,7 +129,6 @@ export type SpeechSearchParams = {
 }
 
 const PAGE_SIZE = 5
-const CURRENT_TERM = 21
 
 export const searchSpeeches = createServerFn({ method: 'GET' })
   .inputValidator((params: SpeechSearchParams) => params)
@@ -142,13 +140,11 @@ export const searchSpeeches = createServerFn({ method: 'GET' })
     const page = Math.max(0, data.page ?? 0)
     const offset = page * PAGE_SIZE
 
-    const partyValues = party ? partyMatchValues(party) : null
-
     const partiesRows = db
       .selectDistinct({ party: speeches.party })
       .from(speeches)
       .all()
-      .map((r) => normalizeParty(r.party))
+      .map((r) => r.party)
       .filter((p): p is string => !!p)
     const parties = Array.from(new Set(partiesRows)).sort()
 
@@ -169,7 +165,7 @@ export const searchSpeeches = createServerFn({ method: 'GET' })
 
     const filters: SQL[] = []
     if (q) filters.push(sql`f.speeches_fts MATCH ${escapeFts(q)}`)
-    if (partyValues) filters.push(sql`s.party IN (${sql.join(partyValues.map((v) => sql`${v}`), sql`, `)})`)
+    if (party) filters.push(sql`s.party = ${party}`)
     if (date) filters.push(sql`s.date = ${date}`)
     if (memberId) filters.push(sql`s.speaker_member_id = ${memberId}`)
     const whereSql = filters.length ? sql`WHERE ${sql.join(filters, sql` AND `)}` : sql``
@@ -179,27 +175,31 @@ export const searchSpeeches = createServerFn({ method: 'GET' })
       ? sql`snippet(speeches_fts, 1, '<<<', '>>>', '…', 24)`
       : sql`NULL`
     const items = db.all(sql`
-      SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party, s.position,
+      WITH linked_votes AS (
+        SELECT speech_id, vote_id, row_number() OVER (
+          PARTITION BY speech_id
+          ORDER BY confidence DESC, CASE source WHEN 'direct' THEN 0 ELSE 1 END, vote_id
+        ) AS rn
+        FROM speech_vote_links
+      )
+      SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party,
+             COALESCE(sdgs.position, s.position) AS position,
              s.text_excerpt, s.date, s.agenda_item,
-             COALESCE(direct.id, agenda.id) AS vote_id,
-             COALESCE(direct.clean_title, direct.title, agenda.clean_title, agenda.title) AS vote_title,
+             COALESCE(sdg.title, pai.title) AS agenda_title,
+             sdgs.group_id AS debate_group_id,
+             sdgs.contribution_type AS contribution_type,
+             lv.vote_id AS vote_id,
+             COALESCE(v.clean_title, v.title) AS vote_title,
              ${snippetExpr} AS snippet
       FROM speeches s
       ${ftsJoin}
-      LEFT JOIN votes direct ON direct.id = s.vote_id
-      LEFT JOIN votes agenda ON agenda.id = (
-        SELECT av.id FROM votes av
-        WHERE av.term_id = ${CURRENT_TERM}
-          AND av.procedural = 0
-          AND av.vote_type != 'hammelsprung'
-          AND av.date = s.date
-          AND av.agenda_item = s.agenda_item
-          AND s.vote_id IS NULL
-        ORDER BY CASE av.vote_type WHEN 'namentlich' THEN 0 WHEN 'handzeichen' THEN 1 ELSE 2 END, av.id
-        LIMIT 1
-      )
+      LEFT JOIN linked_votes lv ON lv.speech_id = s.id AND lv.rn = 1
+      LEFT JOIN votes v ON v.id = lv.vote_id
+      LEFT JOIN speech_debate_group_speeches sdgs ON sdgs.speech_id = s.id
+      LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
+      LEFT JOIN plenary_agenda_items pai ON pai.session_id = s.session_id AND pai.date = s.date AND pai.agenda_item = s.agenda_item
       ${whereSql}
-      ORDER BY s.date DESC, s.position ASC
+      ORDER BY s.date DESC, COALESCE(sdgs.position, s.position) ASC
       LIMIT ${PAGE_SIZE} OFFSET ${offset}
     `) as Array<SpeechRawRow>
     const totalRow = db.get(sql`
@@ -224,26 +224,30 @@ export const listSpeechesForMember = createServerFn({ method: 'GET' })
   .inputValidator((memberId: string) => memberId)
   .handler(async ({ data: memberId }): Promise<MemberSpeechSummary[]> => {
     const rows = db.all(sql`
-      SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party, s.position,
+      WITH linked_votes AS (
+        SELECT speech_id, vote_id, row_number() OVER (
+          PARTITION BY speech_id
+          ORDER BY confidence DESC, CASE source WHEN 'direct' THEN 0 ELSE 1 END, vote_id
+        ) AS rn
+        FROM speech_vote_links
+      )
+      SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party,
+             COALESCE(sdgs.position, s.position) AS position,
              s.text_excerpt, s.date, s.agenda_item,
-             COALESCE(direct.id, agenda.id) AS vote_id,
-             COALESCE(direct.clean_title, direct.title, agenda.clean_title, agenda.title) AS vote_title,
+             COALESCE(sdg.title, pai.title) AS agenda_title,
+             sdgs.group_id AS debate_group_id,
+             sdgs.contribution_type AS contribution_type,
+             lv.vote_id AS vote_id,
+             COALESCE(v.clean_title, v.title) AS vote_title,
              NULL AS snippet
       FROM speeches s
-      LEFT JOIN votes direct ON direct.id = s.vote_id
-      LEFT JOIN votes agenda ON agenda.id = (
-        SELECT av.id FROM votes av
-        WHERE av.term_id = ${CURRENT_TERM}
-          AND av.procedural = 0
-          AND av.vote_type != 'hammelsprung'
-          AND av.date = s.date
-          AND av.agenda_item = s.agenda_item
-          AND s.vote_id IS NULL
-        ORDER BY CASE av.vote_type WHEN 'namentlich' THEN 0 WHEN 'handzeichen' THEN 1 ELSE 2 END, av.id
-        LIMIT 1
-      )
+      LEFT JOIN linked_votes lv ON lv.speech_id = s.id AND lv.rn = 1
+      LEFT JOIN votes v ON v.id = lv.vote_id
+      LEFT JOIN speech_debate_group_speeches sdgs ON sdgs.speech_id = s.id
+      LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
+      LEFT JOIN plenary_agenda_items pai ON pai.session_id = s.session_id AND pai.date = s.date AND pai.agenda_item = s.agenda_item
       WHERE s.speaker_member_id = ${memberId}
-      ORDER BY s.date DESC, s.position ASC
+      ORDER BY s.date DESC, COALESCE(sdgs.position, s.position) ASC
     `) as Array<SpeechRawRow>
     return rows.map(rawToResult)
   })

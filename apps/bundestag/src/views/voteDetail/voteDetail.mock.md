@@ -44,6 +44,22 @@
 
 Title and proposer dominate the top. The "Worum geht es" block is the plain-language summary, set as a Card to feel distinct from metadata. Result is loud (badge + totals + single bar). The party-bloc grid is the centerpiece: each cell shows totals and a per-party result bar so cross-party deviations are visible at a glance. Abweichler callout makes defection a first-class story.
 
+### Ergebnis tab waffle
+
+The party waffle uses one 10 by 10 px square mark per member ballot, grouped by party and ordered by vote choice. It omits `Fraktionslos` because the section is a faction breakdown. Member-linked cells scale only to 125% on hover so the grid stays stable.
+
+The result tab has two small section titles: `Ergebnis` above the donut and `Fraktionen` above the waffle. The waffle uses `max-content` for the party logo column and gives the cell column the remaining width. A subtle one-pixel `elevated` divider separates faction rows with tighter spacing than the votes list.
+
+### Reden tab controls
+
+```
+[ Reden durchsuchen......................................... ]
+
+[ Fraktion v ]
+```
+
+The speech search and speech filters use separate rows. Filter pills stay text-first, with party logos only for party values.
+
 ## Tokens
 
 | Element | Text size | Weight | Spacing | Component |
@@ -56,6 +72,10 @@ Title and proposer dominate the top. The "Worum geht es" block is the plain-lang
 | Result label | l | semibold | — | Badge |
 | Result totals | l | regular | gap-m | — |
 | Result bar | s | regular | mt-s, mb-l | — |
+| Result section title | s uppercase | regular, opacity-l | mb-s | — |
+| Waffle label column | s | semibold | max-content | — |
+| Waffle row divider | — | — | h-px, elevated | — |
+| Waffle cell | — | — | 10px, gap 2px | — |
 | Section heading | l | semibold | mb-m | — |
 | Party cell | — | — | p-m, gap-s | Card |
 | Party name | m | semibold | mb-s | — |

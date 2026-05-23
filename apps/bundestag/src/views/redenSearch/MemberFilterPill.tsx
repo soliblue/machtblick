@@ -1,19 +1,17 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState, type ComponentType } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import type { MemberOption } from '@/server/speeches'
 
-type IconProps = { size?: number; className?: string }
 type Props = {
   label: string
   options: MemberOption[]
   value: string | null
   onChange: (id: string | null) => void
-  icon?: ComponentType<IconProps>
 }
 
 const BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 
-export function MemberFilterPill({ label, options, value, onChange, icon: Icon }: Props) {
+export function MemberFilterPill({ label, options, value, onChange }: Props) {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -59,7 +57,6 @@ export function MemberFilterPill({ label, options, value, onChange, icon: Icon }
         className="inline-flex shrink-0 items-center gap-s border px-m py-xs text-m transition-colors hover:bg-surface"
         style={{ borderColor: BORDER, background: value ? 'var(--color-surface)' : 'transparent' }}
       >
-        {Icon && <Icon size={14} className="opacity-l" />}
         {selected ? <span className="font-semibold">{selected.name}</span> : <span>{label}</span>}
         {value && (
           <span

@@ -1,20 +1,18 @@
-import { useEffect, useLayoutEffect, useRef, useState, type ComponentType } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { PARTY_LOGO, partyLabel } from '@/lib/parties'
 import { PartyLogo } from './PartyLogo'
 import { useCopy, useLocale } from '@/lib/i18n'
 
-type IconProps = { size?: number; className?: string }
 type Props = {
   label: string
   options: string[]
   value: string | null
   onChange: (value: string | null) => void
   formatOption?: (opt: string) => string
-  icon?: ComponentType<IconProps>
 }
 
-export function FilterPill({ label, options, value, onChange, formatOption, icon: Icon }: Props) {
+export function FilterPill({ label, options, value, onChange, formatOption }: Props) {
   const t = useCopy()
   const locale = useLocale()
   const fmt = (opt: string) => formatOption?.(opt) ?? partyLabel(opt, locale)
@@ -59,11 +57,7 @@ export function FilterPill({ label, options, value, onChange, formatOption, icon
           background: value ? 'var(--color-surface)' : 'transparent',
         }}
       >
-        {value && PARTY_LOGO[value] ? (
-          <PartyLogo party={value} size={14} decorative />
-        ) : Icon ? (
-          <Icon size={14} className="opacity-l" />
-        ) : null}
+        {value && PARTY_LOGO[value] ? <PartyLogo party={value} size={14} decorative /> : null}
         {value ? <span className="font-semibold">{fmt(value)}</span> : <span>{label}</span>}
         {value && (
           <span

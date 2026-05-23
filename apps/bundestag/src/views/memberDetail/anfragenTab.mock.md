@@ -6,7 +6,9 @@
 [ Abstimmungen ] [ Reden ] [ Anfragen ] [ Nebeneinkuenfte ] [ Bio ]
                           ----------
 
-  Y Filter   [ Typ v ]   [ Status v ]   [ Ressort v ]   [ Suche ]
+  [ Suche....................................................... ]
+
+  [ Typ v ]   [ Status v ]   [ Ressort v ]
 
   ANFRAGE                                  DATUM     TYP   STATUS
   --------------------------------------------------------------
@@ -58,7 +60,8 @@ KL = Kleine Anfrage   GR = Grosse Anfrage   SF = Schriftliche Frage
 
 | Element | Text size | Weight | Spacing |
 |---|---|---|---|
-| Filter row | s | regular | gap-s, mb-m |
+| Search row | m | regular | mb-m |
+| Filter row | m | regular | gap-s, mb-m |
 | Header row | s uppercase, letter-spacing 0.08em | regular, opacity-l | py-s, gap-m |
 | Row container | — | — | py-s, gap-m |
 | Title | m | semibold | — |

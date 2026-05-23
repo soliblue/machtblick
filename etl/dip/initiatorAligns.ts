@@ -1,4 +1,4 @@
-import { matchParty } from '../../db/partyPatterns'
+import { canonicalPartyToken } from '../../db/partyPatterns'
 
 const LAENDER = new Set([
   'baden-württemberg', 'baden-wuerttemberg',
@@ -26,7 +26,7 @@ function normalizeToken(raw: string): string | null {
   if (/^Bundesministerium\b/i.test(t)) return 'Bundesregierung'
   if (/^Bundesrat$/i.test(t)) return 'Bundesrat'
   if (LAENDER.has(t.toLowerCase())) return 'Bundesrat'
-  return matchParty(t)
+  return canonicalPartyToken(t)
 }
 
 export function normalizeInitiatorTokens(raw: string | null | undefined): Set<string> {

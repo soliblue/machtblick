@@ -6,18 +6,18 @@ Route: `/members/$id/speeches`
 
 ```
 +------------------------------------------------------------+
-| [Search Reden]                         14 Reden, 37 Beitr. |
+| [Search Reden]                                             |
 |                                                            |
-| 08.05.2026  Bundesweites Moratorium des Windindustrie... AfD v |
-| 6 Beitraege  3 kurz                                         |
+| Bundesweites Moratorium des Windindustrieausbaus           v |
+| 08.05.2026  6 Beitraege  3 kurz                            |
 | Herr Praesident! Werte Kollegen! Also eines ist in der...   |
 |                                                            |
-| 26.03.2026  Aktuelle Stunde: Mitversicherung von... AfD   v |
-| 1 Beitrag                                                   |
+| Aktuelle Stunde: Mitversicherung von Familien...           v |
+| 26.03.2026  1 Beitrag                                      |
 | Danke schoen, Frau Moll; dann lernen wir uns so auch...     |
 |                                                            |
-| 19.03.2026  Tagesordnungspunkt 20  AfD                    ^ |
-| 2 Beitraege  1 kurz                                         |
+| Antrag zur Einsetzung einer Enquete-Kommission             ^ |
+| 19.03.2026  2 Beitraege  1 kurz                            |
 |                                                            |
 | Verlauf                                                     |
 |   Sprecherin A  SPD                                         |
@@ -44,9 +44,8 @@ Search matches every underlying contribution, including short replies. Results s
 | Element | Text size | Weight | Spacing |
 |---|---|---|---|
 | Search input | m | regular | py-xs |
-| Summary count | s | regular | gap-m |
-| Group date | m | semibold | gap-s |
-| Group title | m | regular | gap-s |
+| Group title | m | semibold | gap-s |
+| Group date | s | regular | mt-xs |
 | Contribution count | s | regular | mt-xs |
 | Excerpt | m | regular | mt-s |
 | Expanded timeline | m | regular | pl-m |

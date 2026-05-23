@@ -1,4 +1,4 @@
-import { CheckCircle2, Search, SlidersHorizontal, Tag, Vote } from 'lucide-react'
+import { Search } from 'lucide-react'
 import type { MemberInitiativeRow as MemberInitiativeRowData } from '@/server/members'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { useMemberProposalFilters, type MemberProposalVoteLinkFilter } from '@/hooks/useMemberProposalFilters'
@@ -43,11 +43,9 @@ export function ProposalsTab({ proposals, statusFilter, setStatusFilter, topicFi
         />
       </div>
       <div className="mb-l -mx-l flex items-center gap-s overflow-x-auto px-l [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <SlidersHorizontal size={17} className="shrink-0 opacity-l" />
         {statusOptions.length > 0 && (
           <FilterPill
             label={locale === 'en' ? 'Status' : 'Stand'}
-            icon={CheckCircle2}
             options={statusOptions}
             value={statusFilter}
             onChange={setStatusFilter}
@@ -61,7 +59,6 @@ export function ProposalsTab({ proposals, statusFilter, setStatusFilter, topicFi
         )}
         <FilterPill
           label={locale === 'en' ? 'Vote' : 'Abstimmung'}
-          icon={Vote}
           options={VOTE_LINK_OPTIONS}
           value={voteLinkFilter}
           onChange={(v) => setVoteLinkFilter(v as MemberProposalVoteLinkFilter | null)}
@@ -70,7 +67,6 @@ export function ProposalsTab({ proposals, statusFilter, setStatusFilter, topicFi
         {topicOptions.length > 0 && (
           <FilterPill
             label={t.category}
-            icon={Tag}
             options={topicOptions}
             value={topicFilter}
             onChange={setTopicFilter}

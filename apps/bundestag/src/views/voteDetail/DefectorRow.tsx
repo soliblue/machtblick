@@ -19,7 +19,7 @@ export function DefectorRow({ id, name, choice, pictureUrl, party }: Props) {
   const locale = useLocale()
   return (
     <a
-      href={withLocale(`/members/${id}/`, locale)}
+      href={withLocale(`/members/${id}/votes/`, locale)}
       className="grid grid-cols-[36px_1fr_auto] items-center gap-m border-t py-s opacity-100 hover:bg-surface"
       style={{ borderColor: ROW_BORDER }}
     >

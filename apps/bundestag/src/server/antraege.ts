@@ -7,7 +7,6 @@ import {
   antragDescriptionTranslations,
   antragSignatories,
   members,
-  speeches,
   speechTranslations,
   voteAntraege,
   voteMembers,
@@ -16,19 +15,13 @@ import {
   voteTranslations,
   votes,
 } from '@machtblick/db/schema'
-import { and, asc, desc, eq, inArray } from 'drizzle-orm'
+import { and, desc, eq, inArray, sql } from 'drizzle-orm'
 import { normalizeLocale, type Locale } from '@/lib/locale'
-import { normalizePartyName } from '@/lib/parties'
 import { SHOW_HAMMELSPRUNG } from '@/lib/voteTypes'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
 import type { SpeechSummary } from './speeches'
 
 const CURRENT_TERM = 21
-
-const SPEECH_PARTY_NORMALIZE: Record<string, string> = {
-  'BÜNDNIS 90/DIE GRÜNEN': 'B90/Grüne',
-  'DIE LINKE': 'Die Linke',
-}
 
 export type AntragSignatory = {
   memberId: string
@@ -86,6 +79,23 @@ export type AntragDetail = {
   linkedVotes: AntragLinkedVote[]
   debate: SpeechSummary[]
   debateSource: 'direct' | 'related'
+}
+
+type DebateSpeechRow = {
+  vote_id: string
+  id: string
+  speaker_name: string
+  speaker_member_id: string | null
+  speaker_role: string | null
+  party: string | null
+  date: string
+  agenda_item: string | null
+  agenda_title: string | null
+  debate_group_id: string | null
+  contribution_type: string | null
+  position: number
+  text_excerpt: string
+  debate_source: string | null
 }
 
 function voteTranslationMap(ids: string[], locale: Locale) {
@@ -231,31 +241,46 @@ export const getAntrag = createServerFn({ method: 'GET' })
         memberBallots: ballotsByVote.get(v.id) ?? [],
       }
     })
-    const speechRowsById = new Map<string, typeof speeches.$inferSelect>()
+    const debateRows = voteRows.length
+      ? db.all(sql`
+          SELECT vdg.vote_id, s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party,
+                 s.date, s.agenda_item, COALESCE(sdg.title, pai.title) AS agenda_title,
+                 sdgs.group_id AS debate_group_id,
+                 sdgs.contribution_type AS contribution_type,
+                 COALESCE(sdgs.position, s.position) AS position,
+                 s.text_excerpt,
+                 vdg.source AS debate_source
+          FROM vote_debate_groups vdg
+          INNER JOIN speech_debate_group_speeches sdgs ON sdgs.group_id = vdg.group_id
+          INNER JOIN speeches s ON s.id = sdgs.speech_id
+          LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
+          LEFT JOIN plenary_agenda_items pai ON pai.session_id = s.session_id AND pai.date = s.date AND pai.agenda_item = s.agenda_item
+          WHERE vdg.vote_id IN (${sql.join(voteRows.map((v) => sql`${v.id}`), sql`, `)})
+          ORDER BY COALESCE(sdg.date, s.date) DESC, COALESCE(sdgs.position, s.position) ASC
+        `) as DebateSpeechRow[]
+      : []
+    const speechRowsById = new Map<string, DebateSpeechRow>()
+    const voteDateById = new Map(voteRows.map((v) => [v.id, v.date]))
     let hasRelatedDebate = false
-    for (const v of voteRows) {
-      const rowsByAgenda = v.agendaItem
-        ? db.select().from(speeches).where(and(eq(speeches.date, v.date), eq(speeches.agendaItem, v.agendaItem))).all()
-        : []
-      const rows = rowsByAgenda.length
-        ? rowsByAgenda
-        : db.select().from(speeches).where(eq(speeches.voteId, v.id)).all()
-      if (!rowsByAgenda.length && rows.some((s) => s.date !== v.date)) hasRelatedDebate = true
-      for (const s of rows) speechRowsById.set(s.id, s)
+    for (const row of debateRows) {
+      if (row.debate_source === 'related' || row.date !== voteDateById.get(row.vote_id)) hasRelatedDebate = true
+      if (!speechRowsById.has(row.id)) speechRowsById.set(row.id, row)
     }
     const speechRows = [...speechRowsById.values()].sort((a, b) => b.date.localeCompare(a.date) || a.position - b.position)
     const speechTranslationsById = speechTranslationMap(speechRows.map((s) => s.id), locale)
     const debate: SpeechSummary[] = speechRows.map((s) => ({
       id: s.id,
-      speakerName: s.speakerName,
-      speakerMemberId: s.speakerMemberId,
-      speakerRole: s.speakerRole,
-      party: s.party ? (SPEECH_PARTY_NORMALIZE[s.party] ?? s.party) : null,
+      speakerName: s.speaker_name,
+      speakerMemberId: s.speaker_member_id,
+      speakerRole: s.speaker_role,
+      party: s.party,
       date: s.date,
-      agendaItem: s.agendaItem,
-      agendaTitle: null,
+      agendaItem: s.agenda_item,
+      agendaTitle: s.agenda_title,
+      debateGroupId: s.debate_group_id,
+      contributionType: s.contribution_type,
       position: s.position,
-      excerpt: speechTranslationsById.get(s.id)?.textExcerpt ?? s.textExcerpt,
+      excerpt: speechTranslationsById.get(s.id)?.textExcerpt ?? s.text_excerpt,
     }))
     const signatoryRows = db
       .select({ memberId: antragSignatories.memberId, firstName: members.firstName, lastName: members.lastName, pictureUrl: members.pictureUrl })
@@ -278,7 +303,7 @@ export const getAntrag = createServerFn({ method: 'GET' })
         cleanTitle: row.cleanTitle,
         abstract: cleanAbstract(row.abstract),
         beratungsstand: row.beratungsstand,
-        initiativeFraktion: normalizePartyName(row.initiativeFraktion),
+        initiativeFraktion: row.initiativeFraktion,
         introducedDate: row.introducedDate,
         drucksache: row.drucksache,
         drucksachePdfUrl: row.drucksachePdfUrl,

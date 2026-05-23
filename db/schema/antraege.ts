@@ -9,6 +9,7 @@ export const antraege = sqliteTable(
     title: text('title').notNull(),
     cleanTitle: text('clean_title'),
     abstract: text('abstract'),
+    abstractPlain: text('abstract_plain'),
     beratungsstand: text('beratungsstand'),
     wahlperiode: integer('wahlperiode').notNull(),
     initiativeFraktion: text('initiative_fraktion'),

@@ -1,4 +1,3 @@
-import { Filter, Vote, Scale } from 'lucide-react'
 import type { PartyDetail as PartyDetailData, PartyVote } from '@/server/parties'
 import { formatDate } from '@/lib/format'
 import { FilterPill } from '@/views/votesList/FilterPill'
@@ -31,10 +30,8 @@ export function PartyVotesPanel({ data, result, onResultChange, partyVote, onPar
   return (
     <div>
       <div className="mb-l flex flex-wrap items-center gap-s">
-        <Filter size={14} className="opacity-l" />
         <FilterPill
           label={t.partyVoted}
-          icon={Vote}
           options={['yes', 'no', 'abstain', 'split']}
           value={partyVote}
           onChange={(v) => onPartyVoteChange(v as PartyVote | null)}
@@ -42,7 +39,6 @@ export function PartyVotesPanel({ data, result, onResultChange, partyVote, onPar
         />
         <FilterPill
           label={t.result}
-          icon={Scale}
           options={['angenommen', 'abgelehnt']}
           value={result}
           onChange={(v) => onResultChange(v as Result | null)}

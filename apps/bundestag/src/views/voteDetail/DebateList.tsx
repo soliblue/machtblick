@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { ChevronLeft, ChevronRight, Search, Users } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Search } from 'lucide-react'
 import { FilterPill } from '@/views/votesList/FilterPill'
 import { SpeechRow } from '@/views/redenSearch/SpeechRow'
 import { tokenize } from '@/lib/highlight'
@@ -55,20 +55,20 @@ export function DebateList({ speeches, source, ballotByMember, partySummaries }:
         {source === 'related' ? t.relatedSpeechesForVote : t.speechesForVote}
       </div>
       <PartySummaryLogoRow summaries={partySummaries} />
-      <div className="mb-m flex flex-wrap items-center gap-m">
-        <div className="relative flex-1 min-w-[12rem]">
-          <Search size={14} className="absolute left-s top-1/2 -translate-y-1/2 opacity-l" />
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => reset(setQuery)(e.target.value)}
-            placeholder={t.searchSpeeches}
-            className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
-            style={{ borderColor: ROW_BORDER }}
-          />
-          {textsLoading && <div className="mt-xs text-s opacity-l">{t.searchIndexLoading}</div>}
-        </div>
-        <FilterPill label={t.parliamentaryGroup} icon={Users} options={parties} value={party} onChange={reset(setParty)} />
+      <div className="mb-m relative min-w-[12rem]">
+        <Search size={14} className="absolute left-s top-1/2 -translate-y-1/2 opacity-l" />
+        <input
+          type="text"
+          value={query}
+          onChange={(e) => reset(setQuery)(e.target.value)}
+          placeholder={t.searchSpeeches}
+          className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
+          style={{ borderColor: ROW_BORDER }}
+        />
+        {textsLoading && <div className="mt-xs text-s opacity-l">{t.searchIndexLoading}</div>}
+      </div>
+      <div className="mb-m flex flex-wrap items-center gap-s">
+        <FilterPill label={t.parliamentaryGroup} options={parties} value={party} onChange={reset(setParty)} />
       </div>
       {textsLoading ? (
         <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>{t.searchPreparing}</div>

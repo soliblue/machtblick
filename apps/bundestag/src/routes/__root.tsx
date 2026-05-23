@@ -70,19 +70,25 @@ export const Route = createRootRoute({
                 {
                   '@type': 'Dataset',
                   name: 'Bundestag votes',
+                  description: 'Current-term roll-call votes in the German Bundestag, including results, member choices, party summaries, and source document links.',
                   url: `${SITE_URL}/votes/`,
+                  creator: { '@id': `${SITE_URL}/#organization` },
                   distribution: { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${SITE_URL}/api/votes.json` },
                 },
                 {
                   '@type': 'Dataset',
                   name: 'Bundestag members',
+                  description: 'Current German Bundestag member profiles with party affiliation, mandate details, voting records, speeches, questions, and motions.',
                   url: `${SITE_URL}/members/`,
+                  creator: { '@id': `${SITE_URL}/#organization` },
                   distribution: { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${SITE_URL}/api/members.json` },
                 },
                 {
                   '@type': 'Dataset',
                   name: 'Bundestag parliamentary groups',
+                  description: 'Parliamentary group data for the current German Bundestag, including seats, members, voting alignment, and party history.',
                   url: `${SITE_URL}/parties/`,
+                  creator: { '@id': `${SITE_URL}/#organization` },
                   distribution: { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${SITE_URL}/api/parties.json` },
                 },
               ],
@@ -132,7 +138,7 @@ function Nav() {
   const enHref = localizedPath(pathname, 'en')
   return (
     <nav
-      className="sticky top-0 z-50 bg-background/85 backdrop-blur-md"
+      className="sticky top-0 z-50 bg-background"
       style={{ borderBottom: '1px solid color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
     >
       <div className="mx-auto flex max-w-3xl items-center gap-l px-l py-m text-m">

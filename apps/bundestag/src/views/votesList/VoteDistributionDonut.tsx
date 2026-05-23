@@ -55,6 +55,7 @@ export function VoteDistributionDonut({
           fill: s.color,
           stroke: 'var(--color-background)',
           strokeWidth: 2,
+          strokeLinejoin: 'round' as const,
           opacity,
           style: { cursor: interactive ? 'pointer' : undefined, transition: 'opacity 120ms' },
           onClick: interactive ? () => onSelect!(s.key) : undefined,
@@ -78,29 +79,31 @@ export function VoteDistributionDonut({
         angle += sweep
         return <path key={s.key} d={d} {...common} />
       })}
-      {showLabel && (
-        <g style={{ pointerEvents: 'none' }}>
-          <circle cx="50" cy="50" r="22" fill="var(--color-background)" />
-          <text
-            x="50"
-            y={activeSeg ? '46' : '54'}
-            textAnchor="middle"
-            style={{ fontSize: 9, fontWeight: 600, fill: 'var(--color-fg)' }}
-          >
-            {activeSeg ? ({ yes: t.yes, no: t.no, abstain: t.abstain, absent: t.absent }[activeSeg.key]) : total}
-          </text>
-          {activeSeg && (
+      <g style={{ pointerEvents: 'none' }}>
+        <circle cx="50" cy="50" r="22" fill="var(--color-background)" />
+        {showLabel && (
+          <>
             <text
               x="50"
-              y="58"
+              y={activeSeg ? '46' : '54'}
               textAnchor="middle"
-              style={{ fontSize: 7, fill: 'var(--color-fg)', opacity: 0.7 }}
+              style={{ fontSize: 9, fontWeight: 600, fill: 'var(--color-fg)' }}
             >
-              {activeValue} · {activePct}%
+              {activeSeg ? ({ yes: t.yes, no: t.no, abstain: t.abstain, absent: t.absent }[activeSeg.key]) : total}
             </text>
-          )}
-        </g>
-      )}
+            {activeSeg && (
+              <text
+                x="50"
+                y="58"
+                textAnchor="middle"
+                style={{ fontSize: 7, fill: 'var(--color-fg)', opacity: 0.7 }}
+              >
+                {activeValue} · {activePct}%
+              </text>
+            )}
+          </>
+        )}
+      </g>
     </svg>
   )
 }

@@ -13,7 +13,8 @@ export const Route = createFileRoute('/en/parties/$id')({
   staleTime: Infinity,
   shouldReload: false,
   head: ({ loaderData, params }) => {
-    const path = `/en/parties/${params.id}`
+    const path = `/en/parties/${params.id}/profile`
+    const dataPath = `/en/parties/${params.id}`
     const party = loaderData?.party
     const name = party ? partyLabel(party, 'en') : 'Party'
     const showPartyLine = hasPartyLine(party)
@@ -25,7 +26,7 @@ export const Route = createFileRoute('/en/parties/$id')({
           : `${name} in the German Bundestag: seats, members, attendance, and votes.`,
         canonical: path,
       }),
-      links: [...canonicalLink(path), ...alternateJsonLink(path)],
+      links: [...canonicalLink(path), ...alternateJsonLink(dataPath)],
       scripts: loaderData
         ? jsonLd({
             '@context': 'https://schema.org',
@@ -37,7 +38,7 @@ export const Route = createFileRoute('/en/parties/$id')({
             member: loaderData.members.map((m) => ({
               '@type': 'Person',
               name: m.name,
-              url: `${SITE_URL}/en/members/${m.id}/`,
+              url: `${SITE_URL}/en/members/${m.id}/votes/`,
             })),
           })
         : [],

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Filter, FileQuestion, CheckCircle2, Building2, Search } from 'lucide-react'
+import { Search } from 'lucide-react'
 import type { MemberAnfragen, AnfrageRow as AnfrageRowData } from '@/server/anfragen'
 import { FilterPill } from '@/views/votesList/FilterPill'
 import { AnfrageRow } from './AnfrageRow'
@@ -48,10 +48,8 @@ export function AnfragenTab({ data }: Props) {
             />
           </div>
           <div className="mb-m flex flex-wrap items-center gap-s">
-            <Filter size={14} className="opacity-l" />
             <FilterPill
               label={locale === 'en' ? 'Type' : 'Typ'}
-              icon={FileQuestion}
               options={TYPE_OPTIONS}
               value={typeFilter}
               onChange={setTypeFilter}
@@ -59,7 +57,6 @@ export function AnfragenTab({ data }: Props) {
             />
             <FilterPill
               label="Status"
-              icon={CheckCircle2}
               options={STATUS_OPTIONS}
               value={statusFilter}
               onChange={setStatusFilter}
@@ -68,7 +65,6 @@ export function AnfragenTab({ data }: Props) {
             {topRessorts.length > 0 && (
               <FilterPill
                 label={locale === 'en' ? 'Ministry' : 'Ressort'}
-                icon={Building2}
                 options={topRessorts}
                 value={ressortFilter}
                 onChange={setRessortFilter}

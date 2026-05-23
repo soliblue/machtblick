@@ -1,4 +1,4 @@
-import { SlidersHorizontal, Users, MapPin, Search, User, Cake, Vote } from 'lucide-react'
+import { Search } from 'lucide-react'
 import type { MandateType, MemberListItem, MemberSex } from '@/server/members'
 import { MemberRow } from './MemberRow'
 import { FilterPill } from '@/views/votesList/FilterPill'
@@ -75,12 +75,10 @@ export function MembersList({
         />
       </div>
       <div className="mb-l -mx-l flex items-center gap-s overflow-x-auto px-l [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <SlidersHorizontal size={17} className="shrink-0 opacity-l" />
-        <FilterPill label={t.navParties} icon={Users} options={availableParties} value={party} onChange={onPartyChange} />
-        <FilterPill label={t.state} icon={MapPin} options={availableStates} value={state} onChange={onStateChange} />
+        <FilterPill label={t.navParties} options={availableParties} value={party} onChange={onPartyChange} />
+        <FilterPill label={t.state} options={availableStates} value={state} onChange={onStateChange} />
         <FilterPill
           label={t.sex}
-          icon={User}
           options={availableSexes}
           value={sex}
           onChange={(v) => onSexChange(isSex(v) ? v : null)}
@@ -88,7 +86,6 @@ export function MembersList({
         />
         <FilterPill
           label={t.age}
-          icon={Cake}
           options={availableAgeBuckets}
           value={ageBucket}
           onChange={(v) => onAgeBucketChange(isAgeBucket(v) ? v : null)}
@@ -96,7 +93,6 @@ export function MembersList({
         />
         <FilterPill
           label={t.mandate}
-          icon={Vote}
           options={availableMandateTypes}
           value={mandateType}
           onChange={(v) => onMandateTypeChange(isMandateType(v) ? v : null)}

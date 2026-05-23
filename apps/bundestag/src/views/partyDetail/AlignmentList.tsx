@@ -28,7 +28,7 @@ export function AlignmentList({ alignments }: Props) {
         return slug ? (
           <a
             key={a.party}
-            href={withLocale(`/parties/${slug}/`, locale)}
+            href={withLocale(`/parties/${slug}/profile/`, locale)}
             className="block transition-opacity hover:opacity-80"
           >
             {row}

@@ -6,8 +6,10 @@
 +------------------------------------------------------------+
 | Abgeordnete                                                |
 |                                                            |
-| [ Suche.......... ] [ Partei v ] [ Bundesland v ]          |
-| [ Ausschuss v ]                                            |
+| [ Suche.................................................. ] |
+|                                                            |
+| [ Partei v ] [ Bundesland v ] [ Geschlecht v ]              |
+| [ Alter v ] [ Mandat v ]                                    |
 |                                                            |
 | Sortiert nach: [ Anwesenheit v ]                           |
 |                                                            |
@@ -34,7 +36,8 @@ A scannable table beats cards here: filtering and sorting is the primary task. A
 | Element | Text size | Weight | Spacing | Component |
 |---|---|---|---|---|
 | Page title | xxl | semibold | mb-l | — |
-| Filter row | m | regular | gap-s, mb-s | Input, Select |
+| Search row | m | regular | mb-m | Input |
+| Filter row | m | regular | gap-s, mb-l | FilterPill |
 | Sort control | m | regular | mb-m | Select |
 | Table header | s | semibold | py-s | Table |
 | Table row | m | regular | py-s | Table |
@@ -42,4 +45,4 @@ A scannable table beats cards here: filtering and sorting is the primary task. A
 | Percent cell | m | regular | — | — |
 | Load more | m | regular | mt-l | Button |
 
-Components used: Input, Select, Table, Badge, Button.
+Components used: Input, FilterPill, Table, Badge, Button.

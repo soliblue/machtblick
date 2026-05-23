@@ -28,19 +28,27 @@ All paths below are relative to the repo root.
    - One generated detail page when present
 3. Verify head metadata:
    - `<title>` and meta description exist
+   - sampled titles and descriptions are specific to the page type, not only generic defaults
    - canonical URL is absolute
+   - canonical URL resolves as the intended indexable 200 page, not a redirect, 404, or URL whose canonical points elsewhere
    - `hreflang` alternates include German, English, and `x-default`
+   - `hreflang` alternates point to canonical URLs in the matching language
+   - sampled `hreflang` targets exist and reciprocate the language cluster when both pages exist
    - Open Graph title, description, URL, image, image dimensions, and image alt exist
    - X card title, description, image, and image alt exist
    - production robots meta allows indexing and large image previews
-   - JSON-LD parses and describes the site or dataset
+   - JSON-LD parses, describes the current page or site, and satisfies current primary docs for the schema types used
    - JSON alternate links point at real generated JSON files when the page has one
 4. Verify static discovery files:
-   - `robots.txt` allows search and retrieval crawlers, declares the sitemap, and preserves the intended content signal
+   - `robots.txt` allows search and retrieval crawlers, declares the sitemap, preserves the intended content signal, and matches current primary docs for named AI crawlers
    - `llms.txt` explains the site, route families, JSON endpoints, sources, and AI access policy
+   - `llms.txt` route examples match canonical URL strategy, especially default tabs and redirecting parent routes
    - `.well-known/api-catalog` parses as JSON and links service docs plus JSON endpoints
    - `_headers` exposes the API catalog and `llms.txt`
-   - `sitemap.xml` exists and contains key route families
+   - `sitemap.xml` exists, contains key route families, and lists only preferred canonical URLs
+   - sitemap URLs resolve as indexable pages and do not include redirecting routes, filter/query variants, or pages whose `rel="canonical"` points elsewhere
+   - sitemap URLs are self-consistent with generated `rel="canonical"` values for sampled pages
+   - sitemap `lastmod` is absent or reflects a significant page update with a verifiable source, not only build time
    - `site.webmanifest` parses as JSON and its icons exist
    - favicon and share image assets exist
 5. For share images, verify dimensions when tooling is available. The default social card should be 1200 by 630.

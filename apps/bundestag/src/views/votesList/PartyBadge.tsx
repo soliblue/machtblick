@@ -24,7 +24,7 @@ export function PartyBadge({ party, compact = false }: Props) {
     const logo = <PartyLogo party={party} size={20} decorative />
     return slug ? (
       <a
-        href={withLocale(`/parties/${slug}/`, locale)}
+        href={withLocale(`/parties/${slug}/profile/`, locale)}
         onClick={(e) => e.stopPropagation()}
         aria-label={partyLabel(party, locale)}
         className="relative z-10 inline-flex hover:opacity-80"
@@ -54,7 +54,7 @@ export function PartyBadge({ party, compact = false }: Props) {
       )}
       {slug ? (
         <a
-          href={withLocale(`/parties/${slug}/`, locale)}
+          href={withLocale(`/parties/${slug}/profile/`, locale)}
           onClick={(e) => e.stopPropagation()}
           className="relative z-10 hover:opacity-80"
         >

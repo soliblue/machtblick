@@ -1,4 +1,4 @@
-import { ChevronDown } from 'lucide-react'
+import { ChevronDown, ExternalLink } from 'lucide-react'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { formatDate } from '@/lib/format'
 import { highlight } from '@/lib/highlight'
@@ -28,9 +28,6 @@ export function MemberSpeechGroupRow({ group, open, onToggle, terms, texts, cont
   const matchedSpeeches = terms.length
     ? group.speeches.filter((speech) => terms.every((term) => `${speech.speakerName} ${texts?.[speech.id] ?? speech.excerpt}`.toLowerCase().includes(term)))
     : []
-  const contributionLabel = locale === 'en'
-    ? `${group.speeches.length} ${group.speeches.length === 1 ? 'contribution' : 'contributions'}`
-    : `${group.speeches.length} ${group.speeches.length === 1 ? 'Beitrag' : 'Beiträge'}`
   const shortLabel = group.shortCount > 0
     ? locale === 'en'
       ? `${group.shortCount} short`
@@ -54,25 +51,29 @@ export function MemberSpeechGroupRow({ group, open, onToggle, terms, texts, cont
         <div className="grid grid-cols-[1fr_auto] items-start gap-m">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-s">
-              <span className="font-semibold">{formatDate(group.date)}</span>
-              {group.voteId && group.voteTitle ? (
+              {group.voteTitle ? (
+                <span className="text-m font-semibold">{group.voteTitle}</span>
+              ) : group.agendaTitle ? (
+                <span className="text-m font-semibold">{group.agendaTitle}</span>
+              ) : group.agendaItem ? (
+                <span className="text-m font-semibold">{group.agendaItem}</span>
+              ) : (
+                <span className="text-m font-semibold">{locale === 'en' ? 'Speech' : 'Rede'}</span>
+              )}
+            </div>
+            <div className="mt-xs flex flex-wrap items-center gap-s text-s">
+              <span className="opacity-l">{formatDate(group.date)}</span>
+              {shortLabel && <span className="opacity-l">{shortLabel}</span>}
+              {group.voteId && (
                 <a
                   href={withLocale(`/votes/${group.voteId}/`, locale)}
                   onClick={(event) => event.stopPropagation()}
-                  className="relative z-10 text-m hover:opacity-80"
+                  className="relative z-10 inline-flex items-center gap-xs opacity-l hover:opacity-100"
                 >
-                  {group.voteTitle}
+                  {locale === 'en' ? 'Vote' : 'Abstimmung'}
+                  <ExternalLink size={14} aria-hidden="true" />
                 </a>
-              ) : group.agendaTitle ? (
-                <span className="text-m">{group.agendaTitle}</span>
-              ) : group.agendaItem ? (
-                <span className="text-s opacity-l">{group.agendaItem}</span>
-              ) : null}
-              {group.main.party && <PartyBadge party={group.main.party} compact />}
-            </div>
-            <div className="mt-xs flex flex-wrap items-center gap-s text-s opacity-l">
-              <span>{contributionLabel}</span>
-              {shortLabel && <span>{shortLabel}</span>}
+              )}
             </div>
           </div>
           <ChevronDown
@@ -81,7 +82,7 @@ export function MemberSpeechGroupRow({ group, open, onToggle, terms, texts, cont
             style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
           />
         </div>
-        {terms.length && matchedSpeeches.length ? (
+        {open ? null : terms.length && matchedSpeeches.length ? (
           <div className="mt-s flex flex-col gap-xs text-m opacity-l">
             {matchedSpeeches.slice(0, 2).map((speech) => {
               const body = texts?.[speech.id] ?? speech.excerpt
@@ -94,8 +95,7 @@ export function MemberSpeechGroupRow({ group, open, onToggle, terms, texts, cont
         )}
       </div>
       {open && (
-        <div className="mt-m pl-m">
-          <div className="mb-s text-s opacity-l">{locale === 'en' ? 'Exchange' : 'Verlauf'}</div>
+        <div className="mt-m">
           {contextLoading && !contextRows ? (
             <div className="text-m opacity-l">{locale === 'en' ? 'Loading context...' : 'Kontext wird geladen...'}</div>
           ) : (

@@ -49,9 +49,9 @@ export function canonicalLink(path: string) {
   const english = base === '/' ? '/en/' : `/en${base}`
   return [
     { rel: 'canonical', href: `${SITE_URL}${canonical}` },
-    { rel: 'alternate', hreflang: 'de', href: `${SITE_URL}${base}` },
-    { rel: 'alternate', hreflang: 'en', href: `${SITE_URL}${english}` },
-    { rel: 'alternate', hreflang: 'x-default', href: `${SITE_URL}${base}` },
+    { rel: 'alternate', hrefLang: 'de', href: `${SITE_URL}${base}` },
+    { rel: 'alternate', hrefLang: 'en', href: `${SITE_URL}${english}` },
+    { rel: 'alternate', hrefLang: 'x-default', href: `${SITE_URL}${base}` },
   ]
 }
 

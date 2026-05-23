@@ -20,14 +20,17 @@ Specialists:
 | launcher | Local dev server bring-up |
 | visibility | SEO, sharing previews, crawler and AI assistant discoverability |
 | renamer | Conversation names |
+| archiver | Conversation archive and unarchive actions |
 | deployer | Cloudflare deploys only when explicitly asked |
 | scribe | Git commits |
 
 Every change starts with a plan in `plans/NN-slug.md`, small or big. The plan is the durable channel between sessions and subagents, so it carries the goal, status, shared contracts, open questions, and an append-only log per agent.
 
-## Conversation Names
+## Conversation Names and Archives
 
 Lead should call `renamer` after the first substantive user message, after about the fifth user message, and whenever the user asks if the current name still fits. Renamer considers the conversation context and uses one emoji plus at most two words.
+
+Lead may call `archiver` only when the user asks to archive or unarchive a conversation, or when lead gives explicit target thread ids for completed spawned threads. Archiver requires target thread ids and must not guess from recency. Archiver must not archive the active root thread unless the user explicitly asks.
 
 ## Memory and Context
 
@@ -88,7 +91,7 @@ Live preview of the local checkout is at `https://dev.machtblick.de`, served by 
 - **TanStack first.** Router, Query, Table, Form, before reaching for alternatives
 - **ASCII mocks are the source of truth for layout intent.** Commit at `apps/<app>/src/views/<view>/<view>.mock.md`
 - **No absolute filesystem paths in checked-in files.** Scripts, configs, agent definitions, and docs use repo-relative paths
-- **Fix data, not symptoms.** When app logic has to compensate for messy data, the fix belongs in ETL or a one-shot DB normalization script under `db/`, not in the read path
+- **Fix data, not symptoms.** When app logic has to compensate for messy data, the fix belongs in ETL or a one-shot DB normalization script under `db/`, not in the read path. Derived public-data fields that humans may review, like titles, mappings, classifications, and labels, must be materialized through ETL or SQL before the app reads them
 - **LLM work in ETL goes through local agent CLIs, not provider APIs.** Prefer `codex exec`; use `claude -p --model sonnet --output-format json` only when a task explicitly needs Claude
 - **Every route must prerender.** New dynamic segment or nested tab means updating `apps/<app>/vite.config.ts > prerenderPaths()` in the same change
 - **Server functions only run at build time.** A view needing data from a server fn must trigger it from a route `loader` and read with `Route.useLoaderData()`. Never call a server function from `useQuery`

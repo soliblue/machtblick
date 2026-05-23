@@ -12,7 +12,7 @@ export function PartyRow({ party }: Props) {
   const t = useCopy()
   return (
     <a
-      href={withLocale(`/parties/${party.slug}/`, locale)}
+      href={withLocale(`/parties/${party.slug}/profile/`, locale)}
       className="flex items-center justify-between border-t py-l transition-opacity first:border-t-0 hover:opacity-80"
       style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
     >

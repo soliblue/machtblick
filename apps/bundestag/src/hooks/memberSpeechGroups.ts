@@ -34,7 +34,11 @@ export function groupMemberSpeeches(speeches: SpeechResult[]): MemberSpeechGroup
       voteTitle: linked.voteTitle,
       speeches: sorted,
       main,
-      shortCount: sorted.filter((speech) => speech.excerpt.split(/\s+/).filter(Boolean).length < 24).length,
+      shortCount: sorted.filter((speech) => (
+        'contributionType' in speech && typeof speech.contributionType === 'string'
+          ? speech.contributionType === 'short'
+          : speech.excerpt.split(/\s+/).filter(Boolean).length < 24
+      )).length,
     }
   }).sort((a, b) => b.date.localeCompare(a.date) || a.main.position - b.main.position)
 }
@@ -56,5 +60,7 @@ export function contextRowsForGroup(meta: SpeechMetaEntry[], group: MemberSpeech
 }
 
 export function speechGroupKey(speech: Pick<SpeechResult, 'date' | 'agendaItem' | 'voteId' | 'id'>) {
-  return `${speech.date}\u0000${speech.agendaItem ?? speech.voteId ?? speech.id}`
+  return 'debateGroupId' in speech && typeof speech.debateGroupId === 'string' && speech.debateGroupId.length > 0
+    ? speech.debateGroupId
+    : `${speech.date}\u0000${speech.agendaItem ?? speech.voteId ?? speech.id}`
 }

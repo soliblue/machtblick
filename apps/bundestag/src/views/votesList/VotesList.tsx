@@ -1,4 +1,4 @@
-import { SlidersHorizontal, Vote, Flag, Scale, Search, Tag } from 'lucide-react'
+import { Search } from 'lucide-react'
 import type { VoteListItem } from '@/server/votes'
 import type { VoteTypeFilter, VoteResultFilter } from '@/hooks/useVoteListFilters'
 import { VISIBLE_VOTE_TYPES } from '@/lib/voteTypes'
@@ -50,10 +50,8 @@ export function VotesList({ votes, proposingParty, onProposingPartyChange, avail
         />
       </div>
       <div className="mb-l -mx-l flex items-center gap-s overflow-x-auto px-l [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <SlidersHorizontal size={17} className="shrink-0 opacity-l" />
         <FilterPill
           label={t.type}
-          icon={Vote}
           options={VISIBLE_VOTE_TYPES}
           value={voteType}
           onChange={(v) => onVoteTypeChange(v as VoteTypeFilter | null)}
@@ -61,14 +59,12 @@ export function VotesList({ votes, proposingParty, onProposingPartyChange, avail
         />
         <FilterPill
           label={t.proposer}
-          icon={Flag}
           options={availableParties}
           value={proposingParty}
           onChange={onProposingPartyChange}
         />
         <FilterPill
           label={t.result}
-          icon={Scale}
           options={['angenommen', 'abgelehnt']}
           value={result}
           onChange={(v) => onResultChange(v as VoteResultFilter | null)}
@@ -77,7 +73,6 @@ export function VotesList({ votes, proposingParty, onProposingPartyChange, avail
         {availableTopics.length > 0 && (
           <FilterPill
             label={t.category}
-            icon={Tag}
             options={availableTopics}
             value={topic}
             onChange={onTopicChange}

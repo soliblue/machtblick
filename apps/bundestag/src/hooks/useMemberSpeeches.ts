@@ -56,7 +56,6 @@ export function useMemberSpeeches(speeches: SpeechResult[], locale: Locale) {
     textsLoading: terms.length > 0 && !speechTextsLoaded(locale),
     slice: filtered.slice(safePage * PAGE_SIZE, (safePage + 1) * PAGE_SIZE),
     filteredCount: filtered.length,
-    contributionCount: filtered.reduce((sum, group) => sum + group.speeches.length, 0),
     pageCount,
     safePage,
     setPage,

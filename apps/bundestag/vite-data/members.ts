@@ -1,5 +1,4 @@
 import type Database from 'better-sqlite3'
-import { speechAgendaTitle } from '../src/server/speechAgendaTitles'
 
 type MemberRow = {
   id: string
@@ -87,14 +86,12 @@ type SpeechJoinRow = {
   text_excerpt: string
   date: string
   agenda_item: string | null
+  agenda_title: string | null
+  debate_group_id: string | null
+  contribution_type: string | null
   vote_id: string | null
   vote_title: string | null
   vote_clean_title: string | null
-}
-
-const SPEECH_PARTY_NORMALIZE: Record<string, string> = {
-  'BÜNDNIS 90/DIE GRÜNEN': 'B90/Grüne',
-  'DIE LINKE': 'Die Linke',
 }
 
 const PARTY_LINE_EXCLUDED = new Set(['fraktionslos', 'Bundesregierung'])
@@ -200,38 +197,44 @@ export function fullMember(db: Database.Database, id: string) {
   })
   const currentParty = affiliations.find((a) => a.valid_to === null)?.party ?? ''
   const speechRows = db.prepare(`
-    SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party, s.position,
-           s.text_excerpt, s.date, s.agenda_item,
-           COALESCE(direct.id, agenda.id) AS vote_id,
-           COALESCE(direct.title, agenda.title) AS vote_title,
-           COALESCE(direct.clean_title, agenda.clean_title) AS vote_clean_title
-    FROM speeches s
-    LEFT JOIN votes direct ON direct.id = s.vote_id
-    LEFT JOIN votes agenda ON agenda.id = (
-      SELECT av.id FROM votes av
-      WHERE av.term_id = ${CURRENT_TERM}
-        AND av.procedural = 0
-        AND av.vote_type != 'hammelsprung'
-        AND av.date = s.date
-        AND av.agenda_item = s.agenda_item
-        AND s.vote_id IS NULL
-      ORDER BY CASE av.vote_type WHEN 'namentlich' THEN 0 WHEN 'handzeichen' THEN 1 ELSE 2 END, av.id
-      LIMIT 1
+    WITH linked_votes AS (
+      SELECT speech_id, vote_id, row_number() OVER (
+        PARTITION BY speech_id
+        ORDER BY confidence DESC, CASE source WHEN 'direct' THEN 0 ELSE 1 END, vote_id
+      ) AS rn
+      FROM speech_vote_links
     )
+    SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party,
+           COALESCE(sdgs.position, s.position) AS position,
+           s.text_excerpt, s.date, s.agenda_item,
+           COALESCE(sdg.title, pai.title) AS agenda_title,
+           sdgs.group_id AS debate_group_id,
+           sdgs.contribution_type AS contribution_type,
+           lv.vote_id AS vote_id,
+           v.title AS vote_title,
+           v.clean_title AS vote_clean_title
+    FROM speeches s
+    LEFT JOIN linked_votes lv ON lv.speech_id = s.id AND lv.rn = 1
+    LEFT JOIN votes v ON v.id = lv.vote_id
+    LEFT JOIN speech_debate_group_speeches sdgs ON sdgs.speech_id = s.id
+    LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
+    LEFT JOIN plenary_agenda_items pai ON pai.session_id = s.session_id AND pai.date = s.date AND pai.agenda_item = s.agenda_item
     WHERE s.speaker_member_id = ?
-    ORDER BY s.date DESC, s.position ASC
+    ORDER BY s.date DESC, COALESCE(sdgs.position, s.position) ASC
   `).all(id) as SpeechJoinRow[]
   const speeches = speechRows.map((row) => ({
     id: row.id,
     speakerName: row.speaker_name,
     speakerMemberId: row.speaker_member_id,
     speakerRole: row.speaker_role,
-    party: row.party ? (SPEECH_PARTY_NORMALIZE[row.party] ?? row.party) : null,
+    party: row.party,
     position: row.position,
     excerpt: row.text_excerpt,
     date: row.date,
     agendaItem: row.agenda_item,
-    agendaTitle: speechAgendaTitle(row.date, row.agenda_item),
+    agendaTitle: row.agenda_title,
+    debateGroupId: row.debate_group_id,
+    contributionType: row.contribution_type,
     voteId: row.vote_id,
     voteTitle: row.vote_clean_title ?? row.vote_title,
     snippet: null,

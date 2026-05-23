@@ -15,19 +15,25 @@ export function ResultTab({ data }: Props) {
   return (
     <>
       <section className="mb-l grid items-start gap-l md:grid-cols-[auto_1fr] md:items-center">
-        <div className="flex justify-center md:justify-start">
-          <VoteDistributionDonut
-            yes={vote.yes}
-            no={vote.no}
-            abstain={vote.abstain}
-            absent={vote.absent}
-            size={240}
-            selected={filter}
-            onSelect={toggle}
-            showLabel
-          />
+        <div>
+          <div className="mb-s text-s uppercase opacity-l">{t.result}</div>
+          <div className="flex justify-center md:justify-start">
+            <VoteDistributionDonut
+              yes={vote.yes}
+              no={vote.no}
+              abstain={vote.abstain}
+              absent={vote.absent}
+              size={240}
+              selected={filter}
+              onSelect={toggle}
+              showLabel
+            />
+          </div>
         </div>
-        <PartyWaffle summaries={partySummaries} highlight={filter} memberBallots={memberBallots} />
+        <div>
+          <div className="mb-s text-s uppercase opacity-l">{t.navParties}</div>
+          <PartyWaffle summaries={partySummaries} highlight={filter} memberBallots={memberBallots} />
+        </div>
       </section>
 
       {defectors.length > 0 && (

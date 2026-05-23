@@ -14,7 +14,7 @@ export function MemberRow({ member }: Props) {
       style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
     >
       <a
-        href={withLocale(`/members/${member.id}/`, locale)}
+        href={withLocale(`/members/${member.id}/votes/`, locale)}
         className="absolute inset-0"
         aria-label={member.name}
       />
@@ -22,7 +22,7 @@ export function MemberRow({ member }: Props) {
       <PartyBadge party={member.party} compact />
       <span className="hidden w-32 text-s opacity-l sm:inline">{member.state}</span>
       <span className="w-16 text-right sm:w-20">{pct(member.attendance)}</span>
-      <span className="w-16 text-right sm:w-20">{member.loyalty === null ? '–' : pct(member.loyalty)}</span>
+      <span className="w-16 text-right sm:w-20">{member.loyalty === null ? '-' : pct(member.loyalty)}</span>
     </div>
   )
 }

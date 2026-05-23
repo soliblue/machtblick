@@ -26,11 +26,6 @@ export function MemberSpeechesSection({ speeches }: { speeches: SpeechResult[] }
           />
           {speechState.textsLoading && <div className="mt-xs text-s opacity-l">{t.searchIndexLoading}</div>}
         </div>
-        <div className="text-s opacity-l">
-          {locale === 'en'
-            ? `${speechState.filteredCount} speeches, ${speechState.contributionCount} contributions`
-            : `${speechState.filteredCount} Reden, ${speechState.contributionCount} Beiträge`}
-        </div>
       </div>
       {speechState.textsLoading ? (
         <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>{t.searchPreparing}</div>

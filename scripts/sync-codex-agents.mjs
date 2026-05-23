@@ -6,6 +6,7 @@ const targetDir = ".codex/agents";
 const skippedAgents = new Set(["lead"]);
 
 const roleByAgent = {
+  archiver: "worker",
   designer: "worker",
   plumber: "worker",
   backend: "worker",

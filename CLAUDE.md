@@ -47,7 +47,7 @@ Live preview of the local checkout is at `https://dev.machtblick.de`, served by 
 - **TanStack first.** Router, Query, Table, Form, before reaching for alternatives
 - **ASCII mocks are the source of truth for layout intent.** Commit at `apps/<app>/src/views/<view>/<view>.mock.md`
 - **No absolute filesystem paths in checked-in files.** Scripts, configs, agent definitions, and docs use repo-relative paths so the project works for anyone who clones it
-- **Fix data, not symptoms.** When app logic has to compensate for messy data (server-side flips, regex fallbacks, "if X then invert Y"), the fix belongs in ETL or a one-shot DB normalization script under `db/`, not in the read path. Document the quirk inline in `.claude/agents/plumber.md` (per-source section) so it doesn't get rediscovered. Hacks in app code rot; clean data scales.
+- **Fix data, not symptoms.** When app logic has to compensate for messy data (server-side flips, regex fallbacks, "if X then invert Y"), the fix belongs in ETL or a one-shot DB normalization script under `db/`, not in the read path. Derived public-data fields that humans may review, like titles, mappings, classifications, and labels, must be materialized through ETL or SQL before the app reads them. Document the quirk inline in `.claude/agents/plumber.md` (per-source section) so it doesn't get rediscovered. Hacks in app code rot; clean data scales.
 - **LLM work in ETL goes through local agent CLIs, not provider APIs.** Prefer `codex exec` because Codex credits are plentiful; use `claude -p --model sonnet --output-format json` only when a task explicitly needs Claude. For enrichment steps that need a model (title simplification, classification, summarization, parsing fallbacks), shell out with the prompt on stdin and parse strict JSON from stdout or an output file. Loop locally with concurrency control; no SDK, no API keys in code.
 - **Every route must prerender.** We ship to Cloudflare Pages with `spa: false`. Any path not in `apps/<app>/vite.config.ts > prerenderPaths()` falls back to the root `index.html`, which has no dehydrated loader data. New dynamic segment or new nested tab → add it to `prerenderPaths()` in the same change. Child routes that read a parent's loader (`useLoaderData({ from: '<parent>' })`) must guard with `?? defaultValue` because on a cold prerender-fallback hit the parent loader hasn't resolved yet.
 - **Server functions only run at build time.** On Cloudflare Pages with `spa: false`, `createServerFn(...)` handlers execute during prerender and their results are dehydrated into the HTML; at runtime `/_serverFn/...` returns the SPA fallback. A view needing data from a server fn must trigger it from a route `loader` and read with `Route.useLoaderData()`. **Never call a server function from `useQuery`** (works locally, returns HTML in prod, crashes downstream on JSON parse). Lazy data → put the loader on a sub-route so it only fires when that route is active.
@@ -91,9 +91,12 @@ UI primitives come from shadcn/ui, restricted to the curated set: Button, Input,
 | launcher | Local dev server bring-up |
 | visibility | SEO, sharing previews, crawler and AI assistant discoverability |
 | renamer | Conversation names |
+| archiver | Conversation archive and unarchive actions |
 | deployer | Cloudflare deploys only when explicitly asked |
 | scribe | Git commits |
 
 Every change starts with a plan in `plans/NN-slug.md`, small or big. The plan is the only durable channel between sessions and subagents, so it carries the goal, status, shared contracts, open questions, and an append-only log per agent.
 
 Conversation names should stay glanceable. Lead should call `renamer` after the first substantive user message, after about the fifth user message, and whenever the user asks if the current name still fits. Renamer considers the conversation context and uses one emoji plus at most two words.
+
+Lead may call `archiver` only when the user asks to archive or unarchive a conversation, or when lead gives explicit target thread ids for completed spawned threads. Archiver requires target thread ids and must not guess from recency. Archiver must not archive the active root thread unless the user explicitly asks.

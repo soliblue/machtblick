@@ -10,6 +10,7 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "db:normalize": "tsx db/normalize-results.ts",
+    "db:materialize": "tsx db/materialize-derived-data.ts",
     "etl:donations": "tsx etl/bundestag-spenden/ingest.ts",
     "etl:affiliations": "tsx etl/bundestag-affiliations/ingest.ts",
     "etl:speeches": "tsx etl/bundestag-reden/ingest.ts",

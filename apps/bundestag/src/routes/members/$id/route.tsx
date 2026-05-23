@@ -13,7 +13,8 @@ export const Route = createFileRoute('/members/$id')({
   staleTime: Infinity,
   shouldReload: false,
   head: ({ loaderData, params }) => {
-    const path = `/members/${params.id}`
+    const path = `/members/${params.id}/votes`
+    const dataPath = `/members/${params.id}`
     const name = loaderData?.name ?? 'Abgeordnete:r'
     const hasLineHistory = loaderData?.history.some((r) => r.defected !== null) ?? false
     return {
@@ -25,7 +26,7 @@ export const Route = createFileRoute('/members/$id')({
         canonical: path,
         type: 'profile',
       }),
-      links: [...canonicalLink(path), ...alternateJsonLink(path)],
+      links: [...canonicalLink(path), ...alternateJsonLink(dataPath)],
       scripts: loaderData
         ? jsonLd({
             '@context': 'https://schema.org',

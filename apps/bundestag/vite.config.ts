@@ -9,19 +9,9 @@ import { leanVotes, fullVote } from './vite-data/votes'
 import { leanMembers, fullMember } from './vite-data/members'
 import { leanParties, fullParty } from './vite-data/parties'
 import { fullAntrag } from './vite-data/antraege'
-import { speechAgendaTitle } from './src/server/speechAgendaTitles'
 
 const SITE_URL = 'https://machtblick.de'
 const CURRENT_TERM = 21
-
-const PARTY_NORMALIZE: Record<string, string> = {
-  'BÜNDNIS 90/DIE GRÜNEN': 'B90/Grüne',
-  'DIE LINKE': 'Die Linke',
-}
-
-function normalizeParty(raw: string | null): string | null {
-  return raw ? (PARTY_NORMALIZE[raw] ?? raw) : null
-}
 
 type SpeechRow = {
   id: string
@@ -36,6 +26,9 @@ type SpeechRow = {
   text_full_en: string | null
   date: string
   agenda_item: string | null
+  agenda_title: string | null
+  debate_group_id: string | null
+  contribution_type: string | null
   vote_id: string | null
   vote_title: string | null
 }
@@ -52,26 +45,30 @@ const CHAIR_ROLES = new Set([
 function writeSpeechesStatic() {
   const db = new Database(fileURLToPath(new URL('../../db/machtblick.sqlite', import.meta.url)), { readonly: true })
   const rows = db.prepare(`
-    SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party, s.position,
+    WITH linked_votes AS (
+      SELECT speech_id, vote_id, row_number() OVER (
+        PARTITION BY speech_id
+        ORDER BY confidence DESC, CASE source WHEN 'direct' THEN 0 ELSE 1 END, vote_id
+      ) AS rn
+      FROM speech_vote_links
+    )
+    SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party,
+           COALESCE(sdgs.position, s.position) AS position,
            s.text_excerpt, s.text_full, st.text_excerpt AS text_excerpt_en, st.text_full AS text_full_en,
            s.date, s.agenda_item,
-           COALESCE(direct.id, agenda.id) AS vote_id,
-           COALESCE(direct.clean_title, direct.title, agenda.clean_title, agenda.title) AS vote_title
+           COALESCE(sdg.title, pai.title) AS agenda_title,
+           sdgs.group_id AS debate_group_id,
+           sdgs.contribution_type AS contribution_type,
+           lv.vote_id AS vote_id,
+           COALESCE(v.clean_title, v.title) AS vote_title
     FROM speeches s
-    LEFT JOIN votes direct ON direct.id = s.vote_id
-    LEFT JOIN votes agenda ON agenda.id = (
-      SELECT av.id FROM votes av
-      WHERE av.term_id = ${CURRENT_TERM}
-        AND av.procedural = 0
-        AND av.vote_type != 'hammelsprung'
-        AND av.date = s.date
-        AND av.agenda_item = s.agenda_item
-        AND s.vote_id IS NULL
-      ORDER BY CASE av.vote_type WHEN 'namentlich' THEN 0 WHEN 'handzeichen' THEN 1 ELSE 2 END, av.id
-      LIMIT 1
-    )
+    LEFT JOIN linked_votes lv ON lv.speech_id = s.id AND lv.rn = 1
+    LEFT JOIN votes v ON v.id = lv.vote_id
+    LEFT JOIN speech_debate_group_speeches sdgs ON sdgs.speech_id = s.id
+    LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
+    LEFT JOIN plenary_agenda_items pai ON pai.session_id = s.session_id AND pai.date = s.date AND pai.agenda_item = s.agenda_item
     LEFT JOIN speech_translations st ON st.speech_id = s.id AND st.locale = 'en'
-    ORDER BY s.date DESC, s.position ASC
+    ORDER BY s.date DESC, COALESCE(sdgs.position, s.position) ASC
   `).all() as SpeechRow[]
   db.close()
   const publicDir = fileURLToPath(new URL('./public', import.meta.url))
@@ -82,12 +79,14 @@ function writeSpeechesStatic() {
     speakerName: r.speaker_name,
     speakerMemberId: r.speaker_member_id,
     speakerRole: r.speaker_role,
-    party: normalizeParty(r.party),
+    party: r.party,
     position: r.position,
     excerpt: r.text_full.slice(0, 160),
     date: r.date,
     agendaItem: r.agenda_item,
-    agendaTitle: speechAgendaTitle(r.date, r.agenda_item),
+    agendaTitle: r.agenda_title,
+    debateGroupId: r.debate_group_id,
+    contributionType: r.contribution_type,
     voteId: r.vote_id,
     voteTitle: r.vote_title,
   }))
@@ -169,11 +168,15 @@ function writeSitemap(paths: string[]) {
   const seen = new Set<string>()
   const urls = paths
     .filter((p) => !p.includes('?'))
+    .filter((p) => p !== '/' && p !== '/en/')
+    .filter((p) => !/^\/(en\/)?members\/[^/]+\/?$/.test(p))
+    .filter((p) => !/^\/(en\/)?members\/[^/]+\/(speeches|questions|motions)\/?$/.test(p))
+    .filter((p) => !/^\/(en\/)?parties\/[^/]+\/?$/.test(p))
+    .filter((p) => !/^\/(en\/)?parties\/[^/]+\/(votes|history)\/?$/.test(p))
     .map((p) => (p === '/' || p.endsWith('/') ? p : `${p}/`))
     .filter((p) => (seen.has(p) ? false : (seen.add(p), true)))
-  const today = new Date().toISOString().slice(0, 10)
   const body = urls
-    .map((p) => `  <url><loc>${SITE_URL}${p}</loc><lastmod>${today}</lastmod></url>`)
+    .map((p) => `  <url><loc>${SITE_URL}${p}</loc></url>`)
     .join('\n')
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`
   writeFileSync(fileURLToPath(new URL('./public/sitemap.xml', import.meta.url)), xml)

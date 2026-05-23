@@ -20,10 +20,7 @@ export function VoteRow({ vote }: Props) {
     hammelsprung: t.division,
   }
   return (
-    <div
-      className="relative border-t py-m first:border-t-0 sm:py-l"
-      style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 8%, transparent)' }}
-    >
+    <div className="relative py-xl first:pt-xs before:absolute before:inset-x-xs before:top-0 before:h-[1.5px] before:rounded-full before:bg-elevated before:content-[''] first:before:hidden">
       <a
         href={withLocale(`/votes/${vote.id}/`, locale)}
         className="absolute inset-0"
@@ -37,11 +34,11 @@ export function VoteRow({ vote }: Props) {
         <span>{typeLabels[vote.voteType]}</span>
       </div>
       <div className="mt-s grid grid-cols-[auto_1fr] items-center gap-x-m gap-y-s sm:gap-x-l">
-        <div className="row-span-2 shrink-0 [&_svg]:!h-[88px] [&_svg]:!w-[88px] sm:[&_svg]:!h-[160px] sm:[&_svg]:!w-[160px]">
-          <VoteDistributionDonut yes={vote.yes} no={vote.no} abstain={vote.abstain} absent={vote.absent} size={88} />
+        <div className="row-span-2 shrink-0 [&_svg]:!h-[80px] [&_svg]:!w-[80px] sm:[&_svg]:!h-[144px] sm:[&_svg]:!w-[144px]">
+          <VoteDistributionDonut yes={vote.yes} no={vote.no} abstain={vote.abstain} absent={vote.absent} size={80} />
         </div>
         <div className="font-display text-[18px] leading-snug sm:text-[21px]" style={{ fontWeight: 500 }}>{heading}</div>
-        <div className="col-start-2 flex flex-wrap items-center justify-start gap-s">
+        <div className="col-start-2 flex flex-wrap items-center justify-start gap-s pb-xs">
           {stamps.map((s) => (
             <Stamp key={s} variant={s} />
           ))}

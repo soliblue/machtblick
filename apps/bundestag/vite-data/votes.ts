@@ -74,44 +74,24 @@ type SpeechRow = {
   party: string | null
   date: string
   agenda_item: string | null
+  agenda_title: string | null
+  debate_group_id: string | null
+  contribution_type: string | null
   position: number
   text_excerpt: string
+  debate_source: string | null
 }
 
 type DescriptionDecisionRow = {
   source_pdf_url: string
 }
 
-const SPEECH_PARTY_NORMALIZE: Record<string, string> = {
-  'BÜNDNIS 90/DIE GRÜNEN': 'B90/Grüne',
-  'DIE LINKE': 'Die Linke',
-}
-
 const PARTY_LINE_EXCLUDED = new Set(['fraktionslos', 'Bundesregierung'])
 const CURRENT_TERM = 21
-
-const ANTRAG_FLAVORED = ['Antrag:', 'Gesetzentwurf:', 'Entschließungsantrag:', 'Änderungsantrag:']
-const ANTRAG_EXCLUDED = ['Beschlussempfehlung', 'Bericht:', 'Ergänzung', 'Wahlvorschlag', 'Unterrichtung', 'Verordnung']
-
-function pickAntragPdfUrl(docs: DocumentRow[]): string | null {
-  const antrag = docs.filter((d) => ANTRAG_FLAVORED.some((p) => d.title.startsWith(p)) && !ANTRAG_EXCLUDED.some((p) => d.title.startsWith(p)))
-  if (!antrag.length) return null
-  antrag.sort((a, b) => drucksacheRank(a.label) - drucksacheRank(b.label))
-  return antrag[0].url
-}
-
-function drucksacheRank(label: string): number {
-  const m = label.match(/^(\d+)\/(\d+)$/)
-  return m ? Number(m[1]) * 1_000_000 + Number(m[2]) : Number.MAX_SAFE_INTEGER
-}
 
 function partyAt(affiliations: AffiliationRow[], date: string): string {
   const hit = affiliations.find((a) => a.valid_from <= date && (a.valid_to === null || a.valid_to >= date))
   return hit?.party ?? ''
-}
-
-function normalizeSpeechParty(raw: string | null): string | null {
-  return raw ? (SPEECH_PARTY_NORMALIZE[raw] ?? raw) : null
 }
 
 export function leanVotes(db: Database.Database) {
@@ -244,33 +224,48 @@ export function fullVote(db: Database.Database, id: string) {
   const defectors = Array.from(defectorsByParty.entries())
     .map(([party, list]) => ({ party, majority: majorityByParty.get(party)!, count: list.length, members: list }))
     .sort((a, b) => b.count - a.count)
-  const speechRowsByAgenda = voteRow.agenda_item
-    ? db.prepare(`
-      SELECT id, speaker_name, speaker_member_id, speaker_role, party, date, agenda_item, position, text_excerpt
-      FROM speeches WHERE date = ? AND agenda_item = ? ORDER BY position ASC
-    `).all(voteRow.date, voteRow.agenda_item) as SpeechRow[]
-    : []
-  const speechRows = speechRowsByAgenda.length
-    ? speechRowsByAgenda
-    : db.prepare(`
-      SELECT id, speaker_name, speaker_member_id, speaker_role, party, date, agenda_item, position, text_excerpt
-      FROM speeches WHERE vote_id = ? ORDER BY position ASC
-    `).all(id) as SpeechRow[]
+  const speechRows = db.prepare(`
+    SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party,
+           s.date, s.agenda_item, COALESCE(sdg.title, pai.title) AS agenda_title,
+           sdgs.group_id AS debate_group_id,
+           sdgs.contribution_type AS contribution_type,
+           COALESCE(sdgs.position, s.position) AS position,
+           s.text_excerpt,
+           vdg.source AS debate_source
+    FROM vote_debate_groups vdg
+    INNER JOIN speech_debate_group_speeches sdgs ON sdgs.group_id = vdg.group_id
+    INNER JOIN speeches s ON s.id = sdgs.speech_id
+    LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
+    LEFT JOIN plenary_agenda_items pai ON pai.session_id = s.session_id AND pai.date = s.date AND pai.agenda_item = s.agenda_item
+    WHERE vdg.vote_id = ?
+    ORDER BY COALESCE(sdg.date, s.date) ASC, COALESCE(sdgs.position, s.position) ASC
+  `).all(id) as SpeechRow[]
   const debate = speechRows.map((r) => ({
     id: r.id,
     speakerName: r.speaker_name,
     speakerMemberId: r.speaker_member_id,
     speakerRole: r.speaker_role,
-    party: normalizeSpeechParty(r.party),
+    party: r.party,
     date: r.date,
     agendaItem: r.agenda_item,
+    agendaTitle: r.agenda_title,
+    debateGroupId: r.debate_group_id,
+    contributionType: r.contribution_type,
     position: r.position,
     excerpt: r.text_excerpt,
   }))
-  const debateSource = speechRowsByAgenda.length || speechRows.every((r) => r.date === voteRow.date) ? 'direct' : 'related'
+  const debateSource = speechRows.some((r) => r.debate_source === 'related' || r.date !== voteRow.date) ? 'related' : 'direct'
   const descRow = db.prepare('SELECT source_pdf_url FROM vote_description_decisions WHERE vote_id = ?').get(id) as DescriptionDecisionRow | undefined
   const antragPdfUrl = descRow?.source_pdf_url
-    ?? pickAntragPdfUrl(documents)
+    ?? (db.prepare(`
+      SELECT vd.url
+      FROM vote_document_roles vdr
+      INNER JOIN vote_documents vd ON vd.id = vdr.document_id AND vd.vote_id = vdr.vote_id
+      WHERE vdr.vote_id = ?
+        AND vdr.role IN ('primary_antrag', 'antrag')
+      ORDER BY CASE vdr.role WHEN 'primary_antrag' THEN 0 ELSE 1 END, vd.id
+      LIMIT 1
+    `).get(id) as { url: string } | undefined)?.url
     ?? null
   return {
     vote,

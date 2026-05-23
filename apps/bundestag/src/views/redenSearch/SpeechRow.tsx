@@ -109,7 +109,7 @@ function SpeakerName({ speech }: { speech: SpeechSummary }) {
   if (speech.speakerMemberId) {
     return (
       <a
-        href={withLocale(`/members/${speech.speakerMemberId}/`, locale)}
+        href={withLocale(`/members/${speech.speakerMemberId}/votes/`, locale)}
         onClick={(e) => e.stopPropagation()}
         className="relative z-10 font-semibold hover:opacity-80"
       >

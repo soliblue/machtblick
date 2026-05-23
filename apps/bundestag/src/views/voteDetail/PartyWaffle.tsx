@@ -1,4 +1,5 @@
-import { PARTY_LOGO, PARTY_ORDER, PARTY_SLUG, partyLabel } from '@/lib/parties'
+import { Fragment } from 'react'
+import { PARTY_LOGO, PARTY_ORDER, PARTY_SLUG, hasPartyLine, partyLabel } from '@/lib/parties'
 import type { VoteChoice } from '@/views/votesList/VoteDistributionDonut'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { useCopy, useLocale } from '@/lib/i18n'
@@ -47,7 +48,7 @@ function buildCells(s: Row, ballots: Ballot[] | undefined): Cell[] {
 
 export function PartyWaffle({ summaries, highlight, memberBallots }: Props) {
   const byParty = new Map(summaries.map((s) => [s.party, s]))
-  const ordered = PARTY_ORDER.map((p) => byParty.get(p)).filter((s): s is Row => Boolean(s))
+  const ordered = PARTY_ORDER.map((p) => byParty.get(p)).filter((s): s is Row => !!s && hasPartyLine(s.party))
   const locale = useLocale()
   const t = useCopy()
   const choiceLabel = {
@@ -58,28 +59,28 @@ export function PartyWaffle({ summaries, highlight, memberBallots }: Props) {
   }
   return (
     <TooltipProvider delayDuration={50}>
-      <div className="grid gap-s" style={{ gridTemplateColumns: 'auto 1fr' }}>
-        {ordered.map((s) => {
+      <div className="grid gap-x-m gap-y-xs" style={{ gridTemplateColumns: 'max-content minmax(0, 1fr)' }}>
+        {ordered.map((s, rowIndex) => {
           const cells = buildCells(s, memberBallots)
           const label = partyLabel(s.party, locale)
           return (
-            <div key={s.party} className="contents">
+            <Fragment key={s.party}>
               <a
-                href={withLocale(`/parties/${PARTY_SLUG[s.party] ?? s.party}/`, locale)}
-                className="self-center pr-m"
+                href={withLocale(`/parties/${PARTY_SLUG[s.party] ?? s.party}/profile/`, locale)}
+                className="flex min-h-[24px] items-center self-center"
                 aria-label={label}
               >
                 {PARTY_LOGO[s.party] ? (
                   <img src={PARTY_LOGO[s.party]} alt={label} style={{ height: 24, width: 'auto' }} />
                 ) : (
-                  <span className="text-m font-semibold">{label}</span>
+                  <span className="text-s font-semibold">{label}</span>
                 )}
               </a>
               <div className="flex flex-wrap gap-[2px]">
                 {cells.map((c, i) => {
                   const style = {
-                    width: 12,
-                    height: 12,
+                    width: 10,
+                    height: 10,
                     background: CHOICE_COLOR[c.choice],
                     opacity: !highlight || highlight === c.choice ? 1 : 0.15,
                     transition: 'opacity 120ms, transform 80ms',
@@ -91,10 +92,10 @@ export function PartyWaffle({ summaries, highlight, memberBallots }: Props) {
                     <Tooltip key={i}>
                       <TooltipTrigger asChild>
                         <a
-                          href={withLocale(`/members/${c.member.id}/`, locale)}
+                          href={withLocale(`/members/${c.member.id}/votes/`, locale)}
                           style={style}
                           aria-label={c.member.name}
-                          className="hover:scale-150"
+                          className="hover:scale-125"
                         />
                       </TooltipTrigger>
                       <TooltipContent>
@@ -105,7 +106,10 @@ export function PartyWaffle({ summaries, highlight, memberBallots }: Props) {
                   )
                 })}
               </div>
-            </div>
+              {rowIndex < ordered.length - 1 ? (
+                <div className="col-span-2 h-px bg-elevated" aria-hidden="true" />
+              ) : null}
+            </Fragment>
           )
         })}
       </div>

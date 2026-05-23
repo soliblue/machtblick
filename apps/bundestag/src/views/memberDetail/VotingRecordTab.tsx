@@ -1,4 +1,3 @@
-import { Filter, GitBranch, Vote } from 'lucide-react'
 import type { MemberVoteRow } from '@/server/members'
 import { formatDate } from '@/lib/format'
 import { FilterPill } from '@/views/votesList/FilterPill'
@@ -36,10 +35,8 @@ export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilt
   return (
     <div className="flex flex-col">
       <div className="mb-m flex flex-wrap items-center gap-s">
-        <Filter size={14} className="opacity-l" />
         <FilterPill
           label={t.line}
-          icon={GitBranch}
           options={['linie', 'abw']}
           value={lineFilter}
           onChange={setLineFilter}
@@ -47,7 +44,6 @@ export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilt
         />
         <FilterPill
           label={t.vote}
-          icon={Vote}
           options={['ja', 'nein', 'enthalten', 'nicht_abgegeben']}
           value={choiceFilter}
           onChange={setChoiceFilter}

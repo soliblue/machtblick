@@ -65,17 +65,3 @@ export const SLUG_TO_PARTY: Record<string, string> = Object.fromEntries(
 
 export const hasPartyLine = (party: string | null | undefined) =>
   !!party && party !== 'fraktionslos' && party !== 'Bundesregierung' && party !== 'Petitionsausschuss' && party !== 'Wahlprüfungsausschuss'
-
-const PARTY_NORMALIZE: Record<string, string> = {
-  'Fraktion der CDU/CSU': 'CDU/CSU',
-  'Fraktion der SPD': 'SPD',
-  'Fraktion der AfD': 'AfD',
-  'Fraktion BÜNDNIS 90/DIE GRÜNEN': 'B90/Grüne',
-  'Fraktion DIE LINKE': 'Die Linke',
-  'Bundesministerium der Finanzen': 'Bundesregierung',
-  'Bundesministerium für Wirtschaft und Energie': 'Bundesregierung',
-}
-
-export function normalizePartyName(raw: string | null | undefined): string | null {
-  return raw ? raw.split(',').map((part) => PARTY_NORMALIZE[part.trim()] ?? part.trim()).filter(Boolean).join(', ') : null
-}
