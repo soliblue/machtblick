@@ -1,3 +1,5 @@
+/motions/:id.json /motions/:id.json 200
+/en/motions/:id.json /en/motions/:id.json 200
 /votes /votes/ 301
 /members /members/ 301
 /parties /parties/ 301

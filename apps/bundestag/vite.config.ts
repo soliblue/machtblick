@@ -168,15 +168,11 @@ function writeSitemap(paths: string[]) {
   const seen = new Set<string>()
   const urls = paths
     .filter((p) => !p.includes('?'))
-    .filter((p) => p !== '/' && p !== '/en/')
-    .filter((p) => !/^\/(en\/)?members\/[^/]+\/?$/.test(p))
-    .filter((p) => !/^\/(en\/)?members\/[^/]+\/(speeches|questions|motions)\/?$/.test(p))
-    .filter((p) => !/^\/(en\/)?parties\/[^/]+\/?$/.test(p))
-    .filter((p) => !/^\/(en\/)?parties\/[^/]+\/(votes|history)\/?$/.test(p))
     .map((p) => (p === '/' || p.endsWith('/') ? p : `${p}/`))
     .filter((p) => (seen.has(p) ? false : (seen.add(p), true)))
+  const today = new Date().toISOString().slice(0, 10)
   const body = urls
-    .map((p) => `  <url><loc>${SITE_URL}${p}</loc></url>`)
+    .map((p) => `  <url><loc>${SITE_URL}${p}</loc><lastmod>${today}</lastmod></url>`)
     .join('\n')
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`
   writeFileSync(fileURLToPath(new URL('./public/sitemap.xml', import.meta.url)), xml)
