@@ -24,11 +24,8 @@ const SCHEMA = JSON.stringify({
   },
 })
 
-const SYSTEM = `Summarize German Bundestag votes from Plenarprotokoll excerpts for a transparency website. For each block produce:
-- subject: 2-6 word topical headline in German (e.g. "Mietpreisbremse", "EU-Mehrjähriger Finanzrahmen", "Reform Abgeordnetengesetz"). No procedural prefixes ("Antrag der", "Beschlussempfehlung"), no Drucksache numbers.
-- summary: 1-3 neutral German sentences describing what was decided. Who proposed it, what it does, how the parties voted, the outcome. Mention Drucksachen only when central.
-- context: 0-2 short German paragraphs (each ~3-5 sentences) of debate framing pulled from the surrounding speeches in the block. Use it to explain the political dispute, key arguments for/against, or notable interjections. Leave empty array if the block is purely procedural.
-The 'index' must match the input block index exactly.`
+const SYSTEM = (await readFile(new URL('../../../prompts/etl/bundestag/handzeichen-enrich-system.md', import.meta.url), 'utf8')).trimEnd()
+const PROMPT_TEMPLATE = (await readFile(new URL('../../../prompts/etl/bundestag/handzeichen-enrich.md', import.meta.url), 'utf8')).trimEnd()
 
 async function callClaude(prompt) {
   return new Promise((resolve, reject) => {
@@ -72,11 +69,12 @@ console.log(`${jobs.length} protocols, ${totalVotes} votes to enrich`)
 async function processJob(job) {
   for (let i = 0; i < job.needs.length; i += BATCH_SIZE) {
     const batch = job.needs.slice(i, i + BATCH_SIZE)
-    const prompt = `Enrich ${batch.length} vote events. Return JSON {"votes":[...]} with one entry per input block, matching the input 'index' field.\n\n` +
-      batch.map(({ v, i: voteIdx }) => {
+    const prompt = PROMPT_TEMPLATE
+      .replace('__COUNT__', String(batch.length))
+      .replace('__BLOCKS__', batch.map(({ v }) => {
         const block = job.data.blocks[v.index]?.block ?? ''
         return `--- Block index=${v.index} ---\nTitle: ${v.title}\nOutcome: ${v.outcome}\nDrucksache: ${(v.drucksache ?? []).join(', ')}\nProse:\n${block}`
-      }).join('\n\n')
+      }).join('\n\n'))
     try {
       const res = await callClaude(prompt)
       const byIndex = new Map(res.votes.map((r) => [r.index, r]))

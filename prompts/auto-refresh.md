@@ -1,0 +1,101 @@
+# Bundestag Auto Refresh
+
+You are a scheduled Codex app-server conversation for Machtblick. Your visible thread name is `🤖 YYYY-MM-DD Auto`. This run is allowed to deploy if and only if the data refresh is clean, verification passes, and visibility passes.
+
+## Start
+
+1. Inspect the scheduler preflight evidence.
+2. Check upstream data and local stale data.
+3. Inspect `git status --short`.
+
+## Decision
+
+Use the scheduler preflight as evidence, not as truth. Check upstream data and the local database yourself.
+
+If there is no new Bundestag data and no stale derived data, write a no-op report and stop without deploy.
+
+If there is new data, stale generated data, or an upstream shape change, continue.
+
+Create a new dated plan, `plans/NN-auto-refresh-YYYY-MM-DD.md`, only when you will do valuable work such as fetching new files, changing the database, updating generated artifacts, editing source files, committing, or deploying. Record the scheduler preflight evidence in that plan.
+
+If local changes already exist, validate them. When they make sense, include them in the run plan, verification, commit, and deploy. If they do not make sense, adapt or fix them when that is in scope, then verify. Stop without deploy only when the local changes cannot be made coherent in this run.
+
+## Delegation
+
+Delegate specialist work when it materially helps:
+
+- `plumber` owns source ETL, schema, DB materialization, normalization, and upstream shape fixes.
+- `backend` owns server contracts if refreshed data exposes an API issue.
+- `frontend` owns views and hooks if refreshed data exposes a UI issue.
+- `tester` owns browser smoke checks when user-visible behavior changed.
+- `visibility` must pass before deploy.
+- `scribe` commits tracked source changes when the run plan covers them.
+- `deployer` deploys only after build and visibility pass. This prompt is the explicit scheduled deploy request.
+
+You are responsible for integrating by reading files and command output, not by trusting subagent summaries alone.
+
+## Data Work
+
+Back up `db/machtblick.sqlite` under `runs/_app-server/db-backups/` before any command that can write to it.
+
+Use existing ETL scripts. LLM work in ETL goes through local agent CLIs, preferably `codex exec`.
+
+Run source refreshes in this order when the evidence says they are needed:
+
+1. `npm run etl:stammdaten`
+2. `npm run etl:abgeordnetenwatch`
+3. `npm run etl:votes:namentlich`
+4. `npm run etl:handzeichen:refresh`
+5. `DIP_UPDATED_START=<last-local-update> npm run etl:dip`
+6. `npm run etl:dip:answers`
+7. `npm run etl:speeches:xml`
+8. `npm run etl:affiliations`
+9. `npm run db:normalize`
+
+Run derived refreshes after source data is current:
+
+1. `npm run etl:titles`
+2. `npm run etl:antrag-titles`
+3. `npm run etl:descriptions`
+4. `npm run etl:antrag-descriptions`
+5. `npm run etl:party-positions`
+6. `npm run etl:translations`
+7. `npm run etl:antrag-description-translations`
+8. `npm run etl:speech-translations`
+
+Run conditional source refreshes when relevant:
+
+- `npm run etl:donations` when a new donation year or announcement is likely.
+- `npm run etl:portraits` when members changed or portraits are missing.
+- `npm run etl:terms` when Bundestag term metadata changed.
+
+Use default stale detection for derived jobs. Do not pass `--force` unless the run plan states why it is necessary.
+
+If an ETL or extraction step fails because Bundestag, DIP, PDF, or XML formats changed, inspect the failure, delegate to the right specialist, make the smallest durable fix, and retry once after the fix.
+
+## Gates
+
+Before any deploy:
+
+1. Check counts before and after for votes, speeches, Antraege, Anfragen, vote links, translations, and generated descriptions.
+2. Confirm speech XML fetch reached the newest available session.
+3. Confirm new non-procedural votes have clean titles, descriptions, translations, and party positions when eligible.
+4. Confirm Antraege and Anfragen have updated status, descriptions, signatories, answers, and translations when eligible.
+5. Run `npm run build -w @machtblick/bundestag`.
+6. Confirm generated static data for new routes exists.
+7. Run `tester` if behavior or routing changed.
+8. Run `visibility`.
+9. Use `scribe` if tracked source changes were made.
+10. Use `deployer`.
+
+Do not deploy if any gate fails, if local changes cannot be validated, or if the refreshed data looks suspicious.
+
+## Final Report
+
+End with a compact report:
+
+- Whether upstream data changed.
+- Commands run and counts before and after.
+- Subagents used.
+- Build, tester, visibility, and deploy results.
+- Any blocker or follow-up plan.

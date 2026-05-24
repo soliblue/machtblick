@@ -9,6 +9,7 @@ import Database from 'better-sqlite3'
 const PROMPT_VERSION = 'antrag-translation-en-v1'
 const root = fileURLToPath(new URL('../../..', import.meta.url))
 const schemaPath = fileURLToPath(new URL('./output-schema.json', import.meta.url))
+const promptTemplate = readFileSync(fileURLToPath(new URL('../../../prompts/etl/bundestag/antrag-description-translations.md', import.meta.url)), 'utf8').trimEnd()
 const model = process.env.CODEX_MODEL ?? 'gpt-5.2'
 const timeoutMs = Number(process.env.CODEX_TIMEOUT_MS ?? 180000)
 const concurrency = Number(argValue('--concurrency') ?? 2)
@@ -116,20 +117,7 @@ function chunk(items, size) {
 }
 
 function buildPrompt(rows) {
-  return `Translate German Bundestag Antrag summaries into clear, neutral English for a public transparency website.
-
-Rules:
-- Return strict JSON matching the schema.
-- Return one translations item per input row, in the same order, with the same antrag_id.
-- Preserve markdown structure, headings, bullet lists, bold and italic emphasis.
-- Preserve party names, person names, document numbers, law names, institution names, dates, counts, and URLs.
-- Keep "Bundestag" as Bundestag.
-- Do not add facts, opinions, caveats, markdown outside translated fields, or commentary.
-- Do not use Unicode dash punctuation.
-
-Input JSON:
-${JSON.stringify({ rows }, null, 2)}
-`
+  return promptTemplate.replace('__INPUT_JSON__', JSON.stringify({ rows }, null, 2)) + '\n'
 }
 
 function runCodex(prompt) {

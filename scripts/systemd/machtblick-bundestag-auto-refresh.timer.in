@@ -1,0 +1,11 @@
+[Unit]
+Description=Weekly Machtblick Bundestag auto refresh
+
+[Timer]
+OnCalendar=Sat 06:00
+AccuracySec=1h
+RandomizedDelaySec=30m
+Persistent=true
+
+[Install]
+WantedBy=timers.target

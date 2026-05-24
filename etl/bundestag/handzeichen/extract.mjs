@@ -30,12 +30,8 @@ const SCHEMA = JSON.stringify({
   },
 })
 
-const SYSTEM = `Extract Bundestag vote events from protocol excerpts. Aliases:
-- Koalitionsfraktionen / Koalition = CDU/CSU + SPD
-- Union / Unionsfraktion = CDU/CSU
-- Bündnis 90/Die Grünen / Grüne = B90/Grüne
-- Linke / Linksfraktion = Die Linke
-Title: clean short German title without procedural prefix. Drucksache: every "21/NNNN" reference. vote_type: 'hammelsprung' if Hammelsprung mentioned, 'namentlich' if namentliche Abstimmung, else 'handzeichen'. Omit unmentioned parties from arrays. If positions are unclear or mixed within a Fraktion (e.g. "mehrheitlich"), pick majority direction. The 'index' must match the input block index exactly.`
+const SYSTEM = (await readFile(new URL('../../../prompts/etl/bundestag/handzeichen-extract-system.md', import.meta.url), 'utf8')).trimEnd()
+const PROMPT_TEMPLATE = (await readFile(new URL('../../../prompts/etl/bundestag/handzeichen-extract.md', import.meta.url), 'utf8')).trimEnd()
 
 async function callClaude(prompt) {
   return new Promise((resolve, reject) => {
@@ -83,8 +79,9 @@ async function processJob(job) {
   const allVotes = []
   for (let i = 0; i < job.data.blocks.length; i += BATCH_SIZE) {
     const batch = job.data.blocks.slice(i, i + BATCH_SIZE)
-    const prompt = `Extract ${batch.length} vote events. Return JSON {"votes":[...]} with one entry per input block, matching the input 'index' field.\n\n` +
-      batch.map((b, k) => `--- Block index=${i + k} ---\n${b.block}`).join('\n\n')
+    const prompt = PROMPT_TEMPLATE
+      .replace('__COUNT__', String(batch.length))
+      .replace('__BLOCKS__', batch.map((b, k) => `--- Block index=${i + k} ---\n${b.block}`).join('\n\n'))
     try {
       const res = await callClaude(prompt)
       allVotes.push(...res.votes)

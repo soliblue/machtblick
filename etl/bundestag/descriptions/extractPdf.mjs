@@ -7,6 +7,7 @@ import { request } from 'node:https'
 const HERE = dirname(fileURLToPath(import.meta.url))
 const TEXT_DIR = join(HERE, 'text')
 const PDF_DIR = join(HERE, 'pdf')
+const OCR_PROMPT = readFileSync(fileURLToPath(new URL('../../../prompts/etl/pdf-text-extraction.md', import.meta.url)), 'utf8').trimEnd()
 mkdirSync(TEXT_DIR, { recursive: true })
 mkdirSync(PDF_DIR, { recursive: true })
 
@@ -82,7 +83,7 @@ async function runPdfjs(pdf) {
 }
 
 function runClaudeOcr(pdf) {
-  const prompt = `Extract the full plain text of this PDF (Drucksache from the German Bundestag). Output the text only, preserving paragraph breaks, no commentary, no markdown. PDF path: ${pdf}`
+  const prompt = OCR_PROMPT.replace('__PDF_PATH__', pdf)
   return execFileSync('claude', ['-p', prompt, '--model', 'claude-haiku-4-5'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }).trim()
 }
 

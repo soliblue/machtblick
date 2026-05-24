@@ -1,20 +1,9 @@
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+
 export const PROMPT_VERSION = 'translation-en-v1'
+const TEMPLATE = readFileSync(fileURLToPath(new URL('../../../prompts/etl/bundestag/translations.md', import.meta.url)), 'utf8').trimEnd()
 
 export function buildPrompt(input) {
-  return `Translate German Bundestag app content into clear, neutral English for a public transparency website.
-
-Rules:
-- Return strict JSON matching the schema.
-- Preserve null values as null.
-- Preserve party names, person names, document numbers, law names, institution names, dates, counts, and URLs.
-- Do not add facts, opinions, caveats, markdown, or commentary.
-- Keep titles concise and public-facing.
-- Translate Bundestag terms naturally, but keep "Bundestag" as Bundestag.
-- Translate "ja", "nein", "enthalten", "nicht abgegeben" only when they appear inside prose.
-- Keep party_summaries in the same order and with the same party values.
-- Return one translations item per input job, in the same order, with the same vote_id.
-
-Input JSON:
-${JSON.stringify(input, null, 2)}
-`
+  return TEMPLATE.replace('__INPUT_JSON__', JSON.stringify(input, null, 2)) + '\n'
 }

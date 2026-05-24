@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+
 const POSITION_LABEL = {
   yes: 'zugestimmt',
   no: 'abgelehnt',
@@ -6,6 +9,7 @@ const POSITION_LABEL = {
 }
 
 export const PROMPT_VERSION = 'party-positions-v1'
+const TEMPLATE = readFileSync(fileURLToPath(new URL('../../../prompts/etl/bundestag/party-positions.md', import.meta.url)), 'utf8').trimEnd()
 
 export function buildPrompt({ vote, speeches }) {
   const input = {
@@ -36,38 +40,5 @@ export function buildPrompt({ vote, speeches }) {
       text: s.text_full,
     })),
   }
-  return `Du fasst Bundestagsreden für ein gemeinnütziges Transparenzportal zusammen.
-
-Aufgabe:
-Fasse die Position der angegebenen Partei zu genau dieser Abstimmung zusammen.
-Nutze nur die Reden in der Eingabe.
-Die Reden wurden direkt über speeches.vote_id oder über denselben Tagesordnungspunkt am Abstimmungstag zugeordnet und nach derselben Partei gefiltert.
-Wenn einzelne Zwischenrufe oder kurze Wortmeldungen nichts zur Sache beitragen, ignoriere sie.
-Erfinde keine Argumente, keine Motive und keine Fakten von außen.
-
-Stil:
-Schreibe auf einfachem Deutsch, ungefähr wie ELI5 für Erwachsene.
-position_summary soll 5 bis 10 kurze Sätze haben.
-Jeder Satz soll eine konkrete Aussage enthalten.
-Keine langen Schachtelsätze.
-Keine Parteikommentare von außen.
-Keine Anglizismen, wenn ein einfaches deutsches Wort reicht.
-Keine Gedankenstriche.
-
-Inhalt:
-Sage klar, ob die Partei zugestimmt, abgelehnt, sich enthalten oder unterschiedlich abgestimmt hat.
-Erkläre dann die wichtigsten Gründe aus den Reden.
-Wenn die Reden kaum erklären, warum so abgestimmt wurde, sage das knapp und bleibe bei dem, was gesagt wurde.
-key_points enthält 3 bis 5 kurze Kernpunkte, nur wenn sie in den Reden vorkommen.
-dissent_note ist nur gesetzt, wenn die Fraktion gemischt abstimmte oder eine Rede ausdrücklich von der Linie abwich.
-
-Antworte nur als JSON passend zu diesem Schema:
-{
-  "position_summary": "5 bis 10 kurze deutsche Sätze",
-  "key_points": ["kurzer Punkt", "kurzer Punkt"],
-  "dissent_note": null
-}
-
-Eingabe:
-${JSON.stringify(input, null, 2)}`
+  return TEMPLATE.replace('__INPUT_JSON__', JSON.stringify(input, null, 2))
 }

@@ -1,12 +1,14 @@
 import { readdirSync, readFileSync, writeFileSync, openSync, fsyncSync, closeSync, statSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { ROOT, ensureRoot, pdfPath, txtPath, metaPath, hasPdf, hasTxt } from './cache.ts'
 
 ensureRoot()
 
 const MIN_CHARS = 100
 const MIN_ALPHA_RATIO = 0.3
+const OCR_PROMPT = readFileSync(fileURLToPath(new URL('../../../prompts/etl/pdf-text-extraction.md', import.meta.url)), 'utf8').trimEnd()
 
 const alphaRatio = (s: string) => {
   if (s.length === 0) return 0
@@ -25,7 +27,7 @@ function runPdftotext(id: number): string {
 }
 
 function runClaude(id: number, model: 'haiku' | 'sonnet'): { text: string; ok: boolean } {
-  const prompt = `Extract the full plain text of this PDF (Drucksache from the German Bundestag). Output the text only, preserving paragraph breaks, no commentary, no markdown. PDF path: ${pdfPath(id)}`
+  const prompt = OCR_PROMPT.replace('__PDF_PATH__', pdfPath(id))
   const out = execFileSync('claude', ['-p', prompt, '--model', model === 'haiku' ? 'claude-haiku-4-5' : 'claude-sonnet-4-5'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
   return { text: out.trim(), ok: out.trim().length >= MIN_CHARS }
 }

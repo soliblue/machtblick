@@ -10,6 +10,8 @@ build
 .vercel
 coverage
 *.tsbuildinfo
+__pycache__/
+runs/_app-server/
 
 .env
 .env.*

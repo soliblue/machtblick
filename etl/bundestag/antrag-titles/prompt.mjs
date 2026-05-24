@@ -1,24 +1,10 @@
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+
 export const PROMPT_VERSION = 1
 
+const TEMPLATE = readFileSync(fileURLToPath(new URL('../../../prompts/etl/bundestag/antrag-titles.md', import.meta.url)), 'utf8').trimEnd()
+
 export function buildPrompt(items) {
-  return `Du schreibst kurze, sachliche Titel fuer Bundestagsantraege und Gesetzentwuerfe.
-
-Ziel: Ein Mensch soll auf einer Detailseite sofort verstehen, worum es geht.
-
-Regeln:
-- Schreibe auf Deutsch.
-- Nutze Titel und vereinfachte Zusammenfassung.
-- Maximal 90 Zeichen.
-- Kein Markdown, keine Anfuehrungszeichen, kein Punkt am Ende.
-- Keine Fraktionsnamen, Drucksachennummern oder Formalien wie "Antrag" am Anfang, wenn der sachliche Kern ohne sie klar bleibt.
-- Keine Wertung und kein Abstimmungsergebnis.
-- Keine Gedankenstriche. Nutze Komma, Doppelpunkt oder normale Bindestriche in zusammengesetzten Begriffen.
-- Wenn der offizielle Titel bereits kurz und gut verstaendlich ist, gib ihn bereinigt zurueck.
-- Gib null nur zurueck, wenn der Titel ohne Informationsverlust nicht sinnvoll gekuerzt werden kann.
-
-Antworte exakt als JSON nach Schema.
-
-Eingaben:
-${JSON.stringify(items, null, 2)}
-`
+  return TEMPLATE.replace('__INPUT_JSON__', JSON.stringify(items, null, 2)) + '\n'
 }

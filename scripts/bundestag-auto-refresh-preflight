@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="${MACHTBLICK_ROOT:-$(cd "$SCRIPT_DIR/.." && pwd)}"
+
+cd "$ROOT"
+
+printf 'utc=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+printf 'root=%s\n' "$ROOT"
+printf 'branch=%s\n' "$(git branch --show-current)"
+printf 'git_status_begin\n'
+git status --short
+printf 'git_status_end\n'
+
+node --input-type=module <<'NODE'
+import { existsSync, statSync } from 'node:fs'
+import { createRequire } from 'node:module'
+
+const require = createRequire(import.meta.url)
+const Database = require('better-sqlite3')
+const dbPath = 'db/machtblick.sqlite'
+
+if (existsSync(dbPath)) {
+  const db = new Database(dbPath, { readonly: true, fileMustExist: true })
+  const scalar = (sql) => Object.values(db.prepare(sql).get() ?? {})[0] ?? ''
+  const rows = (sql) => db.prepare(sql).all()
+  const newestSpeechSession = Number(scalar("select max(case when session_id like '21-%' then cast(substr(session_id, 4) as integer) when session_id glob '21[0-9]*' then cast(substr(session_id, 3) as integer) end) from speeches")) || 0
+
+  console.log(`db_path=${dbPath}`)
+  console.log(`db_size_mb=${(statSync(dbPath).size / 1024 / 1024).toFixed(1)}`)
+  console.log(`votes_count=${scalar('select count(*) from votes')}`)
+  console.log(`votes_newest_date=${scalar('select max(date) from votes')}`)
+  console.log(`votes_newest_bundestag_id=${scalar('select max(bundestag_id) from votes')}`)
+  for (const row of rows('select vote_type as vote_type, count(*) as count from votes group by vote_type order by vote_type')) console.log(`votes_by_type.${row.vote_type}=${row.count}`)
+  console.log(`speeches_count=${scalar('select count(*) from speeches')}`)
+  console.log(`speeches_newest_date=${scalar('select max(date) from speeches')}`)
+  console.log(`speeches_newest_session=21-${newestSpeechSession}`)
+  console.log(`speeches_without_member=${scalar('select count(*) from speeches where speaker_member_id is null')}`)
+  console.log(`speeches_without_vote_link=${scalar('select count(*) from speeches where vote_id is null')}`)
+  console.log(`antraege_count=${scalar('select count(*) from antraege')}`)
+  console.log(`antraege_newest_updated_at=${scalar('select max(updated_at) from antraege')}`)
+  console.log(`antraege_missing_descriptions=${scalar('select count(*) from antraege a left join antrag_descriptions d on d.antrag_id = a.id where d.antrag_id is null')}`)
+  console.log(`anfragen_count=${scalar('select count(*) from anfragen')}`)
+  console.log(`anfragen_newest_updated_at=${scalar('select max(updated_at) from anfragen')}`)
+  console.log(`vote_antraege_count=${scalar('select count(*) from vote_antraege')}`)
+  console.log(`vote_translations_count=${scalar('select count(*) from vote_translations')}`)
+  console.log(`speech_translations_count=${scalar('select count(*) from speech_translations')}`)
+  console.log(`antrag_description_translations_count=${scalar('select count(*) from antrag_description_translations')}`)
+
+  for (const session of [newestSpeechSession + 1, newestSpeechSession + 2, newestSpeechSession + 3]) {
+    const id = String(session).padStart(3, '0')
+    const url = `https://dserver.bundestag.de/btp/21/21${id}.xml`
+    const response = await fetch(url, { method: 'HEAD' })
+    console.log(`speech_xml_probe.21${id}=${response.status}`)
+  }
+
+  const newestDipUpdate = scalar("select max(updated_at) from (select updated_at from antraege union all select updated_at from anfragen)")
+  const updatedStart = newestDipUpdate || new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+  const dipUrl = new URL('https://search.dip.bundestag.de/api/v1/vorgang')
+  dipUrl.searchParams.set('apikey', process.env.DIP_API_KEY ?? 'R2BZaee.DjdCyihKZMf8AOjtScubP2EVydegzjmBIQ')
+  dipUrl.searchParams.set('f.wahlperiode', '21')
+  dipUrl.searchParams.set('f.aktualisiert.start', updatedStart)
+  dipUrl.searchParams.set('format', 'json')
+  const dipResponse = await fetch(dipUrl, { headers: { accept: 'application/json' } })
+  const dipText = await dipResponse.text()
+  const dipEnvelope = dipText.startsWith('{') ? JSON.parse(dipText) : { numFound: `non_json_status_${dipResponse.status}` }
+  console.log(`dip_vorgang_updated_start=${updatedStart}`)
+  console.log(`dip_vorgang_num_found=${dipEnvelope.numFound}`)
+  db.close()
+} else {
+  console.log(`db_missing=${dbPath}`)
+}
+NODE

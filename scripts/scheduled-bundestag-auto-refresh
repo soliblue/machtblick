@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="${MACHTBLICK_ROOT:-$(cd "$SCRIPT_DIR/.." && pwd)}"
+RESULT_DIR="${MACHTBLICK_AUTO_RESULT_DIR:-$ROOT/runs/_app-server}"
+TIMEOUT_SECONDS="${MACHTBLICK_AUTO_TIMEOUT_SECONDS:-43200}"
+
+mkdir -p "$RESULT_DIR"
+
+LOCK_FILE="$RESULT_DIR/bundestag-auto-refresh.lock"
+exec 9>"$LOCK_FILE"
+
+if ! flock -n 9; then
+  printf 'bundestag auto refresh already running\n'
+  exit 0
+fi
+
+cd "$ROOT"
+
+STAMP="$(date -u +%Y%m%dT%H%M%SZ)"
+RUN_DATE="$(date -u +%F)"
+NAME="🤖 ${RUN_DATE} Auto"
+RESULT_FILE="$RESULT_DIR/bundestag-auto-$STAMP.json"
+PROTOCOL_LOG="$RESULT_DIR/bundestag-auto-$STAMP.protocol.jsonl"
+
+set +e
+PREFLIGHT_OUTPUT="$("$ROOT/scripts/bundestag-auto-refresh-preflight" 2>&1)"
+PREFLIGHT_STATUS=$?
+set -e
+
+PROMPT="$(
+  printf '%s\n' "$(cat "$ROOT/prompts/auto-refresh.md")"
+  printf '\n## Scheduler Preflight\n\n'
+  printf 'Thread name: `%s`.\n\n' "$NAME"
+  printf '`scripts/bundestag-auto-refresh-preflight` exited with `%s` at `%s`.\n\n' "$PREFLIGHT_STATUS" "$STAMP"
+  printf '```text\n%s\n```\n' "$PREFLIGHT_OUTPUT"
+)"
+
+ARGS=(
+  "$ROOT/scripts/codex_app_thread.py"
+  --cwd "$ROOT"
+  --name "$NAME"
+  --prompt "$PROMPT"
+  --result-file "$RESULT_FILE"
+  --protocol-log "$PROTOCOL_LOG"
+  --timeout-seconds "$TIMEOUT_SECONDS"
+)
+
+if [[ -n "${MACHTBLICK_AUTO_MODEL:-}" ]]; then
+  ARGS+=(--model "$MACHTBLICK_AUTO_MODEL")
+fi
+
+if [[ -n "${MACHTBLICK_AUTO_EFFORT:-}" ]]; then
+  ARGS+=(--effort "$MACHTBLICK_AUTO_EFFORT")
+fi
+
+if [[ "${MACHTBLICK_AUTO_DRY_RUN:-}" == "1" ]]; then
+  ARGS+=(--dry-run)
+fi
+
+"${ARGS[@]}"
