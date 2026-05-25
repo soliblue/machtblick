@@ -37,7 +37,13 @@ export function VoteRow({ vote }: Props) {
         <div className="row-span-2 shrink-0 [&_svg]:!h-[80px] [&_svg]:!w-[80px] sm:[&_svg]:!h-[144px] sm:[&_svg]:!w-[144px]">
           <VoteDistributionDonut yes={vote.yes} no={vote.no} abstain={vote.abstain} absent={vote.absent} size={80} />
         </div>
-        <div className="font-display text-[18px] leading-snug sm:text-[21px]" style={{ fontWeight: 500 }}>{heading}</div>
+        <div
+          lang={locale}
+          className="font-display text-[18px] leading-snug sm:text-[21px]"
+          style={{ fontWeight: 500, hyphens: 'auto', overflowWrap: 'break-word', wordBreak: 'normal' }}
+        >
+          {heading}
+        </div>
         <div className="col-start-2 flex flex-wrap items-center justify-start gap-s pb-xs">
           {stamps.map((s) => (
             <Stamp key={s} variant={s} />

@@ -35,7 +35,7 @@ function VotesRoute() {
   const { party, type, result, topic, q } = Route.useSearch()
   const navigate = useNavigate({ from: Route.fullPath })
   const proposingParty = party ?? null
-  const voteType = type ?? 'namentlich'
+  const voteType = type ?? null
   const resultValue = result ?? null
   const topicValue = topic ?? null
   const query = q ?? ''
