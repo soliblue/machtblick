@@ -149,32 +149,32 @@ function Nav() {
           <a href={href('/speeches/')} className={linkClass}>{t.navSpeeches}</a>
           <a href={href('/parties/')} className={linkClass}>{t.navParties}</a>
         </div>
-        <div
-          aria-label={t.language}
-          className="group relative hidden h-[32px] w-[120px] overflow-hidden rounded-full border bg-background text-s transition-[height] duration-200 focus-within:h-[72px] hover:h-[72px] sm:block"
-          style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
-        >
+        <div aria-label={t.language} className="group relative hidden w-[120px] text-s sm:block">
           {locale === 'en' ? (
             <>
-              <a href={enHref} aria-current="page" className="flex h-[32px] items-center justify-center gap-xs px-s">
+              <button type="button" className="flex h-[32px] w-full items-center justify-center gap-xs border bg-background px-s" style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}>
                 <span aria-hidden="true">🇬🇧</span>
                 <span>{t.english}</span>
-              </a>
-              <a href={deHref} className="flex h-[40px] items-center justify-center gap-xs px-s opacity-l transition-opacity hover:bg-surface hover:opacity-100 focus:bg-surface focus:opacity-100">
-                <span aria-hidden="true">🇩🇪</span>
-                <span>{t.german}</span>
-              </a>
+              </button>
+              <div className="invisible absolute right-0 top-full z-50 mt-xs w-[120px] border bg-background opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100" style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}>
+                <a href={deHref} className="flex h-[36px] items-center justify-center gap-xs px-s opacity-l transition-opacity hover:bg-surface hover:opacity-100 focus:bg-surface focus:opacity-100">
+                  <span aria-hidden="true">🇩🇪</span>
+                  <span>{t.german}</span>
+                </a>
+              </div>
             </>
           ) : (
             <>
-              <a href={deHref} aria-current="page" className="flex h-[32px] items-center justify-center gap-xs px-s">
+              <button type="button" className="flex h-[32px] w-full items-center justify-center gap-xs border bg-background px-s" style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}>
                 <span aria-hidden="true">🇩🇪</span>
                 <span>{t.german}</span>
-              </a>
-              <a href={enHref} className="flex h-[40px] items-center justify-center gap-xs px-s opacity-l transition-opacity hover:bg-surface hover:opacity-100 focus:bg-surface focus:opacity-100">
-                <span aria-hidden="true">🇬🇧</span>
-                <span>{t.english}</span>
-              </a>
+              </button>
+              <div className="invisible absolute right-0 top-full z-50 mt-xs w-[120px] border bg-background opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100" style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}>
+                <a href={enHref} className="flex h-[36px] items-center justify-center gap-xs px-s opacity-l transition-opacity hover:bg-surface hover:opacity-100 focus:bg-surface focus:opacity-100">
+                  <span aria-hidden="true">🇬🇧</span>
+                  <span>{t.english}</span>
+                </a>
+              </div>
             </>
           )}
         </div>
@@ -196,7 +196,7 @@ function Nav() {
           <div className="flex gap-s">
             <a
               href={deHref}
-              className={`rounded-full border px-m py-xs ${locale === 'de' ? 'opacity-100' : 'opacity-l'}`}
+              className={`border px-m py-xs ${locale === 'de' ? 'opacity-100' : 'opacity-l'}`}
               style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
               onClick={() => setOpen(false)}
             >
@@ -204,7 +204,7 @@ function Nav() {
             </a>
             <a
               href={enHref}
-              className={`rounded-full border px-m py-xs ${locale === 'en' ? 'opacity-100' : 'opacity-l'}`}
+              className={`border px-m py-xs ${locale === 'en' ? 'opacity-100' : 'opacity-l'}`}
               style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
               onClick={() => setOpen(false)}
             >

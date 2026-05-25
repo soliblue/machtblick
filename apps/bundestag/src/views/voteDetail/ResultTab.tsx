@@ -3,7 +3,7 @@ import type { VoteDetail as VoteDetailData } from '@/server/votes'
 import { VoteDistributionDonut, type VoteChoice } from '@/views/votesList/VoteDistributionDonut'
 import { PartyWaffle } from './PartyWaffle'
 import { DefectorList } from './DefectorList'
-import { useCopy } from '@/lib/i18n'
+import { useCopy, useLocale } from '@/lib/i18n'
 
 type Props = { data: VoteDetailData }
 
@@ -11,10 +11,23 @@ export function ResultTab({ data }: Props) {
   const { vote, partySummaries, defectors, memberBallots } = data
   const [filter, setFilter] = useState<VoteChoice | null>(null)
   const t = useCopy()
+  const locale = useLocale()
   const toggle = (c: VoteChoice) => setFilter((prev) => (prev === c ? null : c))
   return (
     <>
-      <section className="mb-l grid items-start gap-l md:grid-cols-[auto_1fr] md:items-center">
+      <div className="mb-l bg-surface p-m text-s">
+        {locale === 'de' ? (
+          <>
+            Diese Ergebnisdaten basieren auf der <a href={vote.sourceUrl} target="_blank" rel="noreferrer" className="underline">offiziellen Quelle des Deutschen Bundestages</a>.
+          </>
+        ) : (
+          <>
+            These results are based on the <a href={vote.sourceUrl} target="_blank" rel="noreferrer" className="underline">official source of the German Bundestag</a>.
+          </>
+        )}
+      </div>
+
+      <section className="mb-l grid items-start gap-l md:grid-cols-[auto_1fr]">
         <div>
           <div className="mb-s text-s uppercase opacity-l">{t.result}</div>
           <div className="flex justify-center md:justify-start">
