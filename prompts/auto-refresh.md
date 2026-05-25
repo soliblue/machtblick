@@ -80,7 +80,7 @@ Before any deploy:
 1. Check counts before and after for votes, speeches, Antraege, Anfragen, vote links, translations, and generated descriptions.
 2. Confirm speech XML fetch reached the newest available session.
 3. Confirm new non-procedural votes have clean titles, descriptions, translations, and party positions when eligible.
-4. Confirm Antraege and Anfragen have updated status, descriptions, signatories, answers, and translations when eligible.
+4. Confirm Antraege and Anfragen have updated metadata, signatories, answers, descriptions, and translations when eligible.
 5. Run `npm run build -w @machtblick/bundestag`.
 6. Confirm generated static data for new routes exists.
 7. Run `tester` if behavior or routing changed.
@@ -88,7 +88,7 @@ Before any deploy:
 9. Use `scribe` if tracked source changes were made.
 10. Use `deployer`.
 
-Do not deploy if any gate fails, if local changes cannot be validated, or if the refreshed data looks suspicious.
+Publish complete slices independently. Incomplete DIP rows may remain in SQLite and must be reported, but they do not block unrelated complete slices. New votes and speeches can deploy when their own vote and speech gates pass. Motion detail pages and JSON should exist only for motions with generated descriptions, and English motion pages require English description translations. Missing Anfrage answer PDFs block publishing answer text or future question detail pages for those rows, but they do not block complete votes, speeches, or motions. Do not deploy if a gate fails for a slice that would be published, if local changes cannot be validated, or if the refreshed data looks suspicious.
 
 ## Final Report
 

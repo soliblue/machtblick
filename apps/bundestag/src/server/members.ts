@@ -3,6 +3,8 @@ import { notFound } from '@tanstack/react-router'
 import { db } from '@machtblick/db/client'
 import {
   antraege,
+  antragDescriptions,
+  antragDescriptionTranslations,
   antragSignatories,
   memberAbgeordnetenwatch,
   members,
@@ -327,7 +329,25 @@ export const getMember = createServerFn({ method: 'GET' })
       .where(eq(antragSignatories.memberId, id))
       .all()
     const antragIds = signedInitiatives.map((s) => s.antragId)
-    const initiativeRows = antragIds.length
+    const publishedAntragIds = antragIds.length
+      ? locale === 'en'
+        ? db
+            .select({ id: antraege.id })
+            .from(antraege)
+            .innerJoin(antragDescriptions, eq(antragDescriptions.antragId, antraege.id))
+            .innerJoin(antragDescriptionTranslations, and(eq(antragDescriptionTranslations.antragId, antraege.id), eq(antragDescriptionTranslations.locale, 'en')))
+            .where(inArray(antraege.id, antragIds))
+            .all()
+            .map((r) => r.id)
+        : db
+            .select({ id: antraege.id })
+            .from(antraege)
+            .innerJoin(antragDescriptions, eq(antragDescriptions.antragId, antraege.id))
+            .where(inArray(antraege.id, antragIds))
+            .all()
+            .map((r) => r.id)
+      : []
+    const initiativeRows = publishedAntragIds.length
       ? db
           .select({
             id: antraege.id,
@@ -339,19 +359,19 @@ export const getMember = createServerFn({ method: 'GET' })
             sachgebiet: antraege.sachgebiet,
           })
           .from(antraege)
-          .where(inArray(antraege.id, antragIds))
+          .where(inArray(antraege.id, publishedAntragIds))
           .orderBy(desc(antraege.introducedDate))
           .all()
       : []
-    const initiativeCounts = antragIds.length
+    const initiativeCounts = publishedAntragIds.length
       ? db
           .select({ antragId: antragSignatories.antragId, n: sql<number>`count(*)`.as('n') })
           .from(antragSignatories)
-          .where(inArray(antragSignatories.antragId, antragIds))
+          .where(inArray(antragSignatories.antragId, publishedAntragIds))
           .groupBy(antragSignatories.antragId)
           .all()
       : []
-    const initiativeVoteRows = antragIds.length
+    const initiativeVoteRows = publishedAntragIds.length
       ? db
           .select({
             antragId: voteAntraege.antragId,
@@ -363,7 +383,7 @@ export const getMember = createServerFn({ method: 'GET' })
           })
           .from(voteAntraege)
           .innerJoin(votes, eq(votes.id, voteAntraege.voteId))
-          .where(inArray(voteAntraege.antragId, antragIds))
+          .where(inArray(voteAntraege.antragId, publishedAntragIds))
           .orderBy(desc(votes.date))
           .all()
       : []

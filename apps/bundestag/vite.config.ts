@@ -117,9 +117,10 @@ function prerenderPaths(): string[] {
     paths.push(`/votes/${v.id}/`)
     paths.push(`/en/votes/${v.id}/`)
   }
-  const antraege = db.prepare('SELECT id FROM antraege WHERE wahlperiode = ? ORDER BY id').all(CURRENT_TERM) as Array<{ id: number }>
-  for (const a of antraege) {
+  for (const a of publishableAntragIds(db)) {
     paths.push(`/motions/${a.id}/`)
+  }
+  for (const a of publishableAntragIds(db, 'en')) {
     paths.push(`/en/motions/${a.id}/`)
   }
   const members = db.prepare(`
@@ -164,18 +165,76 @@ function prerenderPaths(): string[] {
   return paths
 }
 
+function publishableAntragIds(db: Database.Database, locale: 'de' | 'en' = 'de') {
+  const sql = locale === 'en'
+    ? `
+      SELECT a.id
+      FROM antraege a
+      INNER JOIN antrag_descriptions ad ON ad.antrag_id = a.id
+      INNER JOIN antrag_description_translations t ON t.antrag_id = a.id AND t.locale = 'en'
+      WHERE a.wahlperiode = ?
+      ORDER BY a.id
+    `
+    : `
+      SELECT a.id
+      FROM antraege a
+      INNER JOIN antrag_descriptions ad ON ad.antrag_id = a.id
+      WHERE a.wahlperiode = ?
+      ORDER BY a.id
+    `
+  return db.prepare(sql).all(CURRENT_TERM) as Array<{ id: number }>
+}
+
 function writeSitemap(paths: string[]) {
   const seen = new Set<string>()
   const urls = paths
     .filter((p) => !p.includes('?'))
     .map((p) => (p === '/' || p.endsWith('/') ? p : `${p}/`))
     .filter((p) => (seen.has(p) ? false : (seen.add(p), true)))
-  const today = new Date().toISOString().slice(0, 10)
   const body = urls
-    .map((p) => `  <url><loc>${SITE_URL}${p}</loc><lastmod>${today}</lastmod></url>`)
+    .map((p) => `  <url><loc>${SITE_URL}${p}</loc></url>`)
     .join('\n')
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`
   writeFileSync(fileURLToPath(new URL('./public/sitemap.xml', import.meta.url)), xml)
+}
+
+function sitemapPaths(): string[] {
+  const db = new Database(fileURLToPath(new URL('../../db/machtblick.sqlite', import.meta.url)), { readonly: true })
+  const paths = ['/votes/', '/members/', '/parties/', '/speeches/', '/imprint/', '/privacy/', '/en/votes/', '/en/members/', '/en/parties/', '/en/speeches/', '/en/imprint/', '/en/privacy/']
+  const votes = db.prepare("SELECT id FROM votes WHERE term_id = ? AND procedural = 0 AND vote_type != 'hammelsprung'").all(CURRENT_TERM) as Array<{ id: string }>
+  for (const v of votes) {
+    paths.push(`/votes/${v.id}/`)
+    paths.push(`/en/votes/${v.id}/`)
+  }
+  for (const a of publishableAntragIds(db)) paths.push(`/motions/${a.id}/`)
+  for (const a of publishableAntragIds(db, 'en')) paths.push(`/en/motions/${a.id}/`)
+  const members = db.prepare(`
+    SELECT DISTINCT m.rowid, m.id
+    FROM members m
+    INNER JOIN vote_members vm ON vm.member_id = m.id
+    INNER JOIN votes v ON v.id = vm.vote_id
+    WHERE v.term_id = ?
+    ORDER BY m.rowid
+  `).all(CURRENT_TERM) as Array<{ id: string }>
+  for (const m of members) {
+    paths.push(`/members/${m.id}/votes/`)
+    paths.push(`/en/members/${m.id}/votes/`)
+  }
+  const parties = db.prepare(`
+    SELECT DISTINCT s.party FROM vote_party_summaries s
+    INNER JOIN votes v ON v.id = s.vote_id
+    WHERE v.term_id = ? AND v.vote_type = 'namentlich'
+  `).all(CURRENT_TERM) as Array<{ party: string }>
+  const slugMap: Record<string, string> = { 'CDU/CSU': 'cdu-csu', SPD: 'spd', AfD: 'afd', 'B90/Grüne': 'gruene', 'Die Linke': 'linke', fraktionslos: 'fraktionslos' }
+  for (const p of parties) {
+    const slug = slugMap[p.party]
+    if (slug) {
+      paths.push(`/parties/${slug}/profile/`)
+      paths.push(`/en/parties/${slug}/profile/`)
+    }
+  }
+  db.close()
+  return paths
 }
 
 function writeJsonEndpoints() {
@@ -188,7 +247,8 @@ function writeJsonEndpoints() {
   const voteIds = db.prepare("SELECT id FROM votes WHERE term_id = ? AND procedural = 0 AND vote_type != 'hammelsprung'").all(CURRENT_TERM) as Array<{ id: string }>
   mkdirSync(`${publicDir}/votes`, { recursive: true })
   for (const { id } of voteIds) writeFileSync(`${publicDir}/votes/${id}.json`, JSON.stringify(fullVote(db, id)))
-  const antragIds = db.prepare('SELECT id FROM antraege WHERE wahlperiode = ? ORDER BY id').all(CURRENT_TERM) as Array<{ id: number }>
+  const antragIds = publishableAntragIds(db)
+  const englishAntragIds = publishableAntragIds(db, 'en')
   rmSync(`${publicDir}/antraege`, { force: true, recursive: true })
   rmSync(`${publicDir}/en/antraege`, { force: true, recursive: true })
   rmSync(`${publicDir}/motions`, { force: true, recursive: true })
@@ -197,6 +257,8 @@ function writeJsonEndpoints() {
   mkdirSync(`${publicDir}/en/motions`, { recursive: true })
   for (const { id } of antragIds) {
     writeFileSync(`${publicDir}/motions/${id}.json`, JSON.stringify(fullAntrag(db, id)))
+  }
+  for (const { id } of englishAntragIds) {
     writeFileSync(`${publicDir}/en/motions/${id}.json`, JSON.stringify(fullAntrag(db, id, 'en')))
   }
   const memberIds = db.prepare(`
@@ -223,7 +285,7 @@ function writeJsonEndpoints() {
 }
 
 const prerenderedPaths = prerenderPaths()
-writeSitemap(prerenderedPaths)
+writeSitemap(sitemapPaths())
 writeSpeechesStatic()
 writeJsonEndpoints()
 

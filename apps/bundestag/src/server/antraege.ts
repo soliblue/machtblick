@@ -149,9 +149,11 @@ export const getAntrag = createServerFn({ method: 'GET' })
     const row = db.select().from(antraege).where(eq(antraege.id, id)).get()
     if (!row || row.wahlperiode !== CURRENT_TERM) throw notFound()
     const description = db.select().from(antragDescriptions).where(eq(antragDescriptions.antragId, id)).get()
+    if (!description) throw notFound()
     const translation = locale === 'en'
       ? db.select().from(antragDescriptionTranslations).where(and(eq(antragDescriptionTranslations.antragId, id), eq(antragDescriptionTranslations.locale, 'en'))).get()
       : null
+    if (locale === 'en' && !translation) throw notFound()
     const links = db.select({ voteId: voteAntraege.voteId }).from(voteAntraege).where(eq(voteAntraege.antragId, id)).all()
     const voteIds = links.map((l) => l.voteId)
     const voteRows = voteIds.length
