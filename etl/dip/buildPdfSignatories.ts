@@ -67,7 +67,7 @@ export async function buildPdfSignatoryRows(
       const key = `${antrag.id}|${member.id}`
       if (seen.has(key)) continue
       seen.add(key)
-      rows.push({ kind: 'antrag', targetId: antrag.id, memberId: member.id, dipPersonId: member.dipPersonId })
+      rows.push({ targetId: antrag.id, memberId: member.id, dipPersonId: member.dipPersonId })
     }
   }
   return rows

@@ -34,7 +34,6 @@ import { Route as PartiesIdProfileRouteImport } from './routes/parties/$id/profi
 import { Route as PartiesIdHistoryRouteImport } from './routes/parties/$id/history'
 import { Route as MembersIdVotesRouteImport } from './routes/members/$id/votes'
 import { Route as MembersIdSpeechesRouteImport } from './routes/members/$id/speeches'
-import { Route as MembersIdQuestionsRouteImport } from './routes/members/$id/questions'
 import { Route as MembersIdMotionsRouteImport } from './routes/members/$id/motions'
 import { Route as EnVotesIdRouteImport } from './routes/en/votes/$id'
 import { Route as EnMotionsIdRouteImport } from './routes/en/motions/$id'
@@ -47,7 +46,6 @@ import { Route as EnPartiesIdProfileRouteImport } from './routes/en/parties/$id/
 import { Route as EnPartiesIdHistoryRouteImport } from './routes/en/parties/$id/history'
 import { Route as EnMembersIdVotesRouteImport } from './routes/en/members/$id/votes'
 import { Route as EnMembersIdSpeechesRouteImport } from './routes/en/members/$id/speeches'
-import { Route as EnMembersIdQuestionsRouteImport } from './routes/en/members/$id/questions'
 import { Route as EnMembersIdMotionsRouteImport } from './routes/en/members/$id/motions'
 
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -175,11 +173,6 @@ const MembersIdSpeechesRoute = MembersIdSpeechesRouteImport.update({
   path: '/speeches',
   getParentRoute: () => MembersIdRouteRoute,
 } as any)
-const MembersIdQuestionsRoute = MembersIdQuestionsRouteImport.update({
-  id: '/questions',
-  path: '/questions',
-  getParentRoute: () => MembersIdRouteRoute,
-} as any)
 const MembersIdMotionsRoute = MembersIdMotionsRouteImport.update({
   id: '/motions',
   path: '/motions',
@@ -240,11 +233,6 @@ const EnMembersIdSpeechesRoute = EnMembersIdSpeechesRouteImport.update({
   path: '/speeches',
   getParentRoute: () => EnMembersIdRouteRoute,
 } as any)
-const EnMembersIdQuestionsRoute = EnMembersIdQuestionsRouteImport.update({
-  id: '/questions',
-  path: '/questions',
-  getParentRoute: () => EnMembersIdRouteRoute,
-} as any)
 const EnMembersIdMotionsRoute = EnMembersIdMotionsRouteImport.update({
   id: '/motions',
   path: '/motions',
@@ -271,7 +259,6 @@ export interface FileRoutesByFullPath {
   '/en/motions/$id': typeof EnMotionsIdRoute
   '/en/votes/$id': typeof EnVotesIdRoute
   '/members/$id/motions': typeof MembersIdMotionsRoute
-  '/members/$id/questions': typeof MembersIdQuestionsRoute
   '/members/$id/speeches': typeof MembersIdSpeechesRoute
   '/members/$id/votes': typeof MembersIdVotesRoute
   '/parties/$id/history': typeof PartiesIdHistoryRoute
@@ -284,7 +271,6 @@ export interface FileRoutesByFullPath {
   '/members/$id/': typeof MembersIdIndexRoute
   '/parties/$id/': typeof PartiesIdIndexRoute
   '/en/members/$id/motions': typeof EnMembersIdMotionsRoute
-  '/en/members/$id/questions': typeof EnMembersIdQuestionsRoute
   '/en/members/$id/speeches': typeof EnMembersIdSpeechesRoute
   '/en/members/$id/votes': typeof EnMembersIdVotesRoute
   '/en/parties/$id/history': typeof EnPartiesIdHistoryRoute
@@ -309,7 +295,6 @@ export interface FileRoutesByTo {
   '/en/motions/$id': typeof EnMotionsIdRoute
   '/en/votes/$id': typeof EnVotesIdRoute
   '/members/$id/motions': typeof MembersIdMotionsRoute
-  '/members/$id/questions': typeof MembersIdQuestionsRoute
   '/members/$id/speeches': typeof MembersIdSpeechesRoute
   '/members/$id/votes': typeof MembersIdVotesRoute
   '/parties/$id/history': typeof PartiesIdHistoryRoute
@@ -322,7 +307,6 @@ export interface FileRoutesByTo {
   '/members/$id': typeof MembersIdIndexRoute
   '/parties/$id': typeof PartiesIdIndexRoute
   '/en/members/$id/motions': typeof EnMembersIdMotionsRoute
-  '/en/members/$id/questions': typeof EnMembersIdQuestionsRoute
   '/en/members/$id/speeches': typeof EnMembersIdSpeechesRoute
   '/en/members/$id/votes': typeof EnMembersIdVotesRoute
   '/en/parties/$id/history': typeof EnPartiesIdHistoryRoute
@@ -352,7 +336,6 @@ export interface FileRoutesById {
   '/en/motions/$id': typeof EnMotionsIdRoute
   '/en/votes/$id': typeof EnVotesIdRoute
   '/members/$id/motions': typeof MembersIdMotionsRoute
-  '/members/$id/questions': typeof MembersIdQuestionsRoute
   '/members/$id/speeches': typeof MembersIdSpeechesRoute
   '/members/$id/votes': typeof MembersIdVotesRoute
   '/parties/$id/history': typeof PartiesIdHistoryRoute
@@ -365,7 +348,6 @@ export interface FileRoutesById {
   '/members/$id/': typeof MembersIdIndexRoute
   '/parties/$id/': typeof PartiesIdIndexRoute
   '/en/members/$id/motions': typeof EnMembersIdMotionsRoute
-  '/en/members/$id/questions': typeof EnMembersIdQuestionsRoute
   '/en/members/$id/speeches': typeof EnMembersIdSpeechesRoute
   '/en/members/$id/votes': typeof EnMembersIdVotesRoute
   '/en/parties/$id/history': typeof EnPartiesIdHistoryRoute
@@ -396,7 +378,6 @@ export interface FileRouteTypes {
     | '/en/motions/$id'
     | '/en/votes/$id'
     | '/members/$id/motions'
-    | '/members/$id/questions'
     | '/members/$id/speeches'
     | '/members/$id/votes'
     | '/parties/$id/history'
@@ -409,7 +390,6 @@ export interface FileRouteTypes {
     | '/members/$id/'
     | '/parties/$id/'
     | '/en/members/$id/motions'
-    | '/en/members/$id/questions'
     | '/en/members/$id/speeches'
     | '/en/members/$id/votes'
     | '/en/parties/$id/history'
@@ -434,7 +414,6 @@ export interface FileRouteTypes {
     | '/en/motions/$id'
     | '/en/votes/$id'
     | '/members/$id/motions'
-    | '/members/$id/questions'
     | '/members/$id/speeches'
     | '/members/$id/votes'
     | '/parties/$id/history'
@@ -447,7 +426,6 @@ export interface FileRouteTypes {
     | '/members/$id'
     | '/parties/$id'
     | '/en/members/$id/motions'
-    | '/en/members/$id/questions'
     | '/en/members/$id/speeches'
     | '/en/members/$id/votes'
     | '/en/parties/$id/history'
@@ -476,7 +454,6 @@ export interface FileRouteTypes {
     | '/en/motions/$id'
     | '/en/votes/$id'
     | '/members/$id/motions'
-    | '/members/$id/questions'
     | '/members/$id/speeches'
     | '/members/$id/votes'
     | '/parties/$id/history'
@@ -489,7 +466,6 @@ export interface FileRouteTypes {
     | '/members/$id/'
     | '/parties/$id/'
     | '/en/members/$id/motions'
-    | '/en/members/$id/questions'
     | '/en/members/$id/speeches'
     | '/en/members/$id/votes'
     | '/en/parties/$id/history'
@@ -701,13 +677,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MembersIdSpeechesRouteImport
       parentRoute: typeof MembersIdRouteRoute
     }
-    '/members/$id/questions': {
-      id: '/members/$id/questions'
-      path: '/questions'
-      fullPath: '/members/$id/questions'
-      preLoaderRoute: typeof MembersIdQuestionsRouteImport
-      parentRoute: typeof MembersIdRouteRoute
-    }
     '/members/$id/motions': {
       id: '/members/$id/motions'
       path: '/motions'
@@ -792,13 +761,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnMembersIdSpeechesRouteImport
       parentRoute: typeof EnMembersIdRouteRoute
     }
-    '/en/members/$id/questions': {
-      id: '/en/members/$id/questions'
-      path: '/questions'
-      fullPath: '/en/members/$id/questions'
-      preLoaderRoute: typeof EnMembersIdQuestionsRouteImport
-      parentRoute: typeof EnMembersIdRouteRoute
-    }
     '/en/members/$id/motions': {
       id: '/en/members/$id/motions'
       path: '/motions'
@@ -811,7 +773,6 @@ declare module '@tanstack/react-router' {
 
 interface MembersIdRouteRouteChildren {
   MembersIdMotionsRoute: typeof MembersIdMotionsRoute
-  MembersIdQuestionsRoute: typeof MembersIdQuestionsRoute
   MembersIdSpeechesRoute: typeof MembersIdSpeechesRoute
   MembersIdVotesRoute: typeof MembersIdVotesRoute
   MembersIdIndexRoute: typeof MembersIdIndexRoute
@@ -819,7 +780,6 @@ interface MembersIdRouteRouteChildren {
 
 const MembersIdRouteRouteChildren: MembersIdRouteRouteChildren = {
   MembersIdMotionsRoute: MembersIdMotionsRoute,
-  MembersIdQuestionsRoute: MembersIdQuestionsRoute,
   MembersIdSpeechesRoute: MembersIdSpeechesRoute,
   MembersIdVotesRoute: MembersIdVotesRoute,
   MembersIdIndexRoute: MembersIdIndexRoute,
@@ -849,7 +809,6 @@ const PartiesIdRouteRouteWithChildren = PartiesIdRouteRoute._addFileChildren(
 
 interface EnMembersIdRouteRouteChildren {
   EnMembersIdMotionsRoute: typeof EnMembersIdMotionsRoute
-  EnMembersIdQuestionsRoute: typeof EnMembersIdQuestionsRoute
   EnMembersIdSpeechesRoute: typeof EnMembersIdSpeechesRoute
   EnMembersIdVotesRoute: typeof EnMembersIdVotesRoute
   EnMembersIdIndexRoute: typeof EnMembersIdIndexRoute
@@ -857,7 +816,6 @@ interface EnMembersIdRouteRouteChildren {
 
 const EnMembersIdRouteRouteChildren: EnMembersIdRouteRouteChildren = {
   EnMembersIdMotionsRoute: EnMembersIdMotionsRoute,
-  EnMembersIdQuestionsRoute: EnMembersIdQuestionsRoute,
   EnMembersIdSpeechesRoute: EnMembersIdSpeechesRoute,
   EnMembersIdVotesRoute: EnMembersIdVotesRoute,
   EnMembersIdIndexRoute: EnMembersIdIndexRoute,

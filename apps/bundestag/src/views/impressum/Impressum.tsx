@@ -23,7 +23,7 @@ const SOURCES_BUNDESTAG = [
     name: 'DIP',
     url: 'https://search.dip.bundestag.de/',
     display: 'search.dip.bundestag.de',
-    desc: 'Anfragen und Mitzeichner',
+    desc: 'Anträge und Drucksachen',
   },
 ]
 
@@ -75,7 +75,7 @@ export function Impressum() {
             { name: 'Master data', url: 'https://www.bundestag.de/services/opendata', display: 'bundestag.de', desc: 'Member master data' },
             { name: 'Plenary records', url: 'https://dserver.bundestag.de/', display: 'dserver.bundestag.de', desc: 'Speeches and plenary records' },
             { name: 'Parlamentaria', url: 'https://www.bundestag.de/parlament/praesidium/parteienfinanzierung', display: 'bundestag.de', desc: 'Party donations above 50,000 euros' },
-            { name: 'DIP', url: 'https://search.dip.bundestag.de/', display: 'search.dip.bundestag.de', desc: 'Parliamentary questions and co-signers' },
+            { name: 'DIP', url: 'https://search.dip.bundestag.de/', display: 'search.dip.bundestag.de', desc: 'Motions and parliamentary papers' },
           ].map((s) => (
             <div key={s.name} className="mb-m">
               <div className="text-m">{s.name}</div>

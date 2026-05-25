@@ -47,10 +47,9 @@ Run source refreshes in this order when the evidence says they are needed:
 3. `npm run etl:votes:namentlich`
 4. `npm run etl:handzeichen:refresh`
 5. `DIP_UPDATED_START=<last-local-update> npm run etl:dip`
-6. `npm run etl:dip:answers`
-7. `npm run etl:speeches:xml`
-8. `npm run etl:affiliations`
-9. `npm run db:normalize`
+6. `npm run etl:speeches:xml`
+7. `npm run etl:affiliations`
+8. `npm run db:normalize`
 
 Run derived refreshes after source data is current:
 
@@ -77,10 +76,10 @@ If an ETL or extraction step fails because Bundestag, DIP, PDF, or XML formats c
 
 Before any deploy:
 
-1. Check counts before and after for votes, speeches, Antraege, Anfragen, vote links, translations, and generated descriptions.
+1. Check counts before and after for votes, speeches, Antraege, vote links, translations, and generated descriptions.
 2. Confirm speech XML fetch reached the newest available session.
 3. Confirm new non-procedural votes have clean titles, descriptions, translations, and party positions when eligible.
-4. Confirm Antraege and Anfragen have updated metadata, signatories, answers, descriptions, and translations when eligible.
+4. Confirm Antraege have updated metadata, signatories, descriptions, and translations when eligible.
 5. Run `npm run build -w @machtblick/bundestag`.
 6. Confirm generated static data for new routes exists.
 7. Run `tester` if behavior or routing changed.
@@ -88,7 +87,7 @@ Before any deploy:
 9. Use `scribe` if tracked source changes were made.
 10. Use `deployer`.
 
-Publish complete slices independently. Incomplete DIP rows may remain in SQLite and must be reported, but they do not block unrelated complete slices. New votes and speeches can deploy when their own vote and speech gates pass. Motion detail pages and JSON should exist only for motions with generated descriptions, and English motion pages require English description translations. Missing Anfrage answer PDFs block publishing answer text or future question detail pages for those rows, but they do not block complete votes, speeches, or motions. Do not deploy if a gate fails for a slice that would be published, if local changes cannot be validated, or if the refreshed data looks suspicious.
+Publish complete slices independently. Incomplete DIP rows may remain in SQLite and must be reported, but they do not block unrelated complete slices. New votes and speeches can deploy when their own vote and speech gates pass. Motion detail pages and JSON should exist only for motions with generated descriptions, and English motion pages require English description translations. Do not deploy if a gate fails for a slice that would be published, if local changes cannot be validated, or if the refreshed data looks suspicious.
 
 ## Final Report
 

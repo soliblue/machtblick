@@ -28,11 +28,9 @@
 /en/datenschutz/ /en/privacy/ 301
 /members/:id/abstimmungen/ /members/:id/votes/ 301
 /members/:id/reden/ /members/:id/speeches/ 301
-/members/:id/anfragen/ /members/:id/questions/ 301
 /members/:id/antraege/ /members/:id/motions/ 301
 /en/members/:id/abstimmungen/ /en/members/:id/votes/ 301
 /en/members/:id/reden/ /en/members/:id/speeches/ 301
-/en/members/:id/anfragen/ /en/members/:id/questions/ 301
 /en/members/:id/antraege/ /en/members/:id/motions/ 301
 /parties/:id/abstimmungen/ /parties/:id/votes/ 301
 /parties/:id/profil/ /parties/:id/profile/ 301

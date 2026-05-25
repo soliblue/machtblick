@@ -32,8 +32,6 @@ db.transaction(() => {
     db.prepare('DELETE FROM vote_members WHERE member_id = ?').run(from)
     db.prepare('UPDATE OR IGNORE antrag_signatories SET member_id = ? WHERE member_id = ?').run(to, from)
     db.prepare('DELETE FROM antrag_signatories WHERE member_id = ?').run(from)
-    db.prepare('UPDATE OR IGNORE anfrage_signatories SET member_id = ? WHERE member_id = ?').run(to, from)
-    db.prepare('DELETE FROM anfrage_signatories WHERE member_id = ?').run(from)
     db.prepare('UPDATE speeches SET speaker_member_id = ? WHERE speaker_member_id = ?').run(to, from)
     db.prepare('UPDATE OR IGNORE member_abgeordnetenwatch SET member_id = ? WHERE member_id = ?').run(to, from)
     db.prepare('DELETE FROM member_abgeordnetenwatch WHERE member_id = ?').run(from)

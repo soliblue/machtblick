@@ -1,14 +1,12 @@
 import { db } from '@machtblick/db/client'
-import { anfragen, anfrageSignatories, anfragenRaw, antraege, antragSignatories, antraegeRaw } from '@machtblick/db/schema'
+import { antraege, antragSignatories, antraegeRaw } from '@machtblick/db/schema'
 import { sql } from 'drizzle-orm'
 import { readAllPages } from './cache.ts'
-import { buildAnfrageRow } from './buildAnfragen.ts'
 import { buildAntragRow } from './buildAntraege.ts'
 import { buildPdfSignatoryRows, type AntragForPdfSignatures } from './buildPdfSignatories.ts'
 import { buildSignatoryRows } from './buildSignatories.ts'
 import type { Vorgang, Vorgangsposition, Aktivitaet } from './types.ts'
 
-const ANFRAGE_TYPES = ['Kleine Anfrage', 'Große Anfrage', 'Schriftliche Frage']
 const ANTRAG_TYPES = ['Antrag', 'Gesetzgebung']
 const fetchedAt = new Date().toISOString()
 
@@ -37,28 +35,6 @@ function readVorgaengeAndPositions(types: string[]) {
   return { vorgaenge, positionsByVorgang }
 }
 
-console.log('=== Anfragen ===')
-const anfragenData = readVorgaengeAndPositions(ANFRAGE_TYPES)
-const anfrageRows = anfragenData.vorgaenge
-  .map((v) => ({ v, row: buildAnfrageRow(v, anfragenData.positionsByVorgang.get(v.id) ?? []) }))
-  .filter((r): r is { v: typeof r.v; row: NonNullable<typeof r.row> } => r.row !== null)
-console.log(`Ingesting ${anfrageRows.length} anfragen`)
-
-db.transaction((tx) => {
-  for (const { v, row } of anfrageRows) {
-    tx.insert(anfragen).values(row).onConflictDoUpdate({ target: anfragen.id, set: row }).run()
-    tx.insert(anfragenRaw).values({
-      anfrageId: row.id,
-      vorgangJson: v,
-      positionsJson: anfragenData.positionsByVorgang.get(v.id) ?? [],
-      fetchedAt,
-    }).onConflictDoUpdate({
-      target: anfragenRaw.anfrageId,
-      set: { vorgangJson: v, positionsJson: anfragenData.positionsByVorgang.get(v.id) ?? [], fetchedAt },
-    }).run()
-  }
-})
-
 console.log('=== Antraege ===')
 const antraegeData = readVorgaengeAndPositions(ANTRAG_TYPES)
 const antragRows = antraegeData.vorgaenge
@@ -82,7 +58,7 @@ db.transaction((tx) => {
 })
 
 console.log('=== Signatories ===')
-const ALL_SIG_ARTEN = new Set(['Kleine Anfrage', 'Große Anfrage', 'Frage', 'Antrag', 'Gesetzentwurf'])
+const ALL_SIG_ARTEN = new Set(['Antrag', 'Gesetzentwurf'])
 const relevantAkt: Aktivitaet[] = []
 let scanned = 0
 for (const a of readAllPages<Aktivitaet>('aktivitaet')) {
@@ -91,42 +67,29 @@ for (const a of readAllPages<Aktivitaet>('aktivitaet')) {
 }
 console.log(`Aktivitaet scanned ${scanned}, kept ${relevantAkt.length}`)
 
-const anfrageIds = new Set((db.all(sql`SELECT id FROM ${anfragen}`) as Array<{ id: number }>).map((r) => r.id))
 const antragIds = new Set((db.all(sql`SELECT id FROM ${antraege}`) as Array<{ id: number }>).map((r) => r.id))
 const relevant = relevantAkt.filter((a) =>
   (a.vorgangsbezug ?? []).some((vb) => {
     const tid = Number(vb.id)
-    return anfrageIds.has(tid) || antragIds.has(tid)
+    return antragIds.has(tid)
   })
 )
 const sigRows = buildSignatoryRows(relevant)
-const anfrageSigs = sigRows.filter((r) => r.kind === 'anfrage' && anfrageIds.has(r.targetId))
-const structuredAntragSigs = sigRows.filter((r) => r.kind === 'antrag' && antragIds.has(r.targetId))
+const structuredAntragSigs = sigRows.filter((r) => antragIds.has(r.targetId))
 const pdfAntragSigs = await buildPdfSignatoryRows(antragRows.map(({ row }) => row as AntragForPdfSignatures), structuredAntragSigs)
 const antragSigs = [...structuredAntragSigs, ...pdfAntragSigs]
-console.log(`Resolved ${anfrageSigs.length} anfrage signatories, ${antragSigs.length} antrag signatories`)
+console.log(`Resolved ${antragSigs.length} antrag signatories`)
 console.log(`Resolved ${pdfAntragSigs.length} antrag signatories from PDF signature blocks`)
 
 db.transaction((tx) => {
-  const ids = [...new Set(anfrageSigs.map((r) => r.targetId))]
-  for (const id of ids) tx.run(sql`DELETE FROM ${anfrageSignatories} WHERE anfrage_id = ${id}`)
-  for (const r of anfrageSigs) tx.insert(anfrageSignatories).values({ anfrageId: r.targetId, memberId: r.memberId, dipPersonId: r.dipPersonId }).onConflictDoNothing().run()
-})
-
-db.transaction((tx) => {
-  const ids = [...new Set(antragSigs.map((r) => r.targetId))]
-  for (const id of ids) tx.run(sql`DELETE FROM ${antragSignatories} WHERE antrag_id = ${id}`)
+  for (const { row } of antragRows) tx.run(sql`DELETE FROM ${antragSignatories} WHERE antrag_id = ${row.id}`)
   for (const r of antragSigs) tx.insert(antragSignatories).values({ antragId: r.targetId, memberId: r.memberId, dipPersonId: r.dipPersonId }).onConflictDoNothing().run()
 })
 
 console.log('=== Counts ===')
-const counts = db.all(sql`SELECT type, COUNT(*) as n FROM ${anfragen} GROUP BY type`) as Array<{ type: string; n: number }>
-for (const c of counts) console.log(`  anfragen ${c.type}: ${c.n}`)
 const aCounts = db.all(sql`SELECT type, COUNT(*) as n FROM ${antraege} GROUP BY type`) as Array<{ type: string; n: number }>
 for (const c of aCounts) console.log(`  antraege ${c.type}: ${c.n}`)
-const aSigCount = (db.all(sql`SELECT COUNT(*) as n FROM ${anfrageSignatories}`) as Array<{ n: number }>)[0].n
 const atSigCount = (db.all(sql`SELECT COUNT(*) as n FROM ${antragSignatories}`) as Array<{ n: number }>)[0].n
-console.log(`Total anfrage signatories: ${aSigCount}`)
 console.log(`Total antrag signatories: ${atSigCount}`)
 
 console.log('=== Vote linkage ===')

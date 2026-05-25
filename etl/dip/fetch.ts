@@ -1,7 +1,7 @@
 import { dipList } from './client.ts'
 import { nextPageNumber, writePage, readCursor, writeCursor, markDone, isDone } from './cache.ts'
 
-const TYPES = ['Kleine Anfrage', 'Große Anfrage', 'Schriftliche Frage', 'Antrag', 'Gesetzgebung']
+const TYPES = ['Antrag', 'Gesetzgebung']
 
 const slug = (t: string) =>
   t.toLowerCase().replace(/ß/g, 'ss').replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')

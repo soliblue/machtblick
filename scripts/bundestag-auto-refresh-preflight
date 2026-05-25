@@ -41,8 +41,6 @@ if (existsSync(dbPath)) {
   console.log(`antraege_count=${scalar('select count(*) from antraege')}`)
   console.log(`antraege_newest_updated_at=${scalar('select max(updated_at) from antraege')}`)
   console.log(`antraege_missing_descriptions=${scalar('select count(*) from antraege a left join antrag_descriptions d on d.antrag_id = a.id where d.antrag_id is null')}`)
-  console.log(`anfragen_count=${scalar('select count(*) from anfragen')}`)
-  console.log(`anfragen_newest_updated_at=${scalar('select max(updated_at) from anfragen')}`)
   console.log(`vote_antraege_count=${scalar('select count(*) from vote_antraege')}`)
   console.log(`vote_translations_count=${scalar('select count(*) from vote_translations')}`)
   console.log(`speech_translations_count=${scalar('select count(*) from speech_translations')}`)
@@ -55,7 +53,7 @@ if (existsSync(dbPath)) {
     console.log(`speech_xml_probe.21${id}=${response.status}`)
   }
 
-  const newestDipUpdate = scalar("select max(updated_at) from (select updated_at from antraege union all select updated_at from anfragen)")
+  const newestDipUpdate = scalar('select max(updated_at) from antraege')
   const updatedStart = newestDipUpdate || new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
   const dipUrl = new URL('https://search.dip.bundestag.de/api/v1/vorgang')
   dipUrl.searchParams.set('apikey', process.env.DIP_API_KEY ?? 'R2BZaee.DjdCyihKZMf8AOjtScubP2EVydegzjmBIQ')

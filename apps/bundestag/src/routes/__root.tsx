@@ -78,7 +78,7 @@ export const Route = createRootRoute({
                 {
                   '@type': 'Dataset',
                   name: 'Bundestag members',
-                  description: 'Current German Bundestag member profiles with party affiliation, mandate details, voting records, speeches, questions, and motions.',
+                  description: 'Current German Bundestag member profiles with party affiliation, mandate details, voting records, speeches, and motions.',
                   url: `${SITE_URL}/members/`,
                   creator: { '@id': `${SITE_URL}/#organization` },
                   distribution: { '@type': 'DataDownload', encodingFormat: 'application/json', contentUrl: `${SITE_URL}/api/members.json` },

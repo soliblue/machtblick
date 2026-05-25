@@ -35,7 +35,7 @@
 |                                                            |
 |    DIP - Parlamentsinformationssystem                     |
 |    search.dip.bundestag.de                                 |
-|    Anfragen und Mitzeichner                                |
+|    Antraege und Drucksachen                                |
 |                                                            |
 |  Quellen ohne explizite Lizenzangabe sind oeffentlich      |
 |  zugaengliche Daten des Deutschen Bundestages.             |

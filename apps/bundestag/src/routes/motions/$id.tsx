@@ -15,7 +15,7 @@ export const Route = createFileRoute('/motions/$id')({
     const desc = loaderData?.antrag.summarySimplified ?? loaderData?.antrag.abstract ?? 'Antrag im Deutschen Bundestag.'
     return {
       meta: seoMeta({ title, description: desc, canonical: path, type: 'article' }),
-      links: [...canonicalLink(path), ...alternateJsonLink(path)],
+      links: [...canonicalLink(path, { englishAlternate: loaderData?.hasEnglishTranslation ?? false }), ...alternateJsonLink(path)],
     }
   },
 })

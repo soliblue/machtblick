@@ -43,14 +43,18 @@ export function seoMeta({ title, description, canonical, type = 'website', image
   ]
 }
 
-export function canonicalLink(path: string) {
+type CanonicalLinkOptions = {
+  englishAlternate?: boolean
+}
+
+export function canonicalLink(path: string, options: CanonicalLinkOptions = {}) {
   const canonical = pagePath(path)
   const base = canonical === '/en/' ? '/' : canonical.startsWith('/en/') ? canonical.slice(3) : canonical
   const english = base === '/' ? '/en/' : `/en${base}`
   return [
     { rel: 'canonical', href: `${SITE_URL}${canonical}` },
     { rel: 'alternate', hrefLang: 'de', href: `${SITE_URL}${base}` },
-    { rel: 'alternate', hrefLang: 'en', href: `${SITE_URL}${english}` },
+    ...(options.englishAlternate ?? true ? [{ rel: 'alternate', hrefLang: 'en', href: `${SITE_URL}${english}` }] : []),
     { rel: 'alternate', hrefLang: 'x-default', href: `${SITE_URL}${base}` },
   ]
 }

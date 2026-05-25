@@ -8,7 +8,7 @@ Machtblick is a public-interest project built from open German datasets. The Bun
 
 - [Sitemap](https://machtblick.de/sitemap.xml): Complete list of prerendered public URLs.
 - [Votes](https://machtblick.de/votes/): Bundestag votes with sponsor, date, result, party positions, and linked documents.
-- [Members](https://machtblick.de/members/): Bundestag members with party, state, attendance, vote behavior, speeches, questions, and motions.
+- [Members](https://machtblick.de/members/): Bundestag members with party, state, attendance, vote behavior, speeches, and motions.
 - [Speeches](https://machtblick.de/speeches/): Searchable Bundestag speeches.
 - [Parties](https://machtblick.de/parties/): Parliamentary groups with seats, cohesion, proposals, members, and voting alignment.
 
@@ -25,8 +25,8 @@ Machtblick is a public-interest project built from open German datasets. The Bun
 - `/votes/{id}/`: Vote detail with party voting, deviating members, result, sponsor, speeches, related motions, and source documents.
 - `/motions/{id}/`: Motion or bill detail with summary, status, print document, signatories, and linked votes.
 - `/members/`: Member list, optionally filtered with `?party=` and `?state=`.
-- `/members/{slug}/votes/`: Canonical member detail with voting record, attendance, speeches, questions, and motions.
-- `/members/{slug}/speeches/`, `/members/{slug}/questions/`, and `/members/{slug}/motions/`: Member detail tabs that canonicalize to the voting record.
+- `/members/{slug}/votes/`: Canonical member detail with voting record, attendance, speeches, and motions.
+- `/members/{slug}/speeches/` and `/members/{slug}/motions/`: Member detail tabs that canonicalize to the voting record.
 - `/parties/`: Parliamentary group overview.
 - `/parties/{slug}/profile/`: Canonical party detail with profile, votes, history, proposals, members, cohesion, and alignment.
 - `/parties/{slug}/votes/` and `/parties/{slug}/history/`: Party detail tabs that canonicalize to the profile.
