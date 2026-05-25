@@ -2,7 +2,7 @@ import { writeFileSync, existsSync, mkdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { execFileSync } from 'node:child_process'
 
-const URL = 'https://www.bundestag.de/resource/blob/472878/c2ee46c6dadbf6f06ee27d5618fd24e9/MdB-Stammdaten-data.zip'
+const sourceUrl = 'https://www.bundestag.de/resource/blob/472878/c2ee46c6dadbf6f06ee27d5618fd24e9/MdB-Stammdaten-data.zip'
 const rawDir = fileURLToPath(new URL('./raw/', import.meta.url))
 const zipPath = `${rawDir}MdB-Stammdaten-data.zip`
 const xmlPath = `${rawDir}MDB_STAMMDATEN.XML`
@@ -15,8 +15,8 @@ if (existsSync(xmlPath) && !force) {
   process.exit(0)
 }
 
-const res = await fetch(URL, { headers: { 'User-Agent': 'machtblick-etl' } })
-if (!res.ok) throw new Error(`fetch ${URL}: ${res.status}`)
+const res = await fetch(sourceUrl, { headers: { 'User-Agent': 'machtblick-etl' } })
+if (!res.ok) throw new Error(`fetch ${sourceUrl}: ${res.status}`)
 const buf = Buffer.from(await res.arrayBuffer())
 writeFileSync(zipPath, buf)
 console.log(`downloaded ${zipPath} (${buf.length} bytes)`)

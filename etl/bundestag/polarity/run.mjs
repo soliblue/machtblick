@@ -1,11 +1,12 @@
 import Database from 'better-sqlite3'
+import { fileURLToPath } from 'node:url'
 import { hasInvertedTitleShape, stripProceduralPrefix, extractDrucksachen, readDrucksacheCache, underlyingTitleFromCache } from './rule.mjs'
 import { classifyWithLLM } from './llm.mjs'
 import { applyInversion, recordNoInversion, defectionSignature } from './apply.mjs'
 import { parseProposingParty } from './proposer.mjs'
 import { pLimit } from './limit.mjs'
 
-const DB_PATH = '/Users/soli/machtblick/db/machtblick.sqlite'
+const DB_PATH = fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url))
 const db = new Database(DB_PATH)
 
 const candidates = db.prepare(`

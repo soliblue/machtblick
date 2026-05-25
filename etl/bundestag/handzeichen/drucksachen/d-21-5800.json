@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "287625",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/5800",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "ede396c997f0c06b07858fb86944c4af",
+      "aktualisiert": "2026-05-11T15:17:01+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334711",
+          "titel": "Siebte Beschlussempfehlung des Wahlprüfungsausschusses zu Einsprüchen anlässlich der Wahl zum 21. Deutschen Bundestag am 23. Februar 2025",
+          "vorgangstyp": "Wahlprüfungsverfahren"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "WPA",
+          "titel": "Wahlprüfungsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/058/2105800.pdf",
+        "id": "287625",
+        "dokumentnummer": "21/5800",
+        "datum": "2026-05-07",
+        "verteildatum": "2026-05-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Wahlprüfungsausschuss"
+        ]
+      },
+      "titel": "Siebte Beschlussempfehlung des Wahlprüfungsausschusses zu Einsprüchen anlässlich der Wahl zum 21. Deutschen Bundestag am 23. Februar 2025",
+      "datum": "2026-05-07"
+    }
+  ],
+  "cursor": "AoJwkKj4gJ4DMURydWNrc2FjaGUtMjg3NjI1"
+}

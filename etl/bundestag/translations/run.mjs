@@ -230,32 +230,33 @@ function writeTranslations(job, output) {
   const byParty = new Map(output.party_summaries.map((s) => [s.party, s]))
   for (const source of job.summaries) {
     const translated = byParty.get(source.party)
-    if (!translated) throw new Error(`missing party summary translation for ${job.vote.id} ${source.party}`)
-    const hash = job.summaryHashes.find((s) => s.party === source.party).hash
-    db.prepare(`
-      INSERT INTO vote_party_summary_translations (
-        vote_id, party, locale, position_summary, key_points, dissent_note,
-        source_hash, model, prompt_version, translated_at
-      ) VALUES (?, ?, 'en', ?, ?, ?, ?, ?, ?, ?)
-      ON CONFLICT(vote_id, party, locale) DO UPDATE SET
-        position_summary = excluded.position_summary,
-        key_points = excluded.key_points,
-        dissent_note = excluded.dissent_note,
-        source_hash = excluded.source_hash,
-        model = excluded.model,
-        prompt_version = excluded.prompt_version,
-        translated_at = excluded.translated_at
-    `).run(
-      job.vote.id,
-      source.party,
-      clean(translated.position_summary),
-      clean(translated.key_points),
-      clean(translated.dissent_note),
-      hash,
-      model,
-      PROMPT_VERSION,
-      now,
-    )
+    if (translated) {
+      const hash = job.summaryHashes.find((s) => s.party === source.party).hash
+      db.prepare(`
+        INSERT INTO vote_party_summary_translations (
+          vote_id, party, locale, position_summary, key_points, dissent_note,
+          source_hash, model, prompt_version, translated_at
+        ) VALUES (?, ?, 'en', ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT(vote_id, party, locale) DO UPDATE SET
+          position_summary = excluded.position_summary,
+          key_points = excluded.key_points,
+          dissent_note = excluded.dissent_note,
+          source_hash = excluded.source_hash,
+          model = excluded.model,
+          prompt_version = excluded.prompt_version,
+          translated_at = excluded.translated_at
+      `).run(
+        job.vote.id,
+        source.party,
+        clean(translated.position_summary),
+        clean(translated.key_points),
+        clean(translated.dissent_note),
+        hash,
+        model,
+        PROMPT_VERSION,
+        now,
+      )
+    } else console.warn(`missing party summary translation for ${job.vote.id} ${source.party}`)
   }
 }
 
@@ -294,8 +295,8 @@ function writeBatch(batch, output) {
   const byId = new Map(output.translations.map((t) => [t.vote_id, t]))
   for (const job of batch) {
     const translated = byId.get(job.vote.id)
-    if (!translated) throw new Error(`missing vote translation for ${job.vote.id}`)
-    writeTranslations(job, translated)
+    if (translated) writeTranslations(job, translated)
+    else console.warn(`missing vote translation for ${job.vote.id}`)
   }
 }
 

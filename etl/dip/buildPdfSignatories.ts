@@ -84,7 +84,13 @@ function initiativeParties(value: string | null | undefined) {
 
 async function extractPdfText(url: string) {
   const { getDocument } = await import('pdfjs-dist/legacy/build/pdf.mjs')
-  const bytes = new Uint8Array(await (await fetch(url)).arrayBuffer())
+  const res = await fetch(url)
+  if (!res.ok) return ''
+  const contentType = res.headers.get('content-type') ?? ''
+  const bytes = new Uint8Array(await res.arrayBuffer())
+  const head = new TextDecoder().decode(bytes.slice(0, 5))
+  if (!contentType.includes('pdf') && head !== '%PDF-') return ''
+  if (head !== '%PDF-') return ''
   const doc = await getDocument({ data: bytes, verbosity: 0 }).promise
   const pages: string[] = []
   for (let p = 1; p <= doc.numPages; p++) {

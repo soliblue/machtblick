@@ -49,7 +49,7 @@ let llmFailure = 0
 
 const limit = pLimit(4)
 
-async function process(row) {
+async function processVote(row) {
   const picked = await pickAntragWithFallback(row.id, db)
   if (!picked) {
     skippedNoPdf++
@@ -84,7 +84,7 @@ async function process(row) {
   }
 }
 
-await Promise.all(candidates.map((row) => limit(() => process(row))))
+await Promise.all(candidates.map((row) => limit(() => processVote(row))))
 
 console.log(`done. total=${candidates.length} skipped_no_pdf=${skippedNoPdf} llm_failure=${llmFailure}`)
 console.log(`  by kind: antrag=${counts.antrag} petitionen=${counts.petitionen} wahleinspruch=${counts.wahleinspruch} verordnung=${counts.verordnung}`)

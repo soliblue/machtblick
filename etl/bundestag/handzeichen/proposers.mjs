@@ -1,10 +1,13 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { createHash } from 'node:crypto'
 import Database from 'better-sqlite3'
 
 const API = 'https://search.dip.bundestag.de/api/v1'
 const KEY = process.env.DIP_API_KEY ?? 'JuUJMTh.aode9HMRTazR7NwudVElhD26LeNADLxxST'
 const CACHE = new URL('./drucksachen/', import.meta.url).pathname
+let enodiaCookie = ''
 await mkdir(CACHE, { recursive: true })
 
 const PROPOSER_MAP = {
@@ -19,7 +22,7 @@ const PROPOSER_MAP = {
   BR: 'Bundesrat',
 }
 
-const KNOWN_COMMITTEES = new Set(['AfLEH', 'AfWE', 'PetA', 'AfRechtVer', 'FinanzA', 'HaushA', 'InnenA', 'AfG', 'VerkA', 'AfWIuG', 'VgA', 'AfU', 'BRHPräs', 'ADi', 'AuswA', 'BMF', 'BauA', 'WahlprüfA', 'VermA', 'AfBFSFJ', 'AfArbSoz'])
+const KNOWN_COMMITTEES = new Set(['AfLEH', 'AfWE', 'PetA', 'AfRechtVer', 'FinanzA', 'HaushA', 'InnenA', 'AfG', 'VerkA', 'AfWIuG', 'VgA', 'AfU', 'BRHPräs', 'ADi', 'AuswA', 'BMF', 'BauA', 'WahlprüfA', 'WPA', 'VermA', 'AfBFSFJ', 'AfArbSoz'])
 const unknownBezeichnungen = new Set()
 
 function proposerFromUrheber(urheber) {
@@ -35,13 +38,30 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 async function dipFetch(url) {
   let attempt = 0
   while (true) {
-    const res = await fetch(url, { headers: { accept: 'application/json', 'user-agent': 'machtblick-etl/0.1 (https://github.com/soli/machtblick)' } })
+    const headers = { accept: 'application/json', 'user-agent': 'machtblick-etl/0.1 (https://github.com/soli/machtblick)' }
+    if (enodiaCookie) headers.cookie = enodiaCookie
+    const res = await fetch(url, { headers })
     const text = await res.text()
     if (text.startsWith('{')) return JSON.parse(text)
+    if (text.includes('Enodia Verification')) {
+      await updateEnodiaCookie(text)
+      continue
+    }
     attempt++
     if (attempt > 30) throw new Error(`DIP non-JSON after ${attempt} retries: ${url}`)
     await sleep(Math.min(300000, 10000 * attempt))
   }
+}
+
+async function updateEnodiaCookie(text) {
+  const evl = text.match(/window\.chl = "([^"]+)"/)?.[1]
+  if (!evl) throw new Error('Enodia challenge missing')
+  const envelope = JSON.parse(Buffer.from(evl.split('.')[0], 'base64').toString('utf8'))
+  const challenge = envelope.content.challenge
+  let solution = 0
+  while (!createHash('sha256').update(`${challenge}${solution}`).digest('hex').startsWith('0000')) solution++
+  const auth = await fetch('https://search.dip.bundestag.de/.enodia/verify', { method: 'POST', body: `${solution}-${evl}` }).then((r) => r.text())
+  enodiaCookie = `enodia=${auth}`
 }
 
 async function getCached(name, fetcher) {
@@ -83,7 +103,7 @@ async function resolveProposer(dnr) {
   return null
 }
 
-const db = new Database('/Users/soli/machtblick/db/machtblick.sqlite')
+const db = new Database(fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url)))
 const rows = db.prepare("SELECT id, document FROM votes WHERE vote_type IN ('handzeichen','hammelsprung') AND document IS NOT NULL AND document NOT LIKE 'Antrag%' AND document NOT LIKE 'Gesetzentwurf%'").all()
 console.log(`processing ${rows.length} votes`)
 

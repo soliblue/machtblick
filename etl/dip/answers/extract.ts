@@ -22,8 +22,19 @@ const alphaRatio = (s: string) => {
 
 const isGibberish = (s: string) => s.length < MIN_CHARS || alphaRatio(s) < MIN_ALPHA_RATIO
 
-function runPdftotext(id: number): string {
-  return execFileSync('pdftotext', ['-layout', '-enc', 'UTF-8', pdfPath(id), '-'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 })
+async function runPdfjs(id: number): Promise<string> {
+  const { getDocument } = await import('pdfjs-dist/legacy/build/pdf.mjs')
+  const bytes = new Uint8Array(readFileSync(pdfPath(id)))
+  const head = new TextDecoder().decode(bytes.slice(0, 5))
+  if (head !== '%PDF-') return ''
+  const doc = await getDocument({ data: bytes, verbosity: 0 }).promise
+  const pages: string[] = []
+  for (let p = 1; p <= doc.numPages; p++) {
+    const page = await doc.getPage(p)
+    const text = await page.getTextContent()
+    pages.push(text.items.map((item) => 'str' in item && typeof item.str === 'string' ? item.str : '').join(' '))
+  }
+  return pages.join('\n').replace(/\s+/g, ' ')
 }
 
 function runClaude(id: number, model: 'haiku' | 'sonnet'): { text: string; ok: boolean } {
@@ -46,8 +57,8 @@ const sources: Record<string, number> = {}
 
 for (const id of todo) {
   let text = ''
-  let source: 'pdftotext' | 'claude-haiku' | 'claude-sonnet' = 'pdftotext'
-  text = runPdftotext(id)
+  let source: 'pdfjs' | 'claude-haiku' | 'claude-sonnet' = 'pdfjs'
+  text = await runPdfjs(id)
   if (isGibberish(text)) {
     const haiku = runClaude(id, 'haiku')
     if (haiku.ok && !isGibberish(haiku.text)) {

@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "287989",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6051",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "5429639b5d548322895420804bb31725",
+      "aktualisiert": "2026-05-22T13:25:11+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "330469",
+          "titel": "Gesetz zur Modernisierung der nationalen Umsetzung von europäischen Regelungen zum Ökodesign, zur Energieverbrauchskennzeichnung und zu weiteren Regelungen",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfWE",
+          "titel": "Ausschuss für Wirtschaft und Energie"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/060/2106051.pdf",
+        "id": "287989",
+        "dokumentnummer": "21/6051",
+        "datum": "2026-05-20",
+        "verteildatum": "2026-05-20",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Wirtschaft und Energie"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7328",
+          "titel": "Helmut Kleebank, MdB, SPD",
+          "autor_titel": "Helmut Kleebank, Berichterstattung"
+        },
+        {
+          "id": "8022",
+          "titel": "Mathias Weiser, MdB, AfD",
+          "autor_titel": "Mathias Weiser, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksache 21/5141 -\r\nEntwurf eines Gesetzes zur Modernisierung der nationalen Umsetzung von europäischen Regelungen zum Ökodesign, zur Energieverbrauchskennzeichnung und zu weiteren Regelungen",
+      "datum": "2026-05-20"
+    }
+  ],
+  "cursor": "AoJw0P20op4DMURydWNrc2FjaGUtMjg3OTg5"
+}

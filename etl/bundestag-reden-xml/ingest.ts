@@ -88,9 +88,8 @@ for (const rows of parsedProtocols) {
 const sessionsCovered = [...new Set(inserts.map((r) => r.sessionId))]
 const dbChanges = db.transaction((tx) => {
   let n = 0
-  for (const sid of sessionsCovered) tx.delete(speeches).where(sql`${speeches.sessionId} = ${sid}`).run()
   for (const row of inserts) {
-    const r = tx.insert(speeches).values(row).run()
+    const r = tx.insert(speeches).values(row).onConflictDoUpdate({ target: speeches.id, set: row }).run()
     n += r.changes
   }
   return n

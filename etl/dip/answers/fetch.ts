@@ -21,7 +21,12 @@ let failed = 0
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
 async function downloadOne(row: { id: number; answer_pdf_url: string }) {
-  const res = await fetch(row.answer_pdf_url, { headers: { 'User-Agent': 'machtblick-etl/1.0 (contact via github)' } })
+  const res = await fetchAnswer(row.answer_pdf_url)
+  if (!res) {
+    failed++
+    console.warn(`  ${row.id}: fetch failed ${row.answer_pdf_url}`)
+    return
+  }
   if (!res.ok) {
     failed++
     console.warn(`  ${row.id}: HTTP ${res.status} ${row.answer_pdf_url}`)
@@ -34,6 +39,17 @@ async function downloadOne(row: { id: number; answer_pdf_url: string }) {
   closeSync(fd)
   done++
   if (done % 50 === 0) console.log(`  fetched ${done}/${todo.length} (${failed} failed)`)
+}
+
+async function fetchAnswer(url: string) {
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      return await fetch(url, { headers: { 'User-Agent': 'machtblick-etl/1.0 (contact via github)' } })
+    } catch {
+      if (attempt < 3) await sleep(DELAY_MS * attempt)
+    }
+  }
+  return null
 }
 
 const queue = [...todo]
