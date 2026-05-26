@@ -1,0 +1,38 @@
+# Namentliche Vote 1004
+
+## Goal
+
+Import Bundestag roll-call vote `1004` from `2026-05-22` into SQLite with member ballots, party summaries, source documents, speech links, generated summaries, titles, party positions, and English translations where the existing ETL supports them.
+
+## Status
+
+Imported and enriched where upstream data is available. Speech-based enrichment is blocked until Bundestag publishes protocol XML for session `21081`.
+
+## Scope
+
+- Fix the namentliche importer so it can match the current Bundestag XLSX download list to Bundestag detail IDs.
+- Back up `db/machtblick.sqlite` before writing.
+- Import term 21 namentliche votes with Abgeordnetenwatch period `161`.
+- Run the existing downstream normalization and enrichment jobs needed for the new vote.
+- Verify vote `1004` has DB rows across `votes`, `vote_members`, `vote_party_summaries`, `vote_documents`, descriptions, translations, and linked speech context when available.
+
+## Notes
+
+- Current local DB has term 21 namentliche votes through `bundestag_id = 1003`.
+- Bundestag published `bundestag_id = 1004`, dated `2026-05-22`, title `Ablehnung eines Antrags zur Arzneimittelversorgung`.
+- The current importer parses downloads from `abstimmung/liste`, which provides XLSX and PDF links but no reliable `abstimmung?id`.
+- The current detail feed at `abstimmung/abstimmungen` provides IDs, dates, titles, and result counts.
+
+## Log
+
+### Lead
+
+- Confirmed the missing namentliche vote is `1004`.
+- Found the importer needs a durable source-ID match before it is safe to rerun for term 21.
+- Updated the importer to join the XLSX download feed to the Bundestag detail feed and added `--source-id` so this refresh can touch only vote `1004`.
+- Extended the matched detail import to store the Bundestag teaser text and inferred initiator, then refreshed vote `1004` only.
+- Verified vote `1004` now has 628 member ballots, 6 party summaries, 2 source document rows, `initiator = AfD`, and Drucksachen `21/6076` and `21/2553` in `votes.document`.
+- Ran normalization, polarity, initiator, DIP linkage, speech XML refresh, agenda backfill, materialization, description generation, scoped title cleanup, scoped translations, scoped party positions, scoped speech translations, and public vote validation.
+- Linked vote `1004` to Antrag `21/2553`, generated German summaries from the Antrag PDF, generated English vote and Antrag translations, and validated public vote data.
+- Confirmed Bundestag speech XML fetch stops at session `21081` with no download, so vote `1004` currently has no speech links, party position summaries, speech translations, or agenda item.
+- User requested commit, push, and deploy after confirming the missing speech XML explanation.

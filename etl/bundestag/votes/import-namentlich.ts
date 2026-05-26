@@ -9,7 +9,9 @@ const TERM_ID = Number(arg('--term') ?? 20)
 const AW_PERIOD_ID = Number(arg('--aw-period') ?? 132)
 const UA = 'machtblick-bundestag/0.1 (https://github.com/soli/machtblick; asoliman96@gmail.com)'
 const LIST_URL = 'https://www.bundestag.de/ajax/filterlist/de/parlament/plenum/abstimmung/liste/462112-462112'
+const DETAIL_LIST_URL = 'https://www.bundestag.de/ajax/filterlist/de/parlament/plenum/abstimmung/abstimmungen/484422-484422'
 const AW = 'https://www.abgeordnetenwatch.de/api/v2'
+const SOURCE_ID = Number(arg('--source-id') ?? 0) || null
 const NAME_PARTICLES = new Set(['von', 'van', 'de', 'der', 'den', 'dos', 'da', 'di', 'du', 'le', 'la', 'zu'])
 const MEMBER_ALIASES = new Map([
   ['thomas max ladzinski', 'ladzinski-thomas'],
@@ -17,7 +19,8 @@ const MEMBER_ALIASES = new Map([
 ])
 let enodiaCookie = ''
 
-type LinkItem = { date: string; title: string; pdfUrl: string | null; xlsxUrl: string; sourceUrl: string; sourceId: number | null }
+type LinkItem = { date: string; title: string; description: string | null; initiator: string | null; pdfUrl: string | null; xlsxUrl: string; sourceUrl: string; sourceId: number | null }
+type DetailItem = { date: string; title: string; description: string; initiator: string | null; sourceId: number }
 type VoteRow = { party: string; last: string; first: string; yes: number; no: number; abstain: number; invalid: number; absent: number }
 type Mandate = {
   id: number
@@ -102,28 +105,33 @@ async function importMandates() {
 }
 
 async function importVotes() {
-  const links = (await fetchVoteLinks()).filter((l) => l.date >= term.startDate && (!term.endDate || l.date <= term.endDate))
+  const links = (await fetchVoteLinks()).filter((l) => l.date >= term.startDate && (!term.endDate || l.date <= term.endDate) && (!SOURCE_ID || l.sourceId === SOURCE_ID))
+  if (SOURCE_ID && links.length === 0) throw new Error(`Bundestag source id ${SOURCE_ID} not found`)
+  const latestExisting = db.prepare("SELECT MAX(date) AS date FROM votes WHERE term_id = ? AND vote_type = 'namentlich'").get(TERM_ID) as { date: string | null }
   let votesWritten = 0
   let memberVotesWritten = 0
   for (const link of links) {
+    if (!link.sourceId && latestExisting.date && link.date <= latestExisting.date) continue
+    if (!link.sourceId) throw new Error(`missing Bundestag source id for ${link.date}: ${link.title}`)
     const rows = await fetchVoteRows(link.xlsxUrl)
     const first = rows[0]
     if (!first) continue
-    const generatedVoteId = `bt${TERM_ID}-${link.date}-${String(first.session).padStart(3, '0')}-${first.number}-${slugify(link.title)}`
+    const generatedVoteId = link.sourceId ? `${link.date}-${link.sourceId}-${slugify(link.title)}` : `bt${TERM_ID}-${link.date}-${String(first.session).padStart(3, '0')}-${first.number}-${slugify(link.title)}`
     const existingVote = link.sourceId ? db.prepare('SELECT id FROM votes WHERE term_id = ? AND bundestag_id = ?').get(TERM_ID, link.sourceId) as { id: string } | undefined : null
     const voteId = existingVote?.id ?? generatedVoteId
     const counts = countRows(rows)
     const partySummaries = summaries(rows)
     db.transaction(() => {
       db.prepare(`
-        INSERT INTO votes (id, term_id, bundestag_id, vote_type, date, title, clean_title, summary, document, result, total_members, yes, no, abstain, absent, source_url, fetched_at)
-        VALUES (?, ?, ?, 'namentlich', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO votes (id, term_id, bundestag_id, vote_type, date, title, clean_title, summary, document, initiator, result, total_members, yes, no, abstain, absent, source_url, fetched_at)
+        VALUES (?, ?, ?, 'namentlich', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(id) DO UPDATE SET
           bundestag_id = coalesce(votes.bundestag_id, excluded.bundestag_id),
           title = excluded.title,
           clean_title = coalesce(votes.clean_title, excluded.clean_title),
           summary = excluded.summary,
           document = excluded.document,
+          initiator = coalesce(votes.initiator, excluded.initiator),
           result = excluded.result,
           total_members = excluded.total_members,
           yes = excluded.yes,
@@ -140,7 +148,8 @@ async function importVotes() {
         link.title,
         null,
         `${counts.yes} Ja, ${counts.no} Nein, ${counts.abstain} Enthaltungen.`,
-        link.title,
+        link.description ?? link.title,
+        link.initiator,
         counts.yes > counts.no ? 'angenommen' : 'abgelehnt',
         counts.total,
         counts.yes,
@@ -196,6 +205,11 @@ async function fetchAwMandates() {
 
 async function fetchVoteLinks() {
   const out: LinkItem[] = []
+  const detailsByKey = new Map<string, DetailItem[]>()
+  for (const detail of await fetchVoteDetails()) {
+    const key = detailKey(detail)
+    detailsByKey.set(key, [...(detailsByKey.get(key) ?? []), detail])
+  }
   for (let offset = 0; ; offset += 30) {
     const html = await fetchBundestag(`${LIST_URL}?offset=${offset}&limit=30`).then((r) => r.text())
     const hits = Number(html.match(/data-hits="(\d+)"/)?.[1] ?? 0)
@@ -205,13 +219,40 @@ async function fetchVoteLinks() {
       if (!xlsxUrl) continue
       const pdfUrl = body.match(/href="([^"]+\.pdf)"/)?.[1] ?? null
       const label = text(body.match(/<strong>\s*([\s\S]*?)\s*<\/strong>/)?.[1] ?? '')
-      const date = parseDate(label.match(/^(\d{2}\.\d{2}\.\d{4})/)?.[1] ?? text(body.match(/data-th="Veröffentlichung"[\s\S]*?<p>\s*([\s\S]*?)\s*<\/p>/)?.[1] ?? ''))
+      const publicationDate = parseDate(text(body.match(/data-th="Veröffentlichung"[\s\S]*?<p>\s*([\s\S]*?)\s*<\/p>/)?.[1] ?? ''))
+      const date = publicationDate ?? parseDate(label.match(/^(\d{2}\.\d{2}\.\d{4,5})/)?.[1] ?? '')
       const title = label.replace(/^\d{2}\.\d{2}\.\d{4,5}:\s*/, '').trim()
-      const sourceId = Number(body.match(/abstimmung\?id=(\d+)/)?.[1] ?? 0) || null
+      const matches = date && title ? detailsByKey.get(detailKey({ date, title })) : null
+      const detail = matches?.shift()
+      const sourceId = detail?.sourceId ?? (Number(body.match(/abstimmung\?id=(\d+)/)?.[1] ?? 0) || null)
       const sourceUrl = sourceId ? `https://www.bundestag.de/parlament/plenum/abstimmung/abstimmung?id=${sourceId}` : xlsxUrl
-      if (date && title) out.push({ date, title, pdfUrl, xlsxUrl, sourceUrl, sourceId })
+      if (date && title) out.push({ date, title, description: detail?.description ?? null, initiator: detail?.initiator ?? null, pdfUrl, xlsxUrl, sourceUrl, sourceId })
     }
     if (offset + 30 >= hits) return out
+  }
+}
+
+async function fetchVoteDetails() {
+  const out: DetailItem[] = []
+  for (let offset = 0; ; offset += 10) {
+    const html = await fetchBundestag(`${DETAIL_LIST_URL}?offset=${offset}&limit=10`).then((r) => r.text())
+    const hits = Number(html.match(/data-hits="(\d+)"/)?.[1] ?? 0)
+    for (const slide of html.matchAll(/<div class="col-xs-12 bt-slide">([\s\S]*?)(?=<div class="col-xs-12 bt-slide">|$)/g)) {
+      const body = slide[1]
+      const sourceId = Number(body.match(/canvas-na-(\d+)/)?.[1] ?? 0)
+      const date = parseDate(text(body.match(/<span class="bt-date">\s*([\s\S]*?)\s*<\/span>/)?.[1] ?? ''))
+      const headings = [...body.matchAll(/<h3>\s*([\s\S]*?)\s*<\/h3>/g)]
+      const heading = headings.at(-1)?.[1]?.replace(/<span class="bt-dachzeile">[\s\S]*?<\/span>/, '') ?? ''
+      const title = text(heading)
+      const description = text(body.match(/<div class="bt-teaser-haupttext">\s*([\s\S]*?)\s*<\/div>/)?.[1] ?? '')
+      const initiatorMatch = description.match(/Fraktion(?:en)?\s+(?:der\s+|des\s+)?([^()]+?)(?:[:,(]|$|\s+(?:zu|zum|zur|Entwurf|Drucksache))/i)
+      const initiator = (initiatorMatch ? normalizeFractionLabel(initiatorMatch[1]) : null)
+        ?? (/(?:Antrag|Gesetzentwurf)(?:es)?\s+der\s+Bundesregierung/i.test(description) ? 'Bundesregierung' : null)
+        ?? (/(?:Antrag|Gesetzentwurf)(?:es)?\s+des\s+Bundesrates/i.test(description) ? 'Bundesrat' : null)
+        ?? normalizeFractionLabel(description)
+      if (sourceId && date && title) out.push({ sourceId, date, title, description, initiator })
+    }
+    if (offset + 10 >= hits) return out
   }
 }
 
@@ -335,7 +376,11 @@ function month(name: string) {
 }
 
 function text(html: string) {
-  return html.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim()
+  return html.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/\s+/g, ' ').trim()
+}
+
+function detailKey(item: { date: string; title: string }) {
+  return `${item.date}|${slugify(item.title)}`
 }
 
 async function fetchBundestag(url: string) {

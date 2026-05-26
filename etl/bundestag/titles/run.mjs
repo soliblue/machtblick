@@ -8,6 +8,7 @@ const DB_PATH = fileURLToPath(new URL('../../../db/machtblick.sqlite', import.me
 const args = new Set(process.argv.slice(2))
 const dryRun = args.has('--dry-run')
 const force = args.has('--force')
+const voteFilter = argValue('--vote')
 const sampleLimit = (() => {
   const arg = process.argv.find((a) => a.startsWith('--limit='))
   return arg ? Number(arg.split('=')[1]) : null
@@ -51,8 +52,11 @@ const rows = db.prepare(`
   SELECT v.id, v.title, v.document, v.summary_simplified, v.inverted, v.is_petition_bundle, p.rewritten_title
   FROM votes
   v LEFT JOIN vote_polarity_decisions p ON p.vote_id = v.id
-  WHERE v.procedural = 0 AND v.vote_type != 'hammelsprung' ${whereClean}
-`).all()
+  WHERE v.procedural = 0
+    AND v.vote_type != 'hammelsprung'
+    AND (? IS NULL OR v.id = ?)
+    ${whereClean}
+`).all(voteFilter, voteFilter)
 
 const candidates = rows
 const work = sampleLimit ? candidates.slice(0, sampleLimit) : candidates
@@ -136,3 +140,8 @@ for (const item of outcomes) {
 
 console.log(`done. processed=${work.length} written=${written} direct=${direct} kept_original=${nulled} low_skipped=${lowSkipped} failed=${failed}`)
 db.close()
+
+function argValue(name) {
+  const i = process.argv.indexOf(name)
+  return i >= 0 ? process.argv[i + 1] : null
+}

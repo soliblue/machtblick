@@ -10,6 +10,7 @@ import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
 const root = fileURLToPath(new URL('../../..', import.meta.url))
 const schemaPath = fileURLToPath(new URL('./output-schema-batch.json', import.meta.url))
 const model = process.env.CODEX_MODEL ?? 'gpt-5.2'
+const provider = process.env.TRANSLATION_PROVIDER ?? 'codex'
 const concurrency = Number(argValue('--concurrency') ?? 2)
 const batchSize = Number(argValue('--batch-size') ?? 4)
 const limit = Number(argValue('--limit') ?? 0)
@@ -71,7 +72,7 @@ for (const vote of candidates) {
 
 const selected = limit > 0 ? jobs.slice(0, limit) : jobs
 const batches = chunk(selected, batchSize)
-console.log(`translation jobs: ${selected.length}/${jobs.length} eligible, batches=${batches.length}, batchSize=${batchSize}, db=${dbPath}, model=${model}`)
+console.log(`translation jobs: ${selected.length}/${jobs.length} eligible, batches=${batches.length}, batchSize=${batchSize}, db=${dbPath}, provider=${provider}, model=${model}`)
 if (dryRun) {
   db.close()
   process.exit(0)
@@ -82,7 +83,7 @@ const workers = Array.from({ length: Math.min(concurrency, batches.length) }, as
   while (cursor < batches.length) {
     const batch = batches[cursor]
     cursor++
-    const output = await runCodex(buildPrompt({
+    const output = await runModel(buildPrompt({
       jobs: batch.map((job) => ({
         vote: job.vote,
         party_summaries: job.summaries.map((s) => ({
@@ -181,6 +182,10 @@ function sourceHash(value) {
   return createHash('sha256').update(JSON.stringify(value)).digest('hex')
 }
 
+function runModel(prompt) {
+  return provider === 'claude' ? runClaude(prompt) : runCodex(prompt)
+}
+
 function runCodex(prompt) {
   const dir = mkdtempSync(join(tmpdir(), 'machtblick-translation-'))
   const outPath = join(dir, 'out.json')
@@ -207,6 +212,33 @@ function runCodex(prompt) {
       const text = readFileSync(outPath, 'utf8')
       rmSync(dir, { recursive: true, force: true })
       resolve(JSON.parse(text))
+    })
+    c.stdin.write(prompt)
+    c.stdin.end()
+  })
+}
+
+function runClaude(prompt) {
+  return new Promise((resolve, reject) => {
+    const c = spawn('claude', ['-p', '--model', model, '--output-format', 'json'], { stdio: ['pipe', 'pipe', 'pipe'] })
+    let stdout = ''
+    let stderr = ''
+    c.stdout.on('data', (d) => (stdout += d))
+    c.stderr.on('data', (d) => (stderr += d))
+    c.on('close', (code) => {
+      if (code !== 0) {
+        reject(new Error(`claude exit ${code}: ${stderr}`))
+        return
+      }
+      const env = JSON.parse(stdout)
+      const result = env.result ?? env
+      const text = typeof result === 'string' ? result : JSON.stringify(result)
+      const match = text.match(/\{[\s\S]*\}/)
+      if (!match) {
+        reject(new Error(`no JSON object in claude output: ${text.slice(0, 200)}`))
+        return
+      }
+      resolve(JSON.parse(match[0]))
     })
     c.stdin.write(prompt)
     c.stdin.end()
@@ -316,7 +348,7 @@ function writeBatch(batch, output) {
   const byId = new Map(output.translations.map((t) => [t.vote_id, t]))
   for (const job of batch) {
     const translated = byId.get(job.vote.id)
-    if (translated) writeTranslations(job, translated)
+    if (translated) writeTranslations(job, translated.vote ? translated : { vote_id: translated.vote_id, vote: translated, party_summaries: translated.party_summaries ?? [] })
     else console.warn(`missing vote translation for ${job.vote.id}`)
   }
 }
