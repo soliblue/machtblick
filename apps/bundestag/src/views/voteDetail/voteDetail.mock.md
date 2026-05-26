@@ -53,12 +53,23 @@ The result tab has two small section titles: `Ergebnis` above the donut and `Fra
 ### Reden tab controls
 
 ```
-[ Reden durchsuchen......................................... ]
+[ Debatte im Ueberblick ]
 
-[ Fraktion v ]
+[ KI-generierte Kurzfassungen auf Grundlage der tatsaechlichen ]
+[ Reden von Abgeordneten der jeweiligen Fraktion.             ]
+
+| [logo]                                                >  |
+| Die Fraktion unterstuetzt die Foerderung, betont aber... |
+|----------------------------------------------------------|
+| [logo]                                                >  |
+| Die SPD stellt die Entlastung finanzschwacher...         |
+
+[ Reden zur Abstimmung ]
+
+[ Reden durchsuchen......................................... ]
 ```
 
-The speech search and speech filters use separate rows. Filter pills stay text-first, with party logos only for party values.
+Party summary preview rows open the full summary modal. They do not filter the speech list. The speech section keeps only search above the rows so the tab does not stack summary controls, search, and filters.
 
 ## Tokens
 

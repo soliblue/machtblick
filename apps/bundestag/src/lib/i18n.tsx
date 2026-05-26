@@ -88,6 +88,9 @@ const copy = {
     here: 'hier',
     noSimplifiedSummary: 'Noch keine vereinfachte Beschreibung verfügbar.',
     partySummaryAria: 'Zusammenfassung',
+    partySummaries: 'Debatte im Überblick',
+    partySummaryIntro: 'KI-generierte Kurzfassungen auf Grundlage der tatsächlichen Reden von Abgeordneten der jeweiligen Fraktion.',
+    openPartySummary: 'Zusammenfassung öffnen:',
     partySummaryNotice: 'Aus den Plenarreden mit Codex zusammengefasst. Originalreden stehen im Reden-Tab.',
     stampClose: {
       angenommen: 'Angenommen',
@@ -214,6 +217,9 @@ const copy = {
     here: 'here',
     noSimplifiedSummary: 'No simplified description is available yet.',
     partySummaryAria: 'Summary',
+    partySummaries: 'Debate at a glance',
+    partySummaryIntro: 'AI-generated summaries based on the actual speeches by members of each parliamentary group.',
+    openPartySummary: 'Open summary for',
     partySummaryNotice: 'Summarized from plenary speeches with Codex. Original speeches remain in the speeches tab.',
     stampClose: {
       angenommen: 'Accepted',

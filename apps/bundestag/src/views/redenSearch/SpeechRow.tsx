@@ -27,9 +27,10 @@ type Props = {
   showDate?: boolean
   pictureUrl?: string | null
   choice?: MemberVoteRow['choice'] | null
+  withDivider?: boolean
 }
 
-export function SpeechRow({ speech, query = '', showVoteLink = true, showDate = false, pictureUrl, choice }: Props) {
+export function SpeechRow({ speech, query = '', showVoteLink = true, showDate = false, pictureUrl, choice, withDivider = true }: Props) {
   const terms = tokenize(query)
   const [open, setOpen] = useState(false)
   const locale = useLocale()
@@ -47,7 +48,7 @@ export function SpeechRow({ speech, query = '', showVoteLink = true, showDate = 
           setOpen((v) => !v)
         }
       }}
-      className="cursor-pointer border-t py-m"
+      className={withDivider ? 'cursor-pointer border-t py-m' : 'cursor-pointer pb-m'}
       style={{ borderColor: ROW_BORDER }}
     >
       <div

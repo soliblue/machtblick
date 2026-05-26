@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react'
 import { ChevronLeft, ChevronRight, Search } from 'lucide-react'
-import { FilterPill } from '@/views/votesList/FilterPill'
 import { SpeechRow } from '@/views/redenSearch/SpeechRow'
 import { tokenize } from '@/lib/highlight'
 import { makeSnippet } from '@/lib/snippet'
@@ -8,7 +7,7 @@ import { loadSpeechTexts, speechTextsLoaded } from '@/lib/speechesStatic'
 import { useQuery } from '@tanstack/react-query'
 import type { MemberVoteRow } from '@/server/members'
 import type { SpeechSummary } from '@/server/speeches'
-import { PartySummaryLogoRow } from './PartySummaryLogoRow'
+import { PartySummaryPreviewList } from './PartySummaryPreviewList'
 import type { PartySummary } from './PartySummaryModal'
 import { useCopy, useLocale } from '@/lib/i18n'
 
@@ -20,7 +19,6 @@ const PAGE_SIZE = 5
 
 export function DebateList({ speeches, source, ballotByMember, partySummaries }: Props) {
   const [query, setQuery] = useState('')
-  const [party, setParty] = useState<string | null>(null)
   const [page, setPage] = useState(0)
   const locale = useLocale()
   const t = useCopy()
@@ -32,29 +30,24 @@ export function DebateList({ speeches, source, ballotByMember, partySummaries }:
     staleTime: Infinity,
   })
   const textsLoading = terms.length > 0 && !speechTextsLoaded(locale)
-  const parties = useMemo(
-    () => Array.from(new Set(speeches.map((s) => s.party).filter((p): p is string => !!p))).sort(),
-    [speeches],
-  )
   const filtered = useMemo(() => {
     return speeches.filter((s) => {
-      if (party && s.party !== party) return false
       if (!terms.length) return true
       const body = texts.data?.[s.id] ?? s.excerpt
       const hay = `${s.speakerName} ${body}`.toLowerCase()
       return terms.every((t) => hay.includes(t))
     })
-  }, [speeches, terms, party, texts.data])
+  }, [speeches, terms, texts.data])
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
   const safePage = Math.min(page, pageCount - 1)
   const slice = filtered.slice(safePage * PAGE_SIZE, (safePage + 1) * PAGE_SIZE)
   const reset = <T,>(setter: (v: T) => void) => (v: T) => { setter(v); setPage(0) }
   return (
     <section className="mb-l">
+      <PartySummaryPreviewList summaries={partySummaries} />
       <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>
         {source === 'related' ? t.relatedSpeechesForVote : t.speechesForVote}
       </div>
-      <PartySummaryLogoRow summaries={partySummaries} />
       <div className="mb-m relative min-w-[12rem]">
         <Search size={14} className="absolute left-s top-1/2 -translate-y-1/2 opacity-l" />
         <input
@@ -67,16 +60,13 @@ export function DebateList({ speeches, source, ballotByMember, partySummaries }:
         />
         {textsLoading && <div className="mt-xs text-s opacity-l">{t.searchIndexLoading}</div>}
       </div>
-      <div className="mb-m flex flex-wrap items-center gap-s">
-        <FilterPill label={t.parliamentaryGroup} options={parties} value={party} onChange={reset(setParty)} />
-      </div>
       {textsLoading ? (
-        <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>{t.searchPreparing}</div>
+        <div className="py-m text-m opacity-l">{t.searchPreparing}</div>
       ) : filtered.length === 0 ? (
-        <div className="border-t py-m text-m opacity-l" style={{ borderColor: ROW_BORDER }}>{t.noSpeechesFound}</div>
+        <div className="py-m text-m opacity-l">{t.noSpeechesFound}</div>
       ) : (
         <div className="flex flex-col">
-          {slice.map((s) => {
+          {slice.map((s, index) => {
             const body = texts.data?.[s.id] ?? s.excerpt
             const snippet = terms.length ? makeSnippet(body, terms) : null
             const ballot = s.speakerMemberId ? ballotByMember.get(s.speakerMemberId) : undefined
@@ -89,6 +79,7 @@ export function DebateList({ speeches, source, ballotByMember, partySummaries }:
                 showDate={source === 'related'}
                 pictureUrl={ballot?.pictureUrl ?? null}
                 choice={ballot?.choice ?? null}
+                withDivider={index > 0}
               />
             )
           })}
