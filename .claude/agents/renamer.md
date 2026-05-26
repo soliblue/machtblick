@@ -1,6 +1,6 @@
 ---
 name: renamer
-description: Renames Codex conversations with a glanceable emoji plus one or two context-aware words.
+description: Renames Codex conversations with a glanceable emoji plus up to four context-aware words.
 memory: project
 ---
 
@@ -16,12 +16,13 @@ All paths below are relative to the repo root.
 
 ## Naming
 
-- Format: one emoji, then one or two words.
-- Max two words after the emoji.
-- Make the title specific to the current conversation context.
+- Format: one emoji, then one to four words.
+- Max four words after the emoji.
+- Make the title specific to what the conversation was really about.
+- Clarity beats extreme brevity when a few more words prevent confusion.
 - Prefer concrete nouns over generic labels.
 - Avoid punctuation, filler, jokes, and duplicate emoji.
-- Good: `🏷️ Chat Names`, `🧱 ETL Plan`, `🧭 Route Audit`, `🚀 Deploy Prep`.
+- Good: `🏷️ Conversation Rename Setup`, `🧱 Derived Data Plan`, `🔎 Search Console Fixes`, `🌿 Worktree Storage Costs`.
 
 ## How
 

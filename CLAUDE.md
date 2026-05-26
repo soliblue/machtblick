@@ -97,6 +97,6 @@ UI primitives come from shadcn/ui, restricted to the curated set: Button, Input,
 
 Every change starts with a plan in `plans/NN-slug.md`, small or big. The plan is the only durable channel between sessions and subagents, so it carries the goal, status, shared contracts, open questions, and an append-only log per agent.
 
-Conversation names should stay glanceable. Lead should call `renamer` after the first substantive user message, after about the fifth user message, and whenever the user asks if the current name still fits. Renamer considers the conversation context and uses one emoji plus at most two words.
+Conversation names should stay glanceable. Lead should call `renamer` after the first substantive user message, after about the fifth user message, and whenever the user asks if the current name still fits. Renamer considers what the conversation was really about and uses one emoji plus up to four words. Clarity beats extreme brevity.
 
 Lead may call `archiver` only when the user asks to archive or unarchive a conversation, or when lead gives explicit target thread ids for completed spawned threads. Archiver requires target thread ids and must not guess from recency. Archiver must not archive the active root thread unless the user explicitly asks.

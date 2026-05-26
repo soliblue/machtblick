@@ -17,8 +17,8 @@ Completed.
 
 ## Shared Contracts
 
-- Conversation names use one emoji plus at most two words.
-- Names describe the current conversation context, not only the first prompt.
+- Conversation names use one emoji plus up to four words.
+- Names make clear what the conversation was really about, not only the first prompt.
 - Lead should consider renaming after the first substantive user message, after about the fifth user message, and whenever the user asks if the title still fits.
 - Renamer needs the target thread id from lead and must not rename its own spawned thread unless explicitly asked.
 
@@ -33,3 +33,4 @@ Completed.
 - Added renamer guidance to `AGENTS.md` and `CLAUDE.md`.
 - Ran `npm run agents:sync`, which generated `.codex/agents/renamer.toml`.
 - Verified generated agent presence and checked the changed guidance for em dashes.
+- Updated the naming contract from two words to up to four words so titles can stay recognizable.
