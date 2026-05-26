@@ -36,3 +36,13 @@ Imported and enriched where upstream data is available. Speech-based enrichment 
 - Linked vote `1004` to Antrag `21/2553`, generated German summaries from the Antrag PDF, generated English vote and Antrag translations, and validated public vote data.
 - Confirmed Bundestag speech XML fetch stops at session `21081` with no download, so vote `1004` currently has no speech links, party position summaries, speech translations, or agenda item.
 - User requested commit, push, and deploy after confirming the missing speech XML explanation.
+
+### Visibility
+
+- 2026-05-26 predeploy check for commit `362fbe33a3930a2e5de975155313c88a50a8a972` used the fresh build in `apps/bundestag/dist/client`; no build was run.
+- PASS: German and English vote `1004` detail HTML exists at `/votes/2026-05-22-1004-ablehnung-eines-antrags-zur-arzneimittelversorgung/` and `/en/votes/2026-05-22-1004-ablehnung-eines-antrags-zur-arzneimittelversorgung/`.
+- PASS: both detail pages have specific titles and descriptions, `index, follow` robots with large image preview, absolute canonicals, reciprocal `de`, `en`, and `x-default` hreflang alternates, Open Graph and X card metadata, parseable JSON-LD, and a real JSON alternate at `/votes/2026-05-22-1004-ablehnung-eines-antrags-zur-arzneimittelversorgung.json`.
+- PASS: `sitemap.xml` lists both vote `1004` canonical URLs, the local generated pages exist, canonicals self-match, there is no sitemap `lastmod`, no query URL, and no non-trailing `/votes` parent route.
+- PASS: `robots.txt`, `_headers`, `llms.txt`, `.well-known/api-catalog`, `site.webmanifest`, favicon files, and `og-image.png` are present; API catalog and manifest parse as JSON, listed endpoints and icons exist, and `og-image.png` is `1200x630`.
+- PASS: no stale production `noindex` found on generated HTML except the intended `404.html`.
+- Blocking visibility issues: none.
