@@ -110,10 +110,30 @@ function isVerordnung(title) {
   return title.startsWith('Verordnung:')
 }
 
+function isUnterrichtung(title) {
+  return title.startsWith('Unterrichtung:')
+}
+
+function pickLinkedAntrag(voteId, db) {
+  const row = db.prepare(`
+    SELECT a.drucksache, a.drucksache_pdf_url
+    FROM vote_antraege va
+    INNER JOIN antraege a ON a.id = va.antrag_id
+    WHERE va.vote_id = ?
+      AND a.drucksache IS NOT NULL
+      AND a.drucksache_pdf_url IS NOT NULL
+    ORDER BY CASE a.type WHEN 'antrag' THEN 0 WHEN 'gesetzentwurf' THEN 1 WHEN 'entschließungsantrag' THEN 2 WHEN 'änderungsantrag' THEN 3 ELSE 4 END, a.drucksache
+    LIMIT 1
+  `).get(voteId)
+  return row ? { drucksacheId: row.drucksache, pdfUrl: row.drucksache_pdf_url, kind: 'antrag' } : null
+}
+
 export async function pickAntragWithFallback(voteId, db) {
   const rows = db.prepare(`SELECT label, title, url FROM vote_documents WHERE vote_id = ?`).all(voteId)
   const primary = pickAntragFromRows(rows)
   if (primary) return primary
+  const linked = pickLinkedAntrag(voteId, db)
+  if (linked) return linked
   const beschluss = findBeschluss(rows)
   if (beschluss) {
     const btitle = beschluss.title || ''
@@ -136,6 +156,10 @@ export async function pickAntragWithFallback(voteId, db) {
   const verordnung = rows.find((r) => isVerordnung(r.title || ''))
   if (verordnung && verordnung.url) {
     return { drucksacheId: verordnung.label, pdfUrl: verordnung.url, kind: 'verordnung' }
+  }
+  const unterrichtung = rows.find((r) => isUnterrichtung(r.title || ''))
+  if (unterrichtung && unterrichtung.url) {
+    return { drucksacheId: unterrichtung.label, pdfUrl: unterrichtung.url, kind: 'unterrichtung' }
   }
   return null
 }

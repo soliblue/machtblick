@@ -17,7 +17,7 @@ const MEMBER_ALIASES = new Map([
 ])
 let enodiaCookie = ''
 
-type LinkItem = { date: string; title: string; pdfUrl: string | null; xlsxUrl: string; sourceId: number | null }
+type LinkItem = { date: string; title: string; pdfUrl: string | null; xlsxUrl: string; sourceUrl: string; sourceId: number | null }
 type VoteRow = { party: string; last: string; first: string; yes: number; no: number; abstain: number; invalid: number; absent: number }
 type Mandate = {
   id: number
@@ -121,7 +121,7 @@ async function importVotes() {
         ON CONFLICT(id) DO UPDATE SET
           bundestag_id = coalesce(votes.bundestag_id, excluded.bundestag_id),
           title = excluded.title,
-          clean_title = excluded.clean_title,
+          clean_title = coalesce(votes.clean_title, excluded.clean_title),
           summary = excluded.summary,
           document = excluded.document,
           result = excluded.result,
@@ -138,7 +138,7 @@ async function importVotes() {
         link.sourceId,
         link.date,
         link.title,
-        link.title,
+        null,
         `${counts.yes} Ja, ${counts.no} Nein, ${counts.abstain} Enthaltungen.`,
         link.title,
         counts.yes > counts.no ? 'angenommen' : 'abgelehnt',
@@ -147,7 +147,7 @@ async function importVotes() {
         counts.no,
         counts.abstain,
         counts.absent,
-        link.xlsxUrl,
+        link.sourceUrl,
         new Date().toISOString(),
       )
       db.prepare('DELETE FROM vote_documents WHERE vote_id = ?').run(voteId)
@@ -208,7 +208,8 @@ async function fetchVoteLinks() {
       const date = parseDate(label.match(/^(\d{2}\.\d{2}\.\d{4})/)?.[1] ?? text(body.match(/data-th="Veröffentlichung"[\s\S]*?<p>\s*([\s\S]*?)\s*<\/p>/)?.[1] ?? ''))
       const title = label.replace(/^\d{2}\.\d{2}\.\d{4,5}:\s*/, '').trim()
       const sourceId = Number(body.match(/abstimmung\?id=(\d+)/)?.[1] ?? 0) || null
-      if (date && title) out.push({ date, title, pdfUrl, xlsxUrl, sourceId })
+      const sourceUrl = sourceId ? `https://www.bundestag.de/parlament/plenum/abstimmung/abstimmung?id=${sourceId}` : xlsxUrl
+      if (date && title) out.push({ date, title, pdfUrl, xlsxUrl, sourceUrl, sourceId })
     }
     if (offset + 30 >= hits) return out
   }

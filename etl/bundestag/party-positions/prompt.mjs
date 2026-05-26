@@ -16,7 +16,7 @@ export function buildPrompt({ vote, speeches }) {
     abstimmung: {
       id: vote.vote_id,
       datum: vote.date,
-      titel: vote.clean_title ?? vote.title,
+      titel: vote.clean_title,
       offizieller_titel: vote.title,
       kurze_antragszusammenfassung: vote.summary_simplified ?? vote.summary ?? null,
       ergebnis: vote.result,
@@ -24,12 +24,12 @@ export function buildPrompt({ vote, speeches }) {
     partei: {
       name: vote.party,
       abstimmungsverhalten: POSITION_LABEL[vote.position] ?? vote.position,
-      stimmen: {
+      stimmen: vote.members == null ? null : {
         ja: vote.yes ?? 0,
         nein: vote.no ?? 0,
         enthalten: vote.abstain ?? 0,
         nicht_abgegeben: vote.absent ?? 0,
-        mitglieder: vote.members ?? 0,
+        mitglieder: vote.members,
       },
     },
     reden: speeches.map((s) => ({

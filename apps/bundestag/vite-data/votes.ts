@@ -1,5 +1,6 @@
 import type Database from 'better-sqlite3'
 import { compareVotesNewest } from '../src/lib/voteOrdering'
+import { requireVoteCleanTitle } from '../src/lib/voteTitles'
 
 type VoteRow = {
   id: string
@@ -117,9 +118,10 @@ export function leanVotes(db: Database.Database) {
     if (seatsByParty.size >= 6) break
   }
   return rows.map((v) => {
+    const titled = requireVoteCleanTitle({ id: v.id, title: v.title, cleanTitle: v.clean_title })
     if (v.vote_type === 'namentlich' && v.yes != null) {
       return {
-        id: v.id, title: v.title, cleanTitle: v.clean_title, date: v.date,
+        id: v.id, title: titled.title, cleanTitle: titled.cleanTitle, date: v.date,
         result: v.result, initiator: v.initiator,
         yes: v.yes, no: v.no!, abstain: v.abstain!, absent: v.absent!,
       }
@@ -133,7 +135,7 @@ export function leanVotes(db: Database.Database) {
       else if (s.position === 'abstain') abstain += seats
     }
     return {
-      id: v.id, title: v.title, cleanTitle: v.clean_title, date: v.date,
+      id: v.id, title: titled.title, cleanTitle: titled.cleanTitle, date: v.date,
       result: v.result, initiator: v.initiator,
       yes, no, abstain, absent: 0,
     }
@@ -164,7 +166,7 @@ export function fullVote(db: Database.Database, id: string) {
     }
   })
   const vote = voteRow.vote_type === 'namentlich'
-    ? {
+    ? requireVoteCleanTitle({
         id: voteRow.id, bundestagId: null as number | null, voteType: voteRow.vote_type, date: voteRow.date,
         agendaItem: voteRow.agenda_item, title: voteRow.title, cleanTitle: voteRow.clean_title, topic: voteRow.topic,
         subject: voteRow.subject, summary: voteRow.summary, summarySimplified: voteRow.summary_simplified,
@@ -173,12 +175,12 @@ export function fullVote(db: Database.Database, id: string) {
         totalMembers: voteRow.total_members ?? 0, yes: voteRow.yes ?? 0, no: voteRow.no ?? 0,
         abstain: voteRow.abstain ?? 0, absent: voteRow.absent ?? 0, sourceUrl: voteRow.source_url,
         contextJson: voteRow.context_json, procedureJson: voteRow.procedure_json, fetchedAt: '',
-      }
+      })
     : (() => {
         const yes = partySummaries.reduce((a, s) => a + s.yes, 0)
         const no = partySummaries.reduce((a, s) => a + s.no, 0)
         const abstain = partySummaries.reduce((a, s) => a + s.abstain, 0)
-        return {
+        return requireVoteCleanTitle({
           id: voteRow.id, bundestagId: null as number | null, voteType: voteRow.vote_type, date: voteRow.date,
           agendaItem: voteRow.agenda_item, title: voteRow.title, cleanTitle: voteRow.clean_title, topic: voteRow.topic,
           subject: voteRow.subject, summary: voteRow.summary, summarySimplified: voteRow.summary_simplified,
@@ -186,7 +188,7 @@ export function fullVote(db: Database.Database, id: string) {
           result: voteRow.result, procedural: false, inverted: !!voteRow.inverted, isPetitionBundle: !!voteRow.is_petition_bundle,
           totalMembers: yes + no + abstain, yes, no, abstain, absent: 0, sourceUrl: voteRow.source_url,
           contextJson: voteRow.context_json, procedureJson: voteRow.procedure_json, fetchedAt: '',
-        }
+        })
       })()
   const rawVmRows = db.prepare(`
     SELECT vm.member_id, vm.choice, m.name, m.picture_url, vm.state

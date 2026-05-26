@@ -12,6 +12,8 @@ const PATTERNS = [
   'Wahl %',
   'Wahl der%',
   'Wahl von%',
+  'Wahlvorschlag%',
+  'Wahlvorschläge%',
   'Wahl Stiftungsrat%',
   'Wahl Kuratorium%',
   'Bestellung %',
@@ -22,6 +24,9 @@ const PATTERNS = [
   'Genehmigung der Durchführung eines Strafverfahrens%',
   'Aufhebung der Immunität%',
   'Immunität %',
+  'Verfahrensbeteiligung BVerfG%',
+  'Beschlussempfehlung zum Streitverfahren vor dem BVerfG%',
+  'Normenkontrolle zum Bundeshaushalt%',
 ]
 
 const placeholders = PATTERNS.map(() => 'title LIKE ?').join(' OR ')

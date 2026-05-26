@@ -6,6 +6,7 @@ import { desc, eq, and, inArray } from 'drizzle-orm'
 import { SLUG_TO_PARTY, hasPartyLine } from '@/lib/parties'
 import { getCurrentPartyMap } from './memberParty'
 import { normalizeLocale, type Locale } from '@/lib/locale'
+import { requireVoteCleanTitle } from '@/lib/voteTitles'
 
 const CURRENT_TERM = 21
 
@@ -66,7 +67,7 @@ export type PartyVoteRow = {
   voteId: string
   date: string
   title: string
-  cleanTitle: string | null
+  cleanTitle: string
   result: 'angenommen' | 'abgelehnt'
   partyVote: PartyVote
   cohesion: number | null
@@ -93,7 +94,7 @@ export type PartyProposal = {
   voteId: string
   date: string
   title: string
-  cleanTitle: string | null
+  cleanTitle: string
   result: 'angenommen' | 'abgelehnt'
 }
 
@@ -174,6 +175,7 @@ export const getParty = createServerFn({ method: 'GET' })
     const summaryTranslations = translationMap(summaries.map((s) => s.voteId), locale)
     const voteRows: PartyVoteRow[] = summaries.filter((s) => s.voteType === 'namentlich').map((s) => {
       const t = summaryTranslations.get(s.voteId)
+      const titled = requireVoteCleanTitle({ id: s.voteId, title: s.title, cleanTitle: t?.cleanTitle ?? s.cleanTitle })
       const top = Math.max(s.yes, s.no, s.abstain)
       const partyVote: PartyVote =
         s.yes === top && s.yes > s.no && s.yes > s.abstain ? 'yes'
@@ -183,8 +185,8 @@ export const getParty = createServerFn({ method: 'GET' })
       return {
         voteId: s.voteId,
         date: s.date,
-        title: t?.title ?? s.title,
-        cleanTitle: t?.cleanTitle ?? s.cleanTitle,
+        title: titled.title,
+        cleanTitle: titled.cleanTitle,
         result: s.result,
         partyVote,
         cohesion: hasPartyLine(party) ? cohesion(s) : null,
@@ -267,9 +269,10 @@ export const getParty = createServerFn({ method: 'GET' })
     for (const v of allVotes) {
       if (v.initiator !== party) continue
       const t = proposalTranslations.get(v.id)
+      const titled = requireVoteCleanTitle({ id: v.id, title: v.title, cleanTitle: t?.cleanTitle ?? v.cleanTitle })
       proposalsTotal += 1
       if (v.result === 'angenommen') proposalsAccepted += 1
-      proposals.push({ voteId: v.id, date: v.date, title: t?.title ?? v.title, cleanTitle: t?.cleanTitle ?? v.cleanTitle, result: v.result })
+      proposals.push({ voteId: v.id, date: v.date, title: titled.title, cleanTitle: titled.cleanTitle, result: v.result })
     }
     proposals.sort((a, b) => b.date.localeCompare(a.date))
     const donationNames = DONATION_PARTY_NAMES[party] ?? [party]

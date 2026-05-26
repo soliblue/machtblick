@@ -21,7 +21,7 @@ export function AntragVoteResult({ vote }: Props) {
   const toggle = (choice: VoteChoice) => setFilter((current) => (current === choice ? null : choice))
   return (
     <section className="border-t py-l" style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}>
-      <a href={href} className="text-l font-semibold underline-offset-4 hover:underline">{vote.cleanTitle ?? vote.title}</a>
+      <a href={href} className="text-l font-semibold underline-offset-4 hover:underline">{vote.cleanTitle}</a>
       <div className="mt-s flex flex-wrap items-center gap-s text-s opacity-l">
         <span>{formatDate(vote.date)}</span>
         <span>{vote.voteType === 'namentlich' ? t.namedVote : vote.voteType === 'handzeichen' ? t.showOfHands : t.division}</span>

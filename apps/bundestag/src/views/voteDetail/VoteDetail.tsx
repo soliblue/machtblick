@@ -57,7 +57,7 @@ export function VoteDetail({ data, activeTab, onTabChange }: Props) {
             : 'Diese Abstimmung bündelt mehrere Petitionen in einer Sammelübersicht. Das Plenum stimmt über alle enthaltenen Empfehlungen des Petitionsausschusses gemeinsam ab. Ein "angenommen" bedeutet, dass die Empfehlungen so beschlossen wurden, die einzelnen Petitionen können dabei sehr unterschiedlich behandelt worden sein (z.B. an die Bundesregierung weitergeleitet, als Material überwiesen, oder abschließend behandelt).'}
         </div>
       )}
-      <h1 className="text-xxl font-semibold">{vote.cleanTitle ?? vote.title}</h1>
+      <h1 className="text-xxl font-semibold">{vote.cleanTitle}</h1>
       {vote.cleanTitle && vote.cleanTitle !== vote.title && (
         <div className="mt-s text-s opacity-l">{t.officialTitle}: {vote.title}</div>
       )}

@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
-export const PROMPT_VERSION = 5
+export const PROMPT_VERSION = 6
 
 const promptPath = (name) => fileURLToPath(new URL(`../../../prompts/etl/bundestag/${name}.md`, import.meta.url))
 const RULES = readFileSync(promptPath('descriptions-rules'), 'utf8').trimEnd()
@@ -9,12 +9,14 @@ const ANTRAG_TEMPLATE = readFileSync(promptPath('descriptions-antrag'), 'utf8').
 const PETITIONEN_TEMPLATE = readFileSync(promptPath('descriptions-petitionen'), 'utf8').trimEnd()
 const WAHLEINSPRUCH_TEMPLATE = readFileSync(promptPath('descriptions-wahleinspruch'), 'utf8').trimEnd()
 const VERORDNUNG_TEMPLATE = readFileSync(promptPath('descriptions-verordnung'), 'utf8').trimEnd()
+const UNTERRICHTUNG_TEMPLATE = readFileSync(promptPath('descriptions-unterrichtung'), 'utf8').trimEnd()
 
 const TEMPLATES = {
   antrag: ANTRAG_TEMPLATE,
   petitionen: PETITIONEN_TEMPLATE,
   wahleinspruch: WAHLEINSPRUCH_TEMPLATE,
   verordnung: VERORDNUNG_TEMPLATE,
+  unterrichtung: UNTERRICHTUNG_TEMPLATE,
 }
 
 export function buildPrompt(title, text, kind = 'antrag') {

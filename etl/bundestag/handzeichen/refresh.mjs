@@ -38,6 +38,9 @@ await run('node', [join(HERE, '..', 'votes', 'initiator', 'run.mjs')])
 console.log('→ self-no escalation (initiator voted NO → re-check polarity via LLM)')
 await run('node', [join(HERE, '..', 'polarity', 'self-no-escalate.mjs')])
 
+console.log('→ title provenance repair')
+await run('npx', ['tsx', join(HERE, '..', '..', '..', 'db', 'normalize-vote-title-provenance.ts')])
+
 console.log('→ self-no audit (must be clean)')
 await run('node', [join(HERE, '..', 'votes', 'initiator', 'audit-self-no.mjs')])
 
@@ -46,5 +49,17 @@ await run('node', [join(HERE, '..', 'votes', 'initiator', 'audit-suspicious-init
 
 console.log('→ descriptions (Antrag → simplified)')
 await run('node', [join(HERE, '..', 'descriptions', 'run.mjs')])
+
+console.log('→ clean titles')
+await run('node', [join(HERE, '..', 'titles', 'run.mjs')])
+
+console.log('→ clean title fallbacks')
+await run('npx', ['tsx', join(HERE, '..', '..', '..', 'db', 'normalize-vote-title-provenance.ts'), '--fill-clean-title-fallbacks'])
+
+console.log('→ party positions (handzeichen)')
+await run('node', [join(HERE, '..', 'party-positions', 'run.mjs'), '--vote-type', 'handzeichen'])
+
+console.log('→ public vote validation')
+await run('npx', ['tsx', join(HERE, '..', '..', '..', 'db', 'validate-public-votes.ts')])
 
 console.log('✓ refresh complete')

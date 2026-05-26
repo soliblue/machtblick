@@ -45,9 +45,9 @@ export function applyInversion(db, row, decision) {
 
   db.prepare(`
     UPDATE votes
-    SET title = ?, yes = ?, no = ?, result = ?, inverted = 1
+    SET yes = ?, no = ?, result = ?, inverted = 1
     WHERE id = ?
-  `).run(newTitle, newYes, newNo, computedResult, row.id)
+  `).run(newYes, newNo, computedResult, row.id)
 
   db.prepare(`
     INSERT INTO vote_polarity_decisions (vote_id, inverted, source, confidence, reason, rewritten_title, original_title, decided_at)

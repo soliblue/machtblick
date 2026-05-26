@@ -11,7 +11,7 @@ type Props = { vote: VoteListItem }
 
 export function VoteRow({ vote }: Props) {
   const stamps = deriveStamps(vote)
-  const heading = vote.cleanTitle ?? vote.title
+  const heading = vote.cleanTitle
   const locale = useLocale()
   const t = useCopy()
   const typeLabels: Record<VoteListItem['voteType'], string> = {

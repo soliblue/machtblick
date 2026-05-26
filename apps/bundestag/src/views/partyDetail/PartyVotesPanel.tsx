@@ -54,7 +54,7 @@ export function PartyVotesPanel({ data, result, onResultChange, partyVote, onPar
             style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
           >
             <div className="flex min-w-0 flex-col">
-              <span style={{ overflowWrap: 'anywhere' }}>{v.cleanTitle ?? v.title}</span>
+              <span style={{ overflowWrap: 'anywhere' }}>{v.cleanTitle}</span>
               <span className="text-s opacity-l">{formatDate(v.date)}</span>
             </div>
             <VoteChip vote={v.partyVote} label={voteLabels[v.partyVote]} />

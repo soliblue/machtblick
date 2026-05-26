@@ -20,6 +20,7 @@ import { getCurrentPartyMap, loadAffiliationsByMember, partyAt } from './memberP
 import { hasPartyLine } from '../lib/parties'
 import type { SpeechResult } from './speeches'
 import { normalizeLocale, type Locale } from '../lib/locale'
+import { requireVoteCleanTitle, requireVoteTitleText } from '../lib/voteTitles'
 
 export type MemberSex = 'm' | 'f' | 'd'
 export type MandateType = 'direkt' | 'liste'
@@ -120,7 +121,7 @@ export type MemberVoteRow = {
   voteId: string
   date: string
   title: string
-  cleanTitle: string | null
+  cleanTitle: string
   result: 'angenommen' | 'abgelehnt'
   choice: 'ja' | 'nein' | 'enthalten' | 'nicht_abgegeben'
   party: string
@@ -157,7 +158,7 @@ export type MemberInitiativeVote = {
   voteId: string
   date: string
   title: string
-  cleanTitle: string | null
+  cleanTitle: string
   result: 'angenommen' | 'abgelehnt'
 }
 
@@ -251,6 +252,7 @@ export const getMember = createServerFn({ method: 'GET' })
     let defections = 0
     const history: MemberVoteRow[] = vmRows.map((r) => {
       const t = historyTranslations.get(r.voteId)
+      const titled = requireVoteCleanTitle({ id: r.voteId, title: r.title, cleanTitle: t?.cleanTitle ?? r.cleanTitle })
       const party = partyAt(affList, r.date)
       const maj = majByVoteParty.get(`${r.voteId} ${party}`) ?? ''
       const eligible = hasPartyLine(party)
@@ -264,8 +266,8 @@ export const getMember = createServerFn({ method: 'GET' })
       return {
         voteId: r.voteId,
         date: r.date,
-        title: t?.title ?? r.title,
-        cleanTitle: t?.cleanTitle ?? r.cleanTitle,
+        title: titled.title,
+        cleanTitle: titled.cleanTitle,
         result: r.result,
         choice: r.choice,
         party,
@@ -288,12 +290,12 @@ export const getMember = createServerFn({ method: 'GET' })
              COALESCE(sdg.title, pai.title) AS agenda_title,
              sdgs.group_id AS debate_group_id,
              sdgs.contribution_type AS contribution_type,
-             lv.vote_id AS vote_id,
+             v.id AS vote_id,
              v.title AS vote_title,
              v.clean_title AS vote_clean_title
       FROM speeches s
       LEFT JOIN linked_votes lv ON lv.speech_id = s.id AND lv.rn = 1
-      LEFT JOIN votes v ON v.id = lv.vote_id
+      LEFT JOIN votes v ON v.id = lv.vote_id AND v.term_id = 21 AND v.procedural = 0 AND v.vote_type != 'hammelsprung'
       LEFT JOIN speech_debate_group_speeches sdgs ON sdgs.speech_id = s.id
       LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
       LEFT JOIN plenary_agenda_items pai ON pai.session_id = s.session_id AND pai.date = s.date AND pai.agenda_item = s.agenda_item
@@ -319,7 +321,7 @@ export const getMember = createServerFn({ method: 'GET' })
         debateGroupId: row.debate_group_id,
         contributionType: row.contribution_type,
         voteId: row.vote_id,
-        voteTitle: t?.cleanTitle ?? t?.title ?? row.vote_clean_title ?? row.vote_title,
+        voteTitle: requireVoteTitleText(row.vote_id, t?.cleanTitle ?? row.vote_clean_title),
         snippet: null,
       }
     })
@@ -391,11 +393,12 @@ export const getMember = createServerFn({ method: 'GET' })
     const initiativeVotesById = new Map<number, MemberInitiativeVote[]>()
     for (const r of initiativeVoteRows) {
       const list = initiativeVotesById.get(r.antragId) ?? []
+      const titled = requireVoteCleanTitle({ id: r.voteId, title: r.title, cleanTitle: r.cleanTitle })
       list.push({
         voteId: r.voteId,
         date: r.date,
-        title: r.title,
-        cleanTitle: r.cleanTitle,
+        title: titled.title,
+        cleanTitle: titled.cleanTitle,
         result: r.result,
       })
       initiativeVotesById.set(r.antragId, list)

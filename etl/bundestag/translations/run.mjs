@@ -14,6 +14,9 @@ const concurrency = Number(argValue('--concurrency') ?? 2)
 const batchSize = Number(argValue('--batch-size') ?? 4)
 const limit = Number(argValue('--limit') ?? 0)
 const voteFilter = argValue('--vote')
+const termFilter = Number(argValue('--term') ?? 0)
+const publicMissingOnly = process.argv.includes('--public-missing-only')
+const dryRun = process.argv.includes('--dry-run')
 const force = process.argv.includes('--force')
 const dbPath = process.env.MACHTBLICK_DB ?? findDbPath()
 const db = new Database(dbPath)
@@ -26,14 +29,15 @@ const candidates = db.prepare(`
   WHERE procedural = 0
     AND vote_type != 'hammelsprung'
     AND (? IS NULL OR id = ?)
+    AND (? = 0 OR term_id = ?)
   ORDER BY date DESC, bundestag_id DESC
-`).all(voteFilter ?? null, voteFilter ?? null)
+`).all(voteFilter ?? null, voteFilter ?? null, termFilter, termFilter)
 
 const existingVotes = new Map(
-  db.prepare('SELECT vote_id, source_hash FROM vote_translations WHERE locale = ?').all('en').map((r) => [r.vote_id, r.source_hash]),
+  db.prepare('SELECT vote_id, clean_title, summary, summary_simplified, summary_detail, source_hash FROM vote_translations WHERE locale = ?').all('en').map((r) => [r.vote_id, r]),
 )
 const existingSummaries = new Map(
-  db.prepare('SELECT vote_id, party, source_hash FROM vote_party_summary_translations WHERE locale = ?').all('en').map((r) => [`${r.vote_id}\u0000${r.party}`, r.source_hash]),
+  db.prepare('SELECT vote_id, party, position_summary, key_points, dissent_note, source_hash FROM vote_party_summary_translations WHERE locale = ?').all('en').map((r) => [`${r.vote_id}\u0000${r.party}`, r]),
 )
 
 const jobs = []
@@ -47,14 +51,31 @@ for (const vote of candidates) {
   `).all(vote.id)
   const voteHash = sourceHash(vote)
   const summaryHashes = summaries.map((s) => ({ party: s.party, hash: sourceHash(s) }))
-  const staleVote = force || existingVotes.get(vote.id) !== voteHash
-  const staleSummary = summaryHashes.some((s) => force || existingSummaries.get(`${vote.id}\u0000${s.party}`) !== s.hash)
+  const existingVote = existingVotes.get(vote.id)
+  const missingVoteField = !existingVote
+    || (vote.clean_title && !existingVote.clean_title)
+    || (vote.summary && !existingVote.summary)
+    || (vote.summary_simplified && !existingVote.summary_simplified)
+    || (vote.summary_detail && !existingVote.summary_detail)
+  const missingSummaryField = summaries.some((s) => {
+    const existing = existingSummaries.get(`${s.vote_id}\u0000${s.party}`)
+    return !existing
+      || (s.position_summary && !existing.position_summary)
+      || (s.key_points && !existing.key_points)
+      || (s.dissent_note && !existing.dissent_note)
+  })
+  const staleVote = publicMissingOnly ? missingVoteField : force || existingVote?.source_hash !== voteHash
+  const staleSummary = publicMissingOnly ? missingSummaryField : summaryHashes.some((s) => force || existingSummaries.get(`${vote.id}\u0000${s.party}`)?.source_hash !== s.hash)
   if (staleVote || staleSummary) jobs.push({ vote, voteHash, summaries, summaryHashes })
 }
 
 const selected = limit > 0 ? jobs.slice(0, limit) : jobs
 const batches = chunk(selected, batchSize)
 console.log(`translation jobs: ${selected.length}/${jobs.length} eligible, batches=${batches.length}, batchSize=${batchSize}, db=${dbPath}, model=${model}`)
+if (dryRun) {
+  db.close()
+  process.exit(0)
+}
 
 let cursor = 0
 const workers = Array.from({ length: Math.min(concurrency, batches.length) }, async () => {

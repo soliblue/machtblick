@@ -1,4 +1,5 @@
 import type Database from 'better-sqlite3'
+import { requireVoteCleanTitle } from '../src/lib/voteTitles'
 
 type AntragRow = {
   id: number
@@ -92,13 +93,16 @@ export function fullAntrag(db: Database.Database, id: number, locale: 'de' | 'en
       displayName: `${s.first_name} ${s.last_name}`,
       portraitUrl: s.picture_url,
     })),
-    linkedVotes: linkedVotes.map((v) => ({
-      id: v.id,
-      date: v.date,
-      title: v.title,
-      cleanTitle: v.clean_title,
-      result: v.result,
-      voteType: v.vote_type,
-    })),
+    linkedVotes: linkedVotes.map((v) => {
+      const titled = requireVoteCleanTitle({ id: v.id, title: v.title, cleanTitle: v.clean_title })
+      return {
+        id: v.id,
+        date: v.date,
+        title: titled.title,
+        cleanTitle: titled.cleanTitle,
+        result: v.result,
+        voteType: v.vote_type,
+      }
+    }),
   }
 }

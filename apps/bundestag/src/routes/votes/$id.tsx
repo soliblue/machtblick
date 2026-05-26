@@ -24,7 +24,7 @@ export const Route = createFileRoute('/votes/$id')({
   head: ({ loaderData, params }) => {
     const path = `/votes/${params.id}`
     const v = loaderData?.vote
-    const headline = v ? (v.cleanTitle ?? v.title) : null
+    const headline = v?.cleanTitle ?? null
     const title = headline ?? 'Abstimmung'
     const desc = v && headline
       ? `${headline}. Abstimmung im Bundestag am ${v.date}: ${v.result}. Antragsteller: ${loaderData?.proposingParty ?? 'unbekannt'}.`

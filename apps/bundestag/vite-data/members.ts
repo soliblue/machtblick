@@ -1,4 +1,5 @@
 import type Database from 'better-sqlite3'
+import { requireVoteCleanTitle, requireVoteTitleText } from '../src/lib/voteTitles'
 
 type MemberRow = {
   id: string
@@ -173,6 +174,7 @@ export function fullMember(db: Database.Database, id: string) {
   let loyalEligible = 0
   let defections = 0
   const history = vmRows.map((r) => {
+    const titled = requireVoteCleanTitle({ id: r.vote_id, title: r.title, cleanTitle: r.clean_title })
     const party = partyAt(affiliations, r.date)
     const maj = majByVoteParty.get(`${r.vote_id} ${party}`) ?? ''
     const eligible = !!party && !PARTY_LINE_EXCLUDED.has(party)
@@ -186,8 +188,8 @@ export function fullMember(db: Database.Database, id: string) {
     return {
       voteId: r.vote_id,
       date: r.date,
-      title: r.title,
-      cleanTitle: r.clean_title,
+      title: titled.title,
+      cleanTitle: titled.cleanTitle,
       result: r.result,
       choice: r.choice,
       party,
@@ -210,12 +212,12 @@ export function fullMember(db: Database.Database, id: string) {
            COALESCE(sdg.title, pai.title) AS agenda_title,
            sdgs.group_id AS debate_group_id,
            sdgs.contribution_type AS contribution_type,
-           lv.vote_id AS vote_id,
+           v.id AS vote_id,
            v.title AS vote_title,
            v.clean_title AS vote_clean_title
     FROM speeches s
     LEFT JOIN linked_votes lv ON lv.speech_id = s.id AND lv.rn = 1
-    LEFT JOIN votes v ON v.id = lv.vote_id
+    LEFT JOIN votes v ON v.id = lv.vote_id AND v.term_id = 21 AND v.procedural = 0 AND v.vote_type != 'hammelsprung'
     LEFT JOIN speech_debate_group_speeches sdgs ON sdgs.speech_id = s.id
     LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
     LEFT JOIN plenary_agenda_items pai ON pai.session_id = s.session_id AND pai.date = s.date AND pai.agenda_item = s.agenda_item
@@ -236,7 +238,7 @@ export function fullMember(db: Database.Database, id: string) {
     debateGroupId: row.debate_group_id,
     contributionType: row.contribution_type,
     voteId: row.vote_id,
-    voteTitle: row.vote_clean_title ?? row.vote_title,
+    voteTitle: requireVoteTitleText(row.vote_id, row.vote_clean_title),
     snippet: null,
   }))
   return {

@@ -10,6 +10,8 @@ import { pLimit } from '../polarity/limit.mjs'
 
 const dbPath = process.env.MACHTBLICK_DB ?? findDbPath()
 const db = new Database(dbPath)
+const limitCount = Number(argValue('--limit') ?? 0)
+const voteFilter = argValue('--vote')
 
 ensureSchema()
 
@@ -17,10 +19,14 @@ const candidates = db.prepare(`
   SELECT v.id, v.title
   FROM votes v
   WHERE v.procedural = 0
+    AND v.term_id = 21
+    AND v.vote_type != 'hammelsprung'
     AND v.summary_simplified IS NULL
-`).all()
+    AND (? IS NULL OR v.id = ?)
+`).all(voteFilter ?? null, voteFilter ?? null)
 
-console.log(`descriptions: ${candidates.length} candidates`)
+const selected = limitCount > 0 ? candidates.slice(0, limitCount) : candidates
+console.log(`descriptions: ${selected.length}/${candidates.length} candidates`)
 
 const updateVote = db.prepare(`UPDATE votes SET summary_simplified = ?, summary_detail = ? WHERE id = ?`)
 const upsertDecision = db.prepare(`
@@ -43,7 +49,7 @@ const upsertAntragDescription = db.prepare(`
     prompt_version = excluded.prompt_version
 `)
 
-const counts = { antrag: 0, petitionen: 0, wahleinspruch: 0, verordnung: 0 }
+const counts = { antrag: 0, petitionen: 0, wahleinspruch: 0, verordnung: 0, unterrichtung: 0 }
 let skippedNoPdf = 0
 let llmFailure = 0
 
@@ -76,19 +82,24 @@ async function processVote(row) {
     const antraege = antragByDrucksache.all(picked.drucksacheId)
     if (antraege.length === 1) upsertAntragDescription.run(antraege[0].id, summarySimplified, summaryDetail, row.id, picked.pdfUrl, generatedAt, PROMPT_VERSION)
     counts[picked.kind] = (counts[picked.kind] ?? 0) + 1
-    const total = counts.antrag + counts.petitionen + counts.wahleinspruch + counts.verordnung
-    if (total % 5 === 0) console.log(`  ${total}/${candidates.length - skippedNoPdf} done`)
+    const total = counts.antrag + counts.petitionen + counts.wahleinspruch + counts.verordnung + counts.unterrichtung
+    if (total % 5 === 0) console.log(`  ${total}/${selected.length - skippedNoPdf} done`)
   } catch (e) {
     llmFailure++
     console.warn(`x ${row.id} LLM failed (${picked.drucksacheId}, ${picked.kind}): ${e.message}`)
   }
 }
 
-await Promise.all(candidates.map((row) => limit(() => processVote(row))))
+await Promise.all(selected.map((row) => limit(() => processVote(row))))
 
-console.log(`done. total=${candidates.length} skipped_no_pdf=${skippedNoPdf} llm_failure=${llmFailure}`)
-console.log(`  by kind: antrag=${counts.antrag} petitionen=${counts.petitionen} wahleinspruch=${counts.wahleinspruch} verordnung=${counts.verordnung}`)
+console.log(`done. total=${selected.length}/${candidates.length} skipped_no_pdf=${skippedNoPdf} llm_failure=${llmFailure}`)
+console.log(`  by kind: antrag=${counts.antrag} petitionen=${counts.petitionen} wahleinspruch=${counts.wahleinspruch} verordnung=${counts.verordnung} unterrichtung=${counts.unterrichtung}`)
 db.close()
+
+function argValue(name) {
+  const i = process.argv.indexOf(name)
+  return i >= 0 ? process.argv[i + 1] : null
+}
 
 function findDbPath() {
   const sourceAdjacent = fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url))

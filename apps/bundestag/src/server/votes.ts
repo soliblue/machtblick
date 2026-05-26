@@ -9,6 +9,7 @@ import { SHOW_HAMMELSPRUNG } from '../lib/voteTypes'
 import type { SpeechSummary } from './speeches'
 import { normalizeLocale, type Locale } from '../lib/locale'
 import { compareVotesNewest } from '../lib/voteOrdering'
+import { requireVoteCleanTitle } from '../lib/voteTitles'
 
 const CURRENT_TERM = 21
 
@@ -79,7 +80,7 @@ export type VoteListItem = {
   id: string
   date: string
   title: string
-  cleanTitle: string | null
+  cleanTitle: string
   topic: string | null
   voteType: 'namentlich' | 'handzeichen' | 'hammelsprung'
   proposingParty: string | null
@@ -115,8 +116,7 @@ function overlayVote<T extends LocalizedVoteFields>(vote: T, translations: Map<s
   const t = translations.get(vote.id)
   return t ? {
     ...vote,
-    title: t.title,
-    cleanTitle: t.cleanTitle,
+    cleanTitle: t.cleanTitle ?? vote.cleanTitle,
     topic: t.topic,
     subject: t.subject,
     summary: t.summary,
@@ -155,7 +155,7 @@ export const listVotes = createServerFn({ method: 'GET' })
     if (seatsByParty.size >= 6) break
   }
   return rows.map((v) => {
-    const localized = overlayVote(v, translations)
+    const localized = requireVoteCleanTitle(overlayVote(v, translations))
     const summaries = byVote.get(v.id) ?? []
     if (v.voteType === 'namentlich' && v.yes != null) {
       return {
@@ -192,8 +192,10 @@ export const listVotes = createServerFn({ method: 'GET' })
   })
 })
 
+export type VoteDetailVote = Omit<typeof votes.$inferSelect, 'cleanTitle'> & { cleanTitle: string; yes: number; no: number; abstain: number; absent: number; totalMembers: number }
+
 export type VoteDetail = {
-  vote: typeof votes.$inferSelect & { yes: number; no: number; abstain: number; absent: number; totalMembers: number }
+  vote: VoteDetailVote
   documents: Array<typeof voteDocuments.$inferSelect>
   partySummaries: Array<typeof votePartySummaries.$inferSelect & { yes: number; no: number; abstain: number; absent: number; members: number }>
   proposingParty: string | null
@@ -255,13 +257,14 @@ export const getVote = createServerFn({ method: 'GET' })
       }
     })
     const localizedVote = overlayVote(voteRow, translations)
+    const publicVote = requireVoteCleanTitle(localizedVote)
     const vote = voteRow.voteType === 'namentlich'
-      ? { ...localizedVote, yes: voteRow.yes ?? 0, no: voteRow.no ?? 0, abstain: voteRow.abstain ?? 0, absent: voteRow.absent ?? 0, totalMembers: voteRow.totalMembers ?? 0 }
+      ? { ...publicVote, yes: voteRow.yes ?? 0, no: voteRow.no ?? 0, abstain: voteRow.abstain ?? 0, absent: voteRow.absent ?? 0, totalMembers: voteRow.totalMembers ?? 0 }
       : (() => {
           const yes = partySummaries.reduce((a, s) => a + s.yes, 0)
           const no = partySummaries.reduce((a, s) => a + s.no, 0)
           const abstain = partySummaries.reduce((a, s) => a + s.abstain, 0)
-          return { ...localizedVote, yes, no, abstain, absent: 0, totalMembers: yes + no + abstain }
+          return { ...publicVote, yes, no, abstain, absent: 0, totalMembers: yes + no + abstain }
         })()
     const rawVmRows = db
       .select({

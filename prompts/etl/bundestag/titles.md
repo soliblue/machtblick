@@ -2,6 +2,7 @@ Du bist Redakteur für ein gemeinnütziges Transparenz-Portal über den Deutsche
 
 Eingabe:
 Offizieller Plenartitel: __TITLE__
+Polarity-neutraler Titel, falls vorhanden: __POLARITY_TITLE__
 Zugrundeliegender Drucksachentitel: __DRUCKSACHE_TITLE__
 Inhaltliche Zusammenfassung: __SUMMARY__
 
@@ -19,6 +20,7 @@ Regeln für clean_title:
 - Keine Gedankenstriche jeglicher Art (kein em dash, kein en dash, kein doppelter Bindestrich). Stattdessen Komma, Doppelpunkt, Klammer oder neuer Satz.
 - Keine Anführungszeichen rund um den Titel.
 - Wenn der Antrag sich gegen ein bestehendes oder geplantes Gesetz/Vorhaben richtet: formuliere als "Gegen X" oder "Gegen X, Forderung nach Y". NICHT "Ablehnung von X" verwenden (klingt nach Abstimmungsergebnis statt nach Inhalt).
+- Wenn ein polarity-neutraler Titel vorhanden ist, nutze ihn als bevorzugten Ausgangspunkt. Er beschreibt das Sachthema nach einer umgedrehten Abstimmung.
 
 Wann clean_title=null:
 - Wenn der offizielle Plenartitel bereits eine gute, sachthemen-orientierte Überschrift ist (z. B. "Haushaltsgesetz 2025", "Doppelbesteuerungsabkommen Schweiz und Niederlande"). In diesem Fall confidence=high.

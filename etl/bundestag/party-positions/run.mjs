@@ -13,6 +13,7 @@ const concurrency = Number(argValue('--concurrency') ?? 2)
 const limit = Number(argValue('--limit') ?? 0)
 const minWords = Number(argValue('--min-words') ?? 150)
 const voteFilter = argValue('--vote')
+const voteType = argValue('--vote-type') ?? 'namentlich'
 const force = process.argv.includes('--force')
 const dbPath = process.env.MACHTBLICK_DB ?? findDbPath()
 const db = new Database(dbPath)
@@ -37,11 +38,11 @@ const candidates = db.prepare(`
          s.party, s.position, s.members, s.yes, s.no, s.abstain, s.absent, s.position_summary
   FROM vote_party_summaries s
   INNER JOIN votes v ON v.id = s.vote_id
-  WHERE v.vote_type = 'namentlich'
+  WHERE (? = 'all' OR v.vote_type = ?)
     AND v.procedural = 0
     AND (? IS NULL OR v.id = ?)
   ORDER BY v.date DESC, v.bundestag_id DESC, s.members DESC
-`).all(voteFilter ?? null, voteFilter ?? null)
+`).all(voteType, voteType, voteFilter ?? null, voteFilter ?? null)
 
 const jobs = []
 for (const row of candidates) {
@@ -105,6 +106,16 @@ function ensureSchema() {
 }
 
 function loadSpeeches(vote, party) {
+  const grouped = filterSpeeches(db.prepare(`
+    SELECT s.id, s.speaker_name, s.speaker_role, COALESCE(sdgs.position, s.position) AS position, s.text_full, s.word_count
+    FROM vote_debate_groups vdg
+    INNER JOIN speech_debate_group_speeches sdgs ON sdgs.group_id = vdg.group_id
+    INNER JOIN speeches s ON s.id = sdgs.speech_id
+    WHERE vdg.vote_id = ?
+      AND s.party = ?
+    ORDER BY COALESCE(sdgs.position, s.position) ASC
+  `).all(vote.vote_id, party))
+  if (grouped.length) return grouped
   const direct = filterSpeeches(db.prepare(`
     SELECT id, speaker_name, speaker_role, position, text_full, word_count
     FROM speeches

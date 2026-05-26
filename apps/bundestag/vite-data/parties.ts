@@ -1,4 +1,5 @@
 import type Database from 'better-sqlite3'
+import { requireVoteCleanTitle } from '../src/lib/voteTitles'
 
 type SummaryRow = {
   vote_id: string
@@ -100,6 +101,7 @@ export function fullParty(db: Database.Database, slug: string) {
   `).all(party) as Array<SummaryRow & { date: string; title: string; clean_title: string | null; result: 'angenommen' | 'abgelehnt'; document: string | null; vote_type: string }>
   const namentlich = summaries.filter((s) => s.vote_type === 'namentlich' && s.yes != null)
   const voteRows = namentlich.map((s) => {
+    const titled = requireVoteCleanTitle({ id: s.vote_id, title: s.title, cleanTitle: s.clean_title })
     const top = Math.max(s.yes, s.no, s.abstain)
     const partyVote =
       s.yes === top && s.yes > s.no && s.yes > s.abstain ? 'yes'
@@ -109,8 +111,8 @@ export function fullParty(db: Database.Database, slug: string) {
     return {
       voteId: s.vote_id,
       date: s.date,
-      title: s.title,
-      cleanTitle: s.clean_title,
+      title: titled.title,
+      cleanTitle: titled.cleanTitle,
       result: s.result,
       partyVote,
       cohesion: !PARTY_LINE_EXCLUDED.has(party) ? cohesion(s) : null,
@@ -181,9 +183,10 @@ export function fullParty(db: Database.Database, slug: string) {
   const proposals: Array<{ voteId: string; date: string; title: string; cleanTitle: string | null; result: 'angenommen' | 'abgelehnt' }> = []
   for (const v of allVotes) {
     if (v.initiator !== party) continue
+    const titled = requireVoteCleanTitle({ id: v.id, title: v.title, cleanTitle: v.clean_title })
     proposalsTotal += 1
     if (v.result === 'angenommen') proposalsAccepted += 1
-    proposals.push({ voteId: v.id, date: v.date, title: v.title, cleanTitle: v.clean_title, result: v.result })
+    proposals.push({ voteId: v.id, date: v.date, title: titled.title, cleanTitle: titled.cleanTitle, result: v.result })
   }
   proposals.sort((a, b) => b.date.localeCompare(a.date))
   const donationNames = DONATION_PARTY_NAMES[party] ?? [party]

@@ -46,17 +46,18 @@ const sammelNumber = (title) => {
 }
 
 const db = new Database(DB_PATH)
-const whereClean = force ? '' : 'AND clean_title IS NULL'
+const whereClean = force ? '' : 'AND v.clean_title IS NULL'
 const rows = db.prepare(`
-  SELECT id, title, document, summary_simplified
+  SELECT v.id, v.title, v.document, v.summary_simplified, v.inverted, v.is_petition_bundle, p.rewritten_title
   FROM votes
-  WHERE procedural = 0 ${whereClean}
+  v LEFT JOIN vote_polarity_decisions p ON p.vote_id = v.id
+  WHERE v.procedural = 0 AND v.vote_type != 'hammelsprung' ${whereClean}
 `).all()
 
-const candidates = rows.filter((r) => isVacuous(r.title))
+const candidates = rows
 const work = sampleLimit ? candidates.slice(0, sampleLimit) : candidates
 
-console.log(`titles: ${candidates.length} vacuous of ${rows.length} non-procedural rows; processing ${work.length}${dryRun ? ' (dry-run)' : ''}`)
+console.log(`titles: ${candidates.length} missing of ${rows.length} visible rows; processing ${work.length}${dryRun ? ' (dry-run)' : ''}`)
 
 const update = db.prepare(`UPDATE votes SET clean_title = ? WHERE id = ?`)
 
@@ -75,18 +76,28 @@ let written = 0
 let nulled = 0
 let lowSkipped = 0
 let failed = 0
+let direct = 0
+
+function displaySourceTitle(row) {
+  return row.inverted && row.rewritten_title ? row.rewritten_title : row.title
+}
 
 const tasks = work.map((row) =>
   limit(async () => {
     const drucksacheTitle = await resolveDrucksacheTitle(row.document)
     const nnn = sammelNumber(row.title)
+    const sourceTitle = displaySourceTitle(row)
     try {
-      const result = await cleanTitleWithLLM({
-        title: row.title,
-        summary: row.summary_simplified,
-        drucksacheTitle,
-        isSammelubersicht: nnn !== null,
-      })
+      const needsLLM = force || row.inverted || row.is_petition_bundle || isVacuous(row.title) || isVacuous(sourceTitle) || drucksacheTitle
+      const result = needsLLM
+        ? await cleanTitleWithLLM({
+            title: row.title,
+            summary: row.summary_simplified,
+            drucksacheTitle,
+            polarityTitle: row.inverted ? row.rewritten_title : null,
+            isSammelubersicht: nnn !== null,
+          })
+        : { clean_title: sourceTitle, confidence: 'high', direct: true }
       if (nnn !== null && result.clean_title) {
         const combined = `Sammelübersicht ${nnn}: ${result.clean_title}`
         result.clean_title = combined.length > 90 ? combined.slice(0, 89) + '…' : combined
@@ -113,13 +124,15 @@ for (const item of outcomes) {
     lowSkipped++
     continue
   }
+  if (!result.clean_title && result.confidence !== 'low') result.clean_title = displaySourceTitle(row)
   if (!result.clean_title) {
     nulled++
     continue
   }
   update.run(result.clean_title, row.id)
+  if (result.direct) direct++
   written++
 }
 
-console.log(`done. processed=${work.length} written=${written} kept_original=${nulled} low_skipped=${lowSkipped} failed=${failed}`)
+console.log(`done. processed=${work.length} written=${written} direct=${direct} kept_original=${nulled} low_skipped=${lowSkipped} failed=${failed}`)
 db.close()

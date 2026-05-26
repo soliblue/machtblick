@@ -20,6 +20,7 @@ import { normalizeLocale, type Locale } from '@/lib/locale'
 import { SHOW_HAMMELSPRUNG } from '@/lib/voteTypes'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
 import type { SpeechSummary } from './speeches'
+import { requireVoteCleanTitle } from '@/lib/voteTitles'
 
 const CURRENT_TERM = 21
 
@@ -34,7 +35,7 @@ export type AntragLinkedVote = {
   id: string
   date: string
   title: string
-  cleanTitle: string | null
+  cleanTitle: string
   result: 'angenommen' | 'abgelehnt'
   voteType: 'namentlich' | 'handzeichen' | 'hammelsprung'
   yes: number
@@ -205,13 +206,14 @@ export const getAntrag = createServerFn({ method: 'GET' })
     }
     const linkedVotes: AntragLinkedVote[] = voteRows.map((v) => {
       const t = translations.get(v.id)
+      const titled = requireVoteCleanTitle({ id: v.id, title: v.title, cleanTitle: t?.cleanTitle ?? v.cleanTitle })
       const summaries = summariesByVote.get(v.id) ?? []
       if (v.voteType === 'namentlich') {
         return {
           id: v.id,
           date: v.date,
-          title: t?.title ?? v.title,
-          cleanTitle: t?.cleanTitle ?? v.cleanTitle,
+          title: titled.title,
+          cleanTitle: titled.cleanTitle,
           result: v.result,
           voteType: v.voteType,
           yes: v.yes ?? 0,
@@ -229,8 +231,8 @@ export const getAntrag = createServerFn({ method: 'GET' })
       return {
         id: v.id,
         date: v.date,
-        title: t?.title ?? v.title,
-        cleanTitle: t?.cleanTitle ?? v.cleanTitle,
+        title: titled.title,
+        cleanTitle: titled.cleanTitle,
         result: v.result,
         voteType: v.voteType,
         yes,

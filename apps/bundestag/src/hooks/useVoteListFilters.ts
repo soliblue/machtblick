@@ -27,7 +27,7 @@ export function useVoteListFilters(
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
     return votes.filter((v) => {
-      if (q && !(v.cleanTitle ?? v.title).toLowerCase().includes(q) && !v.title.toLowerCase().includes(q)) return false
+      if (q && !v.cleanTitle.toLowerCase().includes(q) && !v.title.toLowerCase().includes(q)) return false
       if (proposingParty && v.proposingParty !== proposingParty) return false
       if (voteType && v.voteType !== voteType) return false
       if (result && v.result !== result) return false

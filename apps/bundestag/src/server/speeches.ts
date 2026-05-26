@@ -99,8 +99,8 @@ export const getSpeech = createServerFn({ method: 'GET' })
              COALESCE(sdg.title, pai.title) AS agenda_title,
              sdgs.group_id AS debate_group_id,
              sdgs.contribution_type AS contribution_type,
-             lv.vote_id AS vote_id,
-             COALESCE(v.clean_title, v.title) AS vote_title,
+             v.id AS vote_id,
+             v.clean_title AS vote_title,
              NULL AS snippet
       FROM speeches s
       LEFT JOIN (
@@ -110,7 +110,7 @@ export const getSpeech = createServerFn({ method: 'GET' })
         ) AS rn
         FROM speech_vote_links
       ) lv ON lv.speech_id = s.id AND lv.rn = 1
-      LEFT JOIN votes v ON v.id = lv.vote_id
+      LEFT JOIN votes v ON v.id = lv.vote_id AND v.term_id = 21 AND v.procedural = 0 AND v.vote_type != 'hammelsprung'
       LEFT JOIN speech_debate_group_speeches sdgs ON sdgs.speech_id = s.id
       LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
       LEFT JOIN plenary_agenda_items pai ON pai.session_id = s.session_id AND pai.date = s.date AND pai.agenda_item = s.agenda_item
@@ -188,13 +188,13 @@ export const searchSpeeches = createServerFn({ method: 'GET' })
              COALESCE(sdg.title, pai.title) AS agenda_title,
              sdgs.group_id AS debate_group_id,
              sdgs.contribution_type AS contribution_type,
-             lv.vote_id AS vote_id,
-             COALESCE(v.clean_title, v.title) AS vote_title,
+             v.id AS vote_id,
+             v.clean_title AS vote_title,
              ${snippetExpr} AS snippet
       FROM speeches s
       ${ftsJoin}
       LEFT JOIN linked_votes lv ON lv.speech_id = s.id AND lv.rn = 1
-      LEFT JOIN votes v ON v.id = lv.vote_id
+      LEFT JOIN votes v ON v.id = lv.vote_id AND v.term_id = 21 AND v.procedural = 0 AND v.vote_type != 'hammelsprung'
       LEFT JOIN speech_debate_group_speeches sdgs ON sdgs.speech_id = s.id
       LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
       LEFT JOIN plenary_agenda_items pai ON pai.session_id = s.session_id AND pai.date = s.date AND pai.agenda_item = s.agenda_item
@@ -237,12 +237,12 @@ export const listSpeechesForMember = createServerFn({ method: 'GET' })
              COALESCE(sdg.title, pai.title) AS agenda_title,
              sdgs.group_id AS debate_group_id,
              sdgs.contribution_type AS contribution_type,
-             lv.vote_id AS vote_id,
-             COALESCE(v.clean_title, v.title) AS vote_title,
+             v.id AS vote_id,
+             v.clean_title AS vote_title,
              NULL AS snippet
       FROM speeches s
       LEFT JOIN linked_votes lv ON lv.speech_id = s.id AND lv.rn = 1
-      LEFT JOIN votes v ON v.id = lv.vote_id
+    LEFT JOIN votes v ON v.id = lv.vote_id AND v.term_id = 21 AND v.procedural = 0 AND v.vote_type != 'hammelsprung'
       LEFT JOIN speech_debate_group_speeches sdgs ON sdgs.speech_id = s.id
       LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
       LEFT JOIN plenary_agenda_items pai ON pai.session_id = s.session_id AND pai.date = s.date AND pai.agenda_item = s.agenda_item
