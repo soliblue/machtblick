@@ -1,8 +1,8 @@
 import { execFileSync } from 'node:child_process'
+import { createHash } from 'node:crypto'
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
-import { request } from 'node:https'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
 const TEXT_DIR = join(HERE, 'text')
@@ -10,6 +10,7 @@ const PDF_DIR = join(HERE, 'pdf')
 const OCR_PROMPT = readFileSync(fileURLToPath(new URL('../../../prompts/etl/pdf-text-extraction.md', import.meta.url)), 'utf8').trimEnd()
 mkdirSync(TEXT_DIR, { recursive: true })
 mkdirSync(PDF_DIR, { recursive: true })
+const enodiaCookies = new Map()
 
 const MIN_CHARS = 200
 
@@ -39,27 +40,39 @@ function pdfPath(drucksacheId) {
   return join(PDF_DIR, `${safeId(drucksacheId)}.pdf`)
 }
 
-function download(url, dest) {
-  return new Promise((resolve, reject) => {
-    const chunks = []
-    const doRequest = (target) => {
-      const req = request(target, (res) => {
-        if (res.statusCode === 301 || res.statusCode === 302) {
-          return doRequest(res.headers.location)
-        }
-        if (res.statusCode !== 200) return reject(new Error(`HTTP ${res.statusCode} for ${target}`))
-        res.on('data', (c) => chunks.push(c))
-        res.on('end', () => {
-          writeFileSync(dest, Buffer.concat(chunks))
-          resolve()
-        })
-        res.on('error', reject)
-      })
-      req.on('error', reject)
-      req.end()
+async function download(url, dest) {
+  let attempt = 0
+  while (true) {
+    const origin = new URL(url).origin
+    const headers = enodiaCookies.has(origin) ? { cookie: enodiaCookies.get(origin) } : {}
+    const res = await fetch(url, { headers })
+    if (!res.ok && !res.headers.get('content-type')?.includes('text/html')) throw new Error(`HTTP ${res.status} for ${url}`)
+    if (res.headers.get('content-type')?.includes('text/html')) {
+      const text = await res.text()
+      if (text.includes('Enodia Verification')) {
+        await updateEnodiaCookie(origin, text)
+        attempt++
+        if (attempt > 3) throw new Error(`Enodia verification failed for ${url}`)
+        continue
+      }
+      throw new Error(`HTTP ${res.status} for ${url}`)
     }
-    doRequest(url)
-  })
+    writeFileSync(dest, Buffer.from(await res.arrayBuffer()))
+    return
+  }
+}
+
+async function updateEnodiaCookie(origin, text) {
+  const evl = text.match(/window\.chl = "([^"]+)"/)?.[1]
+  if (!evl) throw new Error('Enodia challenge missing')
+  const envelope = JSON.parse(Buffer.from(evl.split('.')[0], 'base64url').toString('utf8'))
+  if (envelope.content.provider !== 'pow') throw new Error(`unsupported Enodia provider ${envelope.content.provider}`)
+  const challenge = envelope.content.challenge
+  let solution = 0
+  while (!createHash('sha256').update(`${challenge}${solution}`).digest('hex').startsWith('0000')) solution++
+  const verified = await fetch(`${origin}/.enodia/verify`, { method: 'POST', body: `${solution}-${evl}` })
+  if (!verified.ok) throw new Error(`unexpected Enodia verify ${verified.status}`)
+  enodiaCookies.set(origin, `enodia=${await verified.text()}`)
 }
 
 function runPdftotext(pdf) {
