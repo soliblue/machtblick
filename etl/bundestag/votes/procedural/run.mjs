@@ -16,6 +16,11 @@ const PATTERNS = [
   'Wahlvorschläge%',
   'Wahl Stiftungsrat%',
   'Wahl Kuratorium%',
+  'Beschlussempfehlung des Wahlprüfungsausschusses%',
+  '%Wahleinspruch%',
+  '%Wahleinsprüch%',
+  '%Einsprüche anlässlich der Wahl%',
+  '%Einsprüchen gegen die Bundestagswahl%',
   'Bestellung %',
   'Benennung %',
   'Abberufung %',
@@ -29,7 +34,8 @@ const PATTERNS = [
   'Normenkontrolle zum Bundeshaushalt%',
 ]
 
-const placeholders = PATTERNS.map(() => 'title LIKE ?').join(' OR ')
-const result = db.prepare(`UPDATE votes SET procedural = 1 WHERE procedural = 0 AND (${placeholders})`).run(...PATTERNS)
+const placeholders = PATTERNS.map(() => 'title LIKE ? OR document LIKE ?').join(' OR ')
+const params = PATTERNS.flatMap((pattern) => [pattern, pattern])
+const result = db.prepare(`UPDATE votes SET procedural = 1 WHERE procedural = 0 AND (${placeholders})`).run(...params)
 console.log(`procedural: flagged ${result.changes} additional row(s)`)
 db.close()

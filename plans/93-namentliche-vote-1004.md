@@ -41,6 +41,8 @@ Imported and enriched where upstream data is available. Reopened on `2026-06-01`
 - 2026-06-01: Generated German party-position summaries for AfD, B90/Grüne, CDU/CSU, Die Linke, and SPD, plus English party-summary and speech translations.
 - 2026-06-01: Fixed the party-position runner to use canonical party labels after materialization, which lets B90/Grüne summaries find normalized speech rows.
 - 2026-06-01: `npm run db:validate:votes` passed with `missing_speech_rich_party_summaries=0`; `npm run build -w @machtblick/bundestag` passed and generated vote `1004` with 11 direct debate speeches.
+- 2026-06-01: Visibility preflight found canonical vote HTML did not include inactive speech-tab content; updating vote detail rendering so all available tab panels are present in prerendered HTML while inactive panels stay hidden in the UI.
+- 2026-06-01: Rebuilt after the tab rendering fix. German and English vote `1004` HTML both include the speech content and keep the inactive panels hidden.
 
 ### Visibility
 

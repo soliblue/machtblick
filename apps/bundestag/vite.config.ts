@@ -243,6 +243,7 @@ function writeJsonEndpoints() {
   writeFileSync(`${publicDir}/api/members.json`, JSON.stringify(leanMembers(db)))
   writeFileSync(`${publicDir}/api/parties.json`, JSON.stringify(leanParties(db)))
   const voteIds = db.prepare("SELECT id FROM votes WHERE term_id = ? AND procedural = 0 AND vote_type != 'hammelsprung'").all(CURRENT_TERM) as Array<{ id: string }>
+  rmSync(`${publicDir}/votes`, { force: true, recursive: true })
   mkdirSync(`${publicDir}/votes`, { recursive: true })
   for (const { id } of voteIds) writeFileSync(`${publicDir}/votes/${id}.json`, JSON.stringify(fullVote(db, id)))
   const antragIds = publishableAntragIds(db)

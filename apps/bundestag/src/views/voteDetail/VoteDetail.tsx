@@ -14,6 +14,7 @@ import type { VoteSponsors } from '@/server/voteSponsors'
 import { useCopy, useLocale } from '@/lib/i18n'
 
 export type VoteTab = 'ergebnis' | 'details' | 'reden'
+const VOTE_TABS: VoteTab[] = ['ergebnis', 'details', 'reden']
 
 export const isVoteTab = (v: unknown): v is VoteTab =>
   v === 'ergebnis' || v === 'details' || v === 'reden'
@@ -84,7 +85,11 @@ export function VoteDetail({ data, activeTab, onTabChange }: Props) {
       )}
 
       <VoteDetailTabs active={visibleActiveTab} availableTabs={availableTabs} onChange={onTabChange} />
-      {TAB_PANELS[visibleActiveTab](data)}
+      {VOTE_TABS.filter((tab) => availableTabs[tab]).map((tab) => (
+        <section key={tab} hidden={tab !== visibleActiveTab}>
+          {TAB_PANELS[tab](data)}
+        </section>
+      ))}
     </main>
   )
 }
