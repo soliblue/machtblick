@@ -28,3 +28,4 @@ Verified locally. Commit, push, and deploy pending.
 - 2026-06-01: Found stale per-vote JSON could remain from earlier builds, so `apps/bundestag/vite.config.ts` now clears `public/votes` before regenerating current public vote JSON files.
 - 2026-06-01: Rebuilt again after the JSON cleanup. The three term-21 election-objection IDs are absent from `dist/client`, `public/votes`, `api/votes.json`, and `sitemap.xml`; `public/votes` now contains `272` JSON files.
 - 2026-06-01: Visibility predeploy check passed. The three election-objection IDs are absent from public discovery surfaces, and no blocking SEO, social, crawler, AI discovery, sitemap, or JSON alternate issues were found.
+- 2026-06-01: After deploy, the immutable Pages deployment returned `404` for the removed routes, but the production alias still served one stale cached German HTML route. Added explicit legacy redirects for the removed election-objection vote detail URLs to the vote list.
