@@ -27,10 +27,6 @@ const CHAIR_ROLES = new Set([
   'Alterspräsidentin',
 ])
 
-const SPEECH_PARTY = {
-  'B90/Grüne': 'BÜNDNIS 90/DIE GRÜNEN',
-}
-
 ensureSchema()
 
 const candidates = db.prepare(`
@@ -46,7 +42,7 @@ const candidates = db.prepare(`
 
 const jobs = []
 for (const row of candidates) {
-  const speeches = loadSpeeches(row, SPEECH_PARTY[row.party] ?? row.party)
+  const speeches = loadSpeeches(row, row.party)
   const words = speeches.reduce((sum, s) => sum + s.word_count, 0)
   if (speeches.length > 0 && words >= minWords && (force || !row.position_summary)) jobs.push({ row, speeches })
 }

@@ -6,7 +6,7 @@ Import Bundestag roll-call vote `1004` from `2026-05-22` into SQLite with member
 
 ## Status
 
-Imported and enriched where upstream data is available. Speech-based enrichment is blocked until Bundestag publishes protocol XML for session `21081`.
+Imported and enriched where upstream data is available. Reopened on `2026-06-01` after Bundestag published the real session `21081` PDF while the XML URL still returned a duplicate session `80` body.
 
 ## Scope
 
@@ -36,6 +36,11 @@ Imported and enriched where upstream data is available. Speech-based enrichment 
 - Linked vote `1004` to Antrag `21/2553`, generated German summaries from the Antrag PDF, generated English vote and Antrag translations, and validated public vote data.
 - Confirmed Bundestag speech XML fetch stops at session `21081` with no download, so vote `1004` currently has no speech links, party position summaries, speech translations, or agenda item.
 - User requested commit, push, and deploy after confirming the missing speech XML explanation.
+- 2026-06-01: Confirmed `21081.xml` returns `200` but still contains `sitzung-nr="80"` and date `21.05.2026`; confirmed `21081.pdf` is the real session `81` protocol from `22.05.2026`.
+- 2026-06-01: Added a checked-in PDF fallback importer for `Zusatzpunkt 10`, inserted 11 direct debate speech segments for vote `1004`, set `votes.agenda_item = Zusatzpunkt 10`, and materialized the debate group.
+- 2026-06-01: Generated German party-position summaries for AfD, B90/Grüne, CDU/CSU, Die Linke, and SPD, plus English party-summary and speech translations.
+- 2026-06-01: Fixed the party-position runner to use canonical party labels after materialization, which lets B90/Grüne summaries find normalized speech rows.
+- 2026-06-01: `npm run db:validate:votes` passed with `missing_speech_rich_party_summaries=0`; `npm run build -w @machtblick/bundestag` passed and generated vote `1004` with 11 direct debate speeches.
 
 ### Visibility
 

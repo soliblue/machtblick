@@ -40,6 +40,7 @@ type DocumentRow = {
 
 const dbPath = process.env.MACHTBLICK_DB ?? fileURLToPath(new URL('./machtblick.sqlite', import.meta.url))
 const rawAgendaDir = fileURLToPath(new URL('../etl/bundestag-reden-xml/raw/xml/', import.meta.url))
+const fallbackAgendaPath = fileURLToPath(new URL('../etl/bundestag-reden-xml/fallback-agenda-items.json', import.meta.url))
 const db = new Database(dbPath)
 const ANTRAG_FLAVORED = ['Antrag:', 'Gesetzentwurf:', 'Entschließungsantrag:', 'Änderungsantrag:']
 const ANTRAG_EXCLUDED = ['Beschlussempfehlung', 'Bericht:', 'Ergänzung', 'Wahlvorschlag', 'Unterrichtung', 'Verordnung']
@@ -179,9 +180,12 @@ function materializeAgendaItems() {
 }
 
 function agendaRows(): AgendaRow[] {
-  return existsSync(rawAgendaDir)
+  const rows = existsSync(rawAgendaDir)
     ? readdirSync(rawAgendaDir).filter((name) => name.endsWith('.xml')).sort().flatMap((file) => parseAgendaProtocol(readFileSync(join(rawAgendaDir, file), 'utf8')))
     : []
+  return existsSync(fallbackAgendaPath)
+    ? rows.concat(JSON.parse(readFileSync(fallbackAgendaPath, 'utf8')) as AgendaRow[])
+    : rows
 }
 
 function materializeAntraege() {

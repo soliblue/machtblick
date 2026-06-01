@@ -19,6 +19,7 @@
     "etl:speeches:xml:fetch": "tsx etl/bundestag-reden-xml/fetch.ts",
     "etl:speeches:xml:ingest": "tsx etl/bundestag-reden-xml/ingest.ts",
     "etl:speeches:xml": "npm run etl:speeches:xml:fetch && npm run etl:speeches:xml:ingest",
+    "etl:speeches:session81:pdf": "tsx etl/bundestag-reden-xml/ingest-session-81-pdf.ts",
     "etl:stammdaten:fetch": "tsx etl/bundestag-stammdaten/fetch.ts",
     "etl:stammdaten:ingest": "tsx etl/bundestag-stammdaten/ingest.ts",
     "etl:stammdaten": "npm run etl:stammdaten:fetch && npm run etl:stammdaten:ingest",
