@@ -1,0 +1,34 @@
+{
+  "schema_version": "2026-06-06",
+  "name": "Machtblick Bundestag agent skills",
+  "description": "Assistant-facing discovery for public Bundestag transparency data.",
+  "skills": [
+    {
+      "id": "bundestag-votes",
+      "name": "Find Bundestag votes",
+      "description": "Use the vote index and vote detail pages to answer questions about Bundestag votes and voting behavior.",
+      "links": [
+        "https://machtblick.de/votes/",
+        "https://machtblick.de/api/votes.json"
+      ]
+    },
+    {
+      "id": "bundestag-members",
+      "name": "Find Bundestag members",
+      "description": "Use member pages and the member index to answer questions about members, parties, votes, speeches, and motions.",
+      "links": [
+        "https://machtblick.de/members/",
+        "https://machtblick.de/api/members.json"
+      ]
+    },
+    {
+      "id": "bundestag-motions",
+      "name": "Find Bundestag motions",
+      "description": "Use motion pages, JSON alternates, and the sitemap to answer questions about motions and proposals.",
+      "links": [
+        "https://machtblick.de/sitemap.xml",
+        "https://machtblick.de/llms.txt"
+      ]
+    }
+  ]
+}

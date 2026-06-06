@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { join } from 'node:path'
 import { sql } from 'drizzle-orm'
 import { db } from '@machtblick/db/client'
-import { speeches, members, votes } from '@machtblick/db/schema'
+import { speechDebateGroupSpeeches, speeches, speechTranslations, speechVoteLinks, members, votes } from '@machtblick/db/schema'
 import { parseProtocol, type SpeechRow } from './parse.ts'
 
 const HONORIFICS = new Set(['dr', 'prof', 'med', 'hc', 'h', 'c', 'dent', 'rer', 'nat', 'phil', 'jur', 'ing', 'mult', 'habil', 'mag', 'lic', 'theol', 'dipl', 'pol'])
@@ -86,8 +86,13 @@ for (const rows of parsedProtocols) {
 }
 
 const sessionsCovered = [...new Set(inserts.map((r) => r.sessionId))]
+const sessionSql = sql.join(sessionsCovered.map((sessionId) => sql`${sessionId}`), sql`, `)
 const dbChanges = db.transaction((tx) => {
   let n = 0
+  n += tx.run(sql`DELETE FROM ${speechTranslations} WHERE ${speechTranslations.speechId} IN (SELECT ${speeches.id} FROM ${speeches} WHERE ${speeches.sessionId} IN (${sessionSql}) AND ${speeches.sourceUrl} NOT LIKE '%.xml')`).changes
+  n += tx.run(sql`DELETE FROM ${speechDebateGroupSpeeches} WHERE ${speechDebateGroupSpeeches.speechId} IN (SELECT ${speeches.id} FROM ${speeches} WHERE ${speeches.sessionId} IN (${sessionSql}) AND ${speeches.sourceUrl} NOT LIKE '%.xml')`).changes
+  n += tx.run(sql`DELETE FROM ${speechVoteLinks} WHERE ${speechVoteLinks.speechId} IN (SELECT ${speeches.id} FROM ${speeches} WHERE ${speeches.sessionId} IN (${sessionSql}) AND ${speeches.sourceUrl} NOT LIKE '%.xml')`).changes
+  n += tx.run(sql`DELETE FROM ${speeches} WHERE ${speeches.sessionId} IN (${sessionSql}) AND ${speeches.sourceUrl} NOT LIKE '%.xml'`).changes
   for (const row of inserts) {
     const r = tx.insert(speeches).values(row).onConflictDoUpdate({ target: speeches.id, set: row }).run()
     n += r.changes

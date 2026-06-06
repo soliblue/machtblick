@@ -1,0 +1,23 @@
+{
+  "schema_version": "2026-06-06",
+  "name": "Machtblick Bundestag",
+  "description": "Public Bundestag transparency data for votes, members, parties, speeches, and motions.",
+  "url": "https://machtblick.de/",
+  "documentation_url": "https://machtblick.de/llms.txt",
+  "api_catalog_url": "https://machtblick.de/.well-known/api-catalog",
+  "sitemap_url": "https://machtblick.de/sitemap.xml",
+  "datasets": [
+    {
+      "name": "Votes",
+      "url": "https://machtblick.de/api/votes.json"
+    },
+    {
+      "name": "Members",
+      "url": "https://machtblick.de/api/members.json"
+    },
+    {
+      "name": "Parties",
+      "url": "https://machtblick.de/api/parties.json"
+    }
+  ]
+}
