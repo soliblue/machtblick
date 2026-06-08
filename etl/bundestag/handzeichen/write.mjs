@@ -50,6 +50,17 @@ for (const f of files) {
           sourceUrl: `https://search.dip.bundestag.de/api/v1/plenarprotokoll/${data.number}`,
           fetchedAt: new Date().toISOString(),
         }).run()
+      } else {
+        tx.update(votes).set({
+          voteType: v.vote_type,
+          date: data.date,
+          title: v.title,
+          isPetitionBundle: /^Sammelübersicht\s+\d+\s+zu\s+Petitionen/i.test(v.title) || /^Petitionsausschuss\s+Sammelübersicht\s+\d+/i.test(v.title),
+          document: (v.drucksache ?? []).join(', ') || null,
+          result: v.outcome === 'unklar' ? 'angenommen' : v.outcome,
+          sourceUrl: `https://search.dip.bundestag.de/api/v1/plenarprotokoll/${data.number}`,
+          fetchedAt: new Date().toISOString(),
+        }).where(eq(votes.id, id)).run()
       }
       if (parties.length) {
         tx.delete(votePartySummaries).where(and(eq(votePartySummaries.voteId, id), notInArray(votePartySummaries.party, parties))).run()

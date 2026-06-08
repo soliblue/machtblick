@@ -23,6 +23,7 @@ const PROPOSER_MAP = {
 }
 
 const KNOWN_COMMITTEES = new Set(['AfLEH', 'AfWE', 'PetA', 'AfRechtVer', 'FinanzA', 'HaushA', 'InnenA', 'AfG', 'VerkA', 'AfWIuG', 'VgA', 'AfU', 'BRHPräs', 'ADi', 'AuswA', 'BMF', 'BauA', 'WahlprüfA', 'WPA', 'VermA', 'AfBFSFJ', 'AfArbSoz'])
+const SOURCE_TYPES = new Set(['Antrag', 'Gesetzentwurf', 'Entschließungsantrag', 'Änderungsantrag'])
 const unknownBezeichnungen = new Set()
 
 function proposerFromUrheber(urheber) {
@@ -31,6 +32,33 @@ function proposerFromUrheber(urheber) {
     if (!KNOWN_COMMITTEES.has(u.bezeichnung)) unknownBezeichnungen.add(u.bezeichnung)
   }
   return null
+}
+
+function proposerFromText(text) {
+  if (!text) return null
+  if (/(?:Antrag|Gesetzentwurf|Entwurf eines Gesetzes)(?:es)?\s+der\s+Bundesregierung/i.test(text)) return 'Bundesregierung'
+  if (/(?:Antrag|Gesetzentwurf|Entwurf eines Gesetzes)(?:es)?\s+des\s+Bundesrates/i.test(text)) return 'Bundesrat'
+  const fraktion = text.match(/Fraktion(?:en)?\s+(?:der\s+|des\s+)?([^()]+?)(?:[:,(]|$|\s+(?:zu|zum|zur|Entwurf|Drucksache)|\s+-)/i)
+  if (!fraktion) return null
+  return partyFromText(fraktion[1])
+}
+
+function partyFromText(text) {
+  const value = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+  if (value.includes('cdu/csu') || value.includes('cdu csu')) return 'CDU/CSU'
+  if (value.includes('bundnis 90') || value.includes('grunen') || value.includes('b90')) return 'B90/Grüne'
+  if (value.includes('die linke')) return 'Die Linke'
+  if (/\bspd\b/.test(value)) return 'SPD'
+  if (/\bafd\b/.test(value)) return 'AfD'
+  if (/\bfdp\b/.test(value)) return 'FDP'
+  if (/\bbsw\b/.test(value)) return 'BSW'
+  return null
+}
+
+function sourceType(doc) {
+  if (doc?.drucksachetyp === 'Gesetzentwurf') return 'Gesetzentwurf'
+  if (SOURCE_TYPES.has(doc?.drucksachetyp)) return 'Antrag'
+  return /Gesetzentwurf|Entwurf eines Gesetzes/i.test(doc?.titel ?? '') ? 'Gesetzentwurf' : 'Antrag'
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
@@ -89,22 +117,24 @@ async function resolveProposer(dnr) {
   const res = await fetchDrucksache(dnr)
   const doc = res.documents?.[0]
   if (!doc) return null
-  const direct = proposerFromUrheber(doc.urheber)
-  if (direct) return direct
+  const direct = SOURCE_TYPES.has(doc.drucksachetyp) ? proposerFromUrheber(doc.urheber) : null
+  if (direct) return { proposer: direct, type: sourceType(doc) }
+  const fromText = proposerFromText(doc.titel)
+  if (fromText) return { proposer: fromText, type: sourceType(doc) }
   const vId = doc.vorgangsbezug?.[0]?.id
   if (!vId) return null
   const v = await fetchVorgangDrucksachen(vId)
   for (const d of v.documents ?? []) {
-    if (d.drucksachetyp === 'Antrag' || d.drucksachetyp === 'Gesetzentwurf') {
-      const p = proposerFromUrheber(d.urheber)
-      if (p) return p
-    }
+    if (String(d.vorgangsbezug?.[0]?.id ?? '') !== String(vId)) continue
+    if (!SOURCE_TYPES.has(d.drucksachetyp)) continue
+    const p = proposerFromUrheber(d.urheber) ?? proposerFromText(d.titel)
+    if (p) return { proposer: p, type: sourceType(d) }
   }
   return null
 }
 
 const db = new Database(fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url)))
-const rows = db.prepare("SELECT id, document FROM votes WHERE vote_type IN ('handzeichen','hammelsprung') AND document IS NOT NULL AND document NOT LIKE 'Antrag%' AND document NOT LIKE 'Gesetzentwurf%'").all()
+const rows = db.prepare("SELECT id, document FROM votes WHERE vote_type IN ('handzeichen','hammelsprung') AND document IS NOT NULL").all()
 console.log(`processing ${rows.length} votes`)
 
 const upd = db.prepare('UPDATE votes SET document = ? WHERE id = ?')
@@ -114,17 +144,22 @@ for (const r of rows) {
   const dnrs = [...r.document.matchAll(/\b(\d+\/\d+)\b/g)].map((m) => m[1])
   if (!dnrs.length) { none++; continue }
   let proposer = null
+  let type = null
   for (const d of dnrs) {
-    proposer = await resolveProposer(d)
-    if (proposer) break
+    const source = await resolveProposer(d)
+    if (source) {
+      proposer = source.proposer
+      type = source.type
+      break
+    }
   }
   if (proposer) {
     const dStr = `Drucksache ${dnrs.join(', ')}`
     const newDoc = proposer === 'Bundesregierung'
-      ? `Antrag der Bundesregierung (${dStr})`
+      ? `${type} der Bundesregierung (${dStr})`
       : proposer === 'Bundesrat'
-      ? `Antrag des Bundesrates (${dStr})`
-      : `Antrag der Fraktion der ${proposer} (${dStr})`
+      ? `${type} des Bundesrates (${dStr})`
+      : `${type} der Fraktion der ${proposer} (${dStr})`
     upd.run(newDoc, r.id)
     resolved++
   } else none++
