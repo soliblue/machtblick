@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285866",
+      "drucksachetyp": "Wahlvorschlag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4686",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "8b1a2a49380c097eb9e53f5f4ca32387",
+      "aktualisiert": "2026-03-16T15:41:15+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "332455",
+          "titel": "Wahl von Mitgliedern des Kuratoriums der Stiftung \"Haus der Geschichte der Bundesrepublik Deutschland\"",
+          "vorgangstyp": "Besetzung externer Gremien durch BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/046/2104686.pdf",
+        "id": "285866",
+        "dokumentnummer": "21/4686",
+        "datum": "2026-03-16",
+        "verteildatum": "2026-03-16",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Wahlvorschlag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "titel": "Wahl von Mitgliedern des Kuratoriums der Stiftung \"Haus der Geschichte der Bundesrepublik Deutschland\"",
+      "datum": "2026-03-16"
+    }
+  ],
+  "cursor": "AoJw-K-T-5wDMURydWNrc2FjaGUtMjg1ODY2"
+}

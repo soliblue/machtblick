@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "288425",
+      "drucksachetyp": "Entschließungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 16,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6382",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "231b49741770cf42f50502350986d17d",
+      "aktualisiert": "2026-06-10T17:36:43+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335853",
+          "titel": "Entschließungsantrag zur Regierungserklärung durch zum Europäischen Rat am 18. und 19. Juni 2026 in Brüssel",
+          "vorgangstyp": "Entschließungsantrag BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/063/2106382.pdf",
+        "id": "288425",
+        "dokumentnummer": "21/6382",
+        "datum": "2026-06-10",
+        "verteildatum": "2026-06-10",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Entschließungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7979",
+          "titel": "Janina Böttger, MdB, DIE LINKE",
+          "autor_titel": "Janina Böttger"
+        },
+        {
+          "id": "7955",
+          "titel": "Desiree Becker, MdB, DIE LINKE",
+          "autor_titel": "Desiree Becker"
+        }
+      ],
+      "titel": "zu der Abgabe einer Regierungserklärung durch den Bundeskanzler zum Europäischen Rat am 18. und 19. Juni 2026 in Brüssel \r\nhier: Stellungnahme nach Artikel 23 Absatz 3 des Grundgesetzes zum Mehrjährigen Finanzrahmen der Europäischen Union für die Jahre 2028 bis 2034",
+      "datum": "2026-06-10"
+    }
+  ],
+  "cursor": "AoJwkK--2J4DMURydWNrc2FjaGUtMjg4NDI1"
+}

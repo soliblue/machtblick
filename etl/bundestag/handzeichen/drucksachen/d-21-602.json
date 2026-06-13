@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282590",
+      "drucksachetyp": "Unterrichtung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 2,
+      "dokumentnummer": "21/602",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "bfbcb53520fb20480de8787c40095496",
+      "aktualisiert": "2025-10-22T16:28:43+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "325160",
+          "titel": "Finanzplan des Bundes 2025 bis 2029",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        },
+        {
+          "id": "324698",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2026 (Haushaltsgesetz 2026 - HG 2026)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/006/2100602.pdf",
+        "id": "282590",
+        "dokumentnummer": "21/602",
+        "datum": "2025-10-22",
+        "verteildatum": "2025-10-22",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Unterrichtung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2026 (Haushaltsgesetz 2026 - HG 2026)\r\n- Drucksache 21/600 -\r\nund Finanzplan des Bundes 2025 bis 2029\r\n- Drucksache 21/601 -\r\nStellungnahme des Bundesrates und Gegenäußerung der Bundesregierung",
+      "datum": "2025-10-22"
+    }
+  ],
+  "cursor": "AoJw0I7XhZoDMURydWNrc2FjaGUtMjgyNTkw"
+}

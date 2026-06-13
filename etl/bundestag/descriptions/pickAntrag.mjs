@@ -86,7 +86,8 @@ function rankFallback(refs, fullLower) {
   if (antrag.length) return antrag.sort((a, b) => drucksacheRank(a.n) - drucksacheRank(b.n))[0].n
   const titleHasGesetz = /gesetz|entwurf/.test(fullLower)
   const titleHasAntrag = /\bantrag\b/.test(fullLower)
-  if (titleHasGesetz || titleHasAntrag) return refs.sort((a, b) => drucksacheRank(a.n) - drucksacheRank(b.n))[0].n
+  const titleHasVerordnung = /verordnung/.test(fullLower)
+  if (titleHasGesetz || titleHasAntrag || titleHasVerordnung) return refs.sort((a, b) => drucksacheRank(a.n) - drucksacheRank(b.n))[0].n
   return null
 }
 
@@ -128,12 +129,28 @@ function pickLinkedAntrag(voteId, db) {
   return row ? { drucksacheId: row.drucksache, pdfUrl: row.drucksache_pdf_url, kind: 'antrag' } : null
 }
 
+async function pickFromVoteDocument(voteId, db) {
+  const row = db.prepare('SELECT document FROM votes WHERE id = ?').get(voteId)
+  const document = row?.document || ''
+  const refs = parseFallbackRefs(document)
+  const target = refs.length > 0 ? rankFallback(refs, document.toLowerCase()) : null
+  if (!target) return null
+  const data = await loadDrucksache(target)
+  const doc = data.documents?.find((d) => d.dokumentnummer === target) ?? data.documents?.[0]
+  if (!doc?.fundstelle?.pdf_url) return null
+  const lower = document.toLowerCase()
+  const kind = /verordnung/.test(lower) ? 'verordnung' : /unterrichtung/.test(lower) ? 'unterrichtung' : 'antrag'
+  return { drucksacheId: target, pdfUrl: doc.fundstelle.pdf_url, kind }
+}
+
 export async function pickAntragWithFallback(voteId, db) {
   const rows = db.prepare(`SELECT label, title, url FROM vote_documents WHERE vote_id = ?`).all(voteId)
   const primary = pickAntragFromRows(rows)
   if (primary) return primary
   const linked = pickLinkedAntrag(voteId, db)
   if (linked) return linked
+  const voteDocument = await pickFromVoteDocument(voteId, db)
+  if (voteDocument) return voteDocument
   const beschluss = findBeschluss(rows)
   if (beschluss) {
     const btitle = beschluss.title || ''

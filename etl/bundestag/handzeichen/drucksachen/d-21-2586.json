@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282833",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2586",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "11a7db531ce69c85fea0744e40be3367",
+      "aktualisiert": "2025-11-06T10:03:06+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "326354",
+          "titel": "Zweite Verordnung zur Änderung der Kassensicherungsverordnung",
+          "vorgangstyp": "Rechtsverordnung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FinanzA",
+          "titel": "Finanzausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/025/2102586.pdf",
+        "id": "282833",
+        "dokumentnummer": "21/2586",
+        "datum": "2025-11-05",
+        "verteildatum": "2025-11-05",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Finanzausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1701",
+          "titel": "Anja Karliczek, MdB, CDU/CSU",
+          "autor_titel": "Anja Karliczek, Berichterstattung"
+        },
+        {
+          "id": "7387",
+          "titel": "Sascha Müller, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Sascha Müller, Berichterstattung"
+        }
+      ],
+      "titel": "zu der Verordnung des Bundesministeriums der Finanzen\r\n- Drucksachen 21/1925, 21/2146 Nr. 2 -\r\nZweite Verordnung zur Änderung der Kassensicherungsverordnung",
+      "datum": "2025-11-05"
+    }
+  ],
+  "cursor": "AoJwuI3rqZoDMURydWNrc2FjaGUtMjgyODMz"
+}

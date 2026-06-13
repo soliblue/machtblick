@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "285868",
+      "drucksachetyp": "Wahlvorschlag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/4688",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "b7db0e4149c2c44c1383f847dea0264b",
+      "aktualisiert": "2026-03-16T15:45:16+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "332458",
+          "titel": "Wahl eines Mitglieds des Kuratoriums der Stiftung \"Haus der Geschichte der Bundesrepublik Deutschland\"",
+          "vorgangstyp": "Besetzung externer Gremien durch BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/046/2104688.pdf",
+        "id": "285868",
+        "dokumentnummer": "21/4688",
+        "datum": "2026-03-16",
+        "verteildatum": "2026-03-16",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Wahlvorschlag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "titel": "Wahl eines Mitglieds des Kuratoriums der Stiftung \"Haus der Geschichte der Bundesrepublik Deutschland\"",
+      "datum": "2026-03-16"
+    }
+  ],
+  "cursor": "AoJw-K-T-5wDMURydWNrc2FjaGUtMjg1ODY4"
+}

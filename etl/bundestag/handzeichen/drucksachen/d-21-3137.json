@@ -1,0 +1,63 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "283658",
+      "drucksachetyp": "Unterrichtung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 7,
+      "dokumentnummer": "21/3137",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "78ed4ed5a1298d207fca2df64ac65999",
+      "aktualisiert": "2025-12-05T11:26:54+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "328422",
+          "titel": "Zweiundzwanzigste Verordnung zur Änderung der Außenwirtschaftsverordnung - aufhebbare Verordnung",
+          "vorgangstyp": "Rechtsverordnung (Außenwirtschaftsrecht)"
+        },
+        {
+          "id": "328503",
+          "titel": "Bericht über die Anwendung verdeckter Überwachungsmaßnahmen im Rahmen der Gefahrenabwehr",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        },
+        {
+          "id": "328458",
+          "titel": "Tagung der Interparlamentarischen Konferenz für die Gemeinsame Außen- und Sicherheitspolitik und die Gemeinsame Sicherheits- und Verteidigungspolitik vom 26. bis 28. August 2025, Kopenhagen, Dänemark",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        },
+        {
+          "id": "328549",
+          "titel": "Haushaltsführung 2025\r\nÜberplanmäßige Ausgabe bei Kapitel 0904 Titel 687 11 - Energie-, klima- und wirtschaftspolitische Zusammenarbeit mit der Ukraine - bis zur Höhe von 100 Mio. Euro",
+          "vorgangstyp": "Über- und außerplanmäßige Haushaltsausgaben"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BT",
+          "titel": "Bundestag"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/031/2103137.pdf",
+        "id": "283658",
+        "dokumentnummer": "21/3137",
+        "datum": "2025-12-04",
+        "verteildatum": "2025-12-04",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Unterrichtung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundestag"
+        ]
+      },
+      "titel": "über die gemäß § 80 Absatz 3 und § 92 der Geschäftsordnung an die Ausschüsse überwiesenen Vorlagen\r\n(Eingangszeitraum: 13. bis 27. November 2025)",
+      "datum": "2025-12-04"
+    }
+  ],
+  "cursor": "AoJw-JrB9JoDMURydWNrc2FjaGUtMjgzNjU4"
+}

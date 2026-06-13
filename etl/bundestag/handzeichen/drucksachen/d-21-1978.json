@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282790",
+      "drucksachetyp": "Wahlvorschlag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/1978",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "3405a7fb5d69ce73428db319fc9d77aa",
+      "aktualisiert": "2025-11-05T12:54:19+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "327763",
+          "titel": "Wahl eines Mitglieds des Kuratoriums der Stiftung \"Deutsches Historisches Museum\"",
+          "vorgangstyp": "Besetzung externer Gremien durch BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/019/2101978.pdf",
+        "id": "282790",
+        "dokumentnummer": "21/1978",
+        "datum": "2025-11-05",
+        "verteildatum": "2025-11-05",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Wahlvorschlag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "titel": "Wahl eines Mitglieds des Kuratoriums der Stiftung \"Deutsches Historisches Museum\"",
+      "datum": "2025-11-05"
+    }
+  ],
+  "cursor": "AoJwuI3rqZoDMURydWNrc2FjaGUtMjgyNzkw"
+}

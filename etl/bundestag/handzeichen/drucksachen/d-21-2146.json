@@ -1,0 +1,63 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "282170",
+      "drucksachetyp": "Unterrichtung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 18,
+      "dokumentnummer": "21/2146",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "3423a4d531a95fb3e6c6ec6d05ace203",
+      "aktualisiert": "2025-10-10T13:26:25+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "324969",
+          "titel": "Elftes Gesetz zur Änderung des Regionalisierungsgesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "324826",
+          "titel": "Erstes Gesetz zur Änderung des Gesetzes über den unmittelbaren Zwang bei Ausübung öffentlicher Gewalt durch Vollzugsbeamte des Bundes",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "324828",
+          "titel": "Erstes Gesetz zur Änderung des Fernstraßen-Überleitungsgesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "324746",
+          "titel": "Gesetz zur Abmilderung des Trassenentgeltanstiegs bei den Eisenbahnen des Bundes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BT",
+          "titel": "Bundestag"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/021/2102146.pdf",
+        "id": "282170",
+        "dokumentnummer": "21/2146",
+        "datum": "2025-10-09",
+        "verteildatum": "2025-10-10",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Unterrichtung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundestag"
+        ]
+      },
+      "titel": "über die gemäß § 80 Absatz 3 und § 92 der Geschäftsordnung an die Ausschüsse überwiesenen Vorlagen\r\n(Eingangszeitraum: 2. September bis 8. Oktober 2025)",
+      "datum": "2025-10-09"
+    }
+  ],
+  "cursor": "AoJwkLma5JkDMURydWNrc2FjaGUtMjgyMTcw"
+}

@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "287579",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 7,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/5780",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "20459f0c502debe136b520c7edceb85d",
+      "aktualisiert": "2026-05-08T08:16:17+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334686",
+          "titel": "BAföG stärken und Studienstarthilfe ausweiten - Junge Menschen in der Krise\r\nentlasten",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/057/2105780.pdf",
+        "id": "287579",
+        "dokumentnummer": "21/5780",
+        "datum": "2026-05-05",
+        "verteildatum": "2026-05-07",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7921",
+          "titel": "Ayse Asar, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Ayse Asar"
+        },
+        {
+          "id": "8189",
+          "titel": "Dr. Andrea Lübcke, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Andrea Lübcke"
+        }
+      ],
+      "titel": "BAföG stärken und Studienstarthilfe ausweiten - Junge Menschen in der Krise\r\nentlasten",
+      "datum": "2026-05-05"
+    }
+  ],
+  "cursor": "AoJwkJHl-50DMURydWNrc2FjaGUtMjg3NTc5"
+}

@@ -113,11 +113,12 @@ async function importVotes() {
   for (const link of links) {
     if (!link.sourceId && latestExisting.date && link.date <= latestExisting.date) continue
     if (!link.sourceId) throw new Error(`missing Bundestag source id for ${link.date}: ${link.title}`)
+    const existingVote = db.prepare('SELECT id FROM votes WHERE term_id = ? AND bundestag_id = ?').get(TERM_ID, link.sourceId) as { id: string } | undefined
+    if (!SOURCE_ID && existingVote && latestExisting.date && link.date <= latestExisting.date) continue
     const rows = await fetchVoteRows(link.xlsxUrl)
     const first = rows[0]
     if (!first) continue
     const generatedVoteId = link.sourceId ? `${link.date}-${link.sourceId}-${slugify(link.title)}` : `bt${TERM_ID}-${link.date}-${String(first.session).padStart(3, '0')}-${first.number}-${slugify(link.title)}`
-    const existingVote = link.sourceId ? db.prepare('SELECT id FROM votes WHERE term_id = ? AND bundestag_id = ?').get(TERM_ID, link.sourceId) as { id: string } | undefined : null
     const voteId = existingVote?.id ?? generatedVoteId
     const counts = countRows(rows)
     const partySummaries = summaries(rows)
@@ -204,8 +205,9 @@ async function fetchAwMandates() {
 }
 
 async function fetchVoteLinks() {
-  const out: LinkItem[] = []
+  const linksByKey = new Map<string, LinkItem>()
   const detailsByKey = new Map<string, DetailItem[]>()
+  const detailsByXlsxUrl = new Map<string, DetailItem>()
   for (const detail of await fetchVoteDetails()) {
     const key = detailKey(detail)
     detailsByKey.set(key, [...(detailsByKey.get(key) ?? []), detail])
@@ -223,12 +225,13 @@ async function fetchVoteLinks() {
       const date = publicationDate ?? parseDate(label.match(/^(\d{2}\.\d{2}\.\d{4,5})/)?.[1] ?? '')
       const title = label.replace(/^\d{2}\.\d{2}\.\d{4,5}:\s*/, '').trim()
       const matches = date && title ? detailsByKey.get(detailKey({ date, title })) : null
-      const detail = matches?.shift()
+      const detail = detailsByXlsxUrl.get(xlsxUrl) ?? matches?.shift()
+      if (detail) detailsByXlsxUrl.set(xlsxUrl, detail)
       const sourceId = detail?.sourceId ?? (Number(body.match(/abstimmung\?id=(\d+)/)?.[1] ?? 0) || null)
       const sourceUrl = sourceId ? `https://www.bundestag.de/parlament/plenum/abstimmung/abstimmung?id=${sourceId}` : xlsxUrl
-      if (date && title) out.push({ date, title, description: detail?.description ?? null, initiator: detail?.initiator ?? null, pdfUrl, xlsxUrl, sourceUrl, sourceId })
+      if (date && title) linksByKey.set(sourceId ? String(sourceId) : xlsxUrl, { date, title, description: detail?.description ?? null, initiator: detail?.initiator ?? null, pdfUrl, xlsxUrl, sourceUrl, sourceId })
     }
-    if (offset + 30 >= hits) return out
+    if (offset + 30 >= hits) return [...linksByKey.values()]
   }
 }
 
@@ -380,7 +383,7 @@ function text(html: string) {
 }
 
 function detailKey(item: { date: string; title: string }) {
-  return `${item.date}|${slugify(item.title)}`
+  return `${item.date}|${item.title.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/ß/g, 'ss').replace(/[^a-z0-9]+/g, '')}`
 }
 
 async function fetchBundestag(url: string) {

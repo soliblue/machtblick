@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "283250",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/2064",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "3d5de8b878976e2f54fe332d25b7bf69",
+      "aktualisiert": "2025-11-20T17:41:15+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "325160",
+          "titel": "Finanzplan des Bundes 2025 bis 2029",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "HaushA",
+          "titel": "Haushaltsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/020/2102064.pdf",
+        "id": "283250",
+        "dokumentnummer": "21/2064",
+        "datum": "2025-11-20",
+        "verteildatum": "2025-11-20",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Haushaltsausschuss"
+        ]
+      },
+      "titel": "zu der Unterrichtung durch die Bundesregierung\r\n- Drucksachen 21/601, 21/602, 21/2669 Nr. 1 -\r\nFinanzplan des Bundes 2025 bis 2029",
+      "datum": "2025-11-20"
+    }
+  ],
+  "cursor": "AoJw-Pm60JoDMURydWNrc2FjaGUtMjgzMjUw"
+}

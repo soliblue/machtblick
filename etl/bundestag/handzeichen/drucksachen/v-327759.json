@@ -1,0 +1,3742 @@
+{
+  "numFound": 286835,
+  "documents": [
+    {
+      "id": "288723",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "235/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "04e424cee2807bef02639cfc10cd0254",
+      "aktualisiert": "2026-06-12T16:49:04+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334316",
+          "titel": "Vorschlag für eine Verordnung des Europäischen Parlaments und des Rates zur Einrichtung des Programms für agile, schnelle Innovation im Verteidigungsbereich (AGILE)\r\nKOM(2026) 135 endg.; Ratsdok. 7716/26",
+          "vorgangstyp": "EU-Vorlage"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0235-26B.pdf",
+        "id": "288723",
+        "dokumentnummer": "235/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Vorschlag für eine Verordnung des Europäischen Parlaments und des Rates zur Einrichtung des Programms für agile, schnelle Innovation im Verteidigungsbereich (AGILE)",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288722",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "300/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "0b0cfb13ccfe55fdb3c899a0bc2ce0c0",
+      "aktualisiert": "2026-06-12T16:48:34+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "327966",
+          "titel": "Gesetz für den Bürokratierückbau im Bereich des Bundesministeriums des Innern",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0300-26B.pdf",
+        "id": "288722",
+        "dokumentnummer": "300/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Gesetz für den Bürokratierückbau im Bereich des Bundesministeriums des Innern",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288721",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "194/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "68527e1b9ce9883a1aa964c754e9669a",
+      "aktualisiert": "2026-06-12T16:47:05+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "333377",
+          "titel": "Verordnung zur Änderung von Bußgeldvorschriften der Gefahrstoffverordnung",
+          "vorgangstyp": "Rechtsverordnung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0194-26B.pdf",
+        "id": "288721",
+        "dokumentnummer": "194/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Verordnung zur Änderung von Bußgeldvorschriften der Gefahrstoffverordnung",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288720",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "366/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "7b1565bf8234703a1bf23250b9d56aaa",
+      "aktualisiert": "2026-06-12T16:26:04+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335057",
+          "titel": "Neuntes Gesetz zur Änderung von Vorschriften im Steuerberatungsrecht sowie im Steuerrecht",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0366-26B.pdf",
+        "id": "288720",
+        "dokumentnummer": "366/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Neuntes Gesetz zur Änderung von Vorschriften im Steuerberatungsrecht sowie im Steuerrecht",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288719",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "294/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "7d30b2ad32286b777ae730c08c978d72",
+      "aktualisiert": "2026-06-12T16:25:41+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335631",
+          "titel": "Verfahren vor dem Bundesverfassungsgericht",
+          "vorgangstyp": "Verfahren vor dem Bundesverfassungsgericht"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0294-26B.pdf",
+        "id": "288719",
+        "dokumentnummer": "294/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Verfahren vor dem Bundesverfassungsgericht",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288718",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "273/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "4bd670e79b7525e9446e4562b024ad52",
+      "aktualisiert": "2026-06-12T16:25:24+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334571",
+          "titel": "Benennung eines stellvertretenden Mitglieds des Kuratoriums der Stiftung \"Haus der Geschichte der Bundesrepublik Deutschland\"",
+          "vorgangstyp": "Besetzung externer Gremien durch BR"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0273-26B.pdf",
+        "id": "288718",
+        "dokumentnummer": "273/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Benennung eines stellvertretenden Mitglieds des Kuratoriums der Stiftung \"Haus der Geschichte der Bundesrepublik Deutschland\"",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288717",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "214/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "8e91b23009252724e4c27b22d7a3491d",
+      "aktualisiert": "2026-06-12T16:24:30+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "333800",
+          "titel": "Allgemeine Verwaltungsvorschrift zur Anlage und zum Betrieb von Flugplätzen (AVV Flugplätze)",
+          "vorgangstyp": "Allgemeine Verwaltungsvorschrift"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0214-26B.pdf",
+        "id": "288717",
+        "dokumentnummer": "214/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Allgemeine Verwaltungsvorschrift zur Anlage und zum Betrieb von Flugplätzen (AVV Flugplätze)",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288716",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "234/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "9c4dc9cdb0ec38dd893a0fd82107e916",
+      "aktualisiert": "2026-06-12T16:23:30+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334311",
+          "titel": "Sechzehnte Verordnung zur Änderung der Ferienreiseverordnung",
+          "vorgangstyp": "Rechtsverordnung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0234-26B.pdf",
+        "id": "288716",
+        "dokumentnummer": "234/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Sechzehnte Verordnung zur Änderung der Ferienreiseverordnung",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288715",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "233/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "082251803a049bcada9a1f59d53a5015",
+      "aktualisiert": "2026-06-12T16:23:06+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334309",
+          "titel": "Sechzehnte Verordnung zur Änderung gefahrgutrechtlicher Verordnungen",
+          "vorgangstyp": "Rechtsverordnung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0233-26B.pdf",
+        "id": "288715",
+        "dokumentnummer": "233/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Sechzehnte Verordnung zur Änderung gefahrgutrechtlicher Verordnungen",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288714",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "202/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "bc1e74d67e90b84fcbc304812c8be905",
+      "aktualisiert": "2026-06-12T16:22:42+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "333729",
+          "titel": "Zweite Verordnung zur Durchführung des Finanzausgleichsgesetzes im Ausgleichsjahr 2019",
+          "vorgangstyp": "Rechtsverordnung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0202-26B.pdf",
+        "id": "288714",
+        "dokumentnummer": "202/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Zweite Verordnung zur Durchführung des Finanzausgleichsgesetzes im Ausgleichsjahr 2019",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288713",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "272/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "f53b56ef4998b1fdac5fad47d5149456",
+      "aktualisiert": "2026-06-12T16:22:28+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334599",
+          "titel": "Dreizehnte Verordnung zur Änderung weinrechtlicher Bestimmungen",
+          "vorgangstyp": "Rechtsverordnung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0272-26B.pdf",
+        "id": "288713",
+        "dokumentnummer": "272/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Dreizehnte Verordnung zur Änderung weinrechtlicher Bestimmungen",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288712",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "231/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "97f5c6e736825efce043d678ea01df0a",
+      "aktualisiert": "2026-06-12T16:16:16+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334310",
+          "titel": "Dritte Verordnung zur Änderung der Wahlordnung für die Sozialversicherung",
+          "vorgangstyp": "Rechtsverordnung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0231-26B.pdf",
+        "id": "288712",
+        "dokumentnummer": "231/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Dritte Verordnung zur Änderung der Wahlordnung für die Sozialversicherung",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288711",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "230/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "61272310ea765faed094a59c191183f3",
+      "aktualisiert": "2026-06-12T16:15:58+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334307",
+          "titel": "Zweite Verordnung zur Änderung der Verordnung zur Festlegung der Kennzahlen nach § 48a des Zweiten Buches Sozialgesetzbuch",
+          "vorgangstyp": "Rechtsverordnung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0230-26B.pdf",
+        "id": "288711",
+        "dokumentnummer": "230/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Zweite Verordnung zur Änderung der Verordnung zur Festlegung der Kennzahlen nach § 48a des Zweiten Buches Sozialgesetzbuch",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288710",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "229/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "6027f71f69eab60d5a62c1b2973121b5",
+      "aktualisiert": "2026-06-12T16:15:38+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334306",
+          "titel": "Verordnung zur Anpassung der Entschädigungszahlungen nach dem Vierzehnten Buch Sozialgesetzbuch zum 1. Juli 2026",
+          "vorgangstyp": "Rechtsverordnung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0229-26B.pdf",
+        "id": "288710",
+        "dokumentnummer": "229/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Verordnung zur Anpassung der Entschädigungszahlungen nach dem Vierzehnten Buch Sozialgesetzbuch zum 1. Juli 2026",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288709",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "243/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "c8df47a8294dcaed8c5362dc2c509d84",
+      "aktualisiert": "2026-06-12T16:15:12+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334378",
+          "titel": "Verordnung zur Bestimmung des Rentenwerts in der gesetzlichen Rentenversicherung und zur Bestimmung weiterer Werte zum 1. Juli 2026 (Rentenwertbestimmungsverordnung 2026 - RWBestV 2026)",
+          "vorgangstyp": "Rechtsverordnung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0243-26B.pdf",
+        "id": "288709",
+        "dokumentnummer": "243/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Verordnung zur Bestimmung des Rentenwerts in der gesetzlichen Rentenversicherung und zur Bestimmung weiterer Werte zum 1. Juli 2026 (Rentenwertbestimmungsverordnung 2026 - RWBestV 2026)",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288708",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "283/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "8fd3f9b78dd36533cf8138333fde119c",
+      "aktualisiert": "2026-06-12T16:11:19+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "330850",
+          "titel": "Vorschlag für eine Verordnung des Europäischen Parlaments und des Rates zur Schaffung eines Rahmens für Maßnahmen zur Stärkung der Biotechnologie und der Bioproduktion in der Union, insbesondere im Bereich der Gesundheit, und zur Änderung der Verordnungen (EG) Nr. 178/2002, (EG) Nr. 1394/2007, (EU) Nr. 536/2014, (EU) 2019/6, (EU) 2024/795 und (EU) 2024/1938 (Europäische Biotech-Verordnung)\r\nKOM(2025) 1022 endg.; Ratsdok. 16945/25",
+          "vorgangstyp": "EU-Vorlage"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0283-26B.pdf",
+        "id": "288708",
+        "dokumentnummer": "283/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Vorschlag für eine Verordnung des Europäischen Parlaments und des Rates zur Schaffung eines Rahmens für Maßnahmen zur Stärkung der Biotechnologie und der Bioproduktion in der Union, insbesondere im Bereich der Gesundheit, und zur Änderung der Verordnungen (EG) Nr. 178/2002, (EG) Nr. 1394/2007, (EU) Nr. 536/2014, (EU) 2019/6, (EU) 2024/795 und (EU) 2024/1938 (Europäische Biotech-Verordnung)",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288707",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "239/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "2629d349e0689d56d5d10876c987e107",
+      "aktualisiert": "2026-06-12T16:10:53+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334370",
+          "titel": "Mitteilung der Kommission an das Europäische Parlament, den Rat, den Europäischen Wirtschafts- und Sozialausschuss und den Ausschuss der Regionen - AccelerateEU - Energieunion: Bezahlbare und sichere Energie durch beschleunigte Maßnahmen\r\nKOM(2026) 370 endg.; Ratsdok. 8482/26",
+          "vorgangstyp": "EU-Vorlage"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0239-26B.pdf",
+        "id": "288707",
+        "dokumentnummer": "239/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Mitteilung der Kommission an das Europäische Parlament, den Rat, den Europäischen Wirtschafts- und Sozialausschuss und den Ausschuss der Regionen - AccelerateEU - Energieunion: Bezahlbare und sichere Energie durch beschleunigte Maßnahmen",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288706",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "236/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "b770132fd8d09e80f415dc52162735d9",
+      "aktualisiert": "2026-06-12T16:10:34+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "333862",
+          "titel": "Vorschlag für eine Verordnung des Europäischen Parlaments und des Rates zur Schaffung eines Rahmens von Maßnahmen zur Beschleunigung der Verstärkung der industriellen Kapazitäten und der Dekarbonisierung in strategischen Sektoren sowie zur Änderung der Verordnungen (EU) 2018/1724, (EU) 2024/1735 und (EU) 2024/3110\r\nKOM(2026) 100 endg.; Ratsdok. 7009/26",
+          "vorgangstyp": "EU-Vorlage"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0236-26B.pdf",
+        "id": "288706",
+        "dokumentnummer": "236/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Vorschlag für eine Verordnung des Europäischen Parlaments und des Rates zur Schaffung eines Rahmens von Maßnahmen zur Beschleunigung der Verstärkung der industriellen Kapazitäten und der Dekarbonisierung in strategischen Sektoren sowie zur Änderung der Verordnungen (EU) 2018/1724, (EU) 2024/1735 und (EU) 2024/3110",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288705",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "193/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "7b13de03f7934336c2a6dfa41e14379d",
+      "aktualisiert": "2026-06-12T16:10:16+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "333601",
+          "titel": "Mitteilung der Kommission an das Europäische Parlament, den Rat, den Europäischen Wirtschafts- und Sozialausschuss und den Ausschuss der Regionen: Strategie für die Gleichstellung der Geschlechter 2026 - 2030\r\nKOM(2026) 113 endg.; Ratsdok. 6832/26",
+          "vorgangstyp": "EU-Vorlage"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0193-26B.pdf",
+        "id": "288705",
+        "dokumentnummer": "193/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Mitteilung der Kommission an das Europäische Parlament, den Rat, den Europäischen Wirtschafts- und Sozialausschuss und den Ausschuss der Regionen: Strategie für die Gleichstellung der Geschlechter 2026 - 2030",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288704",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "280/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "2e702b453583cade7320fe95842c1c6e",
+      "aktualisiert": "2026-06-12T16:09:59+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334705",
+          "titel": "Mitteilung der Kommission an das Europäische Parlament, den Europäischen Rat, den Rat, den Europäischen Wirtschafts- und Sozialausschuss und den Ausschuss der Regionen: Ein einfacheres, klareres und besser durchsetzbares EU-Regelwerk\r\nKOM(2026) 380 endg.",
+          "vorgangstyp": "EU-Vorlage"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0280-26B.pdf",
+        "id": "288704",
+        "dokumentnummer": "280/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Mitteilung der Kommission an das Europäische Parlament, den Europäischen Rat, den Rat, den Europäischen Wirtschafts- und Sozialausschuss und den Ausschuss der Regionen: Ein einfacheres, klareres und besser durchsetzbares EU-Regelwerk",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288703",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "271/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "94a05b01b93629092a0f3f38becb41a1",
+      "aktualisiert": "2026-06-12T16:09:23+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334569",
+          "titel": "Gesetz zu der Mehrseitigen Vereinbarung vom 15. Januar 2025 zwischen den zuständigen Behörden über den Austausch von GloBE-Informationen",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0271-26B.pdf",
+        "id": "288703",
+        "dokumentnummer": "271/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zu der Mehrseitigen Vereinbarung vom 15. Januar 2025 zwischen den zuständigen Behörden über den Austausch von GloBE-Informationen",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288702",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "293/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "6bb73aafdc1bdd8ba3699cc4379ce5f5",
+      "aktualisiert": "2026-06-12T16:08:38+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334922",
+          "titel": "Gesetz zur Sicherung der Versorgungssicherheit Strom und zur Bereitstellung neuer Kapazitäten und zur Änderung der Besonderen Gebührenverordnung BNetzA",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0293-26B.pdf",
+        "id": "288702",
+        "dokumentnummer": "293/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Sicherung der Versorgungssicherheit Strom und zur Bereitstellung neuer Kapazitäten und zur Änderung der Besonderen Gebührenverordnung BNetzA",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288701",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "292/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "720d776f28ffed110ff5baf65144d363",
+      "aktualisiert": "2026-06-12T16:08:19+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334923",
+          "titel": "Gesetz zur Änderung des Gebäudeenergiegesetzes, zur Änderung des Gebäude-Elektromobilitätsinfrastruktur-Gesetzes und zur Änderung weiterer Vorschriften im Wärmebereich",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0292-26B.pdf",
+        "id": "288701",
+        "dokumentnummer": "292/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Änderung des Gebäudeenergiegesetzes, zur Änderung des Gebäude-Elektromobilitätsinfrastruktur-Gesetzes und zur Änderung weiterer Vorschriften im Wärmebereich",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288700",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "270/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "df45e1535e060d6243d764751d38c7a3",
+      "aktualisiert": "2026-06-12T16:08:06+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334568",
+          "titel": "Zweites Gesetz zur Änderung des Bundesbedarfsplangesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0270-26B.pdf",
+        "id": "288700",
+        "dokumentnummer": "270/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Zweiten Gesetzes zur Änderung des Bundesbedarfsplangesetzes",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288699",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "269/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "ff945ffd0c9c684780e3e433d8932039",
+      "aktualisiert": "2026-06-12T16:07:50+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334556",
+          "titel": "Gesetz zur Ermöglichung der digitalen Fluggastabfertigung",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0269-26B.pdf",
+        "id": "288699",
+        "dokumentnummer": "269/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Ermöglichung der digitalen Fluggastabfertigung",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288698",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "268/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "fabab7bc939dcb8930895bccfb4bdbb9",
+      "aktualisiert": "2026-06-12T16:07:24+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334555",
+          "titel": "Zweites Gesetz zur Änderung des Straßenverkehrsunfallstatistikgesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0268-26B.pdf",
+        "id": "288698",
+        "dokumentnummer": "268/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Zweiten Gesetzes zur Änderung des Straßenverkehrsunfallstatistikgesetzes",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288697",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "267/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "53df251b64d1c0c4ba8368f5bba367ff",
+      "aktualisiert": "2026-06-12T16:07:00+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334552",
+          "titel": "Drittes Gesetz zur Änderung des Seelotsgesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0267-26B.pdf",
+        "id": "288697",
+        "dokumentnummer": "267/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Dritten Gesetzes zur Änderung des Seelotsgesetzes",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288696",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "266/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "958176dfa9788e3f8092ddaa7294ad0e",
+      "aktualisiert": "2026-06-12T16:06:47+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334473",
+          "titel": "Gesetz zur Änderung des Strafrechts - Umsetzung der Richtlinie (EU) 2024/1203 über den strafrechtlichen Schutz der Umwelt sowie zur Änderung der Zustellungspauschalen und Gebühren im Gesetz über Ordnungswidrigkeiten und in den Justizkostengesetzen",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0266-26B.pdf",
+        "id": "288696",
+        "dokumentnummer": "266/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Änderung des Strafrechts - Umsetzung der Richtlinie (EU) 2024/1203 über den strafrechtlichen Schutz der Umwelt sowie zur Änderung der Zustellungspauschalen und Gebühren im Gesetz über Ordnungswidrigkeiten und in den Justizkostengesetzen",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288695",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "265/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "c6dacd043062031d37b8e77173eb01ce",
+      "aktualisiert": "2026-06-12T16:06:21+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334559",
+          "titel": "Gesetz zur Änderung des Rechts der Wohn- und Geschäftsraummiete",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0265-26B.pdf",
+        "id": "288695",
+        "dokumentnummer": "265/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Änderung des Rechts der Wohn- und Geschäftsraummiete",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288694",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "264/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "cd50eafe46701fbe4031e149c48f14eb",
+      "aktualisiert": "2026-06-12T16:06:08+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334557",
+          "titel": "Gesetz zur Änderung der Strafprozessordnung - digitale Ermittlungsmaßnahmen",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0264-26B.pdf",
+        "id": "288694",
+        "dokumentnummer": "264/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Änderung der Strafprozessordnung - digitale Ermittlungsmaßnahmen",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288693",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "263/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "cfc66dd484e35d57a786706a57b5dce6",
+      "aktualisiert": "2026-06-12T16:05:50+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334474",
+          "titel": "Gesetz zur Einführung einer IP-Adressspeicherung und Weiterentwicklung der Befugnisse zur Datenerhebung im Strafverfahren",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0263-26B.pdf",
+        "id": "288693",
+        "dokumentnummer": "263/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Einführung einer IP-Adressspeicherung und Weiterentwicklung der Befugnisse zur Datenerhebung im Strafverfahren",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288692",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "262/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "3976966e88b84a41307d508b79a8782c",
+      "aktualisiert": "2026-06-12T16:05:10+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334567",
+          "titel": "Gesetz zur Änderung des Versorgungsausgleichsrechts",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0262-26B.pdf",
+        "id": "288692",
+        "dokumentnummer": "262/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Änderung des Versorgungsausgleichsrechts",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288691",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "261/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "05f3740ebf0141365850e99083e31ca7",
+      "aktualisiert": "2026-06-12T16:04:54+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334554",
+          "titel": "Gesetz zur Modernisierung des Verpflichtungsgesetzes und zur Änderung des Europäische-Staatsanwaltschaft-Gesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0261-26B.pdf",
+        "id": "288691",
+        "dokumentnummer": "261/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Modernisierung des Verpflichtungsgesetzes und zur Änderung des Europäische-Staatsanwaltschaft-Gesetzes",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288690",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "260/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "594536548f4819ac632bcc166a247ae1",
+      "aktualisiert": "2026-06-12T16:04:36+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334566",
+          "titel": "Gesetz zur Durchführung der Verordnung (EU) 2024/2847 über horizontale Cybersicherheitsanforderungen für Produkte mit digitalen Elementen (Cyberresilienz-Verordnung)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0260-26B.pdf",
+        "id": "288690",
+        "dokumentnummer": "260/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Durchführung der Verordnung (EU) 2024/2847 über horizontale Cybersicherheitsanforderungen für Produkte mit digitalen Elementen (Cyberresilienz-Verordnung)",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288689",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "259/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "ed560c526178027d5020638cacf7de86",
+      "aktualisiert": "2026-06-12T16:04:11+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334562",
+          "titel": "Gesetz zur Stärkung digitaler Ermittlungsbefugnisse zur Abwehr von Gefahren des internationalen Terrorismus",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0259-26B.pdf",
+        "id": "288689",
+        "dokumentnummer": "259/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Stärkung digitaler Ermittlungsbefugnisse zur Abwehr von Gefahren des internationalen Terrorismus",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288688",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "258/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "5d692668bed7be8d110bfacd142a7dbf",
+      "aktualisiert": "2026-06-12T16:03:57+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334493",
+          "titel": "Gesetz zur Stärkung digitaler Ermittlungsbefugnisse in der Polizeiarbeit",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0258-26B.pdf",
+        "id": "288688",
+        "dokumentnummer": "258/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Stärkung digitaler Ermittlungsbefugnisse in der Polizeiarbeit",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288687",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "257/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "2c7cde716da3cfa1be42d011c5a02dac",
+      "aktualisiert": "2026-06-12T16:03:46+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334558",
+          "titel": "Drittes Gesetz zur Änderung des Vereinsgesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0257-26B.pdf",
+        "id": "288687",
+        "dokumentnummer": "257/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Dritten Gesetzes zur Änderung des Vereinsgesetzes",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288686",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "256/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "c963a2cd4dd7bb1bd06d49180673b118",
+      "aktualisiert": "2026-06-12T16:03:26+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334469",
+          "titel": "Gesetz zur Stabilisierung der Beitragssätze in der gesetzlichen Krankenversicherung (GKV-Beitragssatzstabilisierungsgesetz)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0256-26B.pdf",
+        "id": "288686",
+        "dokumentnummer": "256/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Stabilisierung der Beitragssätze in der gesetzlichen Krankenversicherung (GKV-Beitragssatzstabilisierungsgesetz)",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288685",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "255/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "4642f0577b3c0329080d3632e91fec29",
+      "aktualisiert": "2026-06-12T16:03:07+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334560",
+          "titel": "Gesetz zur Reform der Notfallversorgung",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0255-26B.pdf",
+        "id": "288685",
+        "dokumentnummer": "255/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Reform der Notfallversorgung",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288684",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "254/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "6265d2388bf31429e65bf2f3b7a6f81f",
+      "aktualisiert": "2026-06-12T16:02:53+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334561",
+          "titel": "Gesetz zur Entlastung der Länder und ihrer Kommunen (Länder- und Kommunalentlastungsgesetz - LKEG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0254-26B.pdf",
+        "id": "288684",
+        "dokumentnummer": "254/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Entlastung der Länder und ihrer Kommunen (Länder- und Kommunalentlastungsgesetz - LKEG)",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288683",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "253/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "74e93f86e03525cdcfe64aec5eb9cd8b",
+      "aktualisiert": "2026-06-12T16:02:36+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334565",
+          "titel": "Gesetz zur Umsetzung der Richtlinien (EU) 2025/1 und (EU) 2025/2 zur Festlegung eines Rahmens für die Sanierung und Abwicklung von Versicherungsunternehmen sowie zur Änderung des Aufsichtsrahmens für Versicherungsunternehmen (Versicherungs-Sanierungs-Abwicklungs-und-Aufsichtsänderungs-Gesetz - VSAAG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0253-26B.pdf",
+        "id": "288683",
+        "dokumentnummer": "253/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Umsetzung der Richtlinien (EU) 2025/1 und (EU) 2025/2 zur Festlegung eines Rahmens für die Sanierung und Abwicklung von Versicherungsunternehmen sowie zur Änderung des Aufsichtsrahmens für Versicherungsunternehmen (Versicherungs-Sanierungs-Abwicklungs-und-Aufsichtsänderungs-Gesetz - VSAAG)",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288682",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "282/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "77f1fdff93098b8309b6ad627556aa53",
+      "aktualisiert": "2026-06-12T16:01:20+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334698",
+          "titel": "Zweites Gesetz zur Änderung des Allgemeinen Gleichbehandlungsgesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0282-26B.pdf",
+        "id": "288682",
+        "dokumentnummer": "282/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Zweiten Gesetzes zur Änderung des Allgemeinen Gleichbehandlungsgesetzes",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288681",
+      "drucksachetyp": "Stellungnahme",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "251/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "93d88d2f2bf21a05405069869944ffdc",
+      "aktualisiert": "2026-06-12T16:01:06+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334564",
+          "titel": "Zweites Gesetz zur Änderung des Düngegesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0251-26B.pdf",
+        "id": "288681",
+        "dokumentnummer": "251/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Stellungnahme",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Zweiten Gesetzes zur Änderung des Düngegesetzes",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288680",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "245/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "55b6fa8b18d6ba0958616d3ced3acdb5",
+      "aktualisiert": "2026-06-12T16:00:51+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334371",
+          "titel": "Entschließung des Bundesrates: Verlässliche Umsetzung des Offshore-Windenergieausbaus",
+          "vorgangstyp": "Selbständiger Antrag von Ländern auf Entschließung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0245-26B.pdf",
+        "id": "288680",
+        "dokumentnummer": "245/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entschließung des Bundesrates: Verlässliche Umsetzung des Offshore-Windenergieausbaus",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288679",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "247/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "5ed971a0ab2c587cf888137d519f0ee9",
+      "aktualisiert": "2026-06-12T16:00:26+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334372",
+          "titel": "Entschließung des Bundesrates zum Schutz von Mietern vor Versorgungssperren: Einführung eines Straftatbestandes bei vorsätzlicher zweckwidriger Verwendung oder pflichtwidrigem Zurückhalten von Betriebskostenvorauszahlungen durch Vermieter",
+          "vorgangstyp": "Selbständiger Antrag von Ländern auf Entschließung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0247-26B.pdf",
+        "id": "288679",
+        "dokumentnummer": "247/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entschließung des Bundesrates zum Schutz von Mietern vor Versorgungssperren: Einführung eines Straftatbestandes bei vorsätzlicher zweckwidriger Verwendung oder pflichtwidrigem Zurückhalten von Betriebskostenvorauszahlungen durch Vermieter",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288678",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "276/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "f0cd186fbf93fc3f854e6dddb73e2347",
+      "aktualisiert": "2026-06-12T16:00:13+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334671",
+          "titel": "Entschließung des Bundesrates zur Wiederaufnahme und Verstetigung des Zukunftsprogramms Kino (ZPK) oder zur Einrichtung einer vergleichbaren investiven Kinoförderung auf Bundesebene",
+          "vorgangstyp": "Selbständiger Antrag von Ländern auf Entschließung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0276-26B.pdf",
+        "id": "288678",
+        "dokumentnummer": "276/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entschließung des Bundesrates zur Wiederaufnahme und Verstetigung des Zukunftsprogramms Kino (ZPK) oder zur Einrichtung einer vergleichbaren investiven Kinoförderung auf Bundesebene",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288677",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "246/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "f15c17549280503037303428a248da40",
+      "aktualisiert": "2026-06-12T15:58:57+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334373",
+          "titel": "Entschließung des Bundesrates \"Bürokratieabbau im Gesundheitswesen - Gesundheitshandwerk stärken - Präqualifizierung in der GKV überprüfen\"",
+          "vorgangstyp": "Selbständiger Antrag von Ländern auf Entschließung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0246-26B.pdf",
+        "id": "288677",
+        "dokumentnummer": "246/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entschließung des Bundesrates \"Bürokratieabbau im Gesundheitswesen - Gesundheitshandwerk stärken - Präqualifizierung in der GKV überprüfen\"",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288676",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "218/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "90871fa1c57664b87c030db9d934a38f",
+      "aktualisiert": "2026-06-12T15:58:37+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "333956",
+          "titel": "Entschließung des Bundesrates: Regional- und Minderheitensprachen im EU-Markenrecht schützen",
+          "vorgangstyp": "Selbständiger Antrag von Ländern auf Entschließung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0218-26B.pdf",
+        "id": "288676",
+        "dokumentnummer": "218/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entschließung des Bundesrates: Regional- und Minderheitensprachen im EU-Markenrecht schützen",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288675",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "242/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "a5c1dd5235c62d91b3c3bbe77f5e6f35",
+      "aktualisiert": "2026-06-12T15:58:13+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334369",
+          "titel": "Entschließung des Bundesrates: Substanzielle Erhöhung des Basisfördersatzes in der Gigabitförderung 2.0 des Bundes",
+          "vorgangstyp": "Selbständiger Antrag von Ländern auf Entschließung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0242-26B.pdf",
+        "id": "288675",
+        "dokumentnummer": "242/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entschließung des Bundesrates: Substanzielle Erhöhung des Basisfördersatzes in der Gigabitförderung 2.0 des Bundes",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288674",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "252/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "310951379eed5af68f4e983180136a53",
+      "aktualisiert": "2026-06-12T15:57:47+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334563",
+          "titel": "Fünftes Gesetz zur Änderung des Tierschutzgesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0252-26B.pdf",
+        "id": "288674",
+        "dokumentnummer": "252/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Fünften Gesetzes zur Änderung des Tierschutzgesetzes",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288673",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "248/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "a169cfa3c44e4afe6ad0b5f0452fa863",
+      "aktualisiert": "2026-06-12T15:56:40+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334375",
+          "titel": "Gesetz zur Einschränkung des Handels mit Gegenständen von Opfern aus der Zeit des Nationalsozialismus",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0248-26B.pdf",
+        "id": "288673",
+        "dokumentnummer": "248/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Entwurf eines Gesetzes zur Einschränkung des Handels mit Gegenständen von Opfern aus der Zeit des Nationalsozialismus",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288672",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "306/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "ce0f5c47e9f7a7243e536a27830d40a6",
+      "aktualisiert": "2026-06-12T15:56:12+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "331146",
+          "titel": "Gesetz zu dem Vertrag vom 12. März 2025 zwischen der Bundesrepublik Deutschland und der Tschechischen Republik über die gemeinsame Staatsgrenze",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0306-26B.pdf",
+        "id": "288672",
+        "dokumentnummer": "306/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Gesetz zu dem Vertrag vom 12. März 2025 zwischen der Bundesrepublik Deutschland und der Tschechischen Republik über die gemeinsame Staatsgrenze",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288671",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "305/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "1b55a4a4e919d54c5b3fceec26c5eea3",
+      "aktualisiert": "2026-06-12T15:55:42+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "330469",
+          "titel": "Gesetz zur Modernisierung der nationalen Umsetzung von europäischen Regelungen zum Ökodesign, zur Energieverbrauchskennzeichnung und zu weiteren Regelungen",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0305-26B.pdf",
+        "id": "288671",
+        "dokumentnummer": "305/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Gesetz zur Modernisierung der nationalen Umsetzung von europäischen Regelungen zum Ökodesign, zur Energieverbrauchskennzeichnung und zu weiteren Regelungen",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288670",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "304/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "891d69383c547881e1c20c3bae273a86",
+      "aktualisiert": "2026-06-12T15:55:14+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "329522",
+          "titel": "Gesetz zur Änderung flaggen-, schiffsregister- und seefischereirechtlicher Vorschriften",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0304-26B.pdf",
+        "id": "288670",
+        "dokumentnummer": "304/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Gesetz zur Änderung flaggen-, schiffsregister- und seefischereirechtlicher Vorschriften",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288669",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "303/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "3df0ed826b7247b81caafeb7fddbe93b",
+      "aktualisiert": "2026-06-12T15:54:48+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "333131",
+          "titel": "Gesetz zur Förderung und Modernisierung des Anwaltsnotariats, zur Änderung des Bundes-Immissionsschutzgesetzes, zur Digitalisierung des Führungszeugnisses und zur Verlängerung der Antragsfrist für Anträge von Soldatinnen und Soldaten auf Entschädigung wegen dienstrechtlicher Benachteiligung",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0303-26B.pdf",
+        "id": "288669",
+        "dokumentnummer": "303/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Gesetz zur Förderung und Modernisierung des Anwaltsnotariats, zur Änderung des Bundes-Immissionsschutzgesetzes, zur Digitalisierung des Führungszeugnisses und zur Verlängerung der Antragsfrist für Anträge von Soldatinnen und Soldaten auf Entschädigung wegen dienstrechtlicher Benachteiligung",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288668",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "302/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "b496c1c310fa9ec1a05d47a10c219975",
+      "aktualisiert": "2026-06-12T15:53:53+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "329548",
+          "titel": "Gesetz zur Einführung der elektronischen Aufenthaltsüberwachung und der Täterarbeit im Gewaltschutzgesetz",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0302-26B.pdf",
+        "id": "288668",
+        "dokumentnummer": "302/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Gesetz zur Einführung der elektronischen Aufenthaltsüberwachung und der Täterarbeit im Gewaltschutzgesetz",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288667",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "301/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "efb3f65ce1a3a91270ebfdd1e6e00fbb",
+      "aktualisiert": "2026-06-12T15:53:26+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "327990",
+          "titel": "Gesetz zur Digitalisierung des Vollzugs von Immobilienverträgen, der gerichtlichen Genehmigungen von notariellen Rechtsgeschäften und der steuerlichen Anzeigen der Notare",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0301-26B.pdf",
+        "id": "288667",
+        "dokumentnummer": "301/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Gesetz zur Digitalisierung des Vollzugs von Immobilienverträgen, der gerichtlichen Genehmigungen von notariellen Rechtsgeschäften und der steuerlichen Anzeigen der Notare",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288666",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "299/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "c041d44e966c3c68cc7df1be55ae0f9d",
+      "aktualisiert": "2026-06-12T15:51:29+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "329550",
+          "titel": "Gesetz zur Weiterentwicklung der Apothekenversorgung (Apothekenversorgung-Weiterentwicklungsgesetz - ApoVWG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0299-26B.pdf",
+        "id": "288666",
+        "dokumentnummer": "299/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Gesetz zur Weiterentwicklung der Apothekenversorgung (Apothekenversorgung-Weiterentwicklungsgesetz - ApoVWG)",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288665",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "298/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "143f4525734903cdfaa5cd6fdd47492b",
+      "aktualisiert": "2026-06-12T15:50:25+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "333599",
+          "titel": "Zweites Gesetz zur Änderung des Luftverkehrsteuergesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0298-26B.pdf",
+        "id": "288665",
+        "dokumentnummer": "298/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Zweites Gesetz zur Änderung des Luftverkehrsteuergesetzes",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288664",
+      "drucksachetyp": "Beschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "311/26(B)",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "d1ceb0f4eb61a92d3b86439bc106c76c",
+      "aktualisiert": "2026-06-12T15:49:40+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335575",
+          "titel": "Wahl des Vorsitzenden des Ausschusses für Fragen der Europäischen Union",
+          "vorgangstyp": "Wahl der Ausschussvorsitzenden BR"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0311-26B.pdf",
+        "id": "288664",
+        "dokumentnummer": "311/26(B)",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschluss",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Wahl des Vorsitzenden des Ausschusses für Fragen der Europäischen Union",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288662",
+      "drucksachetyp": "Unterrichtung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 0,
+      "dokumentnummer": "21/6490",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "6b12e52cf5eec176b48635dd9cfd1b31",
+      "aktualisiert": "2026-06-12T13:52:16+02:00",
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106490.pdf",
+        "id": "288662",
+        "dokumentnummer": "21/6490",
+        "datum": "2026-06-12",
+        "verteildatum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Unterrichtung",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "titel": "1. Sitzungswoche 2026 der Parlamentarischen Versammlung des Europarates vom 26. bis 30. Januar 2026 in Straßburg, Frankreich",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288659",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 0,
+      "dokumentnummer": "21/6417",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "1039cefadd79f596980fde2263d39dee",
+      "aktualisiert": "2026-06-12T13:52:03+02:00",
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106417.pdf",
+        "id": "288659",
+        "dokumentnummer": "21/6417",
+        "datum": "2026-06-12",
+        "verteildatum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "titel": "zu dem Antrag der Bundesregierung\r\n– 21/5778 –\r\nFortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an der „United Nations Interim Force in Lebanon“ (UNIFIL)",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288650",
+      "drucksachetyp": "Antwort",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 0,
+      "dokumentnummer": "21/6484",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T13:08:16+02:00",
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106484.pdf",
+        "id": "288650",
+        "dokumentnummer": "21/6484",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antwort",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "titel": "auf die Kleine Anfrage\r\n- Drucksache 21/6484 -\r\nFörderung der Beschaffung und Einführung eines Enterprise Resource Planning Systems bei der Hanns-Seidel-Stiftung in den Jahren von 2017 bis 2024",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288649",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 15,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6481",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T11:30:00+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "336005",
+          "titel": "Geplante Vollsperrung beim RE1 ab dem Jahr 2029 zwischen Berlin und Frankfurt (Oder)",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106481.pdf",
+        "id": "288649",
+        "dokumentnummer": "21/6481",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7287",
+          "titel": "Christian Görke, MdB, DIE LINKE",
+          "autor_titel": "Christian Görke"
+        },
+        {
+          "id": "8014",
+          "titel": "Isabelle Vandre, MdB, DIE LINKE",
+          "autor_titel": "Isabelle Vandre"
+        }
+      ],
+      "titel": "Geplante Vollsperrung beim RE1 ab dem Jahr 2029 zwischen Berlin und Frankfurt (Oder)",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288648",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 17,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6480",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T11:26:04+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "336004",
+          "titel": "Medienberichte über Gespräche zur Wiederaufnahme von LNG-Lieferungen aus Russland zwischen Novatek und der bundeseigenen SEFE",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106480.pdf",
+        "id": "288648",
+        "dokumentnummer": "21/6480",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7287",
+          "titel": "Christian Görke, MdB, DIE LINKE",
+          "autor_titel": "Christian Görke"
+        },
+        {
+          "id": "7462",
+          "titel": "Janine Wissler, MdB, DIE LINKE",
+          "autor_titel": "Janine Wissler"
+        }
+      ],
+      "titel": "Medienberichte über Gespräche zur Wiederaufnahme von LNG-Lieferungen aus Russland zwischen Novatek und der bundeseigenen SEFE",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288645",
+      "drucksachetyp": "Gesetzesbeschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "366/26",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "da0b8432348702a460f3ca2b5dac517b",
+      "aktualisiert": "2026-06-12T10:32:38+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335057",
+          "titel": "Neuntes Gesetz zur Änderung von Vorschriften im Steuerberatungsrecht sowie im Steuerrecht",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BT",
+          "titel": "Bundestag"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0366-26.pdf",
+        "id": "288645",
+        "dokumentnummer": "366/26",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzesbeschluss",
+        "herausgeber": "BR",
+        "urheber": [
+          "Bundestag"
+        ]
+      },
+      "titel": "Neuntes Gesetz zur Änderung von Vorschriften im Steuerberatungsrecht sowie im Steuerrecht",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288642",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "368/26",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "7bb9b3d4a6902b81828bb23ead7b0095",
+      "aktualisiert": "2026-06-12T09:54:30+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335987",
+          "titel": "Entschließung des Bundesrates zur Einführung eines flexiblen Preisdeckels bei Kraftstoffen",
+          "vorgangstyp": "Selbständiger Antrag von Ländern auf Entschließung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": true,
+          "rolle": "U",
+          "bezeichnung": "SL",
+          "titel": "Saarland"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0368-26.pdf",
+        "id": "288642",
+        "dokumentnummer": "368/26",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BR",
+        "urheber": [
+          "Saarland"
+        ]
+      },
+      "titel": "Entschließung des Bundesrates zur Einführung eines flexiblen Preisdeckels bei Kraftstoffen",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288613",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 8,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6471",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T09:53:55+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335981",
+          "titel": "Fertigstellung des Digitalen Sportstättenatlas Deutschland",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106471.pdf",
+        "id": "288613",
+        "dokumentnummer": "21/6471",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2256",
+          "titel": "Jörn König, MdB, AfD",
+          "autor_titel": "Jörn König"
+        },
+        {
+          "id": "8098",
+          "titel": "Lars Schieske, MdB, AfD",
+          "autor_titel": "Lars Schieske"
+        }
+      ],
+      "titel": "Fertigstellung des Digitalen Sportstättenatlas Deutschland",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288612",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 9,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6470",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T09:43:58+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335980",
+          "titel": "Sachstand zu Abhängigkeiten der Gesundheitsversorgung von Energie- und Rohstoffimporten über die Seewege der Straße von Hormus, dem Golf von Aden und dem Roten Meer",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106470.pdf",
+        "id": "288612",
+        "dokumentnummer": "21/6470",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7173",
+          "titel": "Dr. Janosch Dahmen, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Janosch Dahmen"
+        },
+        {
+          "id": "7259",
+          "titel": "Dr. Sandra Detzer, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Sandra Detzer"
+        }
+      ],
+      "titel": "Sachstand zu Abhängigkeiten der Gesundheitsversorgung von Energie- und Rohstoffimporten über die Seewege der Straße von Hormus, dem Golf von Aden und dem Roten Meer",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288611",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 1,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6469",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T09:40:37+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335978",
+          "titel": "Tätigkeit des Afghanischen Generalkonsulats in Bonn und mögliche Einflussnahme von den Taliban nahen Vertretern",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106469.pdf",
+        "id": "288611",
+        "dokumentnummer": "21/6469",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7881",
+          "titel": "Stefan Schröder, MdB, AfD",
+          "autor_titel": "Stefan Schröder"
+        }
+      ],
+      "titel": "Tätigkeit des Afghanischen Generalkonsulats in Bonn und mögliche Einflussnahme von den Taliban nahen Vertretern",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288580",
+      "drucksachetyp": "Schriftliche Fragen",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 0,
+      "dokumentnummer": "21/6457",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-11T15:37:29+02:00",
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106457.pdf",
+        "id": "288580",
+        "dokumentnummer": "21/6457",
+        "datum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Schriftliche Fragen",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "titel": "",
+      "datum": "2026-06-12"
+    },
+    {
+      "id": "288660",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 0,
+      "dokumentnummer": "21/6409",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "fa9232a67982ba871e93ec214a7a90c6",
+      "aktualisiert": "2026-06-12T13:44:52+02:00",
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106409.pdf",
+        "id": "288660",
+        "dokumentnummer": "21/6409",
+        "datum": "2026-06-11",
+        "verteildatum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "titel": "zu dem Antrag der Abgeordneten Evelyn Schötz, Nicole Gohlke, Dr. Michael Arndt, weiterer Abgeordneter und der Fraktion Die Linke\r\n– 21/2216 –\r\nKeine Leistungskürzungen in der Pflege \r\n",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288647",
+      "drucksachetyp": "Unterrichtung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 4,
+      "dokumentnummer": "21/6479",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "224d82faaecae58957bdaa7d736836d6",
+      "aktualisiert": "2026-06-12T12:08:32+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "328465",
+          "titel": "10. Sektorgutachten der Monopolkommission\r\nEnergie 2025: Wettbewerb und Effizienz für ein zukunftsfähiges Energiesystem",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        },
+        {
+          "id": "335223",
+          "titel": "Mitteilung der freiwilligen Löschung von Zertifikaten nach Artikel 12 Absatz 4 der Richtlinie 2003/87/EG des Europäischen Parlaments und des Rates vom 13. Oktober 2003 über ein System für den Handel mit Treibhausgasemissionszertifikaten in der Union im Jahr 2024",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        },
+        {
+          "id": "335484",
+          "titel": "Bericht über die Umsetzung und Weiterentwicklung des wissenschaftlich fundierten Personalbemessungsverfahrens in der vollstationären Langzeitpflege",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        },
+        {
+          "id": "335485",
+          "titel": "Fünfzehnter Bericht der Bundesregierung über die Auswirkungen des Gesetzes zur Bekämpfung der illegalen Beschäftigung Bericht",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BT",
+          "titel": "Bundestag"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106479.pdf",
+        "id": "288647",
+        "dokumentnummer": "21/6479",
+        "datum": "2026-06-11",
+        "verteildatum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Unterrichtung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundestag"
+        ]
+      },
+      "titel": "über die gemäß § 80 Absatz 3 der Geschäftsordnung an die Ausschüsse überwiesenen Vorlagen \r\n(Eingangszeitraum: 21. bis 26. Mai 2026)",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288646",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "366/1/26",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "0d9d01c6d183aced278fa2995c9d41e9",
+      "aktualisiert": "2026-06-12T10:35:17+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335057",
+          "titel": "Neuntes Gesetz zur Änderung von Vorschriften im Steuerberatungsrecht sowie im Steuerrecht",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "rolle": "U",
+          "bezeichnung": "BE",
+          "titel": "Berlin"
+        },
+        {
+          "rolle": "U",
+          "bezeichnung": "HB",
+          "titel": "Bremen"
+        },
+        {
+          "rolle": "U",
+          "bezeichnung": "HH",
+          "titel": "Hamburg"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0366-1-26.pdf",
+        "id": "288646",
+        "dokumentnummer": "366/1/26",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BR",
+        "urheber": [
+          "Berlin",
+          "Bremen",
+          "Hamburg"
+        ]
+      },
+      "titel": "Neuntes Gesetz zur Änderung von Vorschriften im Steuerberatungsrecht sowie im Steuerrecht",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288644",
+      "drucksachetyp": "Antwort",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6478",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T10:26:34+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335487",
+          "titel": "Einstellung des Betriebs des Bundesprojekts \"Datenatlas Bund\" und deren Folgen",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106478.pdf",
+        "id": "288644",
+        "dokumentnummer": "21/6478",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antwort",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "auf die Kleine Anfrage\r\n- Drucksache 21/6176 -\r\nEinstellung des Betriebs des Bundesprojekts \"Datenatlas Bund\" und deren Folgen",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288643",
+      "drucksachetyp": "Wahlvorschlag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6462",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "1047f90e7eaee3990900c8acb0292e9b",
+      "aktualisiert": "2026-06-12T10:21:11+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335990",
+          "titel": "Wahl eines vom Deutschen Bundestag zu benennenden Mitglieds des Deutschen Ethikrats gemäß den §§ 4 und 5 des Ethikratgesetzes",
+          "vorgangstyp": "Besetzung externer Gremien durch BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106462.pdf",
+        "id": "288643",
+        "dokumentnummer": "21/6462",
+        "datum": "2026-06-11",
+        "verteildatum": "2026-06-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Wahlvorschlag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "titel": "Wahl eines vom Deutschen Bundestag zu benennenden Mitglieds des Deutschen Ethikrats gemäß den §§ 4 und 5 des Ethikratgesetzes",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288636",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 9,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6448",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T09:12:47+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335965",
+          "titel": "Umsetzungsstand der Nationalen Plattform für Forschungssicherheit und Sicherheitsanforderungen im deutschen Wissenschaftssystem",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106448.pdf",
+        "id": "288636",
+        "dokumentnummer": "21/6448",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7921",
+          "titel": "Ayse Asar, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Ayse Asar"
+        },
+        {
+          "id": "8189",
+          "titel": "Dr. Andrea Lübcke, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Andrea Lübcke"
+        }
+      ],
+      "titel": "Umsetzungsstand der Nationalen Plattform für Forschungssicherheit und Sicherheitsanforderungen im deutschen Wissenschaftssystem",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288620",
+      "drucksachetyp": "Antwort",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6477",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T09:24:39+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334639",
+          "titel": "Aktueller Stand der Umsetzung des europäischen Systems für das Management sowie die Steuerung des Eisenbahnverkehrs in Deutschland - Stand Frühling 2026",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Verkehr"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106477.pdf",
+        "id": "288620",
+        "dokumentnummer": "21/6477",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antwort",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "auf die Kleine Anfrage\r\n- Drucksache 21/5813 -\r\nAktueller Stand der Umsetzung des europäischen Systems für das Management sowie die Steuerung des Eisenbahnverkehrs in Deutschland - Stand: Frühling 2026",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288619",
+      "drucksachetyp": "Antwort",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6476",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T10:42:16+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334909",
+          "titel": "Trinkwassersicherheit in Deutschland",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106476.pdf",
+        "id": "288619",
+        "dokumentnummer": "21/6476",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antwort",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "auf die Kleine Anfrage\r\n- Drucksache 21/5948 -\r\nTrinkwassersicherheit in Deutschland",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288618",
+      "drucksachetyp": "Antwort",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6475",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T09:22:56+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335409",
+          "titel": "Personalbestand bei den Schleusenmeistern am Nord-Ostsee-Kanal",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Verkehr"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106475.pdf",
+        "id": "288618",
+        "dokumentnummer": "21/6475",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antwort",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "auf die Kleine Anfrage\r\n- Drucksache 21/6158 -\r\nPersonalbestand bei den Schleusenmeistern am Nord-Ostsee-Kanal",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288617",
+      "drucksachetyp": "Antwort",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6474",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T10:07:27+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334763",
+          "titel": "Einfluss von Lobbyinteressen der Gaswirtschaft auf die Kraftwerksstrategie des Bundesministeriums für Wirtschaft und Energie",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Wirtschaft und Energie"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106474.pdf",
+        "id": "288617",
+        "dokumentnummer": "21/6474",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antwort",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "auf die Kleine Anfrage\r\n- Drucksache 21/5888 -\r\nEinfluss von Lobbyinteressen der Gaswirtschaft auf die Kraftwerksstrategie des Bundesministeriums für Wirtschaft und Energie",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288615",
+      "drucksachetyp": "Antwort",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6473",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T08:17:17+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335443",
+          "titel": "Mögliche Verbindungen zwischen christlichem Fundamentalismus und Rechtsextremismus in Deutschland",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium des Innern"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106473.pdf",
+        "id": "288615",
+        "dokumentnummer": "21/6473",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antwort",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "auf die Kleine Anfrage\r\n- Drucksache 21/6166 -\r\nMögliche Verbindungen zwischen christlichem Fundamentalismus und Rechtsextremismus in Deutschland",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288614",
+      "drucksachetyp": "Antwort",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6472",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T08:28:40+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335412",
+          "titel": "Detailfragen zur Aufnahme und Abschiebung afghanischer Staatsbürger\r\n(Nachfrage zur Antwort der Bundesregierung auf die Kleine Anfrage auf Bundestagsdrucksache 21/5562)",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium des Innern"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106472.pdf",
+        "id": "288614",
+        "dokumentnummer": "21/6472",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antwort",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "auf die Kleine Anfrage\r\n- Drucksache 21/6161 -\r\nDetailfragen zur Aufnahme und Abschiebung afghanischer Staatsbürger (Nachfrage zur Antwort der Bundesregierung auf die Kleine Anfrage auf Bundestagsdrucksache 21/5562)",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288609",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6410",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "02e08315167c58b7707967438bf1f28c",
+      "aktualisiert": "2026-06-12T09:37:34+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335975",
+          "titel": "Antrag auf Genehmigung zur Durchführung eines Strafverfahrens",
+          "vorgangstyp": "Immunitätsangelegenheit"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfWIuG",
+          "titel": "Ausschuss für Wahlprüfung, Immunität und Geschäftsordnung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106410.pdf",
+        "id": "288609",
+        "dokumentnummer": "21/6410",
+        "datum": "2026-06-11",
+        "verteildatum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Wahlprüfung, Immunität und Geschäftsordnung"
+        ]
+      },
+      "titel": "Antrag auf Genehmigung zur Durchführung eines Strafverfahrens",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288589",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "367/26",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "e4bad2738f9154084665e41086b7725b",
+      "aktualisiert": "2026-06-11T16:34:03+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335947",
+          "titel": "Entschließung des Bundesrates \"Unmittelbarer Handlungsbedarf in Folge der Sperrung der Friedrich-Ebert-Autobahnbrücke im Bonner Norden\"",
+          "vorgangstyp": "Selbständiger Antrag von Ländern auf Entschließung"
+        }
+      ],
+      "urheber": [
+        {
+          "rolle": "U",
+          "bezeichnung": "NW",
+          "titel": "Nordrhein-Westfalen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0367-26.pdf",
+        "id": "288589",
+        "dokumentnummer": "367/26",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BR",
+        "urheber": [
+          "Nordrhein-Westfalen"
+        ]
+      },
+      "titel": "Entschließung des Bundesrates \"Unmittelbarer Handlungsbedarf in Folge der Sperrung der Friedrich-Ebert-Autobahnbrücke im Bonner Norden\"",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288588",
+      "drucksachetyp": "Empfehlungen",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "zu283/1/26",
+      "wahlperiode": 21,
+      "herausgeber": "BR",
+      "pdf_hash": "f9601dbc75549981ad907b9ce07d6bfe",
+      "aktualisiert": "2026-06-11T16:26:38+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "330850",
+          "titel": "Vorschlag für eine Verordnung des Europäischen Parlaments und des Rates zur Schaffung eines Rahmens für Maßnahmen zur Stärkung der Biotechnologie und der Bioproduktion in der Union, insbesondere im Bereich der Gesundheit, und zur Änderung der Verordnungen (EG) Nr. 178/2002, (EG) Nr. 1394/2007, (EU) Nr. 536/2014, (EU) 2019/6, (EU) 2024/795 und (EU) 2024/1938 (Europäische Biotech-Verordnung)\r\nKOM(2025) 1022 endg.; Ratsdok. 16945/25",
+          "vorgangstyp": "EU-Vorlage"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2026/0283-1-26(zu).pdf",
+        "id": "288588",
+        "dokumentnummer": "zu283/1/26",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Empfehlungen",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Vorschlag für eine Verordnung des Europäischen Parlaments und des Rates zur Schaffung eines Rahmens für Maßnahmen zur Stärkung der Biotechnologie und der Bioproduktion in der Union, insbesondere im Bereich der Gesundheit, und zur Änderung der Verordnungen (EG) Nr. 178/2002, (EG) Nr. 1394/2007, (EU) Nr. 536/2014, (EU) 2019/6, (EU) 2024/795 und (EU) 2024/1938 (Europäische Biotech-Verordnung)",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288587",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 9,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6456",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T09:22:49+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335969",
+          "titel": "Staatliche Förderung kirchlicher Entwicklungsorganisationen",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106456.pdf",
+        "id": "288587",
+        "dokumentnummer": "21/6456",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "8087",
+          "titel": "Matthias Rentzsch, MdB, AfD",
+          "autor_titel": "Matthias Rentzsch"
+        },
+        {
+          "id": "8040",
+          "titel": "Rocco Kever, MdB, AfD",
+          "autor_titel": "Rocco Kever"
+        }
+      ],
+      "titel": "Staatliche Förderung kirchlicher Entwicklungsorganisationen",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288586",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 13,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6459",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T09:29:58+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335972",
+          "titel": "Strategie der Bundesregierung zur Wiedervernässung der Moore",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106459.pdf",
+        "id": "288586",
+        "dokumentnummer": "21/6459",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7952",
+          "titel": "Marcel Bauer, MdB, DIE LINKE",
+          "autor_titel": "Marcel Bauer"
+        },
+        {
+          "id": "7988",
+          "titel": "Luigi Pantisano, MdB, DIE LINKE",
+          "autor_titel": "Luigi Pantisano"
+        }
+      ],
+      "titel": "Strategie der Bundesregierung zur Wiedervernässung der Moore",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288585",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 14,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6460",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T09:35:12+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335974",
+          "titel": "Zukunft der Elbe als Wasserstraße, Staustufen, Schleusen, Schiffbarkeit und mögliche Wettbewerbsnachteile gegenüber Tschechien",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106460.pdf",
+        "id": "288585",
+        "dokumentnummer": "21/6460",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7245",
+          "titel": "René Bochmann, MdB, AfD",
+          "autor_titel": "René Bochmann"
+        },
+        {
+          "id": "8110",
+          "titel": "Alexis L. Giersch, MdB, AfD",
+          "autor_titel": "Alexis L. Giersch"
+        }
+      ],
+      "titel": "Zukunft der Elbe als Wasserstraße, Staustufen, Schleusen, Schiffbarkeit und mögliche Wettbewerbsnachteile gegenüber Tschechien",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288584",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 8,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6461",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T09:38:16+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335976",
+          "titel": "Steuerliche Implikationen eines europäischen \"28. Regimes\" für Unternehmen",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106461.pdf",
+        "id": "288584",
+        "dokumentnummer": "21/6461",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7974",
+          "titel": "Iris Nieland, MdB, AfD",
+          "autor_titel": "Iris Nieland"
+        },
+        {
+          "id": "2191",
+          "titel": "Kay Gottschalk, MdB, AfD",
+          "autor_titel": "Kay Gottschalk"
+        }
+      ],
+      "titel": "Steuerliche Implikationen eines europäischen \"28. Regimes\" für Unternehmen",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288581",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 15,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6458",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T09:26:27+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335970",
+          "titel": "Verarbeitung von Fluggastdaten in Deutschland im Jahr 2025",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106458.pdf",
+        "id": "288581",
+        "dokumentnummer": "21/6458",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "8054",
+          "titel": "Jan Köstering, MdB, DIE LINKE",
+          "autor_titel": "Jan Köstering"
+        },
+        {
+          "id": "7559",
+          "titel": "Clara Bünger, MdB, DIE LINKE",
+          "autor_titel": "Clara Bünger"
+        }
+      ],
+      "titel": "Verarbeitung von Fluggastdaten in Deutschland im Jahr 2025",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288579",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 4,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6455",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T09:19:19+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335967",
+          "titel": "Erfüllungssachstand des ersten Referenzzeitraums des Saubere-Fahrzeuge-Beschaffungs-Gesetzes",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106455.pdf",
+        "id": "288579",
+        "dokumentnummer": "21/6455",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7376",
+          "titel": "Swantje Henrike Michaelsen, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Swantje Henrike Michaelsen"
+        },
+        {
+          "id": "7916",
+          "titel": "Tarek Al-Wazir, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Tarek Al-Wazir"
+        }
+      ],
+      "titel": "Erfüllungssachstand des ersten Referenzzeitraums des Saubere-Fahrzeuge-Beschaffungs-Gesetzes",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288578",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 7,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6454",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T09:16:09+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335966",
+          "titel": "Projekt \"Sozial-ökologische Transformationen verbunden mit einer Demokratisierung von links in Afrika\"",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106454.pdf",
+        "id": "288578",
+        "dokumentnummer": "21/6454",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "8040",
+          "titel": "Rocco Kever, MdB, AfD",
+          "autor_titel": "Rocco Kever"
+        },
+        {
+          "id": "8087",
+          "titel": "Matthias Rentzsch, MdB, AfD",
+          "autor_titel": "Matthias Rentzsch"
+        }
+      ],
+      "titel": "Projekt \"Sozial-ökologische Transformationen verbunden mit einer Demokratisierung von links in Afrika\"",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288577",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 19,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6447",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-12T08:26:44+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335960",
+          "titel": "Staatliche Förderung der Unterzeichner des DGB-Aufrufs \"Zusammenstehen\" gegen den Bundesparteitag der AfD in Erfurt",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106447.pdf",
+        "id": "288577",
+        "dokumentnummer": "21/6447",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "8064",
+          "titel": "Sebastian Maack, MdB, AfD",
+          "autor_titel": "Sebastian Maack"
+        },
+        {
+          "id": "2055",
+          "titel": "Martin Reichardt, MdB, AfD",
+          "autor_titel": "Martin Reichardt"
+        }
+      ],
+      "titel": "Staatliche Förderung der Unterzeichner des DGB-Aufrufs \"Zusammenstehen\" gegen den Bundesparteitag der AfD in Erfurt",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288576",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 20,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6446",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-11T16:06:35+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335943",
+          "titel": "Staatliche Förderung von Protesten gegen den Bundesparteitag der AfD in Erfurt",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106446.pdf",
+        "id": "288576",
+        "dokumentnummer": "21/6446",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "8064",
+          "titel": "Sebastian Maack, MdB, AfD",
+          "autor_titel": "Sebastian Maack"
+        },
+        {
+          "id": "2055",
+          "titel": "Martin Reichardt, MdB, AfD",
+          "autor_titel": "Martin Reichardt"
+        }
+      ],
+      "titel": "Staatliche Förderung von Protesten gegen den Bundesparteitag der AfD in Erfurt",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288575",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 1,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6445",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-11T16:10:29+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335944",
+          "titel": "Bilanz des ersten Jahres der Tätigkeit des Beauftragten der Bundesregierung für Migration, Flüchtlinge und Integration zugleich Beauftragten der Bundesregierung für Antirassismus",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106445.pdf",
+        "id": "288575",
+        "dokumentnummer": "21/6445",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2075",
+          "titel": "Stephan Brandner, MdB, AfD",
+          "autor_titel": "Stephan Brandner"
+        }
+      ],
+      "titel": "Bilanz des ersten Jahres der Tätigkeit des Beauftragten der Bundesregierung für Migration, Flüchtlinge und Integration zugleich Beauftragten der Bundesregierung für Antirassismus",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288574",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 1,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6444",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-11T16:55:12+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335951",
+          "titel": "Bilanz des ersten Jahres der Tätigkeit des Beauftragten der Bundesregierung für die Belange von Menschen mit Behinderungen",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106444.pdf",
+        "id": "288574",
+        "dokumentnummer": "21/6444",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "titel": "Bilanz des ersten Jahres der Tätigkeit des Beauftragten der Bundesregierung für die Belange von Menschen mit Behinderungen",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288573",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 9,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6443",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-11T16:16:12+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335945",
+          "titel": "Bilanz des ersten Jahres der Tätigkeit der Beauftragten der Bundesregierung für Ostdeutschland",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106443.pdf",
+        "id": "288573",
+        "dokumentnummer": "21/6443",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2075",
+          "titel": "Stephan Brandner, MdB, AfD",
+          "autor_titel": "Stephan Brandner"
+        },
+        {
+          "id": "2191",
+          "titel": "Kay Gottschalk, MdB, AfD",
+          "autor_titel": "Kay Gottschalk"
+        }
+      ],
+      "titel": "Bilanz des ersten Jahres der Tätigkeit der Beauftragten der Bundesregierung für Ostdeutschland",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288572",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 7,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6442",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-11T16:52:32+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335949",
+          "titel": "Bilanz des ersten Jahres der Tätigkeit des Beauftragten der Bundesregierung für Menschenrechtspolitik und humanitäre Hilfe im Auswärtigen Amt",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106442.pdf",
+        "id": "288572",
+        "dokumentnummer": "21/6442",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2075",
+          "titel": "Stephan Brandner, MdB, AfD",
+          "autor_titel": "Stephan Brandner"
+        },
+        {
+          "id": "7973",
+          "titel": "Tobias Teich, MdB, AfD",
+          "autor_titel": "Tobias Teich"
+        }
+      ],
+      "titel": "Bilanz des ersten Jahres der Tätigkeit des Beauftragten der Bundesregierung für Menschenrechtspolitik und humanitäre Hilfe im Auswärtigen Amt",
+      "datum": "2026-06-11"
+    },
+    {
+      "id": "288571",
+      "drucksachetyp": "Kleine Anfrage",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 9,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6441",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "aktualisiert": "2026-06-11T15:36:38+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335939",
+          "titel": "Stand und Koordination des Managements der Asiatischen Hornisse (Vespa velutina) in Deutschland",
+          "vorgangstyp": "Kleine Anfrage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106441.pdf",
+        "id": "288571",
+        "dokumentnummer": "21/6441",
+        "datum": "2026-06-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Kleine Anfrage",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "8080",
+          "titel": "Marcel Queckemeyer, MdB, AfD",
+          "autor_titel": "Marcel Queckemeyer"
+        },
+        {
+          "id": "2071",
+          "titel": "Andreas Bleck, MdB, AfD",
+          "autor_titel": "Andreas Bleck"
+        }
+      ],
+      "titel": "Stand und Koordination des Managements der Asiatischen Hornisse (Vespa velutina) in Deutschland",
+      "datum": "2026-06-11"
+    }
+  ],
+  "cursor": "AoJw0PqH254DMURydWNrc2FjaGUtMjg4NTcx"
+}
