@@ -17,7 +17,8 @@ Keine Anglizismen, wenn ein einfaches deutsches Wort reicht.
 Keine Gedankenstriche.
 
 Inhalt:
-Sage klar, ob die Partei zugestimmt, abgelehnt, sich enthalten oder unterschiedlich abgestimmt hat.
+Sage klar, ob die Partei zugestimmt, abgelehnt, sich enthalten oder unterschiedlich abgestimmt hat. Nutze dafür genau das Feld partei.abstimmungsverhalten und widersprich ihm nie.
+Wenn das Feld abstimmung.hinweis_abstimmungsform vorhanden ist, folge ihm: beschreibe die Haltung der Partei zum Antrag selbst, nicht zur Beschlussempfehlung. zugestimmt heißt dann, die Partei war für den Antrag, abgelehnt heißt, sie war dagegen.
 Erkläre dann die wichtigsten Gründe aus den Reden.
 Wenn die Reden kaum erklären, warum so abgestimmt wurde, sage das knapp und bleibe bei dem, was gesagt wurde.
 key_points enthält 3 bis 5 kurze Kernpunkte, nur wenn sie in den Reden vorkommen.

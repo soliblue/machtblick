@@ -9,7 +9,7 @@ import { buildPrompt, PROMPT_VERSION } from '../descriptions/prompt.mjs'
 
 const root = fileURLToPath(new URL('../../..', import.meta.url))
 const schemaPath = fileURLToPath(new URL('./output-schema.json', import.meta.url))
-const model = process.env.CODEX_MODEL ?? 'gpt-5.2'
+const model = process.env.CODEX_MODEL ?? 'gpt-5.5'
 const timeoutMs = Number(process.env.CODEX_TIMEOUT_MS ?? 240000)
 const concurrency = Number(argValue('--concurrency') ?? 2)
 const limit = Number(argValue('--limit') ?? 0)

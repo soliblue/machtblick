@@ -34,7 +34,8 @@ for (const f of files) {
   for (const v of data.votes) {
     if (v.vote_type === 'namentlich') { skipped++; continue }
     const id = `pp${data.number.replace('/', '-')}-${v.index}-${slugify(v.title)}`
-    const exists = db.select({ id: votes.id }).from(votes).where(eq(votes.id, id)).get()
+    const exists = db.select({ id: votes.id, inverted: votes.inverted }).from(votes).where(eq(votes.id, id)).get()
+    const isPetitionBundle = /^Sammelübersicht\s+\d+\s+zu\s+Petitionen/i.test(v.title) || /^Petitionsausschuss\s+Sammelübersicht\s+\d+/i.test(v.title)
     const all = new Set([...(v.ja ?? []), ...(v.nein ?? []), ...(v.enth ?? [])])
     const parties = [...all].filter((party) => activeParties.size === 0 || activeParties.has(party))
     db.transaction((tx) => {
@@ -44,7 +45,7 @@ for (const f of files) {
           voteType: v.vote_type,
           date: data.date,
           title: v.title,
-          isPetitionBundle: /^Sammelübersicht\s+\d+\s+zu\s+Petitionen/i.test(v.title) || /^Petitionsausschuss\s+Sammelübersicht\s+\d+/i.test(v.title),
+          isPetitionBundle,
           document: (v.drucksache ?? []).join(', ') || null,
           result: v.outcome === 'unklar' ? 'angenommen' : v.outcome,
           sourceUrl: `https://search.dip.bundestag.de/api/v1/plenarprotokoll/${data.number}`,
@@ -55,13 +56,14 @@ for (const f of files) {
           voteType: v.vote_type,
           date: data.date,
           title: v.title,
-          isPetitionBundle: /^Sammelübersicht\s+\d+\s+zu\s+Petitionen/i.test(v.title) || /^Petitionsausschuss\s+Sammelübersicht\s+\d+/i.test(v.title),
+          isPetitionBundle,
           document: (v.drucksache ?? []).join(', ') || null,
-          result: v.outcome === 'unklar' ? 'angenommen' : v.outcome,
           sourceUrl: `https://search.dip.bundestag.de/api/v1/plenarprotokoll/${data.number}`,
           fetchedAt: new Date().toISOString(),
+          ...(exists.inverted ? {} : { result: v.outcome === 'unklar' ? 'angenommen' : v.outcome }),
         }).where(eq(votes.id, id)).run()
       }
+      if (exists?.inverted) return
       if (parties.length) {
         tx.delete(votePartySummaries).where(and(eq(votePartySummaries.voteId, id), notInArray(votePartySummaries.party, parties))).run()
       } else {

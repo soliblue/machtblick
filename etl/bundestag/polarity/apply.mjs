@@ -1,4 +1,4 @@
-function substantiveResultFromSummaries(db, voteId) {
+export function substantiveResultFromSummaries(db, voteId) {
   const summaries = db.prepare(`SELECT party, position FROM vote_party_summaries WHERE vote_id = ?`).all(voteId)
   const seats = db.prepare(`
     SELECT s.party, MAX(s.members) AS m

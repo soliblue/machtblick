@@ -9,7 +9,7 @@ import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
 
 const root = fileURLToPath(new URL('../../..', import.meta.url))
 const schemaPath = fileURLToPath(new URL('./output-schema.json', import.meta.url))
-const model = process.env.CODEX_MODEL ?? 'gpt-5.2'
+const model = process.env.CODEX_MODEL ?? 'gpt-5.5'
 const concurrency = Number(argValue('--concurrency') ?? 2)
 const maxWords = Number(argValue('--max-words') ?? 2200)
 const maxItems = Number(argValue('--max-items') ?? 8)

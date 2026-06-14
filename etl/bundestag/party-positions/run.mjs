@@ -8,7 +8,7 @@ import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
 
 const root = fileURLToPath(new URL('../../..', import.meta.url))
 const schemaPath = fileURLToPath(new URL('./output-schema.json', import.meta.url))
-const model = process.env.CODEX_MODEL ?? 'gpt-5.2'
+const model = process.env.CODEX_MODEL ?? 'gpt-5.5'
 const concurrency = Number(argValue('--concurrency') ?? 2)
 const limit = Number(argValue('--limit') ?? 0)
 const minWords = Number(argValue('--min-words') ?? 150)
@@ -30,7 +30,7 @@ const CHAIR_ROLES = new Set([
 ensureSchema()
 
 const candidates = db.prepare(`
-  SELECT v.id AS vote_id, v.date, v.agenda_item, v.title, v.clean_title, v.summary, v.summary_simplified, v.result,
+  SELECT v.id AS vote_id, v.date, v.agenda_item, v.title, v.clean_title, v.summary, v.summary_simplified, v.result, v.inverted,
          s.party, s.position, s.members, s.yes, s.no, s.abstain, s.absent, s.position_summary
   FROM vote_party_summaries s
   INNER JOIN votes v ON v.id = s.vote_id

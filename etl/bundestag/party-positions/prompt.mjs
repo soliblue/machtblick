@@ -8,7 +8,7 @@ const POSITION_LABEL = {
   mixed: 'unterschiedlich abgestimmt',
 }
 
-export const PROMPT_VERSION = 'party-positions-v1'
+export const PROMPT_VERSION = 'party-positions-v2'
 const TEMPLATE = readFileSync(fileURLToPath(new URL('../../../prompts/etl/bundestag/party-positions.md', import.meta.url)), 'utf8').trimEnd()
 
 export function buildPrompt({ vote, speeches }) {
@@ -20,6 +20,12 @@ export function buildPrompt({ vote, speeches }) {
       offizieller_titel: vote.title,
       kurze_antragszusammenfassung: vote.summary_simplified ?? vote.summary ?? null,
       ergebnis: vote.result,
+      ...(vote.inverted
+        ? {
+            hinweis_abstimmungsform:
+              'Abgestimmt wurde formal über eine Beschlussempfehlung zur Ablehnung des Antrags. Die Felder abstimmungsverhalten, ergebnis und stimmen sind bereits auf den Antrag selbst normalisiert: zugestimmt heißt für den Antrag, abgelehnt heißt gegen den Antrag. Beschreibe die Haltung der Partei immer zum Antrag selbst, nicht zur Beschlussempfehlung, und verwende ausschließlich das angegebene abstimmungsverhalten.',
+          }
+        : {}),
     },
     partei: {
       name: vote.party,

@@ -9,7 +9,7 @@ import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
 
 const root = fileURLToPath(new URL('../../..', import.meta.url))
 const schemaPath = fileURLToPath(new URL('./output-schema-batch.json', import.meta.url))
-const model = process.env.CODEX_MODEL ?? 'gpt-5.2'
+const model = process.env.CODEX_MODEL ?? 'gpt-5.5'
 const provider = process.env.TRANSLATION_PROVIDER ?? 'codex'
 const concurrency = Number(argValue('--concurrency') ?? 2)
 const batchSize = Number(argValue('--batch-size') ?? 4)
