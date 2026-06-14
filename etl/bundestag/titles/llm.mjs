@@ -26,11 +26,19 @@ function extractJson(raw) {
   return JSON.parse(match[0])
 }
 
+function cleanText(value) {
+  return String(value ?? '')
+    .replaceAll('\u2014', ', ')
+    .replaceAll('\u2013', '-')
+    .replaceAll(' -- ', ', ')
+    .trim()
+}
+
 export async function cleanTitleWithLLM({ title, summary, drucksacheTitle, polarityTitle, isSammelubersicht = false }) {
   const prompt = buildPrompt({ title, summary, drucksacheTitle, polarityTitle, isSammelubersicht })
   const raw = await runClaude(prompt, 'sonnet')
   const obj = extractJson(raw)
-  const cleanTitle = typeof obj.clean_title === 'string' ? obj.clean_title.trim() : null
+  const cleanTitle = typeof obj.clean_title === 'string' ? cleanText(obj.clean_title) : null
   return {
     clean_title: cleanTitle && cleanTitle.length > 0 ? cleanTitle : null,
     confidence: obj.confidence === 'high' || obj.confidence === 'medium' || obj.confidence === 'low' ? obj.confidence : 'low',

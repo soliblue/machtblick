@@ -26,12 +26,20 @@ function extractJson(raw) {
   return JSON.parse(match[0])
 }
 
+function cleanText(value) {
+  return String(value ?? '')
+    .replaceAll('\u2014', ', ')
+    .replaceAll('\u2013', '-')
+    .replaceAll(' -- ', ', ')
+    .trim()
+}
+
 export async function generateDescriptions(title, antragText, kind = 'antrag') {
   const prompt = buildPrompt(title, antragText, kind)
   const raw = await runClaude(prompt)
   const obj = extractJson(raw)
-  const simplified = typeof obj.summary_simplified === 'string' ? obj.summary_simplified.trim() : null
-  const detail = typeof obj.summary_detail === 'string' ? obj.summary_detail.trim() : null
+  const simplified = typeof obj.summary_simplified === 'string' ? cleanText(obj.summary_simplified) : null
+  const detail = typeof obj.summary_detail === 'string' ? cleanText(obj.summary_detail) : null
   if (!simplified || !detail) throw new Error(`incomplete LLM output: ${JSON.stringify(obj).slice(0, 200)}`)
   return { summarySimplified: simplified, summaryDetail: detail }
 }

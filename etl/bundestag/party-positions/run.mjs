@@ -31,9 +31,12 @@ ensureSchema()
 
 const candidates = db.prepare(`
   SELECT v.id AS vote_id, v.date, v.agenda_item, v.title, v.clean_title, v.summary, v.summary_simplified, v.result, v.inverted,
-         s.party, s.position, s.members, s.yes, s.no, s.abstain, s.absent, s.position_summary
+         s.party, s.position, s.members, s.yes, s.no, s.abstain, s.absent, s.position_summary,
+         d.generated_at, p.decided_at
   FROM vote_party_summaries s
   INNER JOIN votes v ON v.id = s.vote_id
+  LEFT JOIN vote_party_summary_decisions d ON d.vote_id = s.vote_id AND d.party = s.party
+  LEFT JOIN vote_polarity_decisions p ON p.vote_id = s.vote_id AND p.inverted = 1
   WHERE (? = 'all' OR v.vote_type = ?)
     AND v.procedural = 0
     AND (? IS NULL OR v.id = ?)
@@ -44,7 +47,8 @@ const jobs = []
 for (const row of candidates) {
   const speeches = loadSpeeches(row, row.party)
   const words = speeches.reduce((sum, s) => sum + s.word_count, 0)
-  if (speeches.length > 0 && words >= minWords && (force || !row.position_summary)) jobs.push({ row, speeches })
+  const stale = row.decided_at && row.generated_at && row.generated_at < row.decided_at
+  if (speeches.length > 0 && words >= minWords && (force || !row.position_summary || stale)) jobs.push({ row, speeches })
 }
 
 const selected = limit > 0 ? jobs.slice(0, limit) : jobs

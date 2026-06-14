@@ -51,16 +51,22 @@ Run source refreshes in this order when the evidence says they are needed:
 7. `npm run etl:affiliations`
 8. `npm run db:normalize`
 
-Run derived refreshes after source data is current:
+`etl:handzeichen:refresh` (step 4) owns the polarity-aware path internally: it ingests handzeichen, runs `db:normalize`-equivalent result repair, polarity inversion, initiator backfill, and self-no escalation in the correct order for both handzeichen and namentlich votes. The standalone `npm run db:normalize` (step 8) is the legacy result flip; it is idempotent here but must never be run again after polarity in an ad-hoc step, since it can double-flip an inverted vote whose post-inversion proposer votes no.
+
+Run derived refreshes after source data is current, in this order (titles and descriptions first, then speech↔vote linkage, then summaries that depend on it, then translations last):
 
 1. `npm run etl:titles`
 2. `npm run etl:antrag-titles`
 3. `npm run etl:descriptions`
 4. `npm run etl:antrag-descriptions`
-5. `npm run etl:party-positions`
-6. `npm run etl:translations`
-7. `npm run etl:antrag-description-translations`
-8. `npm run etl:speech-translations`
+5. `npm run etl:votes:backfill-agenda`
+6. `npm run db:materialize`
+7. `npm run etl:party-positions`
+8. `npm run etl:translations`
+9. `npm run etl:antrag-description-translations`
+10. `npm run etl:speech-translations`
+
+`etl:votes:namentlich` does not self-materialize: it ingests votes but sets neither `votes.agenda_item` nor the speech↔vote linkage. `etl:votes:backfill-agenda` (sets `agenda_item` from protocol XML) and `db:materialize` (rebuilds `vote_debate_groups`) must run after any vote ingest and before `etl:party-positions`, otherwise linked votes resolve to zero speeches and get no party-position summaries. Both are idempotent. `etl:handzeichen:refresh` already runs this sequence internally for handzeichen and namentlich votes; the standalone steps cover the namentlich-only ingest.
 
 Run conditional source refreshes when relevant:
 

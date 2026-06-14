@@ -56,9 +56,6 @@ await run('node', [join(HERE, '..', 'titles', 'run.mjs')])
 console.log('→ clean title fallbacks')
 await run('npx', ['tsx', join(HERE, '..', '..', '..', 'db', 'normalize-vote-title-provenance.ts'), '--fill-clean-title-fallbacks'])
 
-console.log('→ public vote validation')
-await run('npx', ['tsx', join(HERE, '..', '..', '..', 'db', 'validate-public-votes.ts')])
-
 console.log('→ backfill agenda_item from plenarprotokoll XML')
 await run('npx', ['tsx', join(HERE, '..', 'votes', 'backfillAgendaItem.ts')])
 
@@ -70,6 +67,9 @@ await run('node', [join(HERE, '..', 'party-positions', 'run.mjs'), '--vote-type'
 
 console.log('→ party positions (namentlich)')
 await run('node', [join(HERE, '..', 'party-positions', 'run.mjs'), '--vote-type', 'namentlich'])
+
+console.log('→ public vote validation (after linkage + summaries; fails if a linked vote lacks a summary)')
+await run('npx', ['tsx', join(HERE, '..', '..', '..', 'db', 'validate-public-votes.ts')])
 
 console.log('→ translations (cascade EN from de summaries + party positions)')
 await run('node', [join(HERE, '..', 'translations', 'run.mjs')])

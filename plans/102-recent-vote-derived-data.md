@@ -13,7 +13,7 @@ Recent votes show incomplete or inconsistent derived text. Three fixes before we
 - Reorder `refresh.mjs`: party-positions + translations after `backfillAgendaItem` + `db:materialize`: DONE (plumber)
 - Generate session-83 party-position summaries (+ translations): DONE (plumber) — 5 votes, 25 party summaries DE+EN
 - Fix `votes.summary` roll-call (DE+EN) for the 19 inverted handzeichen votes: DONE (plumber)
-- Rebuild + deploy: ready (data shipped via build); blocked on user go
+- Rebuild + deploy: done — committed `9614bf7` (pushed origin/main), production deploy `b2bb918b`; build-gate verified 1005 summaries + the inverted votes. This deploy also carried plan 101's previously-unshipped data.
 
 ## Findings already gathered by lead (don't re-derive)
 
@@ -37,6 +37,7 @@ Recent votes show incomplete or inconsistent derived text. Three fixes before we
 ### lead
 
 - Created after the operator spotted vote `1005`'s reden tab showing only raw speeches. Diagnosed three gaps (missing session-83 summaries from plan-100 linkage ordering; stale `votes.summary` for the 19 inverted votes; refresh order recreating the first gap). Authorized the consolidated fix; rebuild + deploy after completion.
+- Verified plumber's work in the DB (session-83 votes 5/5 summaries each, inverted summaries em-dash-free, `pp21-77-16` reads "Die Linke ... stimmte dafür"), committed `9614bf7`, deployed to prod `b2bb918b` (build-gate passed all 4 checks). This deploy also shipped plan 101's data (inverted ballots/results + regenerated party summaries), which had not yet gone out.
 
 ### plumber
 
