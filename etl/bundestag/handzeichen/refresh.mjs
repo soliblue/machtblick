@@ -62,4 +62,10 @@ await run('node', [join(HERE, '..', 'party-positions', 'run.mjs'), '--vote-type'
 console.log('→ public vote validation')
 await run('npx', ['tsx', join(HERE, '..', '..', '..', 'db', 'validate-public-votes.ts')])
 
+console.log('→ backfill agenda_item from plenarprotokoll XML')
+await run('npx', ['tsx', join(HERE, '..', 'votes', 'backfillAgendaItem.ts')])
+
+console.log('→ materialize derived data (speech↔vote linkage)')
+await run('npx', ['tsx', join(HERE, '..', '..', '..', 'db', 'materialize-derived-data.ts')])
+
 console.log('✓ refresh complete')

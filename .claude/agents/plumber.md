@@ -298,6 +298,25 @@ Current coverage on the 6167 21. BT speeches: 5215 matched to a member, 950 role
 
 `speeches_fts` is a contentless FTS5 mirror over `(speaker_name, text_full)` with `unicode61 remove_diacritics 2`. Three triggers keep it in sync with `speeches` (AI/AD/AU). Search with `MATCH` and join back via `rowid`.
 
+### Vote → speech linkage hinges on `votes.agenda_item` (and the backfill is not in any refresh chain)
+
+The website's per-vote speeches tab reads `vote_debate_groups` (vote_id → group_id) → `speech_debate_group_speeches` → `speeches` via `loadDebateForVote()` in `apps/bundestag/src/server/votes.ts`. No row in `vote_debate_groups` for a vote ⇒ empty tab, regardless of session-level speeches existing.
+
+`vote_debate_groups` is materialized by `db:materialize` (`db/materialize-derived-data.ts`, function `materializeVoteDebateGroups`, full DELETE+rebuild, idempotent). **Both** of its linkage paths require `votes.agenda_item` to be set:
+1. agenda match: `votes.agenda_item = speech_debate_groups.agenda_item AND same date` (needs `votes.agenda_item IS NOT NULL`);
+2. via `speech_vote_links` (which itself is built from `speeches.vote_id` or an agenda+date match against `votes.agenda_item`).
+
+`votes.agenda_item` is NOT set by the vote ingests. The namentliche import (`etl:votes:namentlich`) and handzeichen write leave it NULL. It is populated only by the standalone **`npx tsx etl/bundestag/votes/backfillAgendaItem.ts`** (parses `<tagesordnungspunkt>` blocks out of `etl/bundestag-reden-xml/raw/xml/`, matches votes to TOPs by Drucksache; idempotent; `--dry-run` supported). This script has **no npm alias** and is **not chained** into `etl/bundestag/handzeichen/refresh.mjs` (the weekly auto-refresh) nor into the namentliche import. Consequence: every refresh leaves new votes with `agenda_item = NULL` → zero speech links → no speeches tab. This was the plan-100 bug (session 83, 2026-06-11: 401 speeches present, all 6 substantive votes resolved to 0 links until the backfill ran).
+
+The correct refresh order, after every vote ingest:
+```
+backfillAgendaItem.ts   (sets votes.agenda_item from protocol XML)
+db:materialize          (rebuilds speech_debate_groups, speech_vote_links, vote_debate_groups)
+```
+Both idempotent, safe to run unconditionally. When fixing a missing-speeches-tab report, check `votes.agenda_item` FIRST — if NULL, run the backfill then materialize; don't touch the read path.
+
+Limits worth knowing: a vote whose underlying Drucksache never appears in the published protocol XML (e.g. some Verordnungen — plan 100's `2026-06-11-1008-jahresemissions-gesamtmengen-verordnung`, Drs 21/6124/21/5069 absent from 21083.xml) cannot be resolved and stays linkless. Same upstream-extraction class as the 31 NULL-document handzeichen rows. Procedural votes (`procedural=1`) are intentionally excluded from `vote_debate_groups` and stay 0.
+
 ## Bundestag MdB-Stammdaten — data notes
 
 Upstream: `https://www.bundestag.de/resource/blob/472878/c2ee46c6dadbf6f06ee27d5618fd24e9/MdB-Stammdaten-data.zip` → `MDB_STAMMDATEN.XML`. Canonical source of the 8-digit Bundestag-MdB-Stammdaten-ID (`11005100` etc.) used as `<redner id>` in plenary protocol XML. Updated several times per year by the Bundestag.

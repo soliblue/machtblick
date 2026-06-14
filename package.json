@@ -34,6 +34,7 @@
     "etl:handzeichen:refresh": "node etl/bundestag/handzeichen/refresh.mjs",
     "etl:votes:historical": "tsx etl/bundestag/votes/import-historical.ts",
     "etl:votes:namentlich": "tsx etl/bundestag/votes/import-namentlich.ts",
+    "etl:votes:backfill-agenda": "tsx etl/bundestag/votes/backfillAgendaItem.ts",
     "etl:handzeichen:proposers": "node etl/bundestag/handzeichen/proposers.mjs",
     "etl:polarity": "node etl/bundestag/polarity/run.mjs",
     "etl:initiator": "node etl/bundestag/votes/initiator/run.mjs",
