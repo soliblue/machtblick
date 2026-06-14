@@ -10,8 +10,8 @@ Substantive votes from session 83 (2026-06-11) show no speeches tab on the site 
 - Root-cause why the 2026-06-13 refresh produced no bridge rows for these votes; document and prevent recurrence: done (plumber) — agenda-item backfill (the linkage prerequisite) is not in any refresh chain or npm script. Documented in plumber.md. Recurrence fix applied: `refresh.mjs` now chains the agenda backfill + `db:materialize` at its tail, and a discoverable `etl:votes:backfill-agenda` npm alias was added.
 - Refresh party donations (Großspenden) through 2026-06-10: done (plumber) — 8 rows added (88 → 96), latest notified now 2026-06-10.
 - Verify speeches tab on dev for session 83 votes: done (tester) — PASS. bafög 67, eufor-althea 17, entschliessungsantrag 45 (tabs present and populated with exact counts); 1008 Verordnung tab correctly absent; 2026-05-22 regression intact at 33. No console errors, no regressions.
-- Commit data + docs + recurrence patch: blocked on explicit user go (scribe)
-- Rebuild + redeploy so prod prerenders the tab: blocked on explicit user go (deployer)
+- Commit data + docs + recurrence patch: done (scribe) — `5722758 fix(etl): backfill vote agenda items so speeches link, wire into refresh`, 4 files on main (DB excluded, gitignored by design).
+- Rebuild + redeploy so prod prerenders the tab: done (deployer) — production deployment `eb1f0bd6-288a-4c3f-9dc4-5bd1d63d26cf`. Build gate confirmed speeches baked into the fixed vote pages (bafög and 2026-05-22 both populated). Live on machtblick.de.
 
 ## Contracts
 

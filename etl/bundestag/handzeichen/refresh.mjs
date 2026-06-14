@@ -56,9 +56,6 @@ await run('node', [join(HERE, '..', 'titles', 'run.mjs')])
 console.log('→ clean title fallbacks')
 await run('npx', ['tsx', join(HERE, '..', '..', '..', 'db', 'normalize-vote-title-provenance.ts'), '--fill-clean-title-fallbacks'])
 
-console.log('→ party positions (handzeichen)')
-await run('node', [join(HERE, '..', 'party-positions', 'run.mjs'), '--vote-type', 'handzeichen'])
-
 console.log('→ public vote validation')
 await run('npx', ['tsx', join(HERE, '..', '..', '..', 'db', 'validate-public-votes.ts')])
 
@@ -67,5 +64,14 @@ await run('npx', ['tsx', join(HERE, '..', 'votes', 'backfillAgendaItem.ts')])
 
 console.log('→ materialize derived data (speech↔vote linkage)')
 await run('npx', ['tsx', join(HERE, '..', '..', '..', 'db', 'materialize-derived-data.ts')])
+
+console.log('→ party positions (handzeichen)')
+await run('node', [join(HERE, '..', 'party-positions', 'run.mjs'), '--vote-type', 'handzeichen'])
+
+console.log('→ party positions (namentlich)')
+await run('node', [join(HERE, '..', 'party-positions', 'run.mjs'), '--vote-type', 'namentlich'])
+
+console.log('→ translations (cascade EN from de summaries + party positions)')
+await run('node', [join(HERE, '..', 'translations', 'run.mjs')])
 
 console.log('✓ refresh complete')
