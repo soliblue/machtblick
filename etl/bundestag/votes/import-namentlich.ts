@@ -5,8 +5,8 @@ import { fileURLToPath } from 'node:url'
 import { normalizeFractionLabel } from '../../abgeordnetenwatch-terms/parties.ts'
 
 const db = new Database(fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url)))
-const TERM_ID = Number(arg('--term') ?? 20)
-const AW_PERIOD_ID = Number(arg('--aw-period') ?? 132)
+const TERM_ID = Number(arg('--term') ?? 21)
+const AW_PERIOD_ID = Number(arg('--aw-period') ?? 161)
 const UA = 'machtblick-bundestag/0.1 (https://github.com/soli/machtblick; asoliman96@gmail.com)'
 const LIST_URL = 'https://www.bundestag.de/ajax/filterlist/de/parlament/plenum/abstimmung/liste/462112-462112'
 const DETAIL_LIST_URL = 'https://www.bundestag.de/ajax/filterlist/de/parlament/plenum/abstimmung/abstimmungen/484422-484422'
@@ -21,6 +21,7 @@ let enodiaCookie = ''
 
 type LinkItem = { date: string; title: string; description: string | null; initiator: string | null; pdfUrl: string | null; xlsxUrl: string; sourceUrl: string; sourceId: number | null }
 type DetailItem = { date: string; title: string; description: string; initiator: string | null; sourceId: number }
+type ExistingVote = { id: string; title: string; cleanTitle: string | null }
 type VoteRow = { party: string; last: string; first: string; yes: number; no: number; abstain: number; invalid: number; absent: number }
 type Mandate = {
   id: number
@@ -112,13 +113,13 @@ async function importVotes() {
   let memberVotesWritten = 0
   for (const link of links) {
     if (!link.sourceId && latestExisting.date && link.date <= latestExisting.date) continue
-    if (!link.sourceId) throw new Error(`missing Bundestag source id for ${link.date}: ${link.title}`)
     const existingVote = db.prepare('SELECT id FROM votes WHERE term_id = ? AND bundestag_id = ?').get(TERM_ID, link.sourceId) as { id: string } | undefined
     if (!SOURCE_ID && existingVote && latestExisting.date && link.date <= latestExisting.date) continue
     const rows = await fetchVoteRows(link.xlsxUrl)
     const first = rows[0]
     if (!first) continue
     const generatedVoteId = link.sourceId ? `${link.date}-${link.sourceId}-${slugify(link.title)}` : `bt${TERM_ID}-${link.date}-${String(first.session).padStart(3, '0')}-${first.number}-${slugify(link.title)}`
+    if (!existingVote && link.sourceId) deleteFallbackVote(link, generatedVoteId)
     const voteId = existingVote?.id ?? generatedVoteId
     const counts = countRows(rows)
     const partySummaries = summaries(rows)
@@ -207,10 +208,12 @@ async function fetchAwMandates() {
 async function fetchVoteLinks() {
   const linksByKey = new Map<string, LinkItem>()
   const detailsByKey = new Map<string, DetailItem[]>()
+  const detailsByDate = new Map<string, DetailItem[]>()
   const detailsByXlsxUrl = new Map<string, DetailItem>()
   for (const detail of await fetchVoteDetails()) {
     const key = detailKey(detail)
     detailsByKey.set(key, [...(detailsByKey.get(key) ?? []), detail])
+    detailsByDate.set(detail.date, [...(detailsByDate.get(detail.date) ?? []), detail])
   }
   for (let offset = 0; ; offset += 30) {
     const html = await fetchBundestag(`${LIST_URL}?offset=${offset}&limit=30`).then((r) => r.text())
@@ -225,7 +228,7 @@ async function fetchVoteLinks() {
       const date = publicationDate ?? parseDate(label.match(/^(\d{2}\.\d{2}\.\d{4,5})/)?.[1] ?? '')
       const title = label.replace(/^\d{2}\.\d{2}\.\d{4,5}:\s*/, '').trim()
       const matches = date && title ? detailsByKey.get(detailKey({ date, title })) : null
-      const detail = detailsByXlsxUrl.get(xlsxUrl) ?? matches?.shift()
+      const detail = detailsByXlsxUrl.get(xlsxUrl) ?? matches?.shift() ?? (date && title ? matchDetailByPrefix(detailsByDate.get(date) ?? [], title) : null)
       if (detail) detailsByXlsxUrl.set(xlsxUrl, detail)
       const sourceId = detail?.sourceId ?? (Number(body.match(/abstimmung\?id=(\d+)/)?.[1] ?? 0) || null)
       const sourceUrl = sourceId ? `https://www.bundestag.de/parlament/plenum/abstimmung/abstimmung?id=${sourceId}` : xlsxUrl
@@ -233,6 +236,45 @@ async function fetchVoteLinks() {
     }
     if (offset + 30 >= hits) return [...linksByKey.values()]
   }
+}
+
+function matchDetailByPrefix(details: DetailItem[], title: string) {
+  const key = titleKey(title)
+  return details.find((detail) => {
+    const detailTitle = titleKey(detail.title)
+    return Math.min(key.length, detailTitle.length) >= 16 && (key.startsWith(detailTitle) || detailTitle.startsWith(key))
+  }) ?? null
+}
+
+function deleteFallbackVote(link: LinkItem, generatedVoteId: string) {
+  const key = titleKey(link.title)
+  const fallback = (db.prepare(`
+    SELECT id, title, clean_title AS cleanTitle
+    FROM votes
+    WHERE term_id = ?
+      AND vote_type = 'namentlich'
+      AND bundestag_id IS NULL
+      AND date = ?
+  `).all(TERM_ID, link.date) as ExistingVote[]).find((vote) => titleKey(vote.cleanTitle ?? vote.title) === key)
+  if (!fallback || fallback.id === generatedVoteId) return
+  db.transaction(() => {
+    db.prepare('DELETE FROM vote_document_roles WHERE vote_id = ?').run(fallback.id)
+    db.prepare('DELETE FROM vote_documents WHERE vote_id = ?').run(fallback.id)
+    db.prepare('DELETE FROM vote_members WHERE vote_id = ?').run(fallback.id)
+    db.prepare('DELETE FROM vote_party_summary_decisions WHERE vote_id = ?').run(fallback.id)
+    db.prepare('DELETE FROM vote_party_summary_translations WHERE vote_id = ?').run(fallback.id)
+    db.prepare('DELETE FROM vote_party_summaries WHERE vote_id = ?').run(fallback.id)
+    db.prepare('DELETE FROM vote_translations WHERE vote_id = ?').run(fallback.id)
+    db.prepare('DELETE FROM vote_description_decisions WHERE vote_id = ?').run(fallback.id)
+    db.prepare('DELETE FROM vote_polarity_decisions WHERE vote_id = ?').run(fallback.id)
+    db.prepare('DELETE FROM vote_summary_repairs WHERE vote_id = ?').run(fallback.id)
+    db.prepare('DELETE FROM vote_antraege WHERE vote_id = ?').run(fallback.id)
+    db.prepare('DELETE FROM vote_debate_groups WHERE vote_id = ?').run(fallback.id)
+    db.prepare('DELETE FROM speech_vote_links WHERE vote_id = ?').run(fallback.id)
+    db.prepare('UPDATE speeches SET vote_id = NULL WHERE vote_id = ?').run(fallback.id)
+    db.prepare('UPDATE antrag_descriptions SET source_vote_id = NULL WHERE source_vote_id = ?').run(fallback.id)
+    db.prepare('DELETE FROM votes WHERE id = ?').run(fallback.id)
+  })()
 }
 
 async function fetchVoteDetails() {
@@ -383,7 +425,11 @@ function text(html: string) {
 }
 
 function detailKey(item: { date: string; title: string }) {
-  return `${item.date}|${item.title.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/ß/g, 'ss').replace(/[^a-z0-9]+/g, '')}`
+  return `${item.date}|${titleKey(item.title)}`
+}
+
+function titleKey(title: string) {
+  return title.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/ß/g, 'ss').replace(/[^a-z0-9]+/g, '')
 }
 
 async function fetchBundestag(url: string) {
