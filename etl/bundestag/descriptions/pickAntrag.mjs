@@ -67,7 +67,7 @@ async function loadDrucksache(dnr) {
 
 function parseFallbackRefs(title) {
   const out = []
-  const re = /Drucksachen?\s+((?:\d+\/\d+(?:\s+Nr\.\s*\d+)?(?:,\s*)?)+)/gi
+  const re = /Drucksachen?\s+((?:\d+\/\d+(?:\s+Nr\.\s*\d+)?(?:\s*(?:,|und)\s*)?)+)/gi
   let m
   while ((m = re.exec(title)) !== null) {
     const nums = [...m[1].matchAll(/(\d+\/\d+)/g)].map((x) => x[1])
@@ -80,6 +80,7 @@ function parseFallbackRefs(title) {
 }
 
 function rankFallback(refs, fullLower) {
+  if (/beschlussempfehlung/.test(fullLower) && /\bzu\s+(?:dem|der|den|einem|einer)?\s*(?:antrag|gesetzentwurf|entwurf)\b/.test(fullLower) && refs.length > 1) return refs[refs.length - 1].n
   const gesetz = refs.filter((r) => r.isGesetz)
   if (gesetz.length) return gesetz.sort((a, b) => drucksacheRank(a.n) - drucksacheRank(b.n))[0].n
   const antrag = refs.filter((r) => r.isAntrag)
@@ -133,6 +134,18 @@ async function pickFromVoteDocument(voteId, db) {
   const row = db.prepare('SELECT document FROM votes WHERE id = ?').get(voteId)
   const document = row?.document || ''
   const refs = parseFallbackRefs(document)
+  const directAntrag = db.prepare(`
+    SELECT drucksache, drucksache_pdf_url
+    FROM antraege
+    WHERE wahlperiode = 21
+      AND drucksache = ?
+      AND drucksache_pdf_url IS NOT NULL
+    LIMIT 1
+  `)
+  for (const ref of refs.slice().reverse()) {
+    const antrag = directAntrag.get(ref.n)
+    if (antrag) return { drucksacheId: antrag.drucksache, pdfUrl: antrag.drucksache_pdf_url, kind: 'antrag' }
+  }
   const target = refs.length > 0 ? rankFallback(refs, document.toLowerCase()) : null
   if (!target) return null
   const data = await loadDrucksache(target)

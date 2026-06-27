@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["clean_title", "confidence"],
+  "properties": {
+    "clean_title": {
+      "type": ["string", "null"]
+    },
+    "confidence": {
+      "enum": ["high", "medium", "low"]
+    }
+  }
+}

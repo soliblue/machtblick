@@ -1,13 +1,19 @@
 import Database from 'better-sqlite3'
 import { fileURLToPath } from 'node:url'
 import { spawn } from 'node:child_process'
-import { readFileSync } from 'node:fs'
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import { applyInversion, defectionSignature } from './apply.mjs'
 import { pLimit } from './limit.mjs'
 
 const FRAKTIONEN = new Set(['CDU/CSU', 'B90/Grüne', 'Die Linke', 'AfD', 'SPD', 'FDP', 'BSW'])
 
 const db = new Database(fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url)))
+const root = fileURLToPath(new URL('../../..', import.meta.url))
+const schemaPath = fileURLToPath(new URL('./output-schema-self-no.json', import.meta.url))
+const model = process.env.CODEX_MODEL ?? 'gpt-5.5'
+const provider = process.env.POLARITY_PROVIDER ?? 'codex'
 
 const candidates = db.prepare(`
   SELECT v.id, v.title, v.document, v.result, v.yes, v.no, v.vote_type, v.initiator
@@ -39,6 +45,39 @@ function runClaude(prompt) {
   })
 }
 
+function runCodex(prompt) {
+  const dir = mkdtempSync(join(tmpdir(), 'machtblick-polarity-self-no-'))
+  const outPath = join(dir, 'out.json')
+  return new Promise((resolve, reject) => {
+    const c = spawn('codex', [
+      '-a', 'never',
+      'exec',
+      '--model', model,
+      '--sandbox', 'read-only',
+      '--ignore-rules',
+      '--output-schema', schemaPath,
+      '--output-last-message', outPath,
+      '--cd', root,
+      '--ephemeral',
+      '-',
+    ], { stdio: ['pipe', 'pipe', 'pipe'] })
+    let stderr = ''
+    c.stderr.on('data', (d) => (stderr += d))
+    c.on('close', (code) => {
+      if (code !== 0) {
+        rmSync(dir, { recursive: true, force: true })
+        reject(new Error(`codex exit ${code}: ${stderr}`))
+        return
+      }
+      const text = readFileSync(outPath, 'utf8')
+      rmSync(dir, { recursive: true, force: true })
+      resolve(JSON.parse(text))
+    })
+    c.stdin.write(prompt)
+    c.stdin.end()
+  })
+}
+
 function parseLlm(raw) {
   const env = JSON.parse(raw)
   const text = typeof env.result === 'string' ? env.result : JSON.stringify(env.result ?? env)
@@ -63,8 +102,8 @@ const tasks = candidates.map((row) =>
       .replace('__PROPOSER__', row.initiator)
       .replace('__POSITIONS__', posLine)
       .replace('__RESULT__', row.result)
-    const raw = await runClaude(prompt)
-    const result = parseLlm(raw)
+    const raw = provider === 'claude' ? await runClaude(prompt) : await runCodex(prompt)
+    const result = provider === 'claude' ? parseLlm(raw) : raw
     return { row, result }
   }),
 )

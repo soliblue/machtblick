@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "288384",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 41,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6333",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "3b252c409ca8df628e48880f318f6ef8",
+      "aktualisiert": "2026-06-10T11:00:46+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335821",
+          "titel": "Gesetz zur dauerhaften Ermäßigung der Umsatzsteuer auf Gas und Wärme (Gas- und Wärme-Umsatzsteuersenkungsgesetz)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/063/2106333.pdf",
+        "id": "288384",
+        "dokumentnummer": "21/6333",
+        "datum": "2026-06-09",
+        "verteildatum": "2026-06-09",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2191",
+          "titel": "Kay Gottschalk, MdB, AfD",
+          "autor_titel": "Kay Gottschalk"
+        },
+        {
+          "id": "7974",
+          "titel": "Iris Nieland, MdB, AfD",
+          "autor_titel": "Iris Nieland"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur dauerhaften Ermäßigung der Umsatzsteuer auf Gas und Wärme (Gas- und Wärme-Umsatzsteuersenkungsgesetz)",
+      "datum": "2026-06-09"
+    }
+  ],
+  "cursor": "AoJw0OP01Z4DMURydWNrc2FjaGUtMjg4Mzg0"
+}

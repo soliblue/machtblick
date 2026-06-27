@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["inverted", "rewrittenTitle", "confidence", "reason"],
+  "properties": {
+    "inverted": {
+      "type": "boolean"
+    },
+    "rewrittenTitle": {
+      "type": ["string", "null"]
+    },
+    "confidence": {
+      "enum": ["high", "medium", "low"]
+    },
+    "reason": {
+      "type": "string"
+    }
+  }
+}

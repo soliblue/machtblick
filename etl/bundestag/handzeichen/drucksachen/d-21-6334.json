@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "288385",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 41,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6334",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "68719702e1e89b06981a3d0a098ec432",
+      "aktualisiert": "2026-06-10T11:22:04+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335824",
+          "titel": "Gesetz zur Aufhebung des Treibhausgas-Emissionshandelsgesetzes und des Brennstoffemissionshandelsgesetzes (CO2-Preis-Abschaffungsgesetz)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/063/2106334.pdf",
+        "id": "288385",
+        "dokumentnummer": "21/6334",
+        "datum": "2026-06-09",
+        "verteildatum": "2026-06-09",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2191",
+          "titel": "Kay Gottschalk, MdB, AfD",
+          "autor_titel": "Kay Gottschalk"
+        },
+        {
+          "id": "7974",
+          "titel": "Iris Nieland, MdB, AfD",
+          "autor_titel": "Iris Nieland"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur Aufhebung des Treibhausgas-Emissionshandelsgesetzes und des Brennstoffemissionshandelsgesetzes (CO2-Preis-Abschaffungsgesetz)",
+      "datum": "2026-06-09"
+    }
+  ],
+  "cursor": "AoJw0OP01Z4DMURydWNrc2FjaGUtMjg4Mzg1"
+}

@@ -1,4 +1,4 @@
-import { readFile, writeFile, readdir, mkdir, stat } from 'node:fs/promises'
+import { readFile, writeFile, readdir, mkdir } from 'node:fs/promises'
 import { join } from 'node:path'
 import { spawn } from 'node:child_process'
 
@@ -41,7 +41,7 @@ async function callClaude(prompt) {
     c.stdout.on('data', (d) => (out += d))
     c.stderr.on('data', (d) => (err += d))
     c.on('close', (code) => {
-      if (code !== 0) return reject(new Error(`exit ${code}: ${err}`))
+      if (code !== 0) return reject(new Error(`exit ${code}: ${err || out.slice(0, 500)}`))
       try {
         const r = JSON.parse(out)
         if (r.is_error) return reject(new Error(r.result || 'claude error'))
@@ -53,8 +53,8 @@ async function callClaude(prompt) {
   })
 }
 
-async function fileExists(p) {
-  try { await stat(p); return true } catch { return false }
+async function readExisting(p) {
+  return readFile(p, 'utf8').then((text) => JSON.parse(text), () => null)
 }
 
 const BATCH_SIZE = 5
@@ -64,12 +64,13 @@ const files = (await readdir(BLOCKS)).filter((f) => f.endsWith('.json')).sort()
 const jobs = []
 for (const f of files) {
   const outPath = join(OUT, f)
-  if (await fileExists(outPath)) continue
   const data = JSON.parse(await readFile(join(BLOCKS, f), 'utf8'))
+  const existing = await readExisting(outPath)
   if (data.blocks.length === 0) {
-    await writeFile(outPath, JSON.stringify({ ...data, votes: [] }, null, 2))
+    if (!existing) await writeFile(outPath, JSON.stringify({ ...data, votes: [] }, null, 2))
     continue
   }
+  if ((existing?.votes?.length ?? 0) > 0) continue
   jobs.push({ file: f, data, outPath })
 }
 
@@ -82,13 +83,11 @@ async function processJob(job) {
     const prompt = PROMPT_TEMPLATE
       .replace('__COUNT__', String(batch.length))
       .replace('__BLOCKS__', batch.map((b, k) => `--- Block index=${i + k} ---\n${b.block}`).join('\n\n'))
-    try {
-      const res = await callClaude(prompt)
-      allVotes.push(...res.votes)
-      process.stdout.write(`  ${job.file} batch ${i / BATCH_SIZE + 1}/${Math.ceil(job.data.blocks.length / BATCH_SIZE)}\n`)
-    } catch (e) {
-      console.error(`  ${job.file} batch ${i / BATCH_SIZE + 1} failed: ${e.message}`)
-    }
+    const res = await callClaude(prompt).catch((e) => {
+      throw new Error(`${job.file} batch ${i / BATCH_SIZE + 1} failed: ${e.message}`)
+    })
+    allVotes.push(...res.votes)
+    process.stdout.write(`  ${job.file} batch ${i / BATCH_SIZE + 1}/${Math.ceil(job.data.blocks.length / BATCH_SIZE)}\n`)
   }
   await writeFile(job.outPath, JSON.stringify({ ...job.data, votes: allVotes }, null, 2))
   console.log(`✓ ${job.file}: ${allVotes.length} votes`)

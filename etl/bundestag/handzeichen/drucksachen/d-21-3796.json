@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "284641",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 8,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/3796",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "383904d467c901023a07a25bd0af0848",
+      "aktualisiert": "2026-01-27T15:05:41+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "330569",
+          "titel": "Eine Reform des Patientenrechtegesetzes ist überfällig - Rechte von Patientinnen und Patienten jetzt stärken",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/037/2103796.pdf",
+        "id": "284641",
+        "dokumentnummer": "21/3796",
+        "datum": "2026-01-26",
+        "verteildatum": "2026-01-27",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7298",
+          "titel": "Linda Heitmann, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Linda Heitmann"
+        },
+        {
+          "id": "7173",
+          "titel": "Dr. Janosch Dahmen, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Janosch Dahmen"
+        }
+      ],
+      "titel": "Eine Reform des Patientenrechtegesetzes ist überfällig - Rechte von Patientinnen und Patienten jetzt stärken",
+      "datum": "2026-01-26"
+    }
+  ],
+  "cursor": "AoJwuLz9_JsDMURydWNrc2FjaGUtMjg0NjQx"
+}
