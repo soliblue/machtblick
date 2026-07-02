@@ -23,7 +23,7 @@ export const Route = createFileRoute('/en/votes/')({
   }),
   validateSearch: (search: Record<string, unknown>): Search => ({
     party: typeof search.party === 'string' ? search.party : undefined,
-    type: isVoteType(search.type) ? search.type : undefined,
+    type: isVoteType(search.type) ? search.type : 'namentlich',
     result: isResult(search.result) ? search.result : undefined,
     topic: typeof search.topic === 'string' ? search.topic : undefined,
     q: typeof search.q === 'string' ? search.q : undefined,
