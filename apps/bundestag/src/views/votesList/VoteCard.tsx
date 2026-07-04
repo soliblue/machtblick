@@ -49,9 +49,9 @@ export function VoteCard({ vote }: Props) {
         >
           {vote.cleanTitle}
         </h2>
-        <div ref={summaryRef} data-clamp-summary className="relative mt-m min-h-0 flex-1 overflow-hidden text-m leading-[1.45]">
+        <div ref={summaryRef} data-clamp-summary className="relative mt-m min-h-0 flex-1 overflow-hidden text-m leading-[1.45] desk:pointer-events-none">
           <p
-            className="desk:absolute desk:inset-0"
+            className="desk:pointer-events-none desk:absolute desk:inset-0"
             style={{
               fontFamily: SERIF,
               display: '-webkit-box',

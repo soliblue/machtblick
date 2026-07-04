@@ -7,6 +7,7 @@ import { localeFromPath, localizedPath, withLocale } from '@/lib/locale'
 
 export function Nav() {
   const [open, setOpen] = useState(false)
+  const [langOpen, setLangOpen] = useState(false)
   const pathname = useRouterState({ select: (s) => s.location.pathname })
   const locale = localeFromPath(pathname)
   const t = useCopy()
@@ -29,13 +30,29 @@ export function Nav() {
           <a href={href('/speeches/')} className={linkClass}>{t.navSpeeches}</a>
           <a href={href('/parties/')} className={linkClass}>{t.navParties}</a>
         </div>
-        <div aria-label={t.language} className="group relative hidden w-[120px] text-s sm:block">
-          <button type="button" className="flex h-[32px] w-full items-center justify-center gap-xs border bg-background px-s" style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}>
+        <div
+          aria-label={t.language}
+          className="group relative hidden w-[120px] text-s sm:block"
+          onKeyDown={(e) => e.key === 'Escape' && setLangOpen(false)}
+          onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setLangOpen(false)}
+        >
+          <button
+            type="button"
+            aria-haspopup="menu"
+            aria-expanded={langOpen}
+            onClick={() => setLangOpen((v) => !v)}
+            className="flex h-[32px] w-full items-center justify-center gap-xs border bg-background px-s"
+            style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
+          >
             <span aria-hidden="true">{current.flag}</span>
             <span>{current.label}</span>
           </button>
-          <div className="invisible absolute right-0 top-full z-50 mt-xs w-[120px] border bg-background opacity-0 transition-opacity group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100" style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}>
-            <a href={other.href} className="flex h-[36px] items-center justify-center gap-xs px-s opacity-l transition-opacity hover:bg-surface hover:opacity-100 focus:bg-surface focus:opacity-100">
+          <div
+            role="menu"
+            className={`absolute right-0 top-full z-50 mt-xs w-[120px] border bg-background transition-opacity group-hover:visible group-hover:opacity-100 ${langOpen ? 'visible opacity-100' : 'invisible opacity-0'}`}
+            style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
+          >
+            <a role="menuitem" href={other.href} tabIndex={langOpen ? 0 : -1} className="flex h-[36px] items-center justify-center gap-xs px-s opacity-l transition-opacity hover:bg-surface hover:opacity-100 focus:bg-surface focus:opacity-100">
               <span aria-hidden="true">{other.flag}</span>
               <span>{other.label}</span>
             </a>

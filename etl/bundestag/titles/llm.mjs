@@ -77,8 +77,8 @@ function cleanText(value) {
     .trim()
 }
 
-export async function cleanTitleWithLLM({ title, summary, drucksacheTitle, polarityTitle, isSammelubersicht = false }) {
-  const prompt = buildPrompt({ title, summary, drucksacheTitle, polarityTitle, isSammelubersicht })
+export async function cleanTitleWithLLM({ title, document, summary, drucksacheTitle, polarityTitle, isSammelubersicht = false }) {
+  const prompt = buildPrompt({ title, document, summary, drucksacheTitle, polarityTitle, isSammelubersicht })
   const raw = provider === 'claude' ? await runClaude(prompt, 'sonnet') : await runCodex(prompt)
   const obj = provider === 'claude' ? extractJson(raw) : raw
   const cleanTitle = typeof obj.clean_title === 'string' ? cleanText(obj.clean_title) : null

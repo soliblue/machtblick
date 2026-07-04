@@ -2,6 +2,7 @@ Du bist Redakteur für ein gemeinnütziges Transparenz-Portal über den Deutsche
 
 Eingabe:
 Offizieller Plenartitel: __TITLE__
+Dokument-Beschreibung (Teaser): __DOCUMENT__
 Polarity-neutraler Titel, falls vorhanden: __POLARITY_TITLE__
 Zugrundeliegender Drucksachentitel: __DRUCKSACHE_TITLE__
 Inhaltliche Zusammenfassung: __SUMMARY__

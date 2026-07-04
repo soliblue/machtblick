@@ -97,7 +97,7 @@ Before any deploy:
 
 1. Check counts before and after for votes, speeches, Antraege, vote links, translations, and generated descriptions.
 2. Confirm speech XML fetch reached the newest available session.
-3. Confirm new non-procedural votes have clean titles, descriptions, translations, and party positions when eligible.
+3. Confirm every new vote has a clean title (`SELECT COUNT(*) FROM votes WHERE clean_title IS NULL` must be 0; `etl:titles` fills procedural and hammelsprung rows deterministically from the source title), and new non-procedural votes have descriptions, translations, and party positions when eligible.
 4. Confirm Antraege have updated metadata, signatories, descriptions, and translations when eligible.
 5. Run `npm run build -w @machtblick/bundestag`.
 6. Confirm generated static data for new routes exists.

@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { X } from 'lucide-react'
 import { Markdown } from '@/lib/Markdown'
 import { partyLabel } from '@/lib/parties'
@@ -20,13 +21,47 @@ export function PartySummaryModal({ summary, onClose }: Props) {
   const t = useCopy()
   const locale = useLocale()
   const label = partyLabel(summary.party, locale)
+  const panelRef = useRef<HTMLElement>(null)
+  useEffect(() => {
+    const trigger = document.activeElement as HTMLElement | null
+    const panel = panelRef.current
+    if (!panel) return
+    panel.focus()
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+      if (e.key !== 'Tab') return
+      const items = panel.querySelectorAll<HTMLElement>('button, a[href]')
+      const first = items[0]
+      const last = items[items.length - 1]
+      if (e.shiftKey && (document.activeElement === first || document.activeElement === panel)) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      document.body.style.overflow = previousOverflow
+      trigger?.focus()
+    }
+  }, [])
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-fg/40 p-l" role="presentation" onClick={onClose}>
       <section
+        ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-label={`${t.partySummaryAria} ${label}`}
-        className="max-h-[85vh] w-[90vw] max-w-[42rem] overflow-y-auto bg-background shadow-xl"
+        tabIndex={-1}
+        className="max-h-[85vh] w-[90vw] max-w-[42rem] overflow-y-auto bg-background shadow-xl outline-none"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="sticky top-0 z-10 mb-l flex items-start justify-between gap-m bg-background p-l pb-m">

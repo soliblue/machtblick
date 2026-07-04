@@ -121,6 +121,7 @@ export const getVote = createServerFn({ method: 'GET' })
       }
     })
     const localizedVote = overlayVote(voteRow, translations)
+    if (!localizedVote.cleanTitle?.trim()) throw notFound()
     const publicVote = requireVoteCleanTitle(localizedVote)
     const vote = voteRow.voteType === 'namentlich'
       ? { ...publicVote, yes: voteRow.yes ?? 0, no: voteRow.no ?? 0, abstain: voteRow.abstain ?? 0, absent: voteRow.absent ?? 0, totalMembers: voteRow.totalMembers ?? 0 }

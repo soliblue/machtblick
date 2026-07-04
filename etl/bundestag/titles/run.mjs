@@ -49,12 +49,11 @@ const sammelNumber = (title) => {
 const db = new Database(DB_PATH)
 const whereClean = force ? '' : 'AND v.clean_title IS NULL'
 const rows = db.prepare(`
-  SELECT v.id, v.title, v.document, v.summary_simplified, v.inverted, v.is_petition_bundle, p.rewritten_title
+  SELECT v.id, v.title, v.document, v.summary_simplified, v.inverted, v.is_petition_bundle,
+    v.procedural, v.vote_type, v.clean_title, p.rewritten_title
   FROM votes
   v LEFT JOIN vote_polarity_decisions p ON p.vote_id = v.id
-  WHERE v.procedural = 0
-    AND v.vote_type != 'hammelsprung'
-    AND (? IS NULL OR v.id = ?)
+  WHERE (? IS NULL OR v.id = ?)
     ${whereClean}
 `).all(voteFilter, voteFilter)
 
@@ -88,6 +87,9 @@ function displaySourceTitle(row) {
 
 const tasks = work.map((row) =>
   limit(async () => {
+    if (row.procedural || row.vote_type === 'hammelsprung') {
+      return { row, result: { clean_title: displaySourceTitle(row), confidence: 'high', direct: true } }
+    }
     const drucksacheTitle = await resolveDrucksacheTitle(row.document)
     const nnn = sammelNumber(row.title)
     const sourceTitle = displaySourceTitle(row)
@@ -96,6 +98,7 @@ const tasks = work.map((row) =>
       const result = needsLLM
         ? await cleanTitleWithLLM({
             title: row.title,
+            document: row.document,
             summary: row.summary_simplified,
             drucksacheTitle,
             polarityTitle: row.inverted ? row.rewritten_title : null,
@@ -125,8 +128,11 @@ for (const item of outcomes) {
     continue
   }
   if (result.confidence === 'low') {
-    lowSkipped++
-    continue
+    if (row.clean_title) {
+      lowSkipped++
+      continue
+    }
+    result.clean_title = displaySourceTitle(row)
   }
   if (!result.clean_title && result.confidence !== 'low') result.clean_title = displaySourceTitle(row)
   if (!result.clean_title) {

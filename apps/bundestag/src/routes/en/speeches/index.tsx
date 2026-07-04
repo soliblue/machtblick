@@ -13,7 +13,7 @@ export const Route = createFileRoute('/en/speeches/')({
     party: search.party ?? '',
     date: search.date ?? '',
     memberId: search.memberId ?? '',
-    page: search.page ?? 0,
+    page: (search.page ?? 1) - 1,
   }),
   loader: ({ deps }) => searchSpeechesStatic(deps, 'en'),
   head: () => ({
@@ -29,14 +29,15 @@ export const Route = createFileRoute('/en/speeches/')({
     party: typeof s.party === 'string' && s.party ? s.party : undefined,
     date: typeof s.date === 'string' && s.date ? s.date : undefined,
     memberId: typeof s.memberId === 'string' && s.memberId ? s.memberId : undefined,
-    page: typeof s.page === 'number' && s.page > 0 ? s.page : undefined,
+    page: typeof s.page === 'number' && s.page > 1 ? s.page : undefined,
   }),
 })
 
 function RedenRoute() {
   const initialData = Route.useLoaderData()
   const { q, party, date, memberId, page } = Route.useSearch()
-  const search = useSpeechSearch({ q, party, date, memberId, page }, initialData, 'en')
+  const pageIndex = (page ?? 1) - 1
+  const search = useSpeechSearch({ q, party, date, memberId, page: pageIndex }, initialData, 'en')
   const navigate = useNavigate({ from: Route.fullPath })
   return (
     <RedenSearch
@@ -46,12 +47,12 @@ function RedenRoute() {
       party={party ?? null}
       date={date ?? null}
       memberId={memberId ?? null}
-      page={page ?? 0}
+      page={pageIndex}
       onQueryChange={(v) => navigate({ search: (s) => ({ ...s, q: v || undefined, page: undefined }) })}
       onPartyChange={(v) => navigate({ search: (s) => ({ ...s, party: v ?? undefined, page: undefined }) })}
       onDateChange={(v) => navigate({ search: (s) => ({ ...s, date: v ?? undefined, page: undefined }) })}
       onMemberChange={(v) => navigate({ search: (s) => ({ ...s, memberId: v ?? undefined, page: undefined }) })}
-      onPageChange={(p) => navigate({ search: (s) => ({ ...s, page: p > 0 ? p : undefined }) })}
+      onPageChange={(p) => navigate({ search: (s) => ({ ...s, page: p > 0 ? p + 1 : undefined }) })}
     />
   )
 }
