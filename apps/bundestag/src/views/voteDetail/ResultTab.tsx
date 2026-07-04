@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { VoteDetail as VoteDetailData } from '@/server/votes'
+import type { VoteDetail as VoteDetailData } from '@/server/voteDetail'
 import type { VoteChoice } from '@/views/votesList/VoteDistributionDonut'
 import { VoteHemicycle } from '@/views/votesList/VoteHemicycle'
 import { PartyDonutGrid } from './PartyDonutGrid'

@@ -1,7 +1,7 @@
 import { ExternalLink } from 'lucide-react'
 import { useMemo } from 'react'
 import type { AntragDetail as AntragDetailData } from '@/server/antraege'
-import type { MemberVoteRow } from '@/server/members'
+import type { MemberVoteRow } from '@/server/memberDetail'
 import { formatDate } from '@/lib/format'
 import { isLaenderInitiative } from '@/lib/bundeslaender'
 import { Markdown } from '@/lib/Markdown'

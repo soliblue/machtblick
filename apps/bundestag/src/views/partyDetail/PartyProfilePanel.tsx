@@ -1,4 +1,4 @@
-import type { PartyDetail as PartyDetailData } from '@/server/parties'
+import type { PartyDetail as PartyDetailData } from '@/server/partyDetail'
 import { AlignmentList } from './AlignmentList'
 import { DonationsBar } from './DonationsBar'
 import { ProposalsBar } from './ProposalsBar'

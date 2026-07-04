@@ -1,6 +1,6 @@
 import { initials } from '@/lib/initials'
 import { VoteChoicePill } from '../memberDetail/VoteChoicePill'
-import type { MemberVoteRow } from '@/server/members'
+import type { MemberVoteRow } from '@/server/memberDetail'
 import { useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
 

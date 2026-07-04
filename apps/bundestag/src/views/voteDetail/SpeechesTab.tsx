@@ -1,5 +1,5 @@
-import type { MemberVoteRow } from '@/server/members'
-import type { VoteDetail as VoteDetailData } from '@/server/votes'
+import type { MemberVoteRow } from '@/server/memberDetail'
+import type { VoteDetail as VoteDetailData } from '@/server/voteDetail'
 import { DebateList } from './DebateList'
 import { useCopy } from '@/lib/i18n'
 

@@ -1,4 +1,4 @@
-import type { MemberInitiativeRow as MemberInitiativeRowData } from '@/server/members'
+import type { MemberInitiativeRow as MemberInitiativeRowData } from '@/server/memberInitiatives'
 import { formatDate } from '@/lib/format'
 import { useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'

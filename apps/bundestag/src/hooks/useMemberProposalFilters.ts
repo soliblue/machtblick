@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import type { MemberInitiativeRow } from '@/server/members'
+import type { MemberInitiativeRow } from '@/server/memberInitiatives'
 
 export type MemberProposalVoteLinkFilter = 'with' | 'without'
 

@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react'
-import type { VoteDetail as VoteDetailData } from '@/server/votes'
+import type { VoteDetail as VoteDetailData } from '@/server/voteDetail'
 import { formatDate } from '@/lib/format'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { Stamp } from '@/views/votesList/Stamp'

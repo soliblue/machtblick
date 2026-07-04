@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { getVote } from '@/server/votes'
+import { getVote } from '@/server/voteDetail'
 import { getVoteSponsors } from '@/server/voteSponsors'
 import { VoteDetail, type VoteTab, isVoteTab } from '@/views/voteDetail/VoteDetail'
 import { seoMeta, canonicalLink, alternateJsonLink, breadcrumbJsonLd } from '@/lib/seo'

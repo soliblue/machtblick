@@ -1,6 +1,6 @@
 import { createFileRoute, useLoaderData, useNavigate } from '@tanstack/react-router'
 import { PartyVotesPanel } from '@/views/partyDetail/PartyVotesPanel'
-import type { PartyVote } from '@/server/parties'
+import type { PartyVote } from '@/server/partyDetail'
 
 type Result = 'angenommen' | 'abgelehnt'
 const isResult = (v: unknown): v is Result => v === 'angenommen' || v === 'abgelehnt'

@@ -1,4 +1,4 @@
-import type { PartyAlignment } from '@/server/parties'
+import type { PartyAlignment } from '@/server/partyDetail'
 import { PARTY_SLUG, partyLabel } from '@/lib/parties'
 import { PartyLogo } from '@/views/votesList/PartyLogo'
 import { pct } from '@/lib/format'

@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
 import type { VoteListItem } from '@/server/votes'
 
-export type VoteTypeFilter = 'namentlich' | 'handzeichen' | 'hammelsprung'
-export type VoteResultFilter = 'angenommen' | 'abgelehnt'
+export type VoteTypeFilter = VoteListItem['voteType']
+export type VoteResultFilter = VoteListItem['result']
 
 export function useVoteListFilters(
   votes: VoteListItem[],

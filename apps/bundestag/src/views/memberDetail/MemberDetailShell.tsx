@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { CalendarCheck, Heart, Vote, UserX, Cake, Mic2, ScrollText, GraduationCap } from 'lucide-react'
-import type { MemberDetail as MemberDetailData } from '@/server/members'
+import type { MemberDetail as MemberDetailData } from '@/server/memberDetail'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { pct } from '@/lib/format'
 import { StatTiles } from './StatTiles'

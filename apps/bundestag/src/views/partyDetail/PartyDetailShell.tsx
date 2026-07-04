@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { Users } from 'lucide-react'
-import type { PartyDetail as PartyDetailData } from '@/server/parties'
+import type { PartyDetail as PartyDetailData } from '@/server/partyDetail'
 import { PARTY_COLOR, PARTY_LOGO, partyLabel } from '@/lib/parties'
 import { PartyLogo } from '@/views/votesList/PartyLogo'
 import { PartyDetailTabs } from './PartyDetailTabs'

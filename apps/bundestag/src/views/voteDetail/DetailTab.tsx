@@ -1,4 +1,4 @@
-import type { VoteDetail as VoteDetailData } from '@/server/votes'
+import type { VoteDetail as VoteDetailData } from '@/server/voteDetail'
 import { Markdown } from '@/lib/Markdown'
 import { useCopy } from '@/lib/i18n'
 

@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
-import { getParty } from '@/server/parties'
+import { getParty } from '@/server/partyDetail'
 import { PartyDetailShell } from '@/views/partyDetail/PartyDetailShell'
 import { seoMeta, canonicalLink, alternateJsonLink, jsonLd, breadcrumbJsonLd, SITE_URL } from '@/lib/seo'
 import { PARTY_LABEL, hasPartyLine } from '@/lib/parties'

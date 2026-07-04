@@ -1,8 +1,7 @@
 import { db } from '@machtblick/db/client'
 import { memberAffiliations } from '@machtblick/db/schema'
 import { and, eq, isNull, lte, or, gte } from 'drizzle-orm'
-
-const CURRENT_TERM = 21
+import { CURRENT_TERM } from './term'
 
 export function getMemberPartyAt(memberId: string, date: string): string {
   const row = db

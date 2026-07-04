@@ -7,22 +7,20 @@ import {
   antragDescriptionTranslations,
   antragSignatories,
   members,
-  speechTranslations,
   voteAntraege,
   voteMembers,
   votePartySummaries,
-  votePartySummaryTranslations,
-  voteTranslations,
   votes,
 } from '@machtblick/db/schema'
 import { and, desc, eq, inArray, sql } from 'drizzle-orm'
 import { normalizeLocale, type Locale } from '@/lib/locale'
 import { SHOW_HAMMELSPRUNG } from '@/lib/voteTypes'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
+import { getSeatsByParty } from './seats'
+import { CURRENT_TERM } from './term'
+import { partySummaryTranslationMap, speechTranslationMap, voteTranslationMap } from './translations'
 import type { SpeechSummary } from './speeches'
 import { requireVoteCleanTitle } from '@/lib/voteTitles'
-
-const CURRENT_TERM = 21
 
 export type AntragSignatory = {
   memberId: string
@@ -100,47 +98,12 @@ type DebateSpeechRow = {
   debate_source: string | null
 }
 
-function voteTranslationMap(ids: string[], locale: Locale) {
-  return new Map(
-    locale === 'en' && ids.length
-      ? db.select().from(voteTranslations).where(and(eq(voteTranslations.locale, 'en'), inArray(voteTranslations.voteId, ids))).all().map((t) => [t.voteId, t])
-      : [],
-  )
-}
-
-function partySummaryTranslationMap(ids: string[], locale: Locale) {
-  return new Map(
-    locale === 'en' && ids.length
-      ? db.select().from(votePartySummaryTranslations).where(and(eq(votePartySummaryTranslations.locale, 'en'), inArray(votePartySummaryTranslations.voteId, ids))).all().map((t) => [`${t.voteId}\u0000${t.party}`, t])
-      : [],
-  )
-}
-
-function speechTranslationMap(ids: string[], locale: Locale) {
-  return new Map(
-    locale === 'en' && ids.length
-      ? db.select().from(speechTranslations).where(and(eq(speechTranslations.locale, 'en'), inArray(speechTranslations.speechId, ids))).all().map((t) => [t.speechId, t])
-      : [],
-  )
-}
-
 function cleanAbstract(value: string | null) {
   return value
     ?.replace(/<br\s*\/?>/gi, '\n')
     .replace(/<[^>]+>/g, '')
     .replace(/\n{3,}/g, '\n\n')
     .trim() || null
-}
-
-function getSeatsByParty(): Map<string, number> {
-  const out = new Map<string, number>()
-  const rows = db.select().from(votes).where(and(eq(votes.termId, CURRENT_TERM), eq(votes.voteType, 'namentlich'))).orderBy(desc(votes.date)).limit(20).all()
-  for (const v of rows) {
-    const summaries = db.select().from(votePartySummaries).where(eq(votePartySummaries.voteId, v.id)).all()
-    for (const r of summaries) if (r.members && !out.has(r.party)) out.set(r.party, r.members)
-    if (out.size >= 6) break
-  }
-  return out
 }
 
 export const getAntrag = createServerFn({ method: 'GET' })
@@ -168,7 +131,7 @@ export const getAntrag = createServerFn({ method: 'GET' })
     const summariesByVote = new Map<string, AntragLinkedVote['partySummaries']>()
     for (const s of summaryRows) {
       const arr = summariesByVote.get(s.voteId) ?? []
-      const t = summaryTranslations.get(`${s.voteId}\u0000${s.party}`)
+      const t = summaryTranslations.get(`${s.voteId} ${s.party}`)
       const vote = voteRows.find((v) => v.id === s.voteId)
       if (vote?.voteType === 'namentlich') {
         arr.push({ ...s, positionSummary: t?.positionSummary ?? s.positionSummary, keyPoints: t?.keyPoints ?? s.keyPoints, dissentNote: t?.dissentNote ?? s.dissentNote, members: s.members ?? 0, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0 })

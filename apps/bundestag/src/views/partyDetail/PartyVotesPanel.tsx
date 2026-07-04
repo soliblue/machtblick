@@ -1,4 +1,4 @@
-import type { PartyDetail as PartyDetailData, PartyVote } from '@/server/parties'
+import type { PartyDetail as PartyDetailData, PartyVote } from '@/server/partyDetail'
 import { formatDate } from '@/lib/format'
 import { FilterPill } from '@/views/votesList/FilterPill'
 import { FilterPillRow } from '@/views/votesList/FilterPillRow'

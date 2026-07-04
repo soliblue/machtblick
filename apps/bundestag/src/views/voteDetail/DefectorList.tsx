@@ -1,7 +1,7 @@
 import { DefectorRow } from './DefectorRow'
 import { PartyLogo } from '../votesList/PartyLogo'
 import { PARTY_SLUG, partyLabel } from '@/lib/parties'
-import type { MemberVoteRow } from '@/server/members'
+import type { MemberVoteRow } from '@/server/memberDetail'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
 

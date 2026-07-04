@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
-import { getMember } from '@/server/members'
+import { getMember } from '@/server/memberDetail'
 import { MemberDetailShell } from '@/views/memberDetail/MemberDetailShell'
 import { seoMeta, canonicalLink, alternateJsonLink, jsonLd, breadcrumbJsonLd, SITE_URL } from '@/lib/seo'
 import { hasPartyLine } from '@/lib/parties'

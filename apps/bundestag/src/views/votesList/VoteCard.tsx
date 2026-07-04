@@ -1,5 +1,6 @@
 import type { VoteListItem } from '@/server/votes'
 import { formatDateShort } from '@/lib/format'
+import { SERIF } from '@/lib/fonts'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
 import { MarkdownInline } from '@/lib/MarkdownInline'
@@ -9,7 +10,6 @@ import { PartyDonutRow } from './PartyDonutRow'
 import { deriveDescription } from './deriveDek'
 import { useFittedLineClamp } from '@/hooks/useFittedLineClamp'
 
-export const SERIF = "Charter, 'Bitstream Charter', Georgia, 'Times New Roman', serif"
 
 type Props = { vote: VoteListItem }
 

@@ -1,5 +1,5 @@
 import { Search } from 'lucide-react'
-import type { MemberInitiativeRow as MemberInitiativeRowData } from '@/server/members'
+import type { MemberInitiativeRow as MemberInitiativeRowData } from '@/server/memberInitiatives'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { useMemberProposalFilters, type MemberProposalVoteLinkFilter } from '@/hooks/useMemberProposalFilters'
 import { FilterPill } from '@/views/votesList/FilterPill'

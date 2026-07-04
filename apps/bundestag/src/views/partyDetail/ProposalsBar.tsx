@@ -1,5 +1,5 @@
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import type { PartyProposal } from '@/server/parties'
+import type { PartyProposal } from '@/server/partyDetail'
 import { formatDate } from '@/lib/format'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'

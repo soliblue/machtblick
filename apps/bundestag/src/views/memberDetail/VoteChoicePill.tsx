@@ -1,4 +1,4 @@
-import type { MemberVoteRow } from '@/server/members'
+import type { MemberVoteRow } from '@/server/memberDetail'
 import { useCopy } from '@/lib/i18n'
 
 const COLOR: Record<MemberVoteRow['choice'], string> = {

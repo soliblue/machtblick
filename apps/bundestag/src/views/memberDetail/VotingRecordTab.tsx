@@ -1,4 +1,4 @@
-import type { MemberVoteRow } from '@/server/members'
+import type { MemberVoteRow } from '@/server/memberDetail'
 import { formatDate } from '@/lib/format'
 import { FilterPill } from '@/views/votesList/FilterPill'
 import { FilterPillRow } from '@/views/votesList/FilterPillRow'
