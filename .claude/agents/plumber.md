@@ -125,9 +125,16 @@ There is no explicit `is_current` flag. `member_affiliations.valid_to` is the si
 - `valid_to IS NULL` → still an MdB
 - `valid_to = <date>` → mandate ended on that date
 
-When a member silently disappears from roll calls (e.g. `foullong-uwe` — votes through 2025-07-10 then nothing), close their open affiliation row by setting `valid_to` to their last appearance. One-shot: `db/close-foullong.ts`. Backend derives "current MdB" from "has affiliation with `valid_to IS NULL`".
+`db/close-departed-mandates.ts` (`npm run db:close-departed`) owns the close-out, idempotent, two passes:
 
-ETL TODO: the affiliation worker should detect long gaps automatically rather than rely on hand-written one-shots.
+1. **Stammdaten `MDBWP_BIS`** (authoritative): the WP21 `<WAHLPERIODE>` block carries the exact mandate-end date for departed MdBs. Joined via `members.bt_mdb_id`. Also corrects an already-closed final run whose `valid_to` differs (upgrades provisional roster-gap dates once Stammdaten publishes).
+2. **Roster-gap fallback**: a namentliche roll call's `vote_members` roster lists every sitting member including absentees (`nicht_abgegeben`), so the roster IS the chamber. A member with WP21 ballots who is absent from the rosters of the **last two** namentliche vote dates has departed; close at their last roster appearance. Needed because Stammdaten republishes with weeks-to-months lag (found 2026-07: three CDU/CSU departures from May/June 2026 absent from the May XML).
+
+Critical: `etl/bundestag-affiliations/ingest.ts` is a full DELETE + rewrite that reopens every run (`valid_to = null` on each member's last run), so any close-out applied earlier is clobbered by the next affiliations ingest. That is how a superseded one-shot (`db/close-foullong.ts`, since deleted) silently regressed and Baerbock/Habeck + 5 others counted as sitting (637 vs 630) until round 14 caught it. The close script is therefore chained into `npm run etl:affiliations` itself and documented in `prompts/auto-refresh.md` step 8; never run the ingest bare. Sanity signal: the script prints the chamber-wide sitting count (distinct WP21-ballot members with an open affiliation), which must equal the seat total (630).
+
+`etl/bundestag-stammdaten/fetch.ts` re-downloads when the local XML is older than 7 days (it used to skip whenever the file existed, so cron never refreshed it and `MDBWP_BIS` dates never arrived); falls back to python3 zipfile when `unzip` is not installed. Note abgeordnetenwatch is no help here: the WP21 mandate list now returns only the 630 current holders, departed mandates vanish without an end date.
+
+Backend derives "current MdB" from "has affiliation with `valid_to IS NULL`".
 
 ### Member identity, name format, Bundesland (plan 101)
 

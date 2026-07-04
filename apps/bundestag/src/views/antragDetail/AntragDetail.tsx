@@ -61,7 +61,7 @@ export function AntragDetail({ data }: Props) {
         <PartyBadge party={antrag.initiativeFraktion} />
         {antrag.introducedDate ? <span className="opacity-l">{formatDate(antrag.introducedDate)}</span> : null}
         {antrag.drucksache ? <span className="opacity-l">Drs. {antrag.drucksache}</span> : null}
-        {plainStatus ? <span className="opacity-l">{plainStatus}</span> : null}
+        {plainStatus ? <span className="opacity-l">{t.motionStatus[plainStatus] ?? plainStatus}</span> : null}
       </div>
       <div className="mt-m mb-l flex flex-wrap items-center gap-l">
         {stamp ? <Stamp variant={stamp} size="m" /> : null}

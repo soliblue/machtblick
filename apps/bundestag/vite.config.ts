@@ -31,6 +31,7 @@ type SpeechRow = {
   contribution_type: string | null
   vote_id: string | null
   vote_title: string | null
+  vote_title_en: string | null
 }
 
 const CHAIR_ROLES = new Set([
@@ -60,10 +61,12 @@ function writeSpeechesStatic() {
            sdgs.group_id AS debate_group_id,
            sdgs.contribution_type AS contribution_type,
            v.id AS vote_id,
-           v.clean_title AS vote_title
+           v.clean_title AS vote_title,
+           COALESCE(vt.clean_title, vt.title) AS vote_title_en
     FROM speeches s
     LEFT JOIN linked_votes lv ON lv.speech_id = s.id AND lv.rn = 1
     LEFT JOIN votes v ON v.id = lv.vote_id AND v.term_id = 21 AND v.procedural = 0 AND v.vote_type != 'hammelsprung'
+    LEFT JOIN vote_translations vt ON vt.vote_id = v.id AND vt.locale = 'en'
     LEFT JOIN speech_debate_group_speeches sdgs ON sdgs.speech_id = s.id
     LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
     LEFT JOIN plenary_agenda_items pai ON pai.session_id = s.session_id AND pai.date = s.date AND pai.agenda_item = s.agenda_item
@@ -89,6 +92,7 @@ function writeSpeechesStatic() {
     contributionType: r.contribution_type,
     voteId: r.vote_id,
     voteTitle: r.vote_title,
+    voteTitleEn: r.vote_title_en,
   }))
   rmSync(`${publicDir}/speeches-search.json`, { force: true })
   const SHARD_COUNT = 4

@@ -7,7 +7,7 @@ import type {
 import { makeSnippet } from './snippet'
 import type { Locale } from './locale'
 
-export type SpeechMetaEntry = Omit<SpeechResult, 'snippet'>
+export type SpeechMetaEntry = Omit<SpeechResult, 'snippet'> & { voteTitleEn: string | null }
 
 const PAGE_SIZE = 5
 
@@ -88,8 +88,9 @@ export async function searchSpeechesStatic(params: SpeechSearchParams, locale: L
   const membersOptions: MemberOption[] = Array.from(memberMap, ([id, name]) => ({ id, name }))
     .sort((a, b) => a.name.localeCompare(b.name, 'de'))
 
-  const items: SpeechResult[] = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map((s) => ({
+  const items: SpeechResult[] = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map(({ voteTitleEn, ...s }) => ({
     ...s,
+    voteTitle: locale === 'en' ? voteTitleEn ?? s.voteTitle : s.voteTitle,
     excerpt: locale === 'en' && texts ? (texts[s.id] ?? s.excerpt).slice(0, 220) : s.excerpt,
     snippet: q && texts ? makeSnippet(texts[s.id] ?? s.excerpt, terms) : null,
   }))

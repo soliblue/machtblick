@@ -40,7 +40,10 @@ export const listMembers = createServerFn({ method: 'GET' }).handler(async (): P
   const mandateByMember = new Map(allMembers.map((m) => [m.id, m.mandateType]))
   const pictureByMember = new Map(allMembers.map((m) => [m.id, m.pictureUrl]))
   const stats = new Map<string, { name: string; lastName: string; party: string; state: string; total: number; absent: number; loyalMatches: number; loyalEligible: number }>()
-  for (const m of allMembers) stats.set(m.id, { name: m.name, lastName: m.lastName, party: currentPartyByMember.get(m.id) ?? '', state: '', total: 0, absent: 0, loyalMatches: 0, loyalEligible: 0 })
+  for (const m of allMembers) {
+    if (!currentPartyByMember.has(m.id)) continue
+    stats.set(m.id, { name: m.name, lastName: m.lastName, party: currentPartyByMember.get(m.id) ?? '', state: '', total: 0, absent: 0, loyalMatches: 0, loyalEligible: 0 })
+  }
   for (const r of vmRows) {
     const s = stats.get(r.memberId)
     if (!s) continue
