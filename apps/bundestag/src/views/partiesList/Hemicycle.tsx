@@ -1,4 +1,5 @@
 import type { PartyListItem } from '@/server/parties'
+import { hemicycleSeats } from '@/lib/hemicycle'
 import { PARTY_COLOR, partyLabel } from '@/lib/parties'
 import { useLocale } from '@/lib/i18n'
 
@@ -10,22 +11,10 @@ export function Hemicycle({ parties, width = 720 }: Props) {
   const total = parties.reduce((a, p) => a + p.seats, 0)
   const rows = Math.max(4, Math.min(10, Math.round(Math.sqrt(total / 4))))
   const radii = Array.from({ length: rows }, (_, r) => 0.55 + (r / (rows - 1)) * 0.45)
-  const radiusSum = radii.reduce((a, b) => a + b, 0)
-  const rowCounts = radii.map((r) => Math.round((r / radiusSum) * total))
-  let diff = total - rowCounts.reduce((a, b) => a + b, 0)
-  for (let i = rowCounts.length - 1; diff !== 0; i = (i - 1 + rowCounts.length) % rowCounts.length) {
-    rowCounts[i] += Math.sign(diff)
-    diff -= Math.sign(diff)
-  }
-
-  const seats = rowCounts.flatMap((count, r) =>
-    Array.from({ length: count }, (_, s) => {
-      const t = count === 1 ? 0.5 : s / (count - 1)
-      const angle = Math.PI - t * Math.PI
-      return { x: Math.cos(angle) * radii[r], y: -Math.sin(angle) * radii[r], angle, row: r }
-    }),
-  )
-  seats.sort((a, b) => b.angle - a.angle || a.row - b.row)
+  const seats = hemicycleSeats(total, radii, 'edge').map((s) => ({
+    x: Math.cos(s.angle) * s.radius,
+    y: -Math.sin(s.angle) * s.radius,
+  }))
 
   const ordered = [
     ...SEATING_ORDER.map((p) => parties.find((x) => x.party === p)).filter((p): p is PartyListItem => Boolean(p)),
@@ -42,11 +31,12 @@ export function Hemicycle({ parties, width = 720 }: Props) {
   return (
     <svg width="100%" viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Sitzverteilung im Bundestag">
       {seats.map((s, i) => (
-        <circle
+        <rect
           key={i}
-          cx={cx + s.x * drawR}
-          cy={cy + s.y * drawR}
-          r={dotR}
+          x={(cx + s.x * drawR - dotR).toFixed(2)}
+          y={(cy + s.y * drawR - dotR).toFixed(2)}
+          width={(dotR * 2).toFixed(2)}
+          height={(dotR * 2).toFixed(2)}
           fill={PARTY_COLOR[assignments[i]] ?? 'var(--color-gray)'}
         />
       ))}

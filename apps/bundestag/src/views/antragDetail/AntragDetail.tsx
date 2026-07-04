@@ -3,6 +3,7 @@ import { useMemo } from 'react'
 import type { AntragDetail as AntragDetailData } from '@/server/antraege'
 import type { MemberVoteRow } from '@/server/members'
 import { formatDate } from '@/lib/format'
+import { isLaenderInitiative } from '@/lib/bundeslaender'
 import { Markdown } from '@/lib/Markdown'
 import { MarkdownInline } from '@/lib/MarkdownInline'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
@@ -53,6 +54,9 @@ export function AntragDetail({ data }: Props) {
       {antrag.cleanTitle && antrag.cleanTitle !== antrag.title ? (
         <div className="mt-s text-s opacity-l">{t.officialTitle}: {antrag.title}</div>
       ) : null}
+      {isLaenderInitiative(antrag.initiativeFraktion) && (
+        <div className="mt-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{t.laenderMotion}</div>
+      )}
       <div className="mt-s flex flex-wrap items-center gap-m text-m">
         <PartyBadge party={antrag.initiativeFraktion} />
         {antrag.introducedDate ? <span className="opacity-l">{formatDate(antrag.introducedDate)}</span> : null}

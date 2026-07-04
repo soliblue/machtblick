@@ -11,5 +11,5 @@ export function requireVoteCleanTitle<T extends VoteTitleFields>(vote: T): T & {
 
 export function requireVoteTitleText(voteId: string | null, cleanTitle: string | null | undefined): string | null {
   if (voteId && !cleanTitle?.trim()) throw new Error(`Missing clean_title for vote ${voteId}`)
-  return voteId ? cleanTitle : null
+  return voteId && cleanTitle ? cleanTitle : null
 }

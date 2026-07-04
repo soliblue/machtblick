@@ -57,8 +57,8 @@ export function useMemberListFilters(
     })
     const dir = sortDir === 'asc' ? 1 : -1
     return [...base].sort((a, b) => {
-      const av = a[sortKey]
-      const bv = b[sortKey]
+      const av = sortKey === 'name' ? `${a.lastName} ${a.name}` : a[sortKey]
+      const bv = sortKey === 'name' ? `${b.lastName} ${b.name}` : b[sortKey]
       if (av === null && bv === null) return 0
       if (av === null) return 1
       if (bv === null) return -1

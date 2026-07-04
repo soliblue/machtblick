@@ -1,6 +1,7 @@
 import type { MemberVoteRow } from '@/server/members'
 import { formatDate } from '@/lib/format'
 import { FilterPill } from '@/views/votesList/FilterPill'
+import { FilterPillRow } from '@/views/votesList/FilterPillRow'
 import { Stamp } from '@/views/votesList/Stamp'
 import { VoteChoicePill } from './VoteChoicePill'
 import { useCopy, useLocale } from '@/lib/i18n'
@@ -34,7 +35,7 @@ export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilt
   })
   return (
     <div className="flex flex-col">
-      <div className="mb-m flex flex-wrap items-center gap-s">
+      <FilterPillRow className="mb-m">
         <FilterPill
           label={t.line}
           options={['linie', 'abw']}
@@ -49,7 +50,7 @@ export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilt
           onChange={setChoiceFilter}
           formatOption={(o) => choiceLabel[o] ?? o}
         />
-      </div>
+      </FilterPillRow>
       {filtered.map((r) => (
         <a
           key={r.voteId}

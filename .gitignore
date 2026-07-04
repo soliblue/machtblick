@@ -58,3 +58,4 @@ etl/**/samples/
 
 .claude/scheduled_tasks.lock
 .claude/agent-memory/
+apps/bundestag/test/.tester-*

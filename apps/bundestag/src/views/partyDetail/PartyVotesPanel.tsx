@@ -1,6 +1,7 @@
 import type { PartyDetail as PartyDetailData, PartyVote } from '@/server/parties'
 import { formatDate } from '@/lib/format'
 import { FilterPill } from '@/views/votesList/FilterPill'
+import { FilterPillRow } from '@/views/votesList/FilterPillRow'
 import { Stamp } from '@/views/votesList/Stamp'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
@@ -29,7 +30,7 @@ export function PartyVotesPanel({ data, result, onResultChange, partyVote, onPar
   const voteLabels: Record<PartyVote, string> = { yes: t.yes, no: t.no, abstain: t.abstain, split: t.split }
   return (
     <div>
-      <div className="mb-l flex flex-wrap items-center gap-s">
+      <FilterPillRow>
         <FilterPill
           label={t.partyVoted}
           options={['yes', 'no', 'abstain', 'split']}
@@ -44,7 +45,7 @@ export function PartyVotesPanel({ data, result, onResultChange, partyVote, onPar
           onChange={(v) => onResultChange(v as Result | null)}
           formatOption={(o) => resultLabels[o as Result]}
         />
-      </div>
+      </FilterPillRow>
       <div className="flex flex-col">
         {votes.map((v) => (
           <a

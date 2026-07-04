@@ -33,7 +33,10 @@ export function FilterPill({ label, options, value, onChange, formatOption }: Pr
       if (menuRef.current?.contains(t)) return
       setOpen(false)
     }
-    const onScroll = () => setOpen(false)
+    const onScroll = (e: Event) => {
+      if (e.target instanceof HTMLElement && e.target.contains(buttonRef.current)) return
+      setOpen(false)
+    }
     document.addEventListener('mousedown', close)
     window.addEventListener('scroll', onScroll, true)
     window.addEventListener('resize', onScroll)
@@ -51,7 +54,7 @@ export function FilterPill({ label, options, value, onChange, formatOption }: Pr
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-haspopup="listbox"
-        className="inline-flex shrink-0 items-center gap-s border px-m py-xs text-m transition-colors hover:bg-surface"
+        className="relative inline-flex shrink-0 items-center gap-s border px-m py-xs text-m transition-colors before:absolute before:inset-x-0 before:-inset-y-[7px] before:content-[''] hover:bg-surface"
         style={{
           borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)',
           background: value ? 'var(--color-surface)' : 'transparent',
@@ -69,7 +72,7 @@ export function FilterPill({ label, options, value, onChange, formatOption }: Pr
               onChange(null)
             }}
             onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.stopPropagation(); onChange(null) } }}
-            className="opacity-l hover:opacity-100"
+            className="relative z-10 opacity-l hover:opacity-100"
           >
             ×
           </span>

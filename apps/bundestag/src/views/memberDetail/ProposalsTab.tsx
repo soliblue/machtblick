@@ -3,6 +3,7 @@ import type { MemberInitiativeRow as MemberInitiativeRowData } from '@/server/me
 import { useCopy, useLocale } from '@/lib/i18n'
 import { useMemberProposalFilters, type MemberProposalVoteLinkFilter } from '@/hooks/useMemberProposalFilters'
 import { FilterPill } from '@/views/votesList/FilterPill'
+import { FilterPillRow } from '@/views/votesList/FilterPillRow'
 import { ProposalRow } from './ProposalRow'
 
 const BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
@@ -42,7 +43,7 @@ export function ProposalsTab({ proposals, statusFilter, setStatusFilter, topicFi
           style={{ borderColor: BORDER }}
         />
       </div>
-      <div className="mb-l -mx-l flex items-center gap-s overflow-x-auto px-l [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <FilterPillRow>
         {statusOptions.length > 0 && (
           <FilterPill
             label={locale === 'en' ? 'Status' : 'Stand'}
@@ -72,7 +73,7 @@ export function ProposalsTab({ proposals, statusFilter, setStatusFilter, topicFi
             onChange={setTopicFilter}
           />
         )}
-      </div>
+      </FilterPillRow>
       {filtered.length > 0 ? (
         <div className="flex flex-col">
           {filtered.map((row) => <ProposalRow key={row.antragId} row={row} />)}

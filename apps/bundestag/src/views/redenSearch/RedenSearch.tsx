@@ -1,5 +1,6 @@
 import { Search } from 'lucide-react'
 import { FilterPill } from '@/views/votesList/FilterPill'
+import { FilterPillRow } from '@/views/votesList/FilterPillRow'
 import { MemberFilterPill } from './MemberFilterPill'
 import { Pager } from './Pager'
 import { SpeechResultRow } from './SpeechResultRow'
@@ -54,11 +55,11 @@ export function RedenSearch({ data, query, party, date, memberId, page, textsLoa
         />
         {textsLoading && <div className="mt-xs text-s opacity-l">{t.searchIndexLoading}</div>}
       </div>
-      <div className="mb-m -mx-l flex items-center gap-s overflow-x-auto px-l [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <FilterPillRow className="mb-m">
         <FilterPill label={t.parliamentaryGroup} options={data.parties} value={party} onChange={onPartyChange} />
         <FilterPill label={locale === 'en' ? 'Day' : 'Tag'} options={data.dates} value={date} onChange={onDateChange} formatOption={formatDate} />
         <MemberFilterPill label={locale === 'en' ? 'Member' : 'Abgeordnete:r'} options={data.membersOptions} value={memberId} onChange={onMemberChange} />
-      </div>
+      </FilterPillRow>
       <div className="mb-m text-s opacity-l">
         {textsLoading
           ? t.searchPreparing

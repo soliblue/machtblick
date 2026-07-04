@@ -14,7 +14,7 @@ type Props = {
   showLabel?: boolean
 }
 
-const SEGMENTS: Array<{ key: VoteChoice; color: string }> = [
+export const VOTE_SEGMENTS: Array<{ key: VoteChoice; color: string }> = [
   { key: 'yes', color: 'var(--color-success)' },
   { key: 'no', color: 'var(--color-danger)' },
   { key: 'abstain', color: 'var(--color-yellow)' },
@@ -39,7 +39,7 @@ export function VoteDistributionDonut({
   const total = yes + no + abstain + absent || 1
   const interactive = Boolean(onSelect)
   const active = hovered ?? selected ?? null
-  const activeSeg = active ? SEGMENTS.find((s) => s.key === active)! : null
+  const activeSeg = active ? VOTE_SEGMENTS.find((s) => s.key === active)! : null
   const activeValue = active ? values[active] : total
   const activePct = activeValue === total ? 100 : Math.min(99, Math.round((activeValue / total) * 100))
   let angle = -Math.PI / 2
@@ -48,7 +48,7 @@ export function VoteDistributionDonut({
   const r = 46
   return (
     <svg width={size} height={size} viewBox="0 0 100 100" role="img" aria-label={`${t.yes} ${yes}, ${t.no} ${no}, ${t.abstain} ${abstain}, ${t.absent} ${absent}`}>
-      {SEGMENTS.map((s) => {
+      {VOTE_SEGMENTS.map((s) => {
         const v = values[s.key]
         if (v === 0) return null
         const isActive = active === s.key

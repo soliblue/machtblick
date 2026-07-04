@@ -2,6 +2,7 @@ import { useState } from 'react'
 import type { VoteDetail as VoteDetailData } from '@/server/votes'
 import { VoteDistributionDonut, type VoteChoice } from '@/views/votesList/VoteDistributionDonut'
 import { PartyWaffle } from './PartyWaffle'
+import { VoteCountsRow } from './VoteCountsRow'
 import { DefectorList } from './DefectorList'
 import { useCopy, useLocale } from '@/lib/i18n'
 
@@ -26,6 +27,15 @@ export function ResultTab({ data }: Props) {
           </>
         )}
       </div>
+
+      <VoteCountsRow
+        yes={vote.yes}
+        no={vote.no}
+        abstain={vote.abstain}
+        absent={vote.absent}
+        selected={filter}
+        onSelect={toggle}
+      />
 
       <section className="mb-l grid items-start gap-l md:grid-cols-[auto_1fr]">
         <div>
