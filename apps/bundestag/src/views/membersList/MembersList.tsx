@@ -1,7 +1,9 @@
 import { Search } from 'lucide-react'
 import type { MandateType, MemberListItem, MemberSex } from '@/server/members'
 import { MemberCard } from './MemberCard'
+import { MembersStatsStrip } from './MembersStatsStrip'
 import { SortControl } from './SortControl'
+import type { MemberStats } from '@/hooks/useMemberStats'
 import { FilterPill } from '@/views/votesList/FilterPill'
 import { FilterPillRow } from '@/views/votesList/FilterPillRow'
 import { FilterSheet, type FilterSheetGroup, type FilterSheetSort } from '@/views/votesList/FilterSheet'
@@ -12,6 +14,7 @@ import { useCopy, useLocale } from '@/lib/i18n'
 
 type Props = {
   members: MemberListItem[]
+  stats: MemberStats
   party: string | null
   onPartyChange: (value: string | null) => void
   availableParties: string[]
@@ -36,6 +39,7 @@ type Props = {
 
 export function MembersList({
   members,
+  stats,
   party,
   onPartyChange,
   availableParties,
@@ -123,7 +127,8 @@ export function MembersList({
         </div>
       </div>
       <main className="mx-auto max-w-5xl px-l pb-[96px] pt-l desk:pb-[64px]">
-        <div className="mb-m flex items-center justify-between">
+        <MembersStatsStrip stats={stats} />
+        <div className="mb-m mt-l flex items-center justify-between">
           <span className="text-s caption opacity-l">{members.length} {t.people}</span>
           <div className="hidden desk:block">
             <SortControl sortKey={sortKey} sortDir={sortDir} onSort={onSort} />
@@ -132,7 +137,7 @@ export function MembersList({
         {members.length === 0 ? (
           <p className="py-xl text-center text-s opacity-l">{t.noMembersFound}</p>
         ) : (
-          <div className="grid grid-cols-2 gap-s sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 desk:gap-m">
+          <div className="grid grid-cols-3 gap-s sm:grid-cols-4 lg:grid-cols-5 desk:gap-m">
             {members.map((m) => <MemberCard key={m.id} member={m} />)}
           </div>
         )}
