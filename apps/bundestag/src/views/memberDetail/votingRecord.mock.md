@@ -1,5 +1,11 @@
 # Member detail — Abstimmungen tab
 
+> **Superseded (plan 105 round 9).** The Abstimmungen redesign now lives in
+> `memberDetail.mock.md`: options 1-3 below are retired (the topic galaxy has no
+> `topic` field on `MemberVoteRow`; the term ribbon reads as a barcode at WP21
+> vote density). The row principle (choice-colored lead, outcome as faint
+> trailing chip, ABW surfaced) carried over. Kept for the rationale record.
+
 Route: `/members/$id` (Abstimmungen tab)
 Width target: max-w-3xl (mobile portrait ~52ch)
 

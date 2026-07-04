@@ -1,15 +1,17 @@
 import { ChevronDown, ExternalLink } from 'lucide-react'
-import { PartyBadge } from '@/views/votesList/PartyBadge'
-import { formatDate } from '@/lib/format'
+import { PartyLogo } from '@/views/votesList/PartyLogo'
+import { formatDateShort } from '@/lib/format'
+import { SERIF } from '@/lib/fonts'
 import { highlight } from '@/lib/highlight'
 import { withLocale } from '@/lib/locale'
 import { makeSnippet, renderSnippet } from '@/lib/snippet'
-import { useLocale } from '@/lib/i18n'
+import { useCopy, useLocale } from '@/lib/i18n'
 import type { SpeechResult } from '@/server/speeches'
 import type { SpeechMetaEntry } from '@/lib/speechesStatic'
 import type { MemberSpeechGroup } from '@/hooks/memberSpeechGroups'
 
-const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
+const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 8%, transparent)'
+const PROSE = { fontFamily: SERIF, lineHeight: 1.45 }
 
 type Props = {
   group: MemberSpeechGroup
@@ -23,11 +25,13 @@ type Props = {
 
 export function MemberSpeechGroupRow({ group, open, onToggle, terms, texts, contextRows, contextLoading }: Props) {
   const locale = useLocale()
+  const t = useCopy()
   const memberSpeechIds = new Set(group.speeches.map((speech) => speech.id))
   const timelineRows: Array<SpeechResult | SpeechMetaEntry> = contextRows?.length ? contextRows : group.speeches
   const matchedSpeeches = terms.length
     ? group.speeches.filter((speech) => terms.every((term) => `${speech.speakerName} ${texts?.[speech.id] ?? speech.excerpt}`.toLowerCase().includes(term)))
     : []
+  const contributions = `${group.speeches.length} ${group.speeches.length === 1 ? t.contribution : t.contributions}`
   const shortLabel = group.shortCount > 0
     ? locale === 'en'
       ? `${group.shortCount} short`
@@ -50,29 +54,31 @@ export function MemberSpeechGroupRow({ group, open, onToggle, terms, texts, cont
       >
         <div className="grid grid-cols-[1fr_auto] items-start gap-m">
           <div className="min-w-0">
-            <div className="flex flex-wrap items-center gap-s">
-              {group.voteTitle ? (
-                <span className="text-m font-semibold">{group.voteTitle}</span>
-              ) : group.agendaTitle ? (
-                <span className="text-m font-semibold">{group.agendaTitle}</span>
-              ) : group.agendaItem ? (
-                <span className="text-m font-semibold">{group.agendaItem}</span>
-              ) : (
-                <span className="text-m font-semibold">{locale === 'en' ? 'Speech' : 'Rede'}</span>
-              )}
+            <div className="font-display text-l font-semibold" style={{ overflowWrap: 'anywhere' }}>
+              {group.voteTitle ?? group.agendaTitle ?? group.agendaItem ?? (locale === 'en' ? 'Speech' : 'Rede')}
             </div>
-            <div className="mt-xs flex flex-wrap items-center gap-s text-s">
-              <span className="opacity-l">{formatDate(group.date)}</span>
-              {shortLabel && <span className="opacity-l">{shortLabel}</span>}
+            <div className="mt-s flex flex-wrap items-center gap-x-s gap-y-xs text-s caption">
+              <span className="opacity-l">{formatDateShort(group.date, locale)}</span>
+              <span className="opacity-l" aria-hidden="true">·</span>
+              <span className="opacity-l">{contributions}</span>
+              {shortLabel && (
+                <>
+                  <span className="opacity-l" aria-hidden="true">·</span>
+                  <span className="opacity-l">{shortLabel}</span>
+                </>
+              )}
               {group.voteId && (
-                <a
-                  href={withLocale(`/votes/${group.voteId}/`, locale)}
-                  onClick={(event) => event.stopPropagation()}
-                  className="relative z-10 inline-flex items-center gap-xs opacity-l hover:opacity-100"
-                >
-                  {locale === 'en' ? 'Vote' : 'Abstimmung'}
-                  <ExternalLink size={14} aria-hidden="true" />
-                </a>
+                <>
+                  <span className="opacity-l" aria-hidden="true">·</span>
+                  <a
+                    href={withLocale(`/votes/${group.voteId}/`, locale)}
+                    onClick={(event) => event.stopPropagation()}
+                    className="relative z-10 inline-flex items-center gap-xs opacity-l hover:opacity-100"
+                  >
+                    {locale === 'en' ? 'Vote' : 'Abstimmung'}
+                    <ExternalLink size={14} aria-hidden="true" />
+                  </a>
+                </>
               )}
             </div>
           </div>
@@ -83,7 +89,7 @@ export function MemberSpeechGroupRow({ group, open, onToggle, terms, texts, cont
           />
         </div>
         {open ? null : terms.length && matchedSpeeches.length ? (
-          <div className="mt-s flex flex-col gap-xs text-m opacity-l">
+          <div className="mt-s flex flex-col gap-xs text-m opacity-l" style={PROSE}>
             {matchedSpeeches.slice(0, 2).map((speech) => {
               const body = texts?.[speech.id] ?? speech.excerpt
               const snippet = makeSnippet(body, terms)
@@ -91,7 +97,7 @@ export function MemberSpeechGroupRow({ group, open, onToggle, terms, texts, cont
             })}
           </div>
         ) : (
-          <div className="mt-s text-m opacity-l line-clamp-2">{highlight(group.main.excerpt, terms)}</div>
+          <div className="mt-s text-m opacity-l line-clamp-2" style={PROSE}>{highlight(group.main.excerpt, terms)}</div>
         )}
       </div>
       {open && (
@@ -105,11 +111,11 @@ export function MemberSpeechGroupRow({ group, open, onToggle, terms, texts, cont
                 const body = texts?.[speech.id] ?? speech.excerpt
                 return (
                   <div key={speech.id} className={isMember ? 'opacity-100' : 'opacity-l'}>
-                    <div className="flex flex-wrap items-center gap-s text-s">
+                    <div className="flex flex-wrap items-center gap-s text-s caption">
                       <span className={isMember ? 'font-semibold' : ''}>{speech.speakerName}</span>
-                      {speech.speakerRole ? <span className="opacity-l">{speech.speakerRole}</span> : speech.party ? <PartyBadge party={speech.party} compact /> : null}
+                      {speech.speakerRole ? <span className="opacity-l">{speech.speakerRole}</span> : speech.party ? <PartyLogo party={speech.party} size={17} decorative /> : null}
                     </div>
-                    <div className={isMember ? 'mt-xs whitespace-pre-wrap text-m' : 'mt-xs text-m line-clamp-3'}>
+                    <div className={isMember ? 'mt-xs whitespace-pre-wrap text-m' : 'mt-xs text-m line-clamp-3'} style={PROSE}>
                       {highlight(body, terms)}
                     </div>
                   </div>

@@ -1,11 +1,13 @@
 import type { MemberVoteRow } from '@/server/memberDetail'
-import { formatDate } from '@/lib/format'
+import { formatDateShort } from '@/lib/format'
 import { FilterPill } from '@/views/votesList/FilterPill'
 import { FilterPillRow } from '@/views/votesList/FilterPillRow'
-import { Stamp } from '@/views/votesList/Stamp'
 import { VoteChoicePill } from './VoteChoicePill'
+import { ChoiceFingerprintBar } from './ChoiceFingerprintBar'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
+
+const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 8%, transparent)'
 
 type Props = {
   history: MemberVoteRow[]
@@ -22,7 +24,7 @@ export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilt
     ja: t.yes,
     nein: t.no,
     enthalten: t.abstain,
-    nicht_abgegeben: '-',
+    nicht_abgegeben: t.absent,
   }
   const lineLabel: Record<string, string> = {
     linie: t.line,
@@ -35,6 +37,7 @@ export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilt
   })
   return (
     <div className="flex flex-col">
+      <ChoiceFingerprintBar history={history} choiceFilter={choiceFilter} setChoiceFilter={setChoiceFilter} />
       <FilterPillRow className="mb-m">
         <FilterPill
           label={t.line}
@@ -55,17 +58,29 @@ export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilt
         <a
           key={r.voteId}
           href={withLocale(`/votes/${r.voteId}/`, locale)}
-          className="flex flex-col border-t py-m transition-opacity hover:opacity-80"
-          style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 8%, transparent)' }}
+          className="grid grid-cols-[104px_minmax(0,1fr)] items-start gap-m border-t py-m transition-opacity hover:opacity-80"
+          style={{ borderColor: ROW_BORDER }}
         >
-          <span className="text-m" style={{ overflowWrap: 'anywhere' }}>{r.cleanTitle}</span>
-          <div className="mt-s flex flex-wrap items-center justify-between gap-x-m gap-y-s">
-            <span className="flex flex-wrap items-center gap-s text-s opacity-l">
-              <span className="whitespace-nowrap">{formatDate(r.date)}</span>
-              <Stamp variant={r.result} size="s" />
-              {r.defected === true ? <Stamp variant="abweichler" size="s" /> : null}
-            </span>
-            <VoteChoicePill choice={r.choice} />
+          <VoteChoicePill choice={r.choice} />
+          <div className="min-w-0">
+            <div className="font-display text-l font-semibold" style={{ overflowWrap: 'anywhere' }}>{r.cleanTitle}</div>
+            <div className="mt-s flex flex-wrap items-center gap-x-s gap-y-xs text-s caption">
+              <span className="opacity-l">{formatDateShort(r.date, locale)}</span>
+              {r.defected === true && (
+                <>
+                  <span className="opacity-l" aria-hidden="true">·</span>
+                  <span className="font-semibold text-danger">{t.deviatedFromLine} {choiceLabel[r.partyMajority]}</span>
+                </>
+              )}
+              <span className="opacity-l" aria-hidden="true">·</span>
+              <span className="inline-flex items-center gap-xs opacity-l">
+                <span
+                  className="size-[6px] shrink-0"
+                  style={{ background: r.result === 'angenommen' ? 'var(--color-success)' : 'var(--color-danger)' }}
+                />
+                {r.result === 'angenommen' ? t.accepted : t.rejected}
+              </span>
+            </div>
           </div>
         </a>
       ))}

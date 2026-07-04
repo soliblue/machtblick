@@ -34,10 +34,10 @@ export function MemberDetailTabs({ memberId, votes, speeches, proposals }: Props
       className="-mx-l mt-l mb-l grid border-y"
       style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)', gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }}
     >
-      {tabs.map((t, i) => (
+      {tabs.map((tab, i) => (
         <Link
-          key={t.to}
-          to={t.to}
+          key={tab.to}
+          to={tab.to}
           params={{ id: memberId }}
           className="-mb-px border-b-2 border-transparent py-m text-center text-l font-regular opacity-l transition-opacity hover:opacity-100"
           style={i > 0 ? { borderLeft: '1px solid color-mix(in oklab, var(--color-fg) 15%, transparent)' } : undefined}
@@ -45,7 +45,7 @@ export function MemberDetailTabs({ memberId, votes, speeches, proposals }: Props
             className: '-mb-px py-m text-center text-l font-semibold opacity-100 border-b-2 border-fg bg-surface',
           }}
         >
-          {t.label}
+          {tab.label} <span className="font-regular opacity-m tabular-nums">{counts[tab.count]}</span>
         </Link>
       ))}
     </nav>
