@@ -17,7 +17,7 @@ export const Route = createFileRoute('/en/votes/')({
   head: () => ({
     meta: seoMeta({
       title: 'Votes',
-      description: 'Bundestag votes with sponsors, results, and party voting behavior.',
+      description: 'All votes in the German Bundestag: results, majorities, defectors, and how each parliamentary group voted.',
       canonical: '/en/votes',
     }),
     links: canonicalLink('/en/votes'),

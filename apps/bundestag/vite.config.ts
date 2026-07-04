@@ -183,40 +183,59 @@ function publishableAntragIds(db: Database.Database, locale: 'de' | 'en' = 'de')
   return db.prepare(sql).all(CURRENT_TERM) as Array<{ id: number }>
 }
 
-function writeSitemap(paths: string[]) {
+type SitemapEntry = { path: string; lastmod?: string }
+
+function writeSitemap(entries: SitemapEntry[]) {
   const seen = new Set<string>()
-  const urls = paths
-    .filter((p) => !p.includes('?'))
-    .map((p) => (p === '/' || p.endsWith('/') ? p : `${p}/`))
-    .filter((p) => (seen.has(p) ? false : (seen.add(p), true)))
+  const urls = entries
+    .filter((e) => !e.path.includes('?'))
+    .map((e) => ({ ...e, path: e.path === '/' || e.path.endsWith('/') ? e.path : `${e.path}/` }))
+    .filter((e) => (seen.has(e.path) ? false : (seen.add(e.path), true)))
   const body = urls
-    .map((p) => `  <url><loc>${SITE_URL}${p}</loc></url>`)
+    .map((e) => `  <url><loc>${SITE_URL}${e.path}</loc>${e.lastmod ? `<lastmod>${e.lastmod}</lastmod>` : ''}</url>`)
     .join('\n')
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${body}\n</urlset>\n`
   writeFileSync(fileURLToPath(new URL('./public/sitemap.xml', import.meta.url)), xml)
 }
 
-function sitemapPaths(): string[] {
+function sitemapEntries(): SitemapEntry[] {
   const db = new Database(fileURLToPath(new URL('../../db/machtblick.sqlite', import.meta.url)), { readonly: true })
-  const paths = ['/votes/', '/members/', '/parties/', '/speeches/', '/imprint/', '/privacy/', '/en/votes/', '/en/members/', '/en/parties/', '/en/speeches/', '/en/imprint/', '/en/privacy/']
-  const votes = db.prepare("SELECT id FROM votes WHERE term_id = ? AND procedural = 0 AND vote_type != 'hammelsprung'").all(CURRENT_TERM) as Array<{ id: string }>
+  const latest = (db.prepare('SELECT max(date) AS d FROM votes WHERE term_id = ?').get(CURRENT_TERM) as { d: string | null }).d ?? undefined
+  const entries: SitemapEntry[] = [
+    ...['/votes/', '/members/', '/parties/', '/speeches/', '/en/votes/', '/en/members/', '/en/parties/', '/en/speeches/'].map((path) => ({ path, lastmod: latest })),
+    { path: '/imprint/' },
+    { path: '/privacy/' },
+    { path: '/en/imprint/' },
+    { path: '/en/privacy/' },
+  ]
+  const votes = db.prepare("SELECT id, date FROM votes WHERE term_id = ? AND procedural = 0 AND vote_type != 'hammelsprung'").all(CURRENT_TERM) as Array<{ id: string; date: string }>
   for (const v of votes) {
-    paths.push(`/votes/${v.id}/`)
-    paths.push(`/en/votes/${v.id}/`)
+    entries.push({ path: `/votes/${v.id}/`, lastmod: v.date })
+    entries.push({ path: `/en/votes/${v.id}/`, lastmod: v.date })
   }
-  for (const a of publishableAntragIds(db)) paths.push(`/motions/${a.id}/`)
-  for (const a of publishableAntragIds(db, 'en')) paths.push(`/en/motions/${a.id}/`)
+  const antragDates = new Map(
+    (db.prepare(`
+      SELECT a.id, max(
+        coalesce(a.introduced_date, ''),
+        coalesce((SELECT max(v.date) FROM vote_antraege va INNER JOIN votes v ON v.id = va.vote_id WHERE va.antrag_id = a.id), '')
+      ) AS d
+      FROM antraege a WHERE a.wahlperiode = ?
+    `).all(CURRENT_TERM) as Array<{ id: number; d: string }>).map((r) => [r.id, r.d || undefined]),
+  )
+  for (const a of publishableAntragIds(db)) entries.push({ path: `/motions/${a.id}/`, lastmod: antragDates.get(a.id) })
+  for (const a of publishableAntragIds(db, 'en')) entries.push({ path: `/en/motions/${a.id}/`, lastmod: antragDates.get(a.id) })
   const members = db.prepare(`
-    SELECT DISTINCT m.rowid, m.id
+    SELECT m.rowid, m.id, max(v.date) AS d
     FROM members m
     INNER JOIN vote_members vm ON vm.member_id = m.id
     INNER JOIN votes v ON v.id = vm.vote_id
     WHERE v.term_id = ?
+    GROUP BY m.rowid, m.id
     ORDER BY m.rowid
-  `).all(CURRENT_TERM) as Array<{ id: string }>
+  `).all(CURRENT_TERM) as Array<{ id: string; d: string }>
   for (const m of members) {
-    paths.push(`/members/${m.id}/votes/`)
-    paths.push(`/en/members/${m.id}/votes/`)
+    entries.push({ path: `/members/${m.id}/votes/`, lastmod: m.d })
+    entries.push({ path: `/en/members/${m.id}/votes/`, lastmod: m.d })
   }
   const parties = db.prepare(`
     SELECT DISTINCT s.party FROM vote_party_summaries s
@@ -227,12 +246,12 @@ function sitemapPaths(): string[] {
   for (const p of parties) {
     const slug = slugMap[p.party]
     if (slug) {
-      paths.push(`/parties/${slug}/profile/`)
-      paths.push(`/en/parties/${slug}/profile/`)
+      entries.push({ path: `/parties/${slug}/profile/`, lastmod: latest })
+      entries.push({ path: `/en/parties/${slug}/profile/`, lastmod: latest })
     }
   }
   db.close()
-  return paths
+  return entries
 }
 
 function writeJsonEndpoints() {
@@ -284,7 +303,7 @@ function writeJsonEndpoints() {
 }
 
 const prerenderedPaths = prerenderPaths()
-writeSitemap(sitemapPaths())
+writeSitemap(sitemapEntries())
 writeSpeechesStatic()
 writeJsonEndpoints()
 

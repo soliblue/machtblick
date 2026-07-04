@@ -3,6 +3,7 @@ import { getMember } from '@/server/memberDetail'
 import { MemberDetailShell } from '@/views/memberDetail/MemberDetailShell'
 import { seoMeta, canonicalLink, alternateJsonLink, jsonLd, breadcrumbJsonLd, SITE_URL } from '@/lib/seo'
 import { hasPartyLine, PARTY_SLUG } from '@/lib/parties'
+import { pct } from '@/lib/format'
 import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 
 export const Route = createFileRoute('/en/members/$id')({
@@ -16,13 +17,15 @@ export const Route = createFileRoute('/en/members/$id')({
     const path = `/en/members/${params.id}/votes`
     const dataPath = `/en/members/${params.id}`
     const name = loaderData?.name ?? 'Member'
-    const hasLineHistory = loaderData?.history.some((r) => r.defected !== null) ?? false
+    const who = loaderData ? `${name} (${[loaderData.party, loaderData.state].filter(Boolean).join(', ')})` : name
     return {
       meta: seoMeta({
-        title: name,
-        description: hasLineHistory
-          ? `${name} (${loaderData?.party ?? ''}, ${loaderData?.state ?? ''}), voting record, attendance, and party-line voting in the Bundestag.`
-          : `${name} (${loaderData?.party ?? ''}, ${loaderData?.state ?? ''}), voting record and attendance in the Bundestag.`,
+        title: loaderData ? `${name} (${loaderData.party})` : name,
+        description: loaderData
+          ? loaderData.loyalty !== null
+            ? `${who} in the German Bundestag: ${pct(loaderData.attendance)} attendance and ${pct(loaderData.loyalty)} party-line loyalty in roll-call votes.`
+            : `${who} in the German Bundestag: ${pct(loaderData.attendance)} attendance in roll-call votes, plus speeches and motions.`
+          : 'Voting record, attendance, and party-line voting in the German Bundestag.',
         canonical: path,
         type: 'profile',
       }),

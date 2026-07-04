@@ -19,7 +19,7 @@ export const Route = createFileRoute('/speeches/')({
   head: () => ({
     meta: seoMeta({
       title: 'Reden',
-      description: 'Reden des Deutschen Bundestags durchsuchen, nach Stichwort und Fraktion.',
+      description: 'Alle Reden des Deutschen Bundestags im Volltext durchsuchen und nach Stichwort, Fraktion, Datum und Abgeordneten filtern.',
       canonical: '/speeches',
     }),
     links: canonicalLink('/speeches'),

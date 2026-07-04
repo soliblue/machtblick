@@ -26,13 +26,19 @@ export const Route = createFileRoute('/en/votes/$id')({
     const path = `/en/votes/${params.id}`
     const v = loaderData?.vote
     const headline = v?.cleanTitle ?? null
-    const title = headline ?? 'Vote'
-    const result = v?.result === 'angenommen' ? 'accepted' : v?.result === 'abgelehnt' ? 'rejected' : 'decided'
-    const desc = v && headline
-      ? `${headline}. Bundestag vote on ${formatDateLong(v.date, 'en')}: ${result}. Sponsor: ${loaderData?.proposingParty ?? 'unknown'}.`
+    const namentlich = v?.voteType === 'namentlich'
+    const title = v && headline ? (namentlich ? `${headline}: ${v.yes} to ${v.no}` : headline) : 'Vote'
+    const result = v?.result === 'angenommen' ? 'Passed' : v?.result === 'abgelehnt' ? 'Rejected' : 'Decided'
+    const lead = v && headline
+      ? namentlich
+        ? `${result} ${v.yes} to ${v.no}: ${headline}.`
+        : `${result}: ${headline}.`
       : 'Vote in the German Bundestag.'
-    const ogImage = v?.voteType === 'namentlich'
-      ? { image: `/og/votes/${params.id}.png`, imageAlt: `Bundestag vote result: ${title}` }
+    const core = v && headline ? `${lead} ${namentlich ? 'Roll-call vote in the German Bundestag' : 'Bundestag vote'} on ${formatDateLong(v.date, 'en')}.` : lead
+    const full = v && headline ? `${core} Sponsor: ${loaderData?.proposingParty ?? 'unknown'}.` : lead
+    const desc = full.length <= 160 ? full : core.length <= 160 ? core : lead
+    const ogImage = namentlich
+      ? { image: `/og/votes/${params.id}.png`, imageAlt: `Bundestag vote result: ${headline ?? 'Vote'}` }
       : {}
     return {
       meta: [
@@ -43,7 +49,7 @@ export const Route = createFileRoute('/en/votes/$id')({
       scripts: [
         ...breadcrumbJsonLd([
           { name: 'Votes', path: '/en/votes' },
-          { name: title, path },
+          { name: headline ?? 'Vote', path },
         ]),
         ...(v && headline
           ? jsonLd({
@@ -56,8 +62,8 @@ export const Route = createFileRoute('/en/votes/$id')({
               organizer: { '@type': 'GovernmentOrganization', name: 'German Bundestag' },
               url: `${SITE_URL}${path}/`,
               description: v.voteType === 'namentlich'
-                ? `Roll-call vote on ${formatDateLong(v.date, 'en')}: ${result}. ${v.yes} yes, ${v.no} no, ${v.abstain} abstentions, ${v.absent} not cast.`
-                : `Vote on ${formatDateLong(v.date, 'en')}: ${result}.`,
+                ? `Roll-call vote on ${formatDateLong(v.date, 'en')}: ${result.toLowerCase()}. ${v.yes} yes, ${v.no} no, ${v.abstain} abstentions, ${v.absent} not cast.`
+                : `Vote on ${formatDateLong(v.date, 'en')}: ${result.toLowerCase()}.`,
               ...(loaderData?.sponsors.antraege.length && loaderData.sponsors.antraege.length <= 3
                 ? {
                     about: loaderData.sponsors.antraege.map((a) => ({

@@ -19,7 +19,7 @@ export const Route = createFileRoute('/en/speeches/')({
   head: () => ({
     meta: seoMeta({
       title: 'Speeches',
-      description: 'Search speeches from the German Bundestag by keyword, parliamentary group, date, and member.',
+      description: 'Search the full text of every speech in the German Bundestag and filter by keyword, parliamentary group, date, and member.',
       canonical: '/en/speeches',
     }),
     links: canonicalLink('/en/speeches'),

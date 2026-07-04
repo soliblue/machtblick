@@ -20,10 +20,10 @@ export const Route = createFileRoute('/parties/$id')({
     const showPartyLine = hasPartyLine(party)
     return {
       meta: seoMeta({
-        title: name,
+        title: `${name} im Bundestag`,
         description: showPartyLine
-          ? `${name} im Deutschen Bundestag: Sitze, Geschlossenheit, Anträge, Mitglieder und Übereinstimmung mit anderen Fraktionen.`
-          : `${name} im Deutschen Bundestag: Sitze, Mitglieder, Anwesenheit und Abstimmungen.`,
+          ? `${name} im Deutschen Bundestag${loaderData ? ` mit ${loaderData.seats} Sitzen` : ''}: Geschlossenheit, Abweichler, Anträge, Mitglieder und Übereinstimmung mit anderen Fraktionen.`
+          : `${name} im Deutschen Bundestag${loaderData ? ` mit ${loaderData.seats} Sitzen` : ''}: Mitglieder, Anwesenheit und Abstimmungsverhalten.`,
         canonical: path,
       }),
       links: [...canonicalLink(path), ...alternateJsonLink(dataPath)],

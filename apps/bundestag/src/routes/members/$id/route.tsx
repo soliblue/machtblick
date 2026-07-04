@@ -3,6 +3,7 @@ import { getMember } from '@/server/memberDetail'
 import { MemberDetailShell } from '@/views/memberDetail/MemberDetailShell'
 import { seoMeta, canonicalLink, alternateJsonLink, jsonLd, breadcrumbJsonLd, SITE_URL } from '@/lib/seo'
 import { hasPartyLine, PARTY_SLUG } from '@/lib/parties'
+import { pct } from '@/lib/format'
 import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 
 export const Route = createFileRoute('/members/$id')({
@@ -16,13 +17,15 @@ export const Route = createFileRoute('/members/$id')({
     const path = `/members/${params.id}/votes`
     const dataPath = `/members/${params.id}`
     const name = loaderData?.name ?? 'Abgeordnete:r'
-    const hasLineHistory = loaderData?.history.some((r) => r.defected !== null) ?? false
+    const who = loaderData ? `${name} (${[loaderData.party, loaderData.state].filter(Boolean).join(', ')})` : name
     return {
       meta: seoMeta({
-        title: name,
-        description: hasLineHistory
-          ? `${name} (${loaderData?.party ?? ''}, ${loaderData?.state ?? ''}), Abstimmungsverhalten, Anwesenheit und Linientreue im Deutschen Bundestag.`
-          : `${name} (${loaderData?.party ?? ''}, ${loaderData?.state ?? ''}), Abstimmungsverhalten und Anwesenheit im Deutschen Bundestag.`,
+        title: loaderData ? `${name} (${loaderData.party})` : name,
+        description: loaderData
+          ? loaderData.loyalty !== null
+            ? `${who} im Bundestag: ${pct(loaderData.attendance)} Anwesenheit und ${pct(loaderData.loyalty)} Linientreue bei namentlichen Abstimmungen.`
+            : `${who} im Bundestag: ${pct(loaderData.attendance)} Anwesenheit bei namentlichen Abstimmungen. Reden und Anträge im Überblick.`
+          : 'Abstimmungsverhalten, Anwesenheit und Linientreue im Deutschen Bundestag.',
         canonical: path,
         type: 'profile',
       }),

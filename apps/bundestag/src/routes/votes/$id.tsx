@@ -26,12 +26,19 @@ export const Route = createFileRoute('/votes/$id')({
     const path = `/votes/${params.id}`
     const v = loaderData?.vote
     const headline = v?.cleanTitle ?? null
-    const title = headline ?? 'Abstimmung'
-    const desc = v && headline
-      ? `${headline}. Abstimmung im Bundestag am ${formatDateLong(v.date)}: ${v.result}. Antragsteller: ${loaderData?.proposingParty ?? 'unbekannt'}.`
+    const namentlich = v?.voteType === 'namentlich'
+    const title = v && headline ? (namentlich ? `${headline}: ${v.yes} zu ${v.no}` : headline) : 'Abstimmung'
+    const result = v ? `${v.result.charAt(0).toUpperCase()}${v.result.slice(1)}` : ''
+    const lead = v && headline
+      ? namentlich
+        ? `${result} mit ${v.yes} zu ${v.no} Stimmen: ${headline}.`
+        : `${result}: ${headline}.`
       : 'Namentliche Abstimmung im Deutschen Bundestag.'
-    const ogImage = v?.voteType === 'namentlich'
-      ? { image: `/og/votes/${params.id}.png`, imageAlt: `Abstimmungsergebnis im Bundestag: ${title}` }
+    const core = v && headline ? `${lead} ${namentlich ? 'Namentliche Abstimmung' : 'Abstimmung'} im Bundestag am ${formatDateLong(v.date)}.` : lead
+    const full = v && headline ? `${core} Antragsteller: ${loaderData?.proposingParty ?? 'unbekannt'}.` : lead
+    const desc = full.length <= 160 ? full : core.length <= 160 ? core : lead
+    const ogImage = namentlich
+      ? { image: `/og/votes/${params.id}.png`, imageAlt: `Abstimmungsergebnis im Bundestag: ${headline ?? 'Abstimmung'}` }
       : {}
     return {
       meta: [
@@ -42,7 +49,7 @@ export const Route = createFileRoute('/votes/$id')({
       scripts: [
         ...breadcrumbJsonLd([
           { name: 'Abstimmungen', path: '/votes' },
-          { name: title, path },
+          { name: headline ?? 'Abstimmung', path },
         ]),
         ...(v && headline
           ? jsonLd({

@@ -63,9 +63,19 @@ export function jsonLd(data: object) {
   return [{ type: 'application/ld+json', children: JSON.stringify(data) }]
 }
 
-export function plainDescription(text: string, max = 260) {
+export function plainDescription(text: string, max = 160) {
   const plain = text.replace(/[*_`#]+/g, '').replace(/\s+/g, ' ').trim()
-  return plain.length > max ? `${plain.slice(0, Math.max(plain.lastIndexOf(' ', max), 1))} …` : plain
+  const window = plain.slice(0, max + 1)
+  let sentenceEnd = 0
+  for (const m of window.matchAll(/[.!?](?= )/g)) {
+    const end = (m.index ?? 0) + 1
+    if (!/(\s|^)([0-9]{1,2}|[A-Za-zÄÖÜäöü])\.$/.test(window.slice(0, end))) sentenceEnd = end
+  }
+  return plain.length <= max
+    ? plain
+    : sentenceEnd >= 80
+      ? plain.slice(0, sentenceEnd)
+      : `${plain.slice(0, Math.max(plain.lastIndexOf(' ', max - 2), 1))} …`
 }
 
 export function breadcrumbJsonLd(items: Array<{ name: string; path: string }>) {

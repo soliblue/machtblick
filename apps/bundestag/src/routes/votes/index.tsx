@@ -17,7 +17,7 @@ export const Route = createFileRoute('/votes/')({
   head: () => ({
     meta: seoMeta({
       title: 'Abstimmungen',
-      description: 'Alle Abstimmungen des Deutschen Bundestags mit Antragsteller, Ergebnis und Fraktionsverhalten.',
+      description: 'Alle Abstimmungen des Deutschen Bundestags: Ergebnisse, Mehrheiten, Abweichler und das Stimmverhalten der Fraktionen im Überblick.',
       canonical: '/votes',
     }),
     links: canonicalLink('/votes'),
