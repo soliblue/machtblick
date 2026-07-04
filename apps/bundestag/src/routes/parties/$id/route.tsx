@@ -18,6 +18,9 @@ export const Route = createFileRoute('/parties/$id')({
     const party = loaderData?.party
     const name = party ? (PARTY_LABEL[party] ?? party) : 'Fraktion'
     const showPartyLine = hasPartyLine(party)
+    const ogImage = ['cdu-csu', 'spd', 'afd', 'gruene', 'linke'].includes(params.id)
+      ? { image: `/og/parties/${params.id}.png`, imageAlt: `${name} im Bundestag: Sitze und Anteil der Fraktion.` }
+      : {}
     return {
       meta: seoMeta({
         title: `${name} im Bundestag`,
@@ -25,6 +28,7 @@ export const Route = createFileRoute('/parties/$id')({
           ? `${name} im Deutschen Bundestag${loaderData ? ` mit ${loaderData.seats} Sitzen` : ''}: Geschlossenheit, Abweichler, Anträge, Mitglieder und Übereinstimmung mit anderen Fraktionen.`
           : `${name} im Deutschen Bundestag${loaderData ? ` mit ${loaderData.seats} Sitzen` : ''}: Mitglieder, Anwesenheit und Abstimmungsverhalten.`,
         canonical: path,
+        ...ogImage,
       }),
       links: [...canonicalLink(path), ...alternateJsonLink(dataPath)],
       scripts: [

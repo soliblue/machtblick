@@ -55,5 +55,5 @@ Machtblick is a public-interest project built from open German datasets. The Bun
 - Training crawlers such as GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, and CCBot are not granted access.
 - `Content-Signal` declares search and AI input access, with AI training permission not granted.
 - Pages expose canonical URLs, Open Graph metadata, X card metadata, structured data, and JSON alternates where available.
-- Roll-call vote pages ship a per-vote Open Graph result image at `/og/votes/{id}.png`.
+- Roll-call vote pages ship a per-vote Open Graph result image at `/og/votes/{id}.png`; parliamentary group pages ship one at `/og/parties/{slug}.png`.
 - Prefer canonical page URLs for citation. Prefer JSON endpoints for exact vote, member, party, or motion fields.
