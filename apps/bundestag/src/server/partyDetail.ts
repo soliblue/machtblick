@@ -4,8 +4,12 @@ import { db } from '@machtblick/db/client'
 import { votes, votePartySummaries, voteMembers, members, partyDonations } from '@machtblick/db/schema'
 import { desc, eq, and, inArray } from 'drizzle-orm'
 import { SLUG_TO_PARTY, hasPartyLine } from '@/lib/parties'
+import { AGE_BUCKETS, ageBucketFor, type AgeBucket } from '@/lib/ageBuckets'
 import { getCurrentPartyMap } from './memberParty'
+import { loadDemographics } from './demographics'
+import type { MemberSex } from './members'
 import { attendance, cohesion } from './partyStats'
+import { getChamberSize } from './seats'
 import { CURRENT_TERM } from './term'
 import { voteTranslationMap } from './translations'
 import { normalizeLocale, type Locale } from '@/lib/locale'
@@ -63,13 +67,22 @@ const DONATION_PARTY_NAMES: Record<string, string[]> = {
   'Die Linke': ['Die Linke'],
 }
 
+export type PartyDemographics = {
+  sex: Record<MemberSex | 'unbekannt', number>
+  age: Record<AgeBucket, number>
+}
+
 export type PartyDetail = {
   slug: string
   party: string
   seats: number
+  chamberSeats: number
   cohesion: number
   attendance: number
   successRate: number
+  successMatched: number
+  successDecided: number
+  demographics: PartyDemographics
   proposalsTotal: number
   proposalsAccepted: number
   proposals: PartyProposal[]
@@ -157,9 +170,18 @@ export const getParty = createServerFn({ method: 'GET' })
       .select({ id: members.id, name: members.name })
       .from(members)
       .all()
-      .filter((m) => currentPartyByMember.get(m.id) === party)
+      .filter((m) => currentPartyByMember.get(m.id) === party && stateByMember.has(m.id))
       .map((m) => ({ id: m.id, name: m.name, state: stateByMember.get(m.id) ?? '' }))
     memberRows.sort((a, b) => a.name.localeCompare(b.name, 'de'))
+    const demoByMember = loadDemographics()
+    const sexCounts: PartyDemographics['sex'] = { m: 0, f: 0, d: 0, unbekannt: 0 }
+    const ageCounts = Object.fromEntries(AGE_BUCKETS.map((b) => [b, 0])) as PartyDemographics['age']
+    for (const m of memberRows) {
+      const demo = demoByMember.get(m.id)
+      sexCounts[demo?.sex ?? 'unbekannt'] += 1
+      const bucket = ageBucketFor(demo?.yearOfBirth ?? null)
+      if (bucket) ageCounts[bucket] += 1
+    }
     const allSummaries = db
       .select({
         voteId: votePartySummaries.voteId,
@@ -237,9 +259,13 @@ export const getParty = createServerFn({ method: 'GET' })
       slug,
       party,
       seats,
+      chamberSeats: getChamberSize(),
       cohesion: avgCoh,
       attendance: avgAtt,
       successRate,
+      successMatched,
+      successDecided,
+      demographics: { sex: sexCounts, age: ageCounts },
       proposalsTotal,
       proposalsAccepted,
       proposals,

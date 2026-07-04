@@ -1,7 +1,7 @@
 import { Link } from '../../lib/Link'
 import { useCopy, useLocale } from '@/lib/i18n'
 
-type Props = { partyId: string }
+type Props = { partyId: string; votes: number }
 
 const TABS = [
   { to: '/parties/$id/profile/', label: 'Profil' },
@@ -9,7 +9,7 @@ const TABS = [
   { to: '/parties/$id/history/', label: 'Verlauf' },
 ] as const
 
-export function PartyDetailTabs({ partyId }: Props) {
+export function PartyDetailTabs({ partyId, votes }: Props) {
   const locale = useLocale()
   const t = useCopy()
   const tabs = TABS.map((tab) => ({
@@ -36,7 +36,7 @@ export function PartyDetailTabs({ partyId }: Props) {
             className: '-mb-px py-m text-center text-l font-semibold opacity-100 border-b-2 border-fg bg-surface',
           }}
         >
-          {t.label}
+          {t.label}{t.to.includes('/votes/') && <span className="font-regular opacity-m tabular-nums"> {votes}</span>}
         </Link>
       ))}
     </nav>

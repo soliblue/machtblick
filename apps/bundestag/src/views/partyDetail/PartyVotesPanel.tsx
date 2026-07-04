@@ -1,18 +1,15 @@
 import type { PartyDetail as PartyDetailData, PartyVote } from '@/server/partyDetail'
-import { formatDate } from '@/lib/format'
+import { formatDateShort, pct } from '@/lib/format'
 import { FilterPill } from '@/views/votesList/FilterPill'
 import { FilterPillRow } from '@/views/votesList/FilterPillRow'
-import { Stamp } from '@/views/votesList/Stamp'
+import { VoteChoicePill } from '@/views/memberDetail/VoteChoicePill'
+import { PartyLineFingerprint } from './PartyLineFingerprint'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
 
 type Result = 'angenommen' | 'abgelehnt'
-const VOTE_COLOR: Record<PartyVote, string> = {
-  yes: 'var(--color-success)',
-  no: 'var(--color-danger)',
-  abstain: 'var(--color-fg)',
-  split: 'var(--color-fg)',
-}
+const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 8%, transparent)'
+const CHOICE = { yes: 'ja', no: 'nein', abstain: 'enthalten' } as const
 
 type Props = {
   data: PartyDetailData
@@ -27,10 +24,11 @@ export function PartyVotesPanel({ data, result, onResultChange, partyVote, onPar
   const locale = useLocale()
   const t = useCopy()
   const resultLabels: Record<Result, string> = { angenommen: t.accepted, abgelehnt: t.rejected }
-  const voteLabels: Record<PartyVote, string> = { yes: t.yes, no: t.no, abstain: t.abstain, split: t.split }
+  const voteLabels: Record<PartyVote, string> = { yes: t.yes, no: t.no, abstain: t.abstain, split: t.stanceLabels.split }
   return (
     <div>
-      <FilterPillRow>
+      <PartyLineFingerprint votes={data.votes} filter={partyVote} onFilterChange={onPartyVoteChange} />
+      <FilterPillRow className="mb-m">
         <FilterPill
           label={t.partyVoted}
           options={['yes', 'no', 'abstain', 'split']}
@@ -51,30 +49,39 @@ export function PartyVotesPanel({ data, result, onResultChange, partyVote, onPar
           <a
             key={v.voteId}
             href={withLocale(`/votes/${v.voteId}/`, locale)}
-            className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-center gap-l border-t py-m text-m transition-opacity first:border-t-0 hover:opacity-80"
-            style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
+            className="grid grid-cols-[104px_minmax(0,1fr)] items-start gap-m border-t py-m transition-opacity hover:opacity-80"
+            style={{ borderColor: ROW_BORDER }}
           >
-            <div className="flex min-w-0 flex-col">
-              <span style={{ overflowWrap: 'anywhere' }}>{v.cleanTitle}</span>
-              <span className="text-s opacity-l">{formatDate(v.date)}</span>
+            {v.partyVote === 'split' ? (
+              <span className="w-fit whitespace-nowrap border border-current px-s py-[2px] text-[11px] font-semibold caption opacity-l">
+                {t.stanceLabels.split}
+              </span>
+            ) : (
+              <VoteChoicePill choice={CHOICE[v.partyVote]} />
+            )}
+            <div className="min-w-0">
+              <div className="font-display text-l font-semibold" style={{ overflowWrap: 'anywhere' }}>{v.cleanTitle}</div>
+              <div className="mt-s flex flex-wrap items-center gap-x-s gap-y-xs text-s caption">
+                <span className="opacity-l">{formatDateShort(v.date, locale)}</span>
+                {v.cohesion !== null && v.cohesion < 0.95 && (
+                  <>
+                    <span className="opacity-l" aria-hidden="true">·</span>
+                    <span className="font-semibold text-danger">{t.cohesion} <span className="tabular-nums">{pct(v.cohesion)}</span></span>
+                  </>
+                )}
+                <span className="opacity-l" aria-hidden="true">·</span>
+                <span className="inline-flex items-center gap-xs opacity-l">
+                  <span
+                    className="size-[6px] shrink-0"
+                    style={{ background: v.result === 'angenommen' ? 'var(--color-success)' : 'var(--color-danger)' }}
+                  />
+                  {resultLabels[v.result]}
+                </span>
+              </div>
             </div>
-            <VoteChip vote={v.partyVote} label={voteLabels[v.partyVote]} />
-            <Stamp variant={v.result} />
           </a>
         ))}
       </div>
     </div>
-  )
-}
-
-function VoteChip({ vote, label }: { vote: PartyVote; label: string }) {
-  const color = VOTE_COLOR[vote]
-  return (
-    <span
-      className="px-s py-xs text-s font-semibold"
-      style={{ background: `color-mix(in oklab, ${color} 18%, transparent)`, color }}
-    >
-      {label}
-    </span>
   )
 }

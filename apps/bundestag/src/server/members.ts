@@ -1,31 +1,15 @@
 import { createServerFn } from '@tanstack/react-start'
 import { db } from '@machtblick/db/client'
-import { memberAbgeordnetenwatch, members, voteMembers, votePartySummaries, votes } from '@machtblick/db/schema'
-import { eq, and, sql } from 'drizzle-orm'
+import { members, voteMembers, votePartySummaries, votes } from '@machtblick/db/schema'
+import { eq, and } from 'drizzle-orm'
 import { getCurrentPartyMap, loadAffiliationsByMember, partyAt } from './memberParty'
+import { loadDemographics } from './demographics'
 import { majorityChoice } from './majorityChoice'
 import { CURRENT_TERM } from './term'
 import { hasPartyLine } from '../lib/parties'
 
 export type MemberSex = 'm' | 'f' | 'd'
 export type MandateType = 'direkt' | 'liste'
-
-function loadDemographics(): Map<string, { yearOfBirth: number | null; sex: MemberSex | null }> {
-  const rows = db
-    .select({
-      memberId: memberAbgeordnetenwatch.memberId,
-      yearOfBirth: sql<number | null>`json_extract(${memberAbgeordnetenwatch.rawJson}, '$.year_of_birth')`,
-      sex: sql<string | null>`json_extract(${memberAbgeordnetenwatch.rawJson}, '$.sex')`,
-    })
-    .from(memberAbgeordnetenwatch)
-    .all()
-  const out = new Map<string, { yearOfBirth: number | null; sex: MemberSex | null }>()
-  for (const r of rows) {
-    const sex = r.sex === 'm' || r.sex === 'f' || r.sex === 'd' ? r.sex : null
-    out.set(r.memberId, { yearOfBirth: r.yearOfBirth ?? null, sex })
-  }
-  return out
-}
 
 export type MemberListItem = {
   id: string

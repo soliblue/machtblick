@@ -2,7 +2,7 @@ import { ArrowDownLeft, ArrowDownRight, Replace, Plus, X } from 'lucide-react'
 import type { PartyHistoryEvent } from '@/server/getPartyHistory'
 import { formatDate } from '@/lib/format'
 
-export type StripEvent = PartyHistoryEvent & { anchorTerm: number; leading: boolean; color: string }
+export type StripEvent = PartyHistoryEvent & { anchorTerm: number; leading: boolean }
 
 type Props = {
   events: StripEvent[]
@@ -51,8 +51,8 @@ export function PartyHistoryEventStrip({ events, xMin, xMax, leftPad, rightPad }
                   className={`flex flex-col gap-xs ${leftHalf ? 'items-start' : 'items-end'}`}
                   title={`${formatDate(e.date)} - ${e.labelDe}${e.leading ? ' (vor dem Erfassungszeitraum)' : ''}`}
                 >
-                  <Icon size={14} strokeWidth={1.5} style={{ color: e.color }} />
-                  <span className="text-s leading-tight" style={{ color: e.color }}>
+                  <Icon size={14} strokeWidth={1.5} />
+                  <span className="text-s caption leading-tight">
                     {e.labelDe}
                   </span>
                 </div>
