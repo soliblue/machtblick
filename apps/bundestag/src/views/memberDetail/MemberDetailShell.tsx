@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import type { MemberDetail as MemberDetailData } from '@/server/memberDetail'
 import { PartyLogo } from '@/views/votesList/PartyLogo'
 import { pct } from '@/lib/format'
-import { PARTY_LOGO, PARTY_SLUG, partyLabel } from '@/lib/parties'
+import { hasPartyLine, PARTY_LOGO, PARTY_SLUG, partyLabel } from '@/lib/parties'
 import { MemberDetailTabs } from './MemberDetailTabs'
 import { MemberPortrait } from './MemberPortrait'
 import { MemberStatBar } from './MemberStatBar'
@@ -72,7 +72,7 @@ export function MemberDetailShell({ data, children }: Props) {
           {data.loyalty === null ? (
             <div className="min-w-0">
               <div className="text-s caption opacity-l">{t.loyalty}</div>
-              <div className="mt-xs text-s caption opacity-l">{t.noPartyLine}</div>
+              <div className="mt-xs text-s caption opacity-l">{hasPartyLine(data.party) ? t.noVoteData : t.noPartyLine}</div>
             </div>
           ) : (
             <MemberStatBar

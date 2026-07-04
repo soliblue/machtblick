@@ -21,7 +21,7 @@ export type VoteListItem = {
   yes: number
   no: number
   abstain: number
-  absent: number
+  absent: number | null
   totalMembers: number
   summarySimplified: string | null
   partySummaries: Array<{ party: string; position: 'yes' | 'no' | 'abstain' | 'mixed'; members: number; yes: number; no: number; abstain: number; absent: number }>
@@ -55,6 +55,7 @@ export const listVotes = createServerFn({ method: 'GET' })
     }
     if (seatsByParty.size >= 6) break
   }
+  const chamber = rows.find((r) => r.voteType === 'namentlich')?.totalMembers ?? 0
   return rows.map((v) => {
     const localized = requireVoteCleanTitle(overlayVote(v, translations))
     const summaries = byVote.get(v.id) ?? []
@@ -88,7 +89,7 @@ export const listVotes = createServerFn({ method: 'GET' })
     return {
       id: v.id, date: v.date, title: localized.title, cleanTitle: localized.cleanTitle, topic: localized.topic, voteType: v.voteType,
       proposingParty: v.initiator, result: v.result,
-      yes, no, abstain, absent: 0, totalMembers: yes + no + abstain,
+      yes, no, abstain, absent: null, totalMembers: Math.max(chamber, yes + no + abstain),
       summarySimplified: clipSummary(localized.summarySimplified),
       partySummaries: enriched,
     }

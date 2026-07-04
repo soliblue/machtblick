@@ -26,7 +26,7 @@ export function VoteCard({ vote }: Props) {
       <a
         href={withLocale(`/votes/${vote.id}/`, locale)}
         className="absolute inset-0"
-        aria-label={`${vote.cleanTitle} · ${accepted ? t.accepted : t.rejected} · ${t.yes} ${vote.yes} · ${t.no} ${vote.no} · ${t.abstention} ${vote.abstain} · ${t.absentLabel} ${vote.absent}`}
+        aria-label={[vote.cleanTitle, accepted ? t.accepted : t.rejected, `${t.yes} ${vote.yes}`, `${t.no} ${vote.no}`, `${t.abstention} ${vote.abstain}`, ...(vote.absent === null ? [] : [`${t.absentLabel} ${vote.absent}`])].join(' · ')}
       />
       <div
         className="pointer-events-none absolute left-1/2 top-0 z-[1] flex h-[22px] -translate-x-1/2 -translate-y-1/2 items-center justify-center px-xl text-[11px] font-semibold uppercase leading-none text-white"

@@ -4,7 +4,7 @@ import { db } from '@machtblick/db/client'
 import { votes, voteDocuments, votePartySummaries, voteMembers, members, voteDescriptionDecisions } from '@machtblick/db/schema'
 import { eq, sql } from 'drizzle-orm'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
-import { getSeatsByParty } from './seats'
+import { getChamberSize, getSeatsByParty } from './seats'
 import { overlayVote, partySummaryTranslationMap, speechTranslationMap, voteTranslationMap } from './translations'
 import { hasPartyLine } from '../lib/parties'
 import { SHOW_HAMMELSPRUNG } from '../lib/voteTypes'
@@ -67,7 +67,7 @@ function loadDebateForVote(voteId: string, date: string, locale: Locale): { spee
   }
 }
 
-export type VoteDetailVote = Omit<typeof votes.$inferSelect, 'cleanTitle'> & { cleanTitle: string; yes: number; no: number; abstain: number; absent: number; totalMembers: number }
+export type VoteDetailVote = Omit<typeof votes.$inferSelect, 'cleanTitle'> & { cleanTitle: string; yes: number; no: number; abstain: number; absent: number | null; totalMembers: number }
 
 export type VoteDetail = {
   vote: VoteDetailVote
@@ -128,7 +128,7 @@ export const getVote = createServerFn({ method: 'GET' })
           const yes = partySummaries.reduce((a, s) => a + s.yes, 0)
           const no = partySummaries.reduce((a, s) => a + s.no, 0)
           const abstain = partySummaries.reduce((a, s) => a + s.abstain, 0)
-          return { ...publicVote, yes, no, abstain, absent: 0, totalMembers: yes + no + abstain }
+          return { ...publicVote, yes, no, abstain, absent: null, totalMembers: Math.max(getChamberSize(), yes + no + abstain) }
         })()
     const rawVmRows = db
       .select({

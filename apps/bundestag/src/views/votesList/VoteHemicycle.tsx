@@ -16,7 +16,7 @@ type Props = {
   yes: number
   no: number
   abstain: number
-  absent: number
+  absent: number | null
   totalMembers: number
   hero?: boolean
   selected?: VoteChoice | null
@@ -47,8 +47,9 @@ function LegendBlock({ choice, selected, onSelect, className = '', children }: L
 export function VoteHemicycle({ yes, no, abstain, absent, totalMembers, hero = false, selected = null, onSelect }: Props) {
   const t = useCopy()
   const seats = hemicycleSeats(totalMembers, RADII, 'centered')
+  const noData = Math.max(0, totalMembers - yes - no - abstain - (absent ?? 0))
   const choiceAt = (i: number): VoteChoice =>
-    i < yes ? 'yes' : i < yes + abstain ? 'abstain' : i < yes + abstain + absent ? 'absent' : 'no'
+    i < yes ? 'yes' : i < yes + abstain ? 'abstain' : i < yes + abstain + (absent ?? 0) + noData ? 'absent' : 'no'
   const numeral = `font-display font-semibold leading-[0.9] tracking-[-0.015em] tabular-nums ${hero ? 'text-[40px]' : 'text-[32px]'}`
   return (
     <div className={`flex flex-col gap-m ${hero ? 'w-full max-w-[440px]' : 'w-[320px] max-w-full'}`}>
@@ -56,7 +57,9 @@ export function VoteHemicycle({ yes, no, abstain, absent, totalMembers, hero = f
         viewBox="0 0 320 165"
         className="block h-auto max-w-full"
         role="img"
-        aria-label={`${t.yes} ${yes}, ${t.no} ${no}, ${t.abstain} ${abstain}, ${t.absentLabel} ${absent}`}
+        aria-label={absent === null
+          ? [`${t.yes} ${yes}`, `${t.no} ${no}`, `${t.abstain} ${abstain}`, ...(noData > 0 ? [`${t.noDataLabel} ${noData}`] : [])].join(', ')
+          : `${t.yes} ${yes}, ${t.no} ${no}, ${t.abstain} ${abstain}, ${t.absentLabel} ${absent}`}
       >
         {seats.map((s, i) => {
           const choice = choiceAt(i)
@@ -84,9 +87,13 @@ export function VoteHemicycle({ yes, no, abstain, absent, totalMembers, hero = f
               {abstain} {hero ? t.abstention : t.abstain}
             </LegendBlock>
           )}
-          <LegendBlock choice="absent" selected={selected} onSelect={onSelect}>
-            {absent} {t.absentLabel}
-          </LegendBlock>
+          {absent === null ? (
+            noData > 0 && <div>{noData} {t.noDataLabel}</div>
+          ) : (
+            <LegendBlock choice="absent" selected={selected} onSelect={onSelect}>
+              {absent} {t.absentLabel}
+            </LegendBlock>
+          )}
         </div>
         <LegendBlock choice="no" selected={selected} onSelect={onSelect} className="flex flex-col items-end gap-xs">
           <span className="text-s caption opacity-l">{t.no}</span>
