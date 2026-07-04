@@ -46,16 +46,18 @@ Run source refreshes in this order when the evidence says they are needed:
 2. `npm run etl:abgeordnetenwatch`
 3. `npm run etl:votes:namentlich`
 4. `npm run db:merge-members && npm run db:normalize:member-names && npm run db:backfill:member-states`
-5. `npm run etl:handzeichen:refresh`
-6. `DIP_UPDATED_START=<last-local-update> npm run etl:dip`
-7. `npm run etl:speeches:xml`
-8. `npm run etl:affiliations`
-9. `npm run db:normalize`
+5. `npm run db:normalize`
+6. `npm run etl:handzeichen:refresh`
+7. `DIP_UPDATED_START=<last-local-update> npm run etl:dip`
+8. `npm run etl:speeches:xml`
+9. `npm run etl:affiliations`
 10. `npm run db:backfill:initiators`
 
-`etl:affiliations` (step 8) is a full delete-and-rewrite of `member_affiliations` and ends by chaining `db/close-departed-mandates.ts`, which closes `valid_to` for departed MdBs (Stammdaten `MDBWP_BIS` first, then a roster-gap fallback for members absent from the last two namentliche roll-call rosters). Never run the affiliations ingest without the close step: the rewrite reopens every previously-closed mandate and the app then counts departed members (Baerbock, Habeck, ...) as sitting. `npm run db:close-departed` re-runs the close standalone; the chamber-wide sitting count it prints must equal the seat total (630 in WP21).
+`etl:affiliations` (step 9) is a full delete-and-rewrite of `member_affiliations` and ends by chaining `db/close-departed-mandates.ts`, which closes `valid_to` for departed MdBs (Stammdaten `MDBWP_BIS` first, then a roster-gap fallback for members absent from the last two namentliche roll-call rosters). Never run the affiliations ingest without the close step: the rewrite reopens every previously-closed mandate and the app then counts departed members (Baerbock, Habeck, ...) as sitting. `npm run db:close-departed` re-runs the close standalone; the chamber-wide sitting count it prints must equal the seat total (630 in WP21).
 
-`etl:handzeichen:refresh` (step 5) owns the polarity-aware path internally: it ingests handzeichen, runs `db:normalize`-equivalent result repair, polarity inversion, initiator backfill, and self-no escalation in the correct order for both handzeichen and namentlich votes. The standalone `npm run db:normalize` (step 9) is the legacy result flip; it is idempotent here but must never be run again after polarity in an ad-hoc step, since it can double-flip an inverted vote whose post-inversion proposer votes no.
+`db:normalize` (step 5) is the legacy result flip (proposer voted no on an `angenommen` vote). It must run after the namentlich ingest and strictly before `etl:handzeichen:refresh`, because the refresh runs polarity inversion internally and `db:normalize` after polarity can double-flip an inverted vote whose post-inversion proposer votes no. Never run it again later in the same run.
+
+`etl:handzeichen:refresh` (step 6) owns the polarity-aware path internally: it ingests handzeichen, then runs polarity inversion, the procedural flagger, initiator backfill, self-no escalation, and the self-no and suspicious-initiator audits in the correct order for both handzeichen and namentlich votes, followed by descriptions, titles, agenda backfill, materialization, party positions, validation, and translations for its slice.
 
 `db:backfill:initiators` (step 10) fills `votes.initiator` for votes the XML/teaser extractor could not resolve: document-text parse, then vote_documents titles, then DIP Drucksache lookup (cached under `etl/bundestag/handzeichen/drucksachen/`), then the Haushalt title rule. It only fills empty rows, never overwrites, and skips petition bundles and procedural votes. It also runs inside `etl:handzeichen:refresh`; the standalone step covers the namentlich-only ingest path. Run it after every vote ingest so new votes never render as "Sonstige" for lack of extraction.
 

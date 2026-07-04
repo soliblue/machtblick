@@ -15,6 +15,7 @@
     "db:backfill:member-states": "tsx db/backfill-member-states.ts",
     "db:backfill:initiators": "tsx db/backfill-initiators.ts",
     "db:normalize:vote-titles": "tsx db/normalize-vote-title-provenance.ts",
+    "db:normalize:reading-pairs": "tsx db/normalize-reading-pairs-and-related-speeches.ts",
     "db:validate:votes": "tsx db/validate-public-votes.ts",
     "db:materialize": "tsx db/materialize-derived-data.ts",
     "etl:donations": "tsx etl/bundestag-spenden/ingest.ts",
