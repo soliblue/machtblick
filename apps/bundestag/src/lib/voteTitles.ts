@@ -1,4 +1,4 @@
-export type VoteTitleFields = {
+type VoteTitleFields = {
   id: string
   title: string
   cleanTitle: string | null

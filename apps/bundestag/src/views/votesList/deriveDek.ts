@@ -39,7 +39,7 @@ const subject = (parties: Prose[], locale: Locale) => (parties.length === 1 ? pa
 
 const dePluralVerb = (parties: Prose[]) => parties.length > 1 || parties[0].plural
 
-export function lineParties<T extends { party: string; members: number }>(partySummaries: T[]): T[] {
+function lineParties<T extends { party: string; members: number }>(partySummaries: T[]): T[] {
   return partySummaries.filter((p) => hasPartyLine(p.party)).sort((a, b) => b.members - a.members)
 }
 

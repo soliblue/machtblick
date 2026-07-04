@@ -25,7 +25,7 @@ export function PartyProfilePanel({ data }: Props) {
       </div>
       {data.alignments.length > 0 ? (
         <div>
-          <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{t.agreement}</div>
+          <div className="mb-s text-s caption opacity-l">{t.agreement}</div>
           <AlignmentList alignments={data.alignments} party={data.party} />
         </div>
       ) : <div />}

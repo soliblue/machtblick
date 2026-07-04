@@ -55,7 +55,7 @@ export function AntragDetail({ data }: Props) {
         <div className="mt-s text-s opacity-l">{t.officialTitle}: {antrag.title}</div>
       ) : null}
       {isLaenderInitiative(antrag.initiativeFraktion) && (
-        <div className="mt-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{t.laenderMotion}</div>
+        <div className="mt-s text-s caption opacity-l">{t.laenderMotion}</div>
       )}
       <div className="mt-s flex flex-wrap items-center gap-m text-m">
         <PartyBadge party={antrag.initiativeFraktion} />
@@ -71,7 +71,7 @@ export function AntragDetail({ data }: Props) {
 
       {summary ? (
         <div className="mb-l">
-          <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{t.proposalSummary}</div>
+          <div className="mb-s text-s caption opacity-l">{t.proposalSummary}</div>
           {antrag.summarySimplified
             ? <p className="text-m"><MarkdownInline>{antrag.summarySimplified}</MarkdownInline></p>
             : <p className="text-m whitespace-pre-line">{summary}</p>}
@@ -99,7 +99,7 @@ export function AntragDetail({ data }: Props) {
 
       {linkedVotes.length > 0 ? (
         <section className="mb-l">
-          <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{locale === 'en' ? 'Votes' : 'Abstimmungen'}</div>
+          <div className="mb-s text-s caption opacity-l">{locale === 'en' ? 'Votes' : 'Abstimmungen'}</div>
           <div className="flex flex-col">
             {linkedVotes.map((vote) => <AntragVoteResult key={vote.id} vote={vote} />)}
           </div>

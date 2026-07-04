@@ -101,6 +101,11 @@
   --opacity-l: 0.7;
 }
 
+@utility caption {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
 @layer base {
   html, body { background: var(--color-background); color: var(--color-fg); overflow-x: clip; }
   body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 400; }

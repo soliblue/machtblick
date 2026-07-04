@@ -45,7 +45,7 @@ export function SponsorStrip({ antraege }: VoteSponsors) {
       {withSignatories.map((a) => (
         <div key={a.antragId} className="flex flex-col gap-xs">
           <div className="text-s opacity-l">
-            <span className="uppercase" style={{ letterSpacing: '0.08em' }}>{typeLabel[a.type]}</span>
+            <span className="caption">{typeLabel[a.type]}</span>
             {a.drucksache && <span className="ml-s">Drs. {a.drucksache}</span>}
           </div>
           <SponsorPile signatories={a.signatories} />

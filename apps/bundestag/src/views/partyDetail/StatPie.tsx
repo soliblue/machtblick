@@ -13,7 +13,7 @@ export function StatPie({ label, value, color = 'var(--color-success)', info }: 
   const trackColor = 'color-mix(in oklab, var(--color-fg) 12%, transparent)'
   return (
     <div className="flex flex-col items-center gap-s">
-      <div className="flex items-center gap-xs text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>
+      <div className="flex items-center gap-xs text-s caption opacity-l">
         <span>{label}</span>
         {info && (
           <Tooltip>

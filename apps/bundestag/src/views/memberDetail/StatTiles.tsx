@@ -23,7 +23,7 @@ export function StatTiles({ tiles }: Props) {
         const Icon = t.icon
         const inner = (
           <>
-            <div className="flex items-center gap-xs text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>
+            <div className="flex items-center gap-xs text-s caption opacity-l">
               {Icon && <Icon size={14} />}
               <span>{t.label}</span>
               {t.info && (

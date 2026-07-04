@@ -13,7 +13,7 @@ export function PartyHistoryPanel({ history, partyLabel, partyColor }: Props) {
   return (
     <div>
       <div className="mb-l flex items-baseline justify-between">
-        <div className="text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>
+        <div className="text-s caption opacity-l">
           {t.shareOfBundestag}
         </div>
         {history.points.length > 0 ? (

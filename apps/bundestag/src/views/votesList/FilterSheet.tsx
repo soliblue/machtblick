@@ -60,7 +60,7 @@ export function FilterSheet({ groups, activeCount }: Props) {
             </div>
             {groups.map((g) => (
               <div key={g.key} className="mb-l">
-                <p className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>
+                <p className="mb-s text-s caption opacity-l">
                   {g.label}
                 </p>
                 <div className="flex flex-wrap gap-s">

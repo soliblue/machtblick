@@ -37,7 +37,7 @@ export function PartySummaryPreviewList({ summaries }: Props) {
   }, [summaries])
   return available.length > 0 ? (
     <section className="mb-l">
-      <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>
+      <div className="mb-s text-s caption opacity-l">
         {t.partySummaries}
       </div>
       <p className="mb-m text-s opacity-l">{t.partySummaryIntro}</p>

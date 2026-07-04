@@ -77,7 +77,7 @@ export function VoteDetail({ data, activeTab, onTabChange }: Props) {
 
       {(vote.summarySimplified || vote.summary) && (
         <div className="mb-l">
-          <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{t.proposalSummary}</div>
+          <div className="mb-s text-s caption opacity-l">{t.proposalSummary}</div>
           {vote.summarySimplified
             ? <p className="text-m"><MarkdownInline>{vote.summarySimplified}</MarkdownInline></p>
             : <p className="text-m">{vote.summary}</p>}

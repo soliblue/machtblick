@@ -1,7 +1,7 @@
 import { hasPartyLine } from '@/lib/parties'
 import type { StampVariant } from './Stamp'
 
-export type StampPartySummary = {
+type StampPartySummary = {
   party: string
   members: number
   yes: number

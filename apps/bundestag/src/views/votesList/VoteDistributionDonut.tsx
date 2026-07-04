@@ -14,7 +14,7 @@ type Props = {
   showLabel?: boolean
 }
 
-export const VOTE_SEGMENTS: Array<{ key: VoteChoice; color: string }> = [
+const VOTE_SEGMENTS: Array<{ key: VoteChoice; color: string }> = [
   { key: 'yes', color: 'var(--color-success)' },
   { key: 'no', color: 'var(--color-danger)' },
   { key: 'abstain', color: 'var(--color-yellow)' },

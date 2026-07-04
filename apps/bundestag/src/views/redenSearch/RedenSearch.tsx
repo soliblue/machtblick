@@ -68,7 +68,7 @@ export function RedenSearch({ data, query, party, date, memberId, page, textsLoa
       <div className="flex flex-col">
         {groupByDate(data.items).map(([date, items]) => (
           <div key={date} className="mb-l">
-            <div className="mb-xs text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{formatDate(date)}</div>
+            <div className="mb-xs text-s caption opacity-l">{formatDate(date)}</div>
             {items.map((s) => <SpeechResultRow key={s.id} speech={s} query={query} />)}
           </div>
         ))}

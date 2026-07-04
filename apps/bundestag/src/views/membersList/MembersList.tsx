@@ -1,6 +1,7 @@
 import { Search } from 'lucide-react'
 import type { MandateType, MemberListItem, MemberSex } from '@/server/members'
 import { MemberRow } from './MemberRow'
+import { SortHeader } from './SortHeader'
 import { FilterPill } from '@/views/votesList/FilterPill'
 import { FilterPillRow } from '@/views/votesList/FilterPillRow'
 import type { MemberSortKey, SortDir } from '@/hooks/useMemberListFilters'
@@ -106,7 +107,7 @@ export function MembersList({
       <div className="mb-l flex justify-end">
         <span className="text-s opacity-l">{members.length} {t.people}</span>
       </div>
-      <div className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] gap-m text-s uppercase opacity-l sm:grid-cols-[minmax(0,1fr)_auto_auto_auto_auto]" style={{ letterSpacing: '0.08em' }}>
+      <div className="grid grid-cols-[minmax(0,1fr)_auto_auto_auto] gap-m text-s caption opacity-l sm:grid-cols-[minmax(0,1fr)_auto_auto_auto_auto]">
         <SortHeader label={t.name} k="name" sortKey={sortKey} sortDir={sortDir} onSort={onSort} />
         <SortHeader label={t.party} k="party" sortKey={sortKey} sortDir={sortDir} onSort={onSort} labelClass="hidden sm:inline" />
         <div className="hidden sm:contents">
@@ -119,40 +120,5 @@ export function MembersList({
         {members.map((m) => <MemberRow key={m.id} member={m} />)}
       </div>
     </main>
-  )
-}
-
-function SortHeader({
-  label,
-  k,
-  sortKey,
-  sortDir,
-  onSort,
-  width,
-  align = 'left',
-  labelClass,
-}: {
-  label: string
-  k: MemberSortKey
-  sortKey: MemberSortKey
-  sortDir: SortDir
-  onSort: (key: MemberSortKey) => void
-  width?: string
-  align?: 'left' | 'right'
-  labelClass?: string
-}) {
-  const active = sortKey === k
-  const arrow = active ? (sortDir === 'asc' ? '↑' : '↓') : ''
-  const t = useCopy()
-  return (
-    <button
-      type="button"
-      onClick={() => onSort(k)}
-      aria-label={`${t.sortBy} ${label}${active ? (sortDir === 'asc' ? `, ${t.ascending}` : `, ${t.descending}`) : ''}`}
-      className={`flex items-center gap-xs hover:opacity-100 ${width ?? ''} ${align === 'right' ? 'justify-end' : ''}`}
-      style={{ opacity: active ? 1 : undefined, fontWeight: active ? 600 : undefined }}
-    >
-      <span className={labelClass}>{label}</span> {arrow}
-    </button>
   )
 }

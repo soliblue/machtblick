@@ -59,7 +59,7 @@ export function contextRowsForGroup(meta: SpeechMetaEntry[], group: MemberSpeech
   return rows.filter((speech) => keep.has(speech.id))
 }
 
-export function speechGroupKey(speech: Pick<SpeechResult, 'date' | 'agendaItem' | 'voteId' | 'id'>) {
+function speechGroupKey(speech: Pick<SpeechResult, 'date' | 'agendaItem' | 'voteId' | 'id'>) {
   return 'debateGroupId' in speech && typeof speech.debateGroupId === 'string' && speech.debateGroupId.length > 0
     ? speech.debateGroupId
     : `${speech.date}\u0000${speech.agendaItem ?? speech.voteId ?? speech.id}`

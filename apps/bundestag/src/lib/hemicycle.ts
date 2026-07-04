@@ -1,4 +1,4 @@
-export type HemicycleSeat = { angle: number; radius: number; row: number }
+type HemicycleSeat = { angle: number; radius: number; row: number }
 
 export function hemicycleSeats(total: number, radii: number[], spread: 'edge' | 'centered' = 'centered'): HemicycleSeat[] {
   const radiusSum = radii.reduce((a, b) => a + b, 0)

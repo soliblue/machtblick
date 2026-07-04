@@ -33,15 +33,8 @@ export const SEX_LABEL: Record<'m' | 'f' | 'd', string> = {
   d: 'Divers',
 }
 
-export const SEX_OPTIONS: Array<'m' | 'f' | 'd'> = ['m', 'f', 'd']
-
 export const isSex = (v: unknown): v is 'm' | 'f' | 'd' =>
   v === 'm' || v === 'f' || v === 'd'
-
-export const MANDATE_LABEL: Record<'direkt' | 'liste', string> = {
-  direkt: 'Direktmandat',
-  liste: 'Landesliste',
-}
 
 export const isMandateType = (v: unknown): v is 'direkt' | 'liste' =>
   v === 'direkt' || v === 'liste'

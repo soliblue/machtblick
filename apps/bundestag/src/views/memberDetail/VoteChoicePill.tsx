@@ -21,8 +21,8 @@ export function VoteChoicePill({ choice }: Props) {
   }
   return (
     <span
-      className="px-s py-[2px] text-s font-semibold uppercase"
-      style={{ border: `1px solid ${color}`, color, background: 'transparent', letterSpacing: '0.08em' }}
+      className="px-s py-[2px] text-s font-semibold caption"
+      style={{ border: `1px solid ${color}`, color, background: 'transparent' }}
     >
       {label[choice]}
     </span>

@@ -75,10 +75,10 @@ export function VoteHemicycle({ yes, no, abstain, absent, totalMembers, hero = f
       </svg>
       <div className="flex items-end justify-between px-xs">
         <LegendBlock choice="yes" selected={selected} onSelect={onSelect} className="flex flex-col items-start gap-xs">
-          <span className="text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{t.yes}</span>
+          <span className="text-s caption opacity-l">{t.yes}</span>
           <span className={numeral} style={{ color: COLORS.yes }}>{yes}</span>
         </LegendBlock>
-        <div className="flex max-w-[140px] flex-col self-end pb-[4px] text-center text-s uppercase leading-normal opacity-m" style={{ letterSpacing: '0.08em' }}>
+        <div className="flex max-w-[140px] flex-col self-end pb-[4px] text-center text-s caption leading-normal opacity-m">
           {abstain > 0 && (
             <LegendBlock choice="abstain" selected={selected} onSelect={onSelect}>
               {abstain} {hero ? t.abstention : t.abstain}
@@ -89,7 +89,7 @@ export function VoteHemicycle({ yes, no, abstain, absent, totalMembers, hero = f
           </LegendBlock>
         </div>
         <LegendBlock choice="no" selected={selected} onSelect={onSelect} className="flex flex-col items-end gap-xs">
-          <span className="text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{t.no}</span>
+          <span className="text-s caption opacity-l">{t.no}</span>
           <span className={numeral} style={{ color: COLORS.no }}>{no}</span>
         </LegendBlock>
       </div>

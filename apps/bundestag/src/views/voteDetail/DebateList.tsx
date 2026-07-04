@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
-import { ChevronLeft, ChevronRight, Search } from 'lucide-react'
+import { Search } from 'lucide-react'
 import { SpeechRow } from '@/views/redenSearch/SpeechRow'
+import { Pager } from '@/views/redenSearch/Pager'
 import { tokenize } from '@/lib/highlight'
 import { makeSnippet } from '@/lib/snippet'
 import { loadSpeechTexts, speechTextsLoaded } from '@/lib/speechesStatic'
@@ -44,7 +45,7 @@ export function DebateList({ speeches, source, ballotByMember, partySummaries }:
   return (
     <section className="mb-l">
       <PartySummaryPreviewList summaries={partySummaries} />
-      <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>
+      <div className="mb-s text-s caption opacity-l">
         {source === 'related' ? t.relatedSpeechesForVote : t.speechesForVote}
       </div>
       <div className="mb-m relative min-w-[12rem]">
@@ -86,54 +87,5 @@ export function DebateList({ speeches, source, ballotByMember, partySummaries }:
       )}
       {pageCount > 1 && <Pager page={safePage} pageCount={pageCount} onPage={setPage} />}
     </section>
-  )
-}
-
-function windowedPages(page: number, pageCount: number): Array<number | 'ellipsis'> {
-  const pages = new Set([0, pageCount - 1, page, page - 1, page + 1])
-  const sorted = [...pages].filter((p) => p >= 0 && p < pageCount).sort((a, b) => a - b)
-  const out: Array<number | 'ellipsis'> = []
-  for (let i = 0; i < sorted.length; i++) {
-    if (i > 0 && sorted[i] - sorted[i - 1] > 1) out.push('ellipsis')
-    out.push(sorted[i])
-  }
-  return out
-}
-
-function Pager({ page, pageCount, onPage }: { page: number; pageCount: number; onPage: (p: number) => void }) {
-  const t = useCopy()
-  return (
-    <div className="mt-m flex items-center justify-center gap-xs text-s">
-      <button
-        type="button"
-        onClick={() => onPage(page - 1)}
-        disabled={page === 0}
-        aria-label={t.previousPage}
-        className="px-s py-xs opacity-l hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed"
-      >
-        <ChevronLeft size={14} />
-      </button>
-      {windowedPages(page, pageCount).map((p, i) =>
-        p === 'ellipsis'
-          ? <span key={`e${i}`} className="px-s py-xs opacity-l">…</span>
-          : <button
-              key={p}
-              type="button"
-              onClick={() => onPage(p)}
-              className={p === page ? 'px-s py-xs font-semibold' : 'px-s py-xs opacity-l hover:opacity-100'}
-            >
-              {p + 1}
-            </button>
-      )}
-      <button
-        type="button"
-        onClick={() => onPage(page + 1)}
-        disabled={page === pageCount - 1}
-        aria-label={t.nextPage}
-        className="px-s py-xs opacity-l hover:opacity-100 disabled:opacity-30 disabled:cursor-not-allowed"
-      >
-        <ChevronRight size={14} />
-      </button>
-    </div>
   )
 }

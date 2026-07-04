@@ -12,7 +12,7 @@ export function DonationsBar({ donations, totalEur }: Props) {
   const eur = new Intl.NumberFormat(locale === 'de' ? 'de-DE' : 'en-GB', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 })
   return (
     <div className="mt-xl">
-      <div className="flex items-center justify-between text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>
+      <div className="flex items-center justify-between text-s caption opacity-l">
         <span>{t.majorDonations}</span>
         <span className="tabular-nums">{sorted.length} · {eur.format(totalEur)}</span>
       </div>

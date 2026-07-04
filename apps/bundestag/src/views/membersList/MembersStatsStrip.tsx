@@ -32,7 +32,7 @@ function Tile({ label, children, hideOnMobile = false }: { label: string; childr
   const display = hideOnMobile ? 'hidden md:flex' : 'flex'
   return (
     <div className={`${display} h-[160px] flex-col md:h-[180px]`}>
-      <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>
+      <div className="mb-s text-s caption opacity-l">
         {label}
       </div>
       <div className="min-h-0 flex-1">{children}</div>

@@ -4,11 +4,6 @@ export function tokenize(query: string): string[] {
   return query.trim().toLowerCase().split(/\s+/).filter(Boolean)
 }
 
-export function containsAny(text: string, terms: string[]): boolean {
-  const lower = text.toLowerCase()
-  return terms.some((t) => lower.includes(t))
-}
-
 function escapeRegex(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }

@@ -14,7 +14,7 @@ export function ProposalsBar({ proposals }: Props) {
   const resultLabel = { angenommen: t.accepted, abgelehnt: t.rejected }
   return (
     <div className="mt-xl">
-      <div className="flex items-center justify-between text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>
+      <div className="flex items-center justify-between text-s caption opacity-l">
         <span>{t.proposals}</span>
         <span>{accepted} / {total} {t.acceptedCount}</span>
       </div>

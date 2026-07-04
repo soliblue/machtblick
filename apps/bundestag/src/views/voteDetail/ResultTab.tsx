@@ -16,7 +16,7 @@ export function ResultTab({ data }: Props) {
   return (
     <>
       <section className="mb-l">
-        <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{t.result}</div>
+        <div className="mb-s text-s caption opacity-l">{t.result}</div>
         <div className="flex justify-center">
           <VoteHemicycle
             yes={vote.yes}
@@ -32,13 +32,13 @@ export function ResultTab({ data }: Props) {
       </section>
 
       <section className="mb-l">
-        <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{t.navParties}</div>
+        <div className="mb-s text-s caption opacity-l">{t.navParties}</div>
         <PartyDonutGrid summaries={partySummaries} selected={filter} />
       </section>
 
       {defectors.length > 0 && (
         <section>
-          <div className="mb-s text-s uppercase opacity-l" style={{ letterSpacing: '0.08em' }}>{t.deviations}</div>
+          <div className="mb-s text-s caption opacity-l">{t.deviations}</div>
           <DefectorList defectors={defectors} partySummaries={partySummaries} />
         </section>
       )}

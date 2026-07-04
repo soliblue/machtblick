@@ -35,7 +35,7 @@ export function VoteCard({ vote }: Props) {
         {accepted ? t.accepted : t.rejected}
       </div>
       <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-        <p className="mt-s flex min-w-0 items-center gap-s overflow-hidden text-s uppercase" style={{ letterSpacing: '0.08em' }}>
+        <p className="mt-s flex min-w-0 items-center gap-s overflow-hidden text-s caption">
           <span className="min-w-0 truncate">
             <PartyBadge party={vote.proposingParty} compact logoSize={17} />
           </span>

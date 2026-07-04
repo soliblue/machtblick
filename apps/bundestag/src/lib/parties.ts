@@ -63,7 +63,7 @@ export const SLUG_TO_PARTY: Record<string, string> = Object.fromEntries(
   Object.entries(PARTY_SLUG).map(([k, v]) => [v, k]),
 )
 
-export const GOVERNING_PARTIES = ['CDU/CSU', 'SPD']
+const GOVERNING_PARTIES = ['CDU/CSU', 'SPD']
 
 export const isGoverning = (party: string) => GOVERNING_PARTIES.includes(party)
 
