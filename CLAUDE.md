@@ -58,22 +58,37 @@ Tokens are fixed. Reach for one of these before inventing a value.
 
 | Token | Scale |
 |---|---|
-| Text size | `xxl/xl/l/m/s` = 24/22/16/14/12 |
+| Text size | `xxl/xl/l/m/s` = 24/22/16/14/12. One sanctioned exception: poster numerals, `font-display` semibold 32px+ `tabular-nums`, big result counts only |
 | Font weight | `regular` (400), `semibold` (600). Only two, ever |
+| Font roles | Fraunces (`font-display`, semibold) = titles and poster numerals. Charter serif = summary prose. System sans = all other UI |
 | Icon size | `s/m/l/xl` = 14/17/19/26 |
 | Spacing | `xs/s/m/l/xl` = 4/8/12/16/24 |
-| Radius | `s/m/l` = 8/14/20 |
+| Radius | 0. Sharp corners everywhere. The `s/m/l` = 8/14/20 scale and the full pill exist only for floating controls (e.g. the mobile filter button) |
 | Stroke | `s/m/l` = 1/1.5/2 px |
 | Opacity | `s/m/l` = 0.15/0.4/0.7 |
 | Palette (light, default) | `background` = white, `surface` = subtle off-white, `elevated` = slightly darker. Three shades total |
 | Accents | Fixed 16-name set + `success` + `danger`. Party colors map onto this set, never bespoke |
 
+The card language, settled in plan 102 on `/votes/` (reference mock `apps/bundestag/src/views/votesList/votesList.mock.md`); every remaining view converges on it:
+
+- Cards are white (`background`) with a 1px `text @ opacity-s` border plus a soft double shadow (`0 1px 3px` at 8% + `0 6px 16px` at 7%), radius 0, padding `l`
+- Verdict/status rides the top edge: 3px top border in the status color, a small semibold uppercase white chip in the same color straddling it, centered. Text always straight, never rotated
+- Vote result colors: Ja `success`, Nein `danger`, Enthaltung `yellow` (neutral `fg @ opacity-m` inside the hemicycle dot mass), Abwesend faint `fg @ opacity-s`
+- The hemicycle is the canonical result viz (one dot = one seat, absences visible); per-party breakdown = mini donut row sorted Ja-share left to Nein-share right, mixed party = semibold label
+- Summaries are real generated markdown rendered as serif prose with a fitted line clamp; the whole card is one stretched link
+- Meta and captions: `text-s` uppercase, letter-spacing 0.08em, `opacity-l`
+- One component, both devices: mobile = full-viewport snap-feed card, desktop = the same component reflowed into columns via responsive classes. Never a second design per breakpoint
+- Mobile primary action floats bottom center as a full pill (`fg` fill, `background` text, lucide funnel, active count) opening a bottom sheet; desktop keeps the sticky FilterPill row. Feeds have no masthead or visible h1
+
 Rules:
 
 - Hierarchy comes from size and spacing, not weight inflation
-- Color is meaning, not decoration. Accent = party / result / status
+- Color is meaning, not decoration. Accent = party / result / status; party color is identity only, never stats or charts
+- Proposer renders as the party logo alone (plain text for non-parties), never logo plus name
 - Borders are `text @ opacity-s`, not a new gray
 - If you reach for `padding: 10px` you're wrong
+
+Banned, user-rejected AI tells (do not re-propose): left-edge accent rails or stripes, rotated stamps on list surfaces (the Stamp is a detail-page device, straight when inline), gray or `surface` card backgrounds, mastheads or page titles on feed pages, a third font weight, bespoke grays.
 
 UI primitives come from shadcn/ui, restricted to the curated set: Button, Input, Select, Combobox, Card, Badge, Table, Tabs, Tooltip, Skeleton. Adding anything else is a decision, not a default.
 

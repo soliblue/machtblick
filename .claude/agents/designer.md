@@ -39,23 +39,29 @@ Each mock ends with a "Tokens" section calling out the sizes/spacings/components
 
 ## House conventions
 
-These emerged from polish on the party detail page. Treat as the reference look for every other view.
+The card language settled in plan 102 on `/votes/` (`apps/bundestag/src/views/votesList/votesList.mock.md`) is the reference look for list views; detail-page conventions from the party page still apply where noted.
 
-- **Section captions.** Sub-section titles inside a view (Anträge, Großspenden, Übereinstimmung, Abstimmungen, etc.) use `text-s uppercase opacity-l` with `letter-spacing: 0.08em`. **Never** `text-l font-semibold` for a section caption — that weight is reserved for the page `<h1>`.
-- **Filter rows.** Every row of FilterPills starts with a `<Filter size={14} className="opacity-l" />` (lucide-react) before the first pill.
+- **Cards.** White `background`, 1px `text @ opacity-s` border plus soft double shadow, radius 0, padding l. Never gray or `surface` card backgrounds.
+- **Verdict chip on the top edge.** Status = 3px top border in success/danger plus a small semibold uppercase white chip in the same color straddling it, centered. Text always straight; rotated stamps are banned on list surfaces (the Stamp is a detail-page device).
+- **Result viz.** The hemicycle (one dot = one seat, absences visible) is canonical for a vote outcome; per-party breakdown = mini donut row sorted Ja-share left to Nein-share right, mixed party = semibold label. Horizontal stacked bars remain the idiom for metric breakdowns (cohesion, attendance): caption row, then `flex h-8 w-full gap-[2px]` segments, Tooltip per segment.
+- **Result colors.** Ja success, Nein danger, Enthaltung yellow (neutral `fg @ opacity-m` inside the hemicycle), Abwesend faint `fg @ opacity-s`.
+- **Type roles.** Fraunces `font-display` semibold for titles and poster numerals (32px+ tabular-nums result counts); Charter serif for summary prose; system sans for chrome.
+- **Section captions.** Sub-section titles inside a view use `text-s uppercase opacity-l` with `letter-spacing: 0.08em`. **Never** `text-l font-semibold` for a section caption; that weight is reserved for the page `<h1>`. Feed pages have no masthead or visible h1 at all.
+- **One component, both devices.** Mobile = full-viewport snap-feed card, desktop = the same component reflowed wide. Design the reflow, never a second layout per breakpoint.
+- **Filters.** Desktop: FilterPill rows starting with a `<Filter size={14} className="opacity-l" />` (lucide-react). Mobile feeds: no pill row; a floating bottom-center full pill (`fg` fill, funnel icon, active count) opening a bottom sheet.
 - **Color semantics are strict.**
-  - Party color = identity only (logo, hemicycle square, party badge). Never for stats, charts, or decoration.
-  - Positive metrics (cohesion, attendance, success rate, agreement) → `var(--color-success)`.
-  - Outcomes → `var(--color-success)` accepted / `var(--color-danger)` rejected.
-  - Neutral facts (donations, counts) → `var(--color-fg)` with opacity-m/l layering.
-- **No rounded corners. Anywhere.** Sharp by default. Override shadcn primitives that ship rounded with `rounded-none`.
-- **Horizontal stacked bars are our primary viz.** Caption row (label left, summary right), then `flex h-8 w-full gap-[2px]` of segments, Tooltip per segment. Mirror this idiom before inventing.
-- **Stat pies.** Caption uppercase above the disc, percentage rendered in white inside the disc near the bottom (`bottom-[28%]`), `size-[120px]`. Track `var(--color-fg) @ 12%`, fill `var(--color-success)`.
-- **Page header.** Logo (44 party / 32 vote / 26 member) + title `text-xxl font-semibold` on the left, secondary metric (seats, date) `ml-auto` in `text-l opacity-l` with a Lucide icon.
+  - Party color = identity only (logo, hemicycle square, party badge). Never for stats, charts, or decoration. Proposer = party logo alone, never logo plus name.
+  - Positive metrics (cohesion, attendance, success rate, agreement) = `var(--color-success)`.
+  - Neutral facts (donations, counts) = `var(--color-fg)` with opacity-m/l layering.
+- **Radius 0 everywhere.** Override shadcn primitives that ship rounded with `rounded-none`. Only floating controls (the mobile filter button) may be pills.
+- **Stat pies** (detail pages). Caption uppercase above the disc, percentage rendered in white inside the disc near the bottom (`bottom-[28%]`), `size-[120px]`. Track `var(--color-fg) @ 12%`, fill `var(--color-success)`.
+- **Page header** (detail pages). Logo (44 party / 32 vote / 26 member) + title `text-xxl font-semibold` on the left, secondary metric (seats, date) `ml-auto` in `text-l opacity-l` with a Lucide icon.
+
+Banned, do not re-propose: left-edge accent rails or stripes, rotated stamps on lists, gray card backgrounds, mastheads on feeds, dual proposer logo plus name.
 
 ## Before designing
 
-- Project context (apps, design priorities) is in `CLAUDE.md` at the repo root — read it.
+- Project context (apps, design priorities) is in `CLAUDE.md` at the repo root. Read it.
 - If lead points you at a plan in `plans/`, read it. Append to its Log section when you're done.
 - If a mock already exists for this view, read it before redesigning.
 
@@ -63,4 +69,4 @@ These emerged from polish on the party detail page. Treat as the reference look 
 
 - Don't write React, CSS, or any implementation code. ASCII only.
 - Don't pick colors or fonts. That's later, and not your call.
-- Don't speculate about data you don't know exists — ask lead.
+- Don't speculate about data you don't know exists; ask lead.
