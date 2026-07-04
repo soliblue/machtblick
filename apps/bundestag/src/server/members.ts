@@ -391,11 +391,23 @@ export const getMember = createServerFn({ method: 'GET' })
           .orderBy(desc(votes.date))
           .all()
       : []
+    const antragTitleTranslations = new Map(
+      locale === 'en' && publishedAntragIds.length
+        ? db
+            .select({ antragId: antragDescriptionTranslations.antragId, title: antragDescriptionTranslations.title, cleanTitle: antragDescriptionTranslations.cleanTitle })
+            .from(antragDescriptionTranslations)
+            .where(and(eq(antragDescriptionTranslations.locale, 'en'), inArray(antragDescriptionTranslations.antragId, publishedAntragIds)))
+            .all()
+            .map((t) => [t.antragId, t])
+        : [],
+    )
     const initiativeCountById = new Map(initiativeCounts.map((r) => [r.antragId, r.n]))
+    const initiativeVoteTranslations = translationMap(initiativeVoteRows.map((r) => r.voteId), locale)
     const initiativeVotesById = new Map<number, MemberInitiativeVote[]>()
     for (const r of initiativeVoteRows) {
       const list = initiativeVotesById.get(r.antragId) ?? []
-      const titled = requireVoteCleanTitle({ id: r.voteId, title: r.title, cleanTitle: r.cleanTitle })
+      const t = initiativeVoteTranslations.get(r.voteId)
+      const titled = requireVoteCleanTitle({ id: r.voteId, title: t?.title ?? r.title, cleanTitle: t?.cleanTitle ?? r.cleanTitle })
       list.push({
         voteId: r.voteId,
         date: r.date,
@@ -407,8 +419,8 @@ export const getMember = createServerFn({ method: 'GET' })
     }
     const initiatives: MemberInitiativeRow[] = initiativeRows.map((r) => ({
       antragId: r.id,
-      title: r.title,
-      cleanTitle: r.cleanTitle,
+      title: antragTitleTranslations.get(r.id)?.title ?? r.title,
+      cleanTitle: antragTitleTranslations.get(r.id)?.cleanTitle ?? r.cleanTitle,
       beratungsstand: r.beratungsstand,
       introducedDate: r.introducedDate,
       drucksachePdfUrl: r.drucksachePdfUrl,

@@ -40,6 +40,7 @@ apps/bundestag/public/en/members/*.json
 apps/bundestag/public/en/parties/*.json
 apps/bundestag/public/en/votes/*.json
 apps/bundestag/public/votes/*.json
+apps/bundestag/public/og/
 apps/bundestag/public/members/*.json
 apps/bundestag/public/parties/*.json
 

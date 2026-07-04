@@ -31,9 +31,12 @@ export const Route = createFileRoute('/en/votes/$id')({
     const desc = v && headline
       ? `${headline}. Bundestag vote on ${formatDateLong(v.date, 'en')}: ${result}. Sponsor: ${loaderData?.proposingParty ?? 'unknown'}.`
       : 'Vote in the German Bundestag.'
+    const ogImage = v?.voteType === 'namentlich'
+      ? { image: `/og/votes/${params.id}.png`, imageAlt: `Bundestag vote result: ${title}` }
+      : {}
     return {
       meta: [
-        ...seoMeta({ title, description: desc, canonical: path, type: 'article' }),
+        ...seoMeta({ title, description: desc, canonical: path, type: 'article', ...ogImage }),
         ...(v ? [{ property: 'article:published_time', content: v.date }] : []),
       ],
       links: [...canonicalLink(path), ...alternateJsonLink(path)],

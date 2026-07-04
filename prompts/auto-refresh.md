@@ -70,7 +70,10 @@ Run derived refreshes after source data is current, in this order (titles and de
 7. `npm run etl:party-positions`
 8. `npm run etl:translations`
 9. `npm run etl:antrag-description-translations`
-10. `npm run etl:speech-translations`
+10. `npm run etl:antrag-title-translations`
+11. `npm run etl:speech-translations`
+
+`etl:antrag-title-translations` fills English `title`/`clean_title` on `antrag_description_translations` for every motion that already has an English description translation. It is hash-keyed on the German title pair and idempotent; it must run after `etl:antrag-titles` and `etl:antrag-description-translations`, otherwise new English motion pages render German titles.
 
 `etl:votes:namentlich` does not self-materialize: it ingests votes but sets neither `votes.agenda_item` nor the speech↔vote linkage. `etl:votes:backfill-agenda` (sets `agenda_item` from protocol XML) and `db:materialize` (rebuilds `vote_debate_groups`) must run after any vote ingest and before `etl:party-positions`, otherwise linked votes resolve to zero speeches and get no party-position summaries. Both are idempotent. `etl:handzeichen:refresh` already runs this sequence internally for handzeichen and namentlich votes; the standalone steps cover the namentlich-only ingest.
 

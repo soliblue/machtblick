@@ -18,6 +18,9 @@ export const antragDescriptionTranslations = sqliteTable(
   {
     antragId: integer('antrag_id').notNull().references(() => antraege.id),
     locale: text('locale').notNull(),
+    title: text('title'),
+    cleanTitle: text('clean_title'),
+    titleSourceHash: text('title_source_hash'),
     summarySimplified: text('summary_simplified'),
     summaryDetail: text('summary_detail'),
     sourceHash: text('source_hash'),

@@ -303,8 +303,8 @@ export const getAntrag = createServerFn({ method: 'GET' })
       antrag: {
         id: row.id,
         type: row.type,
-        title: row.title,
-        cleanTitle: row.cleanTitle,
+        title: locale === 'en' ? translation?.title ?? row.title : row.title,
+        cleanTitle: locale === 'en' ? translation?.cleanTitle ?? row.cleanTitle : row.cleanTitle,
         abstract: cleanAbstract(row.abstract),
         beratungsstand: row.beratungsstand,
         initiativeFraktion: row.initiativeFraktion,

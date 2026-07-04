@@ -30,9 +30,12 @@ export const Route = createFileRoute('/votes/$id')({
     const desc = v && headline
       ? `${headline}. Abstimmung im Bundestag am ${formatDateLong(v.date)}: ${v.result}. Antragsteller: ${loaderData?.proposingParty ?? 'unbekannt'}.`
       : 'Namentliche Abstimmung im Deutschen Bundestag.'
+    const ogImage = v?.voteType === 'namentlich'
+      ? { image: `/og/votes/${params.id}.png`, imageAlt: `Abstimmungsergebnis im Bundestag: ${title}` }
+      : {}
     return {
       meta: [
-        ...seoMeta({ title, description: desc, canonical: path, type: 'article' }),
+        ...seoMeta({ title, description: desc, canonical: path, type: 'article', ...ogImage }),
         ...(v ? [{ property: 'article:published_time', content: v.date }] : []),
       ],
       links: [...canonicalLink(path), ...alternateJsonLink(path)],
