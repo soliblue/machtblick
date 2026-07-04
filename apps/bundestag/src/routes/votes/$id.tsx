@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { getVote } from '@/server/voteDetail'
 import { getVoteSponsors } from '@/server/voteSponsors'
 import { VoteDetail, type VoteTab, isVoteTab } from '@/views/voteDetail/VoteDetail'
-import { seoMeta, canonicalLink, alternateJsonLink, breadcrumbJsonLd } from '@/lib/seo'
+import { seoMeta, canonicalLink, alternateJsonLink, breadcrumbJsonLd, jsonLd, SITE_URL } from '@/lib/seo'
 import { formatDateLong } from '@/lib/format'
 import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 
@@ -39,10 +39,37 @@ export const Route = createFileRoute('/votes/$id')({
         ...(v ? [{ property: 'article:published_time', content: v.date }] : []),
       ],
       links: [...canonicalLink(path), ...alternateJsonLink(path)],
-      scripts: breadcrumbJsonLd([
-        { name: 'Abstimmungen', path: '/votes' },
-        { name: title, path },
-      ]),
+      scripts: [
+        ...breadcrumbJsonLd([
+          { name: 'Abstimmungen', path: '/votes' },
+          { name: title, path },
+        ]),
+        ...(v && headline
+          ? jsonLd({
+              '@context': 'https://schema.org',
+              '@type': 'Event',
+              '@id': `${SITE_URL}${path}/`,
+              name: headline,
+              startDate: v.date,
+              location: { '@type': 'Place', name: 'Deutscher Bundestag', address: { '@type': 'PostalAddress', addressLocality: 'Berlin', addressCountry: 'DE' } },
+              organizer: { '@type': 'GovernmentOrganization', name: 'Deutscher Bundestag' },
+              url: `${SITE_URL}${path}/`,
+              description: v.voteType === 'namentlich'
+                ? `Namentliche Abstimmung am ${formatDateLong(v.date)}: ${v.result}. ${v.yes} Ja, ${v.no} Nein, ${v.abstain} Enthaltungen, ${v.absent} nicht abgegeben.`
+                : `Abstimmung am ${formatDateLong(v.date)}: ${v.result}.`,
+              ...(loaderData?.sponsors.antraege.length && loaderData.sponsors.antraege.length <= 3
+                ? {
+                    about: loaderData.sponsors.antraege.map((a) => ({
+                      '@type': 'Legislation',
+                      name: a.title,
+                      url: `${SITE_URL}/motions/${a.antragId}/`,
+                      ...(a.drucksache ? { legislationIdentifier: a.drucksache } : {}),
+                    })),
+                  }
+                : {}),
+            })
+          : []),
+      ],
     }
   },
 })

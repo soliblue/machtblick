@@ -2,7 +2,7 @@ import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { getMember } from '@/server/memberDetail'
 import { MemberDetailShell } from '@/views/memberDetail/MemberDetailShell'
 import { seoMeta, canonicalLink, alternateJsonLink, jsonLd, breadcrumbJsonLd, SITE_URL } from '@/lib/seo'
-import { hasPartyLine } from '@/lib/parties'
+import { hasPartyLine, PARTY_SLUG } from '@/lib/parties'
 import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 
 export const Route = createFileRoute('/members/$id')({
@@ -36,16 +36,24 @@ export const Route = createFileRoute('/members/$id')({
         ? jsonLd({
             '@context': 'https://schema.org',
             '@type': 'Person',
+            '@id': `${SITE_URL}${path}/`,
             name: loaderData.name,
             jobTitle: 'Mitglied des Deutschen Bundestages',
             worksFor: { '@type': 'GovernmentOrganization', name: 'Deutscher Bundestag' },
-            affiliation: {
+            memberOf: {
               '@type': hasPartyLine(loaderData.party) ? 'PoliticalParty' : 'Organization',
               name: loaderData.party,
+              ...(PARTY_SLUG[loaderData.party] ? { url: `${SITE_URL}/parties/${PARTY_SLUG[loaderData.party]}/profile/` } : {}),
             },
-            homeLocation: { '@type': 'AdministrativeArea', name: loaderData.state },
+            ...(loaderData.state
+              ? {
+                  homeLocation: { '@type': 'AdministrativeArea', name: loaderData.state },
+                  address: { '@type': 'PostalAddress', addressRegion: loaderData.state, addressCountry: 'DE' },
+                }
+              : {}),
             url: `${SITE_URL}${path}`,
             ...(loaderData.pictureUrl ? { image: loaderData.pictureUrl } : {}),
+            ...(loaderData.sameAs?.length ? { sameAs: loaderData.sameAs } : {}),
           })
         : []),
       ],

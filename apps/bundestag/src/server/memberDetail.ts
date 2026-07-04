@@ -44,6 +44,7 @@ export type MemberDetail = {
   yearOfBirth: number | null
   sex: MemberSex | null
   education: string | null
+  sameAs: string[]
   initiatives: MemberInitiativeRow[]
   mandateType: MandateType | null
   listState: string | null
@@ -80,6 +81,8 @@ export const getMember = createServerFn({ method: 'GET' })
         yearOfBirth: sql<number | null>`json_extract(${memberAbgeordnetenwatch.rawJson}, '$.year_of_birth')`,
         sex: sql<string | null>`json_extract(${memberAbgeordnetenwatch.rawJson}, '$.sex')`,
         education: sql<string | null>`json_extract(${memberAbgeordnetenwatch.rawJson}, '$.education')`,
+        awProfileUrl: sql<string | null>`json_extract(${memberAbgeordnetenwatch.rawJson}, '$.abgeordnetenwatch_url')`,
+        wikidataQid: sql<string | null>`json_extract(${memberAbgeordnetenwatch.rawJson}, '$.qid_wikidata')`,
       })
       .from(memberAbgeordnetenwatch)
       .where(eq(memberAbgeordnetenwatch.memberId, id))
@@ -204,6 +207,10 @@ export const getMember = createServerFn({ method: 'GET' })
       yearOfBirth,
       sex,
       education,
+      sameAs: [
+        ...(demoRow?.awProfileUrl ? [demoRow.awProfileUrl] : []),
+        ...(demoRow?.wikidataQid ? [`https://www.wikidata.org/wiki/${demoRow.wikidataQid}`] : []),
+      ],
       initiatives: loadMemberInitiatives(id, locale),
       mandateType: m.mandateType === 'direkt' || m.mandateType === 'liste' ? m.mandateType : null,
       listState: m.listState,

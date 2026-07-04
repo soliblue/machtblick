@@ -12,6 +12,7 @@ import { SpeechesTab } from './SpeechesTab'
 import { SponsorStrip } from './SponsorStrip'
 import type { VoteSponsors } from '@/server/voteSponsors'
 import { useCopy, useLocale } from '@/lib/i18n'
+import { withLocale } from '@/lib/locale'
 
 export type VoteTab = 'ergebnis' | 'details' | 'reden'
 const VOTE_TABS: VoteTab[] = ['ergebnis', 'details', 'reden']
@@ -62,10 +63,15 @@ export function VoteDetail({ data, activeTab, onTabChange }: Props) {
       {vote.cleanTitle && vote.cleanTitle !== vote.title && (
         <div className="mt-s text-s opacity-l">{t.officialTitle}: {vote.title}</div>
       )}
-      <div className="mt-s flex items-center gap-m text-m">
+      <div className="mt-s flex flex-wrap items-center gap-m text-m">
         <PartyBadge party={proposingParty} />
         <span className="opacity-l">{formatDate(vote.date)}</span>
         {vote.topic && <span className="opacity-l">· {vote.topic}</span>}
+        {sponsors.antraege.length <= 3 && sponsors.antraege.map((a) => (
+          <a key={a.antragId} href={withLocale(`/motions/${a.antragId}/`, locale)} className="caption text-s opacity-l underline-offset-4 hover:underline hover:opacity-100">
+            {a.drucksache ? `Drs. ${a.drucksache}` : a.type === 'gesetzentwurf' ? t.bill : t.motion}
+          </a>
+        ))}
       </div>
       <div className="mt-m mb-l flex flex-wrap items-center gap-l">
         {stamps.map((s) => (

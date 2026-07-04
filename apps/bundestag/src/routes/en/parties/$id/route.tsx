@@ -36,12 +36,14 @@ export const Route = createFileRoute('/en/parties/$id')({
         ? jsonLd({
             '@context': 'https://schema.org',
             '@type': showPartyLine ? 'PoliticalParty' : 'Organization',
+            '@id': `${SITE_URL}${path}/`,
             name: partyLabel(loaderData.party, 'en'),
             numberOfEmployees: { '@type': 'QuantitativeValue', value: loaderData.seats },
             url: `${SITE_URL}${path}`,
             memberOf: { '@type': 'GovernmentOrganization', name: 'German Bundestag' },
             member: loaderData.members.map((m) => ({
               '@type': 'Person',
+              '@id': `${SITE_URL}/en/members/${m.id}/votes/`,
               name: m.name,
               url: `${SITE_URL}/en/members/${m.id}/votes/`,
             })),
