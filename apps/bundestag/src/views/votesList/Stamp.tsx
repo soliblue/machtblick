@@ -27,9 +27,9 @@ const config: Record<StampVariant, { color: string; rotate: number; opacity?: nu
   'nicht-beraten': { color: 'var(--color-fg)', rotate: 3, opacity: 0.7 },
 }
 
-type Props = { variant: StampVariant; size?: 's' | 'm' }
+type Props = { variant: StampVariant; size?: 's' | 'm'; rotated?: boolean }
 
-export function Stamp({ variant, size = 's' }: Props) {
+export function Stamp({ variant, size = 's', rotated = true }: Props) {
   const t = useCopy()
   const { color, rotate, opacity = 0.85 } = config[variant]
   const sizeClass =
@@ -45,7 +45,7 @@ export function Stamp({ variant, size = 's' }: Props) {
         outlineOffset: '2px',
         color,
         opacity,
-        transform: `rotate(${rotate}deg)`,
+        transform: `rotate(${rotated ? rotate : 0}deg)`,
         letterSpacing: '0.12em',
         background: 'transparent',
         mixBlendMode: 'multiply',

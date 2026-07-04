@@ -1,7 +1,8 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, stripSearchParams, useNavigate } from '@tanstack/react-router'
 import { listVotes } from '@/server/votes'
 import { VotesList } from '@/views/votesList/VotesList'
 import { useVoteListFilters, type VoteTypeFilter, type VoteResultFilter } from '@/hooks/useVoteListFilters'
+import { useVoteDayGroups } from '@/hooks/useVoteDayGroups'
 import { seoMeta, canonicalLink } from '@/lib/seo'
 
 const VOTE_TYPES: VoteTypeFilter[] = ['namentlich', 'handzeichen', 'hammelsprung']
@@ -28,6 +29,7 @@ export const Route = createFileRoute('/en/votes/')({
     topic: typeof search.topic === 'string' ? search.topic : undefined,
     q: typeof search.q === 'string' ? search.q : undefined,
   }),
+  search: { middlewares: [stripSearchParams({ type: 'namentlich' as VoteTypeFilter })] },
 })
 
 function VotesRoute() {
@@ -40,9 +42,10 @@ function VotesRoute() {
   const topicValue = topic ?? null
   const query = q ?? ''
   const { filtered, availableParties, availableTopics } = useVoteListFilters(votes, proposingParty, voteType, resultValue, topicValue, query)
+  const groups = useVoteDayGroups(filtered)
   return (
     <VotesList
-      votes={filtered}
+      groups={groups}
       proposingParty={proposingParty}
       onProposingPartyChange={(v) => navigate({ search: (s) => ({ ...s, party: v ?? undefined }) })}
       availableParties={availableParties}
@@ -53,8 +56,6 @@ function VotesRoute() {
       topic={topicValue}
       onTopicChange={(v) => navigate({ search: (s) => ({ ...s, topic: v ?? undefined }) })}
       availableTopics={availableTopics}
-      query={query}
-      onQueryChange={(v) => navigate({ search: (s) => ({ ...s, q: v.trim() ? v : undefined }) })}
     />
   )
 }

@@ -90,7 +90,15 @@ export type VoteListItem = {
   abstain: number
   absent: number
   totalMembers: number
+  summarySimplified: string | null
   partySummaries: Array<{ party: string; position: 'yes' | 'no' | 'abstain' | 'mixed'; members: number; yes: number; no: number; abstain: number; absent: number }>
+}
+
+const clipSummary = (s: string | null) => {
+  const text = (s ?? '').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').trim()
+  const clipped = text.length > 700 ? `${text.slice(0, 700).replace(/\s+\S*$/, '')}…` : text
+  const balanced = clipped.split('**').length % 2 === 0 ? `${clipped}**` : clipped
+  return balanced || null
 }
 
 type LocalizedVoteFields = {
@@ -162,6 +170,7 @@ export const listVotes = createServerFn({ method: 'GET' })
         id: v.id, date: v.date, title: localized.title, cleanTitle: localized.cleanTitle, topic: localized.topic, voteType: v.voteType,
         proposingParty: v.initiator, result: v.result,
         yes: v.yes, no: v.no!, abstain: v.abstain!, absent: v.absent!, totalMembers: v.totalMembers!,
+        summarySimplified: clipSummary(localized.summarySimplified),
         partySummaries: summaries.map((s) => ({
           party: s.party, position: s.position, members: s.members ?? 0,
           yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0,
@@ -187,6 +196,7 @@ export const listVotes = createServerFn({ method: 'GET' })
       id: v.id, date: v.date, title: localized.title, cleanTitle: localized.cleanTitle, topic: localized.topic, voteType: v.voteType,
       proposingParty: v.initiator, result: v.result,
       yes, no, abstain, absent: 0, totalMembers: yes + no + abstain,
+      summarySimplified: clipSummary(localized.summarySimplified),
       partySummaries: enriched,
     }
   })

@@ -35,6 +35,7 @@
 
 @theme {
   --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --breakpoint-desk: 700px;
   --color-background: #FFFFFF;
   --color-surface: #F7F7F7;
   --color-elevated: #EDEDED;

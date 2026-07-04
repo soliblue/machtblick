@@ -1,15 +1,15 @@
-import { Search } from 'lucide-react'
-import type { VoteListItem } from '@/server/votes'
 import type { VoteTypeFilter, VoteResultFilter } from '@/hooks/useVoteListFilters'
+import type { VoteDayGroup } from '@/hooks/useVoteDayGroups'
 import { VISIBLE_VOTE_TYPES } from '@/lib/voteTypes'
-import { useCopy } from '@/lib/i18n'
-import { VoteRow } from './VoteRow'
+import { useCopy, useLocale } from '@/lib/i18n'
+import { partyLabel } from '@/lib/parties'
+import { VoteCard } from './VoteCard'
 import { FilterPill } from './FilterPill'
-
-const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
+import { FilterPillRow } from './FilterPillRow'
+import { FilterSheet, type FilterSheetGroup } from './FilterSheet'
 
 type Props = {
-  votes: VoteListItem[]
+  groups: VoteDayGroup[]
   proposingParty: string | null
   onProposingPartyChange: (value: string | null) => void
   availableParties: string[]
@@ -20,12 +20,11 @@ type Props = {
   topic: string | null
   onTopicChange: (value: string | null) => void
   availableTopics: string[]
-  query: string
-  onQueryChange: (value: string) => void
 }
 
-export function VotesList({ votes, proposingParty, onProposingPartyChange, availableParties, voteType, onVoteTypeChange, result, onResultChange, topic, onTopicChange, availableTopics, query, onQueryChange }: Props) {
+export function VotesList({ groups, proposingParty, onProposingPartyChange, availableParties, voteType, onVoteTypeChange, result, onResultChange, topic, onTopicChange, availableTopics }: Props) {
   const t = useCopy()
+  const locale = useLocale()
   const typeLabels: Record<VoteTypeFilter, string> = {
     namentlich: t.namedVote,
     handzeichen: t.showOfHands,
@@ -35,55 +34,73 @@ export function VotesList({ votes, proposingParty, onProposingPartyChange, avail
     angenommen: t.accepted,
     abgelehnt: t.rejected,
   }
+  const flat = groups.flatMap((g) => g.votes)
+  const sheetGroups: FilterSheetGroup[] = [
+    { key: 'type', label: t.type, options: [...VISIBLE_VOTE_TYPES], value: voteType, onChange: (v) => onVoteTypeChange(v as VoteTypeFilter | null), format: (o) => typeLabels[o as VoteTypeFilter] },
+    { key: 'party', label: t.proposer, options: availableParties, value: proposingParty, onChange: onProposingPartyChange, format: (o) => partyLabel(o, locale) },
+    { key: 'result', label: t.result, options: ['angenommen', 'abgelehnt'], value: result, onChange: (v) => onResultChange(v as VoteResultFilter | null), format: (o) => resultLabels[o as VoteResultFilter] },
+    ...(availableTopics.length > 0 ? [{ key: 'topic', label: t.category, options: availableTopics, value: topic, onChange: onTopicChange, format: (o: string) => o }] : []),
+  ]
+  const activeCount = [voteType, proposingParty, result, topic].filter(Boolean).length
   return (
-    <main className="mx-auto max-w-3xl p-l">
+    <>
+      <style>{'@media (max-width:699px){html{scroll-snap-type:y mandatory;scroll-padding-top:52px}}'}</style>
+      <div className="sticky top-[54px] z-20 hidden border-b border-fg/15 bg-background desk:block">
+        <div className="px-l py-s desk:mx-auto desk:max-w-3xl">
+          <FilterPillRow className="">
+            <FilterPill
+              label={t.type}
+              options={VISIBLE_VOTE_TYPES}
+              value={voteType}
+              onChange={(v) => onVoteTypeChange(v as VoteTypeFilter | null)}
+              formatOption={(o) => typeLabels[o as VoteTypeFilter]}
+            />
+            <FilterPill
+              label={t.proposer}
+              options={availableParties}
+              value={proposingParty}
+              onChange={onProposingPartyChange}
+            />
+            <FilterPill
+              label={t.result}
+              options={['angenommen', 'abgelehnt']}
+              value={result}
+              onChange={(v) => onResultChange(v as VoteResultFilter | null)}
+              formatOption={(o) => resultLabels[o as VoteResultFilter]}
+            />
+            {availableTopics.length > 0 && (
+              <FilterPill
+                label={t.category}
+                options={availableTopics}
+                value={topic}
+                onChange={onTopicChange}
+              />
+            )}
+          </FilterPillRow>
+        </div>
+      </div>
       <h1 className="sr-only">{t.votes}</h1>
-      <div className="mb-m relative min-w-[12rem]">
-        <Search size={14} className="absolute left-s top-1/2 -translate-y-1/2 opacity-l" />
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => onQueryChange(e.target.value)}
-          placeholder={t.searchVotes}
-          className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
-          style={{ borderColor: ROW_BORDER }}
-        />
-      </div>
-      <div className="mb-l -mx-l flex items-center gap-s overflow-x-auto px-l [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <FilterPill
-          label={t.type}
-          options={VISIBLE_VOTE_TYPES}
-          value={voteType}
-          onChange={(v) => onVoteTypeChange(v as VoteTypeFilter | null)}
-          formatOption={(o) => typeLabels[o as VoteTypeFilter]}
-        />
-        <FilterPill
-          label={t.proposer}
-          options={availableParties}
-          value={proposingParty}
-          onChange={onProposingPartyChange}
-        />
-        <FilterPill
-          label={t.result}
-          options={['angenommen', 'abgelehnt']}
-          value={result}
-          onChange={(v) => onResultChange(v as VoteResultFilter | null)}
-          formatOption={(o) => resultLabels[o as VoteResultFilter]}
-        />
-        {availableTopics.length > 0 && (
-          <FilterPill
-            label={t.category}
-            options={availableTopics}
-            value={topic}
-            onChange={onTopicChange}
-          />
-        )}
-      </div>
-      <div className="flex flex-col">
-        {votes.map((v) => (
-          <VoteRow key={v.id} vote={v} />
+      <script
+        dangerouslySetInnerHTML={{
+          __html:
+            "(function(){var f=function(){requestAnimationFrame(function(){var css='';document.querySelectorAll('[data-clamp-summary]>p').forEach(function(p){var card=p.closest('[id]');var h=p.parentElement.clientHeight;if(!card||!h)return;var lh=parseFloat(getComputedStyle(p).lineHeight);var n=Math.max(1,Math.floor(h/lh));css+='[id=\"'+card.id+'\"] [data-clamp-summary]>p{-webkit-line-clamp:'+n+'}'});var s=document.createElement('style');s.textContent=css;document.head.appendChild(s)})};document.readyState==='loading'?document.addEventListener('DOMContentLoaded',f):f()})()",
+        }}
+      />
+      <div className="desk:hidden">
+        <FilterSheet groups={sheetGroups} activeCount={activeCount} />
+        {flat.map((v) => (
+          <div key={v.id} id={v.id} className="h-[calc(100svh-96px)] snap-start snap-always px-m pt-s">
+            <VoteCard vote={v} />
+          </div>
         ))}
       </div>
-    </main>
+      <main className="mx-auto hidden max-w-3xl flex-col gap-l px-l pb-[64px] pt-xl desk:flex">
+        {flat.map((v) => (
+          <div key={v.id} id={`d-${v.id}`}>
+            <VoteCard vote={v} />
+          </div>
+        ))}
+      </main>
+    </>
   )
 }
