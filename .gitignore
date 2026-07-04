@@ -58,5 +58,6 @@ etl/**/samples/
 .git.bak/
 
 .claude/scheduled_tasks.lock
-.claude/agent-memory/
+**/.claude/agent-memory/
+.design-sync/
 apps/bundestag/test/.tester-*
