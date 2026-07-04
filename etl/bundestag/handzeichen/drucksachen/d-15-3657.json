@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "78459",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "15/3657",
+      "wahlperiode": 15,
+      "herausgeber": "BT",
+      "pdf_hash": "59262c9df5e8e4c9a887e446a9cda7d0",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "97091",
+          "titel": "Gesetz zur Neuordnung des Lebensmittel- und des Futtermittelrechts (G-SIG: 15019447)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Verbraucherschutz, Ernährung und Landwirtschaft"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/15/036/1503657.pdf",
+        "id": "78459",
+        "dokumentnummer": "15/3657",
+        "datum": "2004-08-24",
+        "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Neuordnung des Lebensmittel- und des Futtermittelrechts",
+      "datum": "2004-08-24"
+    }
+  ],
+  "cursor": "AoJwkJuPyP4BMERydWNrc2FjaGUtNzg0NTk="
+}

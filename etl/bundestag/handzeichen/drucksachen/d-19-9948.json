@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "228945",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 22,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/9948",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "6ea2ff3adc75ccc84c09cb8708648fff",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "247787",
+          "titel": "Allgemeine Höchstgeschwindigkeit von 130 km/h auf Bundesautobahnen einführen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/099/1909948.pdf",
+        "id": "228945",
+        "dokumentnummer": "19/9948",
+        "datum": "2019-05-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "9",
+          "titel": "Dr. Anton Hofreiter, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Anton Hofreiter"
+        },
+        {
+          "id": "1139",
+          "titel": "Daniela Wagner, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Daniela Wagner"
+        }
+      ],
+      "titel": "Allgemeine Höchstgeschwindigkeit von 130 km/h auf Bundesautobahnen einführen",
+      "datum": "2019-05-08"
+    }
+  ],
+  "cursor": "AoJwkNa4y-oCMURydWNrc2FjaGUtMjI4OTQ1"
+}

@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "244782",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/22207",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "c4f65275789d903a5cce4b557d59bd50",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "266700",
+          "titel": "Fortsetzung des Einsatzes bewaffneter deutscher Streitkräfte - Stabilisierung sichern, Wiedererstarken des IS verhindern, Versöhnung fördern in Irak und Syrien",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/222/1922207.pdf",
+        "id": "244782",
+        "dokumentnummer": "19/22207",
+        "datum": "2020-09-09",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Fortsetzung des Einsatzes bewaffneter deutscher Streitkräfte - Stabilisierung sichern, Wiedererstarken des IS verhindern, Versöhnung fördern in Irak und Syrien",
+      "datum": "2020-09-09"
+    }
+  ],
+  "cursor": "AoJwkNmTufQCMURydWNrc2FjaGUtMjQ0Nzgy"
+}

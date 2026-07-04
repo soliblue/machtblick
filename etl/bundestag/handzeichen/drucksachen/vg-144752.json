@@ -1,0 +1,78 @@
+{
+  "id": "144752",
+  "abstract": "Berlin als Sitz des Bundestages und als Amtssitz des Bundespräsidenten, Bonn als Sitz der Bundesregierung, der Ministerien und des Bundesrates, Regelung durch ein Gesetz; substantielle Verbesserungen der Arbeitsbedingungen des Parlaments, Ausbau leistungsfähiger Ost-West-Verkehrsverbindungen, Fortführung der Baumaßnahmen des Parlaments in Bonn; Einberufung einer \"Unabhängigen Föderalismuskommission\": Erarbeitung von Vorschlägen zur Verteilung nationaler und internationaler Institutionen in Deutschland, Ansiedlung von Bundeseinrichtungen in den fünf neuen Bundesländern ",
+  "beratungsstand": "Abgelehnt",
+  "vorgangstyp": "Antrag",
+  "sachgebiet": [
+    "Bundestag",
+    "Deutsche Einheit / Innerdeutsche Beziehungen (bis 1990)",
+    "Staat und Verwaltung"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 12,
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Berlin",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bonn",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bundesorgan",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bundespräsident",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bundesrat",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bundesregierung",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bundestag",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Deutschlandpolitik",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Föderalismus",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Hauptstadt",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Neue Bundesländer",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Verkehrsweg",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Konsensantrag Berlin/Bonn (G-SIG: 12010164)",
+  "datum": "1991-09-03"
+}

@@ -1,0 +1,56 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "252400",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme des BR und Gegenäußerung der BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/28182",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "c716d70e68d817da9c9c2f54935e8fb3",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "273809",
+          "titel": "Gesetz zum Schutz der Insektenvielfalt in Deutschland und zur Änderung weiterer Vorschriften",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Umwelt, Naturschutz und nukleare Sicherheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/281/1928182.pdf",
+        "id": "252400",
+        "dokumentnummer": "19/28182",
+        "datum": "2021-03-31",
+        "verteildatum": "2021-04-06",
+        "anlagen": "Stellungnahme des BR und Gegenäußerung der BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Dritten Gesetzes zur Änderung des Bundesnaturschutzgesetzes",
+      "datum": "2021-03-31"
+    }
+  ],
+  "cursor": "AoJw0Lfuw_gCMURydWNrc2FjaGUtMjUyNDAw"
+}

@@ -1,0 +1,83 @@
+{
+  "id": "114175",
+  "abstract": "<strong>Inhalt:</strong> Feststellung des Bundeshaushaltsplans in Einnahmen und Ausgaben auf 478,7 Mrd DM, Ermächtigung zur Kreditaufnahme bis zur Höhe von 46,1 Mrd DM, Verwendung von Erlösen aus Privatisierungen zur Schuldentilgung, Schuldenbeitritt des Bundes, Kreditaufnahme durch den Fonds Deutsche Einheit und das ERP-Sondervermögen, Bürgschaftsübernahmen und Gewährleistungen, Einsparung von Planstellen bei der Bundesverwaltung in Höhe von 1,5 v.H., Begrenzung der Liquiditätshilfen an die Bundesanstalt für Arbeit auf 8 Mrd DM, Experimentierphase für die Abrechnung von Dienstreisen bis Ende 2001.<br />\r\n<br />\r\n<strong>Änderungen aufgrund der Ausschußempfehlung:</strong> Feststellung des Bundeshaushaltsplans auf 477 Mrd.DM, Senkung der Kreditaufnahmeermächtigung auf 43,7 Mrd.DM, Änderung u.a.: Zulassung der unentgeltlichen oder ermäßigten Bereitstellung von Gesetzestexten, höchstrichterlichen Urteilen etc. in elektronischer Form. <br />\r\n<br />\r\n<strong>Nebenschlagwörter:</strong> Nettokreditaufnahme/Kreditaufnahme im Haushaltsjahr 2001 * Bundesschuld/Verwendung von Erlösen aus Privatisierungen zur Schuldentilgung * Fonds &quot;Deutsche Einheit&quot;/Schuldenbeitritt des Bundes * ERP-Sondervermögen/Schuldenbeitritt des Bundes * Stellenplan/Stelleneinsparungen bei der Bundesverwaltung im Haushaltsjahr 2001 * Dienstreise/Experimentelle Abrechnung von Dienstreisen * Haushaltsgesetz/Bundeshaushaltsgesetz 2001",
+  "beratungsstand": "Verkündet",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "D055",
+  "archiv": "XIV/189",
+  "sachgebiet": [
+    "Öffentliche Finanzen, Steuern und Abgaben"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 14,
+  "zustimmungsbeduerftigkeit": [
+    "Nein"
+  ],
+  "initiative": [
+    "Bundesregierung"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "verkuendung": [
+    {
+      "jahrgang": "2000",
+      "heftnummer": "59",
+      "seite": "1920",
+      "ausfertigungsdatum": "2000-12-21",
+      "verkuendungsdatum": "2000-12-28",
+      "einleitungstext": "Gesetz",
+      "pdf_url": "https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&start=//*%5b@attr_id=%27bgbl100s1920.pdf%27%5d",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 2000, 1920"
+    }
+  ],
+  "inkrafttreten": [
+    {
+      "datum": "2001-01-01"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": true,
+      "name": "Bundeshaushaltsgesetz 2001",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bundesschulden",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Dienstreise",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "ERP-Sondervermögen",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Fonds Deutsche Einheit",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Haushaltsgesetz",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Nettokreditaufnahme",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Stellenplan",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2001 (Haushaltsgesetz 2001) (G-SIG: 14019431)",
+  "datum": "2000-12-21"
+}

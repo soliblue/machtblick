@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "133522",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/2044",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "f80bb05a7276395dc27b4a333f62438d",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "154074",
+          "titel": "Gesetz zur Entlastung der Familien und zur Verbesserung der Rahmenbedingungen für Investitionen und Arbeitsplätze (Steueränderungsgesetz 1992 - StÄndG 1992) (G-SIG: 12020152)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "VermA",
+          "titel": "Vermittlungsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/020/1202044.pdf",
+        "id": "133522",
+        "dokumentnummer": "12/2044",
+        "datum": "1992-02-10",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Vermittlungsausschuss"
+        ]
+      },
+      "titel": "zu dem Gesetz zur Entlastung der Familien und zur Verbesserung der Rahmenbedingungen für Investitionen und Arbeitsplätze (Steueränderungsgesetz 1992 - StÄndG 1992) - Drucksachen 12/1108, 12/1368, 12/1466, 12/1506, 12/1691 -",
+      "datum": "1992-02-10"
+    }
+  ],
+  "cursor": "AoJwuIbVuaIBMURydWNrc2FjaGUtMTMzNTIy"
+}

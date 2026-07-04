@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "139498",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/7267",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "6fa5f4a6f0dd34239846ce0198c332b1",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "155361",
+          "titel": "Gesetz zu dem Übereinkommen vom 9. Februar 1994 über die Erhebung von Gebühren für die Benutzung bestimmter Straßen mit schweren Nutzfahrzeugen (G-SIG: 12020763)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Verkehr"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/072/1207267.pdf",
+        "id": "139498",
+        "dokumentnummer": "12/7267",
+        "datum": "1994-04-14",
+        "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zu dem Übereinkommen vom 9. Februar 1994 über die Erhebung von Gebühren für die Benutzung bestimmter Straßen mit schweren Nutzfahrzeugen",
+      "datum": "1994-04-14"
+    }
+  ],
+  "cursor": "AoJw0NOFtrIBMURydWNrc2FjaGUtMTM5NDk4"
+}

@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "217977",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/1095",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "c11b66ab73e3d0f009dd26c2401f45b7",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "233112",
+          "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an der Mission der Vereinten Nationen in der Republik Südsudan (UNMISS) auf Grundlage der Resolution 1996 (2011) des Sicherheitsrates der Vereinten Nationen vom 8. Juli 2011 und Folgeresolutionen, zuletzt 2392 (2017) vom 14. Dezember 2017",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/010/1901095.pdf",
+        "id": "217977",
+        "dokumentnummer": "19/1095",
+        "datum": "2018-03-07",
+        "verteildatum": "2018-03-13",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an der Mission der Vereinten Nationen in der Republik Südsudan (UNMISS) auf Grundlage der Resolution 1996 (2011) des Sicherheitsrates der Vereinten Nationen vom 8. Juli 2011 und Folgeresolutionen, zuletzt 2392 (2017) vom 14. Dezember 2017",
+      "datum": "2018-03-07"
+    }
+  ],
+  "cursor": "AoJwuMWHgOICMURydWNrc2FjaGUtMjE3OTc3"
+}

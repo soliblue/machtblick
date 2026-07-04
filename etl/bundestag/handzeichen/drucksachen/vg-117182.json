@@ -1,0 +1,34 @@
+{
+  "id": "117182",
+  "abstract": "Zugrundelegung einer elliptischen Sitzanordnung für die weiteren Planungen für den Plenarsaal im Reichstagsgebäude ",
+  "beratungsstand": "Abgeschlossen - Ergebnis siehe Vorgangsablauf",
+  "vorgangstyp": "Bericht, Gutachten, Programm",
+  "sachgebiet": [
+    "Bundestag"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 13,
+  "initiative": [
+    "Ältestenrat"
+  ],
+  "aktualisiert": "2025-09-03T09:38:17+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Berlin",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Bundestag",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Reichstagsgebäude",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Gestaltung der Sitzordnung im neuen Plenarsaal im Reichstagsgebäude in Berlin (G-SIG: 13000219)",
+  "datum": "1995-03-09"
+}

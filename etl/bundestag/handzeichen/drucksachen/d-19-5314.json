@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "223417",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme der BRg zur Stellungnahme des Nationalen Normenkontrollrates",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/5314",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "e3a2ecd1c296e82d3a8683a2e8588e49",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "238561",
+          "titel": "Gesetz zur Einstufung Georgiens, der Demokratischen Volksrepublik Algerien, des Königreichs Marokko und der Tunesischen Republik als sichere Herkunftsstaaten",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium des Innern, für Bau und Heimat"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/053/1905314.pdf",
+        "id": "223417",
+        "dokumentnummer": "19/5314",
+        "datum": "2018-10-29",
+        "anlagen": "Stellungnahme der BRg zur Stellungnahme des Nationalen Normenkontrollrates",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Einstufung Georgiens, der Demokratischen Volksrepublik Algerien, des Königreichs Marokko und der Tunesischen Republik als sichere Herkunftsstaaten",
+      "datum": "2018-10-29"
+    }
+  ],
+  "cursor": "AoJwuN_e3-YCMURydWNrc2FjaGUtMjIzNDE3"
+}

@@ -1,0 +1,50 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "104477",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 152,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/2343",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "fc2cbf85d7e585c7efcafe9b4538b140",
+      "aktualisiert": "1995-09-19T00:00:00+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "118833",
+          "titel": "Achtzehntes Gesetz zur Änderung des Abgeordnetengesetzes und Fünfzehntes Gesetz zur Änderung des Europaabgeordnetengesetzes (G-SIG: 13020196)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/023/1302343.pdf",
+        "id": "104477",
+        "dokumentnummer": "13/2343",
+        "datum": "1995-09-19",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2953",
+          "titel": "Peter Conradi, MdB, SPD",
+          "autor_titel": "Peter Conradi"
+        },
+        {
+          "id": "2877",
+          "titel": "Norbert Gansel, MdB, SPD",
+          "autor_titel": "Norbert Gansel"
+        }
+      ],
+      "titel": "zur zweiten Beratung des Gesetzentwurfs der Fraktionen der CDU/CSU und SPD - Drucksachen 13/1825, 13/2340 - Entwurf eines Achtzehnten Gesetzes zur Änderung des Abgeordnetengesetzes und eines Fünfzehnten Gesetzes zur Änderung des Europaabgeordnetengesetzes",
+      "datum": "1995-09-19"
+    }
+  ],
+  "cursor": "AoJwkJLd-LwBMURydWNrc2FjaGUtMTA0NDc3"
+}

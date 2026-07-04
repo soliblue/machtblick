@@ -1,0 +1,56 @@
+{
+  "id": "308104",
+  "vorgangstyp": "EU-Vorlage",
+  "typ": "Vorgang",
+  "wahlperiode": 20,
+  "ratsdok": "16204/23",
+  "kom": "(2023) 754 endg.",
+  "initiative": [
+    "Europäische Kommission"
+  ],
+  "aktualisiert": "2024-07-16T10:51:13+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Europol",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Europäische Union",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Illegale Einwanderung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Kriminalitätsbekämpfung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Menschenhandel",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Polizeiliche Zusammenarbeit",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Schleuserkriminalität",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Verordnung der EU",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Vorschlag für eine Verordnung des Europäischen Parlaments und des Rates zur Verstärkung der polizeilichen Zusammenarbeit bei der Verhütung, Aufdeckung und Untersuchung der Schleuserkriminalität und des Menschenhandels und zur Verstärkung der Unterstützung von Europol bei der Verhütung und Bekämpfung solcher Straftaten und zur Änderung der Verordnung (EU) 2016/794\r\nKOM(2023) 754 endg.; Ratsdok. 16204/23",
+  "datum": "2024-07-15"
+}

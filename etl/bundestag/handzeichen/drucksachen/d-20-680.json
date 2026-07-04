@@ -1,0 +1,51 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "259256",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 50,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "20/680",
+      "wahlperiode": 20,
+      "herausgeber": "BT",
+      "pdf_hash": "1d29d4ff5c430c61903f633e94d5674d",
+      "aktualisiert": "2022-02-15T16:31:02+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "284418",
+          "titel": "Impfbereitschaft ohne allgemeine Impfpflicht gegen SARS-CoV-2 erhöhen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/20/006/2000680.pdf",
+        "id": "259256",
+        "dokumentnummer": "20/680",
+        "datum": "2022-02-15",
+        "verteildatum": "2022-02-15",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "6962",
+          "titel": "Wolfgang Kubicki, MdB, FDP",
+          "autor_titel": "Wolfgang Kubicki"
+        },
+        {
+          "id": "1005",
+          "titel": "Christine Aschenberg-Dugnus, MdB, FDP",
+          "autor_titel": "Christine Aschenberg-Dugnus"
+        }
+      ],
+      "titel": "Impfbereitschaft ohne allgemeine Impfpflicht gegen SARS-CoV-2 erhöhen",
+      "datum": "2022-02-15"
+    }
+  ],
+  "cursor": "AoJw-MDC_v4CMURydWNrc2FjaGUtMjU5MjU2"
+}

@@ -1,0 +1,73 @@
+{
+  "id": "94239",
+  "abstract": "<strong>Bezug:</strong> Siehe auch Haushaltsbegleitgesetz 2004 (D035)<br />\r\n<br />\r\n<strong>Inhalt:</strong> Feststellung des Bundeshaushalts 2004 in Einnahmen und Ausgaben auf 251,2 Mrd. Euro, Kreditaufnahmeermächtigung in Höhe von 30,8 Mrd. Euro, Investitionshaushalt in Höhe von 24,8 Mrd. Euro, pauschale Ermächtigung zur Weiterzahlung von Personalausgaben durch die abordnende Behörde bis zu drei Jahren, Stellenabbau in Höhe von 1,5 v.H., Liquiditätshilfen für die Bundesanstalt für Arbeit in Höhe von 7 Mrd. Euro. <br />\r\n<br />\r\n<strong>Änderungen aufgrund der Ausschußempfehlung:</strong> Erhöhung des Haushaltsvolumens auf 257,3 Mrd. Euro, Senkung der Kreditaufnahmeermächtigung auf 29,3 Mrd. Euro, Anschubfinanzierung für die Bundesanstalt für Immobilienaufgaben. <br />\r\n<br />\r\n<strong>Nebenschlagwörter:</strong> Nettokreditaufnahme/Kreditaufnahme im Haushaltsjahr 2004 * Haushaltsgesetz/Haushaltsgesetz 2004 * Investitionshaushalt/ Investive Ausgaben im Haushaltsjahr 2004 * Stellenplan/ Stelleneinsparungen bei der Bundesverwaltung im Haushaltsjahr 2004 * Bundesagentur für Arbeit/Liquiditätshilfen für die BA im Haushaltsjahr 2004 * Bundesanstalt für Immobilienaufgaben/ Betriebsmitteldarlehen an die neue Bundesanstalt für Immobilienaufgaben",
+  "beratungsstand": "Verkündet",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "D037",
+  "archiv": "XV/114",
+  "sachgebiet": [
+    "Öffentliche Finanzen, Steuern und Abgaben"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 15,
+  "zustimmungsbeduerftigkeit": [
+    "Nein"
+  ],
+  "initiative": [
+    "Bundesregierung"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "verkuendung": [
+    {
+      "jahrgang": "2004",
+      "heftnummer": "7",
+      "seite": "230",
+      "ausfertigungsdatum": "2004-02-18",
+      "verkuendungsdatum": "2004-02-25",
+      "einleitungstext": "Gesetz",
+      "pdf_url": "https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&start=//*%5b@attr_id=%27bgbl104s0230.pdf%27%5d",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 2004, 230"
+    }
+  ],
+  "inkrafttreten": [
+    {
+      "datum": "2004-01-01"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Bundesagentur für Arbeit",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": true,
+      "name": "Bundeshaushaltsgesetz 2004",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Haushaltsgesetz",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Investitionshaushalt",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Nettokreditaufnahme",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Stellenplan",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2004 (Haushaltsgesetz 2004) (G-SIG: 15019231)",
+  "datum": "2004-02-13"
+}

@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "217786",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 51,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/957",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "a4676b6399d26a31b9ecc85d619d371f",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "232537",
+          "titel": "Gesetz zur Änderung des Asylgesetzes - Einstufung der Demokratischen Volksrepublik Algerien, des Königreichs  Marokko und der Tunesischen Republik als sichere Herkunftsstaaten",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FDP",
+          "titel": "Fraktion der FDP"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/009/1900957.pdf",
+        "id": "217786",
+        "dokumentnummer": "19/957",
+        "datum": "2018-02-27",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der FDP"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1171",
+          "titel": "Christian Lindner, MdB, FDP",
+          "autor_titel": "Christian Lindner"
+        },
+        {
+          "id": "2090",
+          "titel": "Dr. Marco Buschmann, MdB, FDP",
+          "autor_titel": "Dr. Marco Buschmann"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur Änderung des Asylgesetzes - Einstufung der Demokratischen Volksrepublik Algerien, des Königreichs  Marokko und der Tunesischen Republik als sichere Herkunftsstaaten",
+      "datum": "2018-02-27"
+    }
+  ],
+  "cursor": "AoJwuOm66-ECMURydWNrc2FjaGUtMjE3Nzg2"
+}

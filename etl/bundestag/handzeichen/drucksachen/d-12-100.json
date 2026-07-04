@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "139335",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/100",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "b87c2e437fb83a105400f91bf022af47",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "153826",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 1991 (Haushaltsgesetz 1991) (G-SIG: 12020040)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/001/1200100.pdf",
+        "id": "139335",
+        "dokumentnummer": "12/100",
+        "datum": "1991-03-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 1991 (Haushaltsgesetz 1991)",
+      "datum": "1991-03-08"
+    }
+  ],
+  "cursor": "AoJw-Ivi0JsBMURydWNrc2FjaGUtMTM5MzM1"
+}

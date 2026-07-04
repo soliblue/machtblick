@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "96569",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/4553",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "60c4b572df6a42b7d4c20bfcd69204a0",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "112274",
+          "titel": "Gesetz zur Neugliederung, Vereinfachung und Reform des Mietrechts (Mietrechtsreformgesetz) (G-SIG: 14019430)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Justiz"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/045/1404553.pdf",
+        "id": "96569",
+        "dokumentnummer": "14/4553",
+        "datum": "2000-11-09",
+        "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Neugliederung, Vereinfachung und Reform des Mietrechts (Mietrechtsreformgesetz)",
+      "datum": "2000-11-09"
+    }
+  ],
+  "cursor": "AoJw-MzE3OIBMERydWNrc2FjaGUtOTY1Njk="
+}

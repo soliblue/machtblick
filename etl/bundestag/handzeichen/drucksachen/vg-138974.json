@@ -1,0 +1,83 @@
+{
+  "id": "138974",
+  "abstract": "Verlagerung von Bundesinstitutionen in die neuen Länder, grundsätzliche Ansiedlung neuer Einrichtungen in diesen Ländern, Umsetzung von Bundesbehörden nach und Ansiedlung von Einrichtungen der Vereinten Nationen in Bonn als Ausgleich für den Verlust von Parlaments- und Regierungssitz, Einrichtung der Europäischen Zentralbank in Frankfurt/Main",
+  "beratungsstand": "Abgeschlossen",
+  "vorgangstyp": "Parlamentarische Sonderkommission",
+  "sachgebiet": [
+    "Deutsche Einheit / Innerdeutsche Beziehungen (bis 1990)",
+    "Staat und Verwaltung"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 12,
+  "initiative": [
+    "Unabhängige Föderalismuskommission"
+  ],
+  "aktualisiert": "2022-09-02T10:04:38+02:00",
+  "vorgang_verlinkung": [
+    {
+      "verweisung": "Einsetzungsantrag",
+      "titel": "Vollendung der Einheit Deutschlands (G-SIG: 12010162)",
+      "id": "144750",
+      "wahlperiode": 12
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Berlin",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bonn",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bund, Länder und Gemeinden",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bundesbehörde",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Deutschlandpolitik",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Europäische Zentralbank",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Frankfurt am Main",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Föderalismuskommission",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": true,
+      "name": "Hauptstadt",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Neue Bundesländer",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Vereinte Nationen",
+      "typ": "Institutionen"
+    }
+  ],
+  "titel": "Unabhängige Föderalismuskommission für eine ausgeglichene Verteilung von Bundesbehörden unter besonderer Berücksichtigung der neuen Länder (G-SIG: 12000946)",
+  "datum": "1992-06-26"
+}

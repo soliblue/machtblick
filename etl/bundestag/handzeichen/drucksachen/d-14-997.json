@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "82783",
+      "drucksachetyp": "Entschließungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/997",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "3e30b4013b97c4a4d3611715910a7b85",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "100003",
+          "titel": "Entschließungsantrag zum Antrag betr. Deutsche Beteiligung an der humanitären Hilfe im Zusammenhang mit dem Kosovo-Konflikt (G-SIG: 14000469)",
+          "vorgangstyp": "Entschließungsantrag BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PDS",
+          "titel": "Fraktion der PDS"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/009/1400997.pdf",
+        "id": "82783",
+        "dokumentnummer": "14/997",
+        "datum": "1999-05-06",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Entschließungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der PDS"
+        ]
+      },
+      "titel": "zu dem A - Drsn. 14/912, 14/982 (BReg) - Deutsche Beteiligung an der humanitären Hilfe im Zusammenhang mit dem Kosovo-Konflikt",
+      "datum": "1999-05-06"
+    }
+  ],
+  "cursor": "AoJw0Ne_zNcBMERydWNrc2FjaGUtODI3ODM="
+}

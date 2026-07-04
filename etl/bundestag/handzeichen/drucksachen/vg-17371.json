@@ -1,0 +1,72 @@
+{
+  "id": "17371",
+  "abstract": "Stärkung des Selbstbestimmungsrechtes betr. medizinische Maßnahmen unter Wahrung von Lebensschutz, ärztlicher Fürsorge und Patientenwohl: Klarstellungen betr. Vorsorgevollmacht und Betreuungsverfügung; Einführung der Patientenverfügung in das Betreuungsrecht: Geltung in Abhängigkeit von Art und Stadium der Erkrankung mit jeweils besonderen Formerfordernissen (qualifizierte ärztliche Beratung, notarielle Beurkundung, regelmäßige Aktualisierung), Auslegungspflicht der Beteiligten und Gerichtsentscheid bei Uneinigkeit, Verbot der aktiven Sterbehilfe;<br />\r\nÄnderung § 1896, Neufassung §§ 1901a und 1904 sowie Einfügung § 1901b, 1904a Bürgerliches Gesetzbuch, Änderung §§ 67, 69a, 69d und 69g Gesetz über die Angelegenheiten der freiwilligen Gerichtsbarkeit sowie Einfügung § 24c Fünftes Buch Sozialgesetzbuch<br />\r\n<br />\r\n<strong>Beschlussempfehlung des Ausschusses:</strong> Verzicht auf die Notwenigkeit einer notariellen Beglaubigung;<br />\r\nÄnderung § 1901b Bürgerliches Gesetzbuch<br />\r\n<br />\r\nBezug: Entscheidung des Bundesgerichtshofes vom 17. März 2003 betr. die Verbindlichkeit einer Patientenverfügung (BGHZ 154, 205)<br />\r\nGrundsätze der Bundesärztekammer vom 7. Mai 2004 zur Sterbebegleitung<br />\r\nSiehe auch C146 und C187",
+  "beratungsstand": "Abgelehnt",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "C183",
+  "archiv": "XVI/546",
+  "sachgebiet": [
+    "Gesundheit",
+    "Recht"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 16,
+  "zustimmungsbeduerftigkeit": [
+    "Nein, laut Gesetzentwurf (Drs 16/11360)"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Bürgerliches Gesetzbuch",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesetz über die Angelegenheiten der freiwilligen Gerichtsbarkeit",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Medizinische Behandlung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Notar",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Patientenverfügung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Patientenverfügungsgesetz",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Rechtliche Betreuung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Sterbehilfe",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Vormundschaftsgericht",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Vorsorgevollmacht",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Gesetz zur Verankerung der Patientenverfügung im Betreuungsrecht (Patientenverfügungsgesetz - PatVerfG)",
+  "datum": "2009-06-18"
+}

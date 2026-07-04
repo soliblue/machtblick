@@ -1,0 +1,101 @@
+{
+  "id": "237020",
+  "abstract": "Zustimmung des Deutschen Bundestages gem. § 3 Absatz 1 i.V.m. Absatz 2 Nummer 2 des Stabilisierungsmechanismusgesetzes zur Änderung der Bedingungen der Finanzhilfefazilität zur Abschaffung der in der Finanzhilfevereinbarung vorgesehenen zusätzlichen Zinsmarge auf die Schuldenrückkaufstranchen der Darlehen der Europäischen Finanzstabilisierungsfazilität ab 2018, zur Fortführung der Abführung des rechnerischen Gegenwertes der Zentralbankgewinne aus griechischen Staatsanleihen aus dem Bundeshaushalt ab 2018 sowie zur Weiterleitung der 2014 an den ESM geleisteten Zahlung, zur Änderung der Bedingungen der bestehenden Finanzhilfefazilität zur Verlängerung der Laufzeit der EFSF-Kredite sowie zu weiteren Verschiebungen;<br />\r\nAnlage 1 bis 8a: Erklärung der Eurogruppe vom 22. Juni 2018, Vereinbarung über die spezifische wirtschaftspolitische Konditionierung (Supplemental MoU), MoU Annex 1, MoU Annex 2, MoU Ergänzung (Technical MoU), Überprüfungsbericht (Compliance Report), Note des ESM zur 5. Tranche, Erklärung des Internationalen Währungsfonds (IWF)",
+  "beratungsstand": "Angenommen",
+  "vorgangstyp": "Antrag",
+  "sachgebiet": [
+    "Europapolitik und Europäische Union",
+    "Wirtschaft",
+    "Öffentliche Finanzen, Steuern und Abgaben"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 19,
+  "initiative": [
+    "Bundesministerium der Finanzen"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Bundesbürgschaft",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bundeshaushalt",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "ESM-Finanzierungsgesetz",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Europäische Finanzstabilisierungsfazilität",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Europäische Wirtschafts- und Währungsunion",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Europäischer Finanzstabilisierungsmechanismus",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": true,
+      "name": "Europäischer Stabilitätsmechanismus",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Finanzmarkt",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Griechenland",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Internationaler Währungsfonds",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Kredit",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Kreditsicherung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Stabilisierungsmechanismusgesetz",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Wirtschaftliche Stabilität",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Zins",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Öffentliche Schulden",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Finanzhilfen zugunsten Griechenlands:\r\nVierte und letzte Überprüfung des ESM-Anpassungsprogramms, mittelfristige schuldenbezogene Maßnahmen",
+  "datum": "2018-06-29"
+}

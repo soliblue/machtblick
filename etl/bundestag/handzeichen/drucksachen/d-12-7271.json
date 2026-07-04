@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "139284",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/7271",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "58048557bc1b2f2b995fb35a6638b7db",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "155425",
+          "titel": "Gesetz über die Regulierung des Rabattrechts (Rabattderegulierungsgesetz - RabattDeregG) (G-SIG: 12020755)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Wirtschaft"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/072/1207271.pdf",
+        "id": "139284",
+        "dokumentnummer": "12/7271",
+        "datum": "1994-04-14",
+        "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Aufhebung des Rabattgesetzes und der Verordnung zur Durchführung des Rabattgesetzes (Rabattgesetzaufhebungsgesetz - RabattGAufhG)",
+      "datum": "1994-04-14"
+    }
+  ],
+  "cursor": "AoJw0NOFtrIBMURydWNrc2FjaGUtMTM5Mjg0"
+}

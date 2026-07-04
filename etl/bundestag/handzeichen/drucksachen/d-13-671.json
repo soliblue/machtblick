@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "120380",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/671",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "33f14d534c1f7203404a87992401ffd5",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "118638",
+          "titel": "Zweites Gesetz zur Änderung des Futtermittelgesetzes (G-SIG: 13020059)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Ernährung, Landwirtschaft und Forsten"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/006/1300671.pdf",
+        "id": "120380",
+        "dokumentnummer": "13/671",
+        "datum": "1995-03-02",
+        "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Zweiten Gesetzes zur Änderung des Futtermittelgesetzes",
+      "datum": "1995-03-02"
+    }
+  ],
+  "cursor": "AoJwuKij87gBMURydWNrc2FjaGUtMTIwMzgw"
+}

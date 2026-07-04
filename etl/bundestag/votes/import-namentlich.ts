@@ -12,10 +12,11 @@ const LIST_URL = 'https://www.bundestag.de/ajax/filterlist/de/parlament/plenum/a
 const DETAIL_LIST_URL = 'https://www.bundestag.de/ajax/filterlist/de/parlament/plenum/abstimmung/abstimmungen/484422-484422'
 const AW = 'https://www.abgeordnetenwatch.de/api/v2'
 const SOURCE_ID = Number(arg('--source-id') ?? 0) || null
-const NAME_PARTICLES = new Set(['von', 'van', 'de', 'der', 'den', 'dos', 'da', 'di', 'du', 'le', 'la', 'zu'])
+const NAME_PARTICLES = new Set(['von', 'van', 'de', 'der', 'den', 'dos', 'da', 'di', 'du', 'le', 'la', 'zu', 'auf', 'freiherr', 'graf', 'edler', 'edle', 'baron', 'baronin'])
+const HONORIFICS = new Set(['dr', 'prof', 'med', 'hc', 'h', 'c', 'dent', 'rer', 'nat', 'phil', 'jur', 'ing', 'mult', 'habil', 'mag', 'lic', 'theol', 'dipl', 'pol'])
 const MEMBER_ALIASES = new Map([
   ['thomas max ladzinski', 'ladzinski-thomas'],
-  ['dr daniel zerbin', 'zerbin-prof-dr-daniel'],
+  ['daniel zerbin', 'zerbin-prof-dr-daniel'],
 ])
 let enodiaCookie = ''
 
@@ -39,8 +40,11 @@ type Mandate = {
 type AwMandatesResponse = { meta: { result: { total: number; count: number } }; data: Mandate[] }
 
 const term = db.prepare('SELECT start_date AS startDate, end_date AS endDate FROM bundestag_terms WHERE id = ?').get(TERM_ID) as { startDate: string; endDate: string | null }
-const existingMembers = db.prepare('SELECT id, first_name AS firstName, last_name AS lastName FROM members').all() as Array<{ id: string; firstName: string; lastName: string }>
-const memberIdByKey = new Map(existingMembers.map((m) => [nameKey(m.firstName, m.lastName), m.id]))
+const existingMembers = db.prepare('SELECT id, first_name AS firstName, last_name AS lastName, bt_mdb_id AS btMdbId FROM members').all() as Array<{ id: string; firstName: string; lastName: string; btMdbId: string | null }>
+const keyMaps = [new Map<string, string[]>(), new Map<string, string[]>(), new Map<string, string[]>()]
+for (const m of existingMembers) registerMemberKeys(m.id, m.firstName, m.lastName)
+const memberIdByMdbId = new Map(existingMembers.filter((m) => m.btMdbId).map((m) => [m.btMdbId!, m.id]))
+const termMemberIds = new Set((db.prepare('SELECT DISTINCT member_id AS id FROM member_mandates WHERE term_id = ?').all(TERM_ID) as Array<{ id: string }>).map((r) => r.id))
 const usedMemberIds = new Set(existingMembers.map((m) => m.id))
 
 await importMandates()
@@ -57,7 +61,10 @@ async function importMandates() {
   db.transaction(() => {
     for (const mandate of mandates) {
       const name = splitAwName(mandate.politician.label)
-      const memberId = resolveMemberId(name.first, name.last)
+      const mdbId = mandate.id_external_administration?.padStart(8, '0') ?? null
+      const memberId = (mdbId ? memberIdByMdbId.get(mdbId) : null) ?? resolveMemberId(name.first, name.last)
+      if (mdbId) memberIdByMdbId.set(mdbId, memberId)
+      termMemberIds.add(memberId)
       db.prepare(`
         INSERT INTO members (id, name, first_name, last_name, bt_mdb_id)
         VALUES (?, ?, ?, ?, ?)
@@ -105,7 +112,21 @@ async function importMandates() {
   console.log(`mandates: ${mandates.length}; members upserted=${membersWritten}; mandates upserted=${mandatesWritten}; affiliations upserted=${affiliationsWritten}`)
 }
 
+function loadMemberStates() {
+  const out = new Map<string, string>()
+  for (const row of db.prepare(`
+    SELECT vm.member_id AS id, vm.state AS state, COUNT(*) AS n FROM vote_members vm
+    JOIN votes v ON v.id = vm.vote_id
+    WHERE v.term_id = ? AND vm.state != ''
+    GROUP BY vm.member_id, vm.state ORDER BY n
+  `).all(TERM_ID) as Array<{ id: string; state: string }>) out.set(row.id, row.state)
+  for (const row of db.prepare("SELECT id, list_state AS state FROM members WHERE list_state IS NOT NULL AND list_state != ''").all() as Array<{ id: string; state: string }>) out.set(row.id, row.state)
+  for (const row of db.prepare('SELECT member_id AS id, list_state AS state FROM member_mandates WHERE term_id = ? AND list_state IS NOT NULL').all(TERM_ID) as Array<{ id: string; state: string }>) out.set(row.id, row.state)
+  return out
+}
+
 async function importVotes() {
+  const stateByMember = loadMemberStates()
   const links = (await fetchVoteLinks()).filter((l) => l.date >= term.startDate && (!term.endDate || l.date <= term.endDate) && (!SOURCE_ID || l.sourceId === SOURCE_ID))
   if (SOURCE_ID && links.length === 0) throw new Error(`Bundestag source id ${SOURCE_ID} not found`)
   const latestExisting = db.prepare("SELECT MAX(date) AS date FROM votes WHERE term_id = ? AND vote_type = 'namentlich'").get(TERM_ID) as { date: string | null }
@@ -181,8 +202,8 @@ async function importVotes() {
         `).run(memberId, `${row.first} ${row.last}`, row.first, row.last)
         db.prepare(`
           INSERT INTO vote_members (vote_id, member_id, party, state, choice)
-          VALUES (?, ?, ?, '', ?)
-        `).run(voteId, memberId, row.party, choice(row))
+          VALUES (?, ?, ?, ?, ?)
+        `).run(voteId, memberId, row.party, stateByMember.get(memberId) ?? '', choice(row))
         memberVotesWritten++
       }
     })()
@@ -292,8 +313,8 @@ async function fetchVoteDetails() {
       const description = text(body.match(/<div class="bt-teaser-haupttext">\s*([\s\S]*?)\s*<\/div>/)?.[1] ?? '')
       const initiatorMatch = description.match(/Fraktion(?:en)?\s+(?:der\s+|des\s+)?([^()]+?)(?:[:,(]|$|\s+(?:zu|zum|zur|Entwurf|Drucksache))/i)
       const initiator = (initiatorMatch ? normalizeFractionLabel(initiatorMatch[1]) : null)
-        ?? (/(?:Antrag|Gesetzentwurf)(?:es)?\s+der\s+Bundesregierung/i.test(description) ? 'Bundesregierung' : null)
-        ?? (/(?:Antrag|Gesetzentwurf)(?:es)?\s+des\s+Bundesrates/i.test(description) ? 'Bundesrat' : null)
+        ?? (/(?:Antrag|Gesetzentwurf)(?:e?s)?\s+der\s+Bundesregierung/i.test(description) ? 'Bundesregierung' : null)
+        ?? (/(?:Antrag|Gesetzentwurf)(?:e?s)?\s+des\s+Bundesrates/i.test(description) ? 'Bundesrat' : null)
         ?? normalizeFractionLabel(description)
       if (sourceId && date && title) out.push({ sourceId, date, title, description, initiator })
     }
@@ -365,12 +386,38 @@ function position(s: { yes: number; no: number; abstain: number }) {
   return 'mixed'
 }
 
+function memberKeys(first: string, last: string) {
+  const noParensFirst = first.replace(/\([^)]*\)/g, ' ')
+  const noParensLast = last.replace(/\([^)]*\)/g, ' ')
+  return [
+    nameTokens(`${first} ${last}`).join(' '),
+    nameTokens(`${noParensFirst} ${noParensLast}`).join(' '),
+    [nameTokens(noParensFirst)[0] ?? '', ...nameTokens(noParensLast)].join(' '),
+  ]
+}
+
+function registerMemberKeys(id: string, first: string, last: string) {
+  for (const [level, key] of memberKeys(first, last).entries()) {
+    if (!key.trim()) continue
+    const ids = keyMaps[level].get(key) ?? []
+    if (!ids.includes(id)) keyMaps[level].set(key, [...ids, id])
+  }
+}
+
 function resolveMemberId(first: string, last: string) {
-  const key = nameKey(first, last)
-  const alias = MEMBER_ALIASES.get(key)
+  const keys = memberKeys(first, last)
+  const alias = MEMBER_ALIASES.get(keys[0])
   if (alias) return alias
-  const existing = memberIdByKey.get(key)
-  if (existing) return existing
+  for (const [level, key] of keys.entries()) {
+    if (!key.trim()) continue
+    const ids = keyMaps[level].get(key) ?? []
+    if (ids.length === 1) return ids[0]
+    if (ids.length > 1) {
+      const withMandate = ids.filter((id) => termMemberIds.has(id))
+      if (withMandate.length === 1) return withMandate[0]
+      if (withMandate.length > 1) throw new Error(`ambiguous member name ${first} ${last}: ${withMandate.join(', ')}`)
+    }
+  }
   const base = slugify(`${last}-${first.split(/\s+/)[0] ?? first}`)
   let id = base
   let suffix = 2
@@ -378,7 +425,7 @@ function resolveMemberId(first: string, last: string) {
     id = `${base}-${suffix}`
     suffix++
   }
-  memberIdByKey.set(key, id)
+  registerMemberKeys(id, first, last)
   usedMemberIds.add(id)
   return id
 }
@@ -455,8 +502,14 @@ function solvePow(challenge: string) {
   return sol
 }
 
-function nameKey(first: string, last: string) {
-  return `${first} ${last}`.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/ß/g, 'ss').replace(/[^a-z0-9]+/g, ' ').trim()
+function nameTokens(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .split(/[^a-z0-9]+/)
+    .filter((t) => t && !HONORIFICS.has(t) && !NAME_PARTICLES.has(t))
 }
 
 function slugify(input: string) {

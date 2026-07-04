@@ -1,0 +1,49 @@
+{
+  "id": "318527",
+  "beratungsstand": "Abgelehnt",
+  "vorgangstyp": "Vertrauensantrag des Bundeskanzlers",
+  "sachgebiet": [
+    "Bundestag",
+    "Staat und Verwaltung"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 20,
+  "aktualisiert": "2025-01-02T16:22:12+01:00",
+  "verkuendung": [
+    {
+      "jahrgang": "2024",
+      "heftnummer": "434",
+      "ausfertigungsdatum": "2024-12-27",
+      "verkuendungsdatum": "2024-12-27",
+      "einleitungstext": "Bekanntmachung",
+      "pdf_url": "https://www.recht.bund.de/eli/bund/BGBl_1/2024/434",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 2024, 434"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Bundeskanzler",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Grundgesetz Art. 68",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Scholz, Olaf",
+      "typ": "Personen"
+    },
+    {
+      "fundstelle": true,
+      "name": "Vertrauensfrage",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Antrag des Bundeskanzlers Olaf Scholz gemäß Artikel 68 des Grundgesetzes",
+  "datum": "2024-12-27"
+}

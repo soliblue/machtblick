@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "253562",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 14,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/29309",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "e1e5427eea568b4051d91ee01f1bfa33",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "277573",
+          "titel": "Antrag auf abstrakte Normenkontrolle beim Bundesverfassungsgericht gemäß Art. 93 Absatz 1 Nr. 2 GG wegen des Vierten Gesetzes zum Schutz der Bevölkerung bei einer epidemischen Lage von nationaler Tragweite",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/293/1929309.pdf",
+        "id": "253562",
+        "dokumentnummer": "19/29309",
+        "datum": "2021-05-05",
+        "verteildatum": "2021-05-05",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2075",
+          "titel": "Stephan Brandner, MdB, AfD",
+          "autor_titel": "Stephan Brandner"
+        },
+        {
+          "id": "2237",
+          "titel": "Fabian Jacobi, MdB, AfD",
+          "autor_titel": "Fabian Jacobi"
+        }
+      ],
+      "titel": "Antrag auf abstrakte Normenkontrolle beim Bundesverfassungsgericht gemäß Art. 93 Absatz 1 Nr. 2 GG wegen des Vierten Gesetzes zum Schutz der Bevölkerung bei einer epidemischen Lage von nationaler Tragweite",
+      "datum": "2021-05-05"
+    }
+  ],
+  "cursor": "AoJwkIr-nfkCMURydWNrc2FjaGUtMjUzNTYy"
+}

@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "103957",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/1685",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "c4fd294d94c5eb70a83194b76a1c373b",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "118710",
+          "titel": "Gesetz zur Änderung des Grundgesetzes (Artikel 28 und 106 GG) (G-SIG: 13020134)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/016/1301685.pdf",
+        "id": "103957",
+        "dokumentnummer": "13/1685",
+        "datum": "1995-06-13",
+        "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Änderung des Grundgesetzes",
+      "datum": "1995-06-13"
+    }
+  ],
+  "cursor": "AoJwkKux_LoBMURydWNrc2FjaGUtMTAzOTU3"
+}

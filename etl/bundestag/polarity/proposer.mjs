@@ -2,6 +2,7 @@ const PATTERNS = [
   [/CDU\s*\/\s*CSU/i, 'CDU/CSU'],
   [/B(?:Ü|UE|U)NDNIS\s*90\s*\/\s*DIE\s*GR(?:Ü|UE|U)NEN/i, 'B90/Grüne'],
   [/B(?:ü|u)ndnis\s*90\s*\/\s*Die\s*Gr(?:ü|u)nen/i, 'B90/Grüne'],
+  [/B90\s*\/\s*Gr(?:ü|ue|u)ne/i, 'B90/Grüne'],
   [/Die\s*Linke/i, 'Die Linke'],
   [/\bAfD\b/, 'AfD'],
   [/\bSPD\b/, 'SPD'],
@@ -21,7 +22,11 @@ export function parseProposingParty(document) {
     const m = matchParty(fraktion[1])
     if (m) return m
   }
-  if (/(?:Antrag|Gesetzentwurf)(?:es)?\s+der\s+Bundesregierung/i.test(document)) return 'Bundesregierung'
-  if (/(?:Antrag|Gesetzentwurf)(?:es)?\s+des\s+Bundesrates/i.test(document)) return 'Bundesrat'
+  if (/(?:Antrag|Gesetzentwurf)(?:e?s)?\s+der\s+Bundesregierung/i.test(document)) return 'Bundesregierung'
+  if (/(?:Antrag|Gesetzentwurf)(?:e?s)?\s+des\s+Bundesrates/i.test(document)) return 'Bundesrat'
+  if (/Initiative:\s*Bundesregierung/i.test(document)) return 'Bundesregierung'
+  if (/Initiative:\s*Bundesrat/i.test(document)) return 'Bundesrat'
+  if (/Antrags?\s+(?:der|des)\s+Bundesministeriums?/i.test(document)) return 'Bundesregierung'
+  if (/\bBReg\b/.test(document)) return 'Bundesregierung'
   return matchParty(document)
 }

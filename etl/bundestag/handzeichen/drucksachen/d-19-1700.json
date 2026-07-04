@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "219167",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/1700",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "1c1fc47699f72005916bb8a45c72a6ee",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "235198",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2018 (Haushaltsgesetz 2018)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/017/1901700.pdf",
+        "id": "219167",
+        "dokumentnummer": "19/1700",
+        "datum": "2018-05-04",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2018 (Haushaltsgesetz 2018)",
+      "datum": "2018-05-04"
+    }
+  ],
+  "cursor": "AoJw0IKmleMCMURydWNrc2FjaGUtMjE5MTY3"
+}

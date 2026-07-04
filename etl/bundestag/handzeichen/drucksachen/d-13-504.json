@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "103044",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/504",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "8cef10facfb3f2755a06eccf6748f309",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "118576",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 1995 (Haushaltsgesetz 1995) (G-SIG: 13020044)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "HaushA",
+          "titel": "Haushaltsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/005/1300504.pdf",
+        "id": "103044",
+        "dokumentnummer": "13/504",
+        "datum": "1995-01-19",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Haushaltsausschuss"
+        ]
+      },
+      "titel": "zum Entwurf eines Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 1995 (Haushaltsgesetz 1995) - Drucksache 13/50 hier: Einzelplan 04 Geschäftsbereich des Bundeskanzlers und des Bundeskanzleramtes",
+      "datum": "1995-01-19"
+    }
+  ],
+  "cursor": "AoJwuMWQh7gBMURydWNrc2FjaGUtMTAzMDQ0"
+}

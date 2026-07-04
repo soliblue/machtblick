@@ -1,0 +1,56 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "251604",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme des BR und Gegenäußerung der BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/27636",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "038f6b65b57786470fa5d098854c4e37",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "273050",
+          "titel": "Gesetz zur Verbesserung des Schutzes von Gerichtsvollziehern vor Gewalt sowie zur Änderung weiterer zwangsvollstreckungsrechtlicher Vorschriften und zur Änderung des Infektionsschutzgesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Justiz und für Verbraucherschutz"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/276/1927636.pdf",
+        "id": "251604",
+        "dokumentnummer": "19/27636",
+        "datum": "2021-03-17",
+        "verteildatum": "2021-03-17",
+        "anlagen": "Stellungnahme des BR und Gegenäußerung der BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Verbesserung des Schutzes von Gerichtsvollziehern vor Gewalt sowie zur Änderung weiterer zwangsvollstreckungsrechtlicher Vorschriften (Gerichtsvollzieherschutzgesetz - GvSchuG)",
+      "datum": "2021-03-17"
+    }
+  ],
+  "cursor": "AoJwuPT1n_gCMURydWNrc2FjaGUtMjUxNjA0"
+}

@@ -1,0 +1,116 @@
+{
+  "id": "249993",
+  "abstract": "Einrichtung eines bundesweiten Online-Registers zur Abgabe und Dokumentation einer stets widerrufbaren Erklärung zur Organ- und Gewebespende, Aufklärung und Information der Bevölkerung sowie Beratung durch Hausärzte, regelmäßige Evaluationspflicht der Aufklärungsunterlagen und Berichtspflicht gegenüber dem Bundestag, verstärkte Thematisierung in der ärztlichen Ausbildung;<br />\r\nÄnderung §§ 2 und 19 sowie Einfügung § 2a Transplantationsgesetz, Änderung §§ 87 und 87a Fünftes Buch Sozialgesetzbuch, Anlage 15 Approbationsordnung für Ärzte sowie § 19 Fahrerlaubnis-Verordnung; Verordnungsermächtigung<br />\r\n<br />\r\n<strong>Beschlussempfehlung des Ausschusses:</strong> Änderung der Bezeichnung der registerführenden Behörde",
+  "beratungsstand": "Verkündet",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "M019",
+  "archiv": "XIX/198",
+  "sachgebiet": [
+    "Gesundheit"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 19,
+  "zustimmungsbeduerftigkeit": [
+    "Nein, laut Gesetzentwurf (Drs 19/11087)",
+    "Nein, laut Verkündung (BGBl I)"
+  ],
+  "aktualisiert": "2024-07-09T18:10:46+02:00",
+  "verkuendung": [
+    {
+      "jahrgang": "2020",
+      "heftnummer": "13",
+      "seite": "497",
+      "ausfertigungsdatum": "2020-03-16",
+      "verkuendungsdatum": "2020-03-19",
+      "einleitungstext": "Gesetz",
+      "pdf_url": "https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&start=//*%5b@attr_id=%27bgbl120s0497.pdf%27%5d",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 2020, 497"
+    }
+  ],
+  "inkrafttreten": [
+    {
+      "datum": "2022-03-01"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Approbationsordnung für Ärzte",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bericht der Bundesregierung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Evaluation",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Fahrerlaubnis-Verordnung",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": true,
+      "name": "Gesetz zur Stärkung der Entscheidungsbereitschaft bei der Organspende",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesundheitsberatung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesundheitserziehung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gewebespende",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Medizinische Ausbildung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Organentnahme",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Organspende",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Patientenberatung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Register",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Sozialgesetzbuch V",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Transplantationsgesetz",
+      "typ": "Rechtsmaterialien"
+    }
+  ],
+  "titel": "Gesetz zur Stärkung der Entscheidungsbereitschaft bei der Organspende",
+  "datum": "2020-02-14"
+}

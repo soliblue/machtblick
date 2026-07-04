@@ -1,0 +1,36 @@
+{
+  "id": "152902",
+  "abstract": "Verhüllung des Reichstagsgebäudes durch den Künstler Christo 14 Tage lang unmittelbar vor Beginn des Umbaus ",
+  "beratungsstand": "Angenommen",
+  "vorgangstyp": "Antrag",
+  "sachgebiet": [
+    "Kultur"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 12,
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Berlin",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Kultur",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Kunst",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Reichstagsgebäude",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Verhüllter Reichstag - Projekt für Berlin (G-SIG: 12011947)",
+  "datum": "1994-02-25"
+}

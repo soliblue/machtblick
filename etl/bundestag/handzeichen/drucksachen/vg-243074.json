@@ -1,0 +1,48 @@
+{
+  "id": "243074",
+  "abstract": "Ausgangslage und Berichtsauftrag, Überblick über die Maßnahmen, Umsetzungsbegleitung Bundesteilhabegesetz, Ausführung sowie absehbare Wirkungen neuer Regelungen der Eingliederungshilfe (Wirkungsprognose), modellhafte Erprobung der zum 1. Januar 2020 in Kraft tretenden Verfahren und Leistungen, Untersuchung jährlicher Einnahmen und Ausgaben",
+  "vorgangstyp": "Bericht, Gutachten, Programm",
+  "sachgebiet": [
+    "Gesellschaftspolitik, soziale Gruppen"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 19,
+  "initiative": [
+    "Bundesregierung"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Behindertenrecht",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bericht der Bundesregierung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Bundesteilhabegesetz",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": true,
+      "name": "Eingliederungshilfe für Behinderte",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesetzesfolgenabschätzung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Teilhabe behinderter Menschen",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Bericht zum Stand und zu den Ergebnissen der Maßnahmen nach Artikel 25 Absatz 2 bis 4 des Bundesteilhabegesetzes",
+  "datum": "2020-03-11"
+}

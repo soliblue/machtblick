@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "226252",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/7693",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "8f354d3529ff26a9d41417041605908c",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "244128",
+          "titel": "Gesetz zur Verbesserung der Information über einen Schwangerschaftsabbruch",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "CDU/CSU",
+          "titel": "Fraktion der CDU/CSU"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "SPD",
+          "titel": "Fraktion der SPD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/076/1907693.pdf",
+        "id": "226252",
+        "dokumentnummer": "19/7693",
+        "datum": "2019-02-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der CDU/CSU",
+          "Fraktion der SPD"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Verbesserung der Information über einen Schwangerschaftsabbruch",
+      "datum": "2019-02-12"
+    }
+  ],
+  "cursor": "AoJwuKLX8OgCMURydWNrc2FjaGUtMjI2MjUy"
+}

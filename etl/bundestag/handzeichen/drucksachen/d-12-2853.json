@@ -1,0 +1,49 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "123461",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "anlagen": "Bericht der BT-Präsidentin, Vorschläge der Kommission",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/2853",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "20970842d8bcc8b540c723b6ff35bc4e",
+      "aktualisiert": "2022-09-02T10:02:16+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "138974",
+          "titel": "Unabhängige Föderalismuskommission für eine ausgeglichene Verteilung von Bundesbehörden unter besonderer Berücksichtigung der neuen Länder (G-SIG: 12000946)",
+          "vorgangstyp": "Parlamentarische Sonderkommission"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "Ältestenrat",
+          "titel": "Ältestenrat"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/028/1202853.pdf",
+        "id": "123461",
+        "dokumentnummer": "12/2853",
+        "datum": "1992-06-25",
+        "anlagen": "Bericht der BT-Präsidentin, Vorschläge der Kommission",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ältestenrat"
+        ]
+      },
+      "titel": "zu den Vorschlägen der Unabhängigen Föderalismuskommission vom 27. Mai 1992 für eine ausgeglichene Verteilung von Bundesbehörden unter besonderer Berücksichtigung der neuen Länder",
+      "datum": "1992-06-25"
+    }
+  ],
+  "cursor": "AoJw0MTfl6UBMURydWNrc2FjaGUtMTIzNDYx"
+}

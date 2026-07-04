@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "80628",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "15/4020",
+      "wahlperiode": 15,
+      "herausgeber": "BT",
+      "pdf_hash": "7983a36e86582d808ca902461ee35398",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "99184",
+          "titel": "Gesetz über die Feststellung eines Nachtrags zum Bundeshaushaltsplan für das Haushaltsjahr 2004 (Nachtragshaushaltsgesetz 2004) (G-SIG: 15019550)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/15/040/1504020.pdf",
+        "id": "80628",
+        "dokumentnummer": "15/4020",
+        "datum": "2004-10-15",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes über die Feststellung eines Nachtrags zum Bundeshaushaltsplan für das Haushaltsjahr 2004 (Nachtragshaushaltsgesetz 2004)",
+      "datum": "2004-10-15"
+    }
+  ],
+  "cursor": "AoJwkPGBzv8BMERydWNrc2FjaGUtODA2Mjg="
+}

@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "107001",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/4245",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "86265a153010bd234b74b3311624fc80",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "121712",
+          "titel": "Gesetz zur Änderung des Gesetzes über den Ladenschluß und zur Neuregelung der Arbeitszeit in Bäckereien und Konditoreien (G-SIG: 13020365)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Arbeit und Sozialordnung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/042/1304245.pdf",
+        "id": "107001",
+        "dokumentnummer": "13/4245",
+        "datum": "1996-03-28",
+        "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Änderung des Gesetzes über den Ladenschluß und zur Neuregelung der Arbeitszeit in Bäckereien und Konditoreien",
+      "datum": "1996-03-28"
+    }
+  ],
+  "cursor": "AoJwuMTS5MABMURydWNrc2FjaGUtMTA3MDAx"
+}

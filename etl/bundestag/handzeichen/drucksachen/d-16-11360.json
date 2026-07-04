@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "18738",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 114,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "16/11360",
+      "wahlperiode": 16,
+      "herausgeber": "BT",
+      "pdf_hash": "97dbcb8958dc916b066ad70ffd434f25",
+      "aktualisiert": "2008-12-16T00:00:00+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "17371",
+          "titel": "Gesetz zur Verankerung der Patientenverfügung im Betreuungsrecht (Patientenverfügungsgesetz - PatVerfG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/16/113/1611360.pdf",
+        "id": "18738",
+        "dokumentnummer": "16/11360",
+        "datum": "2008-12-16",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "641",
+          "titel": "Thomas Bareiß, MdB, CDU/CSU",
+          "autor_titel": "Thomas Bareiß"
+        },
+        {
+          "id": "7011",
+          "titel": "Norbert Barthle, MdB, CDU/CSU",
+          "autor_titel": "Norbert Barthle"
+        },
+        {
+          "id": "289",
+          "titel": "Ernst-Reinhard Beck (Reutlingen), MdB, CDU/CSU",
+          "autor_titel": "Ernst-Reinhard Beck (Reutlingen)"
+        },
+        {
+          "id": "2",
+          "titel": "Volker Beck (Köln), MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Volker Beck (Köln)"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur Verankerung der Patientenverfügung \r\nim Betreuungsrecht (Patientenverfügungsgesetz - PatVerfG)",
+      "datum": "2008-12-16"
+    }
+  ],
+  "cursor": "AoJwuPncn54CMERydWNrc2FjaGUtMTg3Mzg="
+}

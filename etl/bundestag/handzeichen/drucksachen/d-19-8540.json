@@ -1,0 +1,65 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "227323",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/8540",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "3c741aee42f8ddb385924190ec037937",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "245179",
+          "titel": "Ein deutsch-französisches Parlamentsabkommen - Für eine verstärkte parlamentarische Zusammenarbeit",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "CDU/CSU",
+          "titel": "Fraktion der CDU/CSU"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "FDP",
+          "titel": "Fraktion der FDP"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "SPD",
+          "titel": "Fraktion der SPD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/085/1908540.pdf",
+        "id": "227323",
+        "dokumentnummer": "19/8540",
+        "datum": "2019-03-19",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN",
+          "Fraktion der CDU/CSU",
+          "Fraktion der FDP",
+          "Fraktion der SPD"
+        ]
+      },
+      "titel": "Ein deutsch-französisches Parlamentsabkommen - Für eine verstärkte parlamentarische Zusammenarbeit",
+      "datum": "2019-03-19"
+    }
+  ],
+  "cursor": "AoJw-PTmyukCMURydWNrc2FjaGUtMjI3MzIz"
+}

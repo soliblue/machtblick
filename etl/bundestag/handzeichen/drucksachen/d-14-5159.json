@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "96887",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/5159",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "d4a759d563b513e3b99c1c11b537209f",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "110217",
+          "titel": "Gesetz zur Ergänzung des Gesetzes zur Reform der gesetzlichen Rentenversicherung und zur Förderung eines kapitalgedeckten Altersvorsorgevermögens (Altersvermögensergänzungsgesetz - AVmEG) (G-SIG: 14019528)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PDS",
+          "titel": "Fraktion der PDS"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/051/1405159.pdf",
+        "id": "96887",
+        "dokumentnummer": "14/5159",
+        "datum": "2001-01-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der PDS"
+        ]
+      },
+      "titel": "zu der zweiten Beratung des GE der Frakt. SPD und B90 zur BE des Ausschusses für Arbeit und Sozialordnung -14/4595, 14/5146- Gesetz zur Reform der gesetzlichen Rentenversicherung und zur Förderung eines kaptialgedeckten Altersvorsorgevermögens",
+      "datum": "2001-01-25"
+    }
+  ],
+  "cursor": "AoJwuILnouQBMERydWNrc2FjaGUtOTY4ODc="
+}

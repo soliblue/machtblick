@@ -1,0 +1,37 @@
+{
+  "id": "108597",
+  "abstract": "Keine Realisierung des Kunstprojektes \"Der Bevölkerung\" ",
+  "beratungsstand": "Abgelehnt",
+  "vorgangstyp": "Antrag",
+  "sachgebiet": [
+    "Bundestag",
+    "Kultur"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 14,
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Bundestag",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Kultur",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Kunstwerk",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Reichstagsgebäude",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Kunstprojekt im nördlichen Lichthof des Reichstagsgebäudes von Hans Haacke \"Der Bevölkerung\" (G-SIG: 14010898)",
+  "datum": "2000-04-06"
+}

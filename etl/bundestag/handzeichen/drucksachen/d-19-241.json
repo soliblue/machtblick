@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "216850",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 10,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/241",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "f2e4eb5739b9cc613fb286abadd361a3",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "230548",
+          "titel": "Gesetz zur Änderung des Aufenthaltsgesetzes - Familiennachzug zu subsidiär Schutzberechtigten",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/002/1900241.pdf",
+        "id": "216850",
+        "dokumentnummer": "19/241",
+        "datum": "2017-12-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "16",
+          "titel": "Ulla Jelpke, MdB, DIE LINKE",
+          "autor_titel": "Ulla Jelpke"
+        },
+        {
+          "id": "7811",
+          "titel": "Dr. André Hahn, MdB, DIE LINKE",
+          "autor_titel": "Dr. André Hahn"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur Änderung des Aufenthaltsgesetzes - Familiennachzug zu subsidiär Schutzberechtigten",
+      "datum": "2017-12-12"
+    }
+  ],
+  "cursor": "AoJw-LOYpeACMURydWNrc2FjaGUtMjE2ODUw"
+}

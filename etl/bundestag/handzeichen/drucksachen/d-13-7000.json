@@ -1,0 +1,62 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "108708",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 5,
+      "dokumentnummer": "13/7000",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "365743136c3e4b6b511e31365677f541",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "122749",
+          "titel": "Einstieg in eine umfassende Gemeindefinanz- und Unternehmensteuerreform (G-SIG: 13011695)",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "122658",
+          "titel": "Maßnahmen für die grundlegende Verbesserung der Einnahmen der Städte, Gemeinden und Landkreise (Reform der Kommunalfinanzierung) (G-SIG: 13011604)",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "124445",
+          "titel": "Einsetzung einer Gemeinsamen Kommission zur Reform der Gemeindefinanzen (G-SIG: 13012098)",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "130683",
+          "titel": "Einsetzung einer Gemeinsamen Kommission zur Reform der Gemeindefinanzen (G-SIG: 13021634)",
+          "vorgangstyp": "Parlamentarische Sonderkommission"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FinanzA",
+          "titel": "Finanzausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/070/1307000.pdf",
+        "id": "108708",
+        "dokumentnummer": "13/7000",
+        "datum": "1997-02-19",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Finanzausschuss"
+        ]
+      },
+      "titel": "zu dem Gesetzentwurf der Fraktionen der CDU/CSU und F.D.P. - Drucksache 13/901 - Entwurf eines Jahressteuergesetzes (JStG) 1996 Beschlußempfehlung und Bericht des Finanzausschusses (7. Ausschuß) a) zu dem Antrag der Abgeordneten Dr. Uwe-Jens Rössel, Dr. Christa Luft, Rolf Kutzmutz, weiterer Abgeordneter und der Gruppe der PDS - Drucksache 13/4597 - Maßnahmen für die grundlegende Verbesserung der Einnahmen der Städte, Gemeinden und Landkreise (Reform der Kommunalfinanzierung) b) zu dem Antrag der Abgeordneten Oswald Metzger, Christine Scheel, Antje Hermenau, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIE GRÜNEN - Drucksache 13/4870 - Einstieg in eine umfassende Gemeindefinanz- und Unternehmensteuerreform c) zu der Unterrichtung durch den Bundesrat - Drucksache 13/5760 - d) zu dem Antrag der Fraktion der SPD - Drucksache 13/5776 (neu) - Einsetzung einer Gemeinsamen Kommission zur Reform der Gemeindefinanzen",
+      "datum": "1997-02-19"
+    }
+  ],
+  "cursor": "AoJwuICcsccBMURydWNrc2FjaGUtMTA4NzA4"
+}

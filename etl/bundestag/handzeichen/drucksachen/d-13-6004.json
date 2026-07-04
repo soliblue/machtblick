@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "121513",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/6004",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "f1dec01813dab9b2d44df4b0744a3507",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "137038",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 1997 (Haushaltsgesetz 1997) (G-SIG: 13020495)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "HaushA",
+          "titel": "Haushaltsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/060/1306004.pdf",
+        "id": "121513",
+        "dokumentnummer": "13/6004",
+        "datum": "1996-10-17",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Haushaltsausschuss"
+        ]
+      },
+      "titel": "zu dem Entwurf eines Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 1997 (Haushaltsgesetz 1997) - Drucksache 13/5200 - hier: Einzelplan 04 Geschäftsbereich des Bundeskanzlers und des Bundeskanzleramtes",
+      "datum": "1996-10-17"
+    }
+  ],
+  "cursor": "AoJwkMWf78QBMURydWNrc2FjaGUtMTIxNTEz"
+}

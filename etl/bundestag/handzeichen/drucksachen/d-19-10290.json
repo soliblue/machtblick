@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "229314",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 15,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/10290",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "69676016cbb65c1d1ea2ade064d85650",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "248331",
+          "titel": "Klimanotstand anerkennen - Klimaschutz-Sofortmaßnahmen verabschieden, Strukturwandel sozial gerecht umsetzen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/102/1910290.pdf",
+        "id": "229314",
+        "dokumentnummer": "19/10290",
+        "datum": "2019-05-16",
+        "verteildatum": "2019-07-15",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2069",
+          "titel": "Lorenz Gösta Beutin, MdB, DIE LINKE",
+          "autor_titel": "Lorenz Gösta Beutin"
+        },
+        {
+          "id": "7816",
+          "titel": "Ralph Lenkert, MdB, DIE LINKE",
+          "autor_titel": "Ralph Lenkert"
+        }
+      ],
+      "titel": "Klimanotstand anerkennen - Klimaschutz-Sofortmaßnahmen verabschieden, Strukturwandel sozial gerecht umsetzen",
+      "datum": "2019-05-16"
+    }
+  ],
+  "cursor": "AoJwkLKF4OoCMURydWNrc2FjaGUtMjI5MzE0"
+}

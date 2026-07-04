@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "110006",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/5200",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "cb2082d729f88a5d221024b13109fb88",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "137038",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 1997 (Haushaltsgesetz 1997) (G-SIG: 13020495)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/052/1305200.pdf",
+        "id": "110006",
+        "dokumentnummer": "13/5200",
+        "datum": "1996-08-16",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 1997 (Haushaltsgesetz 1997)",
+      "datum": "1996-08-16"
+    }
+  ],
+  "cursor": "AoJwkPzMz8MBMURydWNrc2FjaGUtMTEwMDA2"
+}

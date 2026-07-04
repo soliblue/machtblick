@@ -1,0 +1,65 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "83916",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 25,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 6,
+      "dokumentnummer": "14/1261",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "c4481c5d97fa3c33b34e175549fb77aa",
+      "aktualisiert": "1999-06-24T00:00:00+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "101198",
+          "titel": "Errichtung eines Mahnmals für die ermordeten Juden Europas (G-SIG: 14010295)",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "109204",
+          "titel": "Errichtung eines Denkmals für die ermordeten Juden Europas (G-SIG: 14010297)",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "108353",
+          "titel": "Errichtung eines Denkmals für die ermordeten Juden Europas (G-SIG: 14010296)",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "102163",
+          "titel": "Errichtung eines Denkmals für die ermordeten Juden Europas und eines \"Hauses der Erinnerung\" (G-SIG: 14010298)",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/012/1401261.pdf",
+        "id": "83916",
+        "dokumentnummer": "14/1261",
+        "datum": "1999-06-24",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1220",
+          "titel": "Hans-Joachim Otto (Frankfurt), MdB, FDP",
+          "autor_titel": "Hans-Joachim Otto (Frankfurt)"
+        },
+        {
+          "id": "2708",
+          "titel": "Dr. Rita Süssmuth, MdB, CDU/CSU",
+          "autor_titel": "Dr. Rita Süssmuth"
+        }
+      ],
+      "titel": "zu der Beschlußempfehlung und dem Bericht des Ausschusses für Kultur und Medien (23. Ausschuß) - 14/1238 -",
+      "datum": "1999-06-24"
+    }
+  ],
+  "cursor": "AoJwkMvVytgBMERydWNrc2FjaGUtODM5MTY="
+}

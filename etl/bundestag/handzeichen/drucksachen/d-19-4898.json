@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "222833",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 10,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/4898",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "c7ef05fd016d6e10b55563cd0deaf649",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "240230",
+          "titel": "Abschaffung des Solidaritätszuschlaggesetzes",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/048/1904898.pdf",
+        "id": "222833",
+        "dokumentnummer": "19/4898",
+        "datum": "2018-10-10",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2247",
+          "titel": "Stefan Keuter, MdB, AfD",
+          "autor_titel": "Stefan Keuter"
+        },
+        {
+          "id": "2185",
+          "titel": "Albrecht Glaser, MdB, AfD",
+          "autor_titel": "Albrecht Glaser"
+        }
+      ],
+      "titel": "Abschaffung des Solidaritätszuschlaggesetzes",
+      "datum": "2018-10-10"
+    }
+  ],
+  "cursor": "AoJwkOfaruYCMURydWNrc2FjaGUtMjIyODMz"
+}

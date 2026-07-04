@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "111256",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Wortlaut des Vertrages, Protokolle, Schlußakte, Erklärungen, konsolidierte Fassung des Vertrages, Denkschrift sowie Stellungnahme BR u.GegÄuß BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/9339",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "e16916c6a0b663c119195ef8bdb406e8",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "135553",
+          "titel": "Gesetz zum Vertrag von Amsterdam vom 2. Oktober 1997 (G-SIG: 13020816)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Auswärtiges Amt"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/093/1309339.pdf",
+        "id": "111256",
+        "dokumentnummer": "13/9339",
+        "datum": "1997-12-03",
+        "anlagen": "Wortlaut des Vertrages, Protokolle, Schlußakte, Erklärungen, konsolidierte Fassung des Vertrages, Denkschrift sowie Stellungnahme BR u.GegÄuß BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zum Vertrag von Amsterdam vom 2. Oktober 1997",
+      "datum": "1997-12-03"
+    }
+  ],
+  "cursor": "AoJw-KSclM0BMURydWNrc2FjaGUtMTExMjU2"
+}

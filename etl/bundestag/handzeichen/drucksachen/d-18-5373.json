@@ -1,0 +1,50 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "55721",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 213,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "18/5373",
+      "wahlperiode": 18,
+      "herausgeber": "BT",
+      "pdf_hash": "0a084d48aa520e6282e2ab149d71c653",
+      "aktualisiert": "2015-07-01T00:00:00+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "67860",
+          "titel": "Gesetz zur Strafbarkeit der geschäftsmäßigen Förderung der Selbsttötung",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/18/053/1805373.pdf",
+        "id": "55721",
+        "dokumentnummer": "18/5373",
+        "datum": "2015-07-01",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "8152",
+          "titel": "Michael Brand (Fulda), MdB, CDU/CSU",
+          "autor_titel": "Michael Brand (Fulda)"
+        },
+        {
+          "id": "178",
+          "titel": "Kerstin Griese, MdB, SPD",
+          "autor_titel": "Kerstin Griese"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur Strafbarkeit der geschäftsmäßigen Förderung der Selbsttötung",
+      "datum": "2015-07-01"
+    }
+  ],
+  "cursor": "AoJw0OHDpM4CMERydWNrc2FjaGUtNTU3MjE="
+}

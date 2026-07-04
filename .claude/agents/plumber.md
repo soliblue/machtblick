@@ -129,6 +129,20 @@ When a member silently disappears from roll calls (e.g. `foullong-uwe` — votes
 
 ETL TODO: the affiliation worker should detect long gaps automatically rather than rely on hand-written one-shots.
 
+### Member identity, name format, Bundesland (plan 101)
+
+`members.name` is canonically **"First Last"** ("Lars Klingbeil", never "Klingbeil, Lars"). Sorting must use `last_name`/`first_name`, not `name` (see `listMembers` in `apps/bundestag/src/server/members.ts`). Enforced by `npm run db:normalize:member-names` (`name = first_name || ' ' || last_name`, idempotent).
+
+Member identity is fragile because three ingest generations coexist: a WP20 dataset ("First Last" ids like `heil-peine-hubertus`, Ortszusatz in last name, padded 4-digit AW ids in `bt_mdb_id` like `00001725`), the WP21 dataset ("Last, First" ids like `heil-hubertus`, real 8-digit Stammdaten ids), and `import-historical.ts` WP1-15 members. `import-namentlich.ts` originally matched by strict full-name key, so honorifics ("Dr. Alaa" vs "Alaa"), particles ("Jan van"), and Ortszusätze ("Brand (Fulda)" vs "Brand") forked ~150 members: the June 2026 votes landed on duplicate rows and the members table listed the same human twice with split attendance.
+
+Fixes, all idempotent:
+
+- `db/merge-member-duplicates.ts` (`npm run db:merge-members`): merges members sharing a `bt_mdb_id`, plus term-21 voters sharing a relaxed name key (parens stripped, honorifics/particles dropped, ae/oe/ue transliteration) when exactly one candidate has a real 8-digit mdb id. Repoints vote_members, member_mandates, member_affiliations, member_abgeordnetenwatch, speeches, antrag_signatories; coalesce-fills the canonical row; purges wholly unreferenced garbage member rows (mojibake stubs, numeric-prefix ids). Run after every namentlich ingest as a watchdog: a nonzero merge count means importer name resolution regressed.
+- `import-namentlich.ts` resolver now matches by three key levels (full, parens-stripped, first-token) with the same normalization, prefers term-21 mandate holders on collision, and throws on true ambiguity. AW mandates resolve by `id_external_administration` → `bt_mdb_id` first.
+- Cross-era duplicates that never voted in WP21 (e.g. `roth-michael` 00001093 vs `roth-michael-3213` 11003124, same human, different mdb namespaces) are known and deliberately NOT merged; they don't surface in any WP21 view.
+
+**Bundesland**: the WP21 XLSX has no Bundesland column, so `import-namentlich.ts` writes `vote_members.state` from a per-member lookup (term mandate `list_state` → `members.list_state` → mode of prior ballots). `db/backfill-member-states.ts` (`npm run db:backfill:member-states`) repairs residue with two extra fallbacks: Stammdaten XML WP21 `LISTE`/`WKR_LAND` codes, then a Wahlkreis-number → Land range map (BTW25 blocks, needed for direct-mandate Nachrücker whose AW mandate carries only a constituency). WP21 ballot state coverage is 100%; the WP20 dataset's ~1100 members have no state source upstream and stay empty (not shown anywhere). Both scripts are chained after `etl:votes:namentlich` in `prompts/auto-refresh.md` step 4.
+
 ### Handzeichen — proposer enrichment is mandatory
 
 `etl/bundestag/handzeichen/write.mjs` only writes the bare Drucksache numbers (e.g. `21/322, 21/631`) into `votes.document`. The app's `parseProposingParty()` (see `apps/bundestag/src/server/proposingParty.ts`) needs the proposer-string form `"Antrag der Fraktion der SPD (Drucksache 21/322)"` produced by the Namentlich ETL — without enrichment, every handzeichen row reads as `Sonstige` (the catch-all fallback) on the votes list.
@@ -639,6 +653,21 @@ A trailing parenthesized suffix is stripped before matching via `stripTitleSuffi
 ### Petition bundles and procedural votes → initiator NULL
 
 `is_petition_bundle=1` (Sammelübersicht) and `procedural=1` (Federführung, Überweisung, Wahlen, Bestellungen, …) rows always get `initiator=NULL`. They're not Fraktion-proposed substantive votes. Skipping them at the runner level (rather than trusting the XML extractor to return null) is more robust: the teaser-fallback for `Überweisung Drucksache 21/X` would otherwise inherit a misleading proposer from the Drucksache.
+
+### Initiator backfill for rows the XML/teaser extractor misses (plan 104)
+
+Two parsers must stay in sync: `db/parseProposingParty.ts` and `etl/bundestag/polarity/proposer.mjs`. Both carried a genitive bug (`(?:es)?` doesn't match `Gesetzentwurfs/Antrags der Bundesregierung`, now `(?:e?s)?`), and proposer.mjs additionally lacked the literal `B90/Grüne` pattern that `db/partyPatterns.ts` has, so WP21 teasers of the form `Antrag der Fraktion der B90/Grüne (Drucksache …)` stayed initiator-less. Symptom of both: substantive bills rendering as "Sonstige" on the votes list (user-reported example: the 2026-06-12 Vaterschaftsanerkennungen Gesetzentwurf, a Bundesregierung bill).
+
+`initiator/run.mjs` no longer nulls rows it can't resolve; it **preserves an existing initiator** (petition bundles and procedural rows are still force-NULLed). This is load-bearing: it lets the DIP-sourced backfill below survive the weekly recompute.
+
+`db/backfill-initiators.ts` (`npm run db:backfill:initiators`, `--dry-run` supported) fills only empty initiators, tiered: document-text parse → earliest-match parse over `vote_documents.title` (earliest match wins because Beschlussempfehlung bundles list the host bill before opposition counter-motions) → DIP Drucksache lookup (shared `etl/bundestag/handzeichen/drucksachen/` cache) → Haushalt title rule (`^Einzelplan \d` / Haushaltsgesetz / Bundeshaushaltsplan / Finanzplan des Bundes → `Bundesregierung`, excluding Änderungs-/Entschließungsantrag titles since BReg never files those). MP-group motions (Gewissensfragen: `weiterer/mehrerer Abgeordneter`, `Antrag der Abgeordneten` in document or title) are skipped entirely and stay empty by design; so do WP12/13 party-Gruppen texts NOT matching those markers (`Gruppe der PDS` etc. resolve normally). Chained into `handzeichen/refresh.mjs` right after `initiator/run.mjs` and as source step 10 in `prompts/auto-refresh.md`.
+
+DIP gotchas learned here:
+- `f.dokumentnummer` is ambiguous across herausgeber: BR/EU Drucksachen can shadow the BT doc at `documents[0]` (e.g. `14/14` returns a BR EU-Unterrichtung first, the PDS Gesetzentwurf second). Pick `herausgeber === 'BT'` first. Fixed in both the backfill and `handzeichen/proposers.mjs`.
+- `f.vorgang=<id>` is **silently ignored for old (pre-WP20) vorgang ids**: the API returns the full unfiltered corpus (`numFound` ≈ 287k) with no error. It fails safe only if you re-check `vorgangsbezug` per doc. Use the `/vorgang/{id}` detail endpoint instead; its `initiative[]` array ("Fraktion der CDU/CSU", "Bundesregierung", Land names) is the cleanest structured source, normalized via `normalizeInitiatorTokens` from `etl/dip/initiatorAligns.ts` plus a PDS → Die Linke pre-check. Cached as `vg-<id>.json`.
+- Old-WP group motions and Gewissensfragen have empty `urheber` and no vorgang `initiative` — genuinely unresolvable, leave empty.
+
+Baseline after backfill (2026-07-04): 1795/2124 votes have initiator; 329 empty = 75 petition bundles + 34 procedural + 220 substantive rows with no structured source (MP-group/free votes, Vermittlungsausschuss vorgaenge whose initiative is a committee, Ältestenrat items, `Plenarprotokoll`-document stubs). Backfilling created exactly one new self-NO candidate (pp21-86-0), which self-no-escalate correctly inverted; audits clean.
 
 ### Self-NO audit and polarity escalation
 

@@ -1,0 +1,50 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "32296",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 36,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "17/5452",
+      "wahlperiode": 17,
+      "herausgeber": "BT",
+      "pdf_hash": "ee8acb972bd9b93c564df8bbb55fac79",
+      "aktualisiert": "2011-04-12T00:00:00+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "34970",
+          "titel": "Gesetz zur begrenzten Zulassung der Präimplantationsdiagnostik (Präimplantationsdiagnostikgesetz - PräimpG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/17/054/1705452.pdf",
+        "id": "32296",
+        "dokumentnummer": "17/5452",
+        "datum": "2011-04-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "197",
+          "titel": "René Röspel, MdB, SPD",
+          "autor_titel": "René Röspel"
+        },
+        {
+          "id": "1798",
+          "titel": "Priska Hinz (Herborn), MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Priska Hinz (Herborn)"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur begrenzten Zulassung der Präimplantationsdiagnostik (Präimplantationsdiagnostikgesetz - PräimpG)",
+      "datum": "2011-04-12"
+    }
+  ],
+  "cursor": "AoJwkOjJpK8CMERydWNrc2FjaGUtMzIyOTY="
+}

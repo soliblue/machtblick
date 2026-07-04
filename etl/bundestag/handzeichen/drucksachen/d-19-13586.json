@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "234245",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 42,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/13586",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "b10dd1514e4211f22921c47483f54423",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "248389",
+          "titel": "Neuntes Gesetz zur Änderung des Stasi-Unterlagen-Gesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/135/1913586.pdf",
+        "id": "234245",
+        "dokumentnummer": "19/13586",
+        "datum": "2019-09-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2177",
+          "titel": "Dr. Götz Frömming, MdB, AfD",
+          "autor_titel": "Dr. Götz Frömming"
+        },
+        {
+          "id": "2232",
+          "titel": "Dr. Marc Jongen, MdB, AfD",
+          "autor_titel": "Dr. Marc Jongen"
+        }
+      ],
+      "titel": "zu der zweiten Beratung des Gesetzentwurfs der Bundesregierung\r\n- Drucksachen 19/11329, 19/13577 -\r\nEntwurf eines Neunten Gesetzes zur Änderung des Stasi-Unterlagen-Gesetzes",
+      "datum": "2019-09-25"
+    }
+  ],
+  "cursor": "AoJwkKD3s-0CMURydWNrc2FjaGUtMjM0MjQ1"
+}

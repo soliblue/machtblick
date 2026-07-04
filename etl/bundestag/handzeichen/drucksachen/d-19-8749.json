@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "227580",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme des BR und Gegenäußerung der BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/8749",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "c297dd1eef69646646933fe0ee8426c7",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "243803",
+          "titel": "Sechsundzwanzigstes Gesetz zur Änderung des Bundesausbildungsförderungsgesetzes (26. BAföGÄndG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Bildung und Forschung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/087/1908749.pdf",
+        "id": "227580",
+        "dokumentnummer": "19/8749",
+        "datum": "2019-03-27",
+        "anlagen": "Stellungnahme des BR und Gegenäußerung der BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Sechsundzwanzigsten Gesetzes zur Änderung des Bundesausbildungsförderungsgesetzes (26. BAföGÄndG)",
+      "datum": "2019-03-27"
+    }
+  ],
+  "cursor": "AoJw-NCz3-kCMURydWNrc2FjaGUtMjI3NTgw"
+}

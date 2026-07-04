@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "219622",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/2384",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "359be31b8b2c1dee48c7f5788be2755b",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "235903",
+          "titel": "Fortsetzung der deutschen Beteiligung an der internationalen Sicherheitspräsenz in Kosovo (KFOR) auf der Grundlage der Resolution 1244 (1999) des Sicherheitsrates der Vereinten Nationen vom 10. Juni 1999",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/023/1902384.pdf",
+        "id": "219622",
+        "dokumentnummer": "19/2384",
+        "datum": "2018-05-30",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Fortsetzung der deutschen Beteiligung an der internationalen\r\nSicherheitspräsenz in Kosovo (KFOR) auf der Grundlage der Resolution\r\n1244 (1999) des Sicherheitsrates der Vereinten Nationen vom 10. Juni 1999",
+      "datum": "2018-05-30"
+    }
+  ],
+  "cursor": "AoJw0K2f2OMCMURydWNrc2FjaGUtMjE5NjIy"
+}

@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "95576",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 4,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/3017",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "ee52cae55d1fbf21df3c9407a91f964c",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "112675",
+          "titel": "Gesetz zum Schutz der Stromerzeugung aus Kraft-Wärme-Kopplung (KWK-Vorschaltgesetz) (G-SIG: 14019328)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PDS",
+          "titel": "Fraktion der PDS"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/030/1403017.pdf",
+        "id": "95576",
+        "dokumentnummer": "14/3017",
+        "datum": "2000-03-23",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der PDS"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2559",
+          "titel": "Rolf Kutzmutz, MdB, PDS",
+          "autor_titel": "Rolf Kutzmutz"
+        },
+        {
+          "id": "81",
+          "titel": "Eva Bulling-Schröter, MdB, PDS",
+          "autor_titel": "Eva Bulling-Schröter"
+        }
+      ],
+      "titel": "zu der zweiten Beratung des Gesetzentwurfs der Fraktionen SPD und BÜNDNIS 90/DIE GRÜNEN -14/2765, 14/3007- Entwurf eines zum Schutz der Stromerzeugung aus Kraft-Wärme-Kopplung (Kraft-Wärme-Kopplungsgesetz",
+      "datum": "2000-03-23"
+    }
+  ],
+  "cursor": "AoJwuKzdid4BMERydWNrc2FjaGUtOTU1NzY="
+}

@@ -1,0 +1,49 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "107087",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/4175",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "845248e868b65119395dfc016f9cab67",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "120015",
+          "titel": "Gesetz zur Änderung des Erblastentilgungsfonds-Gesetzes (G-SIG: 13020379)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BR",
+          "titel": "Bundesrat"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/041/1304175.pdf",
+        "id": "107087",
+        "dokumentnummer": "13/4175",
+        "datum": "1996-03-21",
+        "anlagen": "Stellungnahme BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesrat"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Änderung des Erblastentilgungsfonds-Gesetzes",
+      "datum": "1996-03-21"
+    }
+  ],
+  "cursor": "AoJw-LPP0sABMURydWNrc2FjaGUtMTA3MDg3"
+}

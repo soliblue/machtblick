@@ -1,0 +1,88 @@
+{
+  "numFound": 2,
+  "documents": [
+    {
+      "id": "258931",
+      "drucksachetyp": "Unterrichtung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/22",
+      "wahlperiode": 20,
+      "herausgeber": "BR",
+      "pdf_hash": "7d75707cac6a1b8ec7279ae2c321caaa",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "283712",
+          "titel": "Vorschlag für eine Richtlinie des Rates über die Einzelheiten der Ausübung des aktiven und passiven Wahlrechts bei den Kommunalwahlen für Unionsbürger mit Wohnsitz in einem Mitgliedstaat, dessen Staatsangehörigkeit sie nicht besitzen (Neufassung)\r\nKOM(2021) 733 endg.; Ratsdok. 14379/21",
+          "vorgangstyp": "EU-Vorlage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "EU-Kommission",
+          "titel": "Europäische Kommission"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2022/0019-22.pdf",
+        "id": "258931",
+        "dokumentnummer": "19/22",
+        "datum": "2022-01-17",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Unterrichtung",
+        "herausgeber": "BR",
+        "urheber": [
+          "Europäische Kommission"
+        ]
+      },
+      "titel": "Vorschlag für eine Richtlinie des Rates über die Einzelheiten der Ausübung des aktiven und passiven Wahlrechts bei den Kommunalwahlen für Unionsbürger mit Wohnsitz in einem Mitgliedstaat, dessen Staatsangehörigkeit sie nicht besitzen (Neufassung)",
+      "datum": "2022-01-17"
+    },
+    {
+      "id": "68880",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/22",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "651ccf2e4090319502b53a706fb1b329",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "84454",
+          "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an der NATO-geführten Maritimen Sicherheitsoperation SEA GUARDIAN im Mittelmeer",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/000/1900022.pdf",
+        "id": "68880",
+        "dokumentnummer": "19/22",
+        "datum": "2017-10-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an der NATO-geführten Maritimen Sicherheitsoperation SEA GUARDIAN im Mittelmeer",
+      "datum": "2017-10-25"
+    }
+  ],
+  "cursor": "AoJwkK6-qd8CMERydWNrc2FjaGUtNjg4ODA="
+}

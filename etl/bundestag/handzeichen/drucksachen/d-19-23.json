@@ -1,0 +1,88 @@
+{
+  "numFound": 2,
+  "documents": [
+    {
+      "id": "265527",
+      "drucksachetyp": "Gesetzesbeschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/23",
+      "wahlperiode": 20,
+      "herausgeber": "BR",
+      "pdf_hash": "fd8ad434657e279b9a9ab06aa848d7c2",
+      "aktualisiert": "2023-01-23T13:42:36+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "290310",
+          "titel": "Gesetz zur Umsetzung der Umwandlungsrichtlinie und zur Änderung weiterer Gesetze",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BT",
+          "titel": "Bundestag"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2023/0019-23.pdf",
+        "id": "265527",
+        "dokumentnummer": "19/23",
+        "datum": "2023-01-20",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzesbeschluss",
+        "herausgeber": "BR",
+        "urheber": [
+          "Bundestag"
+        ]
+      },
+      "titel": "Gesetz zur Umsetzung der Umwandlungsrichtlinie und zur Änderung weiterer Gesetze",
+      "datum": "2023-01-20"
+    },
+    {
+      "id": "68881",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/23",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "c515822cd2c4a9959458a3e2fc83378e",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "84456",
+          "titel": "Fortsetzung des Einsatzes bewaffneter deutscher Streitkräfte zur Verhütung und Unterbindung terroristischer Handlungen durch die Terrororganisation IS auf Grundlage von Artikel 51 der Charta der Vereinten Nationen in Verbindung mit Artikel 42 Absatz 7 des Vertrages über die Europäische Union und den Resolutionen 2170 (2014), 2199 (2015), 2249 (2015) des Sicherheitsrates der Vereinten Nationen sowie des Beschlusses der Staats- und Regierungschefs vom NATO-Gipfel am 8./9. Juli 2016 und konkretisierenden Folgebeschlüssen des Nordatlantikrats",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/000/1900023.pdf",
+        "id": "68881",
+        "dokumentnummer": "19/23",
+        "datum": "2017-10-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Fortsetzung des Einsatzes bewaffneter deutscher Streitkräfte zur Verhütung und Unterbindung terroristischer Handlungen durch die Terrororganisation IS auf Grundlage von Artikel 51 der Charta der Vereinten Nationen in Verbindung mit Artikel 42 Absatz 7 des Vertrages über die Europäische Union und den Resolutionen 2170 (2014), 2199 (2015), 2249 (2015) des Sicherheitsrates der Vereinten Nationen sowie des Beschlusses der Staats- und Regierungschefs vom NATO-Gipfel am 8./9. Juli 2016 und konkretisierenden Folgebeschlüssen des Nordatlantikrats",
+      "datum": "2017-10-25"
+    }
+  ],
+  "cursor": "AoJwkK6-qd8CMERydWNrc2FjaGUtNjg4ODE="
+}

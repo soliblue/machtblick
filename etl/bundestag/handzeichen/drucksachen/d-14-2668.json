@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "97905",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/2668",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "07203a3d99e84e9230279dd53ae4f6c7",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "112030",
+          "titel": "Gesetz zur Änderung des Grundgesetzes (Artikel 16) (G-SIG: 14019294)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Justiz"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/026/1402668.pdf",
+        "id": "97905",
+        "dokumentnummer": "14/2668",
+        "datum": "2000-02-10",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Änderung des Grundgesetzes (Artikel 16)",
+      "datum": "2000-02-10"
+    }
+  ],
+  "cursor": "AoJwuMnKnd0BMERydWNrc2FjaGUtOTc5MDU="
+}

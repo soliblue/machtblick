@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "233894",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/13290",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "dd05271a3065401a579f859b19075b4f",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "253102",
+          "titel": "Einsatz bewaffneter deutscher Streitkräfte - Stabilisierung sichern, Wiedererstarken IS verhindern, Versöhnung fördern in Irak und Syrien",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/132/1913290.pdf",
+        "id": "233894",
+        "dokumentnummer": "19/13290",
+        "datum": "2019-09-18",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Einsatz bewaffneter deutscher Streitkräfte - Stabilisierung sichern,\r\nWiedererstarken IS verhindern, Versöhnung fördern in Irak und Syrien\r\n",
+      "datum": "2019-09-18"
+    }
+  ],
+  "cursor": "AoJw0I_0oe0CMURydWNrc2FjaGUtMjMzODk0"
+}

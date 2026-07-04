@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "26631",
+      "drucksachetyp": "Entschließungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "17/1810",
+      "wahlperiode": 17,
+      "herausgeber": "BT",
+      "pdf_hash": "97bba93cb34b62bb0020672605a532cf",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "26821",
+          "titel": "Entschließungsantrag zum Gesetz zur Übernahme von Gewährleistungen im Rahmen eines europäischen Stabilisierungsmechanismus",
+          "vorgangstyp": "Entschließungsantrag BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "SPD",
+          "titel": "Fraktion der SPD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/17/018/1701810.pdf",
+        "id": "26631",
+        "dokumentnummer": "17/1810",
+        "datum": "2010-05-20",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Entschließungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der SPD"
+        ]
+      },
+      "titel": "zu der dritten Beratung des Gesetzentwurfs der Fraktionen der CDU/CSU und FDP\r\n-17/1685, 17/1740, 17/1741-\r\nEntwurf eines Gesetzes zur Übernahme von Gewährleistungen im Rahmen eines europäischen Stabilisierungsmechanismus",
+      "datum": "2010-05-20"
+    }
+  ],
+  "cursor": "AoJw0PfJ2qgCMERydWNrc2FjaGUtMjY2MzE="
+}

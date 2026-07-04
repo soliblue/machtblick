@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "237838",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 39,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/16482",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "27be36f2ccfaaa7c59770393a215245c",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "257492",
+          "titel": "Erneute Abstimmung über das Mandat \"Einsatz bewaffneter deutscher Streitkräfte im Irak\" im Deutschen Bundestag",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/164/1916482.pdf",
+        "id": "237838",
+        "dokumentnummer": "19/16482",
+        "datum": "2020-01-14",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1982",
+          "titel": "Rüdiger Lucassen, MdB, AfD",
+          "autor_titel": "Rüdiger Lucassen"
+        },
+        {
+          "id": "2204",
+          "titel": "Armin-Paulus Hampel, MdB, AfD",
+          "autor_titel": "Armin-Paulus Hampel"
+        }
+      ],
+      "titel": "Erneute Abstimmung über das Mandat \"Einsatz bewaffneter deutscher Streitkräfte im Irak\" im Deutschen Bundestag",
+      "datum": "2020-01-14"
+    }
+  ],
+  "cursor": "AoJwuLrt0e8CMURydWNrc2FjaGUtMjM3ODM4"
+}

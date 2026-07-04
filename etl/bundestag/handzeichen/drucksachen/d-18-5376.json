@@ -1,0 +1,50 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "55720",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 35,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "18/5376",
+      "wahlperiode": 18,
+      "herausgeber": "BT",
+      "pdf_hash": "4ef5644092f6b74c13c0c30e03fd6ac8",
+      "aktualisiert": "2015-06-30T00:00:00+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "67857",
+          "titel": "Gesetz über die Strafbarkeit der Teilnahme an der Selbsttötung",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/18/053/1805376.pdf",
+        "id": "55720",
+        "dokumentnummer": "18/5376",
+        "datum": "2015-06-30",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1110",
+          "titel": "Prof. Dr. Patrick Sensburg, MdB, CDU/CSU",
+          "autor_titel": "Prof. Dr. Patrick Sensburg"
+        },
+        {
+          "id": "190",
+          "titel": "Thomas Dörflinger, MdB, CDU/CSU",
+          "autor_titel": "Thomas Dörflinger"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes über die Strafbarkeit der Teilnahme an der Selbsttötung",
+      "datum": "2015-06-30"
+    }
+  ],
+  "cursor": "AoJwkJb6oc4CMERydWNrc2FjaGUtNTU3MjA="
+}

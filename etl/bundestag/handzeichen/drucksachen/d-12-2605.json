@@ -1,0 +1,50 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "135869",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 238,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/2605",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "fca4a5f29144d21c1e22d29f7c35c5ad",
+      "aktualisiert": "1992-05-14T00:00:00+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "154249",
+          "titel": "Gesetz zum Schutz des vorgeburtlichen/werdenden Lebens, zur Förderung einer kinderfreundlicheren Gesellschaft, für Hilfen im Schwangerschaftskonflikt und zur Regelung des Schwangerschaftsabbruchs (Schwangeren- und Familienhilfegesetz) (G-SIG: 12020308)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/026/1202605.pdf",
+        "id": "135869",
+        "dokumentnummer": "12/2605",
+        "datum": "1992-05-14",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2478",
+          "titel": "Inge Wettig-Danielmeier, MdB, SPD",
+          "autor_titel": "Inge Wettig-Danielmeier"
+        },
+        {
+          "id": "3289",
+          "titel": "Uta Würfel, MdB, FDP",
+          "autor_titel": "Uta Würfel"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zum Schutz des vorgeburtlichen/werdenden Lebens, zur Förderung einer kinderfreundlicheren Gesellschaft, für Hilfen im Schwangerschaftskonflikt und zur Regelung des Schwangerschaftsabbruchs (Schwangeren- und Familienhilfegesetz)",
+      "datum": "1992-05-14"
+    }
+  ],
+  "cursor": "AoJw0OHMq6QBMURydWNrc2FjaGUtMTM1ODY5"
+}

@@ -1,0 +1,50 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "84011",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 40,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/943",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "ed885983003a295a7700d772558cebd1",
+      "aktualisiert": "1999-05-04T00:00:00+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "109204",
+          "titel": "Errichtung eines Denkmals für die ermordeten Juden Europas (G-SIG: 14010297)",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/009/1400943.pdf",
+        "id": "84011",
+        "dokumentnummer": "14/943",
+        "datum": "1999-05-04",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "540",
+          "titel": "Gert Weisskirchen (Wiesloch), MdB, SPD",
+          "autor_titel": "Gert Weisskirchen (Wiesloch)"
+        },
+        {
+          "id": "2708",
+          "titel": "Dr. Rita Süssmuth, MdB, CDU/CSU",
+          "autor_titel": "Dr. Rita Süssmuth"
+        }
+      ],
+      "titel": "Errichtung eines Denkmals für die ermordeten Juden Europas",
+      "datum": "1999-05-04"
+    }
+  ],
+  "cursor": "AoJw0MCsx9cBMERydWNrc2FjaGUtODQwMTE="
+}

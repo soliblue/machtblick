@@ -1,0 +1,56 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "251638",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme des BR und Gegenäußerung der BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/27659",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "d98a14702f2511cee892e7bfb1eb049f",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "273052",
+          "titel": "Siebzehntes Gesetz zur Änderung des Atomgesetzes (Siebzehntes AtG-ÄnderungsG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Umwelt, Naturschutz und nukleare Sicherheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/276/1927659.pdf",
+        "id": "251638",
+        "dokumentnummer": "19/27659",
+        "datum": "2021-03-17",
+        "verteildatum": "2021-03-18",
+        "anlagen": "Stellungnahme des BR und Gegenäußerung der BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Siebzehnten Gesetzes zur Änderung des Atomgesetzes (Siebzehntes AtG-ÄnderungsG)",
+      "datum": "2021-03-17"
+    }
+  ],
+  "cursor": "AoJwuPT1n_gCMURydWNrc2FjaGUtMjUxNjM4"
+}

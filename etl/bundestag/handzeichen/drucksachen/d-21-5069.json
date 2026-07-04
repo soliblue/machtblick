@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "286423",
+      "drucksachetyp": "Verordnung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/5069",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "8c13c2e8dbb77593975e8ecb7b7b99ca",
+      "aktualisiert": "2026-03-30T17:40:52+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "333227",
+          "titel": "Verordnung zur Überführung der jährlichen Minderungsziele in Jahresemissionsgesamtmengen für die Jahre 2031 bis 2040 (Jahresemissionsgesamtmengen-Verordnung 2031-2040 - JEGMV 2031-2040)",
+          "vorgangstyp": "Rechtsverordnung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/050/2105069.pdf",
+        "id": "286423",
+        "dokumentnummer": "21/5069",
+        "datum": "2026-03-30",
+        "verteildatum": "2026-03-30",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Verordnung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Verordnung zur Überführung der jährlichen Minderungsziele in Jahresemissionsgesamtmengen für die Jahre 2031 bis 2040 (Jahresemissionsgesamtmengen-Verordnung 2031-2040 - JEGMV 2031-2040)",
+      "datum": "2026-03-30"
+    }
+  ],
+  "cursor": "AoJwkPOLn50DMURydWNrc2FjaGUtMjg2NDIz"
+}

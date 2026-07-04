@@ -1,0 +1,101 @@
+{
+  "numFound": 2,
+  "documents": [
+    {
+      "id": "53355",
+      "drucksachetyp": "Verordnung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/15",
+      "wahlperiode": 18,
+      "herausgeber": "BR",
+      "pdf_hash": "4821c97cb1e37886f0b5b17f7ad5eb40",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "64609",
+          "titel": "Verordnung zur Aussetzung der Erhebung nach § 9 Absatz 4 des Umweltstatistikgesetzes",
+          "vorgangstyp": "Rechtsverordnung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Umwelt, Naturschutz, Bau und Reaktorsicherheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2015/0014-15.pdf",
+        "id": "53355",
+        "dokumentnummer": "14/15",
+        "datum": "2015-01-14",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Verordnung",
+        "herausgeber": "BR",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Verordnung zur Aussetzung der Erhebung nach § 9 Absatz 4 des Umweltstatistikgesetzes",
+      "datum": "2015-01-14"
+    },
+    {
+      "id": "85291",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 1,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/15",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "3ff6abd08c85990dd11497283bb751a4",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "102460",
+          "titel": "Erstes Gesetz zur Korrektur von Fehlentwicklungen im Recht der Arbeitslosenhilfe (Erstes Arbeitslosenhilfe-Korrekturgesetz - 1.Alhi-KG) (G-SIG: 14019008)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PDS",
+          "titel": "Fraktion der PDS"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/000/1400015.pdf",
+        "id": "85291",
+        "dokumentnummer": "14/15",
+        "datum": "1998-11-04",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der PDS"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "751",
+          "titel": "Dr. Heidi Knake-Werner, MdB, PDS",
+          "autor_titel": "Dr. Heidi Knake-Werner"
+        }
+      ],
+      "titel": "Entwurf eines Ersten Gesetzes zur Korrektur von Fehlentwicklungen im Recht der Arbeitslosenhilfe (Erstes Arbeitslosenhilfe-Korrekturgesetz - 1. Alhi-KG)",
+      "datum": "1998-11-04"
+    }
+  ],
+  "cursor": "AoJw-Lyy9dMBMERydWNrc2FjaGUtODUyOTE="
+}

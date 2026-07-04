@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "139435",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/7269",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "fdd1f08209cabc9654412423dec2444b",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "155335",
+          "titel": "Gesetz zur Änderung des Grundgesetzes (G-SIG: 12020753)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Post und Telekommunikation"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/072/1207269.pdf",
+        "id": "139435",
+        "dokumentnummer": "12/7269",
+        "datum": "1994-04-14",
+        "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Änderung des Grundgesetzes",
+      "datum": "1994-04-14"
+    }
+  ],
+  "cursor": "AoJw0NOFtrIBMURydWNrc2FjaGUtMTM5NDM1"
+}

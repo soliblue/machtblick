@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "220737",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 43,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/3171",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "af3a312b17df272a9a39a923ad45b89c",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "237405",
+          "titel": "Gesetz für mehr Teilhabe im Wahlrecht",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FDP",
+          "titel": "Fraktion der FDP"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/031/1903171.pdf",
+        "id": "220737",
+        "dokumentnummer": "19/3171",
+        "datum": "2018-07-03",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der FDP"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2063",
+          "titel": "Jens Beeck, MdB, FDP",
+          "autor_titel": "Jens Beeck"
+        },
+        {
+          "id": "2132",
+          "titel": "Matthias Seestern-Pauly, MdB, FDP",
+          "autor_titel": "Matthias Seestern-Pauly"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes für mehr Teilhabe im Wahlrecht",
+      "datum": "2018-07-03"
+    }
+  ],
+  "cursor": "AoJw0LTlr-QCMURydWNrc2FjaGUtMjIwNzM3"
+}

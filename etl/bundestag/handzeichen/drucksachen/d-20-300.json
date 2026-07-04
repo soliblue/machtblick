@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "258622",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "20/300",
+      "wahlperiode": 20,
+      "herausgeber": "BT",
+      "pdf_hash": "4562b922fb3bbd65af498b5421e0c95a",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "283166",
+          "titel": "Gesetz über die Feststellung eines Zweiten Nachtrags zum Bundeshaushaltsplan für das Haushaltsjahr 2021 (Zweites Nachtragshaushaltsgesetz 2021)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/20/003/2000300.pdf",
+        "id": "258622",
+        "dokumentnummer": "20/300",
+        "datum": "2021-12-13",
+        "verteildatum": "2021-12-13",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes über die Feststellung eines Zweiten Nachtrags zum Bundeshaushaltsplan für das Haushaltsjahr 2021 (Zweites Nachtragshaushaltsgesetz 2021)",
+      "datum": "2021-12-13"
+    }
+  ],
+  "cursor": "AoJw-ODc2f0CMURydWNrc2FjaGUtMjU4NjIy"
+}

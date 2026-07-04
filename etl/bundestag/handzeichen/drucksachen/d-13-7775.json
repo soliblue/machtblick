@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "110143",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/7775",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "3d8e65195ab1dcc8c7d94046f47a6a05",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "122232",
+          "titel": "Steuerreformgesetz 1998 (StRG) (G-SIG: 13020655)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/077/1307775.pdf",
+        "id": "110143",
+        "dokumentnummer": "13/7775",
+        "datum": "1997-05-30",
+        "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Steuerreformgesetzes (StRG) 1998",
+      "datum": "1997-05-30"
+    }
+  ],
+  "cursor": "AoJw0KDNsskBMURydWNrc2FjaGUtMTEwMTQz"
+}

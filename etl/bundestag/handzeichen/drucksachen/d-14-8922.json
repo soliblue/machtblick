@@ -1,0 +1,50 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "99419",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 75,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/8922",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "25708e9d0d7e3760f5eeb4afa775e481",
+      "aktualisiert": "2002-04-25T00:00:00+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "116056",
+          "titel": "Gesetz zur Sicherstellung des Embryonenschutzes im Zusammenhang mit Einfuhr und Verwendung menschlicher embryonaler Stammzellen (Stammzellgesetz - StZG) (G-SIG: 14019907)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/089/1408922.pdf",
+        "id": "99419",
+        "dokumentnummer": "14/8922",
+        "datum": "2002-04-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "226",
+          "titel": "Dr. Wolfgang Wodarg, MdB, SPD",
+          "autor_titel": "Dr. Wolfgang Wodarg"
+        },
+        {
+          "id": "497",
+          "titel": "Hubert Hüppe, MdB, CDU/CSU",
+          "autor_titel": "Hubert Hüppe"
+        }
+      ],
+      "titel": "zu der zweiten Beatung des Gesetzentwurfs der Abgeordneten Dr. Maria Böhner, Wolf-Michael Catenhusen, Andrea Fischer (Berlin), und weitern Angeordneten -14/8394, 14/8846- Entwurf eines Gesetzes zur Sicherstellung des Embryonenschutzes im Zusammenhang mit Einfuhr und Verwendung menschlicher embryonaler Stammzellen (Stammzellgesetz -StZG)",
+      "datum": "2002-04-25"
+    }
+  ],
+  "cursor": "AoJwkNWktu0BMERydWNrc2FjaGUtOTk0MTk="
+}

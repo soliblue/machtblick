@@ -1,0 +1,111 @@
+{
+  "id": "328422",
+  "abstract": "Aktualisierung der nationalen Ausfuhrliste gemäß Änderungen des Wassenaar Abkommens für konventionelle Rüstungsgüter, u.a. Streichung spezifischer Kontrolltatbestände und Bußgeldbewehrungen betr. Syrien, Festlegung von Bußgeldbewehrungen für Verstöße gegen neue EU-Sanktionen im Zusammenhang mit der russischen Schattenflotte, gegen in Russland niedergelassene Transportunternehmen, den russischen und belarussischen Finanzsektor sowie gegen restriktive Maßnahmen betr. Iran<br />\r\n<br />\r\nBezug: Verordnung (EU) 2025/1494 vom 18. Juli 2025 zur Änderung der Verordnung (EU) Nr. 833/2014 über restriktive Maßnahmen angesichts der Handlungen Russlands, die die Lage in der Ukraine destabilisieren (ABl. L 2025/1494, 19.07.2025, S. 1) ; Verordnung (EU) 2025/1472 vom 18. Juli 2025 zur Änderung der Verordnung (EG) Nr. 765/2006 über restriktive Maßnahmen angesichts der Lage in Belarus und der Beteiligung von Belarus an der Aggression Russlands gegen die Ukraine (ABl. L 2025/1472, 19.07.2025, S. 1) ; Verordnung (EU) 2025/395 vom 24. Februar 2025 zur Änderung der Verordnung (EU) Nr. 833/2014 über restriktive Maßnahmen angesichts der Handlungen Russlands, die die Lage in der Ukraine destabilisieren (ABl. L 2025/395, 24.02.2025, S. 1) ; Verordnung (EU) 2025/392 vom 24. Februar 2025 zur Änderung der Verordnung (EG) Nr. 765/2006 über restriktive Maßnahmen angesichts der Lage in Belarus und der Beteiligung von Belarus an der Aggression Russlands gegen die Ukraine (ABl. L 2025/392, 24.02.2025, S. 1) ; Verordnung (EU) 2024/1865 vom 29. Juni 2024 zur Änderung der Verordnung (EG) Nr. 765/2006 über restriktive Maßnahmen angesichts der Lage in Belarus und der Beteiligung von Belarus an der Aggression Russlands gegen die Ukraine (ABl. L 2024/1865, 30.06.2024, S. 1) ; Verordnung (EU) 2024/1745 vom 24. Juni 2024 zur Änderung der Verordnung (EU) Nr. 833/2014 über restriktive Maßnahmen angesichts der Handlungen Russlands, die die Lage in der Ukraine destabilisieren (ABl. L 2024/1745, 24.06.2024, S. 1) ; Verordnung (EU) 2024/2642 vom 8. Oktober 2024 über restriktive Maßnahmen angesichts der destabilisierenden Aktivitäten Russlands (ABl. L 2024/2642, 09.10.2024, S. 1) ; Verordnung (EU) 2023/1529 vom 20. Juli 2023 über restriktive Maßnahmen angesichts der militärischen Unterstützung des Angriffskriegs Russlands gegen die Ukraine durch Iran (ABl. L 186, 25.07.2023, S. 1) ; Verordnung (EU) Nr. 36/2012 vom 18. Januar 2012 über restriktive Maßnahmen angesichts der Lage in Syrien und zur Aufhebung der Verordnung (EU) Nr. 442/2011 (ABl. L 16, 19.01.2012, S. 1)",
+  "vorgangstyp": "Rechtsverordnung (Außenwirtschaftsrecht)",
+  "sachgebiet": [
+    "Außenwirtschaft"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 21,
+  "initiative": [
+    "Bundesregierung"
+  ],
+  "aktualisiert": "2026-03-03T12:55:18+01:00",
+  "verkuendung": [
+    {
+      "jahrgang": "2025",
+      "heftnummer": "261",
+      "ausfertigungsdatum": "2025-10-29",
+      "verkuendungsdatum": "2025-10-31",
+      "einleitungstext": "Verordnung",
+      "pdf_url": "https://www.recht.bund.de/eli/bund/BGBl_1/2025/261",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 2025, 261"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Ausfuhr",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Ausfuhrliste",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Außenhandelsbeschränkung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Außenwirtschaftsverordnung",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bank",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Belarus",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Geldbuße",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Güterkraftverkehrsgewerbe",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Iran",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Russland",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Rüstungsgut",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Syrien",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Tankschifffahrt",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Verordnung der EU",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Wassenaar-Abkommen",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": true,
+      "name": "Wirtschaftssanktion",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Zweiundzwanzigste Verordnung zur Änderung der Außenwirtschaftsverordnung - aufhebbare Verordnung",
+  "datum": "2026-02-26"
+}

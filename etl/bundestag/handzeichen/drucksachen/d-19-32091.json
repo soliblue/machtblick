@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "257252",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/32091",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "f3f6c0374c50d76c129666ad062f1214",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "281340",
+          "titel": "Feststellung des Fortbestehens der epidemischen Lage von nationaler Tragweite",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "CDU/CSU",
+          "titel": "Fraktion der CDU/CSU"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "SPD",
+          "titel": "Fraktion der SPD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/320/1932091.pdf",
+        "id": "257252",
+        "dokumentnummer": "19/32091",
+        "datum": "2021-08-25",
+        "verteildatum": "2021-08-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der CDU/CSU",
+          "Fraktion der SPD"
+        ]
+      },
+      "titel": "Feststellung des Fortbestehens der epidemischen Lage von nationaler Tragweite",
+      "datum": "2021-08-25"
+    }
+  ],
+  "cursor": "AoJwkJKwvvsCMURydWNrc2FjaGUtMjU3MjUy"
+}

@@ -1,0 +1,68 @@
+{
+  "id": "115648",
+  "abstract": "<b>Inhalt:</b> Feststellung der Einnahmen und Ausgaben auf 247,8 Mrd. Euro, Kreditaufnahmeermächtigung in Höhe von 21,07 Mrd. Euro, Festlegung von Höchstbeträgen für Gewährleistungen, Bürgschaften und Garantien; Einzelregelungen, u.a. betr. Abführung des Bundesbankgewinns an den Erblastentilgungsfonds, Stärkung der Eigenverantwortung bei der Steuerbewirtschaftung, Personalabbau in Höhe von 1,5 v.H., Liquiditätshilfen an die Bundesanstalt für Arbeit in Höhe von 5 Mrd. Euro. <br><br><b>Änderungen aufgrund der Ausschußempfehlung:</b> Reduzierung des Haushaltsvolumens auf 247,5 Mrd. Euro, Ermächtigung des BMF zum Aufbau von Eigenbeständen zur Marktpflege bei Bundesanleihen, Haushaltssperre in Höhe von 1,5 v.H. bei Titelgruppe 55, Erweiterung des Bürgschaftsrahmens für Wohnraumförderung und internationale Entwicklungsorganisationen. <br><br><b>Nebenschlagwörter:</b> Nettokreditaufnahme/Kreditaufnahme im Haushaltsjahr 2002 * Haushaltsgesetz/Bundeshaushaltsgesetz 2002 * Bundesanstalt für Arbeit/Liquiditätshilfen 2002 an die BA * Stellenplan/ Stelleneinsparungen bei der Bundesverwaltung im Haushaltsjahr 2002 * Terrorismusbekämpfung/Bekämpfung des internationalen Terrorismus, Antiterrorpaket ",
+  "beratungsstand": "Verkündet",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "D112",
+  "archiv": "XIV/346",
+  "sachgebiet": [
+    "Öffentliche Finanzen, Steuern und Abgaben"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 14,
+  "zustimmungsbeduerftigkeit": [
+    "Nein"
+  ],
+  "initiative": [
+    "Bundesregierung"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "verkuendung": [
+    {
+      "jahrgang": "2001",
+      "heftnummer": "74",
+      "seite": "3964",
+      "ausfertigungsdatum": "2001-12-20",
+      "verkuendungsdatum": "2001-12-27",
+      "einleitungstext": "Gesetz",
+      "pdf_url": "https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&start=//*%5b@attr_id=%27bgbl101s3964.pdf%27%5d",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 2001, 3964"
+    }
+  ],
+  "inkrafttreten": [
+    {
+      "datum": "2002-01-01"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Bundesanstalt für Arbeit",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": true,
+      "name": "Bundeshaushaltsgesetz 2002",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Haushaltsgesetz",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Nettokreditaufnahme",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Stellenplan",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2002 (Haushaltsgesetz 2002) (G-SIG: 14019738)",
+  "datum": "2001-12-20"
+}

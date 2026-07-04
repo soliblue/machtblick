@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "216842",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/236",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "353688c06d9ea2dcf4ffc131664e84ce",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "230549",
+          "titel": "Anpassungsverfahren gemäß § 11 Absatz 4 des Abgeordnetengesetzes",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "CDU/CSU",
+          "titel": "Fraktion der CDU/CSU"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "FDP",
+          "titel": "Fraktion der FDP"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "SPD",
+          "titel": "Fraktion der SPD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/002/1900236.pdf",
+        "id": "216842",
+        "dokumentnummer": "19/236",
+        "datum": "2017-12-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der CDU/CSU",
+          "Fraktion der FDP",
+          "Fraktion der SPD"
+        ]
+      },
+      "titel": "Anpassungsverfahren gemäß § 11 Absatz 4 des Abgeordnetengesetzes",
+      "datum": "2017-12-11"
+    }
+  ],
+  "cursor": "AoJwuOjOouACMURydWNrc2FjaGUtMjE2ODQy"
+}

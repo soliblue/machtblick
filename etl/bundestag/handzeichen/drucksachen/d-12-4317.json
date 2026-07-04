@@ -1,0 +1,62 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "123966",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 5,
+      "dokumentnummer": "12/4317",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "f94b22b659798294de438011cba08dc3",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "154534",
+          "titel": "Gesetz zur Erleichterung von Investitionen und der Ausweisung und Bereitstellung von Wohnbauland (Investitionserleichterungs- und Wohnbaulandgesetz) (G-SIG: 12020433)",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "154446",
+          "titel": "Gesetz zur Erleichterung von Investitionen und der Ausweisung und Bereitstellung von Wohnbauland (Investitionserleichterungs- und Wohnbaulandgesetz) (G-SIG: 12020435)",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "155199",
+          "titel": "Gesetz zur Änderung des Baugesetzbuchs - § 22a (G-SIG: 12020414)",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "149615",
+          "titel": "Beschleunigung von Planungs- und Genehmigungsverfahren im Umweltbereich (G-SIG: 12011149)",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "RaumA",
+          "titel": "Ausschuss für Raumordnung, Bauwesen und Städtebau"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/043/1204317.pdf",
+        "id": "123966",
+        "dokumentnummer": "12/4317",
+        "datum": "1993-02-10",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Raumordnung, Bauwesen und Städtebau"
+        ]
+      },
+      "titel": "zu dem Gesetzentwurf der Fraktionen der CDU/CSU und F.D.P. - Drucksache 12/3944 - zu dem Gesetzentwurf der Bundesregierung - Drucksachen 12/4047, 12/4208 - Entwurf eines Gesetzes zur Erleichterung von Investitionen und der Ausweisung und Bereitstellung von Wohnbauland (Investitionserleichterungs- und Wohnbaulandgesetz)",
+      "datum": "1993-02-10"
+    }
+  ],
+  "cursor": "AoJwuPeK6KkBMURydWNrc2FjaGUtMTIzOTY2"
+}

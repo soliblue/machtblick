@@ -1,0 +1,50 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "99234",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 115,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/8394",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "763ed3182520747998552425cad57055",
+      "aktualisiert": "2002-02-27T00:00:00+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "116056",
+          "titel": "Gesetz zur Sicherstellung des Embryonenschutzes im Zusammenhang mit Einfuhr und Verwendung menschlicher embryonaler Stammzellen (Stammzellgesetz - StZG) (G-SIG: 14019907)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/083/1408394.pdf",
+        "id": "99234",
+        "dokumentnummer": "14/8394",
+        "datum": "2002-02-27",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "959",
+          "titel": "Dr. Gerd Andres, MdB, SPD",
+          "autor_titel": "Dr. Gerd Andres"
+        },
+        {
+          "id": "544",
+          "titel": "Rainer Arnold, MdB, SPD",
+          "autor_titel": "Rainer Arnold"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur Sicherstellung des Embryonenschutzes im Zusammenhang mit Einfuhr und Verwendung menschlicher embryonaler Stammzellen (Stammzellgesetz - StZG)",
+      "datum": "2002-02-27"
+    }
+  ],
+  "cursor": "AoJwuOPPo-wBMERydWNrc2FjaGUtOTkyMzQ="
+}

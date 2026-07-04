@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "77813",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "15/3660",
+      "wahlperiode": 15,
+      "herausgeber": "BT",
+      "pdf_hash": "8af6e31b81192bb83349a1af544d92a8",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "97609",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2005 (Haushaltsgesetz 2005) (G-SIG: 15019483)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/15/036/1503660.pdf",
+        "id": "77813",
+        "dokumentnummer": "15/3660",
+        "datum": "2004-08-13",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes \nüber die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2005\n(Haushaltsgesetz 2005)",
+      "datum": "2004-08-13"
+    }
+  ],
+  "cursor": "AoJw0Nzlq_4BMERydWNrc2FjaGUtNzc4MTM="
+}

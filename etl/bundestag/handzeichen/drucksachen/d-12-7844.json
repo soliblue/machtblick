@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "133192",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 1,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/7844",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "79c0e5ef903244df5b863cfe7da2e50c",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "155416",
+          "titel": "Gesetz zur Änderung des Arbeitsförderungsgesetzes im Bereich des Baugewerbes (G-SIG: 12020836)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "VermA",
+          "titel": "Vermittlungsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/078/1207844.pdf",
+        "id": "133192",
+        "dokumentnummer": "12/7844",
+        "datum": "1994-06-23",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Vermittlungsausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2543",
+          "titel": "Rudolf Dreßler, MdB, SPD",
+          "autor_titel": "Rudolf Dreßler, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetz zur Änderung des Arbeitsförderungsgesetzes im Bereich des Baugewerbes - Drucksachen 12/7564, 12/7688, 12/7863 -",
+      "datum": "1994-06-23"
+    }
+  ],
+  "cursor": "AoJw0Pik6rMBMURydWNrc2FjaGUtMTMzMTky"
+}

@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "219621",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/2383",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "93b117f973ca3f53fe48c2827c169a91",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "235900",
+          "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an der \"United Nations Interim Force in Lebanon\" (UNIFIL) auf Grundlage der Resolution 1701 (2006) des Sicherheitsrates der Vereinten Nationen und Folgeresolutionen, zuletzt Resolution 2373 (2017) vom 30. August 2017",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/023/1902383.pdf",
+        "id": "219621",
+        "dokumentnummer": "19/2383",
+        "datum": "2018-05-30",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an der \"United Nations Interim Force in Lebanon\" (UNIFIL) auf Grundlage der Resolution 1701 (2006) des Sicherheitsrates der Vereinten Nationen und Folgeresolutionen, zuletzt Resolution 2373 (2017) vom 30. August 2017\r\n",
+      "datum": "2018-05-30"
+    }
+  ],
+  "cursor": "AoJw0K2f2OMCMURydWNrc2FjaGUtMjE5NjIx"
+}

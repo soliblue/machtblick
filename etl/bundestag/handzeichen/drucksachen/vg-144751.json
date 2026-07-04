@@ -1,0 +1,37 @@
+{
+  "id": "144751",
+  "abstract": "Keine örtliche Trennung des Sitzes von Bundestag und Bundesregierung ",
+  "beratungsstand": "Abgelehnt",
+  "vorgangstyp": "Antrag",
+  "sachgebiet": [
+    "Bundestag",
+    "Staat und Verwaltung"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 12,
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Bundesorgan",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bundesregierung",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bundestag",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": true,
+      "name": "Hauptstadt",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Zur Erhaltung der Funktionsfähigkeit der parlamentarischen Demokratie (Erhaltung der Funktionsfähigkeit) (G-SIG: 12010163)",
+  "datum": "1991-09-03"
+}

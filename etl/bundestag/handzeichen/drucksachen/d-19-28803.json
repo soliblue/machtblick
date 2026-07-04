@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "252968",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/28803",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "759da9ca504b8114014ef669113e3fb5",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "276923",
+          "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an der Multidimensionalen Integrierten Stabilisierungsmission der Vereinten Nationen in Mali (MINUSMA)",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/288/1928803.pdf",
+        "id": "252968",
+        "dokumentnummer": "19/28803",
+        "datum": "2021-04-21",
+        "verteildatum": "2021-04-21",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an der Multidimensionalen Integrierten Stabilisierungsmission der Vereinten Nationen in Mali (MINUSMA)",
+      "datum": "2021-04-21"
+    }
+  ],
+  "cursor": "AoJwkOn3-fgCMURydWNrc2FjaGUtMjUyOTY4"
+}

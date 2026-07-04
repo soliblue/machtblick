@@ -1,0 +1,75 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "218745",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 33,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/1691",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "98271f478381d99c5b99caf84535957a",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "234584",
+          "titel": "Weidetierprämie für Schafe und Ziegen jetzt auf den Weg bringen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/016/1901691.pdf",
+        "id": "218745",
+        "dokumentnummer": "19/1691",
+        "datum": "2018-04-17",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN",
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "189",
+          "titel": "Dr. Kirsten Tackmann, MdB, DIE LINKE",
+          "autor_titel": "Dr. Kirsten Tackmann"
+        },
+        {
+          "id": "1002",
+          "titel": "Kersten Steinke, MdB, DIE LINKE",
+          "autor_titel": "Kersten Steinke"
+        },
+        {
+          "id": "1190",
+          "titel": "Friedrich Ostendorff, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Friedrich Ostendorff"
+        },
+        {
+          "id": "1349",
+          "titel": "Harald Ebner, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Harald Ebner"
+        }
+      ],
+      "titel": "Weidetierprämie für Schafe und Ziegen jetzt auf den Weg bringen",
+      "datum": "2018-04-17"
+    }
+  ],
+  "cursor": "AoJwkP_C6eICMURydWNrc2FjaGUtMjE4NzQ1"
+}

@@ -1,0 +1,74 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "92414",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 7,
+      "dokumentnummer": "14/9660",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "34262e83c852c6f3e057bb4998a2ffbc",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "113816",
+          "titel": "Historische Mitte Berlin (G-SIG: 14012811)",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "109846",
+          "titel": "Arbeitsweise der Expertenkommission Historische Mitte (G-SIG: 14011458)",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "108379",
+          "titel": "Wiederaufbau des Berliner Stadtschlosses (G-SIG: 14010553)",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "109732",
+          "titel": "Wiederaufbau des Berliner Stadtschlosses (G-SIG: 14011213)",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfKult",
+          "titel": "Ausschuss für Kultur und Medien"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/096/1409660.pdf",
+        "id": "92414",
+        "dokumentnummer": "14/9660",
+        "datum": "2002-07-02",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Kultur und Medien"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2679",
+          "titel": "Eckhardt Barthel (Berlin), MdB, SPD",
+          "autor_titel": "Eckhardt Barthel (Berlin), Berichterstattung"
+        },
+        {
+          "id": "8",
+          "titel": "Dr. Norbert Lammert, MdB, CDU/CSU",
+          "autor_titel": "Dr. Norbert Lammert, Berichterstattung"
+        }
+      ],
+      "titel": "a)A Abg Gerhardt, Rexrodt, Schmidt-Jorzig FDP -14/1752- Wiederaufbau des Berliner Stadtschlosses b)A Abg Lammert, Fischer (HH), Kansy, CDU/CSU -14/3673- Wiederauf... Stadtschlosses c) A der Abg. Lammert, Neumann (Bremen), Dr. Bergmann-Pohl, CDU/CSU -14/9023- Historische Mitte Berlins d)A Barthel, Bertl, Griefahn SPD sow. Eichstädt-Bohlig, Müller (Kö.) Schlauch B90 -14/9222- Empfeh.... e)A Rexrodt, Otto (F..) Schmidt-Jorzig FDP -14/9243- f)A PDS -14/4402-Arbeits... g)A PDS -14/9244- Die Mitte...",
+      "datum": "2002-07-02"
+    }
+  ],
+  "cursor": "AoJwkOOw5e4BMERydWNrc2FjaGUtOTI0MTQ="
+}

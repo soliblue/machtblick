@@ -1,0 +1,79 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "33800",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 3,
+      "dokumentnummer": "17/6400",
+      "wahlperiode": 17,
+      "herausgeber": "BT",
+      "pdf_hash": "b3bf77d96ea021c52ca32104e2b67b9d",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "34966",
+          "titel": "Gesetz zur Regelung der Präimplantationsdiagnostik (Präimplantationsdiagnostikgesetz -PräimpG)",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "34941",
+          "titel": "Gesetz zum Verbot der Präimplantationsdiagnostik",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "34970",
+          "titel": "Gesetz zur begrenzten Zulassung der Präimplantationsdiagnostik (Präimplantationsdiagnostikgesetz - PräimpG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfG",
+          "titel": "Ausschuss für Gesundheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/17/064/1706400.pdf",
+        "id": "33800",
+        "dokumentnummer": "17/6400",
+        "datum": "2011-06-30",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Gesundheit"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1005",
+          "titel": "Christine Aschenberg-Dugnus, MdB, FDP",
+          "autor_titel": "Christine Aschenberg-Dugnus, Berichterstattung"
+        },
+        {
+          "id": "480",
+          "titel": "Birgitt Bender, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Birgitt Bender, Berichterstattung"
+        },
+        {
+          "id": "479",
+          "titel": "Dr. Rolf Koschorrek, MdB, CDU/CSU",
+          "autor_titel": "Dr. Rolf Koschorrek, Berichterstattung"
+        },
+        {
+          "id": "367",
+          "titel": "Dr. Marlies Volkmer, MdB, SPD",
+          "autor_titel": "Dr. Marlies Volkmer, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Gesetzentwurf der Abgeordneten Katrin Göring-Eckardt, Volker Kauder, Pascal Kober, Johannes Singhammer, Dr. h.c. Wolfgang Thierse, Kathrin Vogler und weitere Abgeordnete\r\n- Drucksache 17/5450 -\r\nEntwurf eines Gesetzes zum Verbot der Präimplantationsdiagnostik\r\nb) zu dem Gesetzentwurf der Abgeordneten Ulrike Flach, Peter Hintze, Dr. Carola Reimann, Dr. Petra Sitte, Jerzy Montag, Heinz Lanfermann und weiterer Abgeordneter\r\n- Drucksache 17/5451 -\r\nEntwurf eines Gesetzes zur Regelung der Präimplantationsdiagnostik (Präimplantationsdiagnostikgesetz -PräimpG)\r\nc) zu dem Gesetzentwurf der Abgeordneten René Röspel, Priska Hinz (Herborn), Patrick Meinhardt, Dr. Norbert Lammert, Kerstin Andreae und weitere Abgeordnete\r\n- Drucksache 17/5452 -\r\nEntwurf eines Gesetzes zur begrenzten Zulassung der Präimplantationsdiagnostik (Präimplantationsdiagnostikgesetz - PräimpG)",
+      "datum": "2011-06-30"
+    }
+  ],
+  "cursor": "AoJw0LT_77ACMERydWNrc2FjaGUtMzM4MDA="
+}

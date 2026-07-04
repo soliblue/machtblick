@@ -1,0 +1,50 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "95384",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 292,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/533",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "0a0b5445632ff2ec54b37baf851ff9e8",
+      "aktualisiert": "1999-03-16T00:00:00+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "105687",
+          "titel": "Gesetz zur Reform des Staatsangehörigkeitsrechts (G-SIG: 14019108)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/005/1400533.pdf",
+        "id": "95384",
+        "dokumentnummer": "14/533",
+        "datum": "1999-03-16",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "361",
+          "titel": "Dr. Peter Struck, MdB, SPD",
+          "autor_titel": "Dr. Peter Struck"
+        },
+        {
+          "id": "7",
+          "titel": "Otto Schily, MdB, SPD",
+          "autor_titel": "Otto Schily"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur Reform des Staatsangehörigkeitsrechts",
+      "datum": "1999-03-16"
+    }
+  ],
+  "cursor": "AoJw-KqkydYBMERydWNrc2FjaGUtOTUzODQ="
+}

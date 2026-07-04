@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "96832",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/5068",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "04b85b7defb6dfe42beb818f0fbba6fa",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "110217",
+          "titel": "Gesetz zur Ergänzung des Gesetzes zur Reform der gesetzlichen Rentenversicherung und zur Förderung eines kapitalgedeckten Altersvorsorgevermögens (Altersvermögensergänzungsgesetz - AVmEG) (G-SIG: 14019528)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Arbeit und Sozialordnung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/050/1405068.pdf",
+        "id": "96832",
+        "dokumentnummer": "14/5068",
+        "datum": "2001-01-12",
+        "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Reform der gesetzlichen Rentenversicherung und zur Förderung eines kapitalgedeckten Altersvorsorgevermögens (Altersvermögensgesetz - AVmG)",
+      "datum": "2001-01-12"
+    }
+  ],
+  "cursor": "AoJw-KyqgeQBMERydWNrc2FjaGUtOTY4MzI="
+}

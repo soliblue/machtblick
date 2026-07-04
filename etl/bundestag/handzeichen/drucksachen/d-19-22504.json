@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "245061",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/22504",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "2f6dd8cbc663bc3e2a2cd6012d92c93e",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "267040",
+          "titel": "... Gesetz zur Änderung des Bundeswahlgesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "CDU/CSU",
+          "titel": "Fraktion der CDU/CSU"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "SPD",
+          "titel": "Fraktion der SPD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/225/1922504.pdf",
+        "id": "245061",
+        "dokumentnummer": "19/22504",
+        "datum": "2020-09-15",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der CDU/CSU",
+          "Fraktion der SPD"
+        ]
+      },
+      "titel": "Entwurf eines ... Gesetzes zur Änderung des Bundeswahlgesetzes",
+      "datum": "2020-09-15"
+    }
+  ],
+  "cursor": "AoJwkJ7NyPQCMURydWNrc2FjaGUtMjQ1MDYx"
+}

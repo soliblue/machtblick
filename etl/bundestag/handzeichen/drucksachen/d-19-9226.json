@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "228124",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 47,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/9226",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "0ab3184e3787272a350a37d344418511",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "246341",
+          "titel": "Weltweit mehr Wald für den Klimaschutz",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FDP",
+          "titel": "Fraktion der FDP"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/092/1909226.pdf",
+        "id": "228124",
+        "dokumentnummer": "19/9226",
+        "datum": "2019-04-09",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der FDP"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2226",
+          "titel": "Dr. Christoph Hoffmann, MdB, FDP",
+          "autor_titel": "Dr. Christoph Hoffmann"
+        },
+        {
+          "id": "2266",
+          "titel": "Alexander Graf Lambsdorff, MdB, FDP",
+          "autor_titel": "Alexander Graf Lambsdorff"
+        }
+      ],
+      "titel": "Weltweit mehr Wald für den Klimaschutz",
+      "datum": "2019-04-09"
+    }
+  ],
+  "cursor": "AoJw0MjigOoCMURydWNrc2FjaGUtMjI4MTI0"
+}

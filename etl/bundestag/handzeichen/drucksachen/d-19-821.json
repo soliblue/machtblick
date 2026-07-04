@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "217651",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 50,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/821",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "edce7604c62476e6859bc77697fb7ead",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "232177",
+          "titel": "Klimaziele verantwortungsbewusst erreichen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FDP",
+          "titel": "Fraktion der FDP"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/008/1900821.pdf",
+        "id": "217651",
+        "dokumentnummer": "19/821",
+        "datum": "2018-02-20",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der FDP"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2168",
+          "titel": "Daniel Föst, MdB, FDP",
+          "autor_titel": "Daniel Föst"
+        },
+        {
+          "id": "2254",
+          "titel": "Dr. Lukas Köhler, MdB, FDP",
+          "autor_titel": "Dr. Lukas Köhler"
+        }
+      ],
+      "titel": "Klimaziele verantwortungsbewusst erreichen",
+      "datum": "2018-02-20"
+    }
+  ],
+  "cursor": "AoJw-Ni32eECMURydWNrc2FjaGUtMjE3NjUx"
+}

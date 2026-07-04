@@ -35,6 +35,9 @@ await run('node', [join(HERE, '..', 'votes', 'procedural', 'run.mjs')])
 console.log('→ initiator backfill from plenarprotokoll XML')
 await run('node', [join(HERE, '..', 'votes', 'initiator', 'run.mjs')])
 
+console.log('→ initiator backfill from document text + DIP (fills remaining empties)')
+await run('npx', ['tsx', join(HERE, '..', '..', '..', 'db', 'backfill-initiators.ts')])
+
 console.log('→ self-no escalation (initiator voted NO → re-check polarity via LLM)')
 await run('node', [join(HERE, '..', 'polarity', 'self-no-escalate.mjs')])
 

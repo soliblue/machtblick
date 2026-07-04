@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "252763",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/28649",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "646be5813e0d4b6d7030d3708a4882f8",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "275852",
+          "titel": "Gesetz über die unternehmerischen Sorgfaltspflichten in Lieferketten",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Arbeit und Soziales"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/286/1928649.pdf",
+        "id": "252763",
+        "dokumentnummer": "19/28649",
+        "datum": "2021-04-19",
+        "verteildatum": "2021-04-19",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes über die unternehmerischen Sorgfaltspflichten in Lieferketten",
+      "datum": "2021-04-19"
+    }
+  ],
+  "cursor": "AoJwkNLk9PgCMURydWNrc2FjaGUtMjUyNzYz"
+}

@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "76683",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Wortlaut des Beitrittvertrags mit Anhängen sowie Denkschrift",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "15/1100",
+      "wahlperiode": 15,
+      "herausgeber": "BT",
+      "pdf_hash": "67452f13de6186b1978c98b466ecb88e",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "93588",
+          "titel": "Gesetz zu dem Vertrag vom 16. April 2003 über den Beitritt der Tschechischen Republik, der Republik Estland, der Republik Zypern, der Republik Lettland, der Republik Litauen, der Republik Ungarn, der Republik Malta, der Republik Polen, der Republik Slowenien und der Slowakischen Republik zur Europäischen Union (G-SIG: 15019154)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Auswärtiges Amt"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/15/011/1501100.pdf",
+        "id": "76683",
+        "dokumentnummer": "15/1100",
+        "datum": "2003-06-02",
+        "anlagen": "Wortlaut des Beitrittvertrags mit Anhängen sowie Denkschrift",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zu dem Vertrag vom 16. April 2003\nüber den Beitritt der Tschechischen Republik, der Republik Estland, der Republik Zypern, der Republik Lettland, der Republik Litauen, der Republik Ungarn, der Republik Malta, der Republik Polen, der Republik Slowenien und der Slowakischen Republik zur Europäischen Union",
+      "datum": "2003-06-02"
+    }
+  ],
+  "cursor": "AoJw0K_9w_UBMERydWNrc2FjaGUtNzY2ODM="
+}

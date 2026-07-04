@@ -115,7 +115,7 @@ async function fetchVorgangDrucksachen(vId) {
 
 async function resolveProposer(dnr) {
   const res = await fetchDrucksache(dnr)
-  const doc = res.documents?.[0]
+  const doc = (res.documents ?? []).find((d) => d.herausgeber === 'BT') ?? res.documents?.[0]
   if (!doc) return null
   const direct = SOURCE_TYPES.has(doc.drucksachetyp) ? proposerFromUrheber(doc.urheber) : null
   if (direct) return { proposer: direct, type: sourceType(doc) }

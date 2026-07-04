@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "255846",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/30964",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "c59553cf8e7380b63ed12bb8ff89c07d",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "279534",
+          "titel": "Keine Verwendung der sogenannten gendergerechten Sprache durch die Bundesregierung",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/309/1930964.pdf",
+        "id": "255846",
+        "dokumentnummer": "19/30964",
+        "datum": "2021-06-22",
+        "verteildatum": "2021-06-23",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2075",
+          "titel": "Stephan Brandner, MdB, AfD",
+          "autor_titel": "Stephan Brandner"
+        },
+        {
+          "id": "2221",
+          "titel": "Prof. Dr. Heiko Heßenkemper, MdB, AfD",
+          "autor_titel": "Prof. Dr. Heiko Heßenkemper"
+        }
+      ],
+      "titel": "Keine Verwendung der sogenannten gendergerechten Sprache durch die Bundesregierung",
+      "datum": "2021-06-22"
+    }
+  ],
+  "cursor": "AoJwkLLKmfoCMURydWNrc2FjaGUtMjU1ODQ2"
+}

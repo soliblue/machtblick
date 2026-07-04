@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "230107",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/10899",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "a31b25f9cbb9030a7a614a4691f0f355",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "248592",
+          "titel": "Zweites Gesetz zur Änderung des Bundesnaturschutzgesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Umwelt, Naturschutz und nukleare Sicherheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/108/1910899.pdf",
+        "id": "230107",
+        "dokumentnummer": "19/10899",
+        "datum": "2019-06-14",
+        "verteildatum": "2019-07-04",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Zweiten Gesetzes zur Änderung des Bundesnaturschutzgesetzes",
+      "datum": "2019-06-14"
+    }
+  ],
+  "cursor": "AoJw0L_bqusCMURydWNrc2FjaGUtMjMwMTA3"
+}

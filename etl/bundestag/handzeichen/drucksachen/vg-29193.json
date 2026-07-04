@@ -1,0 +1,100 @@
+{
+  "id": "29193",
+  "abstract": "Ratifikation des am 25. Mai 2010 in Berlin unterzeichneten Änderungsprotokolls: Beseitigung der fiktiven Anrechnung von Quellensteuern (entspricht dem aktuellen OECD-Musterabkommen)",
+  "beratungsstand": "Verkündet",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "XD016",
+  "archiv": "XVII/97",
+  "sachgebiet": [
+    "Öffentliche Finanzen, Steuern und Abgaben"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 17,
+  "zustimmungsbeduerftigkeit": [
+    "Ja, laut Gesetzentwurf (Drs 542/10)",
+    "Ja, laut Verkündung (BGBl II)"
+  ],
+  "initiative": [
+    "Bundesregierung"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "verkuendung": [
+    {
+      "jahrgang": "2011",
+      "heftnummer": "7",
+      "seite": "250",
+      "ausfertigungsdatum": "2011-02-25",
+      "verkuendungsdatum": "2011-03-03",
+      "einleitungstext": "Gesetz",
+      "pdf_url": "https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&start=//*%5b@attr_id=%27bgbl211s0250.pdf%27%5d",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil II",
+      "verkuendungsblatt_kuerzel": "BGBl II",
+      "fundstelle": "BGBl II 2011, 250"
+    },
+    {
+      "jahrgang": "2011",
+      "heftnummer": "21",
+      "seite": "741B",
+      "ausfertigungsdatum": "2011-06-23",
+      "verkuendungsdatum": "2011-08-09",
+      "einleitungstext": "Bekanntmachung",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil II",
+      "verkuendungsblatt_kuerzel": "BGBl II",
+      "fundstelle": "BGBl II 2011, 741B"
+    }
+  ],
+  "inkrafttreten": [
+    {
+      "datum": "2011-03-04",
+      "erlaeuterung": "weiteres siehe im BGBl"
+    },
+    {
+      "datum": "2011-06-03",
+      "erlaeuterung": "nach Artikel 2 Absatz 2"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Doppelbesteuerung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Doppelbesteuerungsabkommen",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Einkommensteuer",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gewerbesteuer",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Irland",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Quellensteuer",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Steuerdelikt",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Vermögensteuer",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Gesetz zu dem Änderungsprotokoll vom 25. Mai 2010 zum Abkommen vom 17. Oktober 1962 zwischen der Bundesrepublik Deutschland und Irland zur Vermeidung der Doppelbesteuerung und zur Verhinderung der Steuerverkürzung bei den Steuern vom Einkommen und vom Vermögen sowie der Gewerbesteuer",
+  "datum": "2011-02-11"
+}

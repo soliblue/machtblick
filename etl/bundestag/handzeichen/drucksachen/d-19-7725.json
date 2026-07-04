@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "226335",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/7725",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "e4997898eaa1ee61afe1a3164d637859",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "244229",
+          "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an dem Hybriden Einsatz der Afrikanischen Union und der Vereinten Nationen in Darfur (UNAMID)",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/077/1907725.pdf",
+        "id": "226335",
+        "dokumentnummer": "19/7725",
+        "datum": "2019-02-13",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an dem Hybriden Einsatz der Afrikanischen Union und der Vereinten Nationen in Darfur (UNAMID)",
+      "datum": "2019-02-13"
+    }
+  ],
+  "cursor": "AoJw-O2g8-gCMURydWNrc2FjaGUtMjI2MzM1"
+}

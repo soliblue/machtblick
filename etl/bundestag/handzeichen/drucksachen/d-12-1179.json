@@ -1,0 +1,50 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "133579",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 46,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/1179",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "9611e4674dc8d1e4b065ad5d965fbcf4",
+      "aktualisiert": "1991-09-20T00:00:00+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "154157",
+          "titel": "Gesetz zum Schutz der ungeborenen Kinder (G-SIG: 12020163)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/011/1201179.pdf",
+        "id": "133579",
+        "dokumentnummer": "12/1179",
+        "datum": "1991-09-20",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "3206",
+          "titel": "Herbert Werner (Ulm), MdB, CDU/CSU",
+          "autor_titel": "Herbert Werner (Ulm)"
+        },
+        {
+          "id": "2591",
+          "titel": "Monika Brudlewsky, MdB, CDU/CSU",
+          "autor_titel": "Monika Brudlewsky"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zum Schutz der ungeborenen Kinder",
+      "datum": "1991-09-20"
+    }
+  ],
+  "cursor": "AoJwkPyryZ8BMURydWNrc2FjaGUtMTMzNTc5"
+}

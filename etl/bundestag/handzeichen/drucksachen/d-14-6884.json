@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "99345",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/6884",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "17be9fa08ff0a09b81a6d0687bfbb98e",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "113718",
+          "titel": "Erstes Gesetz zur Änderung des Schuldrechtsanpassungsgesetzes (G-SIG: 14019696)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Justiz"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/068/1406884.pdf",
+        "id": "99345",
+        "dokumentnummer": "14/6884",
+        "datum": "2001-09-10",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Ersten Gesetzes zur Änderung des Schuldrechtsanpassungsgesetzes",
+      "datum": "2001-09-10"
+    }
+  ],
+  "cursor": "AoJw0OLj7egBMERydWNrc2FjaGUtOTkzNDU="
+}

@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "223745",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 28,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/5607",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "f43851b0f430bb6da134fb766187a44f",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "238518",
+          "titel": "Gesetz zur steuerlichen Entlastung der Familien sowie zur Anpassung weiterer steuerlicher Regelungen (Familienentlastungsgesetz - FamEntlastG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FDP",
+          "titel": "Fraktion der FDP"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/056/1905607.pdf",
+        "id": "223745",
+        "dokumentnummer": "19/5607",
+        "datum": "2018-11-07",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der FDP"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1437",
+          "titel": "Dr. Florian Toncar, MdB, FDP",
+          "autor_titel": "Dr. Florian Toncar"
+        },
+        {
+          "id": "2127",
+          "titel": "Christian Dürr, MdB, FDP",
+          "autor_titel": "Christian Dürr"
+        }
+      ],
+      "titel": "zu der zweiten Beratung des Gesetzentwurfs der Bundesregierung\r\n- Drucksachen 19/4723, 19/5583 -\r\nEntwurf eines Gesetzes zur steuerlichen Entlastung der Familien sowie zur Anpassung weiterer steuerlicher Regelungen (Familienentlastungsgesetz - FamEntlastG)",
+      "datum": "2018-11-07"
+    }
+  ],
+  "cursor": "AoJw-Ib19uYCMURydWNrc2FjaGUtMjIzNzQ1"
+}

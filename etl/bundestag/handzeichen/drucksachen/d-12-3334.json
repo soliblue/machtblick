@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "136976",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Wortlaut des Vertrages, Protokolle, Denkschrift sowie Stellungnahme BR u.GegÄuß BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/3334",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "423335848633b129cc9f19dbc36be5b5",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "154340",
+          "titel": "Gesetz zum Vertrag vom 7. Februar 1992 über die Europäische Union (G-SIG: 12020355)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Auswärtiges Amt"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/033/1203334.pdf",
+        "id": "136976",
+        "dokumentnummer": "12/3334",
+        "datum": "1992-10-01",
+        "anlagen": "Wortlaut des Vertrages, Protokolle, Denkschrift sowie Stellungnahme BR u.GegÄuß BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zum Vertrag vom 7. Februar 1992 über die Europäische Union",
+      "datum": "1992-10-01"
+    }
+  ],
+  "cursor": "AoJwuImZlKcBMURydWNrc2FjaGUtMTM2OTc2"
+}

@@ -1,0 +1,100 @@
+{
+  "id": "301514",
+  "beratungsstand": "Angenommen",
+  "vorgangstyp": "Antrag",
+  "sachgebiet": [
+    "Gesundheit"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 20,
+  "aktualisiert": "2023-10-05T14:00:12+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Baumaßnahme",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bericht der Bundesregierung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Berufliche Weiterbildung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bundesministerium für Gesundheit",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesetzgebung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesundheitsberuf",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesundheitsvorsorge",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Medizinische Forschung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Palliativversorgung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Programm der Bundesregierung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Psychiatrie",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Psychosoziale Beratung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Psychotherapie",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Suizid",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Zivilschutz",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Zivilschutz- und Katastrophenhilfegesetz",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Öffentlichkeitsarbeit der Bundesregierung",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Suizidprävention stärken",
+  "datum": "2023-07-06"
+}

@@ -1,0 +1,56 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "259822",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "PDF-Datei enthält auch Entwürfe der Einzelpläne",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "20/1000",
+      "wahlperiode": 20,
+      "herausgeber": "BT",
+      "pdf_hash": "5446db564c5fe7767b96930d6cfb03e4",
+      "aktualisiert": "2022-10-11T15:32:29+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "285457",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2022 (Haushaltsgesetz 2022)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/20/010/2001000.pdf",
+        "id": "259822",
+        "dokumentnummer": "20/1000",
+        "datum": "2022-03-18",
+        "verteildatum": "2022-03-18",
+        "anlagen": "PDF-Datei enthält auch Entwürfe der Einzelpläne",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2022 (Haushaltsgesetz 2022)",
+      "datum": "2022-03-18"
+    }
+  ],
+  "cursor": "AoJwuOWrzv8CMURydWNrc2FjaGUtMjU5ODIy"
+}

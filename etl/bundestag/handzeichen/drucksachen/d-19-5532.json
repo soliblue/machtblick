@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "223669",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 23,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/5532",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "e19659755aaa44dec23b3c0e2e60dad9",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "241230",
+          "titel": "Verbot von Tierexporten aus Deutschland - Insbesondere in Nicht-EU-Länder, bei nicht EU-rechtskonformen Transport-, Haltungs- und Schlachtbedingungen sowie Sicherstellung der Einhaltung der EU-Tiertransportvorgaben auf dem Gebiet der Bundesrepublik Deutschland und Ausarbeitung von geeigneten Straf- beziehungsweise Ordnungswidrigkeitsvorschriften für Verstöße gegen die EU-Tiertransportvorgaben",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/055/1905532.pdf",
+        "id": "223669",
+        "dokumentnummer": "19/5532",
+        "datum": "2018-11-07",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2129",
+          "titel": "Thomas Ehrhorn, MdB, AfD",
+          "autor_titel": "Thomas Ehrhorn"
+        },
+        {
+          "id": "2072",
+          "titel": "Peter Boehringer, MdB, AfD",
+          "autor_titel": "Peter Boehringer"
+        }
+      ],
+      "titel": "Verbot von Tierexporten aus Deutschland - Insbesondere in Nicht-EU-Länder, bei nicht EU-rechtskonformen Transport-, Haltungs- und Schlachtbedingungen sowie Sicherstellung der Einhaltung der EU-Tiertransport-vorgaben auf dem Gebiet der Bundesrepublik Deutschland und Ausarbeitung von geeigneten Straf- beziehungsweise Ordnungswidrigkeitsvorschriften für Verstöße gegen die EU-Tiertransportvorgaben\r\n",
+      "datum": "2018-11-07"
+    }
+  ],
+  "cursor": "AoJw-Ib19uYCMURydWNrc2FjaGUtMjIzNjY5"
+}

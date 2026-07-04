@@ -1,0 +1,61 @@
+{
+  "id": "57113",
+  "vorgangstyp": "EU-Vorlage",
+  "typ": "Vorgang",
+  "wahlperiode": 18,
+  "ratsdok": "5567/14",
+  "kom": "(2014) 6 endg.",
+  "initiative": [
+    "Europäische Kommission"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Arbeitskraft",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Arbeitsmarkt",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Arbeitsmarktpolitik",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Arbeitsvermittlung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Arbeitsverwaltung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "EURES",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Kooperation",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Mobilität",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Verordnung der EU",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Vorschlag für eine Verordnung des Europäischen Parlaments und des Rates über ein Europäisches Netz der Arbeitsvermittlungen, den Zugang von Arbeitskräften zu mobilitätsfördernden Diensten und die weitere Integration der Arbeitsmärkte\r\nKOM(2014) 6 endg.; Ratsdok. 5567/14",
+  "datum": "2014-06-06"
+}

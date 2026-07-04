@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "96450",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/4513",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "dc594a68cd842e752b25807b4218359d",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "114175",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2001 (Haushaltsgesetz 2001) (G-SIG: 14019431)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "HaushA",
+          "titel": "Haushaltsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/045/1404513.pdf",
+        "id": "96450",
+        "dokumentnummer": "14/4513",
+        "datum": "2000-10-26",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Haushaltsausschuss"
+        ]
+      },
+      "titel": "zu dem Entwurf eines Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2001 (Haushaltsgesetz 2001) -14/4000- hier: Einzelplan 14 Geschäftsbereich des Bundesministeriums der Verteidigung",
+      "datum": "2000-10-26"
+    }
+  ],
+  "cursor": "AoJwkM6wuOIBMERydWNrc2FjaGUtOTY0NTA="
+}

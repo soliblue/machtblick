@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "139175",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/5616",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "067ff771e6add96158db7ad2d43d4598",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "155139",
+          "titel": "Entgeltfortzahlungsgesetz (G-SIG: 12020608)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Arbeit und Sozialordnung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/056/1205616.pdf",
+        "id": "139175",
+        "dokumentnummer": "12/5616",
+        "datum": "1993-09-04",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Entgeltfortzahlungsgesetzes",
+      "datum": "1993-09-04"
+    }
+  ],
+  "cursor": "AoJw0Nq0-q0BMURydWNrc2FjaGUtMTM5MTc1"
+}

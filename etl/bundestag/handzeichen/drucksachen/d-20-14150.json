@@ -1,0 +1,46 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "277683",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 1,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "20/14150",
+      "wahlperiode": 20,
+      "herausgeber": "BT",
+      "pdf_hash": "87df25d0b9afb04f6d2487fd5c7c13f5",
+      "aktualisiert": "2024-12-11T16:05:04+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "318527",
+          "titel": "Antrag des Bundeskanzlers Olaf Scholz gemäß Artikel 68 des Grundgesetzes",
+          "vorgangstyp": "Vertrauensantrag des Bundeskanzlers"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/20/141/2014150.pdf",
+        "id": "277683",
+        "dokumentnummer": "20/14150",
+        "datum": "2024-12-11",
+        "verteildatum": "2024-12-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "986",
+          "titel": "Olaf Scholz, Bundeskanzl.",
+          "autor_titel": "Olaf Scholz"
+        }
+      ],
+      "titel": "Antrag des Bundeskanzlers gemäß Artikel 68 des Grundgesetzes",
+      "datum": "2024-12-11"
+    }
+  ],
+  "cursor": "AoJw-IXY2pMDMURydWNrc2FjaGUtMjc3Njgz"
+}

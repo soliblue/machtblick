@@ -1,0 +1,57 @@
+{
+  "id": "326354",
+  "abstract": "Klarstellungen und redaktionelle Änderungen zum Einsatz von Taxametern und Wegstreckenzählern durch Taxiunternehmer; Aufhebung der Einschränkung der Übergangsregelung bei einem Fahrzeugwechsel, Übernahme der bisherigen Bestimmung zur Anwendung auf Wegstreckenzähler durch ein BMF-Schreiben, Aufnahme älterer Wegstreckenzähler mit digitaler Schnittstelle in den Anwendungsbereich",
+  "vorgangstyp": "Rechtsverordnung",
+  "sachgebiet": [
+    "Wirtschaft",
+    "Öffentliche Finanzen, Steuern und Abgaben"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 21,
+  "initiative": [
+    "Bundesministerium der Finanzen"
+  ],
+  "aktualisiert": "2026-02-04T17:58:52+01:00",
+  "verkuendung": [
+    {
+      "jahrgang": "2026",
+      "heftnummer": "10",
+      "ausfertigungsdatum": "2026-01-14",
+      "verkuendungsdatum": "2026-01-19",
+      "einleitungstext": "Verordnung",
+      "pdf_url": "https://www.recht.bund.de/eli/bund/BGBl_1/2026/10",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 2026, 10"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": true,
+      "name": "Buchführung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Intelligentes Messsystem",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Kassensicherungsverordnung",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Tachometer",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Taxigewerbe",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Zweite Verordnung zur Änderung der Kassensicherungsverordnung",
+  "datum": "2025-12-19"
+}

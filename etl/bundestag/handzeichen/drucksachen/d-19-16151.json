@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "237376",
+      "drucksachetyp": "Entschließungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 14,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/16151",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "d46f337241c72b5a3e3318a36171245a",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "257006",
+          "titel": "Entschließungsantrag zum Zweiten Gesetz zur Änderung des Bundesnaturschutzgesetzes",
+          "vorgangstyp": "Entschließungsantrag BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/161/1916151.pdf",
+        "id": "237376",
+        "dokumentnummer": "19/16151",
+        "datum": "2019-12-18",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Entschließungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "189",
+          "titel": "Dr. Kirsten Tackmann, MdB, DIE LINKE",
+          "autor_titel": "Dr. Kirsten Tackmann"
+        },
+        {
+          "id": "7816",
+          "titel": "Ralph Lenkert, MdB, DIE LINKE",
+          "autor_titel": "Ralph Lenkert"
+        }
+      ],
+      "titel": "zu der dritten Beratung des Gesetzentwurfs der Bundesregierung\r\n- Drucksachen 19/10899, 19/13289, 19/16148 -\r\nEntwurf eines Zweiten Gesetzes zur Änderung des Bundesnaturschutzgesetzes",
+      "datum": "2019-12-18"
+    }
+  ],
+  "cursor": "AoJw-MOqjO8CMURydWNrc2FjaGUtMjM3Mzc2"
+}

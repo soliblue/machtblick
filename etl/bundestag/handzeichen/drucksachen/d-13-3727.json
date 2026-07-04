@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "106115",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/3727",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "6bc7478690dda48108a28202c6d93ee9",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "120682",
+          "titel": "Erstes Gesetz zur Änderung des Asylbewerberleistungsgesetzes und anderer Gesetze (G-SIG: 13020305)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PDS (Gruppe)",
+          "titel": "Gruppe der PDS"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/037/1303727.pdf",
+        "id": "106115",
+        "dokumentnummer": "13/3727",
+        "datum": "1996-02-07",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Gruppe der PDS"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2544",
+          "titel": "Dr. Ruth Fuchs, MdB, PDS (Gruppe)",
+          "autor_titel": "Dr. Ruth Fuchs"
+        },
+        {
+          "id": "751",
+          "titel": "Dr. Heidi Knake-Werner, MdB, PDS (Gruppe)",
+          "autor_titel": "Dr. Heidi Knake-Werner"
+        }
+      ],
+      "titel": "zur zweiten Beratung des Gesetzesentwurfs - Drucksachen 13/2746, 13/3475, 13/3720, 13/3728 - Entwurf eines Ersten Gesetzes zur Änderung des Asylbewerberleistungsgesetzes und anderer Gesetze",
+      "datum": "1996-02-07"
+    }
+  ],
+  "cursor": "AoJwuIXz478BMURydWNrc2FjaGUtMTA2MTE1"
+}

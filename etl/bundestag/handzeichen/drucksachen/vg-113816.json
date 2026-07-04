@@ -1,0 +1,35 @@
+{
+  "id": "113816",
+  "abstract": "Umsetzung der Empfehlungen der Internationalen Expertenkommission &quot;Historische Mitte Berlin&quot; zur Neubebauung des Schlossplatzes<br />\r\n<br />\r\n<span style=\"font-weight: bold;\">Beschlussempfehlung des Ausschusses:</span> Wiedererrichtung des Berliner Stadtschlosses mit den barocken Fassaden der Nord-, West- und Südseite sowie des Schlüterhofes als Alternative A bzw. Wiederaufbau in moderner Architektur bei Einhaltung der Stereometrie des ehemaligen Schlosses als Alternative B; Architektenwettbewerb, Nutzungskonzept, privat-öffentliche Finanzierung",
+  "beratungsstand": "Für erledigt erklärt",
+  "vorgangstyp": "Antrag",
+  "sachgebiet": [
+    "Kultur",
+    "Raumordnung, Bau- und Wohnungswesen"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 14,
+  "initiative": [
+    "Fraktion der CDU/CSU"
+  ],
+  "aktualisiert": "2023-07-06T11:03:20+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": true,
+      "name": "Berlin",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Kultur",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Schloss (Gebäude)",
+      "typ": "Freier Deskriptor"
+    }
+  ],
+  "titel": "Historische Mitte Berlin (G-SIG: 14012811)",
+  "datum": "2002-08-29"
+}

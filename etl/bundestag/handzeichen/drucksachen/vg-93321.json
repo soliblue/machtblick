@@ -1,0 +1,75 @@
+{
+  "id": "93321",
+  "abstract": "<b>Bezug:</b> Entschließung des Deutschen Bundestages zum Ersten Gesetz für moderne Dienstleistungen am Arbeitsmarkt (Hartz I) auf BT Drs. 15/98 (s. E005); Entscheidung des Bundesverwaltungsgerichts vom 25. Februar 1992 (GewArch 1992 S. 386), Entscheidungen des Bundesverfassungsgerichts vom 31. März 2000 (1 BvR 608/99) und vom 27. September 2000 (1 BvR 2176/98) Siehe auch D015, D017, E024, E027 und E032 <br><br><b>Inhalt:</b> Änderung § 1 Handwerksordnung: Klarstellung betr. nicht zum Kernbereich eines Handwerks gehörende Tätigkeit, insbesondere zur Förderung der Aufnahme einer selbständigen Tätigkeit in diesem Rahmen (damit Öffnung handwerklicher Tätigkeiten für Ich-AGs). Es entstehen keine Kosten. <br><br><b>Änderungen durch das Vermittlungsverfahren:</b> Änderung § 90 Handwerksordnung: Möglichkeit für Handwerksgesellen, sich nach sechs Jahren Berufserfahrung mit einem Qualifizierungsnachweis im kaufmännischen Bereich selbständig zu machen, Zugehörigkeit dieser Unternehmen zum Handwerkskammerbereich. <br><br><b>Nebenschlagwörter:</b> Kleine und mittlere Unternehmen/Gesetz zur Änderung der Handwerksordnung und zur Förderung von Kleinunternehmen * Ich-AG/ Öffnung handwerklicher Tätigkeiten für Ich-AGs * Meisterprüfung/ Zulassung bestimmter handwerklicher Gewerbetätigkeiten ohne Meisterprüfung ",
+  "beratungsstand": "Verkündet",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "E022",
+  "archiv": "XV/90",
+  "sachgebiet": [
+    "Bildung und Erziehung",
+    "Wirtschaft"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 15,
+  "zustimmungsbeduerftigkeit": [
+    "Ja"
+  ],
+  "initiative": [
+    "Fraktion BÜNDNIS 90/DIE GRÜNEN",
+    "Fraktion der SPD"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "verkuendung": [
+    {
+      "jahrgang": "2003",
+      "heftnummer": "66",
+      "seite": "2933",
+      "ausfertigungsdatum": "2003-12-24",
+      "verkuendungsdatum": "2003-12-29",
+      "einleitungstext": "Gesetz",
+      "pdf_url": "https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&start=//*%5b@attr_id=%27bgbl103s2933.pdf%27%5d",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 2003, 2933"
+    }
+  ],
+  "inkrafttreten": [
+    {
+      "datum": "2003-12-30"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Berufsausbildung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gewerbliche Wirtschaft",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": true,
+      "name": "Handwerksordnung",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Ich-AG",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Klein- und Mittelunternehmen",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Mittelstand",
+      "typ": "Freier Deskriptor"
+    }
+  ],
+  "titel": "Gesetz zur Änderung der Handwerksordnung und zur Förderung von Kleinunternehmen (G-SIG: 15019167)",
+  "datum": "2003-12-19"
+}

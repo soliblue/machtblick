@@ -1,0 +1,42 @@
+{
+  "id": "111299",
+  "abstract": "Verbot des Imports von humanen embryonalen Stammzellen, Förderung ethisch unproblematischer Forschungsalternativen (z. B. adulte Stammzellen), gesetzliche Klarstellung des Importverbots ",
+  "beratungsstand": "Abgelehnt",
+  "vorgangstyp": "Antrag",
+  "sachgebiet": [
+    "Gesundheit",
+    "Wissenschaft, Forschung und Technologie"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 14,
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Einfuhrbeschränkung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Forschung und Technologie",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesundheit",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Medizinische Forschung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Stammzelle",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Schutz der Menschenwürde angesichts der biomedizinischen Möglichkeiten - Kein Import embryonaler Stammzellen (G-SIG: 14012575)",
+  "datum": "2002-02-20"
+}

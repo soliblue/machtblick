@@ -1,0 +1,100 @@
+{
+  "numFound": 2,
+  "documents": [
+    {
+      "id": "48346",
+      "drucksachetyp": "Unterrichtung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/14",
+      "wahlperiode": 18,
+      "herausgeber": "BR",
+      "pdf_hash": "c419dd894e983d2a9f7de80c8697a777",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "57113",
+          "titel": "Vorschlag für eine Verordnung des Europäischen Parlaments und des Rates über ein Europäisches Netz der Arbeitsvermittlungen, den Zugang von Arbeitskräften zu mobilitätsfördernden Diensten und die weitere Integration der Arbeitsmärkte\r\nKOM(2014) 6 endg.; Ratsdok. 5567/14",
+          "vorgangstyp": "EU-Vorlage"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "EU-Kommission",
+          "titel": "Europäische Kommission"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2014/0014-14.pdf",
+        "id": "48346",
+        "dokumentnummer": "14/14",
+        "datum": "2014-01-17",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Unterrichtung",
+        "herausgeber": "BR",
+        "urheber": [
+          "Europäische Kommission"
+        ]
+      },
+      "titel": "Vorschlag für eine Verordnung des Europäischen Parlaments und des Rates über ein Europäisches Netz der Arbeitsvermittlungen, den Zugang von Arbeitskräften zu mobilitätsfördernden Diensten und die weitere Integration der Arbeitsmärkte",
+      "datum": "2014-01-17"
+    },
+    {
+      "id": "86137",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 3,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/14",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "c20a619cc430d5c2e15973876954d5b8",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "103424",
+          "titel": "Gesetz zur solidarischen Ausbildungsfinanzierung (Ausbildungsfinanzierungsgesetz) (G-SIG: 14019010)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PDS",
+          "titel": "Fraktion der PDS"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/000/1400014.pdf",
+        "id": "86137",
+        "dokumentnummer": "14/14",
+        "datum": "1998-11-04",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der PDS"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2562",
+          "titel": "Maritta Böttcher, MdB, PDS",
+          "autor_titel": "Maritta Böttcher"
+        },
+        {
+          "id": "2598",
+          "titel": "Rosel Neuhäuser, MdB, PDS",
+          "autor_titel": "Rosel Neuhäuser"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur solidarischen Ausbildungsfinanzierung (Ausbildungsfinanzierungsgesetz)",
+      "datum": "1998-11-04"
+    }
+  ],
+  "cursor": "AoJw-Lyy9dMBMERydWNrc2FjaGUtODYxMzc="
+}

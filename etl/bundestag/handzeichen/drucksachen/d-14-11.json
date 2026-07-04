@@ -1,0 +1,88 @@
+{
+  "numFound": 2,
+  "documents": [
+    {
+      "id": "30809",
+      "drucksachetyp": "Gesetzesbeschluss",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/11",
+      "wahlperiode": 17,
+      "herausgeber": "BR",
+      "pdf_hash": "992ca3f8d5b387217746f85770e8ece5",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "29193",
+          "titel": "Gesetz zu dem Änderungsprotokoll vom 25. Mai 2010 zum Abkommen vom 17. Oktober 1962 zwischen der Bundesrepublik Deutschland und Irland zur Vermeidung der Doppelbesteuerung und zur Verhinderung der Steuerverkürzung bei den Steuern vom Einkommen und vom Vermögen sowie der Gewerbesteuer",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BT",
+          "titel": "Bundestag"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2011/0014-11.pdf",
+        "id": "30809",
+        "dokumentnummer": "14/11",
+        "datum": "2011-01-21",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzesbeschluss",
+        "herausgeber": "BR",
+        "urheber": [
+          "Bundestag"
+        ]
+      },
+      "titel": "Gesetz zu dem Änderungsprotokoll vom 25. Mai 2010 zum Abkommen vom 17. Oktober 1962 zwischen der Bundesrepublik Deutschland und Irland zur Vermeidung der Doppelbesteuerung und zur Verhinderung der Steuerverkürzung bei den Steuern vom Einkommen und vom Vermögen sowie der Gewerbesteuer",
+      "datum": "2011-01-21"
+    },
+    {
+      "id": "83757",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/11",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "a3c2e0a79109100c47ece4bb97e91e94",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "102712",
+          "titel": "Wiedererhebung der Vermögensteuer (G-SIG: 14010001)",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PDS",
+          "titel": "Fraktion der PDS"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/000/1400011.pdf",
+        "id": "83757",
+        "dokumentnummer": "14/11",
+        "datum": "1998-10-28",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der PDS"
+        ]
+      },
+      "titel": "Wiedererhebung der Vermögensteuer",
+      "datum": "1998-10-28"
+    }
+  ],
+  "cursor": "AoJwuKyv49MBMERydWNrc2FjaGUtODM3NTc="
+}

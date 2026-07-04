@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "140019",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 342,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/6708",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "d9ab69ad8f28a75d25125ee1494e9824",
+      "aktualisiert": "1994-01-31T00:00:00+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "155424",
+          "titel": "Gesetz zur Änderung des Grundgesetzes (Artikel 2a) (G-SIG: 12020740)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/067/1206708.pdf",
+        "id": "140019",
+        "dokumentnummer": "12/6708",
+        "datum": "1994-01-31",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "3203",
+          "titel": "Dr. Konrad Elmer, MdB, SPD",
+          "autor_titel": "Dr. Konrad Elmer"
+        },
+        {
+          "id": "3264",
+          "titel": "Susanne Rahardt-Vahldieck, MdB, CDU/CSU",
+          "autor_titel": "Susanne Rahardt-Vahldieck"
+        },
+        {
+          "id": "3246",
+          "titel": "Dr. Christoph Schnittler, MdB, FDP",
+          "autor_titel": "Dr. Christoph Schnittler"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur Änderung des Grundgesetzes (Artikel 2 a)",
+      "datum": "1994-01-31"
+    }
+  ],
+  "cursor": "AoJw-KmX-rABMURydWNrc2FjaGUtMTQwMDE5"
+}

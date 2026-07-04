@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "217787",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 54,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/958",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "fb9205211b7a29afc6bfe919181438ca",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "232543",
+          "titel": "Gesetz zu dem umfassenden Wirtschafts- und Handelsabkommen vom 30. Oktober 2016 zwischen Kanada einerseits und der Europäischen Union und ihren Mitgliedstaaten andererseits",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FDP",
+          "titel": "Fraktion der FDP"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/009/1900958.pdf",
+        "id": "217787",
+        "dokumentnummer": "19/958",
+        "datum": "2018-02-27",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der FDP"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1171",
+          "titel": "Christian Lindner, MdB, FDP",
+          "autor_titel": "Christian Lindner"
+        },
+        {
+          "id": "2266",
+          "titel": "Alexander Graf Lambsdorff, MdB, FDP",
+          "autor_titel": "Alexander Graf Lambsdorff"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zu dem umfassenden Wirtschafts- und Handelsabkommen vom 30. Oktober 2016 zwischen Kanada einerseits und der Europäischen Union und ihren Mitgliedstaaten andererseits",
+      "datum": "2018-02-27"
+    }
+  ],
+  "cursor": "AoJwuOm66-ECMURydWNrc2FjaGUtMjE3Nzg3"
+}

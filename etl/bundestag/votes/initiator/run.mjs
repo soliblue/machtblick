@@ -4,12 +4,13 @@ import { parseProposingParty } from '../../polarity/proposer.mjs'
 import { extractInitiatorClause } from './extract.mjs'
 
 const db = new Database(fileURLToPath(new URL('../../../../db/machtblick.sqlite', import.meta.url)))
-const rows = db.prepare(`SELECT id, document, title, is_petition_bundle, procedural FROM votes`).all()
+const rows = db.prepare(`SELECT id, document, title, initiator, is_petition_bundle, procedural FROM votes`).all()
 const update = db.prepare(`UPDATE votes SET initiator = ? WHERE id = ?`)
 
 let xmlHits = 0
 let teaserHits = 0
 let nulls = 0
+let kept = 0
 let petitionBundles = 0
 let procedurals = 0
 const fallbacks = []
@@ -40,13 +41,16 @@ const tx = db.transaction(() => {
       fallbacks.push(v.id)
       continue
     }
-    update.run(null, v.id)
+    if (v.initiator) {
+      kept++
+      continue
+    }
     nulls++
   }
 })
 tx()
 
-console.log(`xml=${xmlHits} teaser=${teaserHits} null=${nulls} petitionBundles=${petitionBundles} procedurals=${procedurals} total=${rows.length}`)
+console.log(`xml=${xmlHits} teaser=${teaserHits} kept=${kept} null=${nulls} petitionBundles=${petitionBundles} procedurals=${procedurals} total=${rows.length}`)
 if (process.argv.includes('--verbose')) {
   console.log('teaser fallbacks:')
   for (const id of fallbacks) console.log('  ' + id)

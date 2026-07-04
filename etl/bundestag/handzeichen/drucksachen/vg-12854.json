@@ -1,0 +1,87 @@
+{
+  "id": "12854",
+  "abstract": "Sicherstellung der Selbstbestimmung über die medizinische Behandlung auch bei Entscheidungsunfähigkeit: Einführung der Patientenverfügung in das Betreuungsrecht: Geltung unabhängig von Art und Stadium der Erkrankung, formloser Widerruf, Wirksamkeit des schriftlich erklärten und Ermittlung des mutmaßlichen Willens, Aufgaben des Vormundschaftsgerichts, Verfahrensregelungen betr. Schutz des Betroffenen, Unwirksamkeit einer Tötung auf Verlangen;<br />\r\nEinfügung § 1901a (neu) (§ 1901a (alt) wird § 1901b) und Neufassung § 1904 Bürgerliches Gesetzbuch sowie Änderung §§ 67, 69d und 69g Gesetz über die Angelegenheiten der freiwilligen Gerichtsbarkeit<br />\r\n<br />\r\n<strong>Beschlussempfehlung des Ausschusses:</strong> Klarstellungen betr. Bindung des Betreuers und Kriterien zur Ermittlung des mutmaßlichen Willens, Einführung einer Verpflichtung zum Gespräch zur Feststellung des Patientenwillens; rechtsförmliche Änderungen betr. FGG-Reformgesetz;<br />\r\nÄnderung §§ 1901a (neu) und 1904 sowie zusätzliche Einfügung § 1901b (§ 1901a (alt) wird § 1901c) Bürgerliches Gesetzbuch, Verzicht auf Änderung Gesetz über die Angelegenheiten der freiwilligen Gerichtsbarkeit sowie zusätzliche Änderung § 287 und zusätzliche Neufassung § 298 Gesetz über das Verfahren in Familiensachen und in den Angelegenheiten der freiwilligen Gerichtsbarkeit<br />\r\n<br />\r\nBezug: Entscheidungen des Bundesgerichtshofes vom 17. März 2003 sowie vom 8. Juni 2005 betr. Bedeutung des Selbstbestimmungsrechts bei ärztlichen Maßnahmen sowie Verbindlichkeit einer Patientenverfügung (BGHZ 154, 205 bzw. 163, 195)<br />\r\nGrundsätze der Bundesärztekammer vom 7. Mai 2004 zur Sterbebegleitung sowie ihre Empfehlung vom 27. März 2007 zum Umgang mit Vorsorgevollmacht und Patientenverfügung<br />\r\nSiehe auch C183 und C187",
+  "beratungsstand": "Verkündet",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "C146",
+  "archiv": "XVI/546",
+  "sachgebiet": [
+    "Gesundheit",
+    "Recht"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 16,
+  "zustimmungsbeduerftigkeit": [
+    "Nein, laut Verkündung (BGBl I)",
+    "Nein, laut Gesetzentwurf (Drs 16/8442)"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "verkuendung": [
+    {
+      "jahrgang": "2009",
+      "heftnummer": "48",
+      "seite": "2286",
+      "ausfertigungsdatum": "2009-07-29",
+      "verkuendungsdatum": "2009-07-31",
+      "einleitungstext": "Gesetz",
+      "pdf_url": "https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&start=//*%5b@attr_id=%27bgbl109s2286.pdf%27%5d",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 2009, 2286"
+    }
+  ],
+  "inkrafttreten": [
+    {
+      "datum": "2009-09-01"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Bürgerliches Gesetzbuch",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": true,
+      "name": "Drittes Gesetz zur Änderung des Betreuungsrechts",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesetz über das Verfahren in Familiensachen und in den Angelegenheiten der freiwilligen Gerichtsbarkeit",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesetz über die Angelegenheiten der freiwilligen Gerichtsbarkeit",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Medizinische Behandlung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Patientenverfügung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Rechtliche Betreuung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Tötung auf Verlangen",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Vormundschaftsgericht",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Drittes Gesetz zur Änderung des Betreuungsrechts",
+  "datum": "2009-07-10"
+}

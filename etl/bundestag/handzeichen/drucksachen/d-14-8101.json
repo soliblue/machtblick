@@ -1,0 +1,50 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "93545",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 231,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/8101",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "a388c2ba5d2710d8390399f2472b1d18",
+      "aktualisiert": "2002-01-29T00:00:00+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "111299",
+          "titel": "Schutz der Menschenwürde angesichts der biomedizinischen Möglichkeiten - Kein Import embryonaler Stammzellen (G-SIG: 14012575)",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/081/1408101.pdf",
+        "id": "93545",
+        "dokumentnummer": "14/8101",
+        "datum": "2002-01-29",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "226",
+          "titel": "Dr. Wolfgang Wodarg, MdB, SPD",
+          "autor_titel": "Dr. Wolfgang Wodarg"
+        },
+        {
+          "id": "749",
+          "titel": "Dr. Hermann Kues, MdB, CDU/CSU",
+          "autor_titel": "Dr. Hermann Kues"
+        }
+      ],
+      "titel": "Schutz der Menschenwürde angesichts der biomedizinischen Möglichkeiten - Kein Import embryonaler Stammzellen",
+      "datum": "2002-01-29"
+    }
+  ],
+  "cursor": "AoJw-NX52OsBMERydWNrc2FjaGUtOTM1NDU="
+}

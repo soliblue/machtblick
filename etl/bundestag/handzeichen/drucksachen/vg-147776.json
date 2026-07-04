@@ -1,0 +1,49 @@
+{
+  "id": "147776",
+  "abstract": "Verringerung des Bedarfs an Truppenübungsplätzen in den neuen Bundesländern aufgrund der Truppenreduzierungen, Übertragung des Übungsplatzes Colbitz-Letzlinger Heide an das Land Sachsen-Anhalt zur zivilen Rekultivierung und Nutzung ",
+  "beratungsstand": "Abgelehnt",
+  "vorgangstyp": "Antrag",
+  "sachgebiet": [
+    "Deutsche Einheit / Innerdeutsche Beziehungen (bis 1990)"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 12,
+  "initiative": [
+    "Fraktion der SPD"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Abrüstung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Colbitz-Letzlinger Heide",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Deutschlandpolitik",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Sachsen-Anhalt",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Sowjetische Streitkräfte",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": true,
+      "name": "Truppenübungsplatz",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Zivile Nutzung des Truppenübungsplatzes Colbitz-Letzlinger-Heide nach dem Abzug der Westgruppe der ehemaligen sowjetischen Streitkräfte (G-SIG: 12010609)",
+  "datum": "1993-01-14"
+}

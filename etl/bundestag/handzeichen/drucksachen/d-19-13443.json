@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "234107",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/13443",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "a50eb11b2d0ccdab15de56ffb60afdf8",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "252533",
+          "titel": "Gesetz zur Änderung des Energiewirtschaftsgesetzes zur Umsetzung der Richtlinie (EU) 2019/692 des Europäischen Parlamentes und des Rates über gemeinsame Vorschriften für den Erdgasbinnenmarkt",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Wirtschaft und Energie"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/134/1913443.pdf",
+        "id": "234107",
+        "dokumentnummer": "19/13443",
+        "datum": "2019-09-23",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Änderung des Energiewirtschaftsgesetzes zur Umsetzung der Richtlinie (EU) 2019/692 des Europäischen Parlamentes und des Rates über gemeinsame Vorschriften für den Erdgasbinnenmarkt",
+      "datum": "2019-09-23"
+    }
+  ],
+  "cursor": "AoJwkInkru0CMURydWNrc2FjaGUtMjM0MTA3"
+}

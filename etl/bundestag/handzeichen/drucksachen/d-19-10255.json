@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "229271",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 12,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/10255",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "91811b340f474b8007b07008877e4213",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "243803",
+          "titel": "Sechsundzwanzigstes Gesetz zur Änderung des Bundesausbildungsförderungsgesetzes (26. BAföGÄndG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/102/1910255.pdf",
+        "id": "229271",
+        "dokumentnummer": "19/10255",
+        "datum": "2019-05-15",
+        "verteildatum": "2019-08-27",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "546",
+          "titel": "Kai Gehring, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Kai Gehring"
+        },
+        {
+          "id": "2102",
+          "titel": "Dr. Anna Christmann, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Anna Christmann"
+        }
+      ],
+      "titel": "zu der zweiten Beratung des Gesetzentwurfs der Bundesregierung\r\n- Drucksachen 19/8749, 19/10249 -\r\nEntwurf eines Sechsundzwanzigsten Gesetzes zur Änderung des \r\nBundesausbildungsförderungsgesetzes\r\n(26. BAföGÄndG)\r\n",
+      "datum": "2019-05-15"
+    }
+  ],
+  "cursor": "AoJw0Oa73eoCMURydWNrc2FjaGUtMjI5Mjcx"
+}

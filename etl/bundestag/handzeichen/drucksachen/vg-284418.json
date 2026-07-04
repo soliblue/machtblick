@@ -1,0 +1,60 @@
+{
+  "id": "284418",
+  "beratungsstand": "Abgelehnt",
+  "vorgangstyp": "Antrag",
+  "sachgebiet": [
+    "Gesundheit"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 20,
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": true,
+      "name": "COVID-19",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesundheitsberatung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesundheitserziehung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesundheitswesen",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Grundrecht",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Impfpflicht",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Impfung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Recht auf körperliche Unversehrtheit",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Seuchenbekämpfung",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Impfbereitschaft ohne allgemeine Impfpflicht gegen SARS-CoV-2 erhöhen",
+  "datum": "2022-04-07"
+}

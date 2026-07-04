@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "227822",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/8970",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "958c3cc691a1efc8b503e6810a2b6e5d",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "245690",
+          "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an der durch die Europäische Union geführten EU NAVFOR Somalia Operation Atalanta zur Bekämpfung der Piraterie vor der Küste Somalias",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/089/1908970.pdf",
+        "id": "227822",
+        "dokumentnummer": "19/8970",
+        "datum": "2019-04-03",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an der durch\r\ndie Europäische Union geführten EU NAVFOR Somalia Operation Atalanta\r\nzur Bekämpfung der Piraterie vor der Küste Somalias",
+      "datum": "2019-04-03"
+    }
+  ],
+  "cursor": "AoJw0IOp8ekCMURydWNrc2FjaGUtMjI3ODIy"
+}

@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "224394",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 42,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/6061",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "d71660c83842dc875bf6007ba7d7a33e",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "242051",
+          "titel": "Aufforderung zur Abgabe einer Protokollerklärung zur völkerrechtlichen beziehungsweise rechtlichen Unverbindlichkeit des \"Global Compact for Safe, Orderly and Regular Migration\" für die Bundesrepublik Deutschland durch die deutsche Bundesregierung bei der Unterzeichnung des Paktes im Dezember in Marrakesch - Die Bundesrepublik Deutschland als \"permanent objector\"",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/060/1906061.pdf",
+        "id": "224394",
+        "dokumentnummer": "19/6061",
+        "datum": "2018-11-28",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2106",
+          "titel": "Dr. Gottfried Curio, MdB, AfD",
+          "autor_titel": "Dr. Gottfried Curio"
+        },
+        {
+          "id": "2066",
+          "titel": "Marc Bernhard, MdB, AfD",
+          "autor_titel": "Marc Bernhard"
+        }
+      ],
+      "titel": "Aufforderung zur Abgabe einer Protokollerklärung zur völkerrechtlichen beziehungsweise rechtlichen Unverbindlichkeit des \"Global Compact for Safe, Orderly and Regular Migration\" für die Bundesrepublik Deutschland durch die deutsche Bundesregierung bei der Unterzeichnung des Paktes im Dezember in Marrakesch - Die Bundesrepublik Deutschland als \"permanent objector\"",
+      "datum": "2018-11-28"
+    }
+  ],
+  "cursor": "AoJwuLj-rOcCMURydWNrc2FjaGUtMjI0Mzk0"
+}

@@ -1,0 +1,51 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "259616",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 45,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "20/954",
+      "wahlperiode": 20,
+      "herausgeber": "BT",
+      "pdf_hash": "a56d3735c967ae803319d263c25b67af",
+      "aktualisiert": "2022-03-10T16:01:03+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "285168",
+          "titel": "Gesetz zur Einführung einer verpflichtenden Impfberatung für Erwachsene und einer altersbezogenen Impfpflicht ab 50 Jahren unter Vorbehalt gegen das Coronavirus SARS-CoV-2",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/20/009/2000954.pdf",
+        "id": "259616",
+        "dokumentnummer": "20/954",
+        "datum": "2022-03-10",
+        "verteildatum": "2022-03-10",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1690",
+          "titel": "Dieter Janecek, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dieter Janecek"
+        },
+        {
+          "id": "2271",
+          "titel": "Gyde Jensen, MdB, FDP",
+          "autor_titel": "Gyde Jensen"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur Einführung einer verpflichtenden Impfberatung für Erwachsene und einer altersbezogenen Impfpflicht ab 50 Jahren unter Vorbehalt gegen das Coronavirus SARS-CoV-2",
+      "datum": "2022-03-10"
+    }
+  ],
+  "cursor": "AoJwuInfuf8CMURydWNrc2FjaGUtMjU5NjE2"
+}

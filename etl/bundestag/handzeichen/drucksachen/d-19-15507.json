@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "236604",
+      "drucksachetyp": "Entschließungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 23,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/15507",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "95f87d419ce3f2904de4cc2ca949167c",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "256168",
+          "titel": "Entschließungsantrag zur dritten Beratung des Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2020 (Haushaltsgesetz 2020)\r\nhier: Einzelplan 14 - Geschäftsbereich des Bundesministeriums der Verteidigung",
+          "vorgangstyp": "Entschließungsantrag BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/155/1915507.pdf",
+        "id": "236604",
+        "dokumentnummer": "19/15507",
+        "datum": "2019-11-26",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Entschließungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1982",
+          "titel": "Rüdiger Lucassen, MdB, AfD",
+          "autor_titel": "Rüdiger Lucassen"
+        },
+        {
+          "id": "2066",
+          "titel": "Marc Bernhard, MdB, AfD",
+          "autor_titel": "Marc Bernhard"
+        }
+      ],
+      "titel": "zu der dritten Beratung des Gesetzentwurfs der Bundesregierung \r\n- Drucksachen 19/11800, 19/11802, 19/13913, 19/13924, 19/13925, 19/13926 -\r\nEntwurf eines Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2020 (Haushaltsgesetz 2020)\r\nhier: Einzelplan 14\r\nGeschäftsbereich des Bundesministeriums der Verteidigung\r\nzu der Ergänzung des Entwurfs eines Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2020\r\n- Drucksachen 19/13800, 19/13801, 19/13802 -",
+      "datum": "2019-11-26"
+    }
+  ],
+  "cursor": "AoJw-MbX0-4CMURydWNrc2FjaGUtMjM2NjA0"
+}

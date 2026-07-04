@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "82390",
+      "drucksachetyp": "Entschließungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/451",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "d186e85323929ff2fdcbeafaca121632",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "99471",
+          "titel": "Entschließungsantrag zum Steuerentlastungsgesetz 1999/2000/2002 (G-SIG: 14000329)",
+          "vorgangstyp": "Entschließungsantrag BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PDS",
+          "titel": "Fraktion der PDS"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/004/1400451.pdf",
+        "id": "82390",
+        "dokumentnummer": "14/451",
+        "datum": "1999-03-03",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Entschließungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der PDS"
+        ]
+      },
+      "titel": "zu dem GE - Drsn. 14/23 (SPD/B90), 14/442 - Entwurf eines Steuerentlastungsgesetzes 1999/2000/2002",
+      "datum": "1999-03-03"
+    }
+  ],
+  "cursor": "AoJwuNXnp9YBMERydWNrc2FjaGUtODIzOTA="
+}

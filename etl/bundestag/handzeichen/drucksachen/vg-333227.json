@@ -1,0 +1,42 @@
+{
+  "id": "333227",
+  "vorgangstyp": "Rechtsverordnung",
+  "sachgebiet": [
+    "Umwelt"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 21,
+  "initiative": [
+    "Bundesregierung"
+  ],
+  "aktualisiert": "2026-06-16T09:30:08+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Bundes-Klimaschutzgesetz",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": true,
+      "name": "Jahresemissionsgesamtmengen-Verordnung 2031-2040",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Klimaschutz",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Kohlendioxid",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Luftreinhaltung",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Verordnung zur Überführung der jährlichen Minderungsziele in Jahresemissionsgesamtmengen für die Jahre 2031 bis 2040 (Jahresemissionsgesamtmengen-Verordnung 2031-2040 - JEGMV 2031-2040)",
+  "datum": "2026-06-11"
+}

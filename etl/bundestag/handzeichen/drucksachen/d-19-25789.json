@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "249202",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 38,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/25789",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "8d3fce527d51dddb0cce1b804f5c06d5",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "272267",
+          "titel": "Gesetz zur Änderung des Vermögensteuergesetzes (VStG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FDP",
+          "titel": "Fraktion der FDP"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/257/1925789.pdf",
+        "id": "249202",
+        "dokumentnummer": "19/25789",
+        "datum": "2021-01-12",
+        "verteildatum": "2021-01-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der FDP"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2215",
+          "titel": "Markus Herbrand, MdB, FDP",
+          "autor_titel": "Markus Herbrand"
+        },
+        {
+          "id": "2127",
+          "titel": "Christian Dürr, MdB, FDP",
+          "autor_titel": "Christian Dürr"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur Änderung des Vermögensteuergesetzes (VStG)",
+      "datum": "2021-01-12"
+    }
+  ],
+  "cursor": "AoJwuJSQ-_YCMURydWNrc2FjaGUtMjQ5MjAy"
+}

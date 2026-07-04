@@ -1,0 +1,37 @@
+{
+  "id": "101198",
+  "abstract": "Errichtung eines Mahnmals zum Gedenken an die ermordeten Juden Europas in Berlin, Verzicht auf die Realisierung der Ergebnisse des bisherigen Verfahrens, &quot;Morde nicht&quot; als Mahnung des Mahnmals, Errichtung einer Stiftung für die Planung, den Bau und die Betreuung, Vorlage der Entwürfe an den Bundestag, Sicherung der Existenz der bisherigen Gedenkstätten<br />\r\n<br />\r\n<span style=\"font-weight: bold;\">Beschlussempfehlung des Ausschusses:</span> Realisierung des überarbeiteten Entwurfs von Peter Eisenman (Eisenman II): Stelenfeld mit einem ergänzenden Ort der Information, Beginn der Bauarbeiten im Jahr 2000",
+  "beratungsstand": "Für erledigt erklärt",
+  "vorgangstyp": "Antrag",
+  "sachgebiet": [
+    "Gesellschaftspolitik, soziale Gruppen",
+    "Kultur"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 14,
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Berlin",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Gedenkstätte",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Holocaust",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Juden",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Errichtung eines Mahnmals für die ermordeten Juden Europas (G-SIG: 14010295)",
+  "datum": "1999-07-01"
+}

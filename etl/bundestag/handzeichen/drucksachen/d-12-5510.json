@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "139161",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/5510",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "8c8ad273b7455177afd9b86bb2eca500",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "155214",
+          "titel": "Zweites Gesetz zur Umsetzung des Spar-, Konsolidierungs- und Wachstumsprogramms (2. SKWPG) (G-SIG: 12020607)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/055/1205510.pdf",
+        "id": "139161",
+        "dokumentnummer": "12/5510",
+        "datum": "1993-09-04",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Zweiten Gesetzes zur Umsetzung des Spar-, Konsolidierungs- und Wachstumsprogramms - 2. SKWPG -",
+      "datum": "1993-09-04"
+    }
+  ],
+  "cursor": "AoJw0Nq0-q0BMURydWNrc2FjaGUtMTM5MTYx"
+}

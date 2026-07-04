@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "75421",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 1,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "15/2246",
+      "wahlperiode": 15,
+      "herausgeber": "BT",
+      "pdf_hash": "45b92b5709d73bf6fa2e8090826273e7",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "93465",
+          "titel": "Drittes Gesetz zur Änderung der Handwerksordnung und anderer handwerksrechtlicher Vorschriften (G-SIG: 15019186)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "VermA",
+          "titel": "Vermittlungsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/15/022/1502246.pdf",
+        "id": "75421",
+        "dokumentnummer": "15/2246",
+        "datum": "2003-12-16",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Vermittlungsausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "288",
+          "titel": "Ludwig Stiegler, MdB, SPD",
+          "autor_titel": "Ludwig Stiegler, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Dritten Gesetz zur Änderung der Handwerksordnung und anderer handwerksrechtlicher Vorschriften\n15/1206, 15/1481, 15/2083, 15/2120-\n",
+      "datum": "2003-12-16"
+    }
+  ],
+  "cursor": "AoJw-Kasv_kBMERydWNrc2FjaGUtNzU0MjE="
+}

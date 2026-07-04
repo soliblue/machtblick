@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "220669",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 17,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/3185",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "ece74ef494be34bc7b7b23e0d6fe91e6",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "235198",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2018 (Haushaltsgesetz 2018)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/031/1903185.pdf",
+        "id": "220669",
+        "dokumentnummer": "19/3185",
+        "datum": "2018-07-03",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "395",
+          "titel": "Heike Hänsel, MdB, DIE LINKE",
+          "autor_titel": "Heike Hänsel"
+        },
+        {
+          "id": "2043",
+          "titel": "Tobias Pflüger, MdB, DIE LINKE",
+          "autor_titel": "Tobias Pflüger"
+        }
+      ],
+      "titel": "zu der zweiten Beratung des Gesetzentwurfs der Bundesregierung \r\n- Drucksachen 19/1700, 19/1701, 19/2413, 19/2424, 19/2425, 19/2426 -\r\nEntwurf eines Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2018 (Haushaltsgesetz 2018)\r\nhier:\tEinzelplan 14\r\nGeschäftsbereich des Bundesministeriums der Verteidigung\r\n\r\n\r\n",
+      "datum": "2018-07-03"
+    }
+  ],
+  "cursor": "AoJw0LTlr-QCMURydWNrc2FjaGUtMjIwNjY5"
+}

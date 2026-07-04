@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "250569",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/26821",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "79871f714ea8e0f6441a8e6a0ffec27a",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "271514",
+          "titel": "Gesetz zum Beschluss des Rates vom 14. Dezember 2020 über das Eigenmittelsystem der Europäischen Union und zur Aufhebung des Beschlusses 2014/335/EU, Euratom (Eigenmittelbeschluss-Ratifizierungsgesetz - ERatG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/268/1926821.pdf",
+        "id": "250569",
+        "dokumentnummer": "19/26821",
+        "datum": "2021-02-19",
+        "verteildatum": "2021-02-19",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zum Beschluss des Rates vom 14. Dezember 2020 über das Eigenmittelsystem der Europäischen Union und zur Aufhebung des Beschlusses 2014/335/EU, Euratom (Eigenmittelbeschluss-Ratifizierungsgesetz - ERatG)",
+      "datum": "2021-02-19"
+    }
+  ],
+  "cursor": "AoJwuMn83PcCMURydWNrc2FjaGUtMjUwNTY5"
+}

@@ -1,0 +1,50 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "87319",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 176,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/2867",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "81bb06407a630cfbcece474b9de1206f",
+      "aktualisiert": "2000-03-08T00:00:00+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "108597",
+          "titel": "Kunstprojekt im nördlichen Lichthof des Reichstagsgebäudes von Hans Haacke \"Der Bevölkerung\" (G-SIG: 14010898)",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/028/1402867.pdf",
+        "id": "87319",
+        "dokumentnummer": "14/2867",
+        "datum": "2000-03-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "8",
+          "titel": "Dr. Norbert Lammert, MdB, CDU/CSU",
+          "autor_titel": "Dr. Norbert Lammert"
+        },
+        {
+          "id": "305",
+          "titel": "Ulrich Adam, MdB, CDU/CSU",
+          "autor_titel": "Ulrich Adam"
+        }
+      ],
+      "titel": "Kunstprojekt im nördlichen Lichthof des Reichstagsgebäudes von Hans Haacke \"Der Bevölkerung\"",
+      "datum": "2000-03-08"
+    }
+  ],
+  "cursor": "AoJw-L-N490BMERydWNrc2FjaGUtODczMTk="
+}

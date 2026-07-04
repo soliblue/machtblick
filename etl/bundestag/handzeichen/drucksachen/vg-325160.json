@@ -1,0 +1,48 @@
+{
+  "id": "325160",
+  "abstract": "Gesamtwirtschaftliche Entwicklung mit Projektion bis 2029, Bundeshaushalt 2026 und Finanzplan bis 2029, Ausgaben und Einnahmen des Bundes, Finanzbeziehungen zu anderen öffentlichen Ebenen",
+  "vorgangstyp": "Bericht, Gutachten, Programm",
+  "sachgebiet": [
+    "Öffentliche Finanzen, Steuern und Abgaben"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 21,
+  "initiative": [
+    "Bundesregierung"
+  ],
+  "aktualisiert": "2025-12-03T13:46:21+01:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Bundeshaushalt",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Finanzplanung des Bundes",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Finanzpolitik",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Wirtschaftsentwicklung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Öffentliche Ausgaben",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Öffentliche Einnahmen",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Finanzplan des Bundes 2025 bis 2029",
+  "datum": "2025-11-28"
+}

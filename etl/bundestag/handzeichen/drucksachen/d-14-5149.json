@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "86196",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 3,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/5149",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "e501108e2006cee7afb857b68e2dfc45",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "105494",
+          "titel": "Abschreibungstabellen nicht ändern (G-SIG: 14010617)",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FinanzA",
+          "titel": "Finanzausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/051/1405149.pdf",
+        "id": "86196",
+        "dokumentnummer": "14/5149",
+        "datum": "2001-01-24",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Finanzausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "109",
+          "titel": "Jörg-Otto Spiller, MdB, SPD",
+          "autor_titel": "Jörg-Otto Spiller, Berichterstattung"
+        },
+        {
+          "id": "7101",
+          "titel": "Hans Michelbach, MdB, CDU/CSU",
+          "autor_titel": "Hans Michelbach, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Antrag der Abg. Carl-Ludwig Thiele, Gisela Frick, Dr. Hermann Otto Solms, weit. Abg. und der Fraktion der FDP -14/1887- Abschreibungstabellen nicht ändern",
+      "datum": "2001-01-24"
+    }
+  ],
+  "cursor": "AoJw-LadoOQBMERydWNrc2FjaGUtODYxOTY="
+}

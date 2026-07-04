@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "249705",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 37,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/26239",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "4bb9ee1d66826c99805f60b674e31473",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "273016",
+          "titel": "Antrag auf abstrakte Normenkontrolle beim Bundesverfassungsgericht gemäß Artikel 93 Absatz 1 Nummer 2 des Grundgesetzes wegen des Dritten Bevölkerungsschutzgesetzes (Änderung des Infektionsschutzgesetzes)",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/262/1926239.pdf",
+        "id": "249705",
+        "dokumentnummer": "19/26239",
+        "datum": "2021-01-27",
+        "verteildatum": "2021-01-27",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2075",
+          "titel": "Stephan Brandner, MdB, AfD",
+          "autor_titel": "Stephan Brandner"
+        },
+        {
+          "id": "1987",
+          "titel": "Jens Maier, MdB, AfD",
+          "autor_titel": "Jens Maier"
+        }
+      ],
+      "titel": "Antrag auf abstrakte Normenkontrolle beim Bundesverfassungsgericht gemäß Artikel 93 Absatz 1 Nummer 2 des Grundgesetzes wegen des Dritten Bevölkerungsschutzgesetzes (Änderung des Infektionsschutzgesetzes)",
+      "datum": "2021-01-27"
+    }
+  ],
+  "cursor": "AoJw-IDgofcCMURydWNrc2FjaGUtMjQ5NzA1"
+}

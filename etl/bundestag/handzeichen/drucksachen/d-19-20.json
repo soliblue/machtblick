@@ -1,0 +1,88 @@
+{
+  "numFound": 2,
+  "documents": [
+    {
+      "id": "237938",
+      "drucksachetyp": "Unterrichtung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/20",
+      "wahlperiode": 19,
+      "herausgeber": "BR",
+      "pdf_hash": "f596fa8f32eddc961d6d52583be7b814",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "255338",
+          "titel": "Frühjahrstagung der Parlamentarischen Versammlung der NATO vom 26. bis 29. Mai 2017 in Tiflis, Georgien",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "DD NATO PV",
+          "titel": "Deutsche Delegation in der Parlamentarischen Versammlung der NATO"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2020/0019-20.pdf",
+        "id": "237938",
+        "dokumentnummer": "19/20",
+        "datum": "2020-01-15",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Unterrichtung",
+        "herausgeber": "BR",
+        "urheber": [
+          "Deutsche Delegation in der Parlamentarischen Versammlung der NATO"
+        ]
+      },
+      "titel": "Unterrichtung durch die deutsche Delegation in der Parlamentarischen Versammlung der NATO\r\nFrühjahrstagung der Parlamentarischen Versammlung der NATO vom 26. bis 29. Mai 2017 in Tiflis, Georgien",
+      "datum": "2020-01-15"
+    },
+    {
+      "id": "68878",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/20",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "b3310c1d1a79513627a1806c7c0a5f0e",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "84451",
+          "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an der von den Vereinten Nationen geführten Friedensmission in Südsudan (UNMISS) auf Grundlage der Resolution 1996 (2011) des Sicherheitsrates der Vereinten Nationen vom 8. Juli 2011 und Folgeresolutionen, zuletzt 2327 (2016) vom 16. Dezember 2016",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/000/1900020.pdf",
+        "id": "68878",
+        "dokumentnummer": "19/20",
+        "datum": "2017-10-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an der von den Vereinten Nationen geführten Friedensmission in Südsudan (UNMISS) auf Grundlage der Resolution 1996 (2011) des Sicherheitsrates der Vereinten Nationen vom 8. Juli 2011 und Folgeresolutionen, zuletzt 2327 (2016) vom 16. Dezember 2016",
+      "datum": "2017-10-25"
+    }
+  ],
+  "cursor": "AoJwkK6-qd8CMERydWNrc2FjaGUtNjg4Nzg="
+}

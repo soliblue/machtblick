@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "99403",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/8007",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "c7532bf3d60240ef3edfb0b777cc2224",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "115315",
+          "titel": "Gesetz zu Neuregelung des Zollfahndungsdienstes (Zollfahndungsneuregelungsgesetz - ZFnrG) (G-SIG: 14019820)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/080/1408007.pdf",
+        "id": "99403",
+        "dokumentnummer": "14/8007",
+        "datum": "2002-01-17",
+        "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Neuregelung des Zollfahndungsdienstes\r\n(Zollfahndungsneuregelungsgesetz - ZFnrG)",
+      "datum": "2002-01-17"
+    }
+  ],
+  "cursor": "AoJw-MuGuusBMERydWNrc2FjaGUtOTk0MDM="
+}

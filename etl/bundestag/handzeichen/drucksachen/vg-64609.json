@@ -1,0 +1,47 @@
+{
+  "id": "64609",
+  "abstract": "Aussetzung der Erhebung für das Berichtsjahr 2014",
+  "vorgangstyp": "Rechtsverordnung",
+  "sachgebiet": [
+    "Umwelt"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 18,
+  "initiative": [
+    "Bundesregierung"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "verkuendung": [
+    {
+      "jahrgang": "2015",
+      "heftnummer": "13",
+      "seite": "364",
+      "ausfertigungsdatum": "2015-03-26",
+      "verkuendungsdatum": "2015-04-08",
+      "einleitungstext": "Verordnung",
+      "pdf_url": "https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&start=//*%5b@attr_id=%27bgbl115s0364.pdf%27%5d",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 2015, 364"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Umweltinformation",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Umweltstatistik",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Wassergefährdender Stoff",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Verordnung zur Aussetzung der Erhebung nach § 9 Absatz 4 des Umweltstatistikgesetzes",
+  "datum": "2015-03-06"
+}

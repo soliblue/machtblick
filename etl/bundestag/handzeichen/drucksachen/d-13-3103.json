@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "104995",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/3103",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "0984aa125b21d19feaf1334584985cbd",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "119121",
+          "titel": "Gesetz zur Feststellung des Bedarfs von Magnetschwebebahnen (Magnetschwebebahnbedarfsgesetz - MsbG) (G-SIG: 13020215)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Verkehr"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/031/1303103.pdf",
+        "id": "104995",
+        "dokumentnummer": "13/3103",
+        "datum": "1995-11-27",
+        "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Feststellung des Bedarfs von Magnetschwebebahnen (Magnetschwebebahnbedarfsgesetz - MsbG)",
+      "datum": "1995-11-27"
+    }
+  ],
+  "cursor": "AoJwuMnAqr4BMURydWNrc2FjaGUtMTA0OTk1"
+}

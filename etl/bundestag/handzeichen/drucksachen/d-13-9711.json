@@ -1,0 +1,45 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "108786",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 1,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/9711",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "3f960654c9a0ce2e66f8ad7eb2c9b411",
+      "aktualisiert": "1998-02-03T00:00:00+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "121219",
+          "titel": "Gesetz zum Schutze der Nichtraucher (Nichtraucherschutzgesetz - NRSG) (G-SIG: 13020575)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/097/1309711.pdf",
+        "id": "108786",
+        "dokumentnummer": "13/9711",
+        "datum": "1998-02-03",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2702",
+          "titel": "Dr. Wolfgang Freiherr von Stetten, MdB, CDU/CSU",
+          "autor_titel": "Dr. Wolfgang Freiherr von Stetten"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Abgeordneten Roland Sauer (Stuttgart), Uta Titze-Stecher, Dr. Burkhard Hirsch und weiterer Abgeordneter - Drucksache 13/6100 - Entwurf eines Gesetzes zum Schutze der Nichtraucher (Nichtraucherschutzgesetz - NRSG)",
+      "datum": "1998-02-03"
+    }
+  ],
+  "cursor": "AoJw-O3us84BMURydWNrc2FjaGUtMTA4Nzg2"
+}

@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "116899",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BR",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/8653",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "95f0a5a6067a296f3af916d5cb2694bb",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "130094",
+          "titel": "Erstes Gesetz zur Änderung des Dritten Buches Sozialgesetzbuch und anderer Gesetze (Erstes SGB III-Änderungsgesetz - 1.SGB III-ÄndG) (G-SIG: 13020735)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Arbeit und Sozialordnung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/086/1308653.pdf",
+        "id": "116899",
+        "dokumentnummer": "13/8653",
+        "datum": "1997-10-01",
+        "anlagen": "Stellungnahme BR",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Ersten Gesetzes zur Änderung des Dritten Buches Sozialgesetzbuch und anderer Gesetze (Erstes SGB III Änderungsgesetz - 1. SGB III - ÄndG)",
+      "datum": "1997-10-01"
+    }
+  ],
+  "cursor": "AoJw0LLy8csBMURydWNrc2FjaGUtMTE2ODk5"
+}

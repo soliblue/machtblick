@@ -1,0 +1,101 @@
+{
+  "id": "288769",
+  "abstract": "Regelungen für das Recht auf einen selbstbestimmten Tod und Klarstellung der Straffreiheit der Hilfe zur Selbsttötung: Recht auf Hilfe zur Selbsttötung, Recht zur Hilfeleistung, Voraussetzungen für die Inanspruchnahme von Suizidhilfe, Beratungspflicht für suizidwillige Personen, Einrichtung wohnortnaher Beratungsstellen durch die Länder, Zugang zu Medikamenten zur Selbsttötung, Bericht der Bundesregierung erstmals 1 Jahr sowie Gesetzesevaluation 3 Jahre nach Inkrafttreten;<br />\r\nGesetz zur Wahrung und Durchsetzung des Selbstbestimmungsrechts am Lebensende (<strong>Suizidhilfegesetz</strong>) als Art. 1 der Vorlage, Änderung § 13 Betäubungsmittelgesetz sowie § 203 Strafgesetzbuch; Verordnungsermächtigung<br />\r\n<br />\r\nBezug: Entscheidung des Bundesverfassungsgerichts vom 26. Februar 2020 zum Recht auf selbstbestimmtes Sterben und zur Inanspruchnahme von Hilfeleistungen von Dritten (2 BvR 2347/15)<br />\r\nUnveränderte Wiedervorlage des Gesetzentwurfs auf BT-Drs 19/28691 (GESTA 19. WP M060)<br />\r\nSiehe auch GESTA M006 sowie GESTA M014<br />\r\n<br />\r\n<strong>Beschlussempfehlung des Ausschusses:</strong> Zusammenführung mit dem Gesetzentwurf auf BT-Drs 20/2293<br />\r\n<br />\r\nBezug: siehe GESTA M030",
+  "beratungsstand": "Zusammengeführt mit... (siehe Vorgangsablauf)",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "M015",
+  "sachgebiet": [
+    "Gesundheit",
+    "Recht"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 20,
+  "zustimmungsbeduerftigkeit": [
+    "Ja, laut Gesetzentwurf (Drs 20/2332)"
+  ],
+  "aktualisiert": "2023-07-12T17:44:01+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Arzt",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Beratung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Beratungsstelle",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bericht der Bundesregierung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Betäubungsmittel",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Betäubungsmittelgesetz",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bundesverfassungsgericht",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gerichtsentscheidung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Gesetz zur Regelung der Suizidhilfe",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesetzesfolgenabschätzung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Selbstbestimmungsrecht",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Sterbehilfe",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Strafgesetzbuch",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Suizid",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Suizidhilfegesetz",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Verfassungskonformität",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Gesetz zur Regelung der Suizidhilfe",
+  "datum": "2023-07-06"
+}

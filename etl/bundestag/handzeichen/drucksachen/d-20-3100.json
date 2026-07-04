@@ -1,0 +1,56 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "262335",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "PDF-Datei enthält auch Entwürfe der Einzelpläne",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "20/3100",
+      "wahlperiode": 20,
+      "herausgeber": "BT",
+      "pdf_hash": "d8506b4e0f4e6c8ea010591f8d51151d",
+      "aktualisiert": "2022-10-11T16:57:10+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "290223",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2023 (Haushaltsgesetz 2023)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/20/031/2003100.pdf",
+        "id": "262335",
+        "dokumentnummer": "20/3100",
+        "datum": "2022-08-05",
+        "verteildatum": "2022-08-05",
+        "anlagen": "PDF-Datei enthält auch Entwürfe der Einzelpläne",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2023 (Haushaltsgesetz 2023)",
+      "datum": "2022-08-05"
+    }
+  ],
+  "cursor": "AoJw0NHctoIDMURydWNrc2FjaGUtMjYyMzM1"
+}

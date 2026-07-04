@@ -1,0 +1,64 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "106773",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 2,
+      "dokumentnummer": "13/10924",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "2ed9ca31a1cc888d420024a35c06fd63",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "122140",
+          "titel": "Einstieg in eine ökologisch-soziale Steuerreform (G-SIG: 13011236)",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "119918",
+          "titel": "Gesetz zur Einführung einer ökologischen Besteuerung von Energie (Energiesteuergesetz) (G-SIG: 13020345)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FinanzA",
+          "titel": "Finanzausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/109/1310924.pdf",
+        "id": "106773",
+        "dokumentnummer": "13/10924",
+        "datum": "1998-06-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Finanzausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2671",
+          "titel": "Ludwig Eich, MdB, SPD",
+          "autor_titel": "Ludwig Eich, Berichterstattung"
+        },
+        {
+          "id": "2575",
+          "titel": "Gisela Frick, MdB, FDP",
+          "autor_titel": "Gisela Frick, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Gesetzentwurf der Abgeordneten Rainder Steenblock, Michaele Hustedt, Kristin Heyne, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIE GRÜNEN - Drucksache 13/3067 - Entwurf eines Gesetzes zur Einführung einer ökologischen Besteuerung von Energie (Energiesteuergesetz) b) zu dem Antrag der Abgeordneten Rainder Steenblock, Andrea Fischer (Berlin), Kristin Heyne, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIE GRÜNEN - Drucksache 13/3555 - Einstieg in eine ökologisch-soziale Steuerreform",
+      "datum": "1998-06-08"
+    }
+  ],
+  "cursor": "AoJw0O3P9dABMURydWNrc2FjaGUtMTA2Nzcz"
+}

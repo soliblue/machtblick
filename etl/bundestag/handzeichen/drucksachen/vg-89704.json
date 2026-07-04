@@ -1,0 +1,68 @@
+{
+  "id": "89704",
+  "abstract": "<strong>Bezug:</strong> Nachtragshaushaltsgesetz 2003 s. D048 <br />\r\n<br />\r\n<strong>Inhalt:</strong> Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2003 in Einnahmen und Ausgaben auf 247,9 Mrd. Euro, Ermächtigung des Bundesministeriums der Finanzen zur Deckung von Ausgaben Kredite bis zur Höhe von 18,9 Mrd. Euro aufzunehmen, Erhöhung des Kreditrahmens um Beträge zur Tilgung von im Haushaltsjahr fälligen Beträgen, Vorschriften für den Fall einer vorläufigen Haushaltsführung, Einbeziehung weiterer Bereiche in die Haushaltsflexibilisierung, Erprobung einer gelockerten Verbindlichkeit von Stellenplänen, Zusammenfassung der bisher gesonderten Gewährleistungen, Ausdehnung der Zweckbindung des Mineralölsteueraufkommens auf sonstige verkehrspolitische Zwecke, Stelleneinsparungen in Höhe von 1,5 v.H. <br />\r\n<br />\r\n<strong>Änderungen aufgrund der Ausschußempfehlung:</strong> Erhöhung des Gesamthaushaltsvolumens auf 248,2 Mrd. Euro, Erhöhung des Vertragsvolumens für vom BMF im Rahmen der Kreditfinanzierung zur Optimierung abzuschließende Verträge, Finanzrahmen für pro Einzelplan einzusparende Stellen von Arbeitern und Angestellten<br />\r\n<br />\r\n<span style=\"font-weight: bold;\">Änderungen aufgrund von Änderungsanträgen zur 2. Beratung:</span> Kürzung des Gesamtansatzes des Bundeshaushaltsplans 2003 um 1 Mio. auf 248,199 Mrd. Euro. <br />\r\n<br />\r\n<strong>Nebenschlagwörter:</strong> Nettokreditaufnahme/Kreditaufnahme im Haushaltsjahr 2003 * Haushaltsgesetz/Haushaltsgesetz 2003 * Stellenplan/ Stelleneinsparungen bei der Bundesverwaltung im Haushaltsjahr 2003 * Mineralölsteuer/Bindung des Mineralölsteueraufkommens an weitere verkehrspolitische Zwecke",
+  "beratungsstand": "Verkündet",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "D006",
+  "archiv": "XV/11",
+  "sachgebiet": [
+    "Öffentliche Finanzen, Steuern und Abgaben"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 15,
+  "zustimmungsbeduerftigkeit": [
+    "Nein"
+  ],
+  "initiative": [
+    "Bundesregierung"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "verkuendung": [
+    {
+      "jahrgang": "2003",
+      "heftnummer": "17",
+      "seite": "574",
+      "ausfertigungsdatum": "2003-04-30",
+      "verkuendungsdatum": "2003-05-05",
+      "einleitungstext": "Gesetz",
+      "pdf_url": "https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&start=//*%5b@attr_id=%27bgbl103s0574.pdf%27%5d",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 2003, 574"
+    }
+  ],
+  "inkrafttreten": [
+    {
+      "datum": "2003-01-01"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": true,
+      "name": "Bundeshaushaltsgesetz 2003",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Haushaltsgesetz",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Mineralölsteuer",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Nettokreditaufnahme",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Stellenplan",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2003 (Haushaltsgesetz 2003) (G-SIG: 15019039)",
+  "datum": "2003-04-11"
+}

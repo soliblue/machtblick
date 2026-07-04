@@ -1,0 +1,62 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "82306",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 6,
+      "dokumentnummer": "14/5146",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "0a3fd7176eee3cc02e55144e1d94e692",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "104476",
+          "titel": "Bericht der Bundesregierung über die gesetzliche Rentenversicherung, insbesondere über die Entwicklung der Einnahmen und Ausgaben, der Schwankungsreserve sowie des jeweils erforderlichen Beitragssatzes in den künftigen 15 Kalenderjahren gemäß § 154 SGB VI (Rentenversicherungsbericht 2000) und Gutachten des Sozialbeirats zum Rentenversicherungsbericht 2000 (G-SIG: 14001493)",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        },
+        {
+          "id": "104787",
+          "titel": "Verbesserung der Nachhaltigkeit in der Alterssicherung durch eine gerechte und sozialverträgliche Rentenpolitik (G-SIG: 14010411)",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "100844",
+          "titel": "Bericht der Bundesregierung über die gesetzliche Rentenversicherung, insbesondere über die Entwicklung der Einnahmen und Ausgaben, der Schwankungsreserve sowie des jeweils erforderlichen Beitragssatzes in den künftigen 15 Kalenderjahren gemäß § 154 SGB VI (Rentenversicherungsbericht 1999) Gutachten des Sozialbeirats zum Rentenversicherungsbericht 1999 (G-SIG: 14000805)",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        },
+        {
+          "id": "115186",
+          "titel": "Gesetz zur Ergänzung des Gesetzes zur Reform der gesetzlichen Rentenversicherung und zur Förderung eines kapitalgedeckten Altersvorsorgevermögens (Altersvermögensergänzungsgesetz - AVmEG) (G-SIG: 14019514)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfArbSoz (WP06-14)",
+          "titel": "Ausschuss für Arbeit und Sozialordnung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/051/1405146.pdf",
+        "id": "82306",
+        "dokumentnummer": "14/5146",
+        "datum": "2001-01-24",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Arbeit und Sozialordnung"
+        ]
+      },
+      "titel": "1. zum GE der SPD und B90 -14/4595- E eines G zur Reform der gesetzl. Rentenversicherung u. zur Förd. eines kapitalgedeckten Altersvorsorgevermögens (Altersvermögensgesetz - AVmG) 2. zum GE der BReg -14/5068- (AVmG) 3. zum A der Abg. B. Schnieber-Jastram, weit. Abg. und der CDU/CSU -14/1310- Verbess. der Nachhaltigkeit in der Altersicherung durch eine gerechte u.sozialverträgl. Rentenpolitik 4. zur U durch die BReg -14/2116- gem.§ 154 SGB VI (Rentenversicherungsbericht 1999) 5. zur U -14/4730- .. für 2000",
+      "datum": "2001-01-24"
+    }
+  ],
+  "cursor": "AoJw-LadoOQBMERydWNrc2FjaGUtODIzMDY="
+}

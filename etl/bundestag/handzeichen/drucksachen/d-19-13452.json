@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "234113",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme des BR",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/13452",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "fc59fa46aec6b851435b3409b520f1b2",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "251722",
+          "titel": "Gesetz für den Schutz vor Masern und zur Stärkung der Impfprävention (Masernschutzgesetz)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Gesundheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/134/1913452.pdf",
+        "id": "234113",
+        "dokumentnummer": "19/13452",
+        "datum": "2019-09-23",
+        "anlagen": "Stellungnahme des BR",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes für den Schutz vor Masern und zur Stärkung der Impfprävention (Masernschutzgesetz)",
+      "datum": "2019-09-23"
+    }
+  ],
+  "cursor": "AoJwkInkru0CMURydWNrc2FjaGUtMjM0MTEz"
+}

@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "242204",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 42,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/20048",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "365f47f00d5003c9ed7dda10f5890fdb",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "263606",
+          "titel": "Gesetz zur Stärkung der geschlechtlichen Selbstbestimmung",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FDP",
+          "titel": "Fraktion der FDP"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/200/1920048.pdf",
+        "id": "242204",
+        "dokumentnummer": "19/20048",
+        "datum": "2020-06-16",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der FDP"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7552",
+          "titel": "Dr. Jens Brandenburg (Rhein-Neckar), MdB, FDP",
+          "autor_titel": "Dr. Jens Brandenburg (Rhein-Neckar)"
+        },
+        {
+          "id": "1062",
+          "titel": "Manuel Höferlin, MdB, FDP",
+          "autor_titel": "Manuel Höferlin"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur Stärkung der geschlechtlichen Selbstbestimmung",
+      "datum": "2020-06-16"
+    }
+  ],
+  "cursor": "AoJw0Mek3vICMURydWNrc2FjaGUtMjQyMjA0"
+}

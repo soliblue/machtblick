@@ -1,0 +1,79 @@
+{
+  "numFound": 2,
+  "documents": [
+    {
+      "id": "68864",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/12",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "d60c731b239ba1a683ff481d00653513",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "84418",
+          "titel": "Änderung der Geschäftsordnung des Deutschen Bundestages\r\nhier: Änderung der Verhaltensregeln für Mitglieder des Deutschen Bundestages (Anlage 1 der Geschäftsordnung)",
+          "vorgangstyp": "Geschäftsordnung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/000/1900012.pdf",
+        "id": "68864",
+        "dokumentnummer": "19/12",
+        "datum": "2017-10-24",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "titel": "Änderung der Geschäftsordnung des Deutschen Bundestages\r\nhier: Änderung der Verhaltensregeln für Mitglieder des Deutschen Bundestages\r\n(Anlage 1 der Geschäftsordnung)",
+      "datum": "2017-10-24"
+    },
+    {
+      "id": "37068",
+      "drucksachetyp": "Vorschlag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/12",
+      "wahlperiode": 17,
+      "herausgeber": "BR",
+      "pdf_hash": "e0c869bfe81e9bf79e91281ecbe2be48",
+      "aktualisiert": "2012-01-16T00:00:00+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "41609",
+          "titel": "Personelle Veränderung im Beirat für Ausbildungsförderung beim Bundesministerium für Bildung und Forschung",
+          "vorgangstyp": "Besetzung externer Gremien durch BR"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/brd/2012/0019-12.pdf",
+        "id": "37068",
+        "dokumentnummer": "19/12",
+        "datum": "2012-01-16",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Vorschlag",
+        "herausgeber": "BR",
+        "urheber": []
+      },
+      "titel": "Personelle Veränderung im Beirat für Ausbildungsförderung beim Bundesministerium für Bildung und Forschung",
+      "datum": "2012-01-16"
+    }
+  ],
+  "cursor": "AoJwuI6L87QCMERydWNrc2FjaGUtMzcwNjg="
+}

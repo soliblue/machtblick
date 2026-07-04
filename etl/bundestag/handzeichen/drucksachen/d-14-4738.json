@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "100041",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 30,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/4738",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "7e69fda67d000dcefdb39baea2a914c3",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "114175",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2001 (Haushaltsgesetz 2001) (G-SIG: 14019431)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FDP",
+          "titel": "Fraktion der FDP"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/047/1404738.pdf",
+        "id": "100041",
+        "dokumentnummer": "14/4738",
+        "datum": "2000-11-28",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der FDP"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2313",
+          "titel": "Dr. Günter Rexrodt, MdB, FDP",
+          "autor_titel": "Dr. Günter Rexrodt"
+        },
+        {
+          "id": "1210",
+          "titel": "Dr. Werner Hoyer, MdB, FDP",
+          "autor_titel": "Dr. Werner Hoyer"
+        }
+      ],
+      "titel": "zu der zweiten Beratung des Entwurfs des Haushaltsgesetzes 2001 -14/4000 Anlage, 14/4302; 14/4520, 14/4522, 14/4523- hier: Einzelplan 60 - Allgemeine Finanzverwaltung",
+      "datum": "2000-11-28"
+    }
+  ],
+  "cursor": "AoJwuOe6jeMBMURydWNrc2FjaGUtMTAwMDQx"
+}

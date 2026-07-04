@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "139019",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/5502",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "36c79c5d7ca09124483f931638e5b521",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "155183",
+          "titel": "Erstes Gesetz zur Umsetzung des Spar-, Konsolidierungs- und Wachstumsprogramms (1. SKWPG) (G-SIG: 12020589)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/055/1205502.pdf",
+        "id": "139019",
+        "dokumentnummer": "12/5502",
+        "datum": "1993-09-04",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Ersten Gesetzes zur Umsetzung des Spar-, Konsolidierungs- und Wachstumsprogramms - 1. SKWPG -",
+      "datum": "1993-09-04"
+    }
+  ],
+  "cursor": "AoJw0Nq0-q0BMURydWNrc2FjaGUtMTM5MDE5"
+}

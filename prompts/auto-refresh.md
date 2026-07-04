@@ -45,13 +45,19 @@ Run source refreshes in this order when the evidence says they are needed:
 1. `npm run etl:stammdaten`
 2. `npm run etl:abgeordnetenwatch`
 3. `npm run etl:votes:namentlich`
-4. `npm run etl:handzeichen:refresh`
-5. `DIP_UPDATED_START=<last-local-update> npm run etl:dip`
-6. `npm run etl:speeches:xml`
-7. `npm run etl:affiliations`
-8. `npm run db:normalize`
+4. `npm run db:merge-members && npm run db:normalize:member-names && npm run db:backfill:member-states`
+5. `npm run etl:handzeichen:refresh`
+6. `DIP_UPDATED_START=<last-local-update> npm run etl:dip`
+7. `npm run etl:speeches:xml`
+8. `npm run etl:affiliations`
+9. `npm run db:normalize`
+10. `npm run db:backfill:initiators`
 
-`etl:handzeichen:refresh` (step 4) owns the polarity-aware path internally: it ingests handzeichen, runs `db:normalize`-equivalent result repair, polarity inversion, initiator backfill, and self-no escalation in the correct order for both handzeichen and namentlich votes. The standalone `npm run db:normalize` (step 8) is the legacy result flip; it is idempotent here but must never be run again after polarity in an ad-hoc step, since it can double-flip an inverted vote whose post-inversion proposer votes no.
+`etl:handzeichen:refresh` (step 5) owns the polarity-aware path internally: it ingests handzeichen, runs `db:normalize`-equivalent result repair, polarity inversion, initiator backfill, and self-no escalation in the correct order for both handzeichen and namentlich votes. The standalone `npm run db:normalize` (step 9) is the legacy result flip; it is idempotent here but must never be run again after polarity in an ad-hoc step, since it can double-flip an inverted vote whose post-inversion proposer votes no.
+
+`db:backfill:initiators` (step 10) fills `votes.initiator` for votes the XML/teaser extractor could not resolve: document-text parse, then vote_documents titles, then DIP Drucksache lookup (cached under `etl/bundestag/handzeichen/drucksachen/`), then the Haushalt title rule. It only fills empty rows, never overwrites, and skips petition bundles and procedural votes. It also runs inside `etl:handzeichen:refresh`; the standalone step covers the namentlich-only ingest path. Run it after every vote ingest so new votes never render as "Sonstige" for lack of extraction.
+
+The member hygiene chain (step 4) runs after every namentlich ingest: `db:merge-members` is a watchdog that collapses accidentally forked member identities, `db:normalize:member-names` keeps `members.name` in canonical "First Last" form, `db:backfill:member-states` fills `vote_members.state` and `members.list_state` for new members and ballots. All three are idempotent and print what they changed; a nonzero merge count means the importer's name resolution regressed and deserves a look.
 
 Run derived refreshes after source data is current, in this order (titles and descriptions first, then speech↔vote linkage, then summaries that depend on it, then translations last):
 

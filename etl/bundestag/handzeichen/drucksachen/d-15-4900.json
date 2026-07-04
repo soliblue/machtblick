@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "80328",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "15/4900",
+      "wahlperiode": 15,
+      "herausgeber": "BT",
+      "pdf_hash": "a1099bcf0bca99a9254b01ec54f73746",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "97601",
+          "titel": "Gesetz zu dem Vertrag vom 29. Oktober 2004 über eine Verfassung für Europa (G-SIG: 15019586)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Auswärtiges Amt"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/15/049/1504900.pdf",
+        "id": "80328",
+        "dokumentnummer": "15/4900",
+        "datum": "2005-02-18",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zu dem Vertrag vom 29. Oktober 2004 über eine Verfassung für Europa",
+      "datum": "2005-02-18"
+    }
+  ],
+  "cursor": "AoJw-PfHkoICMERydWNrc2FjaGUtODAzMjg="
+}

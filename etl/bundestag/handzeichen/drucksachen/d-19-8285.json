@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "227027",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme des BR und Gegenäußerung der BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/8285",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "2ad856424ec30b3611491e3308489253",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "242999",
+          "titel": "Fachkräfteeinwanderungsgesetz",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium des Innern, für Bau und Heimat"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/082/1908285.pdf",
+        "id": "227027",
+        "dokumentnummer": "19/8285",
+        "datum": "2019-03-13",
+        "anlagen": "Stellungnahme des BR und Gegenäußerung der BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Fachkräfteeinwanderungsgesetzes",
+      "datum": "2019-03-13"
+    }
+  ],
+  "cursor": "AoJw-K-tu-kCMURydWNrc2FjaGUtMjI3MDI3"
+}

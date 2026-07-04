@@ -1,0 +1,61 @@
+{
+  "id": "34966",
+  "abstract": "Regelungen zur Zulässigkeit der Präimplantationsdiagnostik (PID) in Ausnahmefällen, Festlegung der Voraussetzungen und Verfahren einer PID durch Ergänzung embryonenschutzrechtlicher Bestimmungen, Einzelfallentscheidungen, Sicherstellung einer sorgfältigen Diagnostik, Zulassung der PID nur in lizenzierten Zentren, Vorlage eines Berichts im Deutschen Bundestag in jeder Legislaturperiode;<br />\r\nEinfügung § 3a sowie Änderung §§ 9 und 11 Embryonenschutzgesetz; Verordnungsermächtigung<br />\r\n<br />\r\nBezug: Entscheidung des Bundesgerichtshofes vom 6. Juli 2010 betr. Strafbarkeit einer Präimplantationsdiagnostik (5 StR 386/09)<br />\r\nSiehe auch M012 und M014<br />\r\n<br />\r\n<span style=\"font-weight: bold\">Beschlussempfehlung des Ausschusses: </span>Präzisierungen und Terminologieanpassungen, Änderung des Turnus für die Berichterstattung, Folgeänderungen;<br />\r\nÄnderung §§ 3a, 11 und 12 Embryonenschutzgesetz",
+  "beratungsstand": "Verkündet",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "M013",
+  "archiv": "XVII/192",
+  "sachgebiet": [
+    "Gesundheit"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 17,
+  "zustimmungsbeduerftigkeit": [
+    "Nein, laut Gesetzentwurf (Drs 17/5451)",
+    "Nein, laut Verkündung (BGBl I)"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "verkuendung": [
+    {
+      "jahrgang": "2011",
+      "heftnummer": "58",
+      "seite": "2228",
+      "ausfertigungsdatum": "2011-11-21",
+      "verkuendungsdatum": "2011-11-24",
+      "einleitungstext": "Gesetz",
+      "pdf_url": "https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&start=//*%5b@attr_id=%27bgbl111s2228.pdf%27%5d",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 2011, 2228"
+    }
+  ],
+  "inkrafttreten": [
+    {
+      "datum": "2011-12-08"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Bericht der Bundesregierung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Embryonenschutzgesetz",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Präimplantationsdiagnostik",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Präimplantationsdiagnostikgesetz",
+      "typ": "Rechtsmaterialien"
+    }
+  ],
+  "titel": "Gesetz zur Regelung der Präimplantationsdiagnostik (Präimplantationsdiagnostikgesetz -PräimpG)",
+  "datum": "2011-09-23"
+}

@@ -1,0 +1,71 @@
+{
+  "id": "262146",
+  "abstract": "Ermächtigung der Bundesregierung zur Zustimmung im ESM-Gouverneursrat betr. Unterstützung der Finanzierung gesundheitspolitischer Maßnahmen zur Bekämpfung der Covid-19-Pandemie in allen Euro-Mitgliedstaaten;<br />\r\nAnlagen 1 bis 12a: Beschlussentwurf des ESM-Gouverneursrates zur Billigung der Pandemie-Krisenhilfe auf Grundlage der Kreditlinie mit erweiterten Bedingungen, Vorabbewertung der Zugangsvoraussetzungen zu vorsorglicher Finanzhilfe durch die Europäischen Institutionen, der Risiken für die Finanzstabilität des Euroraums, der Schuldentragfähigkeit und des Finanzierungsbedarfs, der außenwirtschaftlichen Situation sowie des Bankensystems, Vorlagenentwurf für einen Pandemie-Reaktionsplan gem. ESM-Vertrag, Vorlagenentwurf für Vorschlag des Geschäftsführenden Direktors für Finanzhilfe in Form einer Pandemie-Krisenhilfe, Erklärung der Eurogruppe zur Pandemie-Krisenhilfe vom 8. Mai 2020, Vorlagenentwurf für Stabilitätshilfeersuchen für eine ECCL PCSI, Analyse der Rechtmäßigkeit der ECCL PCSI-Laufzeiten, Brief des Vize-Präsidenten der Europäischen Kommission Dombrovskis und des EU-Kommissars Gentiloni an den Präsidenten der Eurogruppe Centeno zur verstärkten Überwachung",
+  "beratungsstand": "Angenommen",
+  "vorgangstyp": "Antrag",
+  "sachgebiet": [
+    "Europapolitik und Europäische Union",
+    "Gesundheit",
+    "Öffentliche Finanzen, Steuern und Abgaben"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 19,
+  "initiative": [
+    "Bundesministerium der Finanzen"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": true,
+      "name": "COVID-19",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "ESM-Finanzierungsgesetz",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "ESM-Vertrag",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Europäische Wirtschafts- und Währungsunion",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Europäischer Stabilitätsmechanismus",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesundheitskosten",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Kredit",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Seuchenbekämpfung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Wirtschaftliche Stabilität",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Öffentliche Finanzwirtschaft",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Bereitstellung des ESM-Instruments ECCL Pandemic Crisis Support (PCSI);\r\nEinholung eines zustimmenden Beschlusses des Deutschen Bundestages nach\r\n§ 4 Abs. 1 ESM-Finanzierungsgesetz (ESMFinG)",
+  "datum": "2020-05-14"
+}

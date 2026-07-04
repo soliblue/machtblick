@@ -1,0 +1,48 @@
+{
+  "id": "122804",
+  "abstract": "Keine vorzeitige Anhebung der Altersgrenze für Frauen in der Rentenversicherung und des Schwellenwertes beim Kündigungsschutz, keine Änderung bei den betriebsbedingten Kündigungsmöglichkeiten ",
+  "beratungsstand": "Abgelehnt",
+  "vorgangstyp": "Antrag",
+  "sachgebiet": [
+    "Arbeit und Beschäftigung",
+    "Gesellschaftspolitik, soziale Gruppen",
+    "Soziale Sicherung"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 13,
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Altersversorgung",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Arbeit",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Frau",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Frauenarbeit",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Kündigungsschutz für Arbeitnehmer",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Rentenversicherung",
+      "typ": "Freier Deskriptor"
+    }
+  ],
+  "titel": "Rechtliche Rahmenbedingungen der Altersversorgung und Erwerbstätigkeit von Frauen (G-SIG: 13011734)",
+  "datum": "1996-06-28"
+}

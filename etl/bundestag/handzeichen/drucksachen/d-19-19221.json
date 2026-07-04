@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "241092",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/19221",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "9c815d2ffbe7dc9ce3b3cc8f29d5aae4",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "261888",
+          "titel": "Zweites Gesetz zum Schutz der Bevölkerung bei einer epidemischen Lage von nationaler Tragweite",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/192/1919221.pdf",
+        "id": "241092",
+        "dokumentnummer": "19/19221",
+        "datum": "2020-05-13",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "titel": "zu der zweiten Beratung des Gesetzentwurfs der Fraktionen der CDU/CSU und SPD\r\n- Drucksachen 19/18967, 19/19216 -\r\nEntwurf eines Zweiten Gesetzes zum Schutz der Bevölkerung bei einer epidemischen Lage von nationaler Tragweite",
+      "datum": "2020-05-13"
+    }
+  ],
+  "cursor": "AoJw0MDehvICMURydWNrc2FjaGUtMjQxMDky"
+}

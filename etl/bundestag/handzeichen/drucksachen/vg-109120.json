@@ -1,0 +1,68 @@
+{
+  "id": "109120",
+  "abstract": "<strong>Inhalt:</strong> Feststellung des Bundeshaushaltsplans für das Jahr 2000 in Einnahmen und Ausgaben auf 478,2 Mrd. DM, Ermächtigung zur Aufnahme von Krediten bis zur Höhe von 49,5 Mrd. DM, Verwendung von Einnahmen aus dem Postsektor zur Schuldentilgung, Schuldbeitritt des Bundes bei im Haushaltsjahr 2000 fällig werdenden Krediten des Fonds Deutsche Einheit und des ERP-Sondervermögens, Einzelvorschriften zur Haushaltsflexibilisierung, Erhöhung des Ermächtigungsrahmens für die Marktordnungsausgaben u.a.m., beamtenrechtliche Vorschriften, u.a. Stellenabbau in Höhe von 1,5 v.H., Vorschriften im Zusammenhang mit Modellvorhaben zur Vereinfachung des Dienstreisewesens. <br />\r\n<br />\r\n<strong>Änderungen aufgrund der Ausschußempfehlung:</strong> Erhöhung des Haushaltsansatzes um 600 Mio DM, Unterrichtung des Parlaments bei über- und außerplanmäßigen Verpflichtungsermächtigungen, Regelung zum Abbau von Personalüberhängen bei Bundeseinrichtungen, für die kein Stellenplan im Bundeshaushalt ausgewiesen ist, Unterbringungsregelung für nicht folgepflichtige Angehörige des Bundesrechnungshofs im Zusammenhang mit den Vorschlägen der Föderalismuskommission u.a.m. <br />\r\n<br />\r\n<strong>Nebenschlagwörter:</strong> Nettokreditaufnahme/Kreditaufnahme im Haushaltsjahr 2000 * Haushaltsgesetz/Bundeshaushaltsgesetz 2000 * Stellenplan/ Stelleneinsparungen bei der Bundesverwaltung im Haushaltsjahr 2000",
+  "beratungsstand": "Verkündet",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "D026",
+  "archiv": "XIV/66",
+  "sachgebiet": [
+    "Öffentliche Finanzen, Steuern und Abgaben"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 14,
+  "zustimmungsbeduerftigkeit": [
+    "Nein"
+  ],
+  "initiative": [
+    "Bundesregierung"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "verkuendung": [
+    {
+      "jahrgang": "1999",
+      "heftnummer": "58",
+      "seite": "2561",
+      "ausfertigungsdatum": "1999-12-22",
+      "verkuendungsdatum": "1999-12-28",
+      "einleitungstext": "Gesetz",
+      "pdf_url": "https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&start=//*%5b@attr_id=%27bgbl199s2561.pdf%27%5d",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 1999, 2561"
+    }
+  ],
+  "inkrafttreten": [
+    {
+      "datum": "2000-01-01"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": true,
+      "name": "Bundeshaushaltsgesetz 2000",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Haushalt",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Haushaltsgesetz",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Nettokreditaufnahme",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Stellenplan",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2000 (Haushaltsgesetz 2000) (G-SIG: 14019203)",
+  "datum": "1999-12-17"
+}

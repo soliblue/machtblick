@@ -1,0 +1,86 @@
+{
+  "id": "116056",
+  "abstract": "<b>Bezug:</b> Beschluss des Deutschen Bundestages vom 30. Januar 2002 (PlPr 14/214 und 14/217, BT Drs 14/8102) <br><br><b>Inhalt:</b> Grundsätzliches Verbot der Einfuhr und Verwendung menschlicher embryonaler Stammzellen, ausnahmsweise Einfuhr und Verwendung nach Genehmigung durch eine staatliche Kontrollbehörde nur zu Forschungszwecken und fehlender Möglichkeit zur Implantierung eines Embryos, Einrichtung einer Zentralen Ethik-Kommission für Stammzellenforschung, Robert Koch-Institut/Paul-Ehrlich-Institut als Genehmigungsbehörde, Erstellung eines Registers der Forschungsvorhaben, Straf- und Bußgeldvorschriften. Es entstehen nicht quantifizierte Kosten. <br><br><b>Änderungen aufgrund der Ausschußempfehlung:</b> Definition der Stammzell-Linien, Verbot der Einfuhr von Stammzellen bei mit der deutschen Rechtsordnung unvereinbarer Produktion, Präzisierung der ethischen Anforderungen an Forschungsvorhaben, Strafbarkeit der Beteiligung an der Gewinnung embryonaler Stammzellen im Ausland. Änderungen aufgrund von Änderungsanträgen zur 2. Beratung: Wegfall von § 13 Abs. 3 des Gesetzentwurfs: ausnahmslose Strafbewehrung bei illegalem Import und illegaler Verwendung menschlicher embryonaler Stammzellen. <br><br><b>Nebenschlagwörter:</b> Stammzelle/Stammzellgesetz * Einfuhrbeschränkung/Verbot der Einfuhr menschlicher embryonaler Stammzellen * Gentechnologie/ Stammzellgesetz * Ethikkommission/Einrichtung einer Zentralen Ethik- Kommission für Stammzellenforschung * Robert Koch-Institut/Robert Koch-Institut/Paul-Ehrlich-Institut als Genehmigungsbehörde für Stammzellenforschung * Paul-Ehrlich-Institut/Robert Koch-Institut/ Paul-Ehrlich-Institut als Genehmigungsbehörde für Stammzellenforschung ",
+  "beratungsstand": "Verkündet",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "K014",
+  "archiv": "XIV/451",
+  "sachgebiet": [
+    "Gesundheit",
+    "Wissenschaft, Forschung und Technologie"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 14,
+  "zustimmungsbeduerftigkeit": [
+    "Nein"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "verkuendung": [
+    {
+      "jahrgang": "2002",
+      "heftnummer": "42",
+      "seite": "2277",
+      "ausfertigungsdatum": "2002-06-28",
+      "verkuendungsdatum": "2002-06-29",
+      "einleitungstext": "Gesetz",
+      "pdf_url": "https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&start=//*%5b@attr_id=%27bgbl102s2277.pdf%27%5d",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 2002, 2277"
+    }
+  ],
+  "inkrafttreten": [
+    {
+      "datum": "2002-07-01"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Einfuhrbeschränkung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Ethikkommission",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Forschung und Technologie",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gentechnologie",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesundheit",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Paul-Ehrlich-Institut",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Robert Koch-Institut",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Stammzelle",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Stammzellgesetz",
+      "typ": "Rechtsmaterialien"
+    }
+  ],
+  "titel": "Gesetz zur Sicherstellung des Embryonenschutzes im Zusammenhang mit Einfuhr und Verwendung menschlicher embryonaler Stammzellen (Stammzellgesetz - StZG) (G-SIG: 14019907)",
+  "datum": "2002-05-31"
+}

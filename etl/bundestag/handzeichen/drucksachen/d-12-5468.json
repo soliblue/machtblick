@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "137489",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/5468",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "7a563894576e56ddb9c42d9d792005ff",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "154922",
+          "titel": "Gesetz zur Durchsetzung der Gleichberechtigung von Frauen und Männern (Zweites Gleichberechtigungsgesetz - 2. GleiBG) (G-SIG: 12020527)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Frauen und Jugend"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/054/1205468.pdf",
+        "id": "137489",
+        "dokumentnummer": "12/5468",
+        "datum": "1993-07-21",
+        "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Durchsetzung der Gleichberechtigung von Frauen und Männern (Zweites Gleichberechtigungsgesetz - 2. GleiBG)",
+      "datum": "1993-07-21"
+    }
+  ],
+  "cursor": "AoJwkJXFhq0BMURydWNrc2FjaGUtMTM3NDg5"
+}

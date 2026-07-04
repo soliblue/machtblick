@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "234896",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/14103",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "5d46a00fdeb7cead8a31e0712c4480e3",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "252512",
+          "titel": "Gesetz zur Rückführung des Solidaritätszuschlags 1995",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/141/1914103.pdf",
+        "id": "234896",
+        "dokumentnummer": "19/14103",
+        "datum": "2019-10-16",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Rückführung des Solidaritätszuschlags 1995",
+      "datum": "2019-10-16"
+    }
+  ],
+  "cursor": "AoJw0NGA6u0CMURydWNrc2FjaGUtMjM0ODk2"
+}

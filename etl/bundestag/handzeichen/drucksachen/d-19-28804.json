@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "252969",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/28804",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "439dc6e67cc131a15316661009e3d4f3",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "276916",
+          "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an der Militärmission der Europäischen Union EUTM Mali",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/288/1928804.pdf",
+        "id": "252969",
+        "dokumentnummer": "19/28804",
+        "datum": "2021-04-21",
+        "verteildatum": "2021-04-21",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an der Militärmission der Europäischen Union EUTM Mali",
+      "datum": "2021-04-21"
+    }
+  ],
+  "cursor": "AoJwkOn3-fgCMURydWNrc2FjaGUtMjUyOTY5"
+}

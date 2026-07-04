@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "97711",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 3,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/7596",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "dda8c5a327f2a0930a743994780565f3",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "115648",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2002 (Haushaltsgesetz 2002) (G-SIG: 14019738)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PDS",
+          "titel": "Fraktion der PDS"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/075/1407596.pdf",
+        "id": "97711",
+        "dokumentnummer": "14/7596",
+        "datum": "2001-11-27",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der PDS"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2567",
+          "titel": "Dr. Uwe-Jens Rössel, MdB, PDS",
+          "autor_titel": "Dr. Uwe-Jens Rössel"
+        },
+        {
+          "id": "2643",
+          "titel": "Heidi Lippmann, MdB, PDS",
+          "autor_titel": "Heidi Lippmann"
+        }
+      ],
+      "titel": "zu der zweiten Beratung des Entwurfs des Haushaltsgesetzes 2002 -14/6800 Anlage, 14/7313, 14/7321, 14/7322, 14/7323, 14/7537- hier: Einzelplan 14 Geschäftsbereich des Bundesministeriums der Verteidigung",
+      "datum": "2001-11-27"
+    }
+  ],
+  "cursor": "AoJwuMHdtuoBMERydWNrc2FjaGUtOTc3MTE="
+}

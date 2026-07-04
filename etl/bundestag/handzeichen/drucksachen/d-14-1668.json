@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "98167",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "14/1668",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "0d8c18a54184dd4c219f960ab6b4c2ef",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "110110",
+          "titel": "Gesetz zur Fortführung der ökologischen Steuerreform (G-SIG: 14019223)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/016/1401668.pdf",
+        "id": "98167",
+        "dokumentnummer": "14/1668",
+        "datum": "1999-09-29",
+        "anlagen": "Stellungnahme BR u.GegÄuß BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Fortführung der Ökologischen Steuerreform",
+      "datum": "1999-09-29"
+    }
+  ],
+  "cursor": "AoJw0Oa3xNoBMERydWNrc2FjaGUtOTgxNjc="
+}

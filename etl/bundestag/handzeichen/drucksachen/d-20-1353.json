@@ -1,0 +1,87 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "260156",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "anlagen": "Entwurf eines Gesetzes zur Pandemievorsorge durch Aufklärung, verpflichtende Impfberatung und Immunisierung der Bevölkerung gegen SARS-CoV-2",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 6,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 6,
+      "dokumentnummer": "20/1353",
+      "wahlperiode": 20,
+      "herausgeber": "BT",
+      "pdf_hash": "675b1e9f4227ef9e2c05a8145937d781",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "284990",
+          "titel": "Gesetz zur Aufklärung, Beratung und Impfung aller Volljährigen gegen SARS-CoV-2 (SARSCovImpfG)",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "284418",
+          "titel": "Impfbereitschaft ohne allgemeine Impfpflicht gegen SARS-CoV-2 erhöhen",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "283844",
+          "titel": "Keine gesetzliche Impfpflicht gegen das COVID-19-Virus",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "285168",
+          "titel": "Gesetz zur Einführung einer verpflichtenden Impfberatung für Erwachsene und einer altersbezogenen Impfpflicht ab 50 Jahren unter Vorbehalt gegen das Coronavirus SARS-CoV-2",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfG",
+          "titel": "Ausschuss für Gesundheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/20/013/2001353.pdf",
+        "id": "260156",
+        "dokumentnummer": "20/1353",
+        "datum": "2022-04-06",
+        "verteildatum": "2022-04-06",
+        "anlagen": "Entwurf eines Gesetzes zur Pandemievorsorge durch Aufklärung, verpflichtende Impfberatung und Immunisierung der Bevölkerung gegen SARS-CoV-2",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Gesundheit"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1500",
+          "titel": "Heike Baehrens, MdB, SPD",
+          "autor_titel": "Heike Baehrens, Berichterstattung"
+        },
+        {
+          "id": "7173",
+          "titel": "Dr. Janosch Dahmen, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Janosch Dahmen, Berichterstattung"
+        },
+        {
+          "id": "2134",
+          "titel": "Martin Sichert, MdB, AfD",
+          "autor_titel": "Martin Sichert, Berichterstattung"
+        },
+        {
+          "id": "8160",
+          "titel": "Tino Sorge, MdB, CDU/CSU",
+          "autor_titel": "Tino Sorge, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Gesetzentwurf der Abgeordneten Heike Baehrens und weiter Abgeordner\r\n- Drucksache 20/899 -\r\nEntwurf eines Gesetzes zur Aufklärung, Beratung und Impfung aller Volljährigen gegen SARS-CoV-2 (SARSCoVImpfG)\r\nb) zu dem Gesetzentwurf der Abgeordneten Dieter Janecek und weiterer Abgeordneter\r\n- Drucksache 20/954 -\r\nEntwurf eines Gesetzes zur Einführung einer verpflichtenden Impfberatung für Erwachsene und einer altersbezogenen Impfpflicht ab 50 Jahren unter Vorbehalt gegen das Coronavirus SARS-CoV-2 \r\nc) zu dem Antrag der Abgeordneten Wolfgang Kubicki und weiterer Abgeordneter\r\n- Drucksache 20/680 -\r\nImpfbereitschaft ohne allgemeine Impfpflicht gegen SARS-CoV-2 erhöhen\r\nd) zu dem Antrag der Fraktion der CDU/CSU\r\n- Drucksache 20/978 -\r\nImpfvorsorgegesetz - Ein guter Schutz für unser Land\r\ne) zu dem Antrag der Abgeordneten Martin Sicher,  weiterer Abgeordneter der Fraktion der AfD\r\n- Drucksache 20/516 -\r\nKeine gesetzliche Impfpflicht gegen das COVID-19-Virus",
+      "datum": "2022-04-06"
+    }
+  ],
+  "cursor": "AoJwkKKU__8CMURydWNrc2FjaGUtMjYwMTU2"
+}

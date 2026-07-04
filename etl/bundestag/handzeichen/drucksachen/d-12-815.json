@@ -1,0 +1,50 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "126587",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 11,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/815",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "c7fbd2b9e2ed4c3bf9a42936fde8e9f4",
+      "aktualisiert": "1991-06-19T00:00:00+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "144750",
+          "titel": "Vollendung der Einheit Deutschlands (G-SIG: 12010162)",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/008/1200815.pdf",
+        "id": "126587",
+        "dokumentnummer": "12/815",
+        "datum": "1991-06-19",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "3175",
+          "titel": "Willy Brandt, MdB, SPD",
+          "autor_titel": "Willy Brandt"
+        },
+        {
+          "id": "2880",
+          "titel": "Dr. Burkhard Hirsch, MdB, FDP",
+          "autor_titel": "Dr. Burkhard Hirsch"
+        }
+      ],
+      "titel": "Vollendung der Einheit Deutschlands",
+      "datum": "1991-06-19"
+    }
+  ],
+  "cursor": "AoJw0I7w2Z0BMURydWNrc2FjaGUtMTI2NTg3"
+}

@@ -1,0 +1,102 @@
+{
+  "id": "136080",
+  "abstract": "<strong>Bezug:</strong> Senkung der Lohnnebenkosten durch Rentenreformgesetz 1999 (s. G076 und G082)<br />\r\n<br />\r\n<strong>Inhalt:</strong> Erhöhung der Umsatzsteuer von 15 v.H. auf 16 v.H. zur Finanzierung des zusätzlichen Bundeszuschusses an die Gesetzliche Rentenversicherung gem. Rentenreformgesetz 1999 (Senkung der Lohnzusatzkosten), Beibehaltung des ermäßigten Umsatzsteuersatzes; Änderung § 213 6. Buch Sozialgesetzbuch, der §§ 12 und 24 Umsatzsteuergesetz, der §§ 36 und 37 sowie der Anlage Umsatzsteuer- Durchführungsverordnung sowie § 1 Finanzausgleichsgesetz. Der Bund erzielt Mehreinnahmen in Höhe des zusätzlichen Bundeszuschusses zur Rentenversicherung (1999: 13,3 Mrd DM, 2000: 16,3 Mrd DM).<br />\r\n<br />\r\n<strong>Änderungen durch das Vermittlungsverfahren:</strong> Erhöhung der Mehrwertsteuer von 15 auf 16 v.H. ab 1. April 1998 zur Finanzierung eines höheren Bundeszuschusses an die gesetzliche Rentenversicherung, insbesondere zur Vermeidung einer Beitragserhöhung; Änderung § 52 Einkommensteuergesetz, § 54 Körperschaftsteuergesetz, § 27 Umwandlungssteuergesetz sowie Änderung §§ 1, 2 und 12 und Streichung § 12a Finanzausgleichsgesetz. Abspaltung &quot;Gesetz zur Stabilisierung der Finanzen der Rentenversicherung durch Einbeziehung geringfügig Nebenbeschäftigter in die Rentenversicherungspflicht&quot; s. G087 (BT-Drs 13/9419)<br />\r\n<br />\r\n<strong>Nebenschlagwörter:</strong> Bundeszuschuß/Gesetz zur Finanzierung eines zusätzlichen Bundeszuschusses zur gesetzlichen Rentenversicherung * Sozialgesetzbuch VI/Änderung § 213 SGB VI betr. Bundeszuschuß zur GRV * Umsatzsteuergesetz/Änderung der §§ 12 und 24 UStG betr. Bundeszuschuß zur GRV * Umsatzsteuer-Durchführungsverordnung/ Änderung der §§ 36 und 37 sowie der Anlage UStDV betr. Bundeszuschuß zur GRV * Finanzausgleichsgesetz/Änderung § 1 FAG betr. Bundeszuschuß zur GRV * Mehrwertsteuer/Erhöhung der Mehrwertsteuer von 15 v.H. auf 16 v.H. * Einkommensteuergesetz/Änderung § 52 EStG betr. Bundeszuschuß zur GRV * Körperschaftsteuergesetz/Änderung § 54 KStG betr. Bundeszuschuß zur GRV * Umwandlungs-Steuergesetz/Änderung § 27 UmwStG betr. Bundeszuschuß zur GRV",
+  "beratungsstand": "Verkündet",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "D064",
+  "archiv": "XIII/325",
+  "sachgebiet": [
+    "Soziale Sicherung",
+    "Öffentliche Finanzen, Steuern und Abgaben"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 13,
+  "zustimmungsbeduerftigkeit": [
+    "Ja"
+  ],
+  "initiative": [
+    "Fraktion der CDU/CSU",
+    "Fraktion der FDP"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "verkuendung": [
+    {
+      "jahrgang": "1997",
+      "heftnummer": "86",
+      "seite": "3121",
+      "ausfertigungsdatum": "1997-12-19",
+      "verkuendungsdatum": "1997-12-23",
+      "einleitungstext": "Gesetz",
+      "pdf_url": "https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&start=//*%5b@attr_id=%27bgbl197s3121.pdf%27%5d",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 1997, 3121"
+    }
+  ],
+  "inkrafttreten": [
+    {
+      "datum": "1997-12-01",
+      "erlaeuterung": "Artikel 1 Nr. 4"
+    },
+    {
+      "datum": "1997-12-24",
+      "erlaeuterung": "Artikel 2, 3 und 4"
+    },
+    {
+      "datum": "1998-01-01",
+      "erlaeuterung": "Artikel 7"
+    },
+    {
+      "datum": "1998-04-01"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Bundeszuschuss",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Finanzausgleichsgesetz",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": true,
+      "name": "Gesetzliche Rentenversicherung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Mehrwertsteuer",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Rentenversicherung",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Sozialgesetzbuch VI",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Steuerpolitik",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Umsatzsteuer-Durchführungsverordnung",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Umsatzsteuergesetz",
+      "typ": "Rechtsmaterialien"
+    }
+  ],
+  "titel": "Gesetz zur Finanzierung eines zusätzlichen Bundeszuschusses zur gesetzlichen Rentenversicherung (G-SIG: 13020803)",
+  "datum": "1997-12-19"
+}

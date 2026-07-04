@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "247476",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/24387",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "4652e6fea9205c6ba29fe91022d199fe",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "270040",
+          "titel": "Feststellung des Fortbestandes der epidemischen Lage von nationaler Tragweite",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "CDU/CSU",
+          "titel": "Fraktion der CDU/CSU"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "SPD",
+          "titel": "Fraktion der SPD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/243/1924387.pdf",
+        "id": "247476",
+        "dokumentnummer": "19/24387",
+        "datum": "2020-11-17",
+        "verteildatum": "2020-11-17",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der CDU/CSU",
+          "Fraktion der SPD"
+        ]
+      },
+      "titel": "Feststellung des Fortbestandes der epidemischen Lage von nationaler Tragweite",
+      "datum": "2020-11-17"
+    }
+  ],
+  "cursor": "AoJwuJD36vUCMURydWNrc2FjaGUtMjQ3NDc2"
+}

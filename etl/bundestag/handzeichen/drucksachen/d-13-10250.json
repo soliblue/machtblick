@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "114187",
+      "drucksachetyp": "Unterrichtung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/10250",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "524321ec5691801ba7b90bb8f9c764fb",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "122496",
+          "titel": "Beschluß der Bundesregierung zur Festlegung des Teilnehmerkreises an der Dritten Stufe der Europäischen Wirtschafts- und Währungsunion und Ersuchen der Bundesregierung (G-SIG: 13002436)",
+          "vorgangstyp": "Bericht, Gutachten, Programm"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/102/1310250.pdf",
+        "id": "114187",
+        "dokumentnummer": "13/10250",
+        "datum": "1998-03-27",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Unterrichtung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Beschluß der Bundesregierung zur Festlegung des Teilnehmerkreises an der Dritten Stufe der Europäischen Wirtschafts- und Währungsunion und Ersuchen der Bundesregierung",
+      "datum": "1998-03-27"
+    }
+  ],
+  "cursor": "AoJw-MPhuc8BMURydWNrc2FjaGUtMTE0MTg3"
+}

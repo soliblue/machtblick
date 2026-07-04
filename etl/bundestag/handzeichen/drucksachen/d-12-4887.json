@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "137379",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "12/4887",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "1583a8fd4a959ecd6d57ebdbc46dbe34",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "154914",
+          "titel": "Gesetz über die Entschädigung nach dem Gesetz zur Regelung offener Vermögensfragen und über staatliche Ausgleichsleistungen für Enteignungen auf besatzungsrechtlicher oder besatzungshoheitlicher Grundlage (Entschädigungs- und Ausgleichsleistungsgesetz - EALG) (G-SIG: 12020516)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/048/1204887.pdf",
+        "id": "137379",
+        "dokumentnummer": "12/4887",
+        "datum": "1993-05-10",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes über die Entschädigung nach dem Gesetz zur Regelung offener Vermögensfragen und über staatliche Ausgleichsleistungen für Enteignungen auf besatzungsrechtlicher oder besatzungshoheitlicher Grundlage (Entschädigungs- und Ausgleichsleistungsgesetz - EALG )",
+      "datum": "1993-05-10"
+    }
+  ],
+  "cursor": "AoJwkNmSzasBMURydWNrc2FjaGUtMTM3Mzc5"
+}

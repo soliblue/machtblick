@@ -1,0 +1,65 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "83917",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 11,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 6,
+      "dokumentnummer": "14/1267",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "a99f335c37b7fca0067b3c7e21b52019",
+      "aktualisiert": "1999-06-25T00:00:00+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "101198",
+          "titel": "Errichtung eines Mahnmals für die ermordeten Juden Europas (G-SIG: 14010295)",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "109204",
+          "titel": "Errichtung eines Denkmals für die ermordeten Juden Europas (G-SIG: 14010297)",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "108353",
+          "titel": "Errichtung eines Denkmals für die ermordeten Juden Europas (G-SIG: 14010296)",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "102163",
+          "titel": "Errichtung eines Denkmals für die ermordeten Juden Europas und eines \"Hauses der Erinnerung\" (G-SIG: 14010298)",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/012/1401267.pdf",
+        "id": "83917",
+        "dokumentnummer": "14/1267",
+        "datum": "1999-06-25",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "481",
+          "titel": "Annette Widmann-Mauz, MdB, CDU/CSU",
+          "autor_titel": "Annette Widmann-Mauz"
+        },
+        {
+          "id": "7065",
+          "titel": "Ursula Heinen, MdB, CDU/CSU",
+          "autor_titel": "Ursula Heinen"
+        }
+      ],
+      "titel": "zu der Beschlußempfehlung und dem Bericht des Ausschusses für Kultur und Medien (23. Ausschuß) - 14/1238 - zu den Anträgen 14/941, 14/942, 14/943 Errichtung eines Denkmals für die ermordeten Juden Europas - 14/944 Errichtung eines Denkmals für die ermordeten Juden Europas und eines \"Hauses der Erinnerung\" - 14/965 Errichtung eines Mahnmals für die Opfer der nationalsozialistischen Verbrechen gegen die Menschlichkeit - 14/981 Errichtung eines zentralen Mahnmals",
+      "datum": "1999-06-25"
+    }
+  ],
+  "cursor": "AoJw0JafzdgBMERydWNrc2FjaGUtODM5MTc="
+}

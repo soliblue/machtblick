@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "229273",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/10257",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "cf2a5b7a08107b50bd0e84bdb253b224",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "243803",
+          "titel": "Sechsundzwanzigstes Gesetz zur Änderung des Bundesausbildungsförderungsgesetzes (26. BAföGÄndG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/102/1910257.pdf",
+        "id": "229273",
+        "dokumentnummer": "19/10257",
+        "datum": "2019-05-15",
+        "verteildatum": "2019-08-27",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "titel": "zu der zweiten Beratung des Gesetzentwurfs der Bundesregierung\r\n- Drucksachen 19/8749, 19/10249 -\r\nEntwurf eines Sechsundzwanzigsten Gesetzes zur Änderung des \r\nBundesausbildungsförderungsgesetzes\r\n(26. BAföGÄndG)",
+      "datum": "2019-05-15"
+    }
+  ],
+  "cursor": "AoJw0Oa73eoCMURydWNrc2FjaGUtMjI5Mjcz"
+}

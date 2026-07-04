@@ -1,0 +1,56 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "263547",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme der BRg zur Stellungnahme des Nationalen Normenkontrollrates",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "20/3873",
+      "wahlperiode": 20,
+      "herausgeber": "BT",
+      "pdf_hash": "504228ca23a0f5919a89c209b51aeb24",
+      "aktualisiert": "2022-10-10T17:45:19+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "291526",
+          "titel": "Zwölftes Gesetz zur Änderung des Zweiten Buches Sozialgesetzbuch und anderer Gesetze - Einführung eines Bürgergeldes (Bürgergeld-Gesetz)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Arbeit und Soziales"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/20/038/2003873.pdf",
+        "id": "263547",
+        "dokumentnummer": "20/3873",
+        "datum": "2022-10-10",
+        "verteildatum": "2022-10-10",
+        "anlagen": "Stellungnahme der BRg zur Stellungnahme des Nationalen Normenkontrollrates",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Zwölften Gesetzes zur Änderung des Zweiten Buches Sozialgesetzbuch und anderer Gesetze - Einführung eines Bürgergeldes (Bürgergeld-Gesetz)",
+      "datum": "2022-10-10"
+    }
+  ],
+  "cursor": "AoJw0MjV4IMDMURydWNrc2FjaGUtMjYzNTQ3"
+}

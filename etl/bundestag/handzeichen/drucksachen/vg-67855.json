@@ -1,0 +1,46 @@
+{
+  "id": "67855",
+  "abstract": "Herstellung von Rechtssicherheit für Ärzte und Patienten und Stärkung der Selbstbestimmung unheilbar Erkrankter: zivilrechtliche Zulässigkeit der freiwilligen Hilfestellung eines Arztes zum Suizid;<br />\r\nEinfügung § 1921a Bürgerliches Gesetzbuch<br />\r\n<br />\r\nBezug: Siehe auch GESTA C073, C074 und C075 sowie Antrag auf BT-Drs 18/6546",
+  "beratungsstand": "Abgelehnt",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "C072",
+  "archiv": "XVIII/198",
+  "sachgebiet": [
+    "Recht"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 18,
+  "zustimmungsbeduerftigkeit": [
+    "Nein, laut Gesetzentwurf (Drs 18/5374)"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Arzt",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bürgerliches Gesetzbuch",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": true,
+      "name": "Sterbehilfe",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Suizid",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Suizidhilfegesetz",
+      "typ": "Rechtsmaterialien"
+    }
+  ],
+  "titel": "Gesetz zur Regelung der ärztlich begleiteten Lebensbeendigung (Suizidhilfegesetz)",
+  "datum": "2015-11-06"
+}

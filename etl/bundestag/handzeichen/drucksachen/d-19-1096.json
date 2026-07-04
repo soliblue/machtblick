@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "217978",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/1096",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "6706db46a14d505661bcaa2c8b425dbb",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "233099",
+          "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an dem Hybriden Einsatz der Afrikanischen Union und der Vereinten Nationen in Darfur (UNAMID) auf Grundlage der Resolution 1769 (2007) des Sicherheitsrates der Vereinten Nationen vom 31. Juli 2007 und folgender Resolutionen, zuletzt 2363 (2017) vom 29. Juni 2017",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/010/1901096.pdf",
+        "id": "217978",
+        "dokumentnummer": "19/1096",
+        "datum": "2018-03-07",
+        "verteildatum": "2018-03-13",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Fortsetzung der Beteiligung bewaffneter deutscher Streitkräfte an dem Hybriden Einsatz der Afrikanischen Union und der Vereinten Nationen in Darfur (UNAMID) auf Grundlage der Resolution 1769 (2007) des Sicherheitsrates der Vereinten Nationen vom 31. Juli 2007 und folgender Resolutionen, zuletzt 2363 (2017) vom 29. Juni 2017",
+      "datum": "2018-03-07"
+    }
+  ],
+  "cursor": "AoJwuMWHgOICMURydWNrc2FjaGUtMjE3OTc4"
+}

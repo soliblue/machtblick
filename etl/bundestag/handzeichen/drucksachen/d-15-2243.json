@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "73813",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 1,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "15/2243",
+      "wahlperiode": 15,
+      "herausgeber": "BT",
+      "pdf_hash": "51f5373317ef735c89e3df3210c8d5d9",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "93468",
+          "titel": "Gesetz zur Umsetzung der Protokollerklärung der Bundesregierung zur Vermittlungsempfehlung zum Steuervergünstigungsabbaugesetz (G-SIG: 15019217)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "VermA",
+          "titel": "Vermittlungsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/15/022/1502243.pdf",
+        "id": "73813",
+        "dokumentnummer": "15/2243",
+        "datum": "2003-12-16",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Vermittlungsausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "266",
+          "titel": "Joachim Poß, MdB, SPD",
+          "autor_titel": "Joachim Poß, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetz zur Umsetzung der Protokollerklärung der Bundesregierung zur Vermittlungsempfehlung zum Steuervergünstigungsabbaugesetz\n-15/1518, 15/1665, 15/1684, 15/1762, 15/1996-\n",
+      "datum": "2003-12-16"
+    }
+  ],
+  "cursor": "AoJw-Kasv_kBMERydWNrc2FjaGUtNzM4MTM="
+}

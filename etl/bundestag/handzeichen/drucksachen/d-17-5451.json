@@ -1,0 +1,50 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "32316",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 217,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "17/5451",
+      "wahlperiode": 17,
+      "herausgeber": "BT",
+      "pdf_hash": "712241e474323aa8ed263aaf51c0b3f1",
+      "aktualisiert": "2011-04-12T00:00:00+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "34966",
+          "titel": "Gesetz zur Regelung der Präimplantationsdiagnostik (Präimplantationsdiagnostikgesetz -PräimpG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/17/054/1705451.pdf",
+        "id": "32316",
+        "dokumentnummer": "17/5451",
+        "datum": "2011-04-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1350",
+          "titel": "Ulrike Flach, MdB, FDP",
+          "autor_titel": "Ulrike Flach"
+        },
+        {
+          "id": "1780",
+          "titel": "Peter Hintze, MdB, CDU/CSU",
+          "autor_titel": "Peter Hintze"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur Regelung der Präimplantationsdiagnostik (Präimplantationsdiagnostikgesetz -PräimpG)\r\n",
+      "datum": "2011-04-12"
+    }
+  ],
+  "cursor": "AoJwkOjJpK8CMERydWNrc2FjaGUtMzIzMTY="
+}

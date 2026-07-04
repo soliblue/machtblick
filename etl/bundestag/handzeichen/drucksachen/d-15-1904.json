@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "75973",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "15/1904",
+      "wahlperiode": 15,
+      "herausgeber": "BT",
+      "pdf_hash": "e866b6c2b6b67f77599eba881cb74024",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "94239",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2004 (Haushaltsgesetz 2004) (G-SIG: 15019231)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "HaushA",
+          "titel": "Haushaltsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/15/019/1501904.pdf",
+        "id": "75973",
+        "dokumentnummer": "15/1904",
+        "datum": "2003-11-12",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Haushaltsausschuss"
+        ]
+      },
+      "titel": "zu dem Entwurf eines Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2004 (Haushaltsgesetz 2004)\n-15/1500-\nhier: Einzelplan 04\n       Geschäftsbereich des Bundeskanzlers und des Bundeskanzleramtes",
+      "datum": "2003-11-12"
+    }
+  ],
+  "cursor": "AoJw-J_m5_gBMERydWNrc2FjaGUtNzU5NzM="
+}

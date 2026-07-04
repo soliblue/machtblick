@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "250705",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 17,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/26898",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "3a4c94532c7d9b6b7a7b45f6f66ed2c7",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "274300",
+          "titel": "Forschung zu Kernreaktoren der IV. Generation vorantreiben - Energieversorgung in Deutschland sichern",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/268/1926898.pdf",
+        "id": "250705",
+        "dokumentnummer": "19/26898",
+        "datum": "2021-02-24",
+        "verteildatum": "2021-02-24",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2177",
+          "titel": "Dr. Götz Frömming, MdB, AfD",
+          "autor_titel": "Dr. Götz Frömming"
+        },
+        {
+          "id": "2142",
+          "titel": "Dr. Michael Espendiller, MdB, AfD",
+          "autor_titel": "Dr. Michael Espendiller"
+        }
+      ],
+      "titel": "Forschung zu Kernreaktoren der IV. Generation vorantreiben - Energieversorgung in Deutschland sichern",
+      "datum": "2021-02-24"
+    }
+  ],
+  "cursor": "AoJw-MLs6fcCMURydWNrc2FjaGUtMjUwNzA1"
+}

@@ -1,0 +1,37 @@
+{
+  "id": "109204",
+  "abstract": "Errichtung eines Denkmals für die ermordeten Juden Europas in Berlin, Hinweis auf andere Orte des Erinnerns, Gründung einer Stiftung als Verantwortliche Institution für die Planung, Bau und Betreuung, Baubeginn spätestens im Jahr 2001<br />\r\n<br />\r\n<span style=\"font-weight: bold;\">Beschlussempfehlung des Ausschusses:</span> Realisierung des überarbeiteten Entwurfs von Peter Eisenman (Eisenman II): Stelenfeld mit einem ergänzenden Ort der Information, Beginn der Bauarbeiten im Jahr 2000",
+  "beratungsstand": "Angenommen",
+  "vorgangstyp": "Antrag",
+  "sachgebiet": [
+    "Gesellschaftspolitik, soziale Gruppen",
+    "Kultur"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 14,
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Berlin",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Gedenkstätte",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Holocaust",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Juden",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Errichtung eines Denkmals für die ermordeten Juden Europas (G-SIG: 14010297)",
+  "datum": "1999-07-01"
+}

@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "225959",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 28,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/7429",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "bcffcd2a08a6d67f6da2a7a5fe18494d",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "243771",
+          "titel": "Den Einsatz chemischer Pflanzenschutzmittel wirksam reduzieren",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/074/1907429.pdf",
+        "id": "225959",
+        "dokumentnummer": "19/7429",
+        "datum": "2019-01-30",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2049",
+          "titel": "Stephan Protschka, MdB, AfD",
+          "autor_titel": "Stephan Protschka"
+        },
+        {
+          "id": "2129",
+          "titel": "Thomas Ehrhorn, MdB, AfD",
+          "autor_titel": "Thomas Ehrhorn"
+        }
+      ],
+      "titel": "Den Einsatz chemischer Pflanzenschutzmittel wirksam reduzieren",
+      "datum": "2019-01-30"
+    }
+  ],
+  "cursor": "AoJw-Myaz-gCMURydWNrc2FjaGUtMjI1OTU5"
+}

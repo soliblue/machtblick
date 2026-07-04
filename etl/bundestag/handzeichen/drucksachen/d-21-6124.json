@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "288075",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6124",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "21bd17a16df33890761a2829841c330f",
+      "aktualisiert": "2026-05-26T15:43:33+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "333227",
+          "titel": "Verordnung zur Überführung der jährlichen Minderungsziele in Jahresemissionsgesamtmengen für die Jahre 2031 bis 2040 (Jahresemissionsgesamtmengen-Verordnung 2031-2040 - JEGMV 2031-2040)",
+          "vorgangstyp": "Rechtsverordnung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfU",
+          "titel": "Ausschuss für Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/061/2106124.pdf",
+        "id": "288075",
+        "dokumentnummer": "21/6124",
+        "datum": "2026-05-22",
+        "verteildatum": "2026-05-22",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7888",
+          "titel": "Dr. Fabian Fahl, MdB, DIE LINKE",
+          "autor_titel": "Dr. Fabian Fahl, Berichterstattung"
+        },
+        {
+          "id": "1043",
+          "titel": "Dr. Thomas Gebhart, MdB, CDU/CSU",
+          "autor_titel": "Dr. Thomas Gebhart, Berichterstattung"
+        },
+        {
+          "id": "7929",
+          "titel": "Dr. Ingo Hahn, MdB, AfD",
+          "autor_titel": "Dr. Ingo Hahn, Berichterstattung"
+        },
+        {
+          "id": "7617",
+          "titel": "Daniel Rinkert, MdB, SPD",
+          "autor_titel": "Daniel Rinkert, Berichterstattung"
+        }
+      ],
+      "titel": "zu der Verordnung der Bundesregierung\r\n- Drucksachen 21/5069, 21/5428 Nr. 2 -\r\nVerordnung zur Überführung der jährlichen Minderungsziele in Jahresemissionsgesamtmengen für die Jahre 2031 bis 2040 (Jahresemissionsgesamtmengen-Verordnung 2031-2040 - JEGMV 2031-2040)",
+      "datum": "2026-05-22"
+    }
+  ],
+  "cursor": "AoJw0JTIp54DMURydWNrc2FjaGUtMjg4MDc1"
+}

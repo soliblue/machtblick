@@ -1,0 +1,49 @@
+{
+  "id": "255338",
+  "abstract": "Teilnehmer, Ablauf der Tagung, Kurzprotokolle der Ausschüsse und der Plenarsitzung mit den Schwerpunkten Unterstützung der euroatlantischen Integration Georgiens, Lastenteilung und das Zwei-Prozent-Ziel der NATO, Umgang mit Russland sowie Ergebnisse des NATO-Gipfels in Brüssel",
+  "vorgangstyp": "Bericht, Gutachten, Programm",
+  "sachgebiet": [
+    "Außenpolitik und internationale Beziehungen",
+    "Verteidigung"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 19,
+  "initiative": [
+    "Deutsche Delegation in der Parlamentarischen Versammlung der NATO"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Georgien",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Interparlamentarische Kooperation",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "NATO",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": true,
+      "name": "Parlamentarische Versammlung der NATO",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Russland",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Verteidigungsausgaben",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Frühjahrstagung der Parlamentarischen Versammlung der NATO vom 26. bis 29. Mai 2017 in Tiflis, Georgien",
+  "datum": "2020-01-15"
+}

@@ -1,0 +1,64 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "123784",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 2,
+      "dokumentnummer": "12/3689",
+      "wahlperiode": 12,
+      "herausgeber": "BT",
+      "pdf_hash": "6cfb6281c118c1840cd449aede9fd6b0",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "147287",
+          "titel": "Verminderung der Truppenübungsplätze in der Bundesrepublik Deutschland und künftiges Truppenübungsplatz-Konzept für Streitkräfte (G-SIG: 12010470)",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "140373",
+          "titel": "Entschließungsantrag zum Antrag betr. Verminderung der Truppenübungsplätze in der Bundesrepublik Deutschland und künftiges Truppenübungsplatz-Konzept für Streitkräfte (G-SIG: 12001153)",
+          "vorgangstyp": "Entschließungsantrag BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "VgA",
+          "titel": "Verteidigungsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/12/036/1203689.pdf",
+        "id": "123784",
+        "dokumentnummer": "12/3689",
+        "datum": "1992-11-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Verteidigungsausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "708",
+          "titel": "Gernot Erler, MdB, SPD",
+          "autor_titel": "Gernot Erler, Berichterstattung"
+        },
+        {
+          "id": "2404",
+          "titel": "Benno Zierer, MdB, CDU/CSU",
+          "autor_titel": "Benno Zierer, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Antrag der Abgeordneten Gernot Erler, Dr. Dietmar Matterne, Gerhard Neumann (Gotha), Peter Büchner (Speyer), Dr. Andreas von Bülow, Dr. Konrad Elmer, Katrin Fuchs (Verl), Norbert Gansel, Konrad Gilges, Dieter Heistermann, Erwin Horn, Lothar Ibrügger, Gabriele Iwersen, Horst Jungmann (Wittmoldt), Susanne Kastner, Fritz Rudolf Körper, Walter Kolbow, Horst Kubatschka, Dr. Klaus Kübler, Robert Leidinger, Volker Neumann (Bramsche), Horst Niggemeier, Manfred Opel, Dr. Hermann Scheer, Siegfried Scheffler, Horst Schmidbauer (Nürnberg), Wilhelm Schmidt (Salzgitter), Brigitte Schulte (Hameln), Dr. Hartmut Soell, Heinz-Alfred Steiner, Uta Titze, Karsten D. Voigt (Frankfurt), Rudi Walther (Zierenberg), Barbara Weiler, Reinhard Weis (Stendal), Uta Zapf, Dr. Peter Struck, Dr. Hans-Jochen Vogel und der Fraktion der SPD - Drucksache 12/1487 - Verminderung der Truppenübungsplätze in der Bundesrepublik Deutschland und künftiges Truppenübungsplatz-Konzept für Streitkräfte",
+      "datum": "1992-11-11"
+    }
+  ],
+  "cursor": "AoJw-KDi_acBMURydWNrc2FjaGUtMTIzNzg0"
+}

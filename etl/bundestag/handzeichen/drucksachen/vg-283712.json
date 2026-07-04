@@ -1,0 +1,46 @@
+{
+  "id": "283712",
+  "vorgangstyp": "EU-Vorlage",
+  "typ": "Vorgang",
+  "wahlperiode": 20,
+  "ratsdok": "14379/21",
+  "kom": "(2021) 733 endg.",
+  "initiative": [
+    "Europäische Kommission"
+  ],
+  "aktualisiert": "2026-06-04T11:39:20+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": true,
+      "name": "Ausländerwahlrecht",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "EU-Staaten",
+      "typ": "Geograph. Begriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Kommunalwahl",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Richtlinie der EU",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Unionsbürgerschaft",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Wohnsitz",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Vorschlag für eine Richtlinie des Rates über die Einzelheiten der Ausübung des aktiven und passiven Wahlrechts bei den Kommunalwahlen für Unionsbürger mit Wohnsitz in einem Mitgliedstaat, dessen Staatsangehörigkeit sie nicht besitzen (Neufassung)\r\nKOM(2021) 733 endg.; Ratsdok. 14379/21",
+  "datum": "2024-06-28"
+}

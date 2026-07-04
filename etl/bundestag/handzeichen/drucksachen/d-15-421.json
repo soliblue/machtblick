@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "71464",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 47,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "15/421",
+      "wahlperiode": 15,
+      "herausgeber": "BT",
+      "pdf_hash": "f79d9ce0b158da80afdd97835a29c156",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "87730",
+          "titel": "Europa und Amerika müssen zusammenstehen (G-SIG: 15010119)",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "CDU/CSU",
+          "titel": "Fraktion der CDU/CSU"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/15/004/1500421.pdf",
+        "id": "71464",
+        "dokumentnummer": "15/421",
+        "datum": "2003-02-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der CDU/CSU"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "548",
+          "titel": "Dr. Friedbert Pflüger, MdB, CDU/CSU",
+          "autor_titel": "Dr. Friedbert Pflüger"
+        },
+        {
+          "id": "2274",
+          "titel": "Dr. Wolfgang Schäuble, MdB, CDU/CSU",
+          "autor_titel": "Dr. Wolfgang Schäuble"
+        }
+      ],
+      "titel": "Europa und Amerika müssen zusammenstehen",
+      "datum": "2003-02-11"
+    }
+  ],
+  "cursor": "AoJw-NCipvMBMERydWNrc2FjaGUtNzE0NjQ="
+}

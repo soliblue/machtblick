@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "226591",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 9,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/7906",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "be071c207ef0bf9a236caac04213e098",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "244444",
+          "titel": "Konzerntransparenz gegen Steuerflucht",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/079/1907906.pdf",
+        "id": "226591",
+        "dokumentnummer": "19/7906",
+        "datum": "2019-02-19",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1993",
+          "titel": "Fabio De Masi, MdB, DIE LINKE",
+          "autor_titel": "Fabio De Masi"
+        },
+        {
+          "id": "2095",
+          "titel": "Jörg Cezanne, MdB, DIE LINKE",
+          "autor_titel": "Jörg Cezanne"
+        }
+      ],
+      "titel": "Konzerntransparenz gegen Steuerflucht",
+      "datum": "2019-02-19"
+    }
+  ],
+  "cursor": "AoJw-LLagukCMURydWNrc2FjaGUtMjI2NTkx"
+}

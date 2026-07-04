@@ -1,0 +1,49 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "110479",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/10155",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "ec279b5a5eb4546bb6710be401943967",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "135269",
+          "titel": "Zweites Gesetz zur Änderung des Asylbewerberleistungsgesetzes (G-SIG: 13020789)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BR",
+          "titel": "Bundesrat"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/101/1310155.pdf",
+        "id": "110479",
+        "dokumentnummer": "13/10155",
+        "datum": "1998-03-20",
+        "anlagen": "Stellungnahme BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesrat"
+        ]
+      },
+      "titel": "Entwurf eines Zweiten Gesetzes zur Änderung des Asylbewerberleistungsgesetzes",
+      "datum": "1998-03-20"
+    }
+  ],
+  "cursor": "AoJwuLPep88BMURydWNrc2FjaGUtMTEwNDc5"
+}

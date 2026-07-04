@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "224290",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 6,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/6007",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "87968be35f96ebc96e6ae50ff1823fec",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "241885",
+          "titel": "Gleichstellung von Fahrzeugen, die mit synthetischen Kraftstoffen oder Biokraftstoffen angetrieben werden, mit Elektrofahrzeugen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/060/1906007.pdf",
+        "id": "224290",
+        "dokumentnummer": "19/6007",
+        "datum": "2018-11-26",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7789",
+          "titel": "Dr. Dirk Spaniel, MdB, AfD",
+          "autor_titel": "Dr. Dirk Spaniel"
+        },
+        {
+          "id": "2230",
+          "titel": "Leif-Erik Holm, MdB, AfD",
+          "autor_titel": "Leif-Erik Holm"
+        }
+      ],
+      "titel": "Gleichstellung von Fahrzeugen, die mit synthetischen Kraftstoffen oder Biokraftstoffen angetrieben werden, mit Elektrofahrzeugen",
+      "datum": "2018-11-26"
+    }
+  ],
+  "cursor": "AoJwuKHrp-cCMURydWNrc2FjaGUtMjI0Mjkw"
+}

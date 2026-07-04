@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "241387",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme des BR und Gegenäußerung der BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/19371",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "4834da45e2c7a25cb400cb7dc0f4a3ae",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "259287",
+          "titel": "Gesetz zur Umsetzung der Richtlinie (EU) 2018/957 des Europäischen Parlaments und des Rates vom 28. Juni 2018 zur Änderung der Richtlinie 96/71/EG über die Entsendung von Arbeitnehmern im Rahmen der Erbringung von Dienstleistungen",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Arbeit und Soziales"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/193/1919371.pdf",
+        "id": "241387",
+        "dokumentnummer": "19/19371",
+        "datum": "2020-05-20",
+        "anlagen": "Stellungnahme des BR und Gegenäußerung der BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Umsetzung der Richtlinie (EU) 2018/957 des Europäischen Parlaments und des Rates vom 28. Juni 2018 zur Änderung der Richtlinie 96/71/EG über die Entsendung von Arbeitnehmern im Rahmen der Erbringung von Dienstleistungen",
+      "datum": "2020-05-20"
+    }
+  ],
+  "cursor": "AoJwkNHhmPICMURydWNrc2FjaGUtMjQxMzg3"
+}

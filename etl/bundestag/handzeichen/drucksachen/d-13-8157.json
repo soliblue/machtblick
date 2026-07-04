@@ -1,0 +1,49 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "110132",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme BRg",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/8157",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "bd485577be18290a5cc421a15da9355e",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "122229",
+          "titel": "Gesetz zur Erleichterung des Erwerbs der deutschen Staatsangehörigkeit durch Kinder ausländischer Eltern (G-SIG: 13020629)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BR",
+          "titel": "Bundesrat"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/081/1308157.pdf",
+        "id": "110132",
+        "dokumentnummer": "13/8157",
+        "datum": "1997-07-02",
+        "anlagen": "Stellungnahme BRg",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesrat"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Erleichterung des Erwerbs der deutschen Staatsangehörigkeit durch Kinder ausländischer Eltern",
+      "datum": "1997-07-02"
+    }
+  ],
+  "cursor": "AoJwkNzJh8oBMURydWNrc2FjaGUtMTEwMTMy"
+}

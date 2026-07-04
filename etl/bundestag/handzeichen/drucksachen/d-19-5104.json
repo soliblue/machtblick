@@ -1,0 +1,59 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "223116",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 13,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/5104",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "2e88ebb3112a6d725523aafaf07035ce",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "236577",
+          "titel": "Gesetz zur Weiterentwicklung des Teilzeitrechts - Einführung einer Brückenteilzeit",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/051/1905104.pdf",
+        "id": "223116",
+        "dokumentnummer": "19/5104",
+        "datum": "2018-10-17",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1198",
+          "titel": "Beate Müller-Gemmeke, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Beate Müller-Gemmeke"
+        },
+        {
+          "id": "1600",
+          "titel": "Ulle Schauws, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Ulle Schauws"
+        }
+      ],
+      "titel": "zu der zweiten Beratung des Gesetzentwurfs der Bundesregierung\r\n- Drucksachen 19/3452, 19/5097 -\r\nEntwurf eines Gesetzes zur Weiterentwicklung des Teilzeitrechts – Einführung einer Brückenteilzeit",
+      "datum": "2018-10-17"
+    }
+  ],
+  "cursor": "AoJw0PfdwOYCMURydWNrc2FjaGUtMjIzMTE2"
+}

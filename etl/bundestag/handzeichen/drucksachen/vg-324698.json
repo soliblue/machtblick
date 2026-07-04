@@ -1,0 +1,114 @@
+{
+  "id": "324698",
+  "abstract": "Feststellung des Bundeshaushaltsplans 2026 in Einnahmen und Ausgaben auf 520,476 Mrd Euro, Feststellung des Wirtschaftsplans des Sondervermögens &quot;Bundeswehr&quot; auf 25,509 Mrd Euro, des Sondervermögens &quot;Infrastruktur und Klimaneutralität&quot; auf 58,866 Mrd Euro, des Sondervermögens &quot;Klima- und Transformationsfonds&quot; auf 33,078 Mrd Euro und des Sondervermögens &quot;Aufbauhilfe 2021&quot; auf 2,500 Mrd Euro; Nettokreditaufnahme bis zur Höhe von 89,866 Mrd Euro, Gewährleistungsermächtigungen bis zu 1.012,710 Mrd Euro, Stelleneinsparung von 2 Prozent; Investitionen in Höhe von 56,118 Mrd Euro, erwartete Steuereinnahmen von 383,830 Mrd Euro<br />\r\n<br />\r\n<strong>Beschlussempfehlung des Ausschusses:</strong> Erhöhung des Gesamthaushalts auf 524,540 Mrd Euro sowie des Sondervermögens &quot;Klima- und Transformationsfonds&quot; auf 34,804 Mrd Euro, Senkung des Sondervermögens &quot;Infrastruktur und Klimaneutralität&quot; auf 58,068 Mrd Euro; Erhöhung der max. Nettokreditaufnahme auf 97,964 Mrd Euro und der Stelleneinsparung auf 2,2 Prozent; Erhöhung der Investitionen auf 58,354 Mrd Euro und der erwarteten Steuereinnahmen auf 387,214 Mrd Euro",
+  "beratungsstand": "Verkündet",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "D012",
+  "archiv": "XXI/52",
+  "mitteilung": "Beschlussempfehlungen zu den Einzelplänen s. Vorgangsablauf",
+  "sachgebiet": [
+    "Öffentliche Finanzen, Steuern und Abgaben"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 21,
+  "zustimmungsbeduerftigkeit": [
+    "Nein, laut Gesetzentwurf (Drs 350/25)",
+    "Nein, laut Verkündung (BGBl I)"
+  ],
+  "initiative": [
+    "Bundesregierung"
+  ],
+  "aktualisiert": "2026-01-27T11:11:37+01:00",
+  "verkuendung": [
+    {
+      "jahrgang": "2025",
+      "heftnummer": "343",
+      "ausfertigungsdatum": "2025-12-22",
+      "verkuendungsdatum": "2025-12-22",
+      "einleitungstext": "Gesetz",
+      "pdf_url": "https://www.recht.bund.de/eli/bund/BGBl_1/2025/343",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 2025, 343"
+    }
+  ],
+  "inkrafttreten": [
+    {
+      "datum": "2026-01-01"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Aufbauhilfefonds 2021",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": true,
+      "name": "Bundeshaushalt 2026",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bundeswehr",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": true,
+      "name": "Haushaltsgesetz 2026",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Infrastruktur",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Investitionshaushalt",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Klima- und Transformationsfonds",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Klimaneutralität",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Nettokreditaufnahme",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Personalabbau",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Sondervermögen",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Sondervermögen Infrastruktur und Klimaneutralität",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Stellenplan",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Steueraufkommen",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2026 (Haushaltsgesetz 2026 - HG 2026)",
+  "datum": "2025-12-19"
+}

@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "227513",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme der BRg zur Stellungnahme des Nationalen Normenkontrollrates",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/8691",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "9240d45f8e38457dd28828a99ac7fc20",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "244647",
+          "titel": "Gesetz gegen illegale Beschäftigung und Sozialleistungsmissbrauch",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/086/1908691.pdf",
+        "id": "227513",
+        "dokumentnummer": "19/8691",
+        "datum": "2019-03-25",
+        "anlagen": "Stellungnahme der BRg zur Stellungnahme des Nationalen Normenkontrollrates",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes gegen illegale Beschäftigung und Sozialleistungsmissbrauch",
+      "datum": "2019-03-25"
+    }
+  ],
+  "cursor": "AoJw-Lmg2ukCMURydWNrc2FjaGUtMjI3NTEz"
+}

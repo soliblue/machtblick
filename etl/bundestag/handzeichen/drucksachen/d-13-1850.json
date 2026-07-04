@@ -1,0 +1,62 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "102981",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 9,
+      "dokumentnummer": "13/1850",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "a1100efd7c207db2164269f39ebf230b",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "118215",
+          "titel": "Gesetz zur Anpassung des Schwangeren- und Familienhilfegesetzes an die Vorgaben des Urteils des Bundesverfassungsgerichts vom 28. Mai 1993 (Schwangeren- und Familienhilfeänderungsgesetz - SFHÄndG) (G-SIG: 13020027)",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "118836",
+          "titel": "Schwangeren- und Familienhilfeänderungsgesetz (SFHÄndG) (G-SIG: 13020098)",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "118717",
+          "titel": "Schwangeren- und Familienhilfeänderungsgesetz (SFHÄndG) (G-SIG: 13020096)",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "118474",
+          "titel": "Gesetz zur Hilfe für Frauen bei Schwangerschaftsabbrüchen in besonderen Fällen (G-SIG: 13020043)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfFSFJ",
+          "titel": "Ausschuss für Familie, Senioren, Frauen und Jugend"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/018/1301850.pdf",
+        "id": "102981",
+        "dokumentnummer": "13/1850",
+        "datum": "1995-06-28",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Familie, Senioren, Frauen und Jugend"
+        ]
+      },
+      "titel": "zu dem 1. Gesetzentwurf der Fraktion der CDU/CSU - Drucksache 13/285 - Entwurf eines Schwangeren- und Familienhilfeänderungsgesetzes (SFHÄndG) 2. Gesetzentwurf der Fraktion der SPD - Drucksache 13/27 - Entwurf eines Gesetzes zur Anpassung des Schwangeren- und Familienhilfegesetzes an die Vorgaben des Urteils des Bundesverfassungsgerichts vom 28. Mai 1993 (Schwangeren- und Familienhilfeänderungsgesetz - SFHÄndG) 3. Gesetzentwurf der Fraktion BÜNDNIS 90/DIE GRÜNEN - Drucksache 13/402 - Entwurf eines Gesetzes über Sexualaufklärung, Verhütung, Prävention vor ungewollten Schwangerschaften und Beratung 4. Gesetzentwurf der Fraktion der F.D.P. - Drucksache 13/268 - Entwurf eines Schwangeren- und Familienhilfeänderungsgesetzes (SFHÄndG) 5. Gesetzentwurf der Abgeordneten Hubert Hüppe, Monika Brudlewsky, Dietrich Austermann und weiterer Abgeordneter - Drucksache 13/395 - Entwurf eines Gesetzes zum Schutz des ungeborenen Kindes - Neufassung des Abtreibungsstrafrechts und Regelung der staatlichen Obhut 6. Gesetzentwurf der Abgeordneten Christina Schenk, Petra Bläss und der weiteren Abgeordneten der PDS - Drucksache 13/397 - Entwurf eines Gesetzes zur Sicherung der Unantastbarkeit der Grundrechte von Frauen - Ergänzung des Grundgesetzes (Artikel 2) und entsprechende Änderungen des Strafgesetzbuches 7. Gesetzentwurf des Bundesrates - Drucksache 13/375 - Entwurf eines Gesetzes zur Hilfe für Frauen bei Schwangerschaftsabbrüchen in besonderen Fällen 8. Antrag der Abgeordneten Kerstin Müller (Köln) und der Fraktion BÜNDNIS 90/DIE GRÜNEN - Drucksache 13/409 - Selbstbestimmungsrecht der Frauen",
+      "datum": "1995-06-28"
+    }
+  ],
+  "cursor": "AoJw0JeBo7sBMURydWNrc2FjaGUtMTAyOTgx"
+}

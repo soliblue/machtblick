@@ -1,0 +1,52 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "110947",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 2,
+      "dokumentnummer": "13/9419",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "ffe1c6e28be05dde24f46fa8b05d6086",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "136080",
+          "titel": "Gesetz zur Finanzierung eines zusätzlichen Bundeszuschusses zur gesetzlichen Rentenversicherung (G-SIG: 13020803)",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "136997",
+          "titel": "Gesetz zur Stabilisierung der Finanzen der Rentenversicherung durch Einbeziehung geringfügig Nebenbeschäftigter in die Rentenversicherungspflicht (G-SIG: 13020857)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "VermA",
+          "titel": "Vermittlungsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/094/1309419.pdf",
+        "id": "110947",
+        "dokumentnummer": "13/9419",
+        "datum": "1997-12-10",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Vermittlungsausschuss"
+        ]
+      },
+      "titel": "zu dem Gesetz zur Finanzierung eines zusätzlichen Bundeszuschusses zur gesetzlichen Rentenversicherung - Drucksachen 13/8704, 13/8869, 13/9327 -",
+      "datum": "1997-12-10"
+    }
+  ],
+  "cursor": "AoJwuLWfps0BMURydWNrc2FjaGUtMTEwOTQ3"
+}

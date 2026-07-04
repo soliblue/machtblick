@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "245559",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "PDF-Datei enthält auch Entwürfe der Einzelpläne",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/22600",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "3b87443d22846f8d6c75cd14705c31b3",
+      "aktualisiert": "2022-10-11T15:25:08+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "267642",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2021 (Haushaltsgesetz 2021)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium der Finanzen"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/226/1922600.pdf",
+        "id": "245559",
+        "dokumentnummer": "19/22600",
+        "datum": "2020-09-25",
+        "anlagen": "PDF-Datei enthält auch Entwürfe der Einzelpläne",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 2021 (Haushaltsgesetz 2021)",
+      "datum": "2020-09-25"
+    }
+  ],
+  "cursor": "AoJwkJGt4vQCMURydWNrc2FjaGUtMjQ1NTU5"
+}

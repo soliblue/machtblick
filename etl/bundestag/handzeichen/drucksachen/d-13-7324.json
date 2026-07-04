@@ -1,0 +1,50 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "108673",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 169,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/7324",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "ba068ebc0e3b02abf4a3dfbcbb5d5928",
+      "aktualisiert": "1997-03-21T00:00:00+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "125463",
+          "titel": "33. Strafrechtsänderungsgesetz - §§ 177 bis 179 StGB (33. StrÄndG) (G-SIG: 13020660)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/073/1307324.pdf",
+        "id": "108673",
+        "dokumentnummer": "13/7324",
+        "datum": "1997-03-21",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "491",
+          "titel": "Ulla Schmidt (Aachen), MdB, SPD",
+          "autor_titel": "Ulla Schmidt (Aachen)"
+        },
+        {
+          "id": "151",
+          "titel": "Irmingard Schewe-Gerigk, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Irmingard Schewe-Gerigk"
+        }
+      ],
+      "titel": "Entwurf eines ... Strafrechtsänderungsgesetzes - §§ 177 bis 179 StGB (... StrÄndG)",
+      "datum": "1997-03-21"
+    }
+  ],
+  "cursor": "AoJwuNm7_scBMURydWNrc2FjaGUtMTA4Njcz"
+}

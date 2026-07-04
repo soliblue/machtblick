@@ -1,0 +1,64 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "84800",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 2,
+      "dokumentnummer": "14/1214",
+      "wahlperiode": 14,
+      "herausgeber": "BT",
+      "pdf_hash": "b808f9251c15f214b92430cf31e877b0",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "104148",
+          "titel": "Gesetz zur Wiederherstellung des Interessenausgleichs zwischen Arbeitslosen und Beitragszahlern (Interessenausgleichsgesetz - IAG) (G-SIG: 14019053)",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "105792",
+          "titel": "Zweites Gesetz zur Änderung des Dritten Buches Sozialgesetzbuch und anderer Gesetze (Zweites SGB III-Änderungsgesetz - 2.SGB III-ÄndG) (G-SIG: 14019118)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PDS",
+          "titel": "Fraktion der PDS"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/14/012/1401214.pdf",
+        "id": "84800",
+        "dokumentnummer": "14/1214",
+        "datum": "1999-06-23",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der PDS"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "751",
+          "titel": "Dr. Heidi Knake-Werner, MdB, PDS",
+          "autor_titel": "Dr. Heidi Knake-Werner"
+        },
+        {
+          "id": "2602",
+          "titel": "Dr. Klaus Grehn, MdB, PDS",
+          "autor_titel": "Dr. Klaus Grehn"
+        }
+      ],
+      "titel": "zu der zweiten Beratung des Gesetzentwurfs der Bundesregierung - Drsn. 14/873, 14/1066, 14/1205 - Entwurf eines Zweiten Gesetzes zur Änderung des Dritten Buches Sozialgesetzbuch und anderer Gesetze (Zweites SGB III-Änderungsgesetz - 2. SGB III-ÄndG) - zu der zweiten Beratung des Gesetzentwurfs (PDS) - Drs. 14/208, 14/1205 - Entwurf eines Gesetzes zur Wiederherstellung des Interessenausgleichs zwischen Arbeitslosen und Beitragszahlern - Interessenausgleichsgesetz (IAG) -",
+      "datum": "1999-06-23"
+    }
+  ],
+  "cursor": "AoJw0P-LyNgBMERydWNrc2FjaGUtODQ4MDA="
+}

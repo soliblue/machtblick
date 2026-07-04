@@ -7,11 +7,23 @@ export function parseProposingParty(document: string | null): string | null {
     const match = matchParty(fraktion[1])
     if (match) return match
   }
-  if (/(?:Antrag|Gesetzentwurf)(?:es)?\s+der\s+Bundesregierung/i.test(document)) {
+  if (/(?:Antrag|Gesetzentwurf)(?:e?s)?\s+der\s+Bundesregierung/i.test(document)) {
     return 'Bundesregierung'
   }
-  if (/(?:Antrag|Gesetzentwurf)(?:es)?\s+des\s+Bundesrates/i.test(document)) {
+  if (/(?:Antrag|Gesetzentwurf)(?:e?s)?\s+des\s+Bundesrates/i.test(document)) {
     return 'Bundesrat'
+  }
+  if (/Initiative:\s*Bundesregierung/i.test(document)) {
+    return 'Bundesregierung'
+  }
+  if (/Initiative:\s*Bundesrat/i.test(document)) {
+    return 'Bundesrat'
+  }
+  if (/Antrags?\s+(?:der|des)\s+Bundesministeriums?/i.test(document)) {
+    return 'Bundesregierung'
+  }
+  if (/\bBReg\b/.test(document)) {
+    return 'Bundesregierung'
   }
   if (/Petitionsausschuss/i.test(document)) {
     return 'Petitionsausschuss'

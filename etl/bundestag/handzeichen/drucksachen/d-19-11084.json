@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "231384",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/11084",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "3202bcc8d4e9e345b0a7df442139556c",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "249990",
+          "titel": "Gesetz zur Änderung des Grundgesetzes (Artikel 72, 105 und 125b)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "CDU/CSU",
+          "titel": "Fraktion der CDU/CSU"
+        },
+        {
+          "einbringer": false,
+          "bezeichnung": "SPD",
+          "titel": "Fraktion der SPD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/110/1911084.pdf",
+        "id": "231384",
+        "dokumentnummer": "19/11084",
+        "datum": "2019-06-25",
+        "verteildatum": "2019-07-19",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der CDU/CSU",
+          "Fraktion der SPD"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Änderung des Grundgesetzes (Artikel 72, 105 und 125b)",
+      "datum": "2019-06-25"
+    }
+  ],
+  "cursor": "AoJwkP6Ex-sCMURydWNrc2FjaGUtMjMxMzg0"
+}

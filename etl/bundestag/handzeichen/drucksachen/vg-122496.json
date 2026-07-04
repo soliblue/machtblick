@@ -1,0 +1,55 @@
+{
+  "id": "122496",
+  "abstract": "Festlegung des Teilnehmerkreises an der dritten Stufe der Europäischen Wirtschafts- und Währungsunion (Belgien, Deutschland, Spanien, Frankreich, Irland, Italien, die Niederlande, Österreich, Portugal und Finnland) ",
+  "beratungsstand": "Abgeschlossen - Ergebnis siehe Vorgangsablauf",
+  "vorgangstyp": "Bericht, Gutachten, Programm",
+  "sachgebiet": [
+    "Europapolitik und Europäische Union",
+    "Wirtschaft"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 13,
+  "initiative": [
+    "Bundesregierung"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Deutsche Bundesbank",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Euro",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Europäische Kommission",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": false,
+      "name": "Europäische Union",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": true,
+      "name": "Europäische Wirtschafts- und Währungsunion",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Europäisches Währungsinstitut",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Geld und Kredit",
+      "typ": "Freier Deskriptor"
+    }
+  ],
+  "titel": "Beschluß der Bundesregierung zur Festlegung des Teilnehmerkreises an der Dritten Stufe der Europäischen Wirtschafts- und Währungsunion und Ersuchen der Bundesregierung (G-SIG: 13002436)",
+  "datum": "1998-04-23"
+}

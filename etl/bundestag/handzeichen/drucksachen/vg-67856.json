@@ -1,0 +1,51 @@
+{
+  "id": "67856",
+  "abstract": "Zur Beseitigung von Rechtsunsicherheiten Festschreibung der Straflosigkeit von Hilfe zum Suizid, Verbot der gewerbsmäßigen Hilfe zur oder Förderung der Selbsttötung, Freiwilligkeit ärztlicher Helfer, Beratungspflichten und Dokumentationspflichten bei organisierter oder geschäftsmäßiger Suizidbeihilfe, Detailregelungen durch Rechtsverordnung; Berichterstattung zur Gesetzesfolgenabschätzung alle vier Jahre;<br />\r\nVerordnungsermächtigung<br />\r\n<br />\r\nBezug: Siehe auch GESTA C072, C074 und C075 sowie Antrag auf BT-Drs 18/6546",
+  "beratungsstand": "Abgelehnt",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "C073",
+  "archiv": "XVIII/198",
+  "sachgebiet": [
+    "Recht"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 18,
+  "zustimmungsbeduerftigkeit": [
+    "Nein, laut Gesetzentwurf (Drs 18/5375)"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Arzt",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Berufsrecht",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Gesetz über die Straffreiheit der Hilfe zur Selbsttötung",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gesetzesfolgenabschätzung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Sterbehilfe",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Suizid",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Gesetz über die Straffreiheit der Hilfe zur Selbsttötung",
+  "datum": "2015-11-06"
+}

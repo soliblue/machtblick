@@ -1,0 +1,47 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "237345",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/16060",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "b5b75987fba8a947b86adc13d3269299",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "254562",
+          "titel": "Gesetz zur Umsetzung des Klimaschutzprogramms 2030 im Steuerrecht",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "VermA",
+          "titel": "Vermittlungsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/160/1916060.pdf",
+        "id": "237345",
+        "dokumentnummer": "19/16060",
+        "datum": "2019-12-18",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Vermittlungsausschuss"
+        ]
+      },
+      "titel": "zu dem Gesetz zur Umsetzung des Klimaschutzprogramms 2030 im Steuerrecht\r\n- Drucksachen 19/14338, 19/15125, 19/15157, 19/15229, 19/15637 -",
+      "datum": "2019-12-18"
+    }
+  ],
+  "cursor": "AoJw-MOqjO8CMURydWNrc2FjaGUtMjM3MzQ1"
+}

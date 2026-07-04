@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "252893",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 54,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "19/28755",
+      "wahlperiode": 19,
+      "herausgeber": "BT",
+      "pdf_hash": "aa2f867836051b54a7b6263711e08b4f",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "276429",
+          "titel": "Viertes Gesetz zum Schutz der Bevölkerung bei einer epidemischen Lage von nationaler Tragweite",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FDP",
+          "titel": "Fraktion der FDP"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/19/287/1928755.pdf",
+        "id": "252893",
+        "dokumentnummer": "19/28755",
+        "datum": "2021-04-20",
+        "verteildatum": "2021-04-20",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der FDP"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7549",
+          "titel": "Michael Theurer, MdB, FDP",
+          "autor_titel": "Michael Theurer"
+        },
+        {
+          "id": "1152",
+          "titel": "Stephan Thomae, MdB, FDP",
+          "autor_titel": "Stephan Thomae"
+        }
+      ],
+      "titel": "zu der zweiten Beratung des Gesetzentwurfs der Fraktionen der CDU/CSU und SPD\r\n- Drucksachen 19/28444, 19/28692, 19/28732 -\r\nEntwurf eines Vierten Gesetzes zum Schutz der Bevölkerung bei einer epidemischen Lage von nationaler Tragweite",
+      "datum": "2021-04-20"
+    }
+  ],
+  "cursor": "AoJw0J2u9_gCMURydWNrc2FjaGUtMjUyODkz"
+}

@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "119416",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 1,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "13/1400",
+      "wahlperiode": 13,
+      "herausgeber": "BT",
+      "pdf_hash": "a88f0ad3f54465ac9eb88ccfaacdc104",
+      "aktualisiert": "2022-07-26T19:57:15+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "118576",
+          "titel": "Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 1995 (Haushaltsgesetz 1995) (G-SIG: 13020044)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "VermA",
+          "titel": "Vermittlungsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/13/014/1301400.pdf",
+        "id": "119416",
+        "dokumentnummer": "13/1400",
+        "datum": "1995-05-18",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Vermittlungsausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2814",
+          "titel": "Dr. Heribert Blens, MdB, CDU/CSU",
+          "autor_titel": "Dr. Heribert Blens, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetz über die Feststellung des Bundeshaushaltsplans für das Haushaltsjahr 1995 (Haushaltsgesetz 1995) - Drucksachen 13/50, 13/414, 13/528, 13/966, 13/529, 13/1030, 13/1255 -",
+      "datum": "1995-05-18"
+    }
+  ],
+  "cursor": "AoJwkIC4uboBMURydWNrc2FjaGUtMTE5NDE2"
+}

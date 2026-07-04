@@ -1,0 +1,53 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "77248",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "15/2553",
+      "wahlperiode": 15,
+      "herausgeber": "BT",
+      "pdf_hash": "299624b41bbbb43219ba390c17cfdc6d",
+      "aktualisiert": "2022-07-26T19:57:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "96172",
+          "titel": "Gesetz zur Umsetzung der Reform der Gemeinsamen Agrarpolitik (G-SIG: 15019351)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Verbraucherschutz, Ernährung und Landwirtschaft"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/15/025/1502553.pdf",
+        "id": "77248",
+        "dokumentnummer": "15/2553",
+        "datum": "2004-02-20",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Umsetzung der Reform der Gemeinsamen Agrarpolitik",
+      "datum": "2004-02-20"
+    }
+  ],
+  "cursor": "AoJw-J2l6foBMERydWNrc2FjaGUtNzcyNDg="
+}

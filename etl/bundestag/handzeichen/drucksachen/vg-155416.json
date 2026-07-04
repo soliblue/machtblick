@@ -1,0 +1,91 @@
+{
+  "id": "155416",
+  "abstract": "<b>Bezug:</b> Schlechtwettergeldregelung im 1. Gesetz zur Umsetzung des Spar-, Konsolidierungs- und Wachstumsprogramms der Bundesregierung (s. D53) Siehe auch G59 und G60 <br><br><b>Inhalt:</b> Änderung der §§ 12a, 74 und 75 Arbeitsförderungsgesetz: Wiederaufnahme der Schlechtwettergeldzahlungen für März und November in den Jahren 1994 und 1995, begrenzte Zulassung der Arbeitnehmerüberlassung im Baugewerbe im Rahmen der Kollegenhilfe. In den Jahren 1994 und 1995 entstehen Mehrausgaben beim Schlechtwettergeld in Höhe von insgesamt 320 Mio DM, im Jahre 1996 Minderausgaben in Höhe von 400 Mio DM. <br><br><b>Änderungen durch das Vermittlungsverfahren:</b> Übernahme der wesentlichen Regelungen des Gesetzes zur Änderung des Arbeitsförderungsgesetzes auf BR Drs 164/94 (Beschluß). <br><br><b>Nebenschlagwörter:</b> Schlechtwettergeld/Schlechtwettergeldleistungen in den Jahren 1994 und 1995 * Arbeitnehmerüberlassung/Zulassung der Arbeitnehmerüberlassung im Baugewerbe im Rahmen der Kollegenhilfe * Baugewerbe/Zulassung der Arbeitnehmerüberlassung im Baugewerbe im Rahmen der Kollegenhilfe ",
+  "beratungsstand": "Verkündet",
+  "vorgangstyp": "Gesetzgebung",
+  "gesta": "G065",
+  "archiv": "XII/435",
+  "sachgebiet": [
+    "Arbeit und Beschäftigung",
+    "Raumordnung, Bau- und Wohnungswesen",
+    "Soziale Sicherung"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 12,
+  "zustimmungsbeduerftigkeit": [
+    "Nein"
+  ],
+  "initiative": [
+    "Fraktion der CDU/CSU",
+    "Fraktion der FDP"
+  ],
+  "aktualisiert": "2022-07-26T19:57:25+02:00",
+  "verkuendung": [
+    {
+      "jahrgang": "1994",
+      "heftnummer": "63",
+      "seite": "2456",
+      "ausfertigungsdatum": "1994-09-20",
+      "verkuendungsdatum": "1994-09-28",
+      "einleitungstext": "Gesetz",
+      "pdf_url": "https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&start=//*%5b@attr_id=%27bgbl194s2456.pdf%27%5d",
+      "verkuendungsblatt_bezeichnung": "Bundesgesetzblatt Teil I",
+      "verkuendungsblatt_kuerzel": "BGBl I",
+      "fundstelle": "BGBl I 1994, 2456"
+    }
+  ],
+  "inkrafttreten": [
+    {
+      "datum": "1994-03-01",
+      "erlaeuterung": "Artikel 1 Nr. 2 und 3"
+    },
+    {
+      "datum": "1994-09-29",
+      "erlaeuterung": "Artikel 1 Nr. 1"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Arbeit",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Arbeitsförderungsgesetz",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Baugewerbe",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Bauwesen",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Beschäftigung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Leiharbeit",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Schlechtwettergeld",
+      "typ": "Freier Deskriptor"
+    },
+    {
+      "fundstelle": false,
+      "name": "Sozialversicherung",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Gesetz zur Änderung des Arbeitsförderungsgesetzes im Bereich des Baugewerbes (G-SIG: 12020836)",
+  "datum": "1994-09-06"
+}

@@ -1,0 +1,56 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "274647",
+      "drucksachetyp": "Gesetzentwurf",
+      "anlagen": "Stellungnahme der BRg zur Stellungnahme des Nationalen Normenkontrollrates",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "20/11854",
+      "wahlperiode": 20,
+      "herausgeber": "BT",
+      "pdf_hash": "a77aa5091b0cca3d2a37359cd168ceef",
+      "aktualisiert": "2024-06-18T11:18:53+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "312313",
+          "titel": "Gesetz zur Verbesserung der Versorgungsqualität im Krankenhaus und zur Reform der Vergütungsstrukturen (Krankenhausversorgungsverbesserungsgesetz - KHVVG)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Gesundheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/20/118/2011854.pdf",
+        "id": "274647",
+        "dokumentnummer": "20/11854",
+        "datum": "2024-06-17",
+        "verteildatum": "2024-06-17",
+        "anlagen": "Stellungnahme der BRg zur Stellungnahme des Nationalen Normenkontrollrates",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Gesetzes zur Verbesserung der Versorgungsqualität im Krankenhaus und zur Reform der Vergütungsstrukturen (Krankenhausversorgungsverbesserungsgesetz - KHVVG)",
+      "datum": "2024-06-17"
+    }
+  ],
+  "cursor": "AoJw0PTokpADMURydWNrc2FjaGUtMjc0NjQ3"
+}

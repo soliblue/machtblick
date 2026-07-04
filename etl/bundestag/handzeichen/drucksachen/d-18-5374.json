@@ -1,0 +1,50 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "55718",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 108,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "18/5374",
+      "wahlperiode": 18,
+      "herausgeber": "BT",
+      "pdf_hash": "09c6e9edec309d47666293f30539e0a2",
+      "aktualisiert": "2015-06-30T00:00:00+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "67855",
+          "titel": "Gesetz zur Regelung der ärztlich begleiteten Lebensbeendigung (Suizidhilfegesetz)",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/18/053/1805374.pdf",
+        "id": "55718",
+        "dokumentnummer": "18/5374",
+        "datum": "2015-06-30",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1780",
+          "titel": "Peter Hintze, MdB, CDU/CSU",
+          "autor_titel": "Peter Hintze"
+        },
+        {
+          "id": "7068",
+          "titel": "Dr. Carola Reimann, MdB, SPD",
+          "autor_titel": "Dr. Carola Reimann"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur Regelung der ärztlich begleiteten Lebensbeendigung (Suizidhilfegesetz)",
+      "datum": "2015-06-30"
+    }
+  ],
+  "cursor": "AoJwkJb6oc4CMERydWNrc2FjaGUtNTU3MTg="
+}

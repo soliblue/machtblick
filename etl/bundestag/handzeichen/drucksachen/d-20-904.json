@@ -1,0 +1,51 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "259573",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 111,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "20/904",
+      "wahlperiode": 20,
+      "herausgeber": "BT",
+      "pdf_hash": "40e0dd4d34dfadfa53ce20bf3d901ee5",
+      "aktualisiert": "2022-03-09T13:11:02+01:00",
+      "vorgangsbezug": [
+        {
+          "id": "285113",
+          "titel": "Gesetz zur Strafbarkeit der geschäftsmäßigen Hilfe zur Selbsttötung und zur Sicherstellung der Freiverantwortlichkeit der Entscheidung zur Selbsttötung",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/20/009/2000904.pdf",
+        "id": "259573",
+        "dokumentnummer": "20/904",
+        "datum": "2022-03-07",
+        "verteildatum": "2022-03-09",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": []
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1537",
+          "titel": "Dr. Lars Castellucci, MdB, SPD",
+          "autor_titel": "Dr. Lars Castellucci"
+        },
+        {
+          "id": "1061",
+          "titel": "Ansgar Heveling, MdB, CDU/CSU",
+          "autor_titel": "Ansgar Heveling"
+        }
+      ],
+      "titel": "Entwurf eines Gesetzes zur Strafbarkeit der geschäftsmäßigen Hilfe zur Selbsttötung und zur Sicherstellung der Freiverantwortlichkeit der Entscheidung zur Selbsttötung",
+      "datum": "2022-03-07"
+    }
+  ],
+  "cursor": "AoJw-KaCsv8CMURydWNrc2FjaGUtMjU5NTcz"
+}
