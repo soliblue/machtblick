@@ -61,7 +61,7 @@ export function FilterPill({ label, options, value, onChange, formatOption }: Pr
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-haspopup="listbox"
-        className="relative inline-flex shrink-0 items-center gap-s border px-m py-xs text-m transition-colors before:absolute before:inset-x-0 before:-inset-y-[7px] before:content-[''] hover:bg-surface"
+        className="relative inline-flex shrink-0 items-center gap-s border px-m py-xs text-m transition-colors before:absolute before:inset-x-0 before:-inset-y-s before:content-[''] hover:bg-surface"
         style={{
           borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)',
           background: value ? 'var(--color-surface)' : 'transparent',

@@ -19,7 +19,7 @@ export function AlignmentList({ alignments }: Props) {
               <PartyLogo party={a.party} size={20} decorative />
               <span className="text-m font-semibold">{partyLabel(a.party, locale)}</span>
             </div>
-            <div className="relative h-2" style={{ background: 'color-mix(in oklab, var(--color-fg) 6%, transparent)' }}>
+            <div className="relative h-2 bg-fg/15">
               <div className="h-full" style={{ width: `${a.agreement * 100}%`, background: 'var(--color-success)' }} />
             </div>
             <div className="text-right text-m tabular-nums">{pct(a.agreement)}</div>

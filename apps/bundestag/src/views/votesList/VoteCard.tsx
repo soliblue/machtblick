@@ -20,7 +20,7 @@ export function VoteCard({ vote }: Props) {
   const accepted = vote.result === 'angenommen'
   return (
     <article
-      className="group relative flex h-full flex-col border border-fg/15 bg-background p-l shadow-[0_1px_3px_rgba(10,10,10,0.08),0_6px_16px_rgba(10,10,10,0.07)] desk:grid desk:h-auto desk:grid-cols-[minmax(0,1fr)_280px] desk:gap-x-[32px]"
+      className="group relative flex h-full flex-col border border-fg/15 bg-background p-l shadow-[0_1px_3px_rgba(10,10,10,0.08),0_6px_16px_rgba(10,10,10,0.07)] desk:grid desk:h-auto desk:grid-cols-[minmax(0,1fr)_280px] desk:gap-x-xl"
       style={{ borderTop: `3px solid ${accepted ? 'var(--color-success)' : 'var(--color-danger)'}` }}
     >
       <a

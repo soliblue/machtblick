@@ -34,8 +34,8 @@ export function Stamp({ variant, size = 's', rotated = true }: Props) {
   const { color, rotate, opacity = 0.85 } = config[variant]
   const sizeClass =
     size === 'm'
-      ? 'px-[10px] py-[6px] text-[12px] sm:px-[12px] sm:py-[8px] sm:text-[14px]'
-      : 'px-[6px] py-[3px] text-[10px] sm:px-[8px] sm:py-[4px] sm:text-[12px]'
+      ? 'px-m py-s text-s sm:text-m'
+      : 'px-s py-xs text-[10px] sm:text-s'
   return (
     <span
       className={`inline-block font-semibold uppercase ${sizeClass}`}

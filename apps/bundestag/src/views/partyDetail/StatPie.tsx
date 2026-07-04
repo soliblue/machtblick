@@ -10,7 +10,7 @@ export function StatPie({ label, value, color = 'var(--color-success)', info }: 
   const rad = (angle - 90) * (Math.PI / 180)
   const x = 50 + 42 * Math.cos(rad)
   const y = 50 + 42 * Math.sin(rad)
-  const trackColor = 'color-mix(in oklab, var(--color-fg) 12%, transparent)'
+  const trackColor = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
   return (
     <div className="flex flex-col items-center gap-s">
       <div className="flex items-center gap-xs text-s caption opacity-l">
