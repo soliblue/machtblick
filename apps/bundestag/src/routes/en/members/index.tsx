@@ -2,7 +2,6 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { listMembers, type MandateType, type MemberSex } from '@/server/members'
 import { MembersList } from '@/views/membersList/MembersList'
 import { useMemberListFilters } from '@/hooks/useMemberListFilters'
-import { useMemberStats } from '@/hooks/useMemberStats'
 import { seoMeta, canonicalLink } from '@/lib/seo'
 import { isAgeBucket, isMandateType, isSex, type AgeBucket } from '@/lib/ageBuckets'
 
@@ -57,11 +56,9 @@ function MembersRoute() {
     sortDir,
     toggleSort,
   } = useMemberListFilters(members, partyValue, stateValue, sexValue, ageValue, mandateValue, query)
-  const stats = useMemberStats(filtered)
   return (
     <MembersList
       members={filtered}
-      stats={stats}
       party={partyValue}
       onPartyChange={(v) => navigate({ search: (s) => ({ ...s, party: v ?? undefined }) })}
       availableParties={availableParties}

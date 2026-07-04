@@ -13,9 +13,17 @@ export type FilterSheetGroup = {
   format: (opt: string) => string
 }
 
-type Props = { groups: FilterSheetGroup[]; activeCount: number }
+export type FilterSheetSort = {
+  label: string
+  options: { key: string; label: string }[]
+  value: string
+  dir: 'asc' | 'desc'
+  onSelect: (key: string) => void
+}
 
-export function FilterSheet({ groups, activeCount }: Props) {
+type Props = { groups: FilterSheetGroup[]; activeCount: number; sort?: FilterSheetSort }
+
+export function FilterSheet({ groups, activeCount, sort }: Props) {
   const t = useCopy()
   const [open, setOpen] = useState(false)
   const [dragY, setDragY] = useState(0)
@@ -79,6 +87,27 @@ export function FilterSheet({ groups, activeCount }: Props) {
                 </div>
               </div>
             ))}
+            {sort && (
+              <div className="mb-l">
+                <p className="mb-s text-s caption opacity-l">
+                  {sort.label}
+                </p>
+                <div className="flex flex-wrap gap-s">
+                  {sort.options.map((o) => (
+                    <button
+                      key={o.key}
+                      type="button"
+                      onClick={() => sort.onSelect(o.key)}
+                      className={`border px-m py-s text-m ${o.key === sort.value ? 'bg-surface font-semibold' : ''}`}
+                      style={{ borderColor: HAIR }}
+                    >
+                      {o.label}
+                      {o.key === sort.value && <span className="ml-s">{sort.dir === 'asc' ? '↑' : '↓'}</span>}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

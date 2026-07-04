@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import type { MandateType, MemberListItem, MemberSex } from '@/server/members'
 import { AGE_BUCKETS, ageBucketFor, isAgeBucket, isMandateType, isSex, type AgeBucket } from '@/lib/ageBuckets'
 
-export type MemberSortKey = 'name' | 'party' | 'state' | 'attendance' | 'loyalty'
+export type MemberSortKey = 'name' | 'attendance' | 'loyalty'
 export type SortDir = 'asc' | 'desc'
 
 export function useMemberListFilters(

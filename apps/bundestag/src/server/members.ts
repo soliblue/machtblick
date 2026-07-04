@@ -56,6 +56,7 @@ export type MemberListItem = {
   yearOfBirth: number | null
   sex: MemberSex | null
   mandateType: MandateType | null
+  pictureUrl: string | null
 }
 
 function majorityChoice(s: typeof votePartySummaries.$inferSelect): string {
@@ -80,6 +81,7 @@ export const listMembers = createServerFn({ method: 'GET' }).handler(async (): P
   const currentPartyByMember = getCurrentPartyMap()
   const demographics = loadDemographics()
   const mandateByMember = new Map(allMembers.map((m) => [m.id, m.mandateType]))
+  const pictureByMember = new Map(allMembers.map((m) => [m.id, m.pictureUrl]))
   const stats = new Map<string, { name: string; lastName: string; party: string; state: string; total: number; absent: number; loyalMatches: number; loyalEligible: number }>()
   for (const m of allMembers) stats.set(m.id, { name: m.name, lastName: m.lastName, party: currentPartyByMember.get(m.id) ?? '', state: '', total: 0, absent: 0, loyalMatches: 0, loyalEligible: 0 })
   for (const r of vmRows) {
@@ -113,6 +115,7 @@ export const listMembers = createServerFn({ method: 'GET' }).handler(async (): P
       yearOfBirth: demo?.yearOfBirth ?? null,
       sex: demo?.sex ?? null,
       mandateType: mandateByMember.get(id) === 'direkt' || mandateByMember.get(id) === 'liste' ? (mandateByMember.get(id) as MandateType) : null,
+      pictureUrl: pictureByMember.get(id) ?? null,
     })
   }
   out.sort((a, b) => a.lastName.localeCompare(b.lastName, 'de') || a.name.localeCompare(b.name, 'de'))
