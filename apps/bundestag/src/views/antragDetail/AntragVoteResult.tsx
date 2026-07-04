@@ -6,7 +6,7 @@ import { withLocale } from '@/lib/locale'
 import { VoteDistributionDonut, type VoteChoice } from '@/views/votesList/VoteDistributionDonut'
 import { Stamp } from '@/views/votesList/Stamp'
 import { deriveStamps } from '@/views/votesList/deriveStamps'
-import { PartyWaffle } from '@/views/voteDetail/PartyWaffle'
+import { PartyDonutGrid } from '@/views/voteDetail/PartyDonutGrid'
 
 type Props = {
   vote: AntragLinkedVote
@@ -43,7 +43,7 @@ export function AntragVoteResult({ vote }: Props) {
               showLabel
             />
           </div>
-          <PartyWaffle summaries={vote.partySummaries} highlight={filter} memberBallots={vote.memberBallots} />
+          <PartyDonutGrid summaries={vote.partySummaries} selected={filter} />
         </div>
       ) : null}
     </section>

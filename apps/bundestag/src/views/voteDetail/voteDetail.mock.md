@@ -1,97 +1,215 @@
-# /votes/:id
+# /votes/:id (Ergebnis + Reden tabs, card-language rehaul)
 
-## Layout
+Round 2 of plan 105. Scope: the Ergebnis tab (result viz, per-party breakdown, Abweichler)
+and the Reden tab summary section. Page header, Details tab, and SponsorStrip stay as they are
+(SponsorStrip has its own mock).
 
-```
-+------------------------------------------------------------+
-| < Zurueck zu Abstimmungen                                  |
-|                                                            |
-| Mietpreisbremse verlaengern                                |
-| SPD  -  12.03.2025                                         |
-|                                                            |
-| +--------------------------------------------------------+ |
-| | Worum geht es                                          | |
-| | Kurzbeschreibung des Gesetzentwurfs in zwei oder drei  | |
-| | Saetzen. Klartext, keine Juristensprache.              | |
-| +--------------------------------------------------------+ |
-|                                                            |
-| Ergebnis: ANGENOMMEN                                       |
-| Ja 412      Nein 198      Enth 24      Abw 32              |
-| [######################| Ja ############################]  |
-|                                                            |
-| Wie die Fraktionen gestimmt haben                          |
-| +-----------+ +-----------+ +-----------+ +-----------+    |
-| | SPD       | | CDU/CSU   | | Gruene    | | FDP       |    |
-| | Ja  201   | | Ja  152   | | Ja   58   | | Ja    1   |    |
-| | Nein  2   | | Nein  44  | | Nein  0   | | Nein 88   |    |
-| | Enth  0   | | Enth  1   | | Enth  0   | | Enth  3   |    |
-| | [##### Ja] | [## Ja/Nei] | [#### Ja ] | [# Nein   ] |    |
-| +-----------+ +-----------+ +-----------+ +-----------+    |
-| +-----------+ +-----------+                                |
-| | AfD       | | Linke     |                                |
-| | ...       | | ...       |                                |
-| +-----------+ +-----------+                                |
-|                                                            |
-| Abweichler                                                 |
-| +--------------------------------------------------------+ |
-| | 2 SPD gegen Linie  -  44 CDU/CSU gegen Linie  -  ...   | |
-| | [ Namen anzeigen ]                                     | |
-| +--------------------------------------------------------+ |
-+------------------------------------------------------------+
-```
-
-## Notes
-
-Title and proposer dominate the top. The "Worum geht es" block is the plain-language summary, set as a Card to feel distinct from metadata. Result is loud (badge + totals + single bar). The party-bloc grid is the centerpiece: each cell shows totals and a per-party result bar so cross-party deviations are visible at a glance. Abweichler callout makes defection a first-class story.
-
-### Ergebnis tab waffle
-
-The party waffle uses one 10 by 10 px square mark per member ballot, grouped by party and ordered by vote choice. It omits `Fraktionslos` because the section is a faction breakdown. Member-linked cells scale only to 125% on hover so the grid stays stable.
-
-The result tab has two small section titles: `Ergebnis` above the donut and `Fraktionen` above the waffle. The waffle uses `max-content` for the party logo column and gives the cell column the remaining width. A subtle one-pixel `elevated` divider separates faction rows with tighter spacing than the votes list.
-
-### Reden tab controls
+## Ergebnis tab, mobile (390)
 
 ```
-[ Debatte im Ueberblick ]
-
-[ KI-generierte Kurzfassungen auf Grundlage der tatsaechlichen ]
-[ Reden von Abgeordneten der jeweiligen Fraktion.             ]
-
-| [logo]                                                >  |
-| Die Fraktion unterstuetzt die Foerderung, betont aber... |
-|----------------------------------------------------------|
-| [logo]                                                >  |
-| Die SPD stellt die Entlastung finanzschwacher...         |
-
-[ Reden zur Abstimmung ]
-
-[ Reden durchsuchen......................................... ]
++---------------------------------------------+
+|  [ Ergebnis ]   [ Details ]   [ Reden ]     |
++---------------------------------------------+
+|                                             |
+|  ERGEBNIS                                   |  caption: text-s uppercase opacity-l
+|                                             |
+|              . o o o o o o .                |
+|          o o o o o o o o o o o o            |  HEMICYCLE, one dot = one seat
+|       o o o o o o o o o o o o o o o         |  Ja (success) fills from left,
+|     o o o o o o o o + + . . x x x x x       |  Enthaltung (fg@40) + Abwesend
+|    o o o o o o o o + + . . x x x x x x      |  (fg@15) in the middle,
+|   o o o o o o o o o + + . . x x x x x x     |  Nein (danger) from the right.
+|                                             |  ~full content width, dots r=3
+|   JA          53 ENTHALTUNG          NEIN   |
+|   318         34 ABWESEND            225    |
+|  (green)      (two text-s lines)     (red)  |
+|                                             |
+|   ^ every legend block is a filter toggle   |
+|                                             |
+|  FRAKTIONEN                                 |
+|                                             |
+|   (( ◕ ))     (( ◕ ))     (( ◑ ))           |  VoteDistributionDonut size 72,
+|   [CDUCSU]     [SPD]      [LINKE]           |  one per Fraktion, sorted
+|   Ja 189      Ja 120      Enth 44           |  Ja-share -> Nein-share,
+|   Nein 5      Abw 8       Nein 14           |  3-col grid, 2 rows
+|                                             |
+|   (( ◔ ))     (( ◌ ))                       |
+|   [GRUENE]     [AfD]                        |
+|   Nein 71     Nein 149                      |
+|   Ja 3        Abw 3                         |
+|                                             |
+|  ABWEICHUNGEN                               |
+|                                             |
+|  [CDU/CSU-Logo]  Linie JA · 9 von 197 ----  |  party group header:
+|                                             |  logo 20 + line chip + count,
+|  (foto) Max Mustermann          [ NEIN ]    |  hairline under
+|  (foto) Erika Musterfrau   [ ENTHALTEN ]    |
+|  ( MM ) Moritz Muster           [ NEIN ]    |  member rows: photo 36,
+|  (foto) Paula Probe             [ NEIN ]    |  name text-m, deviating choice
+|                                             |  as colored chip right-aligned
+|  [SPD-Logo]      Linie JA · 2 von 120 ----  |
+|                                             |
+|  (foto) Sabine Beispiel         [ NEIN ]    |
+|  (foto) Bernd Beispiel     [ ENTHALTEN ]    |
+|                                             |
+|  Quelle: offizielle Daten des Deutschen     |  text-s opacity-l, moved from
+|  Bundestages ↗                              |  gray top box to plain footnote
++---------------------------------------------+
 ```
 
-Party summary preview rows open the full summary modal. They do not filter the speech list. The speech section keeps only search above the rows so the tab does not stack summary controls, search, and filters.
+## Ergebnis tab, desktop (max-w-3xl, same component reflowed)
+
+```
++----------------------------------------------------------------------+
+|  [ Ergebnis ]        [ Details ]        [ Reden ]                    |
++----------------------------------------------------------------------+
+|                                                                      |
+|  ERGEBNIS                                                            |
+|                                                                      |
+|                        . o o o o o o o o .                           |
+|                  o o o o o o o o o o o o o o o o                     |
+|              o o o o o o o o o o o o o o o o o o o o                 |
+|           o o o o o o o o o + + + . . . x x x x x x x x              |
+|          o o o o o o o o o o + + + . . . x x x x x x x x x           |
+|                                                                      |
+|          JA              53 ENTHALTUNG                NEIN           |
+|          318             34 ABWESEND                  225            |
+|                                                                      |
+|            hemicycle centered, max-w ~440px, dots r=3                |
+|            poster numerals 40px font-display tabular-nums            |
+|                                                                      |
+|  FRAKTIONEN                                                          |
+|                                                                      |
+|   (( ◕ ))     (( ◕ ))     (( ◑ ))     (( ◔ ))     (( ◌ ))            |
+|   [CDUCSU]     [SPD]      [LINKE]     [GRUENE]     [AfD]             |
+|   Ja 189      Ja 120      Enth 44    Nein 71     Nein 149            |
+|   Nein 5      Abw 8       Nein 14    Ja 3        Abw 3               |
+|                                                                      |
+|      one row, justify-between, same donut size 72                    |
+|                                                                      |
+|  ABWEICHUNGEN                                                        |
+|                                                                      |
+|  [CDU/CSU-Logo]   Linie JA · 9 von 197 ----------------------------  |
+|                                                                      |
+|  (foto) Max Mustermann      [ NEIN ]   (foto) Paula Probe  [ NEIN ]  |
+|  (foto) Erika Musterfrau [ENTHALTEN]   ( MM ) M. Muster    [ NEIN ]  |
+|                                                                      |
+|      member rows reflow to a 2-col grid, groups stay stacked         |
+|                                                                      |
+|  Quelle: offizielle Daten des Deutschen Bundestages ↗                |
++----------------------------------------------------------------------+
+```
+
+## Reden tab, summary section (mobile shown; desktop identical, wider)
+
+```
++---------------------------------------------+
+|  DEBATTE IM UEBERBLICK                      |  caption
+|  KI-Kurzfassungen auf Grundlage der         |  text-s opacity-l plain line,
+|  tatsaechlichen Reden je Fraktion.          |  replaces the gray notice box
+|                                             |
+|  [CDU/CSU-Logo]        [ DAFUER ]        >  |  header: logo 20 left, stance
+|  Die Fraktion stuetzt das Paket, betont     |  chip, chevron right
+|  aber die Kosten fuer den Bund. Einzelne    |  prose: Charter serif, text-m,
+|  Abgeordnete sehen die Finanzierung ...     |  line-clamp-3
+|  ------------------------------------------ |  hairline fg@15
+|  [SPD-Logo]            [ DAFUER ]        >  |
+|  Die Fraktion sieht die Stabilisierung      |
+|  als Kernversprechen und verweist auf ...   |
+|  ------------------------------------------ |
+|  [AfD-Logo]            [ DAGEGEN ]       >  |
+|  Die Fraktion lehnt den Entwurf ab,         |
+|  wuerde aber einzelne Teile mittragen ...   |
+|  ------------------------------------------ |
+|  [Linke-Logo]          [ ENTHALTEN ]     >  |
+|  Die Fraktion enthaelt sich; ihr geht       |
+|  die Stabilisierung nicht weit genug ...    |
+|                                             |
+|  REDEN ZUR ABSTIMMUNG                       |  unchanged below this line
+|  [ (o) Reden durchsuchen................. ] |
+|  ...                                        |
++---------------------------------------------+
+```
+
+## Interactions
+
+- **Choice filter lives in the hemicycle legend.** The four legend blocks (JA numeral,
+  NEIN numeral, ENTHALTUNG line, ABWESEND line) are toggle buttons (`aria-pressed`).
+  Active filter dims all non-matching hemicycle dots to opacity-s and passes
+  `selected` down to every Fraktion donut, which dims non-matching segments (existing
+  `VoteDistributionDonut` behavior). Tap again to clear. The old `VoteCountsRow`
+  swatch row is deleted; the legend is the counts row now.
+- **Fraktion donut** links to the party page (`/parties/:slug/votes/`); hover shows a
+  Tooltip with the full tally (Ja/Nein/Enthaltung/Abwesend). The per-member drill-down
+  the waffle had moves entirely to the Abweichungen section, where the interesting
+  members already are; rank-and-file members remain reachable via the party page.
+- **Abweichler member row** links to `/members/:id/votes/` (unchanged). Group header
+  logo links to the party page.
+- **Debate summary row** (logo + chip + prose) is one button opening the existing
+  `PartySummaryModal` (unchanged behavior).
+- **Stance chip** derives from that party's ballot counts: yes > no → DAFUER (success),
+  no > yes → DAGEGEN (danger), abstain plurality → ENTHALTEN (yellow, dark text),
+  no clear line → GESPALTEN (outlined, fg, no fill).
+
+## Why
+
+One glance at the top of the Ergebnis tab should answer "how did parliament split,
+and how close was it": the hemicycle shows the physical majority (dots past the
+midline) the way the chamber itself would, while the old donut only offered the
+meaningless total 630 in its hole. The waffle's 630 squares made every party row
+look like noise; five donuts sorted Ja-to-Nein turn the party story into a single
+readable gradient, and a mixed donut sticks out immediately. Grouping Abweichler
+under one party header stops the logo stutter (9x CDU/CSU) and states the actual
+story ("9 von 197 gegen die Linie JA") before any name is read. Serif prose plus a
+stance chip turns the debate summaries from clamped UI text into content with a
+verdict you can scan before reading.
+
+## Implementation notes
+
+- **Hemicycle**: reuse `votesList/VoteHemicycle`. Needs: a size variant (dot r≈3,
+  numerals 40px vs the list's 32px), and interactive legend (either new
+  `selected`/`onSelect` props, or a thin `ResultHemicycle` wrapper in voteDetail that
+  renders the SVG via a shared seat helper and its own legend buttons). Dot dimming =
+  opacity-s on non-matching fills, transition 120ms, same as the waffle had.
+- **Fraktion donuts**: reuse `votesList/VoteDistributionDonut` (size 72,
+  `selected` wired to the filter, no `showLabel`, hole too small). Sorting and
+  mixed-detection logic already exist in `votesList/PartyDonutRow` /
+  `deriveDek.lineParties`; reuse or extract, don't duplicate. Tally lines: top two
+  non-zero choices, `text-s tabular-nums`, count value colored per choice
+  (success/danger/yellow/fg@40), label fg opacity-l. Party logo via
+  `votesList/PartyLogo` height 16, mixed party label semibold per house rule.
+- **Abweichler**: keep `DefectorList`/`DefectorRow` files, restructure: iterate
+  `defectors` groups (data already grouped `{party, majority, count, members[]}`),
+  header = `PartyLogo` 20 + "Linie {JA}" mini-chip + "{count} von {members}" text-s
+  opacity-l + hairline; rows keep photo/initials 36 and the existing
+  `memberDetail/VoteChoicePill`, but chip moves right-aligned and the trailing party
+  logo is deleted. Desktop 2-col via `grid desk:grid-cols-2`.
+- **Debate summaries**: rework `PartySummaryPreviewList` rows: `PartyLogo` 20 +
+  stance chip + ChevronRight header line, then `positionSummary` in Charter serif
+  (`SERIF` const as in `VoteCard`) with `line-clamp-3`. Stance needs the per-party
+  counts, which `data.partySummaries` already carries alongside the text fields; pass
+  them through `DebateList`. Notice box → plain `text-s opacity-l` paragraph under
+  the caption. `PartySummaryModal` untouched.
+- **Deletions**: `PartyWaffle.tsx`, `VoteCountsRow.tsx`, the `bg-surface` source box
+  (becomes the bottom footnote link).
+- **No invented copy keys**: DAFUER/DAGEGEN/ENTHALTEN/GESPALTEN and "Linie"/"von"
+  need i18n entries in both locales.
 
 ## Tokens
 
 | Element | Text size | Weight | Spacing | Component |
 |---|---|---|---|---|
-| Back link | s | regular | mb-m | Button (ghost) |
-| Vote title | xxl | semibold | — | — |
-| Proposer + date | m | regular | mb-l | — |
-| Summary card | m | regular | p-m, mb-l | Card |
-| Summary heading | l | semibold | mb-s | — |
-| Result label | l | semibold | — | Badge |
-| Result totals | l | regular | gap-m | — |
-| Result bar | s | regular | mt-s, mb-l | — |
-| Result section title | s uppercase | regular, opacity-l | mb-s | — |
-| Waffle label column | s | semibold | max-content | — |
-| Waffle row divider | — | — | h-px, elevated | — |
-| Waffle cell | — | — | 10px, gap 2px | — |
-| Section heading | l | semibold | mb-m | — |
-| Party cell | — | — | p-m, gap-s | Card |
-| Party name | m | semibold | mb-s | — |
-| Party tally | s | regular | — | — |
-| Defectors card | m | regular | p-m, mt-l | Card |
-| Show names | m | regular | mt-s | Button |
+| Section caption (ERGEBNIS, FRAKTIONEN, ABWEICHUNGEN, DEBATTE...) | s uppercase, ls 0.08em | regular, opacity-l | mb-s | — |
+| Hemicycle poster numerals | 40px font-display tabular-nums | semibold | — | — |
+| Legend labels (JA/NEIN/ENTHALTUNG/ABWESEND) | s uppercase, ls 0.08em | regular, opacity-l | gap-xs | button |
+| Fraktion donut | — | — | grid gap-l, mb-l | VoteDistributionDonut 72 + Tooltip |
+| Donut tally line | s tabular-nums | regular (value colored) | mt-xs | — |
+| Party group header | s | semibold (chip), opacity-l (count) | pb-s + hairline, mt-l | PartyLogo 20 |
+| Line chip / stance chip | 11px uppercase, ls 0.14em | semibold, white on choice color | px-s h-[20px] | — |
+| Abweichler row | m (name) | regular | py-s, gap-m, hairline fg@8 | VoteChoicePill |
+| Summary prose | m serif (Charter), leading 1.45 | regular | mt-s, line-clamp-3 | MarkdownInline |
+| Summary divider | — | — | py-m rows | hairline fg@15 |
+| Source footnote | s | regular, opacity-l | mt-xl | link underline |
 
-Components used: Button, Card, Badge.
+Components used: Tooltip, existing PartyLogo / VoteDistributionDonut / VoteChoicePill /
+PartySummaryModal. No new primitives. Radius 0 everywhere; chips are rectangles.

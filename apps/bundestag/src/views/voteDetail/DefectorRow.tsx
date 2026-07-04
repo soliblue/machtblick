@@ -1,6 +1,5 @@
 import { initials } from '@/lib/initials'
 import { VoteChoicePill } from '../memberDetail/VoteChoicePill'
-import { PartyLogo } from '../votesList/PartyLogo'
 import type { MemberVoteRow } from '@/server/members'
 import { useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
@@ -12,15 +11,14 @@ type Props = {
   name: string
   choice: MemberVoteRow['choice']
   pictureUrl: string | null
-  party: string
 }
 
-export function DefectorRow({ id, name, choice, pictureUrl, party }: Props) {
+export function DefectorRow({ id, name, choice, pictureUrl }: Props) {
   const locale = useLocale()
   return (
     <a
       href={withLocale(`/members/${id}/votes/`, locale)}
-      className="grid grid-cols-[36px_1fr_auto] items-center gap-m border-t py-s opacity-100 hover:bg-surface"
+      className="grid grid-cols-[36px_1fr_auto] items-center gap-m border-b py-s hover:bg-surface"
       style={{ borderColor: ROW_BORDER }}
     >
       {pictureUrl ? (
@@ -30,11 +28,8 @@ export function DefectorRow({ id, name, choice, pictureUrl, party }: Props) {
           {initials(name)}
         </div>
       )}
-      <div className="flex flex-col items-start gap-xs">
-        <div className="text-m">{name}</div>
-        <VoteChoicePill choice={choice} />
-      </div>
-      <PartyLogo party={party} size={36} />
+      <div className="truncate text-m">{name}</div>
+      <VoteChoicePill choice={choice} />
     </a>
   )
 }

@@ -7,12 +7,11 @@ import { loadSpeechTexts, speechTextsLoaded } from '@/lib/speechesStatic'
 import { useQuery } from '@tanstack/react-query'
 import type { MemberVoteRow } from '@/server/members'
 import type { SpeechSummary } from '@/server/speeches'
-import { PartySummaryPreviewList } from './PartySummaryPreviewList'
-import type { PartySummary } from './PartySummaryModal'
+import { PartySummaryPreviewList, type SummaryRow } from './PartySummaryPreviewList'
 import { useCopy, useLocale } from '@/lib/i18n'
 
 type BallotEntry = { choice: MemberVoteRow['choice']; pictureUrl: string | null }
-type Props = { speeches: SpeechSummary[]; source: 'direct' | 'related'; ballotByMember: Map<string, BallotEntry>; partySummaries: PartySummary[] }
+type Props = { speeches: SpeechSummary[]; source: 'direct' | 'related'; ballotByMember: Map<string, BallotEntry>; partySummaries: SummaryRow[] }
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 const PAGE_SIZE = 5

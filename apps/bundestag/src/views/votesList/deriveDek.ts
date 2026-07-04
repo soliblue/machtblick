@@ -39,8 +39,14 @@ const subject = (parties: Prose[], locale: Locale) => (parties.length === 1 ? pa
 
 const dePluralVerb = (parties: Prose[]) => parties.length > 1 || parties[0].plural
 
-export function lineParties(partySummaries: VoteListItem['partySummaries']) {
+export function lineParties<T extends { party: string; members: number }>(partySummaries: T[]): T[] {
   return partySummaries.filter((p) => hasPartyLine(p.party)).sort((a, b) => b.members - a.members)
+}
+
+export function partiesByJaShare<T extends { party: string; members: number; yes: number; no: number; abstain: number }>(partySummaries: T[]): T[] {
+  return lineParties(partySummaries).sort(
+    (a, b) => (b.yes - b.no) / (b.yes + b.no + b.abstain || 1) - (a.yes - a.no) / (a.yes + a.no + a.abstain || 1),
+  )
 }
 
 function deriveDek(vote: Pick<VoteListItem, 'partySummaries'>, locale: Locale): string {

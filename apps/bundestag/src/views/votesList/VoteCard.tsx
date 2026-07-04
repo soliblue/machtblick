@@ -9,7 +9,7 @@ import { PartyDonutRow } from './PartyDonutRow'
 import { deriveDescription } from './deriveDek'
 import { useFittedLineClamp } from '@/hooks/useFittedLineClamp'
 
-const SERIF = "Charter, 'Bitstream Charter', Georgia, 'Times New Roman', serif"
+export const SERIF = "Charter, 'Bitstream Charter', Georgia, 'Times New Roman', serif"
 
 type Props = { vote: VoteListItem }
 
