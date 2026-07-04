@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet } from '@tanstack/react-router'
 import { getParty } from '@/server/parties'
 import { PartyDetailShell } from '@/views/partyDetail/PartyDetailShell'
-import { seoMeta, canonicalLink, alternateJsonLink, jsonLd, SITE_URL } from '@/lib/seo'
+import { seoMeta, canonicalLink, alternateJsonLink, jsonLd, breadcrumbJsonLd, SITE_URL } from '@/lib/seo'
 import { PARTY_LABEL, hasPartyLine } from '@/lib/parties'
 import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 
@@ -27,7 +27,12 @@ export const Route = createFileRoute('/parties/$id')({
         canonical: path,
       }),
       links: [...canonicalLink(path), ...alternateJsonLink(dataPath)],
-      scripts: loaderData
+      scripts: [
+        ...breadcrumbJsonLd([
+          { name: 'Fraktionen', path: '/parties' },
+          { name, path },
+        ]),
+        ...(loaderData
         ? jsonLd({
             '@context': 'https://schema.org',
             '@type': showPartyLine ? 'PoliticalParty' : 'Organization',
@@ -41,7 +46,8 @@ export const Route = createFileRoute('/parties/$id')({
               url: `${SITE_URL}/members/${m.id}/votes/`,
             })),
           })
-        : [],
+        : []),
+      ],
     }
   },
 })

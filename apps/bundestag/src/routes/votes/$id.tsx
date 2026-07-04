@@ -2,7 +2,8 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { getVote } from '@/server/votes'
 import { getVoteSponsors } from '@/server/voteSponsors'
 import { VoteDetail, type VoteTab, isVoteTab } from '@/views/voteDetail/VoteDetail'
-import { seoMeta, canonicalLink, alternateJsonLink } from '@/lib/seo'
+import { seoMeta, canonicalLink, alternateJsonLink, breadcrumbJsonLd } from '@/lib/seo'
+import { formatDateLong } from '@/lib/format'
 import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 
 type Search = { tab?: VoteTab }
@@ -27,11 +28,18 @@ export const Route = createFileRoute('/votes/$id')({
     const headline = v?.cleanTitle ?? null
     const title = headline ?? 'Abstimmung'
     const desc = v && headline
-      ? `${headline}. Abstimmung im Bundestag am ${v.date}: ${v.result}. Antragsteller: ${loaderData?.proposingParty ?? 'unbekannt'}.`
+      ? `${headline}. Abstimmung im Bundestag am ${formatDateLong(v.date)}: ${v.result}. Antragsteller: ${loaderData?.proposingParty ?? 'unbekannt'}.`
       : 'Namentliche Abstimmung im Deutschen Bundestag.'
     return {
-      meta: seoMeta({ title, description: desc, canonical: path, type: 'article' }),
+      meta: [
+        ...seoMeta({ title, description: desc, canonical: path, type: 'article' }),
+        ...(v ? [{ property: 'article:published_time', content: v.date }] : []),
+      ],
       links: [...canonicalLink(path), ...alternateJsonLink(path)],
+      scripts: breadcrumbJsonLd([
+        { name: 'Abstimmungen', path: '/votes' },
+        { name: title, path },
+      ]),
     }
   },
 })

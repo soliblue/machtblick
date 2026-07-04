@@ -21,7 +21,7 @@ Machtblick is a public-interest project built from open German datasets. The Bun
 
 ## URL Structure
 
-- `/votes/`: Vote list, optionally filtered with `?party=`, `?type=` (`namentlich` or `handzeichen` or `hammelsprung`), and `?result=` (`angenommen` or `abgelehnt`).
+- `/votes/`: Vote list, showing roll-call (`namentlich`) votes by default, optionally filtered with `?party=`, `?type=` (`namentlich` or `handzeichen` or `hammelsprung`), and `?result=` (`angenommen` or `abgelehnt`).
 - `/votes/{id}/`: Vote detail with party voting, deviating members, result, sponsor, speeches, related motions, and source documents.
 - `/motions/{id}/`: Motion or bill detail with summary, status, print document, signatories, and linked votes.
 - `/members/`: Member list, optionally filtered with `?party=` and `?state=`.

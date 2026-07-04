@@ -63,6 +63,24 @@ export function jsonLd(data: object) {
   return [{ type: 'application/ld+json', children: JSON.stringify(data) }]
 }
 
+export function plainDescription(text: string, max = 260) {
+  const plain = text.replace(/[*_`#]+/g, '').replace(/\s+/g, ' ').trim()
+  return plain.length > max ? `${plain.slice(0, Math.max(plain.lastIndexOf(' ', max), 1))} …` : plain
+}
+
+export function breadcrumbJsonLd(items: Array<{ name: string; path: string }>) {
+  return jsonLd({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: `${SITE_URL}${pagePath(item.path)}`,
+    })),
+  })
+}
+
 export function alternateJsonLink(path: string) {
   const base = path.length > 1 ? path.replace(/\/$/, '') : path
   const normalized = base.startsWith('/en/motions/') ? base : base === '/en' ? '/' : base.startsWith('/en/') ? base.slice(3) : base
