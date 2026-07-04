@@ -10,20 +10,31 @@ export function SortControl({ sortKey, sortDir, onSort }: Props) {
   const t = useCopy()
   const [open, setOpen] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null)
   useEffect(() => {
     if (!open) return
     const close = (e: MouseEvent) => {
       if (rootRef.current?.contains(e.target as Node)) return
       setOpen(false)
     }
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return
+      setOpen(false)
+      buttonRef.current?.focus()
+    }
     document.addEventListener('mousedown', close)
-    return () => document.removeEventListener('mousedown', close)
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', close)
+      document.removeEventListener('keydown', onKeyDown)
+    }
   }, [open])
   const labels: Record<MemberSortKey, string> = { name: t.name, attendance: t.attendance, loyalty: t.line }
   const arrow = sortDir === 'asc' ? '↑' : '↓'
   return (
     <div ref={rootRef} className="relative">
       <button
+        ref={buttonRef}
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-haspopup="listbox"

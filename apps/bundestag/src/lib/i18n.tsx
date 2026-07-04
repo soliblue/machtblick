@@ -186,7 +186,7 @@ const copy = {
     resetFilter: 'Reset filter',
     searchMembers: 'Search members',
     members: 'Members',
-    parliamentaryGroup: 'Group',
+    parliamentaryGroup: 'Party',
     party: 'Party',
     state: 'State',
     sex: 'Gender',

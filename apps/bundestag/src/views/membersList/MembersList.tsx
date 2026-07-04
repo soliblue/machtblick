@@ -10,8 +10,6 @@ import { isAgeBucket, isMandateType, isSex, type AgeBucket } from '@/lib/ageBuck
 import { partyLabel } from '@/lib/parties'
 import { useCopy, useLocale } from '@/lib/i18n'
 
-const HAIR = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
-
 type Props = {
   members: MemberListItem[]
   party: string | null
@@ -91,15 +89,14 @@ export function MembersList({
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
             placeholder={t.searchMembers}
-            className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
-            style={{ borderColor: HAIR }}
+            className="w-full border border-fg/15 bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
           />
         </div>
       </div>
       <div className="sticky top-[54px] z-20 hidden border-b border-fg/15 bg-background desk:block">
         <div className="px-l py-s desk:mx-auto desk:max-w-5xl">
           <FilterPillRow className="">
-            <FilterPill label={t.navParties} options={availableParties} value={party} onChange={onPartyChange} />
+            <FilterPill label={t.parliamentaryGroup} options={availableParties} value={party} onChange={onPartyChange} />
             <FilterPill label={t.state} options={availableStates} value={state} onChange={onStateChange} />
             <FilterPill
               label={t.sex}

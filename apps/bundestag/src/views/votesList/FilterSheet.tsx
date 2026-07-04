@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Filter } from 'lucide-react'
 import { useCopy } from '@/lib/i18n'
 
@@ -28,13 +28,47 @@ export function FilterSheet({ groups, activeCount, sort }: Props) {
   const [open, setOpen] = useState(false)
   const [dragY, setDragY] = useState(0)
   const startY = useRef(0)
+  const fabRef = useRef<HTMLButtonElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
   const close = () => {
     setOpen(false)
     setDragY(0)
   }
+  useEffect(() => {
+    if (!open) return
+    const panel = panelRef.current
+    if (!panel) return
+    panel.focus()
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        close()
+        return
+      }
+      if (e.key !== 'Tab') return
+      const items = panel.querySelectorAll<HTMLElement>('button')
+      const first = items[0]
+      const last = items[items.length - 1]
+      if (e.shiftKey && (document.activeElement === first || document.activeElement === panel)) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      document.body.style.overflow = previousOverflow
+      fabRef.current?.focus()
+    }
+  }, [open])
   return (
     <>
       <button
+        ref={fabRef}
         type="button"
         onClick={() => setOpen(true)}
         aria-haspopup="dialog"
@@ -50,7 +84,9 @@ export function FilterSheet({ groups, activeCount, sort }: Props) {
         <div className="fixed inset-0 z-40" role="dialog" aria-modal="true" aria-label={t.filterLabel}>
           <div className="absolute inset-0 bg-fg/40" onClick={close} />
           <div
-            className="absolute inset-x-0 bottom-0 max-h-[75svh] overflow-y-auto border-t bg-background px-l"
+            ref={panelRef}
+            tabIndex={-1}
+            className="absolute inset-x-0 bottom-0 max-h-[75svh] overflow-y-auto border-t bg-background px-l outline-none"
             style={{
               borderColor: HAIR,
               paddingBottom: 'calc(24px + env(safe-area-inset-bottom))',

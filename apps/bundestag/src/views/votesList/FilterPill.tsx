@@ -37,11 +37,18 @@ export function FilterPill({ label, options, value, onChange, formatOption }: Pr
       if (e.target instanceof HTMLElement && e.target.contains(buttonRef.current)) return
       setOpen(false)
     }
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return
+      setOpen(false)
+      buttonRef.current?.focus()
+    }
     document.addEventListener('mousedown', close)
+    document.addEventListener('keydown', onKeyDown)
     window.addEventListener('scroll', onScroll, true)
     window.addEventListener('resize', onScroll)
     return () => {
       document.removeEventListener('mousedown', close)
+      document.removeEventListener('keydown', onKeyDown)
       window.removeEventListener('scroll', onScroll, true)
       window.removeEventListener('resize', onScroll)
     }
