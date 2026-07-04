@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
-import { searchSpeechesStatic, speechTextsLoaded } from '@/lib/speechesStatic'
-import type { SpeechSearchParams, SpeechSearchResponse } from '@/server/speeches'
+import { searchSpeechesStatic, speechTextsLoaded, type SpeechFeedResponse } from '@/lib/speechesStatic'
+import type { SpeechSearchParams } from '@/server/speeches'
 import type { Locale } from '@/lib/locale'
 
-export function useSpeechSearch(params: SpeechSearchParams, initialData?: SpeechSearchResponse, locale: Locale = 'de') {
+export function useSpeechSearch(params: SpeechSearchParams, initialData?: SpeechFeedResponse, locale: Locale = 'de') {
   const q = params.q?.trim() ?? ''
   const query = useQuery({
     queryKey: ['speech-search', locale, params],

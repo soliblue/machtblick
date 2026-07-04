@@ -106,6 +106,87 @@ function cleanAbstract(value: string | null) {
     .trim() || null
 }
 
+export type AntragListItem = {
+  id: number
+  type: 'antrag' | 'gesetzentwurf'
+  title: string
+  initiativeFraktion: string | null
+  introducedDate: string | null
+  beratungsstand: string | null
+  summary: string | null
+  vote: { date: string; yes: number; no: number; result: 'angenommen' | 'abgelehnt' } | null
+  hasVote: boolean
+  activityDate: string
+}
+
+const clipListSummary = (text: string | null) => {
+  const plain = (text ?? '').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[*_`#]+/g, '').replace(/\s+/g, ' ').trim()
+  return plain ? (plain.length > 220 ? `${plain.slice(0, 220).replace(/\s+\S*$/, '')}…` : plain) : null
+}
+
+export const listAntraege = createServerFn({ method: 'GET' })
+  .inputValidator(normalizeLocale)
+  .handler(async ({ data: locale }): Promise<AntragListItem[]> => {
+    const rows = db
+      .select({
+        id: antraege.id,
+        type: antraege.type,
+        title: antraege.title,
+        cleanTitle: antraege.cleanTitle,
+        initiativeFraktion: antraege.initiativeFraktion,
+        introducedDate: antraege.introducedDate,
+        beratungsstand: antraege.beratungsstand,
+        summarySimplified: antragDescriptions.summarySimplified,
+      })
+      .from(antraege)
+      .innerJoin(antragDescriptions, eq(antragDescriptions.antragId, antraege.id))
+      .where(eq(antraege.wahlperiode, CURRENT_TERM))
+      .all()
+    const translationById = new Map(
+      locale === 'en'
+        ? db.select().from(antragDescriptionTranslations).where(eq(antragDescriptionTranslations.locale, 'en')).all().map((t) => [t.antragId, t])
+        : [],
+    )
+    const links = db.select({ antragId: voteAntraege.antragId, voteId: voteAntraege.voteId }).from(voteAntraege).all()
+    const voteById = new Map(
+      db
+        .select({ id: votes.id, date: votes.date, voteType: votes.voteType, result: votes.result, yes: votes.yes, no: votes.no })
+        .from(votes)
+        .where(eq(votes.termId, CURRENT_TERM))
+        .all()
+        .filter((v) => SHOW_HAMMELSPRUNG || v.voteType !== 'hammelsprung')
+        .map((v) => [v.id, v]),
+    )
+    const votesByAntrag = new Map<number, NonNullable<ReturnType<typeof voteById.get>>[]>()
+    for (const l of links) {
+      const vote = voteById.get(l.voteId)
+      if (!vote) continue
+      const arr = votesByAntrag.get(l.antragId) ?? []
+      arr.push(vote)
+      votesByAntrag.set(l.antragId, arr)
+    }
+    return rows
+      .filter((r) => locale !== 'en' || translationById.has(r.id))
+      .map((r) => {
+        const t = translationById.get(r.id)
+        const linked = (votesByAntrag.get(r.id) ?? []).sort((a, b) => b.date.localeCompare(a.date))
+        const named = linked.find((v) => v.voteType === 'namentlich')
+        return {
+          id: r.id,
+          type: r.type,
+          title: (locale === 'en' ? t?.cleanTitle ?? t?.title : r.cleanTitle ?? r.title) ?? r.title,
+          initiativeFraktion: r.initiativeFraktion,
+          introducedDate: r.introducedDate,
+          beratungsstand: r.beratungsstand,
+          summary: clipListSummary(locale === 'en' ? t?.summarySimplified ?? null : r.summarySimplified),
+          vote: named ? { date: named.date, yes: named.yes ?? 0, no: named.no ?? 0, result: named.result } : null,
+          hasVote: linked.length > 0,
+          activityDate: [r.introducedDate ?? '', linked[0]?.date ?? ''].sort().pop() || '',
+        }
+      })
+      .sort((a, b) => b.activityDate.localeCompare(a.activityDate) || b.id - a.id)
+  })
+
 export const getAntrag = createServerFn({ method: 'GET' })
   .inputValidator((input: string | { id: string | number; locale?: Locale }) => typeof input === 'string' || typeof input === 'number' ? { id: Number(input), locale: 'de' as Locale } : { id: Number(input.id), locale: normalizeLocale(input.locale) })
   .handler(async ({ data }): Promise<AntragDetail> => {

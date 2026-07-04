@@ -15,6 +15,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as VotesIndexRouteImport } from './routes/votes/index'
 import { Route as SpeechesIndexRouteImport } from './routes/speeches/index'
 import { Route as PartiesIndexRouteImport } from './routes/parties/index'
+import { Route as MotionsIndexRouteImport } from './routes/motions/index'
 import { Route as MembersIndexRouteImport } from './routes/members/index'
 import { Route as EnIndexRouteImport } from './routes/en/index'
 import { Route as VotesIdRouteImport } from './routes/votes/$id'
@@ -28,6 +29,7 @@ import { Route as MembersIdIndexRouteImport } from './routes/members/$id/index'
 import { Route as EnVotesIndexRouteImport } from './routes/en/votes/index'
 import { Route as EnSpeechesIndexRouteImport } from './routes/en/speeches/index'
 import { Route as EnPartiesIndexRouteImport } from './routes/en/parties/index'
+import { Route as EnMotionsIndexRouteImport } from './routes/en/motions/index'
 import { Route as EnMembersIndexRouteImport } from './routes/en/members/index'
 import { Route as PartiesIdVotesRouteImport } from './routes/parties/$id/votes'
 import { Route as PartiesIdProfileRouteImport } from './routes/parties/$id/profile'
@@ -76,6 +78,11 @@ const SpeechesIndexRoute = SpeechesIndexRouteImport.update({
 const PartiesIndexRoute = PartiesIndexRouteImport.update({
   id: '/parties/',
   path: '/parties/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MotionsIndexRoute = MotionsIndexRouteImport.update({
+  id: '/motions/',
+  path: '/motions/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MembersIndexRoute = MembersIndexRouteImport.update({
@@ -141,6 +148,11 @@ const EnSpeechesIndexRoute = EnSpeechesIndexRouteImport.update({
 const EnPartiesIndexRoute = EnPartiesIndexRouteImport.update({
   id: '/en/parties/',
   path: '/en/parties/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnMotionsIndexRoute = EnMotionsIndexRouteImport.update({
+  id: '/en/motions/',
+  path: '/en/motions/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnMembersIndexRoute = EnMembersIndexRouteImport.update({
@@ -251,6 +263,7 @@ export interface FileRoutesByFullPath {
   '/votes/$id': typeof VotesIdRoute
   '/en/': typeof EnIndexRoute
   '/members/': typeof MembersIndexRoute
+  '/motions/': typeof MotionsIndexRoute
   '/parties/': typeof PartiesIndexRoute
   '/speeches/': typeof SpeechesIndexRoute
   '/votes/': typeof VotesIndexRoute
@@ -265,6 +278,7 @@ export interface FileRoutesByFullPath {
   '/parties/$id/profile': typeof PartiesIdProfileRoute
   '/parties/$id/votes': typeof PartiesIdVotesRoute
   '/en/members/': typeof EnMembersIndexRoute
+  '/en/motions/': typeof EnMotionsIndexRoute
   '/en/parties/': typeof EnPartiesIndexRoute
   '/en/speeches/': typeof EnSpeechesIndexRoute
   '/en/votes/': typeof EnVotesIndexRoute
@@ -289,6 +303,7 @@ export interface FileRoutesByTo {
   '/votes/$id': typeof VotesIdRoute
   '/en': typeof EnIndexRoute
   '/members': typeof MembersIndexRoute
+  '/motions': typeof MotionsIndexRoute
   '/parties': typeof PartiesIndexRoute
   '/speeches': typeof SpeechesIndexRoute
   '/votes': typeof VotesIndexRoute
@@ -301,6 +316,7 @@ export interface FileRoutesByTo {
   '/parties/$id/profile': typeof PartiesIdProfileRoute
   '/parties/$id/votes': typeof PartiesIdVotesRoute
   '/en/members': typeof EnMembersIndexRoute
+  '/en/motions': typeof EnMotionsIndexRoute
   '/en/parties': typeof EnPartiesIndexRoute
   '/en/speeches': typeof EnSpeechesIndexRoute
   '/en/votes': typeof EnVotesIndexRoute
@@ -328,6 +344,7 @@ export interface FileRoutesById {
   '/votes/$id': typeof VotesIdRoute
   '/en/': typeof EnIndexRoute
   '/members/': typeof MembersIndexRoute
+  '/motions/': typeof MotionsIndexRoute
   '/parties/': typeof PartiesIndexRoute
   '/speeches/': typeof SpeechesIndexRoute
   '/votes/': typeof VotesIndexRoute
@@ -342,6 +359,7 @@ export interface FileRoutesById {
   '/parties/$id/profile': typeof PartiesIdProfileRoute
   '/parties/$id/votes': typeof PartiesIdVotesRoute
   '/en/members/': typeof EnMembersIndexRoute
+  '/en/motions/': typeof EnMotionsIndexRoute
   '/en/parties/': typeof EnPartiesIndexRoute
   '/en/speeches/': typeof EnSpeechesIndexRoute
   '/en/votes/': typeof EnVotesIndexRoute
@@ -370,6 +388,7 @@ export interface FileRouteTypes {
     | '/votes/$id'
     | '/en/'
     | '/members/'
+    | '/motions/'
     | '/parties/'
     | '/speeches/'
     | '/votes/'
@@ -384,6 +403,7 @@ export interface FileRouteTypes {
     | '/parties/$id/profile'
     | '/parties/$id/votes'
     | '/en/members/'
+    | '/en/motions/'
     | '/en/parties/'
     | '/en/speeches/'
     | '/en/votes/'
@@ -408,6 +428,7 @@ export interface FileRouteTypes {
     | '/votes/$id'
     | '/en'
     | '/members'
+    | '/motions'
     | '/parties'
     | '/speeches'
     | '/votes'
@@ -420,6 +441,7 @@ export interface FileRouteTypes {
     | '/parties/$id/profile'
     | '/parties/$id/votes'
     | '/en/members'
+    | '/en/motions'
     | '/en/parties'
     | '/en/speeches'
     | '/en/votes'
@@ -446,6 +468,7 @@ export interface FileRouteTypes {
     | '/votes/$id'
     | '/en/'
     | '/members/'
+    | '/motions/'
     | '/parties/'
     | '/speeches/'
     | '/votes/'
@@ -460,6 +483,7 @@ export interface FileRouteTypes {
     | '/parties/$id/profile'
     | '/parties/$id/votes'
     | '/en/members/'
+    | '/en/motions/'
     | '/en/parties/'
     | '/en/speeches/'
     | '/en/votes/'
@@ -487,6 +511,7 @@ export interface RootRouteChildren {
   VotesIdRoute: typeof VotesIdRoute
   EnIndexRoute: typeof EnIndexRoute
   MembersIndexRoute: typeof MembersIndexRoute
+  MotionsIndexRoute: typeof MotionsIndexRoute
   PartiesIndexRoute: typeof PartiesIndexRoute
   SpeechesIndexRoute: typeof SpeechesIndexRoute
   VotesIndexRoute: typeof VotesIndexRoute
@@ -495,6 +520,7 @@ export interface RootRouteChildren {
   EnMotionsIdRoute: typeof EnMotionsIdRoute
   EnVotesIdRoute: typeof EnVotesIdRoute
   EnMembersIndexRoute: typeof EnMembersIndexRoute
+  EnMotionsIndexRoute: typeof EnMotionsIndexRoute
   EnPartiesIndexRoute: typeof EnPartiesIndexRoute
   EnSpeechesIndexRoute: typeof EnSpeechesIndexRoute
   EnVotesIndexRoute: typeof EnVotesIndexRoute
@@ -542,6 +568,13 @@ declare module '@tanstack/react-router' {
       path: '/parties'
       fullPath: '/parties/'
       preLoaderRoute: typeof PartiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/motions/': {
+      id: '/motions/'
+      path: '/motions'
+      fullPath: '/motions/'
+      preLoaderRoute: typeof MotionsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/members/': {
@@ -633,6 +666,13 @@ declare module '@tanstack/react-router' {
       path: '/en/parties'
       fullPath: '/en/parties/'
       preLoaderRoute: typeof EnPartiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/motions/': {
+      id: '/en/motions/'
+      path: '/en/motions'
+      fullPath: '/en/motions/'
+      preLoaderRoute: typeof EnMotionsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/en/members/': {
@@ -853,6 +893,7 @@ const rootRouteChildren: RootRouteChildren = {
   VotesIdRoute: VotesIdRoute,
   EnIndexRoute: EnIndexRoute,
   MembersIndexRoute: MembersIndexRoute,
+  MotionsIndexRoute: MotionsIndexRoute,
   PartiesIndexRoute: PartiesIndexRoute,
   SpeechesIndexRoute: SpeechesIndexRoute,
   VotesIndexRoute: VotesIndexRoute,
@@ -861,6 +902,7 @@ const rootRouteChildren: RootRouteChildren = {
   EnMotionsIdRoute: EnMotionsIdRoute,
   EnVotesIdRoute: EnVotesIdRoute,
   EnMembersIndexRoute: EnMembersIndexRoute,
+  EnMotionsIndexRoute: EnMotionsIndexRoute,
   EnPartiesIndexRoute: EnPartiesIndexRoute,
   EnSpeechesIndexRoute: EnSpeechesIndexRoute,
   EnVotesIndexRoute: EnVotesIndexRoute,

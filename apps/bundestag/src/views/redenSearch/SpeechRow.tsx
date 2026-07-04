@@ -35,7 +35,7 @@ export function SpeechRow({ speech, query = '', showVoteLink = true, showDate = 
   const [open, setOpen] = useState(false)
   const locale = useLocale()
   const t = useCopy()
-  const body = useSpeechBody(speech.id, open, locale)
+  const body = useSpeechBody([speech.id], open, locale)
   const withAvatar = pictureUrl !== undefined || choice !== undefined
   return (
     <div

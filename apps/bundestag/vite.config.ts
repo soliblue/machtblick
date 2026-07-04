@@ -32,16 +32,10 @@ type SpeechRow = {
   vote_id: string | null
   vote_title: string | null
   vote_title_en: string | null
+  ballot_choice: string | null
 }
 
-const CHAIR_ROLES = new Set([
-  'Präsident',
-  'Präsidentin',
-  'Vizepräsident',
-  'Vizepräsidentin',
-  'Alterspräsident',
-  'Alterspräsidentin',
-])
+const PRESIDIUM_ROLE = /^(alters|vize)?präsident/i
 
 function writeSpeechesStatic() {
   const db = new Database(fileURLToPath(new URL('../../db/machtblick.sqlite', import.meta.url)), { readonly: true })
@@ -62,10 +56,12 @@ function writeSpeechesStatic() {
            sdgs.contribution_type AS contribution_type,
            v.id AS vote_id,
            v.clean_title AS vote_title,
-           COALESCE(vt.clean_title, vt.title) AS vote_title_en
+           COALESCE(vt.clean_title, vt.title) AS vote_title_en,
+           vm.choice AS ballot_choice
     FROM speeches s
     LEFT JOIN linked_votes lv ON lv.speech_id = s.id AND lv.rn = 1
     LEFT JOIN votes v ON v.id = lv.vote_id AND v.term_id = 21 AND v.procedural = 0 AND v.vote_type != 'hammelsprung'
+    LEFT JOIN vote_members vm ON vm.vote_id = v.id AND vm.member_id = s.speaker_member_id
     LEFT JOIN vote_translations vt ON vt.vote_id = v.id AND vt.locale = 'en'
     LEFT JOIN speech_debate_group_speeches sdgs ON sdgs.speech_id = s.id
     LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
@@ -73,33 +69,73 @@ function writeSpeechesStatic() {
     LEFT JOIN speech_translations st ON st.speech_id = s.id AND st.locale = 'en'
     ORDER BY s.date DESC, COALESCE(sdgs.position, s.position) ASC
   `).all() as SpeechRow[]
+  const pictures = new Map(
+    (db.prepare('SELECT id, picture_url FROM members WHERE picture_url IS NOT NULL').all() as Array<{ id: string; picture_url: string }>)
+      .map((m) => [m.id, m.picture_url]),
+  )
   db.close()
   const publicDir = fileURLToPath(new URL('./public', import.meta.url))
   rmSync(`${publicDir}/speeches`, { force: true, recursive: true })
   rmSync(`${publicDir}/speeches-index.json`, { force: true })
-  const meta = rows.map((r) => ({
-    id: r.id,
-    speakerName: r.speaker_name,
-    speakerMemberId: r.speaker_member_id,
-    speakerRole: r.speaker_role,
-    party: r.party,
-    position: r.position,
-    excerpt: r.text_full.slice(0, 160),
-    date: r.date,
-    agendaItem: r.agenda_item,
-    agendaTitle: r.agenda_title,
-    debateGroupId: r.debate_group_id,
-    contributionType: r.contribution_type,
-    voteId: r.vote_id,
-    voteTitle: r.vote_title,
-    voteTitleEn: r.vote_title_en,
-  }))
+  type MetaEntry = {
+    id: string
+    ids: string[]
+    speakerName: string
+    speakerMemberId: string | null
+    speakerRole: string | null
+    party: string | null
+    position: number
+    excerpt: string
+    date: string
+    agendaItem: string | null
+    agendaTitle: string | null
+    debateGroupId: string | null
+    contributionType: string | null
+    voteId: string | null
+    voteTitle: string | null
+    voteTitleEn: string | null
+    choice: string | null
+  }
+  const debateKey = (groupId: string | null, agendaItem: string | null) => groupId ?? `a:${agendaItem}`
+  const meta: MetaEntry[] = []
+  for (const r of rows) {
+    if (r.speaker_role && PRESIDIUM_ROLE.test(r.speaker_role)) continue
+    const prev = meta[meta.length - 1]
+    if (prev && prev.date === r.date && prev.speakerName === r.speaker_name && debateKey(prev.debateGroupId, prev.agendaItem) === debateKey(r.debate_group_id, r.agenda_item)) {
+      prev.ids.push(r.id)
+      continue
+    }
+    meta.push({
+      id: r.id,
+      ids: [r.id],
+      speakerName: r.speaker_name,
+      speakerMemberId: r.speaker_member_id,
+      speakerRole: r.speaker_role,
+      party: r.party,
+      position: r.position,
+      excerpt: r.text_full.length > 160 ? `${r.text_full.slice(0, 160).replace(/\s+\S*$/, '')}…` : r.text_full,
+      date: r.date,
+      agendaItem: r.agenda_item,
+      agendaTitle: r.agenda_title,
+      debateGroupId: r.debate_group_id,
+      contributionType: r.contribution_type,
+      voteId: r.vote_id,
+      voteTitle: r.vote_title,
+      voteTitleEn: r.vote_title_en,
+      choice: r.ballot_choice === 'ja' || r.ballot_choice === 'nein' || r.ballot_choice === 'enthalten' ? r.ballot_choice : null,
+    })
+  }
+  const people: Record<string, string> = {}
+  for (const m of meta) {
+    if (!m.speakerMemberId || people[m.speakerMemberId]) continue
+    const url = pictures.get(m.speakerMemberId)
+    if (url) people[m.speakerMemberId] = url
+  }
   rmSync(`${publicDir}/speeches-search.json`, { force: true })
   const SHARD_COUNT = 4
   const shards: Array<Record<string, string>> = Array.from({ length: SHARD_COUNT }, () => ({}))
   const englishShards: Array<Record<string, string>> = Array.from({ length: SHARD_COUNT }, () => ({}))
   for (const r of rows) {
-    if (r.speaker_role && CHAIR_ROLES.has(r.speaker_role)) continue
     let h = 0
     for (let i = 0; i < r.id.length; i++) h = (h * 31 + r.id.charCodeAt(i)) | 0
     const shard = Math.abs(h) % SHARD_COUNT
@@ -107,6 +143,7 @@ function writeSpeechesStatic() {
     if (r.text_full_en) englishShards[shard][r.id] = r.text_full_en
   }
   writeFileSync(`${publicDir}/speeches-meta.json`, JSON.stringify(meta))
+  writeFileSync(`${publicDir}/speeches-people.json`, JSON.stringify(people))
   for (let i = 0; i < SHARD_COUNT; i++) {
     writeFileSync(`${publicDir}/speeches-search-${i}.json`, JSON.stringify(shards[i]))
     writeFileSync(`${publicDir}/speeches-search-en-${i}.json`, JSON.stringify(englishShards[i]))
@@ -115,7 +152,7 @@ function writeSpeechesStatic() {
 
 function prerenderPaths(): string[] {
   const db = new Database(fileURLToPath(new URL('../../db/machtblick.sqlite', import.meta.url)), { readonly: true })
-  const paths = ['/', '/votes/', '/members/', '/parties/', '/speeches/', '/imprint/', '/privacy/', '/en/', '/en/votes/', '/en/members/', '/en/parties/', '/en/speeches/', '/en/imprint/', '/en/privacy/']
+  const paths = ['/', '/votes/', '/motions/', '/members/', '/parties/', '/speeches/', '/imprint/', '/privacy/', '/en/', '/en/votes/', '/en/motions/', '/en/members/', '/en/parties/', '/en/speeches/', '/en/imprint/', '/en/privacy/']
   const votes = db.prepare("SELECT id FROM votes WHERE term_id = ? AND procedural = 0 AND vote_type != 'hammelsprung'").all(CURRENT_TERM) as Array<{ id: string }>
   for (const v of votes) {
     paths.push(`/votes/${v.id}/`)
@@ -226,6 +263,9 @@ function sitemapEntries(): SitemapEntry[] {
       FROM antraege a WHERE a.wahlperiode = ?
     `).all(CURRENT_TERM) as Array<{ id: number; d: string }>).map((r) => [r.id, r.d || undefined]),
   )
+  const latestMotionActivity = [...antragDates.values()].filter((d): d is string => !!d).sort().pop()
+  entries.push({ path: '/motions/', lastmod: latestMotionActivity })
+  entries.push({ path: '/en/motions/', lastmod: latestMotionActivity })
   for (const a of publishableAntragIds(db)) entries.push({ path: `/motions/${a.id}/`, lastmod: antragDates.get(a.id) })
   for (const a of publishableAntragIds(db, 'en')) entries.push({ path: `/en/motions/${a.id}/`, lastmod: antragDates.get(a.id) })
   const members = db.prepare(`

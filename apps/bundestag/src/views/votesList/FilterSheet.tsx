@@ -11,6 +11,7 @@ export type FilterSheetGroup = {
   value: string | null
   onChange: (value: string | null) => void
   format: (opt: string) => string
+  searchable?: boolean
 }
 
 export type FilterSheetSort = {
@@ -26,6 +27,7 @@ type Props = { groups: FilterSheetGroup[]; activeCount: number; sort?: FilterShe
 export function FilterSheet({ groups, activeCount, sort }: Props) {
   const t = useCopy()
   const [open, setOpen] = useState(false)
+  const [queries, setQueries] = useState<Record<string, string>>({})
   const [dragY, setDragY] = useState(0)
   const startY = useRef(0)
   const fabRef = useRef<HTMLButtonElement>(null)
@@ -102,27 +104,44 @@ export function FilterSheet({ groups, activeCount, sort }: Props) {
             <div className="flex justify-center py-m">
               <div className="h-[4px] w-[40px] bg-fg/15" />
             </div>
-            {groups.map((g) => (
-              <div key={g.key} className="mb-l">
-                <p className="mb-s text-s caption opacity-l">
-                  {g.label}
-                </p>
-                <div className="flex flex-wrap gap-s">
-                  {g.options.map((opt) => (
-                    <button
-                      key={opt}
-                      type="button"
-                      onClick={() => g.onChange(opt === g.value ? null : opt)}
-                      className={`border px-m py-s text-m ${opt === g.value ? 'bg-surface font-semibold' : ''}`}
+            {groups.map((g) => {
+              const query = (queries[g.key] ?? '').trim().toLowerCase()
+              const visible = g.searchable
+                ? g.options.filter((opt) => opt === g.value || g.format(opt).toLowerCase().includes(query)).slice(0, 20)
+                : g.options
+              return (
+                <div key={g.key} className="mb-l">
+                  <p className="mb-s text-s caption opacity-l">
+                    {g.label}
+                  </p>
+                  {g.searchable && (
+                    <input
+                      type="search"
+                      value={queries[g.key] ?? ''}
+                      onChange={(e) => setQueries((q) => ({ ...q, [g.key]: e.target.value }))}
+                      placeholder={g.label}
+                      aria-label={g.label}
+                      className="mb-s w-full border bg-transparent px-s py-xs text-m outline-none focus:border-fg"
                       style={{ borderColor: HAIR }}
-                    >
-                      {g.format(opt)}
-                      {opt === g.value && <span className="ml-s opacity-l">×</span>}
-                    </button>
-                  ))}
+                    />
+                  )}
+                  <div className="flex flex-wrap gap-s">
+                    {visible.map((opt) => (
+                      <button
+                        key={opt}
+                        type="button"
+                        onClick={() => g.onChange(opt === g.value ? null : opt)}
+                        className={`border px-m py-s text-m ${opt === g.value ? 'bg-surface font-semibold' : ''}`}
+                        style={{ borderColor: HAIR }}
+                      >
+                        {g.format(opt)}
+                        {opt === g.value && <span className="ml-s opacity-l">×</span>}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
             {sort && (
               <div className="mb-l">
                 <p className="mb-s text-s caption opacity-l">

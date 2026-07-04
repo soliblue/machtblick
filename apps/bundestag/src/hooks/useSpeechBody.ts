@@ -1,14 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
-import { loadSpeechTexts, loadSpeechMeta } from '@/lib/speechesStatic'
+import { joinSpeechTexts, loadSpeechTexts } from '@/lib/speechesStatic'
 import type { Locale } from '@/lib/locale'
 
-export function useSpeechBody(speechId: string, enabled: boolean, locale: Locale = 'de') {
+export function useSpeechBody(ids: string[], enabled: boolean, locale: Locale = 'de') {
   return useQuery({
-    queryKey: ['speech', locale, speechId],
+    queryKey: ['speech', locale, ids.join(',')],
     queryFn: async () => {
-      const [meta, texts] = await Promise.all([loadSpeechMeta(), loadSpeechTexts(locale)])
-      const entry = meta.find((s) => s.id === speechId)
-      return { text: texts[speechId] ?? entry?.excerpt ?? '', date: entry?.date ?? '' }
+      const texts = await loadSpeechTexts(locale)
+      const text = joinSpeechTexts(ids, texts)
+      if (text || locale === 'de') return { text }
+      return { text: joinSpeechTexts(ids, await loadSpeechTexts('de')) }
     },
     enabled,
     staleTime: Infinity,

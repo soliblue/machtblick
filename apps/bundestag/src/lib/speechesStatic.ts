@@ -7,17 +7,36 @@ import type {
 import { makeSnippet } from './snippet'
 import type { Locale } from './locale'
 
-export type SpeechMetaEntry = Omit<SpeechResult, 'snippet'> & { voteTitleEn: string | null }
+export type SpeechBallotChoice = 'ja' | 'nein' | 'enthalten'
 
-const PAGE_SIZE = 5
+export type SpeechMetaEntry = Omit<SpeechResult, 'snippet'> & {
+  voteTitleEn: string | null
+  ids: string[]
+  choice: SpeechBallotChoice | null
+}
+
+export type SpeechFeedItem = SpeechResult & {
+  ids: string[]
+  choice: SpeechBallotChoice | null
+}
+
+export type SpeechFeedResponse = Omit<SpeechSearchResponse, 'items'> & { items: SpeechFeedItem[] }
+
+const PAGE_SIZE = 8
 
 let metaCache: Promise<SpeechMetaEntry[]> | null = null
+let peopleCache: Promise<Record<string, string>> | null = null
 let textCache: Partial<Record<Locale, Promise<Record<string, string>>>> = {}
 let textsResolved: Partial<Record<Locale, boolean>> = {}
 
 export function loadSpeechMeta(): Promise<SpeechMetaEntry[]> {
   metaCache ??= fetchJson<SpeechMetaEntry[]>('/speeches-meta.json')
   return metaCache
+}
+
+export function loadSpeechPeople(): Promise<Record<string, string>> {
+  peopleCache ??= fetchJson<Record<string, string>>('/speeches-people.json')
+  return peopleCache
 }
 
 const SHARD_COUNT = 4
@@ -63,7 +82,11 @@ function matches(speakerName: string, body: string, terms: string[]): boolean {
   return terms.every((t) => hay.includes(t))
 }
 
-export async function searchSpeechesStatic(params: SpeechSearchParams, locale: Locale = 'de'): Promise<SpeechSearchResponse> {
+export function joinSpeechTexts(ids: string[], texts: Record<string, string>): string {
+  return ids.map((id) => texts[id] ?? '').filter(Boolean).join('\n\n')
+}
+
+export async function searchSpeechesStatic(params: SpeechSearchParams, locale: Locale = 'de'): Promise<SpeechFeedResponse> {
   const meta = await loadSpeechMeta()
   const q = params.q?.trim() ?? ''
   const party = params.party?.trim() ?? ''
@@ -73,12 +96,12 @@ export async function searchSpeechesStatic(params: SpeechSearchParams, locale: L
   const terms = tokens(q)
   const texts = terms.length || locale === 'en' ? await loadSpeechTexts(locale) : null
 
+  const body = (s: SpeechMetaEntry) => (texts ? joinSpeechTexts(s.ids, texts) || s.excerpt : s.excerpt)
   const filtered = meta.filter((s) => {
     if (party && s.party !== party) return false
     if (date && s.date !== date) return false
     if (memberId && s.speakerMemberId !== memberId) return false
-    const body = texts ? (texts[s.id] ?? s.excerpt) : s.excerpt
-    return matches(s.speakerName, body, terms)
+    return matches(s.speakerName, body(s), terms)
   })
 
   const parties = Array.from(new Set(meta.map((s) => s.party).filter((p): p is string => !!p))).sort()
@@ -88,19 +111,15 @@ export async function searchSpeechesStatic(params: SpeechSearchParams, locale: L
   const membersOptions: MemberOption[] = Array.from(memberMap, ([id, name]) => ({ id, name }))
     .sort((a, b) => a.name.localeCompare(b.name, 'de'))
 
-  const items: SpeechResult[] = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map(({ voteTitleEn, ...s }) => ({
-    ...s,
-    voteTitle: locale === 'en' ? voteTitleEn ?? s.voteTitle : s.voteTitle,
-    excerpt: locale === 'en' && texts ? (texts[s.id] ?? s.excerpt).slice(0, 220) : s.excerpt,
-    snippet: q && texts ? makeSnippet(texts[s.id] ?? s.excerpt, terms) : null,
-  }))
+  const items: SpeechFeedItem[] = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE).map((entry) => {
+    const { voteTitleEn, ...s } = entry
+    return {
+      ...s,
+      voteTitle: locale === 'en' ? voteTitleEn ?? s.voteTitle : s.voteTitle,
+      excerpt: locale === 'en' && texts ? body(entry).slice(0, 220) : s.excerpt,
+      snippet: q && texts ? makeSnippet(body(entry), terms) : null,
+    }
+  })
 
   return { items, total: filtered.length, parties, dates, membersOptions, pageSize: PAGE_SIZE }
-}
-
-export async function getSpeechStatic(id: string): Promise<{ text: string; date: string }> {
-  const [meta, texts] = await Promise.all([loadSpeechMeta(), loadSpeechTexts()])
-  const entry = meta.find((s) => s.id === id)
-  const text = texts[id] ?? entry?.excerpt ?? ''
-  return { text, date: entry?.date ?? '' }
 }
