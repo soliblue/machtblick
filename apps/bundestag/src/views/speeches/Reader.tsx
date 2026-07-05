@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { SpeakerAvatar } from './SpeakerAvatar'
-import { CHOICE_STANCE, StanceText, type Stance } from './StanceText'
+import type { Stance } from './StanceText'
+import { Stamp } from '@/views/votesList/Stamp'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { PartyLogo } from '@/views/votesList/PartyLogo'
 import { Markdown } from '@/lib/Markdown'
@@ -122,11 +123,6 @@ export function Reader({ item, index, count, nextName = null, query = '', onPrev
                 <div className="mt-xs flex flex-wrap items-center gap-s">
                   {item.party && <PartyBadge party={item.party} compact logoSize={16} />}
                   {item.speakerRole && <span className="text-s caption opacity-l">{item.speakerRole}</span>}
-                  {item.choice && (
-                    <StanceText stance={CHOICE_STANCE[item.choice]}>
-                      {{ ja: t.yes, nein: t.no, enthalten: t.abstain }[item.choice]}
-                    </StanceText>
-                  )}
                 </div>
                 {(item.date || (item.voteId && item.voteTitle)) && (
                   <div className="mt-xs truncate text-s opacity-l">
@@ -140,16 +136,24 @@ export function Reader({ item, index, count, nextName = null, query = '', onPrev
                   </div>
                 )}
               </div>
+              {item.choice && (
+                <span className="shrink-0">
+                  <Stamp variant={item.choice === 'enthalten' ? 'enthalten' : item.choice} rotated={false} />
+                </span>
+              )}
             </>
           ) : (
             <>
               <PartyLogo party={item.party} size={26} decorative />
               <div className="min-w-0 flex-1">
                 <div className="text-m font-semibold">{partyLabel(item.party, locale)}</div>
-                <div className="mt-xs">
-                  <StanceText stance={item.stance}>{t.stanceLabels[item.stance]}</StanceText>
-                </div>
               </div>
+              <span className="shrink-0">
+                <Stamp
+                  variant={item.stance === 'yes' ? 'dafuer' : item.stance === 'no' ? 'dagegen' : item.stance === 'abstain' ? 'enthalten' : 'gespalten'}
+                  rotated={false}
+                />
+              </span>
             </>
           )}
           <button type="button" onClick={onClose} aria-label={t.close} className="shrink-0 p-xs opacity-l hover:opacity-100">
