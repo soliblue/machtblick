@@ -22,9 +22,11 @@ struct MotionLinkedVoteCard: View {
                     )
                     .frame(maxWidth: 440)
                     .frame(maxWidth: .infinity)
-                    if let summaries = vote.partySummaries, !summaries.isEmpty {
-                        VoteDonutGrid(summaries: summaries)
-                    }
+                    VoteDonutView(
+                        yes: vote.yes ?? 0, no: vote.no ?? 0, abstain: vote.abstain ?? 0, absent: vote.absent ?? 0
+                    )
+                    .frame(width: 132, height: 132)
+                    .frame(maxWidth: .infinity)
                 }
             }
             .padding(ThemeTokens.Spacing.l)

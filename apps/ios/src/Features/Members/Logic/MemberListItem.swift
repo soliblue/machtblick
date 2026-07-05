@@ -8,6 +8,8 @@ struct MemberListItem: Decodable, Identifiable {
     let yearOfBirth: Int?
     let sex: String?
     let mandateType: String?
+    let attendance: Double
+    let loyalty: Double?
 
     var lastName: String {
         name.split(separator: " ").last.map(String.init) ?? name

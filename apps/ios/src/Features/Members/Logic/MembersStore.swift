@@ -11,6 +11,7 @@ final class MembersStore {
     var sex: String?
     var ageBucket: AgeBucket?
     var mandate: String?
+    var sort: MemberSort = .name
     var sortDescending = false
 
     var filtered: [MemberListItem] {
@@ -23,9 +24,17 @@ final class MembersStore {
                     && (mandate == nil || member.mandateType == mandate)
                     && (search.isEmpty || member.name.localizedStandardContains(search))
             }
-            .sorted {
-                let order = $0.lastName.localizedCompare($1.lastName)
-                return sortDescending ? order == .orderedDescending : order == .orderedAscending
+            .sorted { lhs, rhs in
+                switch sort {
+                case .name:
+                    let order = lhs.lastName.localizedCompare(rhs.lastName)
+                    return sortDescending ? order == .orderedDescending : order == .orderedAscending
+                case .attendance:
+                    return sortDescending ? lhs.attendance > rhs.attendance : lhs.attendance < rhs.attendance
+                case .loyalty:
+                    let l = lhs.loyalty ?? -1, r = rhs.loyalty ?? -1
+                    return sortDescending ? l > r : l < r
+                }
             }
     }
 

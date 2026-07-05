@@ -43,7 +43,6 @@ struct MotionDetailPayload: Decodable {
         let abstain: Int?
         let absent: Int?
         let totalMembers: Int?
-        let partySummaries: [PartyVoteSummary]?
     }
 
     let antrag: Antrag

@@ -23,6 +23,30 @@ struct MemberCardView: View {
                         .foregroundStyle(ThemeColor.secondary)
                         .lineLimit(1)
                 }
+                VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
+                    Text(Copy.attendance).kicker()
+                    HStack(spacing: ThemeTokens.Spacing.s) {
+                        ZStack(alignment: .leading) {
+                            Rectangle().fill(ThemeColor.border)
+                            GeometryReader { geo in
+                                Rectangle().fill(ThemeColor.success)
+                                    .frame(width: geo.size.width * min(max(member.attendance, 0), 1))
+                            }
+                        }
+                        .frame(height: 3)
+                        Text(Formatters.percent(member.attendance))
+                            .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
+                            .monospacedDigit()
+                    }
+                }
+                .padding(.top, ThemeTokens.Spacing.xs)
+                HStack {
+                    Text(Copy.line).kicker()
+                    Spacer()
+                    Text(member.loyalty.map(Formatters.percent) ?? "-")
+                        .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
+                        .monospacedDigit()
+                }
             }
             .padding(ThemeTokens.Spacing.s)
         }

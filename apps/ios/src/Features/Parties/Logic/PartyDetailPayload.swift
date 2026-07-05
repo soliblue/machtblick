@@ -66,4 +66,5 @@ struct PartyDetailPayload: Decodable {
     let votes: [VoteEntry]
     let members: [MemberRef]
     let alignments: [Alignment]
+    let history: PartyHistory?
 }

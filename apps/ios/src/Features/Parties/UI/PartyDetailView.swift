@@ -3,6 +3,7 @@ import SwiftUI
 private enum PartyTab: Hashable {
     case profile
     case votes
+    case history
 }
 
 struct PartyDetailView: View {
@@ -83,11 +84,18 @@ struct PartyDetailView: View {
     }
 
     private func tabs(_ detail: PartyDetailPayload) -> [PartyTab] {
-        detail.votes.isEmpty ? [.profile] : [.profile, .votes]
+        var available: [PartyTab] = [.profile]
+        if !detail.votes.isEmpty { available.append(.votes) }
+        if (detail.history?.chartPoints.count ?? 0) >= 2 { available.append(.history) }
+        return available
     }
 
     private func tabLabel(_ tab: PartyTab) -> String {
-        tab == .profile ? Copy.tabProfile : Copy.votesSection
+        switch tab {
+        case .profile: return Copy.tabProfile
+        case .votes: return Copy.votesSection
+        case .history: return Copy.tabHistory
+        }
     }
 
     @ViewBuilder private func picker(_ detail: PartyDetailPayload) -> some View {
@@ -105,6 +113,10 @@ struct PartyDetailView: View {
         switch active {
         case .profile: PartyProfilePanel(detail: detail, members: store.members)
         case .votes: PartyVotesPanel(votes: detail.votes)
+        case .history:
+            if let history = detail.history {
+                PartyHistoryPanel(history: history, party: detail.party)
+            }
         }
     }
 }

@@ -47,16 +47,23 @@ struct MembersFilterSheet: View {
                     }
                 }
                 Section(Copy.sortLabel) {
-                    Picker(Copy.sortName, selection: $store.sortDescending) {
-                        Text("A-Z").tag(false)
-                        Text("Z-A").tag(true)
+                    Picker(Copy.sortLabel, selection: $store.sort) {
+                        ForEach(MemberSort.allCases, id: \.self) { key in
+                            Text(key.label).tag(key)
+                        }
+                    }
+                    Picker(Copy.sortLabel, selection: $store.sortDescending) {
+                        Text(store.sort == .name ? "A-Z" : Copy.ascending).tag(false)
+                        Text(store.sort == .name ? "Z-A" : Copy.descending).tag(true)
                     }
                     .pickerStyle(.segmented)
                 }
             }
             .navigationTitle(Copy.filterLabel)
             .navigationBarTitleDisplayMode(.inline)
+            .onChange(of: store.sort) { store.sortDescending = store.sort.defaultsDescending }
             .sensoryFeedback(.selection, trigger: store.activeFilterCount)
+            .sensoryFeedback(.selection, trigger: store.sort)
             .sensoryFeedback(.selection, trigger: store.sortDescending)
         }
     }
