@@ -7,6 +7,7 @@ Machtblick is a public-interest project built from open German datasets. The Bun
 ## Best Entry Points
 
 - [Sitemap](https://machtblick.de/sitemap.xml): Complete list of prerendered public URLs.
+- [Votes feed](https://machtblick.de/votes.xml): Atom feed of the 50 latest votes with result and summary (German, the site's primary language).
 - [Votes](https://machtblick.de/votes/): Bundestag vote feed; each vote is a result card with verdict, sponsor, date, yes/no tallies, per-party breakdown, and a plain-language summary.
 - [Members](https://machtblick.de/members/): Bundestag members with party, state, attendance, vote behavior, speeches, and motions.
 - [Speeches](https://machtblick.de/speeches/): Searchable Bundestag speeches.

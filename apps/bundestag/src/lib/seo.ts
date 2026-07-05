@@ -51,11 +51,12 @@ export function canonicalLink(path: string, options: CanonicalLinkOptions = {}) 
   const canonical = pagePath(path)
   const base = canonical === '/en/' ? '/' : canonical.startsWith('/en/') ? canonical.slice(3) : canonical
   const english = base === '/' ? '/en/' : `/en${base}`
+  const hreflang = import.meta.env.PROD ? 'hreflang' : 'hrefLang'
   return [
     { rel: 'canonical', href: `${SITE_URL}${canonical}` },
-    { rel: 'alternate', hrefLang: 'de', href: `${SITE_URL}${base}` },
-    ...(options.englishAlternate ?? true ? [{ rel: 'alternate', hrefLang: 'en', href: `${SITE_URL}${english}` }] : []),
-    { rel: 'alternate', hrefLang: 'x-default', href: `${SITE_URL}${base}` },
+    { rel: 'alternate', [hreflang]: 'de', href: `${SITE_URL}${base}` },
+    ...(options.englishAlternate ?? true ? [{ rel: 'alternate', [hreflang]: 'en', href: `${SITE_URL}${english}` }] : []),
+    { rel: 'alternate', [hreflang]: 'x-default', href: `${SITE_URL}${base}` },
   ]
 }
 

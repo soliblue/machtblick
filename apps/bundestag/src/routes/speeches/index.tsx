@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { searchSpeechesStatic } from '@/lib/speechesStatic'
 import { useSpeechSearch } from '@/hooks/useSpeechSearch'
 import { RedenSearch } from '@/views/redenSearch/RedenSearch'
-import { seoMeta, canonicalLink } from '@/lib/seo'
+import { seoMeta, canonicalLink, breadcrumbJsonLd } from '@/lib/seo'
 
 type Search = { q?: string; party?: string; date?: string; memberId?: string; page?: number }
 
@@ -23,6 +23,7 @@ export const Route = createFileRoute('/speeches/')({
       canonical: '/speeches',
     }),
     links: canonicalLink('/speeches'),
+    scripts: breadcrumbJsonLd([{ name: 'Machtblick', path: '/' }, { name: 'Reden', path: '/speeches' }]),
   }),
   validateSearch: (s: Record<string, unknown>): Search => ({
     q: typeof s.q === 'string' && s.q ? s.q : undefined,

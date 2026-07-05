@@ -3,7 +3,7 @@ import { listAntraege } from '@/server/antraege'
 import { AntraegeList } from '@/views/antraegeList/AntraegeList'
 import { useAntragListFilters, type AntragTypeFilter } from '@/hooks/useAntragListFilters'
 import type { MotionStatusBucket } from '@/lib/motionStatus'
-import { seoMeta, canonicalLink } from '@/lib/seo'
+import { seoMeta, canonicalLink, breadcrumbJsonLd } from '@/lib/seo'
 
 const isType = (v: unknown): v is AntragTypeFilter => v === 'antrag' || v === 'gesetzentwurf'
 const isStatus = (v: unknown): v is MotionStatusBucket => v === 'angenommen' || v === 'abgelehnt' || v === 'im-verfahren' || v === 'nicht-beraten'
@@ -20,6 +20,7 @@ export const Route = createFileRoute('/en/motions/')({
       canonical: '/en/motions',
     }),
     links: canonicalLink('/en/motions'),
+    scripts: breadcrumbJsonLd([{ name: 'Machtblick', path: '/en' }, { name: 'Motions', path: '/en/motions' }]),
   }),
   validateSearch: (s: Record<string, unknown>): Search => ({
     type: isType(s.type) ? s.type : undefined,

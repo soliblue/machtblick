@@ -3,7 +3,7 @@ import { listVotes } from '@/server/votes'
 import { VotesList } from '@/views/votesList/VotesList'
 import { useVoteListFilters, type VoteTypeFilter, type VoteResultFilter } from '@/hooks/useVoteListFilters'
 import { useVoteDayGroups } from '@/hooks/useVoteDayGroups'
-import { seoMeta, canonicalLink } from '@/lib/seo'
+import { seoMeta, canonicalLink, breadcrumbJsonLd } from '@/lib/seo'
 
 const VOTE_TYPES: VoteTypeFilter[] = ['namentlich', 'handzeichen', 'hammelsprung']
 const isVoteType = (v: unknown): v is VoteTypeFilter => typeof v === 'string' && (VOTE_TYPES as string[]).includes(v)
@@ -21,6 +21,7 @@ export const Route = createFileRoute('/votes/')({
       canonical: '/votes',
     }),
     links: canonicalLink('/votes'),
+    scripts: breadcrumbJsonLd([{ name: 'Machtblick', path: '/' }, { name: 'Abstimmungen', path: '/votes' }]),
   }),
   validateSearch: (search: Record<string, unknown>): Search => ({
     party: typeof search.party === 'string' ? search.party : undefined,

@@ -3,7 +3,7 @@ import { listMembers, type MandateType, type MemberSex } from '@/server/members'
 import { MembersList } from '@/views/membersList/MembersList'
 import { useMemberListFilters } from '@/hooks/useMemberListFilters'
 import { useMemberStats } from '@/hooks/useMemberStats'
-import { seoMeta, canonicalLink } from '@/lib/seo'
+import { seoMeta, canonicalLink, breadcrumbJsonLd } from '@/lib/seo'
 import { isAgeBucket, isMandateType, isSex, type AgeBucket } from '@/lib/ageBuckets'
 
 type Search = {
@@ -25,6 +25,7 @@ export const Route = createFileRoute('/en/members/')({
       canonical: '/en/members',
     }),
     links: canonicalLink('/en/members'),
+    scripts: breadcrumbJsonLd([{ name: 'Machtblick', path: '/en' }, { name: 'Members', path: '/en/members' }]),
   }),
   validateSearch: (search: Record<string, unknown>): Search => ({
     party: typeof search.party === 'string' ? search.party : undefined,

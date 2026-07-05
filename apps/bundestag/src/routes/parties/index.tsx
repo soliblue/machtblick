@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { listParties } from '@/server/parties'
 import { PartiesList } from '@/views/partiesList/PartiesList'
-import { seoMeta, canonicalLink } from '@/lib/seo'
+import { seoMeta, canonicalLink, breadcrumbJsonLd } from '@/lib/seo'
 
 export const Route = createFileRoute('/parties/')({
   component: PartiesRoute,
@@ -13,6 +13,7 @@ export const Route = createFileRoute('/parties/')({
       canonical: '/parties',
     }),
     links: canonicalLink('/parties'),
+    scripts: breadcrumbJsonLd([{ name: 'Machtblick', path: '/' }, { name: 'Fraktionen', path: '/parties' }]),
   }),
 })
 

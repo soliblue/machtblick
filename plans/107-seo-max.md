@@ -12,7 +12,7 @@ Each round: audit/research → findings ranked by impact → implement → verif
 | 2 | Implement round-1 highest-impact findings | plumber + frontend lanes done |
 | 3 | Content/keyword depth: German civic search intent (how do citizens search for votes/MPs), title/description tuning against real queries, interlinking depth | done |
 | 4 | AI-assistant surface: llms.txt maximization, structured data for answer engines, API discoverability (.well-known), testing how assistants actually see the site | done |
-| 5 | Crawl+freshness: hreflang casing, votes RSS/Atom feed, breadcrumb JSON-LD coverage, 404/canonical edges, IndexNow chained into weekly refresh | todo |
+| 5 | Crawl+freshness: hreflang casing, votes RSS/Atom feed, breadcrumb JSON-LD coverage, 404/canonical edges, IndexNow chained into weekly refresh | done |
 | 6 | Measure + squeeze: re-run round-1 external audits for before/after proof, clear Bing recommendations, GSC/Bing query data tuning if verified, OG filename/alt + image sitemap | todo |
 | 7 | Speech permalink pages: ON HOLD, NO user sign-off yet (user explicitly withheld 2026-07-05). Do not start without an explicit yes. | blocked |
 
@@ -135,6 +135,22 @@ Not committed. Files edited (routes unless noted): votes/$id, en/votes/$id, moti
 
 Files edited: views/voteDetail/VoteDetail.tsx, routes/__root.tsx, routes/motions/$id.tsx, routes/en/motions/$id.tsx, vite.config.ts, public/llms.txt. New: src/globals.d.ts. Not committed, not deployed.
 
+## Round 5 (visibility, done 2026-07-05, verified on dev :5174 + prod build dist HTML, tsc clean, zero visual change)
+
+**1. hreflang casing.** React 19 renders unknown camelCase attrs literally, so the `hrefLang` key in `canonicalLink` (seo.ts) leaked into SSR HTML. Fix: computed key `import.meta.env.PROD ? 'hreflang' : 'hrefLang'`. Prod/prerender HTML now says `hreflang` (verified in dist/client); dev deliberately keeps camelCase because React dev mode console.errors on the lowercase prop ("Invalid DOM property") and dev is noindexed anyway. Empirically confirmed via renderToString: lowercase renders correctly, warning is dev-only.
+
+**2. Votes Atom feed `/votes.xml`.** New `writeVotesFeed()` in vite.config.ts (runs at config load next to writeSitemap): latest 50 term-21 non-procedural votes, entry title `cleanTitle: result`, link + id = canonical vote URL, summary = `plainDescription(coalesce(summary_simplified, summary, subject, title), 300)`, published/updated = `dateT00:00:00Z`, feed updated = latest vote date, feed-level author (Atom requirement). Decision: one feed, German entries only (primary language, canonical content; en pages are translations of the same votes, a second feed adds no discovery value). Advertised site-wide via `<link rel="alternate" type="application/atom+xml">` in `__root.tsx` and a Best Entry Points line in llms.txt noting the language choice. Validates: ElementTree parse, all required Atom elements present, 50 unique ids, feed updated == max entry updated.
+
+**3. BreadcrumbList coverage.** Was only on member/party/vote details. Added via existing breadcrumbJsonLd helper to 14 routes: motions/$id + en (Anträge/Motions > title, alongside the Legislation node), and lists/static both locales (votes, motions, members, parties, speeches indexes, methodology) as `Machtblick > section` anchored at `/` resp. `/en`. Detail pages keep their established section-anchored 2-item pattern. Verified parseable on all 16 sampled page types.
+
+**4. Canonical/404 edges: audited, nothing to fix.** Query-param URLs (`/motions/?type=gesetzentwurf&page=2`) already emit clean canonical + og:url (python-parsed, an earlier empty grep was a tooling artifact). Prod 404 (`/does-not-exist-xyz/`) serves 404.html with status 404 and `noindex` meta. Trailing slashes: zero non-slash internal hrefs across 9 sampled page types; canonicals, sitemap, and hrefs all use the trailing-slash form. Party/member index routes 307 to their default tab as designed; sitemap lists only tab URLs.
+
+**5. IndexNow in refresh flow.** Fixed scripts/indexnow-ping.mjs crash: `--all` without `--days` made `args[args.indexOf('--days')+1]` resolve args[0] ("--all") → days=NaN → `new Date(NaN).toISOString()` RangeError before the `all` short-circuit. Now days defaults to 7 unless `--days` is present with a finite positive number. Stub-fetch tested: `--all` (3780 URLs), bare (no-op msg), `--days 30` (1500), `--all --days 2`, `--days garbage` (falls back to 7). Added gate step 11 to prompts/auto-refresh.md: run `npm run indexnow -w @machtblick/bundestag` after successful deploy, report status code.
+
+**6. Verification.** tsc clean. Full prod build; dist/client HTML carries lowercase hreflang, atom link, parseable breadcrumbs; votes.xml in dist. Dev :5174: all 16 page types breadcrumb-parse clean, zero console errors (Playwright). Zero visual change: 10 before/after full-viewport screenshots (one per page type, de list + en list + details) all pixel diff bbox None.
+
+Files edited: src/lib/seo.ts, vite.config.ts, src/routes/__root.tsx, src/routes/{votes,motions,members,parties,speeches}/index.tsx + en variants, src/routes/methodology.tsx + en, src/routes/motions/$id.tsx + en, public/llms.txt, scripts/indexnow-ping.mjs, prompts/auto-refresh.md. New generated: public/votes.xml. Not committed, not deployed.
+
 ## Needs user action
 
 1. **Google Search Console**: verify machtblick.de (DNS TXT record via Cloudflare is easiest), then submit `https://machtblick.de/sitemap.xml`. Unlocks index coverage, CWV field data, query reports. ~10 min.
@@ -161,6 +177,7 @@ Files edited: views/voteDetail/VoteDetail.tsx, routes/__root.tsx, routes/motions
    Not viable (checked): data.europa.eu use-case showcase, Netzwerk Recherche link list, Civic Data Lab directory, bundestag.de open-data showcase (none accept submissions).
 
 ## Log
+- visibility: round 5 done 2026-07-05, details in "Round 5" above. hreflang lowercase in prod HTML (dev keeps camelCase to avoid React dev warnings), Atom feed /votes.xml (50 latest votes, German, advertised in __root + llms.txt), BreadcrumbList on all remaining page types (14 routes), canonical/404/trailing-slash edges audited clean, indexnow --all crash fixed + wired into auto-refresh gates as step 11. tsc clean, zero console errors, 10 page types pixel-identical. Not committed, not deployed.
 - lead: plan created 2026-07-05 after prod deploy dc92f4a8, dispatching round 1
 - visibility: round 1 done 2026-07-05. Lighthouse local (PSI quota exhausted) on 4 prod pages, headers scan, JSON-LD + discovery files verified, research logged above. Top implementation targets for round 2: members LCP (Wikimedia hotlink + lazy LCP), votes DOM size, homepage redirect chain, security headers, IndexNow. No code changed.
 - plumber: round 2 photo lane done 2026-07-05. fetch-member-photos.mjs + manifest shipped, 634/635 Commons photos self-hosted with full attribution, wired into build (warm re-run <1s). Gaps: mast-katja Commons file deleted upstream (etl:portraits re-run needed), 209 AW-sourced photos stay hotlinked (no license metadata upstream, must not self-host). Frontend can now switch to manifest local-first resolution. Not committed.

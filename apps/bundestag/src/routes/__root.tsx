@@ -37,6 +37,7 @@ export const Route = createRootRoute({
       { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#0A0A0A' },
       { rel: 'manifest', href: '/site.webmanifest' },
       { rel: 'sitemap', type: 'application/xml', title: 'Sitemap', href: `${SITE_URL}/sitemap.xml` },
+      { rel: 'alternate', type: 'application/atom+xml', title: 'Machtblick: Abstimmungen im Bundestag', href: `${SITE_URL}/votes.xml` },
     ],
     scripts: [
       {

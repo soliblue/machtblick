@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { getAntrag } from '@/server/antraege'
 import { AntragDetail } from '@/views/antragDetail/AntragDetail'
-import { seoMeta, canonicalLink, alternateJsonLink, jsonLd, plainDescription, SITE_URL } from '@/lib/seo'
+import { seoMeta, canonicalLink, alternateJsonLink, jsonLd, breadcrumbJsonLd, plainDescription, SITE_URL } from '@/lib/seo'
 import { formatDateLong } from '@/lib/format'
 import { motionStatusBucket } from '@/lib/motionStatus'
 import { NotFoundPage } from '@/views/notFound/NotFoundPage'
@@ -30,8 +30,13 @@ export const Route = createFileRoute('/motions/$id')({
     return {
       meta: seoMeta({ title, description: desc, canonical: path, type: 'article' }),
       links: [...canonicalLink(path, { englishAlternate: loaderData?.hasEnglishTranslation ?? false }), ...alternateJsonLink(path)],
-      scripts: loaderData
-        ? jsonLd({
+      scripts: [
+        ...breadcrumbJsonLd([
+          { name: 'Anträge', path: '/motions' },
+          { name, path },
+        ]),
+        ...(loaderData
+          ? jsonLd({
             '@context': 'https://schema.org',
             '@type': 'Legislation',
             name,
@@ -43,8 +48,9 @@ export const Route = createFileRoute('/motions/$id')({
             ...(modified ? { dateModified: modified } : {}),
             ...(loaderData.antrag.abstract ? { abstract: loaderData.antrag.abstract } : {}),
             ...(loaderData.antrag.initiativeFraktion ? { creator: { '@type': 'Organization', name: loaderData.antrag.initiativeFraktion } } : {}),
-          })
-        : [],
+            })
+          : []),
+      ],
     }
   },
 })

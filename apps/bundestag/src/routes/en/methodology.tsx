@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Methodik } from '@/views/methodik/Methodik'
-import { seoMeta, canonicalLink } from '@/lib/seo'
+import { seoMeta, canonicalLink, breadcrumbJsonLd } from '@/lib/seo'
 
 export const Route = createFileRoute('/en/methodology')({
   component: Methodik,
@@ -11,5 +11,6 @@ export const Route = createFileRoute('/en/methodology')({
       canonical: '/en/methodology',
     }),
     links: canonicalLink('/en/methodology'),
+    scripts: breadcrumbJsonLd([{ name: 'Machtblick', path: '/en' }, { name: 'About the data', path: '/en/methodology' }]),
   }),
 })
