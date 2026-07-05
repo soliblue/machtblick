@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev --port 3000 --host",
-    "build": "node scripts/generate-og-images.mjs && vite build",
-    "start": "vite preview --port 3000"
+    "build": "node scripts/fetch-member-photos.mjs && node scripts/generate-og-images.mjs && vite build",
+    "start": "vite preview --port 3000",
+    "indexnow": "node scripts/indexnow-ping.mjs"
   },
   "dependencies": {
     "@machtblick/db": "*",

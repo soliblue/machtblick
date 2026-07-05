@@ -6,6 +6,7 @@ import { eq, desc, and, sql } from 'drizzle-orm'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
 import { majorityChoice } from './majorityChoice'
 import { CURRENT_TERM } from './term'
+import { resolvePictureUrl } from './photoManifest'
 import { speechTranslationMap, voteTranslationMap } from './translations'
 import { loadMemberInitiatives, type MemberInitiativeRow } from './memberInitiatives'
 import type { MandateType, MemberSex } from './members'
@@ -200,7 +201,7 @@ export const getMember = createServerFn({ method: 'GET' })
       defections,
       history,
       speeches: speechResults,
-      pictureUrl: m.pictureUrl,
+      pictureUrl: resolvePictureUrl(id, m.pictureUrl),
       pictureAuthor: m.pictureAuthor,
       pictureLicense: m.pictureLicense,
       pictureSourceUrl: m.pictureSourceUrl,

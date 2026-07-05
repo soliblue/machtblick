@@ -3,6 +3,7 @@ import { db } from '@machtblick/db/client'
 import { voteAntraege, antraege, antragSignatories, members, votes } from '@machtblick/db/schema'
 import { eq, inArray } from 'drizzle-orm'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
+import { resolvePictureUrl } from './photoManifest'
 
 export type VoteSponsorMember = {
   memberId: string
@@ -73,7 +74,7 @@ export const getVoteSponsors = createServerFn({ method: 'GET' })
         memberId: r.memberId,
         displayName: `${r.firstName} ${r.lastName}`,
         partyAtDate: partyAt(affByMember.get(r.memberId), vote.date) || null,
-        portraitUrl: r.pictureUrl ?? null,
+        portraitUrl: resolvePictureUrl(r.memberId, r.pictureUrl),
       }))
       return {
         antragId: a.id,

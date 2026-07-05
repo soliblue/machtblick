@@ -1,4 +1,5 @@
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 Allow: /
 
 User-agent: OAI-SearchBot
@@ -44,5 +45,3 @@ User-agent: CCBot
 Disallow: /
 
 Sitemap: https://machtblick.de/sitemap.xml
-
-Content-Signal: search=yes, ai-input=yes, ai-train=no

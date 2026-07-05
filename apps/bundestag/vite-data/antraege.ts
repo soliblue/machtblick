@@ -1,5 +1,6 @@
 import type Database from 'better-sqlite3'
 import { requireVoteCleanTitle } from '../src/lib/voteTitles'
+import { resolvePictureUrl } from '../src/server/photoManifest'
 
 type AntragRow = {
   id: number
@@ -91,7 +92,7 @@ export function fullAntrag(db: Database.Database, id: number, locale: 'de' | 'en
     signatories: signatories.map((s) => ({
       memberId: s.member_id,
       displayName: `${s.first_name} ${s.last_name}`,
-      portraitUrl: s.picture_url,
+      portraitUrl: resolvePictureUrl(s.member_id, s.picture_url),
     })),
     linkedVotes: linkedVotes.map((v) => {
       const titled = requireVoteCleanTitle({ id: v.id, title: v.title, cleanTitle: v.clean_title })

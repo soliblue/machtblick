@@ -9,6 +9,7 @@ import { leanVotes, fullVote } from './vite-data/votes'
 import { leanMembers, fullMember } from './vite-data/members'
 import { leanParties, fullParty } from './vite-data/parties'
 import { fullAntrag } from './vite-data/antraege'
+import { resolvePictureUrl } from './src/server/photoManifest'
 
 const SITE_URL = 'https://machtblick.de'
 const CURRENT_TERM = 21
@@ -129,7 +130,7 @@ function writeSpeechesStatic() {
   for (const m of meta) {
     if (!m.speakerMemberId || people[m.speakerMemberId]) continue
     const url = pictures.get(m.speakerMemberId)
-    if (url) people[m.speakerMemberId] = url
+    if (url) people[m.speakerMemberId] = resolvePictureUrl(m.speakerMemberId, url)
   }
   rmSync(`${publicDir}/speeches-search.json`, { force: true })
   const SHARD_COUNT = 4

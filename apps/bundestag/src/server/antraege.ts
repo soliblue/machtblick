@@ -16,6 +16,7 @@ import { and, desc, eq, inArray, sql } from 'drizzle-orm'
 import { normalizeLocale, type Locale } from '@/lib/locale'
 import { SHOW_HAMMELSPRUNG } from '@/lib/voteTypes'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
+import { resolvePictureUrl } from './photoManifest'
 import { getSeatsByParty } from './seats'
 import { CURRENT_TERM } from './term'
 import { partySummaryTranslationMap, speechTranslationMap, voteTranslationMap } from './translations'
@@ -245,7 +246,7 @@ export const getAntrag = createServerFn({ method: 'GET' })
     for (const b of rawBallots) {
       const vote = voteRows.find((v) => v.id === b.voteId)
       const arr = ballotsByVote.get(b.voteId) ?? []
-      arr.push({ memberId: b.memberId, name: b.name, choice: b.choice, pictureUrl: b.pictureUrl, party: vote ? partyAt(affByMember.get(b.memberId), vote.date) : '' })
+      arr.push({ memberId: b.memberId, name: b.name, choice: b.choice, pictureUrl: resolvePictureUrl(b.memberId, b.pictureUrl), party: vote ? partyAt(affByMember.get(b.memberId), vote.date) : '' })
       ballotsByVote.set(b.voteId, arr)
     }
     const linkedVotes: AntragLinkedVote[] = voteRows.map((v) => {
@@ -340,7 +341,7 @@ export const getAntrag = createServerFn({ method: 'GET' })
       memberId: s.memberId,
       displayName: `${s.firstName} ${s.lastName}`,
       partyAtDate: partyAt(affByMember.get(s.memberId), row.introducedDate ?? new Date().toISOString().slice(0, 10)) || null,
-      portraitUrl: s.pictureUrl,
+      portraitUrl: resolvePictureUrl(s.memberId, s.pictureUrl),
     }))
     return {
       hasEnglishTranslation: Boolean(translation),

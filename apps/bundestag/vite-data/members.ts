@@ -1,5 +1,6 @@
 import type Database from 'better-sqlite3'
 import { requireVoteCleanTitle, requireVoteTitleText } from '../src/lib/voteTitles'
+import { resolvePictureUrl } from '../src/server/photoManifest'
 
 type MemberRow = {
   id: string
@@ -252,7 +253,7 @@ export function fullMember(db: Database.Database, id: string) {
     defections,
     history,
     speeches,
-    pictureUrl: m.picture_url,
+    pictureUrl: resolvePictureUrl(id, m.picture_url),
     pictureAuthor: m.picture_author,
     pictureLicense: m.picture_license,
     pictureSourceUrl: m.picture_source_url,

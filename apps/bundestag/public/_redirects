@@ -12,6 +12,9 @@
 /en/votes/2025-12-18-989-zuruckweisung-von-einspruchen-gegen-die-bundestagswahl/ /en/votes/ 301
 /motions/:id.json /motions/:id.json 200
 /en/motions/:id.json /en/motions/:id.json 200
+/ /votes/ 301
+/en /en/votes/ 301
+/en/ /en/votes/ 301
 /votes /votes/ 301
 /members /members/ 301
 /parties /parties/ 301

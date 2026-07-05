@@ -4,6 +4,7 @@ import { db } from '@machtblick/db/client'
 import { votes, voteDocuments, votePartySummaries, voteMembers, members, voteDescriptionDecisions } from '@machtblick/db/schema'
 import { eq, sql } from 'drizzle-orm'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
+import { resolvePictureUrl } from './photoManifest'
 import { getChamberSize, getSeatsByParty } from './seats'
 import { overlayVote, partySummaryTranslationMap, speechTranslationMap, voteTranslationMap } from './translations'
 import { hasPartyLine } from '../lib/parties'
@@ -161,7 +162,7 @@ export const getVote = createServerFn({ method: 'GET' })
       const maj = majorityByParty.get(r.party)
       if (!maj || r.choice === maj || r.choice === 'nicht_abgegeben') continue
       const arr = defectorsByParty.get(r.party) ?? []
-      arr.push({ id: r.memberId, name: r.name, choice: r.choice, pictureUrl: r.pictureUrl })
+      arr.push({ id: r.memberId, name: r.name, choice: r.choice, pictureUrl: resolvePictureUrl(r.memberId, r.pictureUrl) })
       defectorsByParty.set(r.party, arr)
     }
     const defectors = Array.from(defectorsByParty.entries())
@@ -174,7 +175,7 @@ export const getVote = createServerFn({ method: 'GET' })
       partySummaries,
       proposingParty: vote.initiator,
       defectors,
-      memberBallots: vmRows.map((r) => ({ memberId: r.memberId, name: r.name, party: r.party, choice: r.choice, pictureUrl: r.pictureUrl })),
+      memberBallots: vmRows.map((r) => ({ memberId: r.memberId, name: r.name, party: r.party, choice: r.choice, pictureUrl: resolvePictureUrl(r.memberId, r.pictureUrl) })),
       debate: debate.speeches,
       debateSource: debate.source,
       antragPdfUrl: db.select({ url: voteDescriptionDecisions.sourcePdfUrl }).from(voteDescriptionDecisions).where(eq(voteDescriptionDecisions.voteId, id)).get()?.url

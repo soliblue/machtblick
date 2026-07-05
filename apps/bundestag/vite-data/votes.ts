@@ -1,5 +1,6 @@
 import type Database from 'better-sqlite3'
 import { compareVotesNewest } from '../src/lib/voteOrdering'
+import { resolvePictureUrl } from '../src/server/photoManifest'
 import { requireVoteCleanTitle } from '../src/lib/voteTitles'
 
 type VoteRow = {
@@ -220,7 +221,7 @@ export function fullVote(db: Database.Database, id: string) {
     const maj = majorityByParty.get(r.party)
     if (!maj || r.choice === maj || r.choice === 'nicht_abgegeben') continue
     const arr = defectorsByParty.get(r.party) ?? []
-    arr.push({ id: r.member_id, name: r.name, choice: r.choice, pictureUrl: r.picture_url })
+    arr.push({ id: r.member_id, name: r.name, choice: r.choice, pictureUrl: resolvePictureUrl(r.member_id, r.picture_url) })
     defectorsByParty.set(r.party, arr)
   }
   const defectors = Array.from(defectorsByParty.entries())

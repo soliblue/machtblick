@@ -6,6 +6,7 @@ import { getCurrentPartyMap, loadAffiliationsByMember, partyAt } from './memberP
 import { loadDemographics } from './demographics'
 import { majorityChoice } from './majorityChoice'
 import { CURRENT_TERM } from './term'
+import { resolvePictureUrl } from './photoManifest'
 import { hasPartyLine } from '../lib/parties'
 
 export type MemberSex = 'm' | 'f' | 'd'
@@ -75,7 +76,7 @@ export const listMembers = createServerFn({ method: 'GET' }).handler(async (): P
       yearOfBirth: demo?.yearOfBirth ?? null,
       sex: demo?.sex ?? null,
       mandateType: mandateByMember.get(id) === 'direkt' || mandateByMember.get(id) === 'liste' ? (mandateByMember.get(id) as MandateType) : null,
-      pictureUrl: pictureByMember.get(id) ?? null,
+      pictureUrl: resolvePictureUrl(id, pictureByMember.get(id) ?? null),
     })
   }
   out.sort((a, b) => a.lastName.localeCompare(b.lastName, 'de') || a.name.localeCompare(b.name, 'de'))

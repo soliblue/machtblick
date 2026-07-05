@@ -10,6 +10,10 @@
 /*
   Cache-Control: public, max-age=3600, s-maxage=86400
   Link: </.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="service-doc"
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy-Report-Only: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://commons.wikimedia.org https://upload.wikimedia.org https://www.abgeordnetenwatch.de; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
 
 /.well-known/api-catalog
   Content-Type: application/linkset+json
