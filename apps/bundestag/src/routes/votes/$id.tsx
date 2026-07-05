@@ -4,6 +4,7 @@ import { getVoteSponsors } from '@/server/voteSponsors'
 import { VoteDetail, type VoteTab, isVoteTab } from '@/views/voteDetail/VoteDetail'
 import { seoMeta, canonicalLink, alternateJsonLink, breadcrumbJsonLd, jsonLd, SITE_URL } from '@/lib/seo'
 import { formatDateLong } from '@/lib/format'
+import { partyLabel } from '@/lib/parties'
 import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 
 type Search = { tab?: VoteTab }
@@ -36,7 +37,15 @@ export const Route = createFileRoute('/votes/$id')({
       : 'Namentliche Abstimmung im Deutschen Bundestag.'
     const core = v && headline ? `${lead} ${namentlich ? 'Namentliche Abstimmung' : 'Abstimmung'} im Bundestag am ${formatDateLong(v.date)}.` : lead
     const full = v && headline ? `${core} Antragsteller: ${loaderData?.proposingParty ?? 'unbekannt'}.` : lead
-    const desc = full.length <= 160 ? full : core.length <= 160 ? core : lead
+    const stanceWords = { yes: 'Dafür', no: 'Dagegen', abstain: 'Enthalten' } as const
+    const stances = !namentlich && loaderData
+      ? (['yes', 'no', 'abstain'] as const)
+          .map((pos) => [pos, loaderData.partySummaries.filter((s) => s.position === pos).map((s) => partyLabel(s.party))] as const)
+          .filter(([, parties]) => parties.length)
+          .map(([pos, parties]) => `${stanceWords[pos]}: ${parties.join(', ')}`)
+          .join('. ')
+      : ''
+    const desc = (stances ? [`${full} ${stances}.`, `${core} ${stances}.`, full, core, lead] : [full, core, lead]).find((c) => c.length <= 160) ?? lead
     const ogImage = namentlich
       ? { image: `/og/votes/${params.id}.png`, imageAlt: `Abstimmungsergebnis im Bundestag: ${headline ?? 'Abstimmung'}` }
       : {}

@@ -23,10 +23,10 @@ export const Route = createFileRoute('/en/parties/$id')({
       : {}
     return {
       meta: seoMeta({
-        title: `${name} in the Bundestag`,
+        title: `${name} in the Bundestag: Voting record`,
         description: showPartyLine
           ? `${name} in the German Bundestag${loaderData ? ` with ${loaderData.seats} seats` : ''}: cohesion, defectors, motions, members, and agreement with other parliamentary groups.`
-          : `${name} in the German Bundestag${loaderData ? ` with ${loaderData.seats} seats` : ''}: members, attendance, and voting behavior.`,
+          : `${name} in the German Bundestag${loaderData ? ` with ${loaderData.seats} seats` : ''}: members, attendance, and voting behavior in roll-call votes.`,
         canonical: path,
         ...ogImage,
       }),

@@ -11,6 +11,7 @@ Machtblick is a public-interest project built from open German datasets. The Bun
 - [Members](https://machtblick.de/members/): Bundestag members with party, state, attendance, vote behavior, speeches, and motions.
 - [Speeches](https://machtblick.de/speeches/): Searchable Bundestag speeches.
 - [Parties](https://machtblick.de/parties/): Parliamentary groups with seats, cohesion, proposals, members, and voting alignment.
+- [About the data](https://machtblick.de/methodology/): Data sources, weekly refresh cadence, and AI-generation disclosure for summaries and simplified titles.
 
 ## English Entry Points
 
@@ -44,6 +45,8 @@ Machtblick is a public-interest project built from open German datasets. The Bun
 - `/en/motions/{id}.json`: Full English motion detail.
 
 ## Data Sources
+
+Methodology and update cadence: https://machtblick.de/methodology/ (English: https://machtblick.de/en/methodology/).
 
 - Deutscher Bundestag open data.
 - DIP Bundestag documents.

@@ -7,7 +7,7 @@ export const Route = createFileRoute('/en/imprint')({
   head: () => ({
     meta: seoMeta({
       title: 'Imprint',
-      description: 'Imprint for Machtblick: project description, data sources, and contact.',
+      description: 'Imprint for Machtblick: operator and contact, what the project is, and which data sources from the German Bundestag, abgeordnetenwatch, and Wikimedia it uses.',
       canonical: '/en/imprint',
     }),
     links: canonicalLink('/en/imprint'),

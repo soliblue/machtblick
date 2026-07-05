@@ -16,7 +16,7 @@ export const Route = createFileRoute('/votes/')({
   loader: () => listVotes({ data: 'de' }),
   head: () => ({
     meta: seoMeta({
-      title: 'Abstimmungen',
+      title: 'Namentliche Abstimmungen im Bundestag',
       description: 'Alle Abstimmungen des Deutschen Bundestags: Ergebnisse, Mehrheiten, Abweichler und das Stimmverhalten der Fraktionen im Überblick.',
       canonical: '/votes',
     }),

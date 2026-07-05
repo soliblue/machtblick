@@ -20,8 +20,8 @@ export const Route = createFileRoute('/en/members/')({
   loader: () => listMembers(),
   head: () => ({
     meta: seoMeta({
-      title: 'Members',
-      description: 'Members of the Bundestag with party, state, attendance, and party-line voting.',
+      title: 'Members of the Bundestag',
+      description: 'All members of the German Bundestag in the 21st term with photo, parliamentary group, federal state, attendance, and party-line loyalty in roll-call votes.',
       canonical: '/en/members',
     }),
     links: canonicalLink('/en/members'),

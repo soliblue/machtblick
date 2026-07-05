@@ -12,6 +12,7 @@ export function Footer() {
       style={{ borderTop: '1px solid color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
     >
       <div className="mx-auto flex max-w-3xl justify-end gap-l px-l py-l text-s">
+        <a href={withLocale('/methodology/', locale)} className={linkClass}>{t.aboutData}</a>
         <a href={withLocale('/imprint/', locale)} className={linkClass}>{t.imprint}</a>
         <a href={withLocale('/privacy/', locale)} className={linkClass}>{t.privacy}</a>
       </div>

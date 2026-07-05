@@ -20,8 +20,8 @@ export const Route = createFileRoute('/members/')({
   loader: () => listMembers(),
   head: () => ({
     meta: seoMeta({
-      title: 'Abgeordnete',
-      description: 'Alle Abgeordneten des Deutschen Bundestags mit Fraktion, Bundesland, Anwesenheit und Linientreue.',
+      title: 'Alle Bundestagsabgeordneten',
+      description: 'Alle Abgeordneten des Deutschen Bundestags der 21. Wahlperiode mit Foto, Fraktion, Bundesland sowie Anwesenheit und Linientreue bei namentlichen Abstimmungen.',
       canonical: '/members',
     }),
     links: canonicalLink('/members'),

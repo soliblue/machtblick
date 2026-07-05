@@ -20,7 +20,7 @@ export const Route = createFileRoute('/en/members/$id')({
     const who = loaderData ? `${name} (${[loaderData.party, loaderData.state].filter(Boolean).join(', ')})` : name
     return {
       meta: seoMeta({
-        title: loaderData ? `${name} (${loaderData.party})` : name,
+        title: loaderData ? `${name} (${loaderData.party}): Voting record` : name,
         description: loaderData
           ? loaderData.loyalty !== null
             ? `${who} in the German Bundestag: ${pct(loaderData.attendance)} attendance and ${pct(loaderData.loyalty)} party-line loyalty in roll-call votes.`

@@ -153,7 +153,7 @@ function writeSpeechesStatic() {
 
 function prerenderPaths(): string[] {
   const db = new Database(fileURLToPath(new URL('../../db/machtblick.sqlite', import.meta.url)), { readonly: true })
-  const paths = ['/', '/votes/', '/motions/', '/members/', '/parties/', '/speeches/', '/imprint/', '/privacy/', '/en/', '/en/votes/', '/en/motions/', '/en/members/', '/en/parties/', '/en/speeches/', '/en/imprint/', '/en/privacy/']
+  const paths = ['/', '/votes/', '/motions/', '/members/', '/parties/', '/speeches/', '/imprint/', '/privacy/', '/methodology/', '/en/', '/en/votes/', '/en/motions/', '/en/members/', '/en/parties/', '/en/speeches/', '/en/imprint/', '/en/privacy/', '/en/methodology/']
   const votes = db.prepare("SELECT id FROM votes WHERE term_id = ? AND procedural = 0 AND vote_type != 'hammelsprung'").all(CURRENT_TERM) as Array<{ id: string }>
   for (const v of votes) {
     paths.push(`/votes/${v.id}/`)
@@ -247,8 +247,10 @@ function sitemapEntries(): SitemapEntry[] {
     ...['/votes/', '/members/', '/parties/', '/speeches/', '/en/votes/', '/en/members/', '/en/parties/', '/en/speeches/'].map((path) => ({ path, lastmod: latest })),
     { path: '/imprint/' },
     { path: '/privacy/' },
+    { path: '/methodology/' },
     { path: '/en/imprint/' },
     { path: '/en/privacy/' },
+    { path: '/en/methodology/' },
   ]
   const votes = db.prepare("SELECT id, date FROM votes WHERE term_id = ? AND procedural = 0 AND vote_type != 'hammelsprung'").all(CURRENT_TERM) as Array<{ id: string; date: string }>
   for (const v of votes) {

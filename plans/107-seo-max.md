@@ -4,17 +4,18 @@
 Multi-round deep SEO + AI-discoverability optimization of machtblick.de (live prod @ 61fbb14). Squeeze everything: research current best practices, run free external review/audit services against prod, optimize for both classic search AND AI assistants (crawlers, llms.txt consumers, answer engines). Rounds continue until returns diminish. User directive: "go on for multiple rounds, squeeze everything, maximize impact".
 
 ## Round structure
-Each round: audit/research → findings ranked by impact → implement → verify → commit. Findings that need deploy to take effect accumulate; batch-deploy at sensible checkpoints (user pre-approved this program's deploys implicitly by "fully optimize", CONFIRM with user before each prod deploy anyway per standing rule).
+Each round: audit/research → findings ranked by impact → implement → verify → commit. Findings that need deploy to take effect accumulate; batch-deploy at sensible checkpoints. UPDATE 2026-07-05: user explicitly pre-approved deploys for this program ("i trust u just make sure to deploy when u are done") and wants rounds to continue "till the last idea"; deploy each checkpoint without re-asking, keep user informed.
 
 | # | Focus | Status |
 |---|-------|--------|
 | 1 | External baseline: PageSpeed Insights/Lighthouse (free API), schema.org validator, security headers scan, plus fresh best-practices research (2025/2026 Google guidance, AI crawler standards, llms.txt spec evolution) | done |
 | 2 | Implement round-1 highest-impact findings | plumber + frontend lanes done |
-| 3 | Content/keyword depth: German civic search intent (how do citizens search for votes/MPs), title/description tuning against real queries, interlinking depth | todo |
+| 3 | Content/keyword depth: German civic search intent (how do citizens search for votes/MPs), title/description tuning against real queries, interlinking depth | done |
 | 4 | AI-assistant surface: llms.txt maximization, structured data for answer engines, API discoverability (.well-known), testing how assistants actually see the site | todo |
 | 5+ | Continue while impact/effort stays favorable; each round logged here | todo |
 
 ## Constraints
+- HARD RULE (user, 2026-07-05): do NOT change user-facing behavior or visuals. Optimize only invisible surfaces: meta, markup, headers, structured data, performance mechanics that render identically. Additive pages (methodology) with a quiet footer link are the ceiling; anything visibly changing existing pages needs explicit user sign-off first.
 - Prod deploys only at checkpoints with user confirmation; everything verifiable on dev first.
 - No dark-pattern SEO, no keyword stuffing; the site's credibility IS the product.
 - Free services only (PageSpeed Insights API, validator.schema.org, Bing Webmaster free tier, securityheaders.com, etc.). No paid tools, no signups that need user credentials without asking.
@@ -84,6 +85,37 @@ Wires plumber's manifest into every payload that carries a member photo URL. Vie
 - Verified: /members/ dehydrated payload 630 members = 370 local + 209 abgeordnetenwatch (exactly the no-license set) + 1 commons (mast-katja, file deleted upstream, known plumber gap) + 50 null. speeches-people.json 540 people = 336 local / 203 AW / 1 commons. Member detail img + `<link rel="preload">` both local; "Foto:" credit unchanged (DB `picture_source_url` matches manifest sourceUrl byte-for-byte, link still points at the Commons file page). Vote detail defectors + ballot rows and static vote JSON resolved. Playwright over /members/, member detail, /speeches/, vote detail: zero console errors, all in-viewport local photos load (offscreen lazy images unfetched by design). tsc clean.
 - LCP: the /members/ LCP element is now a same-origin ~27KB thumb with `loading="eager"` + `fetchpriority="high"` from the frontend lane, so the two fixes stack: no Wikimedia DNS/TLS/cookie hop on the critical path. The commons/upload preconnects in the root head no longer help /members/ above-the-fold (all eager photos are local) and can be dropped in round 3 in favor of an abgeordnetenwatch preconnect check.
 
+## Round 2 verification (tester, 2026-07-05, dev :5174, Playwright 14/14 pass, 390x844 + 1440x900, de + en)
+
+- **PASS /votes/ LazyVoteCard shells** (mobile snap feed + desktop, de + en): first 30 cards render full (hemicycle + donuts), card 31+ are title-link shells; deep shells (card 41-46) upgrade to full cards on approach (IO rootMargin 1500px confirmed: upgrade completes before the card is visible). Shell title links navigate correctly in shell state (raw anchor click without scrolling) and in upgraded state. Raw HTML: de 5.64MB / en 5.62MB (was 10.3MB), 114 shell articles per document (mobile + desktop lists).
+- **PASS no layout jumps on upgrade**: mobile cells are fixed-height wrappers, cell height identical across upgrade, snap lands at top 52 (scroll-padding-top) before and after, scrollY stable within 1px while neighbors upgrade. Desktop shells are 240px vs full cards 325px, but upgrades fire ~1500px below the viewport; measured zero shift of visible cards and scrollY during upgrade waves.
+- **PASS filters with shells**: desktop FilterPill (Ergebnis → Abgelehnt) and mobile FilterSheet both narrow the list, first card after refilter renders full (eager window resets), clearing restores the original count. Note for future specs: an active pill relabels itself to the selected value, "Ergebnis" no longer matches.
+- **PASS /members/**: 12 imgs `loading="eager"`, first 5 `fetchpriority="high"` + 5 matching `<link rel="preload" as="image">`, all local; alt = member name on all checked cards; src split 580 imgs = 370 `/members-photos/` + 209 abgeordnetenwatch + 1 wikimedia (mast-katja, known gap), matching stitch-lane counts; eager photos fetched same-origin at load (network-verified, mobile + desktop); grid intact. Member detail (abraham-knut): portrait src local, "Foto:" credit with commons.wikimedia.org link. merz-friedrich portrait is abgeordnetenwatch by design (no-license set), correct fallback.
+- **PASS regressions**: vote detail (hemicycle, Details/Reden tab buttons, "Drucksache NN/NNNN (PDF)" anchor on Details), speeches feed + Reader dialog (feed rows are now `<article>` with "Ganze Rede lesen", not `div[role=button]`), member detail 3 tabs (merz-friedrich), /parties/ + party detail, motion 335818 (renders, vote-result section + PDF anchor present).
+- **Console errors: zero** across all 14 tests (console error + pageerror listeners on every page); **no hydration warnings**.
+- Source mtimes snapshotted before/after the run: unchanged, results not contaminated by the parallel visibility lane.
+
+## Round 3 (visibility, done 2026-07-05, all verified on dev :5174, tsc clean, Playwright 15 pages de+en zero console errors)
+
+Trigger: Bing Webmaster flags "meta descriptions too short" + "not enough inbound links from high quality domains". All changes are head()-metadata only (invisible), per the hard rule; methodology page is additive.
+
+**1. Meta descriptions (before → after, sitemap-driven sample: every page type x both locales + 30 random details, 74 pages).** Before: 13 sampled pages under 100 chars, min 65 (privacy en 65, imprint 71/72, privacy de 76, members list en 78, handzeichen vote en 88, short motions 90-99, fraktionslos profile 91/99). After: min 106, zero under 100, zero over 165. Per-type min/med/max after: imprint 158-164, privacy 145-157, members list 155/158, motion detail de 116/158/165 en 113/155/160 (was min 90/97), vote detail de 135/152/159 en 144/152/157 (was min 88), fraktionslos profile 110/129. Enrichment is data-derived only:
+- Vote detail (de+en): handzeichen votes append per-party stances from vote_party_summaries ("Dafür: AfD. Dagegen: Grüne, CDU/CSU, Linke, SPD."), candidate chain keeps ≤160.
+- Motion detail (de+en): appends "Gesetzentwurf vom [Datum] ([Einbringer]), Status: [angenommen|abgelehnt|im Verfahren|noch nicht beraten]" via motionStatusBucket; falls back to shorter variants when the initiator (can be a long Länder list) pushes past 165.
+- Members list, imprint, privacy, en parties list, fraktionslos party branch: static strings lengthened with facts verified against the rendered pages.
+
+**2. Titles tuned to real German query patterns** (research: abgeordnetenwatch ranks #1 on "Abstimmungsverhalten [Name]" with per-activity titles; bundestag.de's own vote pages carry generic titles, topic-bearing titles from ZDF/AW win; "Umfrage/Sonntagsfrage" terms deliberately avoided, dawum/wahlrecht own that intent):
+- Member detail: `Name (Partei): Abstimmungsverhalten` / `: Voting record` (layout head covers all tabs, canonical is /votes/).
+- Party detail: `X im Bundestag: Abstimmungsverhalten` / `: Voting record`.
+- Motion detail: outcome word appended when decided (`…: angenommen|abgelehnt` / `: adopted|rejected`), JSON-LD Legislation name stays clean.
+- Lists: de votes "Namentliche Abstimmungen im Bundestag", de members "Alle Bundestagsabgeordneten", en "Bundestag votes"/"Members of the Bundestag".
+
+**3. E-E-A-T methodology page** (frontend lane): /methodology/ + /en/methodology/, "Über die Daten"/"About the data". Sources (bundestag.de, dserver, DIP, abgeordnetenwatch, Wikidata/Commons), weekly refresh, AI disclosure mirroring the shipped aiSummaryNotice wording, operator link to /imprint/. New: views/methodik/{Methodik.tsx,methodikCopy.ts}, routes/methodology.tsx, routes/en/methodology.tsx. Edited: i18n (aboutData label), Footer (quiet link before Impressum), vite.config.ts (prerenderPaths + sitemap). Descriptions de 153 / en 155. Also added to llms.txt (Best Entry Points + Data Sources). public/sitemap.xml regenerated in-repo (vite dev does not reload config on edit; used a one-shot `vite.resolveConfig`, no dev-server restart).
+
+**4. Inbound-link targets**: researched and listed as "Needs user action" item 7 below.
+
+Not committed. Files edited (routes unless noted): votes/$id, en/votes/$id, motions/$id, en/motions/$id, members/$id/route, en/members/$id/route, parties/$id/route, en/parties/$id/route, members/index, en/members/index, votes/index, en/votes/index, en/parties/index, imprint, en/imprint, privacy, en/privacy, public/llms.txt, public/sitemap.xml, plus frontend-lane files above.
+
 ## Needs user action
 
 1. **Google Search Console**: verify machtblick.de (DNS TXT record via Cloudflare is easiest), then submit `https://machtblick.de/sitemap.xml`. Unlocks index coverage, CWV field data, query reports. ~10 min.
@@ -92,10 +124,28 @@ Wires plumber's manifest into every payload that carries a member photo URL. Vie
 4. CrUX field data will only appear after sustained real-user traffic; nothing to do, just expectation-setting.
 5. **Cloudflare dashboard**: delete (or retarget to `/votes/`) the zone-level redirect rule that 301s `/` → `/votes`; `_redirects` now handles `/` → `/votes/` in one hop. Same check for `/en` if a zone rule exists there.
 6. **IndexNow**: after the next prod deploy run `npm run indexnow -- --all` once from apps/bundestag (key file must be live first), then `npm run indexnow` after each data-refresh deploy.
+7. **Inbound links** (round 3 research, every target verified live 2026-07-05; ordered by ROI; free, no dark patterns):
+   1. https://github.com/bundestag/awesome-germany, community `bundestag` org's civic list (lists DEMOCRACY app etc.), submit via PR, ~15 min, likelihood high. Best single fit.
+   2. GovData Showroom https://www.govdata.de/showroom/-/details/40, page solicits missing open-data apps, email info@govdata.de describing which open data machtblick uses, ~15 min, high.
+   3. Civic Tech Field Guide https://civictech.guide/submit-listing/, free moderated form, gets a page on directory.civictech.guide, ~15 min, high.
+   4. alternativeto.net, "Suggest new application" (account must be 1 week old), list as alternative to abgeordnetenwatch.de / TheyWorkForYou, ~20 min, high.
+   5. GitHub repo topics `bundestag`, `civic-tech`, `open-data`, `parliamentary-monitoring` on the machtblick repo, appears on github.com/topics/* hubs, 2 min, guaranteed.
+   6. https://github.com/codedust/awesome-egov-de (114 stars, FOSS section), PR or Matrix #awesome-egov-de:tchncs.de, medium.
+   7. Show HN (news.ycombinator.com/showhn.html), "Show HN: Machtblick, visualizing every Bundestag roll-call vote", nofollow but real traffic + secondary links, 10 min, listing guaranteed.
+   8. Wikidata item for machtblick.de (instance of website/civic tech project, operator, official website), 20 min, medium-high; feeds knowledge graphs.
+   9. Code for Germany https://codefor.de/projekte/, PR to okfde/codefor.de `content/projekte`, better odds after joining a local OK Lab, 1-2 h, medium.
+   10. https://github.com/GeiserX/awesome-europe (open source for Europe, active), PR, medium.
+   11. https://github.com/awesomelistsio/awesome-civic-tech, PR, easy but low authority.
+   12. Digital Public Goods Registry (digitalpublicgoods.net/submission-guide), SDG-16 fit, multi-indicator review, high effort, prestigious if accepted.
+   13. bund.dev/bundesAPI: no formal showcase exists; realistic path is an issue/PR on github.com/bundesAPI/bundestag-api proposing a "projects using this API" note, low-medium.
+   14. German Wikipedia: HOLD. "Namentliche Abstimmung" is only a redirect; the sole target is Deutscher Bundestag's Weblinks (de-WP "Nur vom Feinsten", even abgeordnetenwatch isn't linked). Self-adding would likely be reverted and can taint the domain. Revisit after independent press coverage, then via the article's Diskussion page.
+   Not viable (checked): data.europa.eu use-case showcase, Netzwerk Recherche link list, Civic Data Lab directory, bundestag.de open-data showcase (none accept submissions).
 
 ## Log
 - lead: plan created 2026-07-05 after prod deploy dc92f4a8, dispatching round 1
 - visibility: round 1 done 2026-07-05. Lighthouse local (PSI quota exhausted) on 4 prod pages, headers scan, JSON-LD + discovery files verified, research logged above. Top implementation targets for round 2: members LCP (Wikimedia hotlink + lazy LCP), votes DOM size, homepage redirect chain, security headers, IndexNow. No code changed.
 - plumber: round 2 photo lane done 2026-07-05. fetch-member-photos.mjs + manifest shipped, 634/635 Commons photos self-hosted with full attribution, wired into build (warm re-run <1s). Gaps: mast-katja Commons file deleted upstream (etl:portraits re-run needed), 209 AW-sourced photos stay hotlinked (no license metadata upstream, must not self-host). Frontend can now switch to manifest local-first resolution. Not committed.
 - frontend: round 2 frontend lane done 2026-07-05, details in "Round 2, frontend lane" above. New: hooks/useNearViewport.ts, views/votesList/LazyVoteCard.tsx, scripts/indexnow-ping.mjs, public/5ad8cfc66abd353bfb34c0213d0f1dba.txt. Edited: VotesList, MemberCard, MembersList, Stamp, VoteHemicycle, PartyBadge, DetailTab, AntragDetail, i18n, __root, _headers, _redirects, robots.txt, package.json (added indexnow script only; plumber's fetch-member-photos build step untouched). Manifest local-first pictureUrl resolution NOT done in this lane (follow-up). Not committed. Root redirect chain needs user action 5 to fully collapse.
+- tester: round 2 verification done 2026-07-05, 14/14 Playwright pass on dev :5174, details in "Round 2 verification" above. No blockers for deploy from this sweep. No code changed.
 - frontend: round 2 stitch done 2026-07-05, details in "Round 2 stitch" above. New: src/server/photoManifest.ts. Edited: src/server/{members,memberDetail,voteDetail,voteSponsors,antraege}.ts, vite-data/{members,votes,antraege}.ts, vite.config.ts. Views untouched, mock unchanged. Verified on dev :5174 (payload host counts, credit link, Playwright zero console errors), tsc clean. Not committed. Round 3 candidate: drop wikimedia preconnects from __root.
+- visibility: round 3 done 2026-07-05, details in "Round 3" above. Description floor 65 → 106 chars (zero <100, zero >165) across a 74-page sitemap sample; titles carry "Abstimmungsverhalten"/outcome words per query research; methodology page shipped both locales (frontend lane); 14 inbound-link targets under Needs user action 7. All head()-only per the hard rule, verified invisible (Playwright 15 pages de+en zero console errors, tsc clean). Not committed. Leftover from round 2 unaddressed here: wikimedia preconnect drop from __root (still a candidate).

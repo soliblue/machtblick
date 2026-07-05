@@ -7,7 +7,7 @@ export const Route = createFileRoute('/en/privacy')({
   head: () => ({
     meta: seoMeta({
       title: 'Privacy',
-      description: 'Privacy statement for Machtblick: no collection of personal data.',
+      description: 'Privacy statement for Machtblick: this site collects no personal data and uses no cookies, no tracking, no analytics tools, and no user accounts.',
       canonical: '/en/privacy',
     }),
     links: canonicalLink('/en/privacy'),

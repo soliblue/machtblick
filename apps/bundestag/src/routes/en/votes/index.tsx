@@ -16,7 +16,7 @@ export const Route = createFileRoute('/en/votes/')({
   loader: () => listVotes({ data: 'en' }),
   head: () => ({
     meta: seoMeta({
-      title: 'Votes',
+      title: 'Bundestag votes',
       description: 'All votes in the German Bundestag: results, majorities, defectors, and how each parliamentary group voted.',
       canonical: '/en/votes',
     }),

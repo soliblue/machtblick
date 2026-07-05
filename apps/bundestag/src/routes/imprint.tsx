@@ -7,7 +7,7 @@ export const Route = createFileRoute('/imprint')({
   head: () => ({
     meta: seoMeta({
       title: 'Impressum',
-      description: 'Impressum von Machtblick: Projektbeschreibung, Datenquellen und Kontakt.',
+      description: 'Impressum von Machtblick: Betreiber und Kontakt, was das Projekt ist und welche Datenquellen des Deutschen Bundestags, von abgeordnetenwatch und Wikimedia es nutzt.',
       canonical: '/imprint',
     }),
     links: canonicalLink('/imprint'),

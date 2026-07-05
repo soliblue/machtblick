@@ -9,7 +9,7 @@ export const Route = createFileRoute('/en/parties/')({
   head: () => ({
     meta: seoMeta({
       title: 'Parties',
-      description: 'Parliamentary groups and unaffiliated members in the Bundestag: seats, members, and voting behavior.',
+      description: 'Parliamentary groups and independent members in the German Bundestag: seat distribution, members, cohesion, and voting behavior in roll-call votes.',
       canonical: '/en/parties',
     }),
     links: canonicalLink('/en/parties'),

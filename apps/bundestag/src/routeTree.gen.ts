@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as MethodologyRouteImport } from './routes/methodology'
 import { Route as ImprintRouteImport } from './routes/imprint'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VotesIndexRouteImport } from './routes/votes/index'
@@ -21,6 +22,7 @@ import { Route as EnIndexRouteImport } from './routes/en/index'
 import { Route as VotesIdRouteImport } from './routes/votes/$id'
 import { Route as MotionsIdRouteImport } from './routes/motions/$id'
 import { Route as EnPrivacyRouteImport } from './routes/en/privacy'
+import { Route as EnMethodologyRouteImport } from './routes/en/methodology'
 import { Route as EnImprintRouteImport } from './routes/en/imprint'
 import { Route as PartiesIdRouteRouteImport } from './routes/parties/$id/route'
 import { Route as MembersIdRouteRouteImport } from './routes/members/$id/route'
@@ -53,6 +55,11 @@ import { Route as EnMembersIdMotionsRouteImport } from './routes/en/members/$id/
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MethodologyRoute = MethodologyRouteImport.update({
+  id: '/methodology',
+  path: '/methodology',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ImprintRoute = ImprintRouteImport.update({
@@ -108,6 +115,11 @@ const MotionsIdRoute = MotionsIdRouteImport.update({
 const EnPrivacyRoute = EnPrivacyRouteImport.update({
   id: '/en/privacy',
   path: '/en/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EnMethodologyRoute = EnMethodologyRouteImport.update({
+  id: '/en/methodology',
+  path: '/en/methodology',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnImprintRoute = EnImprintRouteImport.update({
@@ -254,10 +266,12 @@ const EnMembersIdMotionsRoute = EnMembersIdMotionsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/imprint': typeof ImprintRoute
+  '/methodology': typeof MethodologyRoute
   '/privacy': typeof PrivacyRoute
   '/members/$id': typeof MembersIdRouteRouteWithChildren
   '/parties/$id': typeof PartiesIdRouteRouteWithChildren
   '/en/imprint': typeof EnImprintRoute
+  '/en/methodology': typeof EnMethodologyRoute
   '/en/privacy': typeof EnPrivacyRoute
   '/motions/$id': typeof MotionsIdRoute
   '/votes/$id': typeof VotesIdRoute
@@ -296,8 +310,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/imprint': typeof ImprintRoute
+  '/methodology': typeof MethodologyRoute
   '/privacy': typeof PrivacyRoute
   '/en/imprint': typeof EnImprintRoute
+  '/en/methodology': typeof EnMethodologyRoute
   '/en/privacy': typeof EnPrivacyRoute
   '/motions/$id': typeof MotionsIdRoute
   '/votes/$id': typeof VotesIdRoute
@@ -335,10 +351,12 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/imprint': typeof ImprintRoute
+  '/methodology': typeof MethodologyRoute
   '/privacy': typeof PrivacyRoute
   '/members/$id': typeof MembersIdRouteRouteWithChildren
   '/parties/$id': typeof PartiesIdRouteRouteWithChildren
   '/en/imprint': typeof EnImprintRoute
+  '/en/methodology': typeof EnMethodologyRoute
   '/en/privacy': typeof EnPrivacyRoute
   '/motions/$id': typeof MotionsIdRoute
   '/votes/$id': typeof VotesIdRoute
@@ -379,10 +397,12 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/imprint'
+    | '/methodology'
     | '/privacy'
     | '/members/$id'
     | '/parties/$id'
     | '/en/imprint'
+    | '/en/methodology'
     | '/en/privacy'
     | '/motions/$id'
     | '/votes/$id'
@@ -421,8 +441,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/imprint'
+    | '/methodology'
     | '/privacy'
     | '/en/imprint'
+    | '/en/methodology'
     | '/en/privacy'
     | '/motions/$id'
     | '/votes/$id'
@@ -459,10 +481,12 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/imprint'
+    | '/methodology'
     | '/privacy'
     | '/members/$id'
     | '/parties/$id'
     | '/en/imprint'
+    | '/en/methodology'
     | '/en/privacy'
     | '/motions/$id'
     | '/votes/$id'
@@ -502,10 +526,12 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ImprintRoute: typeof ImprintRoute
+  MethodologyRoute: typeof MethodologyRoute
   PrivacyRoute: typeof PrivacyRoute
   MembersIdRouteRoute: typeof MembersIdRouteRouteWithChildren
   PartiesIdRouteRoute: typeof PartiesIdRouteRouteWithChildren
   EnImprintRoute: typeof EnImprintRoute
+  EnMethodologyRoute: typeof EnMethodologyRoute
   EnPrivacyRoute: typeof EnPrivacyRoute
   MotionsIdRoute: typeof MotionsIdRoute
   VotesIdRoute: typeof VotesIdRoute
@@ -533,6 +559,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/methodology': {
+      id: '/methodology'
+      path: '/methodology'
+      fullPath: '/methodology'
+      preLoaderRoute: typeof MethodologyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/imprint': {
@@ -610,6 +643,13 @@ declare module '@tanstack/react-router' {
       path: '/en/privacy'
       fullPath: '/en/privacy'
       preLoaderRoute: typeof EnPrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/en/methodology': {
+      id: '/en/methodology'
+      path: '/en/methodology'
+      fullPath: '/en/methodology'
+      preLoaderRoute: typeof EnMethodologyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/en/imprint': {
@@ -884,10 +924,12 @@ const EnPartiesIdRouteRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ImprintRoute: ImprintRoute,
+  MethodologyRoute: MethodologyRoute,
   PrivacyRoute: PrivacyRoute,
   MembersIdRouteRoute: MembersIdRouteRouteWithChildren,
   PartiesIdRouteRoute: PartiesIdRouteRouteWithChildren,
   EnImprintRoute: EnImprintRoute,
+  EnMethodologyRoute: EnMethodologyRoute,
   EnPrivacyRoute: EnPrivacyRoute,
   MotionsIdRoute: MotionsIdRoute,
   VotesIdRoute: VotesIdRoute,
