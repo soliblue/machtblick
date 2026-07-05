@@ -13,7 +13,7 @@ Each round: audit/research → findings ranked by impact → implement → verif
 | 3 | Content/keyword depth: German civic search intent (how do citizens search for votes/MPs), title/description tuning against real queries, interlinking depth | done |
 | 4 | AI-assistant surface: llms.txt maximization, structured data for answer engines, API discoverability (.well-known), testing how assistants actually see the site | done |
 | 5 | Crawl+freshness: hreflang casing, votes RSS/Atom feed, breadcrumb JSON-LD coverage, 404/canonical edges, IndexNow chained into weekly refresh | done |
-| 6 | Measure + squeeze: re-run round-1 external audits for before/after proof, clear Bing recommendations, GSC/Bing query data tuning if verified, OG filename/alt + image sitemap | todo |
+| 6 | Measure + squeeze: re-run round-1 external audits for before/after proof, clear Bing recommendations, GSC/Bing query data tuning if verified, OG filename/alt + image sitemap | done |
 | 7 | Speech permalink pages: ON HOLD, NO user sign-off yet (user explicitly withheld 2026-07-05). Do not start without an explicit yes. | blocked |
 
 ## Constraints
@@ -151,6 +151,41 @@ Files edited: views/voteDetail/VoteDetail.tsx, routes/__root.tsx, routes/motions
 
 Files edited: src/lib/seo.ts, vite.config.ts, src/routes/__root.tsx, src/routes/{votes,motions,members,parties,speeches}/index.tsx + en variants, src/routes/methodology.tsx + en, src/routes/motions/$id.tsx + en, public/llms.txt, scripts/indexnow-ping.mjs, prompts/auto-refresh.md. New generated: public/votes.xml. Not committed, not deployed.
 
+## Round 6 (visibility, done 2026-07-05, measurement + final squeeze; prod @ 48cd1db3, same Lighthouse 12 local mobile-simulated recipe as round 1, same 4 pages, sequential runs)
+
+**1. Before → after (round 1 baseline → live prod 2026-07-05):**
+
+| Page | Perf | A11y | BP | SEO | FCP | LCP | TBT | DOM nodes |
+|---|---|---|---|---|---|---|---|---|
+| `/` (→ /votes/) | 49 → **70** | 91 → **100** | n/a → **100** | 92 → 92 | 4.4 → 3.7s | 4.6 → 3.8s | 1220 → **402ms** | 79,422 → **42,041** |
+| `/votes/` | 59 → **76** | 91 → **100** | n/a → **100** | 92 → 92 | 3.6 → 3.5s | 3.8 → 3.7s | 920 → **277ms** | 79,422 → **42,041** |
+| vote detail (1003) | 84 → 82 | 92 → 92 | 79 → 79 | 85 → **92** | 3.4 → 3.4s | 3.5 → 3.7s | 10 → 12ms | 1,023 |
+| `/members/` | 68 → 69 | 100 → 100 | 79 → 79 | 92 → 92 | 3.4 → 3.6s | **8.4 → 6.2s** | 30 → 10ms | 10,243 |
+
+Headers before → after: missing HSTS/CSP/Permissions-Policy/XFO (≈D) → all present + CSP-Report-Only (≈A), single-hop `/` 301 → `/votes/` (zone-rule fix confirmed live). Remaining caps explained: SEO 92 everywhere = one audit, Lighthouse flags `Content-Signal:` as "Unknown directive" (its validator lags the spec; deliberate keep, Google parses gracefully). BP 79 on detail/members = Wikimedia third-party cookies, root-caused below and fixed this round; expect BP 100 + further members-LCP drop after next deploy. Detail a11y 92 = stamp contrast + target-size instances local to detail pages (round-2 treatment not applied there; visual change, needs sign-off, backlogged).
+
+**2. REGRESSION FOUND + FIXED: round-2 photo self-hosting never shipped.** Prod prerendered HTML had ZERO `/members-photos/` refs (380 wikimedia refs on /members/, ballot payloads + speech avatars all remote). Root cause: `photoManifest.ts` resolved the manifest via `new URL('../../public/...', import.meta.url)`; in the built server bundle the module lives at `dist/server/assets/photoManifest-*.js`, so the path resolved to nonexistent `dist/public/...` → `existsSync` false → silent empty-manifest fallback on every prerender and server-fn payload. Round-2 verification was dev-only (vite SSR resolves from src/, works), so it passed. Fix: resolve `${process.cwd()}/public/members-photos/manifest.json` first (build + dev cwd is apps/bundestag), import.meta.url as fallback. Rebuilt + verified in dist/client: /members/ 750 local / 3 wikimedia (mast-katja only), vote detail 397 local / 2. Also swapped the now-obsolete commons/upload preconnects in `__root.tsx` for `www.abgeordnetenwatch.de` (the 209 AW hotlinks are the only remaining third-party images; rounds 2-4 leftover). tsc clean. Both changes invisible (identical pixels, same images, same-origin). NEEDS DEPLOY to take effect.
+
+**3. Bing recommendations (verified from our side):** IndexNow key file 200 + api.indexnow.org ping 200. Meta descriptions: 28-page sitemap-stratified prod sample, min 106 chars, zero under 100, max 164. Inbound links: pending user outreach (Needs user action 7), nothing further on our side.
+
+**4. Squeeze audit results:** og:image filenames slug-descriptive, og:image:alt page-specific where per-page images exist (namentlich votes "Abstimmungsergebnis im Bundestag: <title>", parties "X im Bundestag: Sitze und Anteil der Fraktion."), descriptive defaults elsewhere; no change needed. og:locale/secure_url/lowercase-hreflang/atom-link all confirmed live on prod (an initial "missing" grep was the binary-detection trap again; `grep -a` on prerendered HTML, always). **Image sitemap: decided NO.** Member photos are Commons duplicates Google already indexes at source authority; after the photo fix they're same-origin `<img alt="Name">` in prerendered HTML, so inline crawlability is already there; OG images are text-graphic share cards, noise in an image sitemap. Zero-benefit maintenance surface for a photo-light site. Favicons/manifest: all assets 200, manifest parses (id, start_url, scope, standalone, categories, 192+512 maskable); only nit is combined `purpose: "any maskable"` (textbook fix needs a padded dedicated maskable asset, backlogged). /votes.xml: 200 `application/xml`, advertised via site-wide `<link rel="alternate" type="application/atom+xml">` + llms.txt, correctly NOT in sitemap/robots. CSP report-only: Playwright over 9 prod pages (all page types, scrolled, networkidle) = zero CSP console messages; enforceable in a future round after one more sweep incl. en + dialogs. robots.txt: prod briefly served the pre-round-2 layout, cache artifact only (cf-cache-status HIT, age ~20h, s-maxage 86400); cache-busted fetch serves the committed version.
+
+## Backlog after round 6
+
+Honest read: on-page technical SEO is saturated. Remaining upside is (a) deploying this round's fix, (b) off-site signals, (c) new content surfaces. Ranked:
+
+1. **Deploy round-6 fix, then spot-check** detail + /members/ Lighthouse: expect BP 79→100 on both (cookies gone) and members LCP well under 6.2s. Impact M, effort ~0 (rides next deploy).
+2. **Speech permalink pages** (row 7, blocked on user): the single biggest untapped indexable surface; everything else below is small next to it.
+3. **Person JSON-LD sameAs enrichment**: Wikidata QID + abgeordnetenwatch profile on member Person nodes for knowledge-graph entity linking. Impact S-M (answer-engine entity resolution), effort S if IDs are in DB.
+4. **Per-member OG images** (portrait + name + party + attendance/loyalty): upgrades 630 member share cards from the generic default. Impact S-M (off-site only), effort M (satori template exists for votes/parties).
+5. **Enforce CSP** (drop Report-Only): zero violations observed. Impact S (posture, no direct ranking), effort S.
+6. **Vote-detail a11y 92→100**: apply round-2 stamp-contrast + target-size treatment to detail pages. Near-identical but technically visual → user sign-off. Impact S, effort S.
+7. **sr-only fact sentence on party profiles** (round-4 leftover, thinnest raw-text page). Impact S, effort S.
+8. **Motions Atom feed**; dedicated maskable icon asset; og:locale variants per Land: XS each, genuine diminishing returns.
+9. **GSC/Bing verification + CrUX field data** (user actions 1-2): prerequisite for any query-data-driven round 7; without them further on-page tuning is guesswork.
+
+Beyond this list the barrel is empty: no further invisible on-page item with meaningful impact identified.
+
 ## Needs user action
 
 1. **Google Search Console**: verify machtblick.de (DNS TXT record via Cloudflare is easiest), then submit `https://machtblick.de/sitemap.xml`. Unlocks index coverage, CWV field data, query reports. ~10 min.
@@ -177,6 +212,7 @@ Files edited: src/lib/seo.ts, vite.config.ts, src/routes/__root.tsx, src/routes/
    Not viable (checked): data.europa.eu use-case showcase, Netzwerk Recherche link list, Civic Data Lab directory, bundestag.de open-data showcase (none accept submissions).
 
 ## Log
+- visibility: round 6 done 2026-07-05, details in "Round 6" + "Backlog after round 6" above. Before/after Lighthouse table written (headline: / perf 49→70, TBT 1220→402ms, DOM halved, members LCP 8.4→6.2s, a11y+BP 100 on lists, headers D→A, single-hop redirect). REGRESSION found + fixed: round-2 photo self-hosting never shipped (photoManifest import.meta.url path broken in dist/server/assets bundle; now cwd-first), verified in dist/client (members 750 local/2 wikimedia); preconnects swapped wikimedia→abgeordnetenwatch. Bing items clear from our side (IndexNow 200, desc min 106). Image sitemap: decided against, reasoning logged. CSP-RO: zero violations over 9 pages. tsc clean, invisible-only changes (photoManifest.ts, __root.tsx). Not committed, NEEDS DEPLOY for BP 79→100 + members LCP gains.
 - visibility: round 5 done 2026-07-05, details in "Round 5" above. hreflang lowercase in prod HTML (dev keeps camelCase to avoid React dev warnings), Atom feed /votes.xml (50 latest votes, German, advertised in __root + llms.txt), BreadcrumbList on all remaining page types (14 routes), canonical/404/trailing-slash edges audited clean, indexnow --all crash fixed + wired into auto-refresh gates as step 11. tsc clean, zero console errors, 10 page types pixel-identical. Not committed, not deployed.
 - lead: plan created 2026-07-05 after prod deploy dc92f4a8, dispatching round 1
 - visibility: round 1 done 2026-07-05. Lighthouse local (PSI quota exhausted) on 4 prod pages, headers scan, JSON-LD + discovery files verified, research logged above. Top implementation targets for round 2: members LCP (Wikimedia hotlink + lazy LCP), votes DOM size, homepage redirect chain, security headers, IndexNow. No code changed.

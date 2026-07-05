@@ -26,8 +26,7 @@ export const Route = createRootRoute({
       ...seoMeta({}),
     ],
     links: [
-      { rel: 'preconnect', href: 'https://commons.wikimedia.org' },
-      { rel: 'preconnect', href: 'https://upload.wikimedia.org' },
+      { rel: 'preconnect', href: 'https://www.abgeordnetenwatch.de' },
       { rel: 'stylesheet', href: globalsCss },
       { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
       { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
