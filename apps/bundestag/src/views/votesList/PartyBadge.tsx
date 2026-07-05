@@ -28,7 +28,7 @@ export function PartyBadge({ party, compact = false, logoSize = 20 }: Props) {
         href={withLocale(`/parties/${slug}/profile/`, locale)}
         onClick={(e) => e.stopPropagation()}
         aria-label={partyLabel(party, locale)}
-        className="relative z-10 inline-flex hover:opacity-80"
+        className="relative z-10 -m-xs inline-flex p-xs hover:opacity-80"
       >
         {logo}
       </a>
@@ -49,7 +49,7 @@ export function PartyBadge({ party, compact = false, logoSize = 20 }: Props) {
     <a
       href={withLocale(`/parties/${slug}/profile/`, locale)}
       onClick={(e) => e.stopPropagation()}
-      className="relative z-10 inline-flex hover:opacity-80"
+      className="relative z-10 -m-xs inline-flex p-xs hover:opacity-80"
     >
       {badge}
     </a>

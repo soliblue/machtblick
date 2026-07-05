@@ -81,7 +81,7 @@ export function VoteHemicycle({ yes, no, abstain, absent, totalMembers, hero = f
           <span className="text-s caption opacity-l">{t.yes}</span>
           <span className={numeral} style={{ color: COLORS.yes }}>{yes}</span>
         </LegendBlock>
-        <div className="flex max-w-[140px] flex-col self-end pb-xs text-center text-s caption leading-normal opacity-m">
+        <div className="flex max-w-[140px] flex-col self-end pb-xs text-center text-s caption leading-normal opacity-l">
           {abstain > 0 && (
             <LegendBlock choice="abstain" selected={selected} onSelect={onSelect}>
               {abstain} {hero ? t.abstention : t.abstain}

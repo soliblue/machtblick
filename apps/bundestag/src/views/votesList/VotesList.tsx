@@ -3,10 +3,12 @@ import type { VoteDayGroup } from '@/hooks/useVoteDayGroups'
 import { VISIBLE_VOTE_TYPES } from '@/lib/voteTypes'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { partyLabel } from '@/lib/parties'
-import { VoteCard } from './VoteCard'
+import { LazyVoteCard } from './LazyVoteCard'
 import { FilterPill } from './FilterPill'
 import { FilterPillRow } from './FilterPillRow'
 import { FilterSheet, type FilterSheetGroup } from './FilterSheet'
+
+const EAGER_CARDS = 30
 
 type Props = {
   groups: VoteDayGroup[]
@@ -88,16 +90,16 @@ export function VotesList({ groups, proposingParty, onProposingPartyChange, avai
       />
       <div className="desk:hidden">
         <FilterSheet groups={sheetGroups} activeCount={activeCount} />
-        {flat.map((v) => (
+        {flat.map((v, i) => (
           <div key={v.id} id={v.id} className="h-[calc(100svh-96px)] snap-start snap-always px-m pt-l">
-            <VoteCard vote={v} />
+            <LazyVoteCard vote={v} eager={i < EAGER_CARDS} />
           </div>
         ))}
       </div>
       <main className="mx-auto hidden max-w-3xl flex-col gap-xl px-l pb-[64px] pt-xl desk:flex">
-        {flat.map((v) => (
+        {flat.map((v, i) => (
           <div key={v.id} id={`d-${v.id}`}>
-            <VoteCard vote={v} />
+            <LazyVoteCard vote={v} eager={i < EAGER_CARDS} />
           </div>
         ))}
       </main>

@@ -116,7 +116,7 @@ export function MembersList({
           <p className="py-xl text-center text-s opacity-l">{t.noMembersFound}</p>
         ) : (
           <div className="grid grid-cols-3 gap-s sm:grid-cols-4 lg:grid-cols-5 desk:gap-m">
-            {members.map((m) => <MemberCard key={m.id} member={m} />)}
+            {members.map((m, i) => <MemberCard key={m.id} member={m} index={i} />)}
           </div>
         )}
       </main>

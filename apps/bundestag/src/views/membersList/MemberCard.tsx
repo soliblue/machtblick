@@ -6,9 +6,9 @@ import { partyLabel } from '@/lib/parties'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
 
-type Props = { member: MemberListItem }
+type Props = { member: MemberListItem; index?: number }
 
-export function MemberCard({ member }: Props) {
+export function MemberCard({ member, index = 0 }: Props) {
   const t = useCopy()
   const locale = useLocale()
   return (
@@ -19,7 +19,14 @@ export function MemberCard({ member }: Props) {
         aria-label={`${member.name}, ${partyLabel(member.party, locale)}, ${member.state}, ${t.attendance} ${pct(member.attendance)}`}
       />
       {member.pictureUrl ? (
-        <img src={member.pictureUrl} alt="" loading="lazy" decoding="async" className="aspect-square w-full object-cover" />
+        <img
+          src={member.pictureUrl}
+          alt={member.name}
+          loading={index < 12 ? 'eager' : 'lazy'}
+          fetchPriority={index < 5 ? 'high' : undefined}
+          decoding="async"
+          className="aspect-square w-full object-cover"
+        />
       ) : (
         <div className="flex aspect-square w-full items-center justify-center bg-surface">
           <span className="text-xl font-semibold opacity-m">{initials(member.name)}</span>

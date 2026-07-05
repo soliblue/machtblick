@@ -114,7 +114,7 @@ export function AntragDetail({ data }: Props) {
             <p className="mt-s text-s opacity-l">
               {t.aiSummaryNotice}
               {antrag.drucksachePdfUrl ? (
-                <> {t.fullMotion} <a href={antrag.drucksachePdfUrl} target="_blank" rel="noreferrer" className="underline">{t.here}</a>.</>
+                <> {t.fullMotion} <a href={antrag.drucksachePdfUrl} target="_blank" rel="noreferrer" className="underline">{antrag.drucksache ? `Drucksache ${antrag.drucksache} (PDF)` : t.sourcePdf}</a>.</>
               ) : null}
             </p>
           )}
