@@ -67,7 +67,11 @@ export function SpeechEntry({ speech, mode, choice = null, pictureUrl = null, vo
         <div className="mt-xs flex flex-wrap items-center gap-s">
           {speech.party && <PartyBadge party={speech.party} compact logoSize={16} />}
           {speech.speakerRole && <span className="text-s caption opacity-l">{speech.speakerRole}</span>}
-          {choice && <Stamp variant={choice === 'enthalten' ? 'enthalten' : choice} rotated={false} />}
+          {choice && (
+            <span className="ml-auto shrink-0">
+              <Stamp variant={choice === 'enthalten' ? 'enthalten' : choice} rotated={false} />
+            </span>
+          )}
         </div>
       )}
     </div>
