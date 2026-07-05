@@ -178,21 +178,54 @@ function majorityChoice(s: SummaryRow): string {
 
 export function leanMembers(db: Database.Database) {
   const allMembers = db.prepare('SELECT id, name, mandate_type FROM members').all() as Array<Pick<MemberRow, 'id' | 'name' | 'mandate_type'>>
-  const nonProceduralVoteIds = new Set(
-    (db.prepare(`SELECT id FROM votes WHERE term_id = ${CURRENT_TERM} AND procedural = 0`).all() as Array<{ id: string }>).map((v) => v.id),
+  const voteDate = new Map(
+    (db.prepare(`SELECT id, date FROM votes WHERE term_id = ${CURRENT_TERM} AND procedural = 0`).all() as Array<{ id: string; date: string }>).map((v) => [v.id, v.date]),
   )
-  const vmRows = (db.prepare('SELECT vote_id, member_id, state FROM vote_members').all() as VoteMemberRow[])
-    .filter((r) => nonProceduralVoteIds.has(r.vote_id))
-  const affiliations = db.prepare(`SELECT member_id, party, valid_from, valid_to FROM member_affiliations WHERE term_id = ${CURRENT_TERM} AND valid_to IS NULL`).all() as AffiliationRow[]
-  const currentParty = new Map(affiliations.map((a) => [a.member_id, a.party]))
+  const vmRows = (db.prepare('SELECT vote_id, member_id, state, choice FROM vote_members').all() as VoteMemberRow[])
+    .filter((r) => voteDate.has(r.vote_id))
+  const currentParty = new Map(
+    (db.prepare(`SELECT member_id, party FROM member_affiliations WHERE term_id = ${CURRENT_TERM} AND valid_to IS NULL`).all() as Array<{ member_id: string; party: string }>).map((a) => [a.member_id, a.party]),
+  )
+  const affByMember = new Map<string, AffiliationRow[]>()
+  for (const a of db.prepare(`SELECT member_id, party, valid_from, valid_to FROM member_affiliations WHERE term_id = ${CURRENT_TERM}`).all() as AffiliationRow[]) {
+    const arr = affByMember.get(a.member_id) ?? []
+    arr.push(a)
+    affByMember.set(a.member_id, arr)
+  }
+  const majByVoteParty = new Map<string, string>()
+  for (const s of db.prepare(`
+    SELECT vps.vote_id, vps.party, vps.yes, vps.no, vps.abstain, vps.absent
+    FROM vote_party_summaries vps
+    INNER JOIN votes v ON v.id = vps.vote_id
+    WHERE v.term_id = ${CURRENT_TERM}
+  `).all() as SummaryRow[]) majByVoteParty.set(`${s.vote_id} ${s.party}`, majorityChoice(s))
+  const ballotsByMember = new Map<string, Array<{ voteId: string; date: string; choice: string }>>()
   const stateByMember = new Map<string, string>()
-  for (const r of vmRows) if (!stateByMember.has(r.member_id)) stateByMember.set(r.member_id, r.state)
-  const hasVotes = new Set(vmRows.map((r) => r.member_id))
+  for (const r of vmRows) {
+    if (!stateByMember.has(r.member_id)) stateByMember.set(r.member_id, r.state)
+    const arr = ballotsByMember.get(r.member_id) ?? []
+    arr.push({ voteId: r.vote_id, date: voteDate.get(r.vote_id)!, choice: r.choice })
+    ballotsByMember.set(r.member_id, arr)
+  }
   const demographics = loadDemographicsMap(db)
   return allMembers
-    .filter((m) => hasVotes.has(m.id))
+    .filter((m) => ballotsByMember.has(m.id))
     .map((m) => {
       const demo = demographics.get(m.id)
+      const ballots = ballotsByMember.get(m.id)!
+      const affiliations = affByMember.get(m.id) ?? []
+      let absent = 0
+      let loyalMatches = 0
+      let loyalEligible = 0
+      for (const b of ballots) {
+        const party = partyAt(affiliations, b.date)
+        const eligible = !!party && !PARTY_LINE_EXCLUDED.has(party)
+        if (b.choice === 'nicht_abgegeben') absent++
+        else if (eligible) {
+          loyalEligible++
+          if (b.choice === (majByVoteParty.get(`${b.voteId} ${party}`) ?? '')) loyalMatches++
+        }
+      }
       return {
         id: m.id,
         name: m.name,
@@ -201,6 +234,8 @@ export function leanMembers(db: Database.Database) {
         yearOfBirth: demo?.yearOfBirth ?? null,
         sex: demo?.sex ?? null,
         mandateType: normalizeMandate(m.mandate_type),
+        attendance: 1 - absent / ballots.length,
+        loyalty: loyalEligible > 0 ? loyalMatches / loyalEligible : null,
       }
     })
     .sort((a, b) => a.name.localeCompare(b.name, 'de'))

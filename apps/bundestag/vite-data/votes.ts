@@ -296,7 +296,7 @@ export function fullVote(db: Database.Database, id: string) {
   }
 }
 
-function latestSeatsByParty(db: Database.Database): Map<string, number> {
+export function latestSeatsByParty(db: Database.Database): Map<string, number> {
   const out = new Map<string, number>()
   const namentlich = db.prepare(`
     SELECT id FROM votes WHERE term_id = ${CURRENT_TERM} AND vote_type = 'namentlich' ORDER BY date DESC LIMIT 20

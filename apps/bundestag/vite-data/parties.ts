@@ -1,5 +1,6 @@
 import type Database from 'better-sqlite3'
 import { requireVoteCleanTitle } from '../src/lib/voteTitles'
+import { partyHistory } from './partyHistory'
 
 type SummaryRow = {
   vote_id: string
@@ -219,5 +220,6 @@ export function fullParty(db: Database.Database, slug: string) {
     votes: voteRows,
     members: memberRows,
     alignments,
+    history: partyHistory(db, party),
   }
 }

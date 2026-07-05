@@ -1,6 +1,7 @@
 import type Database from 'better-sqlite3'
 import { requireVoteCleanTitle } from '../src/lib/voteTitles'
 import { resolvePictureUrl } from '../src/server/photoManifest'
+import { latestSeatsByParty } from './votes'
 
 type AntragRow = {
   id: number
@@ -33,6 +34,11 @@ type VoteRow = {
   clean_title: string | null
   result: 'angenommen' | 'abgelehnt'
   vote_type: string
+  yes: number | null
+  no: number | null
+  abstain: number | null
+  absent: number | null
+  total_members: number | null
 }
 
 const CURRENT_TERM = 21
@@ -97,12 +103,37 @@ export function fullAntrag(db: Database.Database, id: number, locale: 'de' | 'en
     ORDER BY m.last_name ASC, m.first_name ASC
   `).all(id) as SignatoryRow[]
   const linkedVotes = db.prepare(`
-    SELECT v.id, v.date, v.title, v.clean_title, v.result, v.vote_type
+    SELECT v.id, v.date, v.title, v.clean_title, v.result, v.vote_type, v.yes, v.no, v.abstain, v.absent, v.total_members
     FROM vote_antraege va
     INNER JOIN votes v ON v.id = va.vote_id
     WHERE va.antrag_id = ? AND v.term_id = 21 AND v.procedural = 0 AND v.vote_type != 'hammelsprung'
     ORDER BY v.date DESC
   `).all(id) as VoteRow[]
+  const handzeichenIds = linkedVotes.filter((v) => v.vote_type === 'handzeichen').map((v) => v.id)
+  const positionsByVote = new Map<string, Array<{ party: string; position: 'yes' | 'no' | 'abstain' | 'mixed' }>>()
+  if (handzeichenIds.length) {
+    const placeholders = handzeichenIds.map(() => '?').join(', ')
+    for (const p of db.prepare(`SELECT vote_id, party, position FROM vote_party_summaries WHERE vote_id IN (${placeholders})`)
+      .all(...handzeichenIds) as Array<{ vote_id: string; party: string; position: 'yes' | 'no' | 'abstain' | 'mixed' }>) {
+      const arr = positionsByVote.get(p.vote_id) ?? []
+      arr.push({ party: p.party, position: p.position })
+      positionsByVote.set(p.vote_id, arr)
+    }
+  }
+  const seats = latestSeatsByParty(db)
+  function voteCounts(v: VoteRow) {
+    if (v.vote_type === 'namentlich') {
+      return { yes: v.yes ?? 0, no: v.no ?? 0, abstain: v.abstain ?? 0, absent: v.absent ?? 0, totalMembers: v.total_members ?? 0 }
+    }
+    let yes = 0, no = 0, abstain = 0
+    for (const p of positionsByVote.get(v.id) ?? []) {
+      const s = seats.get(p.party) ?? 0
+      if (p.position === 'yes') yes += s
+      else if (p.position === 'no') no += s
+      else if (p.position === 'abstain') abstain += s
+    }
+    return { yes, no, abstain, absent: 0, totalMembers: yes + no + abstain }
+  }
   return {
     antrag: {
       id: row.id,
@@ -134,6 +165,7 @@ export function fullAntrag(db: Database.Database, id: number, locale: 'de' | 'en
         cleanTitle: titled.cleanTitle,
         result: v.result,
         voteType: v.vote_type,
+        ...voteCounts(v),
       }
     }),
   }
