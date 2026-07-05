@@ -38,6 +38,12 @@ struct MotionDetailPayload: Decodable {
         let cleanTitle: String
         let result: VoteResult
         let voteType: String
+        let yes: Int?
+        let no: Int?
+        let abstain: Int?
+        let absent: Int?
+        let totalMembers: Int?
+        let partySummaries: [PartyVoteSummary]?
     }
 
     let antrag: Antrag

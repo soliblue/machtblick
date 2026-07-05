@@ -11,10 +11,12 @@ struct MotionDetailView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xl) {
                         header(detail.antrag)
+                        timeline(detail)
+                        subjects(detail.antrag)
                         summary(detail.antrag)
                         signatories(detail.signatories)
                         linkedVotes(detail.linkedVotes)
-                        links(detail.antrag)
+                        source(detail.antrag)
                     }
                     .padding(ThemeTokens.Spacing.l)
                 }
@@ -29,54 +31,98 @@ struct MotionDetailView: View {
     }
 
     private func header(_ antrag: MotionDetailPayload.Antrag) -> some View {
-        VStack(alignment: .leading, spacing: ThemeTokens.Spacing.m) {
-            HStack(spacing: ThemeTokens.Spacing.s) {
-                Text(antrag.type == "gesetzentwurf" ? Copy.billTitle : Copy.motionTitle)
-                    .kicker()
-                if let drucksache = antrag.drucksache {
-                    Text("\(Copy.drucksacheLabel) \(drucksache)").kicker()
-                }
-                Spacer()
-                if let date = antrag.introducedDate {
-                    Text(Formatters.shortDate(date)).kicker()
-                }
-            }
+        VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
+            proposer(antrag)
             Text(antrag.cleanTitle ?? antrag.title)
                 .font(.display(ThemeTokens.Text.xxl))
                 .multilineTextAlignment(.leading)
-            if let stand = antrag.beratungsstand {
-                Text("\(Copy.statusLabel): \(stand)")
+            if let clean = antrag.cleanTitle, clean != antrag.title {
+                Text("\(Copy.officialTitleMotion): \(antrag.title)")
                     .font(.system(size: ThemeTokens.Text.s))
                     .foregroundStyle(ThemeColor.secondary)
+            }
+            HStack(spacing: ThemeTokens.Spacing.s) {
+                TopicChip(text: antrag.type == "gesetzentwurf" ? Copy.billTitle : Copy.motionTitle, outlined: true)
+                if let date = antrag.introducedDate {
+                    Text(Formatters.shortDate(date)).kicker()
+                }
+                if let drucksache = antrag.drucksache {
+                    Text("\(Copy.drucksacheLabel) \(drucksache)").kicker()
+                }
             }
         }
     }
 
-    @ViewBuilder
-    private func summary(_ antrag: MotionDetailPayload.Antrag) -> some View {
-        VStack(alignment: .leading, spacing: ThemeTokens.Spacing.m) {
-            if let abstract = antrag.abstract {
-                Text(abstract).font(.serif(ThemeTokens.Text.m))
+    @ViewBuilder private func proposer(_ antrag: MotionDetailPayload.Antrag) -> some View {
+        if Bundeslaender.isLaenderInitiative(antrag.initiativeFraktion) {
+            HStack(spacing: ThemeTokens.Spacing.s) {
+                Image(systemName: "building.columns").font(.system(size: ThemeTokens.Icon.xl))
+                    .foregroundStyle(ThemeColor.fg)
+                Text("\(Copy.laenderMotion) · \(antrag.initiativeFraktion ?? "")").kicker()
             }
+        } else if let fraktion = antrag.initiativeFraktion, PartyStyle.hasPartyLine(fraktion) {
+            PartyBadge(party: fraktion)
+        } else if let fraktion = antrag.initiativeFraktion {
+            Text(PartyStyle.label(fraktion)).kicker()
+        }
+    }
+
+    @ViewBuilder private func timeline(_ detail: MotionDetailPayload) -> some View {
+        let stages = MotionTimeline.stages(
+            type: detail.antrag.type, beratungsstand: detail.antrag.beratungsstand,
+            introducedDate: detail.antrag.introducedDate, firstVote: detail.linkedVotes.first)
+        VStack(alignment: .leading, spacing: ThemeTokens.Spacing.m) {
+            Text(Copy.verfahren).kicker()
+            MotionTimelineView(stages: stages)
+            if let stamp = MotionTimeline.statusStamp(
+                detail.antrag.beratungsstand, hasVote: !detail.linkedVotes.isEmpty)
+            {
+                StampView(label: stamp, color: stampColor(stamp))
+            }
+        }
+    }
+
+    private func stampColor(_ stamp: String) -> Color {
+        switch stamp {
+        case Copy.accepted: return ThemeColor.success
+        case Copy.rejected: return ThemeColor.danger
+        default: return ThemeColor.gray
+        }
+    }
+
+    @ViewBuilder private func subjects(_ antrag: MotionDetailPayload.Antrag) -> some View {
+        if !antrag.sachgebiet.isEmpty {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: ThemeTokens.Spacing.xs) {
+                    ForEach(antrag.sachgebiet, id: \.self) { topic in
+                        TopicChip(text: topic)
+                    }
+                }
+            }
+        }
+    }
+
+    @ViewBuilder private func summary(_ antrag: MotionDetailPayload.Antrag) -> some View {
+        VStack(alignment: .leading, spacing: ThemeTokens.Spacing.m) {
+            Text(Copy.proposalSummary).kicker()
             if let simplified = antrag.summarySimplified {
                 MarkdownText(markdown: simplified)
+                Text(Copy.aiNotice)
+                    .font(.system(size: ThemeTokens.Text.s))
+                    .foregroundStyle(ThemeColor.secondary)
+            } else if let abstract = antrag.abstract {
+                Text(abstract).font(.serif(ThemeTokens.Text.m))
             }
             if let detailText = antrag.summaryDetail {
                 MarkdownText(markdown: detailText)
             }
-            if antrag.summarySimplified != nil || antrag.summaryDetail != nil {
-                Text(Copy.aiNotice)
-                    .font(.system(size: ThemeTokens.Text.s))
-                    .foregroundStyle(ThemeColor.secondary)
-            }
         }
     }
 
-    @ViewBuilder
-    private func signatories(_ members: [MotionDetailPayload.Signatory]) -> some View {
+    @ViewBuilder private func signatories(_ members: [MotionDetailPayload.Signatory]) -> some View {
         if !members.isEmpty {
             VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
-                Text(Copy.signatoriesSection).kicker()
+                Text(Copy.broughtBy).kicker()
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: ThemeTokens.Spacing.s) {
                         ForEach(members) { member in
@@ -84,7 +130,7 @@ struct MotionDetailView: View {
                                 VStack(spacing: ThemeTokens.Spacing.xs) {
                                     MemberAvatar(
                                         name: member.displayName,
-                                        url: HTTPClient.absolute(member.portraitUrl), size: 48)
+                                        url: HTTPClient.absolute(member.portraitUrl), size: 48, circle: true)
                                     Text(member.displayName)
                                         .font(.system(size: 9))
                                         .foregroundStyle(ThemeColor.secondary)
@@ -100,35 +146,18 @@ struct MotionDetailView: View {
         }
     }
 
-    @ViewBuilder
-    private func linkedVotes(_ votes: [MotionDetailPayload.LinkedVote]) -> some View {
+    @ViewBuilder private func linkedVotes(_ votes: [MotionDetailPayload.LinkedVote]) -> some View {
         if !votes.isEmpty {
-            VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
-                Text(Copy.linkedVotesSection).kicker()
+            VStack(alignment: .leading, spacing: ThemeTokens.Spacing.m) {
+                Text(Copy.votesSection).kicker()
                 ForEach(votes) { vote in
-                    NavigationLink(value: AppRoute.vote(vote.id)) {
-                        HStack(spacing: ThemeTokens.Spacing.s) {
-                            StampView(label: vote.result.label, color: vote.result.color)
-                            VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
-                                Text(vote.cleanTitle)
-                                    .font(.system(size: ThemeTokens.Text.m))
-                                    .foregroundStyle(ThemeColor.fg)
-                                    .lineLimit(2)
-                                    .multilineTextAlignment(.leading)
-                                Text(Formatters.shortDate(vote.date)).kicker()
-                            }
-                            Spacer()
-                        }
-                        .padding(.vertical, ThemeTokens.Spacing.s)
-                    }
-                    .buttonStyle(.plain)
+                    MotionLinkedVoteCard(vote: vote)
                 }
             }
         }
     }
 
-    @ViewBuilder
-    private func links(_ antrag: MotionDetailPayload.Antrag) -> some View {
+    private func source(_ antrag: MotionDetailPayload.Antrag) -> some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
             if let pdf = antrag.drucksachePdfUrl, let url = HTTPClient.absolute(pdf) {
                 Link(Copy.motionPdf, destination: url)
