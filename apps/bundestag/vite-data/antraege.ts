@@ -35,8 +35,39 @@ type VoteRow = {
   vote_type: string
 }
 
+const CURRENT_TERM = 21
+
 function parseJson<T>(value: string | null, fallback: T): T {
   return value ? JSON.parse(value) as T : fallback
+}
+
+export function leanMotions(db: Database.Database) {
+  const rows = db.prepare(`
+    SELECT a.id, a.type, a.title, a.clean_title, a.drucksache, a.initiative_fraktion, a.introduced_date, a.beratungsstand
+    FROM antraege a
+    INNER JOIN antrag_descriptions ad ON ad.antrag_id = a.id
+    WHERE a.wahlperiode = ${CURRENT_TERM}
+    ORDER BY a.introduced_date DESC, a.id DESC
+  `).all() as Array<{
+    id: number
+    type: 'antrag' | 'gesetzentwurf'
+    title: string
+    clean_title: string | null
+    drucksache: string | null
+    initiative_fraktion: string | null
+    introduced_date: string | null
+    beratungsstand: string | null
+  }>
+  return rows.map((r) => ({
+    id: r.id,
+    type: r.type,
+    title: r.title,
+    cleanTitle: r.clean_title,
+    drucksache: r.drucksache,
+    initiativeFraktion: r.initiative_fraktion,
+    introducedDate: r.introduced_date,
+    beratungsstand: r.beratungsstand,
+  }))
 }
 
 function cleanAbstract(value: string | null) {

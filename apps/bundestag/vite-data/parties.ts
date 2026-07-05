@@ -137,7 +137,7 @@ export function fullParty(db: Database.Database, slug: string) {
   const stateByMember = new Map<string, string>()
   for (const r of stateRows) if (!stateByMember.has(r.member_id)) stateByMember.set(r.member_id, r.state)
   const memberRows = allMemberRows
-    .filter((m) => memberIds.has(m.id))
+    .filter((m) => memberIds.has(m.id) && stateByMember.has(m.id))
     .map((m) => ({ id: m.id, name: m.name, state: stateByMember.get(m.id) ?? '' }))
     .sort((a, b) => a.name.localeCompare(b.name, 'de'))
   const allSummaries = db.prepare(`
@@ -201,8 +201,8 @@ export function fullParty(db: Database.Database, slug: string) {
   }))
   const donationsTotalEur = donationRows.reduce((a, d) => a + d.amount_eur, 0)
   const seats = voteRows[0]?.members ?? 0
-  const avgCoh = summaries.reduce((a, s) => a + cohesion(s), 0) / Math.max(summaries.length, 1)
-  const avgAtt = summaries.reduce((a, s) => a + attendance(s), 0) / Math.max(summaries.length, 1)
+  const avgCoh = namentlich.reduce((a, s) => a + cohesion(s), 0) / Math.max(namentlich.length, 1)
+  const avgAtt = namentlich.reduce((a, s) => a + attendance(s), 0) / Math.max(namentlich.length, 1)
   return {
     slug,
     party,

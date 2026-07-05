@@ -96,8 +96,70 @@ type SpeechJoinRow = {
   vote_clean_title: string | null
 }
 
+type InitiativeRow = {
+  id: number
+  title: string
+  clean_title: string | null
+  beratungsstand: string | null
+  introduced_date: string | null
+  drucksache_pdf_url: string | null
+  sachgebiet: string | null
+}
+
+type InitiativeVoteRow = {
+  antrag_id: number
+  vote_id: string
+  date: string
+  title: string
+  clean_title: string | null
+  result: 'angenommen' | 'abgelehnt'
+}
+
 const PARTY_LINE_EXCLUDED = new Set(['fraktionslos', 'Bundesregierung'])
 const CURRENT_TERM = 21
+
+function loadInitiatives(db: Database.Database, memberId: string) {
+  const rows = db.prepare(`
+    SELECT a.id, a.title, a.clean_title, a.beratungsstand, a.introduced_date, a.drucksache_pdf_url, a.sachgebiet
+    FROM antrag_signatories ans
+    INNER JOIN antraege a ON a.id = ans.antrag_id
+    INNER JOIN antrag_descriptions ad ON ad.antrag_id = a.id
+    WHERE ans.member_id = ? AND a.wahlperiode = ${CURRENT_TERM}
+    ORDER BY a.introduced_date DESC
+  `).all(memberId) as InitiativeRow[]
+  const ids = rows.map((r) => r.id)
+  if (!ids.length) return []
+  const placeholders = ids.map(() => '?').join(', ')
+  const counts = new Map(
+    (db.prepare(`SELECT antrag_id, count(*) AS n FROM antrag_signatories WHERE antrag_id IN (${placeholders}) GROUP BY antrag_id`)
+      .all(...ids) as Array<{ antrag_id: number; n: number }>).map((r) => [r.antrag_id, r.n]),
+  )
+  const voteRows = db.prepare(`
+    SELECT va.antrag_id, v.id AS vote_id, v.date, v.title, v.clean_title, v.result
+    FROM vote_antraege va
+    INNER JOIN votes v ON v.id = va.vote_id
+    WHERE va.antrag_id IN (${placeholders}) AND v.term_id = ${CURRENT_TERM} AND v.procedural = 0 AND v.vote_type != 'hammelsprung'
+    ORDER BY v.date DESC
+  `).all(...ids) as InitiativeVoteRow[]
+  const votesByAntrag = new Map<number, Array<{ voteId: string; date: string; title: string; cleanTitle: string; result: 'angenommen' | 'abgelehnt' }>>()
+  for (const r of voteRows) {
+    const titled = requireVoteCleanTitle({ id: r.vote_id, title: r.title, cleanTitle: r.clean_title })
+    const arr = votesByAntrag.get(r.antrag_id) ?? []
+    arr.push({ voteId: r.vote_id, date: r.date, title: titled.title, cleanTitle: titled.cleanTitle, result: r.result })
+    votesByAntrag.set(r.antrag_id, arr)
+  }
+  return rows.map((r) => ({
+    antragId: r.id,
+    title: r.title,
+    cleanTitle: r.clean_title,
+    beratungsstand: r.beratungsstand,
+    introducedDate: r.introduced_date,
+    drucksachePdfUrl: r.drucksache_pdf_url,
+    sachgebiet: r.sachgebiet ? JSON.parse(r.sachgebiet) as string[] : [],
+    signatoryCount: counts.get(r.id) ?? 1,
+    linkedVotes: votesByAntrag.get(r.id) ?? [],
+  }))
+}
 
 function partyAt(affiliations: AffiliationRow[], date: string): string {
   const hit = affiliations.find((a) => a.valid_from <= date && (a.valid_to === null || a.valid_to >= date))
@@ -253,6 +315,7 @@ export function fullMember(db: Database.Database, id: string) {
     defections,
     history,
     speeches,
+    initiatives: loadInitiatives(db, id),
     pictureUrl: resolvePictureUrl(id, m.picture_url),
     pictureAuthor: m.picture_author,
     pictureLicense: m.picture_license,

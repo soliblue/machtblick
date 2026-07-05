@@ -98,12 +98,12 @@ function partyAt(affiliations: AffiliationRow[], date: string): string {
 
 export function leanVotes(db: Database.Database) {
   const rows = db.prepare(`
-    SELECT id, date, title, clean_title, initiator, result, yes, no, abstain, absent, vote_type, bundestag_id
+    SELECT id, date, title, clean_title, topic, summary_simplified, initiator, result, yes, no, abstain, absent, vote_type, bundestag_id
     FROM votes WHERE term_id = ${CURRENT_TERM} AND procedural = 0 AND vote_type != 'hammelsprung'
     ORDER BY date DESC, bundestag_id DESC
-  `).all() as Array<Pick<VoteRow, 'id' | 'date' | 'title' | 'clean_title' | 'initiator' | 'result' | 'yes' | 'no' | 'abstain' | 'absent' | 'vote_type' | 'bundestag_id'>>
+  `).all() as Array<Pick<VoteRow, 'id' | 'date' | 'title' | 'clean_title' | 'topic' | 'summary_simplified' | 'initiator' | 'result' | 'yes' | 'no' | 'abstain' | 'absent' | 'vote_type' | 'bundestag_id'>>
   rows.sort(compareVotesNewest)
-  const allSummaries = db.prepare('SELECT vote_id, party, position, members FROM vote_party_summaries').all() as SummaryRow[]
+  const allSummaries = db.prepare('SELECT vote_id, party, position, members, yes, no, abstain, absent FROM vote_party_summaries').all() as SummaryRow[]
   const seatsByParty = new Map<string, number>()
   const byVote = new Map<string, SummaryRow[]>()
   for (const s of allSummaries) {
@@ -120,14 +120,21 @@ export function leanVotes(db: Database.Database) {
   }
   return rows.map((v) => {
     const titled = requireVoteCleanTitle({ id: v.id, title: v.title, cleanTitle: v.clean_title })
-    if (v.vote_type === 'namentlich' && v.yes != null) {
-      return {
-        id: v.id, title: titled.title, cleanTitle: titled.cleanTitle, date: v.date,
-        result: v.result, initiator: v.initiator,
-        yes: v.yes, no: v.no!, abstain: v.abstain!, absent: v.absent!,
-      }
-    }
     const summaries = byVote.get(v.id) ?? []
+    const partySummaries = summaries.map((s) =>
+      v.vote_type === 'namentlich'
+        ? { party: s.party, position: s.position, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0 }
+        : { party: s.party, position: s.position, yes: 0, no: 0, abstain: 0, absent: 0 },
+    )
+    const base = {
+      id: v.id, title: titled.title, cleanTitle: titled.cleanTitle, date: v.date,
+      result: v.result, initiator: v.initiator,
+      voteType: v.vote_type, topic: v.topic, summarySimplified: v.summary_simplified,
+      partySummaries,
+    }
+    if (v.vote_type === 'namentlich' && v.yes != null) {
+      return { ...base, yes: v.yes, no: v.no!, abstain: v.abstain!, absent: v.absent! }
+    }
     let yes = 0, no = 0, abstain = 0
     for (const s of summaries) {
       const seats = seatsByParty.get(s.party) ?? 0
@@ -135,11 +142,7 @@ export function leanVotes(db: Database.Database) {
       else if (s.position === 'no') no += seats
       else if (s.position === 'abstain') abstain += seats
     }
-    return {
-      id: v.id, title: titled.title, cleanTitle: titled.cleanTitle, date: v.date,
-      result: v.result, initiator: v.initiator,
-      yes, no, abstain, absent: 0,
-    }
+    return { ...base, yes, no, abstain, absent: 0 }
   })
 }
 
@@ -270,11 +273,19 @@ export function fullVote(db: Database.Database, id: string) {
       LIMIT 1
     `).get(id) as { url: string } | undefined)?.url
     ?? null
+  const linkedAntraege = db.prepare(`
+    SELECT a.id, a.type, a.drucksache
+    FROM vote_antraege va
+    INNER JOIN antraege a ON a.id = va.antrag_id
+    WHERE va.vote_id = ?
+    ORDER BY a.id
+  `).all(id) as Array<{ id: number; type: 'antrag' | 'gesetzentwurf'; drucksache: string | null }>
   return {
     vote,
     documents: documents.map((d) => ({
       id: d.id, voteId: d.vote_id, label: d.label, title: d.title, url: d.url,
     })),
+    antraege: linkedAntraege.map((a) => ({ antragId: a.id, type: a.type, drucksache: a.drucksache })),
     partySummaries,
     proposingParty: vote.initiator,
     defectors,

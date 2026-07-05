@@ -8,7 +8,7 @@ import Database from 'better-sqlite3'
 import { leanVotes, fullVote } from './vite-data/votes'
 import { leanMembers, fullMember } from './vite-data/members'
 import { leanParties, fullParty } from './vite-data/parties'
-import { fullAntrag } from './vite-data/antraege'
+import { fullAntrag, leanMotions } from './vite-data/antraege'
 import { resolvePictureUrl } from './src/server/photoManifest'
 import { plainDescription } from './src/lib/seo'
 
@@ -309,6 +309,7 @@ function writeJsonEndpoints() {
   writeFileSync(`${publicDir}/api/votes.json`, JSON.stringify(leanVotes(db)))
   writeFileSync(`${publicDir}/api/members.json`, JSON.stringify(leanMembers(db)))
   writeFileSync(`${publicDir}/api/parties.json`, JSON.stringify(leanParties(db)))
+  writeFileSync(`${publicDir}/api/motions.json`, JSON.stringify(leanMotions(db)))
   const voteIds = db.prepare("SELECT id FROM votes WHERE term_id = ? AND procedural = 0 AND vote_type != 'hammelsprung'").all(CURRENT_TERM) as Array<{ id: string }>
   rmSync(`${publicDir}/votes`, { force: true, recursive: true })
   mkdirSync(`${publicDir}/votes`, { recursive: true })
