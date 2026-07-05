@@ -1,0 +1,84 @@
+name: Deploy iOS to TestFlight
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'ios-v*'
+
+concurrency:
+  group: ios-testflight
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: macos-15
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.2.app
+          xcodebuild -version
+
+      - name: Install fastlane
+        run: gem install fastlane
+
+      - name: Decode certificate
+        env:
+          DISTRIBUTION_CERTIFICATE_BASE64: ${{ secrets.DISTRIBUTION_CERTIFICATE_BASE64 }}
+        run: |
+          mkdir -p certs
+          echo "$DISTRIBUTION_CERTIFICATE_BASE64" | base64 --decode > certs/distribution.p12
+
+      - name: Install provisioning profile
+        env:
+          PROVISIONING_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
+        run: |
+          mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
+          echo "$PROVISIONING_PROFILE_BASE64" | base64 --decode > /tmp/machtblick.mobileprovision
+          security cms -D -i /tmp/machtblick.mobileprovision > /tmp/machtblick.mobileprovision.plist
+          PROFILE_UUID="$(/usr/libexec/PlistBuddy -c 'Print UUID' /tmp/machtblick.mobileprovision.plist)"
+          PROFILE_NAME="$(/usr/libexec/PlistBuddy -c 'Print Name' /tmp/machtblick.mobileprovision.plist)"
+          cp /tmp/machtblick.mobileprovision "$HOME/Library/MobileDevice/Provisioning Profiles/$PROFILE_UUID.mobileprovision"
+          echo "PROVISIONING_PROFILE_NAME=$PROFILE_NAME" >> "$GITHUB_ENV"
+
+      - name: Debug signing state
+        run: |
+          security list-keychains
+          security find-identity -v -p codesigning || true
+          ls -la "$HOME/Library/MobileDevice/Provisioning Profiles/" || true
+
+      - name: Install cert-cleanup dependencies
+        run: pip3 install --break-system-packages requests cryptography
+
+      - name: Snapshot dev certs before build
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+        run: python3 .github/scripts/asc_certs.py snapshot /tmp/certs-before.json
+
+      - name: Build and upload to TestFlight
+        env:
+          DISTRIBUTION_CERTIFICATE_PASSWORD: ${{ secrets.DISTRIBUTION_CERTIFICATE_PASSWORD }}
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+        run: |
+          cd fastlane
+          fastlane ios beta_local
+
+      - name: Revoke dev cert created by this run
+        if: always()
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+        run: python3 .github/scripts/asc_certs.py revoke-new /tmp/certs-before.json
+
+      - name: Cleanup
+        if: always()
+        run: rm -rf certs/

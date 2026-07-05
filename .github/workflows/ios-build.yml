@@ -1,0 +1,35 @@
+name: iOS Build
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'apps/ios/**'
+      - '.github/workflows/ios-build.yml'
+
+concurrency:
+  group: ios-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: |
+          sudo xcode-select -s /Applications/Xcode_26.2.app
+          xcodebuild -version
+
+      - name: Build without signing
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project apps/ios/iOS.xcodeproj \
+            -scheme Machtblick \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath /tmp/machtblick-build \
+            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO

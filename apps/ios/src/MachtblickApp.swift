@@ -1,0 +1,36 @@
+import SwiftData
+import SwiftUI
+
+@main
+struct MachtblickApp: App {
+    let container: ModelContainer
+    let cache: ApiCache
+    @State private var motionLink: MotionLink?
+
+    init() {
+        container = try! ModelContainer(for: CachedPayload.self)
+        cache = ApiCache(context: container.mainContext)
+        FontRegistrar.registerBundledFonts()
+    }
+
+    var body: some Scene {
+        WindowGroup {
+            RootTabView(cache: cache)
+                .preferredColorScheme(.light)
+                .sheet(item: $motionLink) { link in
+                    NavigationStack {
+                        MotionDetailView(id: link.id, cache: cache)
+                            .appDestinations(cache: cache)
+                    }
+                }
+                .onOpenURL { url in
+                    if url.scheme == "machtblick", url.host() == "motions",
+                        let id = Int(url.lastPathComponent)
+                    {
+                        motionLink = MotionLink(id: id)
+                    }
+                }
+        }
+        .modelContainer(container)
+    }
+}
