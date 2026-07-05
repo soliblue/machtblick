@@ -36,7 +36,7 @@ export function PartyDetailTabs({ partyId, votes }: Props) {
             className: '-mb-px py-m text-center text-l font-semibold opacity-100 border-b-2 border-fg bg-surface',
           }}
         >
-          {t.label}{t.to.includes('/votes/') && <span className="font-regular opacity-m tabular-nums"> {votes}</span>}
+          {t.label}
         </Link>
       ))}
     </nav>

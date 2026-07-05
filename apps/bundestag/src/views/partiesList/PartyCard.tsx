@@ -13,7 +13,7 @@ export function PartyCard({ party, totalSeats }: Props) {
   const label = partyLabel(party.party, locale)
   const share = totalSeats > 0 ? Math.round((party.seats / totalSeats) * 100) : 0
   return (
-    <div className="relative flex flex-col border border-fg/15 bg-background p-m shadow-[0_1px_3px_rgba(10,10,10,0.08),0_6px_16px_rgba(10,10,10,0.07)] transition-opacity hover:opacity-80 desk:p-l">
+    <div className="relative flex flex-col py-m transition-opacity hover:opacity-80 desk:py-l">
       <a
         href={withLocale(`/parties/${party.slug}/profile/`, locale)}
         className="absolute inset-0 z-10"

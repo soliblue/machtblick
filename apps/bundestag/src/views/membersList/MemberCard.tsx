@@ -12,7 +12,7 @@ export function MemberCard({ member }: Props) {
   const t = useCopy()
   const locale = useLocale()
   return (
-    <div className="relative flex flex-col border border-fg/15 bg-background shadow-[0_1px_3px_rgba(10,10,10,0.08),0_6px_16px_rgba(10,10,10,0.07)] transition-opacity hover:opacity-80">
+    <div className="relative flex flex-col border border-fg/15 bg-background transition-opacity hover:opacity-80">
       <a
         href={withLocale(`/members/${member.id}/votes/`, locale)}
         className="absolute inset-0 z-10"

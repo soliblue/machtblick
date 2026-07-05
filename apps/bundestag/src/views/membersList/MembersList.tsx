@@ -62,26 +62,6 @@ export function MembersList({
   onSort,
 }: Props) {
   const t = useCopy()
-  const locale = useLocale()
-  const sheetGroups: FilterSheetGroup[] = [
-    { key: 'party', label: t.parliamentaryGroup, options: availableParties, value: party, onChange: onPartyChange, format: (o) => partyLabel(o, locale) },
-    { key: 'state', label: t.state, options: availableStates, value: state, onChange: onStateChange, format: (o) => o },
-    { key: 'sex', label: t.sex, options: availableSexes, value: sex, onChange: (v) => onSexChange(isSex(v) ? v : null), format: (o) => (isSex(o) ? t.sexLabels[o] : o) },
-    { key: 'age', label: t.age, options: availableAgeBuckets, value: ageBucket, onChange: (v) => onAgeBucketChange(isAgeBucket(v) ? v : null), format: (o) => (isAgeBucket(o) ? t.ageLabels[o] : o) },
-    { key: 'mandate', label: t.mandate, options: availableMandateTypes, value: mandateType, onChange: (v) => onMandateTypeChange(isMandateType(v) ? v : null), format: (o) => (isMandateType(o) ? t.mandateLabels[o] : o) },
-  ]
-  const sheetSort: FilterSheetSort = {
-    label: t.sortLabel,
-    options: [
-      { key: 'name', label: t.name },
-      { key: 'attendance', label: t.attendance },
-      { key: 'loyalty', label: t.line },
-    ],
-    value: sortKey,
-    dir: sortDir,
-    onSelect: (k) => onSort(k as MemberSortKey),
-  }
-  const activeCount = [party, state, sex, ageBucket, mandateType].filter(Boolean).length
   return (
     <>
       <div className="mx-auto max-w-5xl px-l pb-m pt-l">
@@ -97,7 +77,7 @@ export function MembersList({
           />
         </div>
       </div>
-      <div className="sticky top-[54px] z-20 hidden border-b border-fg/15 bg-background desk:block">
+      <div className="sticky top-[54px] z-20 border-b border-fg/15 bg-background">
         <div className="px-l py-s desk:mx-auto desk:max-w-5xl">
           <FilterPillRow className="">
             <FilterPill label={t.parliamentaryGroup} options={availableParties} value={party} onChange={onPartyChange} />
@@ -126,13 +106,11 @@ export function MembersList({
           </FilterPillRow>
         </div>
       </div>
-      <main className="mx-auto max-w-5xl px-l pb-[96px] pt-l desk:pb-[64px]">
+      <main className="mx-auto max-w-5xl px-l pb-[64px] pt-l">
         <MembersStatsStrip stats={stats} />
         <div className="mb-m mt-l flex items-center justify-between">
           <span className="text-s caption opacity-l">{members.length} {t.people}</span>
-          <div className="hidden desk:block">
-            <SortControl sortKey={sortKey} sortDir={sortDir} onSort={onSort} />
-          </div>
+          <SortControl sortKey={sortKey} sortDir={sortDir} onSort={onSort} />
         </div>
         {members.length === 0 ? (
           <p className="py-xl text-center text-s opacity-l">{t.noMembersFound}</p>
@@ -142,9 +120,6 @@ export function MembersList({
           </div>
         )}
       </main>
-      <div className="desk:hidden">
-        <FilterSheet groups={sheetGroups} activeCount={activeCount} sort={sheetSort} />
-      </div>
     </>
   )
 }

@@ -14,7 +14,7 @@ export const COPY = {
     title: 'Impressum',
     whatHeading: 'Was ist Machtblick',
     whatBody:
-      'Machtblick ist das Projekt eines einzelnen deutschen Bürgers, der mit Hilfe von KI Werkzeuge baut, die die Arbeit des Bundestages und der Regierung zugänglicher machen. Keine Kommentare, keine politische Position, kein Aktivismus. Es geht darum, öffentliche Quellen in eine Oberfläche zu übersetzen, die für die Allgemeinheit nutzbar ist.',
+      'Machtblick macht die Arbeit des Bundestages und der Regierung zugänglicher. Öffentliche Quellen werden mit Hilfe von KI in eine Oberfläche übersetzt, die für die Allgemeinheit nutzbar ist. Keine Kommentare, keine politische Position, kein Aktivismus.',
     sourcesHeading: 'Datenquellen',
     bundestagHeading: 'Deutscher Bundestag',
     sourcesBundestag: [
@@ -40,14 +40,15 @@ export const COPY = {
       { label: 'Mitmachen', email: 'mitmachen@machtblick.de' },
     ],
     operatorHeading: 'Zur Person',
-    operatorBody:
-      'Aus Datenschutzgründen werden Name und Anschrift des Betreibers hier nicht veröffentlicht. Sollte das Projekt größere Verbreitung finden, wird dies angepasst.',
+    operatorBody: 'Machtblick ist ein Projekt von ',
+    operatorName: 'Ahmed Soliman',
+    operatorUrl: 'https://soli.blue',
   },
   en: {
     title: 'Imprint',
     whatHeading: 'What Machtblick is',
     whatBody:
-      'Machtblick is the project of one German citizen building AI-assisted tools that make the work of the Bundestag and the Federal Government easier to access. No commentary, no political position, no activism. The aim is to translate public sources into an interface that the public can actually use.',
+      'Machtblick makes the work of the Bundestag and the Federal Government easier to access. Public sources are translated with the help of AI into an interface the public can actually use. No commentary, no political position, no activism.',
     sourcesHeading: 'Data sources',
     bundestagHeading: 'German Bundestag',
     sourcesBundestag: [
@@ -73,7 +74,8 @@ export const COPY = {
       { label: 'Contribute', email: 'mitmachen@machtblick.de' },
     ],
     operatorHeading: 'About the operator',
-    operatorBody:
-      'For privacy reasons, the name and address of the operator are not published here. If the project gains wider distribution, this will be adjusted.',
+    operatorBody: 'Machtblick is a project by ',
+    operatorName: 'Ahmed Soliman',
+    operatorUrl: 'https://soli.blue',
   },
 }

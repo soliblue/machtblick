@@ -26,7 +26,6 @@ export function Nav() {
         <a href={href('/votes/')} onClick={() => setOpen(false)} aria-label="Machtblick"><ScrollEyeWordmark /></a>
         <div className="ml-auto hidden gap-l opacity-l sm:flex">
           <a href={href('/votes/')} className={linkClass}>{t.navVotes}</a>
-          <a href={href('/motions/')} className={linkClass}>{t.navMotions}</a>
           <a href={href('/members/')} className={linkClass}>{t.navMembers}</a>
           <a href={href('/speeches/')} className={linkClass}>{t.navSpeeches}</a>
           <a href={href('/parties/')} className={linkClass}>{t.navParties}</a>
@@ -71,7 +70,6 @@ export function Nav() {
       {open && (
         <div className="flex flex-col gap-m px-l pb-m text-m opacity-l sm:hidden">
           <a href={href('/votes/')} className={linkClass} onClick={() => setOpen(false)}>{t.navVotes}</a>
-          <a href={href('/motions/')} className={linkClass} onClick={() => setOpen(false)}>{t.navMotions}</a>
           <a href={href('/members/')} className={linkClass} onClick={() => setOpen(false)}>{t.navMembers}</a>
           <a href={href('/speeches/')} className={linkClass} onClick={() => setOpen(false)}>{t.navSpeeches}</a>
           <a href={href('/parties/')} className={linkClass} onClick={() => setOpen(false)}>{t.navParties}</a>

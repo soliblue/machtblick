@@ -22,7 +22,7 @@ export function AntragVoteResult({ vote }: Props) {
   return (
     <section
       aria-label={[vote.cleanTitle, accepted ? t.accepted : t.rejected, `${t.yes} ${vote.yes}`, `${t.no} ${vote.no}`, `${t.abstention} ${vote.abstain}`].join(' · ')}
-      className="relative mb-m border border-fg/15 bg-background p-l shadow-[0_1px_3px_rgba(10,10,10,0.08),0_6px_16px_rgba(10,10,10,0.07)]"
+      className="relative mb-m border border-fg/15 bg-background p-l"
       style={{ borderTop: `3px solid ${accepted ? 'var(--color-success)' : 'var(--color-danger)'}` }}
     >
       <div

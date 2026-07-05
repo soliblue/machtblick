@@ -14,7 +14,7 @@ export function MemberPortrait({ name, pictureUrl, pictureAuthor, pictureLicense
   return (
     <div className="flex w-[112px] shrink-0 flex-col gap-xs desk:w-[128px]">
       {pictureUrl ? (
-        <img src={pictureUrl} alt={name} className="h-[112px] w-[112px] object-cover desk:h-[128px] desk:w-[128px]" />
+        <img src={pictureUrl} alt={name} className="h-[112px] w-[112px] rounded-full object-cover desk:h-[128px] desk:w-[128px]" />
       ) : (
         <div className="flex h-[112px] w-[112px] items-center justify-center bg-surface text-xl font-semibold opacity-m desk:h-[128px] desk:w-[128px]">
           {initials(name)}

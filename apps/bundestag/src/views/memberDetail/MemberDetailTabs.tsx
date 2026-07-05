@@ -39,13 +39,13 @@ export function MemberDetailTabs({ memberId, votes, speeches, proposals }: Props
           key={tab.to}
           to={tab.to}
           params={{ id: memberId }}
-          className="-mb-px border-b-2 border-transparent py-m text-center text-l font-regular opacity-l transition-opacity hover:opacity-100"
+          className="-mb-px border-b-2 border-transparent py-m text-center text-m font-regular opacity-l transition-opacity hover:opacity-100"
           style={i > 0 ? { borderLeft: '1px solid color-mix(in oklab, var(--color-fg) 15%, transparent)' } : undefined}
           activeProps={{
-            className: '-mb-px py-m text-center text-l font-semibold opacity-100 border-b-2 border-fg bg-surface',
+            className: '-mb-px py-m text-center text-m font-semibold opacity-100 border-b-2 border-fg bg-surface',
           }}
         >
-          {tab.label} <span className="font-regular opacity-m tabular-nums">{counts[tab.count]}</span>
+          <span className="block truncate">{tab.label}</span>
         </Link>
       ))}
     </nav>

@@ -67,7 +67,13 @@ export function Impressum() {
       </dl>
 
       <h2 className={CAPTION}>{c.operatorHeading}</h2>
-      <p className={PROSE}>{c.operatorBody}</p>
+      <p className={PROSE}>
+        {c.operatorBody}
+        <a href={c.operatorUrl} target="_blank" rel="noreferrer" className="underline underline-offset-4">
+          {c.operatorName}
+        </a>
+        .
+      </p>
     </main>
   )
 }

@@ -26,9 +26,9 @@ export function MembersStatsStrip({ stats }: Props) {
 
 function Tile({ label, children, hideOnMobile = false }: { label: string; children: ReactNode; hideOnMobile?: boolean }) {
   return (
-    <div className={`${hideOnMobile ? 'hidden desk:flex' : 'flex'} flex-col border border-fg/15 bg-background p-m shadow-[0_1px_3px_rgba(10,10,10,0.08),0_6px_16px_rgba(10,10,10,0.07)]`}>
-      <span className="text-s caption opacity-l">{label}</span>
-      <div className="mx-auto mt-s w-full max-w-[140px]">{children}</div>
+    <div className={`${hideOnMobile ? 'hidden desk:flex' : 'flex'} flex-col p-m`}>
+      <div className="mx-auto w-full max-w-[140px]">{children}</div>
+      <span className="mt-s text-center text-s caption opacity-l">{label}</span>
     </div>
   )
 }

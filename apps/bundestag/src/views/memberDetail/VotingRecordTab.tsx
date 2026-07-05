@@ -3,7 +3,6 @@ import { formatDateShort } from '@/lib/format'
 import { FilterPill } from '@/views/votesList/FilterPill'
 import { FilterPillRow } from '@/views/votesList/FilterPillRow'
 import { VoteChoicePill } from './VoteChoicePill'
-import { ChoiceFingerprintBar } from './ChoiceFingerprintBar'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
 
@@ -37,7 +36,6 @@ export function VotingRecordTab({ history, lineFilter, setLineFilter, choiceFilt
   })
   return (
     <div className="flex flex-col">
-      <ChoiceFingerprintBar history={history} choiceFilter={choiceFilter} setChoiceFilter={setChoiceFilter} />
       <FilterPillRow className="mb-m">
         <FilterPill
           label={t.line}

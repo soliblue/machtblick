@@ -71,7 +71,7 @@ Tokens are fixed. Reach for one of these before inventing a value.
 
 The card language, settled in plan 102 on `/votes/` (reference mock `apps/bundestag/src/views/votesList/votesList.mock.md`); every remaining view converges on it:
 
-- Cards are white (`background`) with a 1px `text @ opacity-s` border plus a soft double shadow (`0 1px 3px` at 8% + `0 6px 16px` at 7%), radius 0, padding `l`
+- Cards are white (`background`) with a 1px `text @ opacity-s` border, no shadow (user removed all card shadows 2026-07-05; shadows only on true overlays like the Reader sheet), radius 0, padding `l`
 - Verdict/status rides the top edge: 3px top border in the status color, a small semibold uppercase white chip in the same color straddling it, centered. Text always straight, never rotated
 - Vote result colors: Ja `success`, Nein `danger`, Enthaltung `yellow` (neutral `fg @ opacity-m` inside the hemicycle dot mass), Abwesend faint `fg @ opacity-s`
 - The hemicycle is the canonical result viz (one dot = one seat, absences visible); per-party breakdown = mini donut row sorted Ja-share left to Nein-share right, mixed party = semibold label

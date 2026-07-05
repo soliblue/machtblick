@@ -89,12 +89,12 @@ export function VotesList({ groups, proposingParty, onProposingPartyChange, avai
       <div className="desk:hidden">
         <FilterSheet groups={sheetGroups} activeCount={activeCount} />
         {flat.map((v) => (
-          <div key={v.id} id={v.id} className="h-[calc(100svh-96px)] snap-start snap-always px-m pt-s">
+          <div key={v.id} id={v.id} className="h-[calc(100svh-96px)] snap-start snap-always px-m pt-l">
             <VoteCard vote={v} />
           </div>
         ))}
       </div>
-      <main className="mx-auto hidden max-w-3xl flex-col gap-l px-l pb-[64px] pt-xl desk:flex">
+      <main className="mx-auto hidden max-w-3xl flex-col gap-xl px-l pb-[64px] pt-xl desk:flex">
         {flat.map((v) => (
           <div key={v.id} id={`d-${v.id}`}>
             <VoteCard vote={v} />
