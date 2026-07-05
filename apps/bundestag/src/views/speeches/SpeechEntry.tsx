@@ -1,7 +1,7 @@
 import { ChevronRight } from 'lucide-react'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { SpeakerAvatar } from './SpeakerAvatar'
-import { CHOICE_STANCE, StanceText } from './StanceText'
+import { Stamp } from '@/views/votesList/Stamp'
 import { highlight, tokenize } from '@/lib/highlight'
 import { renderSnippet } from '@/lib/snippet'
 import { SERIF } from '@/lib/fonts'
@@ -67,7 +67,7 @@ export function SpeechEntry({ speech, mode, choice = null, pictureUrl = null, vo
         <div className="mt-xs flex flex-wrap items-center gap-s">
           {speech.party && <PartyBadge party={speech.party} compact logoSize={16} />}
           {speech.speakerRole && <span className="text-s caption opacity-l">{speech.speakerRole}</span>}
-          {choice && <StanceText stance={CHOICE_STANCE[choice]}>{{ ja: t.yes, nein: t.no, enthalten: t.abstain }[choice]}</StanceText>}
+          {choice && <Stamp variant={choice === 'enthalten' ? 'enthalten' : choice} rotated={false} />}
         </div>
       )}
     </div>

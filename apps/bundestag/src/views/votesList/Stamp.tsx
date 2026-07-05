@@ -13,7 +13,7 @@ export type StampVariant =
   | 'beschlussempfehlung'
   | 'nicht-beraten'
 
-export type StanceStampVariant = 'dafuer' | 'dagegen' | 'enthalten' | 'gespalten'
+export type StanceStampVariant = 'dafuer' | 'dagegen' | 'enthalten' | 'gespalten' | 'ja' | 'nein'
 
 const STANCE_LABEL: Partial<Record<StampVariant | StanceStampVariant, 'yes' | 'no' | 'abstain' | 'split'>> = {
   dafuer: 'yes',
@@ -21,6 +21,8 @@ const STANCE_LABEL: Partial<Record<StampVariant | StanceStampVariant, 'yes' | 'n
   enthalten: 'abstain',
   gespalten: 'split',
 }
+
+const BALLOT_LABEL: Partial<Record<StanceStampVariant, 'yes' | 'no'>> = { ja: 'yes', nein: 'no' }
 
 const config: Record<StampVariant | StanceStampVariant, { color: string; rotate: number; opacity?: number }> = {
   angenommen: { color: 'var(--color-success)', rotate: -4, opacity: 0.85 },
@@ -38,6 +40,8 @@ const config: Record<StampVariant | StanceStampVariant, { color: string; rotate:
   dagegen: { color: 'var(--color-danger)', rotate: -5, opacity: 0.85 },
   enthalten: { color: 'var(--color-yellow)', rotate: 4, opacity: 0.85 },
   gespalten: { color: 'var(--color-fg)', rotate: 3, opacity: 0.75 },
+  ja: { color: 'var(--color-success)', rotate: -4, opacity: 0.85 },
+  nein: { color: 'var(--color-danger)', rotate: -5, opacity: 0.85 },
 }
 
 type Props = { variant: StampVariant | StanceStampVariant; size?: 's' | 'm'; rotated?: boolean }
@@ -65,7 +69,11 @@ export function Stamp({ variant, size = 's', rotated = true }: Props) {
         filter: 'url(#stamp-grunge) contrast(1.1)',
       }}
     >
-      {STANCE_LABEL[variant] ? t.stanceLabels[STANCE_LABEL[variant]] : t.stampClose[variant as StampVariant]}
+      {BALLOT_LABEL[variant as StanceStampVariant]
+        ? { yes: t.yes, no: t.no }[BALLOT_LABEL[variant as StanceStampVariant]!]
+        : STANCE_LABEL[variant]
+          ? t.stanceLabels[STANCE_LABEL[variant]]
+          : t.stampClose[variant as StampVariant]}
     </span>
   )
 }
