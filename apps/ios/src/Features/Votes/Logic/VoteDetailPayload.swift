@@ -53,6 +53,12 @@ struct VoteDetailPayload: Decodable {
         let dissentNote: String?
 
         var id: String { party }
+
+        var counts: PartyVoteSummary {
+            PartyVoteSummary(
+                party: party, position: position, members: members, yes: yes, no: no,
+                abstain: abstain, absent: absent)
+        }
     }
 
     struct DefectorMember: Decodable, Identifiable {
@@ -95,8 +101,17 @@ struct VoteDetailPayload: Decodable {
         let excerpt: String
     }
 
+    struct Antrag: Decodable, Identifiable {
+        let antragId: Int
+        let type: String
+        let drucksache: String?
+
+        var id: Int { antragId }
+    }
+
     let vote: Info
     let documents: [Document]
+    let antraege: [Antrag]?
     let partySummaries: [PartySummary]
     let proposingParty: String?
     let defectors: [DefectorGroup]

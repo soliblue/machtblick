@@ -30,6 +30,46 @@ extension BallotChoice {
     }
 }
 
+extension VoteChoice {
+    var color: Color {
+        switch self {
+        case .yes: return ThemeColor.success
+        case .no: return ThemeColor.danger
+        case .abstain: return ThemeColor.yellow
+        case .absent: return ThemeColor.fg.opacity(ThemeTokens.Opacity.m)
+        }
+    }
+
+    var label: String {
+        switch self {
+        case .yes: return Copy.yes
+        case .no: return Copy.no
+        case .abstain: return Copy.abstain
+        case .absent: return Copy.absent
+        }
+    }
+}
+
+extension Stance {
+    var color: Color {
+        switch self {
+        case .yes: return ThemeColor.success
+        case .no: return ThemeColor.danger
+        case .abstain: return ThemeColor.yellow
+        case .split: return ThemeColor.fg
+        }
+    }
+
+    var label: String {
+        switch self {
+        case .yes: return Copy.positionYes
+        case .no: return Copy.positionNo
+        case .abstain: return Copy.positionAbstain
+        case .split: return Copy.positionMixed
+        }
+    }
+}
+
 extension PartyPosition {
     var color: Color {
         switch self {

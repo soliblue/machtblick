@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct PartyDonutRow: View {
-    let summaries: [VoteDetailPayload.PartySummary]
+    let summaries: [PartyVoteSummary]
 
     var body: some View {
         HStack(alignment: .top, spacing: ThemeTokens.Spacing.s) {
@@ -12,11 +12,9 @@ struct PartyDonutRow: View {
                     )
                     .frame(width: 44, height: 44)
                     Text(PartyStyle.label(summary.party))
-                        .font(.system(size: 9, weight: summary.position == .mixed ? .semibold : .regular))
+                        .font(.system(size: 9, weight: emphasized(summary) ? .semibold : .regular))
                         .textCase(.uppercase)
-                        .foregroundStyle(
-                            summary.position == .mixed ? ThemeColor.fg : ThemeColor.secondary
-                        )
+                        .foregroundStyle(emphasized(summary) ? ThemeColor.fg : ThemeColor.secondary)
                         .lineLimit(1)
                         .minimumScaleFactor(0.8)
                 }
@@ -25,9 +23,14 @@ struct PartyDonutRow: View {
         }
     }
 
-    private var ordered: [VoteDetailPayload.PartySummary] {
+    private func emphasized(_ summary: PartyVoteSummary) -> Bool {
+        summary.position == .mixed || summary.position == .split
+    }
+
+    private var ordered: [PartyVoteSummary] {
         summaries.sorted {
-            Double($0.yes) / Double(max($0.members, 1)) > Double($1.yes) / Double(max($1.members, 1))
+            Double($0.yes) / Double(max($0.memberCount, 1))
+                > Double($1.yes) / Double(max($1.memberCount, 1))
         }
     }
 }

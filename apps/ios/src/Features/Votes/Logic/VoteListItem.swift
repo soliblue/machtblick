@@ -11,6 +11,10 @@ struct VoteListItem: Decodable, Identifiable {
     let no: Int
     let abstain: Int
     let absent: Int
+    let voteType: String?
+    let topic: String?
+    let summarySimplified: String?
+    let partySummaries: [PartyVoteSummary]?
 
     var totalMembers: Int {
         yes + no + abstain + absent

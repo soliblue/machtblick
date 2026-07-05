@@ -19,6 +19,24 @@ enum PartyStyle {
         }
     }
 
+    static func slug(_ party: String) -> String {
+        switch party {
+        case "CDU/CSU": return "cdu-csu"
+        case "SPD": return "spd"
+        case "AfD": return "afd"
+        case "B90/Grüne": return "gruene"
+        case "Die Linke": return "linke"
+        case "fraktionslos": return "fraktionslos"
+        case "Bundesregierung": return "bundesregierung"
+        default: return party
+        }
+    }
+
+    static func hasPartyLine(_ party: String) -> Bool {
+        !party.isEmpty && party != "fraktionslos" && party != "Bundesregierung"
+            && party != "Petitionsausschuss" && party != "Wahlprüfungsausschuss"
+    }
+
     static func label(_ party: String) -> String {
         switch party {
         case "B90/Grüne": return "Grüne"

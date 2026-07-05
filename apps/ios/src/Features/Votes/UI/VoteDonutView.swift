@@ -5,6 +5,7 @@ struct VoteDonutView: View {
     let no: Int
     let abstain: Int
     let absent: Int
+    var selected: VoteChoice?
 
     var body: some View {
         Canvas { context, size in
@@ -12,14 +13,16 @@ struct VoteDonutView: View {
             let center = CGPoint(x: 50 * scale, y: 50 * scale)
             let outer = 46 * scale
             let total = Double(max(yes + no + abstain + absent, 1))
-            let segments: [(Int, Color)] = [
-                (yes, ThemeColor.success),
-                (no, ThemeColor.danger),
-                (abstain, ThemeColor.yellow),
-                (absent, ThemeColor.fg.mix(with: ThemeColor.background, by: 0.75)),
+            let segments: [(VoteChoice, Int, Color)] = [
+                (.yes, yes, ThemeColor.success),
+                (.no, no, ThemeColor.danger),
+                (.abstain, abstain, ThemeColor.yellow),
+                (.absent, absent, ThemeColor.fg.mix(with: ThemeColor.background, by: 0.75)),
             ]
             var start = -Double.pi / 2
-            for (value, color) in segments where value > 0 {
+            for (choice, value, baseColor) in segments where value > 0 {
+                let dim = selected != nil && selected != choice
+                let color = baseColor.opacity(dim ? 0.3 : 1)
                 let sweep = Double(value) / total * 2 * .pi
                 if sweep >= 2 * .pi - 0.0001 {
                     context.fill(

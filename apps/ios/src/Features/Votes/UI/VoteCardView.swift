@@ -5,6 +5,18 @@ struct VoteCardView: View {
     let cache: ApiCache
     @State private var detailStore = VoteDetailStore()
 
+    private var needsDetail: Bool {
+        vote.summarySimplified == nil && vote.partySummaries == nil
+    }
+
+    private var summary: String? {
+        vote.summarySimplified ?? detailStore.detail?.vote.summarySimplified
+    }
+
+    private var summaries: [PartyVoteSummary] {
+        vote.partySummaries ?? detailStore.detail?.partySummaries.map(\.counts) ?? []
+    }
+
     var body: some View {
         NavigationLink(value: AppRoute.vote(vote.id)) {
             VStack(alignment: .leading, spacing: 0) {
@@ -21,7 +33,7 @@ struct VoteCardView: View {
                     .lineLimit(4)
                     .multilineTextAlignment(.leading)
                     .padding(.top, ThemeTokens.Spacing.m)
-                if let summary = detailStore.detail?.vote.summarySimplified {
+                if let summary {
                     MarkdownText(markdown: summary)
                         .foregroundStyle(ThemeColor.fg)
                         .lineLimit(7)
@@ -34,7 +46,7 @@ struct VoteCardView: View {
                 )
                 .frame(maxWidth: 320)
                 .frame(maxWidth: .infinity)
-                if let summaries = detailStore.detail?.partySummaries, !summaries.isEmpty {
+                if !summaries.isEmpty {
                     PartyDonutRow(summaries: summaries)
                         .padding(.top, ThemeTokens.Spacing.l)
                 }
@@ -46,6 +58,8 @@ struct VoteCardView: View {
             .padding(.vertical, ThemeTokens.Spacing.s)
         }
         .buttonStyle(.plain)
-        .task { await detailStore.load(id: vote.id, cache: cache) }
+        .task {
+            if needsDetail { await detailStore.load(id: vote.id, cache: cache) }
+        }
     }
 }

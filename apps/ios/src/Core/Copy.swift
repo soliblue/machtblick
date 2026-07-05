@@ -70,4 +70,42 @@ enum Copy {
     static let clearCache = "Cache leeren"
     static let never = "Nie"
     static let aiNotice = "Zusammenfassungen werden automatisiert erstellt und können Fehler enthalten."
+
+    static let tabResult = "Ergebnis"
+    static let tabDetails = "Details"
+    static let tabSpeeches = "Reden"
+    static let officialTitle = "Amtlicher Titel"
+    static let officialDataNotice = "Alle Zahlen stammen aus den amtlichen Daten des Bundestags."
+    static let officialDataLink = "Originaldaten ansehen"
+    static let aiSummaryNotice =
+        "Diese Zusammenfassung wurde automatisiert erstellt und kann Fehler enthalten."
+    static let fullMotion = "Vollständiger Antrag"
+    static let sourcePdf = "Quelle (PDF)"
+    static let noDetailSummary = "Keine ausführliche Zusammenfassung verfügbar."
+    static let invertedNotice =
+        "Wir haben das Vorzeichen dieser Abstimmung umgedreht, damit das Ergebnis klar lesbar ist. Im Original ging es um die Ablehnung dieses Antrags. Wir zeigen das Ergebnis so, als wäre direkt über den Antrag abgestimmt worden."
+    static let petitionNotice =
+        "Diese Abstimmung bündelt mehrere Petitionen in einer Sammelübersicht. Das Plenum stimmt über alle enthaltenen Empfehlungen des Petitionsausschusses gemeinsam ab. Ein angenommen bedeutet, dass die Empfehlungen so beschlossen wurden, die einzelnen Petitionen können dabei sehr unterschiedlich behandelt worden sein."
+
+    static let partySummariesTitle = "Fraktionen im Überblick"
+    static let debateTimeline = "Verlauf der Debatte"
+    static let readSummary = "Zusammenfassung lesen"
+    static let readFullSpeech = "Ganze Rede lesen"
+    static let searchSpeeches = "Reden durchsuchen"
+    static let noSpeechesFound = "Keine Reden gefunden."
+    static let zwischenfrage = "Zwischenfrage"
+    static let close = "Schließen"
+    static let previousLabel = "Zurück"
+    static let nextLabel = "Weiter"
+    static let groupsLabel = "Fraktionen"
+
+    static let filterLabel = "Filter"
+    static let filterType = "Art"
+    static let filterProposer = "Antragsteller"
+    static let filterCategory = "Kategorie"
+    static let namedVote = "Namentlich"
+    static let showOfHands = "Handzeichen"
+    static let noResults = "Keine Treffer"
+    static let filterAll = "Alle"
+    static let relatedMotions = "Zugehörige Anträge"
 }
