@@ -32,6 +32,12 @@ enum PartyStyle {
         }
     }
 
+    static let governing = ["CDU/CSU", "SPD"]
+
+    static func isGoverning(_ party: String) -> Bool {
+        governing.contains(party)
+    }
+
     static func hasPartyLine(_ party: String) -> Bool {
         !party.isEmpty && party != "fraktionslos" && party != "Bundesregierung"
             && party != "Petitionsausschuss" && party != "Wahlprüfungsausschuss"

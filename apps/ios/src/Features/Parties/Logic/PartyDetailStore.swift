@@ -5,11 +5,15 @@ import Observation
 final class PartyDetailStore {
     private(set) var detail: PartyDetailPayload?
     private(set) var lean: PartyListItem?
+    private(set) var members: [MemberListItem] = []
 
     func load(slug: String, cache: ApiCache) async {
         let path = "/parties/\(slug).json"
         if let parties: [PartyListItem] = cache.cached("/api/parties.json") {
             lean = parties.first { $0.slug == slug }
+        }
+        if members.isEmpty, let cached: [MemberListItem] = cache.cached("/api/members.json") {
+            members = cached
         }
         if detail == nil, let cached: PartyDetailPayload = cache.cached(path) {
             detail = cached
@@ -18,6 +22,9 @@ final class PartyDetailStore {
             if let fresh: PartyDetailPayload = await cache.fetch(path) {
                 detail = fresh
             }
+        }
+        if members.isEmpty, let fresh: [MemberListItem] = await cache.fetch("/api/members.json") {
+            members = fresh
         }
     }
 }

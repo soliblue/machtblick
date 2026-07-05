@@ -55,6 +55,8 @@ struct PartyDetailPayload: Decodable {
     let cohesion: Double
     let attendance: Double
     let successRate: Double
+    let successMatched: Int?
+    let successDecided: Int?
     let proposalsTotal: Int
     let proposalsAccepted: Int
     let proposals: [Proposal]

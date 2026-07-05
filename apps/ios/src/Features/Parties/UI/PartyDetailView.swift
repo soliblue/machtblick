@@ -1,9 +1,15 @@
 import SwiftUI
 
+private enum PartyTab: Hashable {
+    case profile
+    case votes
+}
+
 struct PartyDetailView: View {
     let slug: String
     let cache: ApiCache
     @State private var store = PartyDetailStore()
+    @State private var tab: PartyTab = .profile
 
     var body: some View {
         Group {
@@ -11,10 +17,8 @@ struct PartyDetailView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xl) {
                         header(detail)
-                        stats(detail)
-                        donations(detail)
-                        alignments(detail)
-                        votes(detail)
+                        picker(detail)
+                        panel(detail)
                     }
                     .padding(ThemeTokens.Spacing.l)
                 }
@@ -29,87 +33,69 @@ struct PartyDetailView: View {
     }
 
     private func header(_ detail: PartyDetailPayload) -> some View {
-        VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
+        VStack(alignment: .leading, spacing: ThemeTokens.Spacing.m) {
             HStack(spacing: ThemeTokens.Spacing.s) {
-                Circle()
-                    .fill(PartyStyle.color(detail.party))
-                    .frame(width: 12, height: 12)
+                Circle().fill(PartyStyle.color(detail.party)).frame(width: 14, height: 14)
                 Text(PartyStyle.label(detail.party))
                     .font(.display(ThemeTokens.Text.xxl))
             }
-            HStack(alignment: .firstTextBaseline, spacing: ThemeTokens.Spacing.s) {
-                Text("\(seats(detail))")
-                    .font(.display(40))
-                    .monospacedDigit()
-                Text(Copy.seats).kicker()
+            Text(meta(detail)).kicker()
+            HStack(alignment: .top, spacing: ThemeTokens.Spacing.l) {
+                PosterStatBar(
+                    label: Copy.cohesion, value: cohesion(detail),
+                    sub: (text: "\(detail.votes.count) \(Copy.votesSection)", danger: false)
+                )
+                .frame(maxWidth: .infinity, alignment: .leading)
+                PosterStatBar(label: Copy.attendance, value: attendance(detail))
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
+    }
+
+    private func meta(_ detail: PartyDetailPayload) -> String {
+        var parts: [String] = []
+        if PartyStyle.hasPartyLine(detail.party) {
+            parts.append(PartyStyle.isGoverning(detail.party) ? Copy.govLabel : Copy.oppositionLabel)
+        }
+        parts.append("\(seats(detail)) \(Copy.seats)")
+        return parts.joined(separator: " · ")
     }
 
     private func seats(_ detail: PartyDetailPayload) -> Int {
         store.lean?.seats ?? detail.seats
     }
 
-    private func stats(_ detail: PartyDetailPayload) -> some View {
-        VStack(spacing: ThemeTokens.Spacing.m) {
-            StatBar(label: Copy.cohesion, value: store.lean?.cohesion ?? detail.cohesion)
-            StatBar(label: Copy.attendance, value: store.lean?.attendance ?? detail.attendance)
+    private func cohesion(_ detail: PartyDetailPayload) -> Double {
+        store.lean?.cohesion ?? detail.cohesion
+    }
+
+    private func attendance(_ detail: PartyDetailPayload) -> Double {
+        store.lean?.attendance ?? detail.attendance
+    }
+
+    private func tabs(_ detail: PartyDetailPayload) -> [PartyTab] {
+        detail.votes.isEmpty ? [.profile] : [.profile, .votes]
+    }
+
+    private func tabLabel(_ tab: PartyTab) -> String {
+        tab == .profile ? Copy.tabProfile : Copy.votesSection
+    }
+
+    @ViewBuilder private func picker(_ detail: PartyDetailPayload) -> some View {
+        let available = tabs(detail)
+        if available.count > 1 {
+            Picker("", selection: $tab) {
+                ForEach(available, id: \.self) { Text(tabLabel($0)).tag($0) }
+            }
+            .pickerStyle(.segmented)
         }
     }
 
-    @ViewBuilder
-    private func donations(_ detail: PartyDetailPayload) -> some View {
-        if !detail.donations.isEmpty {
-            VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
-                HStack {
-                    Text(Copy.donationsSection).kicker()
-                    Spacer()
-                    Text("\(Copy.donationsTotal): \(Formatters.euro(detail.donationsTotalEur))")
-                        .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
-                        .monospacedDigit()
-                }
-                ForEach(detail.donations) { donation in
-                    HStack(alignment: .firstTextBaseline, spacing: ThemeTokens.Spacing.s) {
-                        Text(donation.donor)
-                            .font(.system(size: ThemeTokens.Text.m))
-                            .lineLimit(2)
-                        Spacer()
-                        VStack(alignment: .trailing, spacing: ThemeTokens.Spacing.xs) {
-                            Text(Formatters.euro(donation.amountEur))
-                                .font(.system(size: ThemeTokens.Text.m, weight: .semibold))
-                                .monospacedDigit()
-                            Text(Formatters.shortDate(donation.dateReceived)).kicker()
-                        }
-                    }
-                    .padding(.vertical, ThemeTokens.Spacing.xs)
-                }
-            }
-        }
-    }
-
-    @ViewBuilder
-    private func alignments(_ detail: PartyDetailPayload) -> some View {
-        if !detail.alignments.isEmpty {
-            VStack(alignment: .leading, spacing: ThemeTokens.Spacing.m) {
-                Text(Copy.alignmentsSection).kicker()
-                ForEach(detail.alignments) { alignment in
-                    StatBar(label: PartyStyle.label(alignment.party), value: alignment.agreement)
-                }
-            }
-        }
-    }
-
-    @ViewBuilder
-    private func votes(_ detail: PartyDetailPayload) -> some View {
-        if !detail.votes.isEmpty {
-            VStack(alignment: .leading, spacing: 0) {
-                Text(Copy.votesSection).kicker()
-                LazyVStack(alignment: .leading, spacing: 0) {
-                    ForEach(detail.votes) { vote in
-                        PartyVoteRow(vote: vote)
-                    }
-                }
-            }
+    @ViewBuilder private func panel(_ detail: PartyDetailPayload) -> some View {
+        let active = tabs(detail).contains(tab) ? tab : .profile
+        switch active {
+        case .profile: PartyProfilePanel(detail: detail, members: store.members)
+        case .votes: PartyVotesPanel(votes: detail.votes)
         }
     }
 }

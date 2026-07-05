@@ -22,8 +22,7 @@ struct PartyCardView: View {
             StatBar(label: Copy.cohesion, value: party.cohesion)
             StatBar(label: Copy.attendance, value: party.attendance)
         }
-        .padding(ThemeTokens.Spacing.m)
+        .padding(.vertical, ThemeTokens.Spacing.s)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .overlay(Rectangle().strokeBorder(ThemeColor.border, lineWidth: ThemeTokens.Stroke.s))
     }
 }
