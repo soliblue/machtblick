@@ -4,6 +4,7 @@ struct MemberAvatar: View {
     let name: String
     let url: URL?
     var size: CGFloat = 56
+    var circle = false
 
     var body: some View {
         AsyncImage(url: url) { phase in
@@ -18,7 +19,7 @@ struct MemberAvatar: View {
             }
         }
         .frame(width: size, height: size)
-        .clipped()
+        .clipShape(circle ? AnyShape(Circle()) : AnyShape(Rectangle()))
     }
 
     private var initials: String {

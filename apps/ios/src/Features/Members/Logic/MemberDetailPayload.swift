@@ -33,6 +33,30 @@ struct MemberDetailPayload: Decodable {
         let snippet: String?
     }
 
+    struct InitiativeVote: Decodable, Identifiable {
+        let voteId: String
+        let date: String
+        let title: String
+        let cleanTitle: String
+        let result: VoteResult
+
+        var id: String { voteId }
+    }
+
+    struct Initiative: Decodable, Identifiable {
+        let antragId: Int
+        let title: String
+        let cleanTitle: String?
+        let beratungsstand: String?
+        let introducedDate: String?
+        let drucksachePdfUrl: String?
+        let sachgebiet: [String]
+        let signatoryCount: Int
+        let linkedVotes: [InitiativeVote]
+
+        var id: Int { antragId }
+    }
+
     let id: String
     let name: String
     let party: String
@@ -43,6 +67,7 @@ struct MemberDetailPayload: Decodable {
     let defections: Int
     let history: [HistoryEntry]
     let speeches: [SpeechEntry]
+    let initiatives: [Initiative]?
     let pictureUrl: String?
     let pictureAuthor: String?
     let pictureLicense: String?
@@ -53,4 +78,5 @@ struct MemberDetailPayload: Decodable {
     let listState: String?
     let constituencyNumber: String?
     let constituencyName: String?
+    let education: String?
 }

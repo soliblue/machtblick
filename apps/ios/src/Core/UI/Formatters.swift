@@ -22,6 +22,13 @@ enum Formatters {
         return formatter
     }()
 
+    private static let dayMonthPrinter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM."
+        formatter.locale = Locale(identifier: "de_DE")
+        return formatter
+    }()
+
     private static let euroPrinter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
@@ -37,6 +44,10 @@ enum Formatters {
 
     static func longDate(_ iso: String) -> String {
         isoParser.date(from: iso).map { longPrinter.string(from: $0) } ?? iso
+    }
+
+    static func dayMonth(_ iso: String) -> String {
+        isoParser.date(from: iso).map { dayMonthPrinter.string(from: $0) } ?? iso
     }
 
     static func percent(_ value: Double) -> String {

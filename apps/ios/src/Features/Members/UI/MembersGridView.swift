@@ -3,18 +3,31 @@ import SwiftUI
 struct MembersGridView: View {
     @Bindable var store: MembersStore
     let cache: ApiCache
+    @State private var showFilters = false
 
     var body: some View {
         ScrollView {
-            LazyVGrid(
-                columns: Array(repeating: GridItem(.flexible(), spacing: ThemeTokens.Spacing.s), count: 3),
-                spacing: ThemeTokens.Spacing.s
-            ) {
-                ForEach(store.filtered) { member in
-                    NavigationLink(value: AppRoute.member(member.id)) {
-                        MemberCardView(member: member)
+            VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
+                DemographicsStrip(members: store.filtered)
+                Text("\(store.filtered.count) \(Copy.people)").kicker()
+                if store.filtered.isEmpty {
+                    Text(Copy.noMembersFound)
+                        .font(.system(size: ThemeTokens.Text.m))
+                        .foregroundStyle(ThemeColor.secondary)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, ThemeTokens.Spacing.xl)
+                } else {
+                    LazyVGrid(
+                        columns: Array(repeating: GridItem(.flexible(), spacing: ThemeTokens.Spacing.s), count: 3),
+                        spacing: ThemeTokens.Spacing.s
+                    ) {
+                        ForEach(store.filtered) { member in
+                            NavigationLink(value: AppRoute.member(member.id)) {
+                                MemberCardView(member: member)
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
-                    .buttonStyle(.plain)
                 }
             }
             .padding(ThemeTokens.Spacing.l)
@@ -25,23 +38,16 @@ struct MembersGridView: View {
         .searchable(text: $store.search, prompt: Copy.searchMembers)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Menu {
-                    Picker(Copy.partiesTab, selection: $store.party) {
-                        Text(Copy.allParties).tag(String?.none)
-                        ForEach(store.parties, id: \.self) { party in
-                            Text(PartyStyle.label(party)).tag(String?.some(party))
-                        }
-                    }
-                    Picker(Copy.allStates, selection: $store.state) {
-                        Text(Copy.allStates).tag(String?.none)
-                        ForEach(store.states, id: \.self) { state in
-                            Text(state).tag(String?.some(state))
-                        }
-                    }
-                } label: {
-                    Image(systemName: "line.3.horizontal.decrease")
+                Button { showFilters = true } label: {
+                    Image(systemName: store.activeFilterCount > 0
+                        ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease")
                 }
             }
+        }
+        .sheet(isPresented: $showFilters) {
+            MembersFilterSheet(store: store)
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
         }
         .appDestinations(cache: cache)
         .task { await store.load(cache: cache) }

@@ -5,34 +5,48 @@ struct MemberVoteRow: View {
 
     var body: some View {
         NavigationLink(value: AppRoute.vote(entry.voteId)) {
-            VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
-                HStack(spacing: ThemeTokens.Spacing.s) {
-                    Text(entry.choice.label)
-                        .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
-                        .foregroundStyle(entry.choice.color)
-                        .padding(.horizontal, ThemeTokens.Spacing.s)
-                        .padding(.vertical, ThemeTokens.Spacing.xs)
-                        .background(entry.choice.color.opacity(0.15))
-                    if entry.defected == true {
-                        Text(Copy.defectorsSection)
-                            .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
-                            .foregroundStyle(ThemeColor.danger)
+            HStack(alignment: .top, spacing: ThemeTokens.Spacing.m) {
+                choice
+                    .frame(width: 96, alignment: .leading)
+                VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
+                    Text(entry.cleanTitle)
+                        .font(.display(ThemeTokens.Text.l))
+                        .foregroundStyle(ThemeColor.fg)
+                        .multilineTextAlignment(.leading)
+                    HStack(spacing: ThemeTokens.Spacing.s) {
+                        Text(Formatters.shortDate(entry.date)).kicker()
+                        if entry.defected == true {
+                            Text("\(Copy.deviatedFromLine) \(majorityLabel)")
+                                .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
+                                .foregroundStyle(ThemeColor.danger)
+                        }
+                        ResultChip(result: entry.result)
                     }
-                    Spacer()
-                    Text(Formatters.shortDate(entry.date)).kicker()
                 }
-                Text(entry.cleanTitle)
-                    .font(.system(size: ThemeTokens.Text.m))
-                    .foregroundStyle(ThemeColor.fg)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.leading)
+                Spacer(minLength: 0)
             }
-            .padding(.vertical, ThemeTokens.Spacing.s)
+            .padding(.vertical, ThemeTokens.Spacing.m)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .overlay(alignment: .bottom) {
+            .overlay(alignment: .top) {
                 Rectangle().fill(ThemeColor.border).frame(height: ThemeTokens.Stroke.s)
             }
         }
         .buttonStyle(.plain)
+    }
+
+    @ViewBuilder private var choice: some View {
+        if entry.choice == .nichtAbgegeben {
+            Text(Copy.notCast)
+                .tracking(0.9)
+                .font(.system(size: 11, weight: .semibold))
+                .textCase(.uppercase)
+                .foregroundStyle(ThemeColor.fg.opacity(ThemeTokens.Opacity.m))
+        } else {
+            ChoicePill(label: entry.choice.label, fill: entry.choice.pillFill, textColor: entry.choice.pillText)
+        }
+    }
+
+    private var majorityLabel: String {
+        BallotChoice(rawValue: entry.partyMajority)?.label ?? entry.partyMajority
     }
 }

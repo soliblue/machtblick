@@ -30,6 +30,36 @@ extension BallotChoice {
     }
 }
 
+extension BallotChoice {
+    var pillFill: Color? {
+        switch self {
+        case .ja: return ThemeColor.success
+        case .nein: return ThemeColor.danger
+        case .enthalten: return ThemeColor.yellow
+        case .nichtAbgegeben: return nil
+        }
+    }
+
+    var pillText: Color {
+        self == .enthalten ? ThemeColor.fg : ThemeColor.background
+    }
+}
+
+extension PartyPosition {
+    var pillFill: Color? {
+        switch self {
+        case .yes: return ThemeColor.success
+        case .no: return ThemeColor.danger
+        case .abstain: return ThemeColor.yellow
+        case .mixed, .split: return nil
+        }
+    }
+
+    var pillText: Color {
+        self == .abstain ? ThemeColor.fg : ThemeColor.background
+    }
+}
+
 extension VoteChoice {
     var color: Color {
         switch self {
