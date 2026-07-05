@@ -59,8 +59,9 @@ struct PieDonutView: View {
             let sweep = Double(slice.value) / Double(total) * 2 * .pi
             let active = index == activeIndex
             let mid = start + sweep / 2
-            let offset = active ? 4 * scale : 0
-            let c = CGPoint(x: center.x + cos(mid) * offset, y: center.y + sin(mid) * offset)
+            let pull: CGFloat = active ? 4 * scale : 0
+            let c = CGPoint(
+                x: center.x + CGFloat(cos(mid)) * pull, y: center.y + CGFloat(sin(mid)) * pull)
             let color = slice.color.opacity(active ? 1 : 0.3)
             if sweep >= 2 * .pi - 0.0001 {
                 context.fill(
