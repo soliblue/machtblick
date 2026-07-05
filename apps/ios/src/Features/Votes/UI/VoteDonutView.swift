@@ -70,13 +70,4 @@ extension PartyPosition {
         case .mixed, .split: return nil
         }
     }
-
-    fileprivate var color: Color {
-        switch self {
-        case .yes: return ThemeColor.success
-        case .no: return ThemeColor.danger
-        case .abstain: return ThemeColor.yellow
-        case .mixed, .split: return ThemeColor.fg.opacity(ThemeTokens.Opacity.m)
-        }
-    }
 }
