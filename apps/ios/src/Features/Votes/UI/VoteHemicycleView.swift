@@ -69,7 +69,9 @@ struct VoteHemicycleView: View {
     @ViewBuilder private func legendLine(_ text: String, choice: VoteChoice) -> some View {
         let dim = selected != nil && selected != choice
         let label = Text(text)
+            .tracking(ThemeTokens.Text.s * 0.08)
             .font(.system(size: ThemeTokens.Text.s))
+            .textCase(.uppercase)
             .foregroundStyle(ThemeColor.secondary)
             .opacity(dim ? ThemeTokens.Opacity.m : 1)
         if let onSelect {

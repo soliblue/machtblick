@@ -393,3 +393,20 @@ Build: PASS. HTML metadata: PASS. Sharing previews: PASS. Crawler access: PASS (
 ## Iteration 2 SHIPPED (2026-07-05)
 Build 2 uploaded to TestFlight (run 28756737710). Web JSON enrichment live on prod (deploy 7d6063a3). All lanes done, review ship-blocker + 3 HIGH fixed, ios-build green at HEAD.
 Deferred to a later iteration (graceful-degrade in app now): motion detail debate section (needs antraege.ts to emit debate + linkedVote partySummaries), /api/motions.json into DataCatalog/llms.txt, cosmetic iOS convention cleanup (multi-type files, token drift), member Verlauf-blocked sort. Speeches full-text (search shards too heavy) still v-next.
+
+## Iteration 3: typography & stamp fidelity to web (2026-07-05)
+
+User A/B'd iOS vote feed vs web: web "10x better" on details. Fidelity pass (layout already correct):
+1. Proposer: dropped the gray PartyBadge box on the vote card + detail header kicker. Party proposers (CDU/CSU, SPD, AfD, B90/Grüne, Die Linke) now render the party LOGO (5 web SVGs bundled as `party-<slug>` imagesets, new `PartyLogo` view); non-party proposers (Bundesregierung, Länder, Sonstige) render plain uppercase caption text, one line, tail-truncated. New `ProposerKicker` view; `PartyStyle.hasLogo`. PartyBadge kept untouched where web also uses badges (Defectors, Speeches, Motions).
+2. Stamp one-line: font 12->10 (web `text-[10px]`), tracking = 0.12em, `lineLimit(1)` + `fixedSize` so ANGENOMMEN/ABGELEHNT never wraps.
+3. Kicker row = web grid `1fr auto 1fr`: proposer leading 1fr (truncates), stamp centered auto, date trailing 1fr.
+4. Date: `Formatters.shortDate` `dd.MM.yyyy` -> `d. MMM yyyy` (spelled month, mirrors web `formatDateShort`), uppercased by the caption/kicker treatment app-wide.
+5. Meta caption casing: hemicycle `legendLine` ("N Enthalten"/"N Abwesend") now uppercase + 0.08em tracking (matches `.caption`). JA/NEIN + party donut labels were already caption.
+6. Filter pill: `safeAreaInset(.bottom)` reserve on the paging feed so cards end above the floating pill (no more donut overlap); pill given the web drop shadow, sits bottom-center above the tab bar.
+7. Mastheads removed on all top-level lists: votes + parties hide the nav bar; members keeps `.searchable` but drops the large title (inline empty) so it opens at the search bar. Detail pages keep their contextual bars.
+8. namentlich default: VotesStore already defaulted `voteTypeFilter='namentlich'`; removed the now-obsolete defensive `voteType==nil` bypass in `filtered` and the `hasVoteType` gate on `activeFilterCount` (field is live), so the feed shows only namentliche votes and the pill reads "Filter · 1" on launch, matching web.
+9. Member detail tabs: stripped the `(count)` suffixes (web removed them) -> "Abstimmungen"/"Reden"/"Anträge". Party detail tabs were already count-free.
+10. Stamp grunge (approximating web's feTurbulence `#stamp-grunge` + mixBlendMode multiply + 0.85 opacity): kept double border (2.5px inner + 1px outer offset) and muted ink (`color.mix(fg, 0.55)` = color-mix 45%), added 0.12em tracking, a deterministic Canvas speckle overlay via `.blendMode(.destinationOut)` inside a `compositingGroup` (worn/broken edges), then whole-stamp `.blendMode(.multiply)` + 0.85 opacity (ink-on-paper). True feTurbulence displacement isn't available in SwiftUI; this is the closest faithful approximation. Applies everywhere StampView renders (card, detail, speeches reader/entry, party summary strip, motions).
+
+### Log
+- lead: implementing, green-build loop via ios-build.yml, no TestFlight.

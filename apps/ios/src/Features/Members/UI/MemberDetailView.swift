@@ -125,11 +125,11 @@ struct MemberDetailView: View {
         return result
     }
 
-    private func tabLabel(_ tab: MemberTab, _ detail: MemberDetailPayload) -> String {
+    private func tabLabel(_ tab: MemberTab) -> String {
         switch tab {
-        case .votes: return "\(Copy.votesSection) (\(detail.history.count))"
-        case .speeches: return "\(Copy.speechesSection) (\(MemberSpeechGrouping.groups(detail.speeches).count))"
-        case .motions: return "\(Copy.tabMotions) (\(detail.initiatives?.count ?? 0))"
+        case .votes: return Copy.votesSection
+        case .speeches: return Copy.speechesSection
+        case .motions: return Copy.tabMotions
         }
     }
 
@@ -137,7 +137,7 @@ struct MemberDetailView: View {
         let available = tabs(detail)
         if available.count > 1 {
             Picker("", selection: $tab) {
-                ForEach(available, id: \.self) { Text(tabLabel($0, detail)).tag($0) }
+                ForEach(available, id: \.self) { Text(tabLabel($0)).tag($0) }
             }
             .pickerStyle(.segmented)
         }

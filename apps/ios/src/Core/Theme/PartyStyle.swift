@@ -32,6 +32,12 @@ enum PartyStyle {
         }
     }
 
+    static let logoSlugs: Set<String> = ["cdu-csu", "spd", "afd", "gruene", "linke"]
+
+    static func hasLogo(_ party: String) -> Bool {
+        logoSlugs.contains(slug(party))
+    }
+
     static let governing = ["CDU/CSU", "SPD"]
 
     static func isGoverning(_ party: String) -> Bool {

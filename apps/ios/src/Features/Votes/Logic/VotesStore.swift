@@ -57,9 +57,8 @@ final class VotesStore {
     }
 
     var activeFilterCount: Int {
-        var count = [proposerFilter, topicFilter].filter { $0 != nil }.count
+        var count = [proposerFilter, topicFilter, voteTypeFilter].filter { $0 != nil }.count
         if resultFilter != nil { count += 1 }
-        if hasVoteType && voteTypeFilter != nil { count += 1 }
         return count
     }
 
@@ -68,7 +67,7 @@ final class VotesStore {
             (proposerFilter == nil || vote.initiator == proposerFilter)
                 && (resultFilter == nil || vote.result == resultFilter)
                 && (topicFilter == nil || vote.topic == topicFilter)
-                && (voteTypeFilter == nil || vote.voteType == nil || vote.voteType == voteTypeFilter)
+                && (voteTypeFilter == nil || vote.voteType == voteTypeFilter)
         }
     }
 }

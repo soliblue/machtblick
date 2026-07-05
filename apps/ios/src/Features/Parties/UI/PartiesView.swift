@@ -17,8 +17,7 @@ struct PartiesView: View {
             }
         }
         .background(ThemeColor.background)
-        .navigationTitle(Copy.partiesTab)
-        .navigationBarTitleDisplayMode(.large)
+        .toolbar(.hidden, for: .navigationBar)
         .sensoryFeedback(.success, trigger: refreshTick)
         .appDestinations(cache: cache)
         .task { await store.load(cache: cache) }

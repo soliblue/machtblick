@@ -5,6 +5,7 @@ struct VotesFeedView: View {
     let cache: ApiCache
     @State private var showFilters = false
     @State private var refreshTick = 0
+    private let filterClearance = ThemeTokens.Spacing.xl * 3
 
     var body: some View {
         Group {
@@ -30,6 +31,9 @@ struct VotesFeedView: View {
                 }
                 .scrollTargetBehavior(.paging)
                 .scrollIndicators(.hidden)
+                .safeAreaInset(edge: .bottom) {
+                    Color.clear.frame(height: filterClearance)
+                }
                 .refreshable {
                     await store.refresh(cache: cache)
                     refreshTick += 1
@@ -38,8 +42,7 @@ struct VotesFeedView: View {
         }
         .overlay(alignment: .bottom) { filterButton }
         .background(ThemeColor.background)
-        .navigationTitle(Copy.votesTab)
-        .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden, for: .navigationBar)
         .appDestinations(cache: cache)
         .sheet(isPresented: $showFilters) {
             VotesFilterSheet(store: store)
@@ -64,6 +67,7 @@ struct VotesFeedView: View {
                 .padding(.vertical, ThemeTokens.Spacing.s)
                 .background(ThemeColor.fg)
                 .clipShape(Capsule())
+                .shadow(color: ThemeColor.fg.opacity(ThemeTokens.Opacity.m), radius: 12, y: 4)
             }
             .padding(.bottom, ThemeTokens.Spacing.l)
         }

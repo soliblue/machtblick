@@ -21,11 +21,13 @@ struct VoteCardView: View {
         NavigationLink(value: AppRoute.vote(vote.id)) {
             VStack(alignment: .leading, spacing: 0) {
                 HStack(spacing: ThemeTokens.Spacing.s) {
-                    PartyBadge(party: vote.initiator ?? Copy.unknown)
-                    Spacer()
+                    ProposerKicker(party: vote.initiator ?? Copy.unknown)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     StampView(label: vote.result.label, color: vote.result.color)
-                    Spacer()
-                    Text(Formatters.shortDate(vote.date)).kicker()
+                    Text(Formatters.shortDate(vote.date))
+                        .kicker()
+                        .lineLimit(1)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
                 }
                 Text(vote.cleanTitle)
                     .font(.display(ThemeTokens.Text.xl))

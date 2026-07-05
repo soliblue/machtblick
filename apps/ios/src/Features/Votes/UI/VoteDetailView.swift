@@ -83,11 +83,13 @@ struct VoteDetailView: View {
     private func header(_ detail: VoteDetailPayload) -> some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.m) {
             HStack(spacing: ThemeTokens.Spacing.s) {
-                PartyBadge(party: detail.proposingParty ?? Copy.unknown)
-                Spacer()
+                ProposerKicker(party: detail.proposingParty ?? Copy.unknown)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 StampView(label: detail.vote.result.label, color: detail.vote.result.color)
-                Spacer()
-                Text(Formatters.shortDate(detail.vote.date)).kicker()
+                Text(Formatters.shortDate(detail.vote.date))
+                    .kicker()
+                    .lineLimit(1)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
             }
             Text(detail.vote.cleanTitle)
                 .font(.display(ThemeTokens.Text.xl))

@@ -18,8 +18,8 @@ struct MembersGridView: View {
             }
         }
         .background(ThemeColor.background)
-        .navigationTitle(Copy.membersTab)
-        .navigationBarTitleDisplayMode(.large)
+        .navigationTitle("")
+        .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $store.search, prompt: Copy.searchMembers)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
