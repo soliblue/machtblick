@@ -31,6 +31,17 @@ struct MotionDetailPayload: Decodable {
         var id: String { memberId }
     }
 
+    struct PartySummary: Decodable {
+        let party: String
+        let position: PartyPosition
+        let yes: Int
+        let no: Int
+        let abstain: Int
+        let positionSummary: String?
+        let keyPoints: String?
+        let dissentNote: String?
+    }
+
     struct LinkedVote: Decodable, Identifiable {
         let id: String
         let date: String
@@ -43,9 +54,24 @@ struct MotionDetailPayload: Decodable {
         let abstain: Int?
         let absent: Int?
         let totalMembers: Int?
+        let partySummaries: [PartySummary]?
+    }
+
+    struct DebateEntry: Decodable, Identifiable {
+        let id: String
+        let speakerName: String
+        let speakerMemberId: String?
+        let speakerRole: String?
+        let party: String?
+        let date: String
+        let contributionType: String?
+        let position: Int
+        let excerpt: String
     }
 
     let antrag: Antrag
     let signatories: [Signatory]
     let linkedVotes: [LinkedVote]
+    let debate: [DebateEntry]?
+    let debateSource: String?
 }

@@ -14,7 +14,7 @@ struct VoteDonutGrid: View {
                     VStack(spacing: ThemeTokens.Spacing.xs) {
                         VoteDonutView(
                             yes: summary.yes, no: summary.no, abstain: summary.abstain,
-                            absent: summary.absent, selected: selected
+                            absent: summary.absent, position: summary.position, selected: selected
                         )
                         .frame(width: 72, height: 72)
                         Text(PartyStyle.label(summary.party))

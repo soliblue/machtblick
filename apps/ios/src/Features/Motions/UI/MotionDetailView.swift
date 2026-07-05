@@ -16,6 +16,7 @@ struct MotionDetailView: View {
                         summary(detail.antrag)
                         signatories(detail.signatories)
                         linkedVotes(detail.linkedVotes)
+                        debate(detail)
                         source(detail.antrag)
                     }
                     .padding(ThemeTokens.Spacing.l)
@@ -155,6 +156,17 @@ struct MotionDetailView: View {
                 ForEach(votes) { vote in
                     MotionLinkedVoteCard(vote: vote)
                 }
+            }
+        }
+    }
+
+    @ViewBuilder private func debate(_ detail: MotionDetailPayload) -> some View {
+        if let entries = detail.debate, !entries.isEmpty {
+            VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
+                Text(Copy.debateSection).kicker()
+                DebatePanel(
+                    speeches: MotionDebateAdapter.speeches(entries),
+                    partySummaries: MotionDebateAdapter.partySummaries(detail.linkedVotes))
             }
         }
     }

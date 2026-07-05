@@ -8,7 +8,8 @@ struct PartyDonutRow: View {
             ForEach(ordered) { summary in
                 VStack(spacing: ThemeTokens.Spacing.xs) {
                     VoteDonutView(
-                        yes: summary.yes, no: summary.no, abstain: summary.abstain, absent: summary.absent
+                        yes: summary.yes, no: summary.no, abstain: summary.abstain, absent: summary.absent,
+                        position: summary.position
                     )
                     .frame(width: 44, height: 44)
                     Text(PartyStyle.label(summary.party))

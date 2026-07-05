@@ -8,7 +8,7 @@ struct MemberListItem: Decodable, Identifiable {
     let yearOfBirth: Int?
     let sex: String?
     let mandateType: String?
-    let attendance: Double
+    let attendance: Double?
     let loyalty: Double?
 
     var lastName: String {

@@ -30,7 +30,8 @@ final class MembersStore {
                     let order = lhs.lastName.localizedCompare(rhs.lastName)
                     return sortDescending ? order == .orderedDescending : order == .orderedAscending
                 case .attendance:
-                    return sortDescending ? lhs.attendance > rhs.attendance : lhs.attendance < rhs.attendance
+                    let l = lhs.attendance ?? -1, r = rhs.attendance ?? -1
+                    return sortDescending ? l > r : l < r
                 case .loyalty:
                     let l = lhs.loyalty ?? -1, r = rhs.loyalty ?? -1
                     return sortDescending ? l > r : l < r
