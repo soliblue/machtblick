@@ -76,8 +76,8 @@ Native SwiftUI iOS app for machtblick, consuming the website's EXISTING static J
 - blueprint: done (cloude explored)
 - data contracts: done (grounded against live machtblick.de JSON + vite-data generators, validated field-by-field)
 - implementation: done (63 Swift files, apps/ios/, zero deps)
-- CI compile loop: ios-build.yml
-- TestFlight: pipeline in place (ios-testflight.yml + fastlane beta_local + asc_certs.py), blocked on user secrets
+- CI compile loop: GREEN (ios-build.yml run 28749944347; single fix iteration, a type-checker timeout in PartySeatMapView)
+- TestFlight: pipeline in place (ios-testflight.yml + fastlane beta_local + asc_certs.py), blocked on user secrets (see User setup)
 
 ## Log
 - lead: plan created 2026-07-05 after user picked native SwiftUI end-to-end with cloude conventions
