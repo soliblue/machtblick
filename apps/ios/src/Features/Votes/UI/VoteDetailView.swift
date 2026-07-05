@@ -24,6 +24,13 @@ struct VoteDetailView: View {
                     }
                     .padding(ThemeTokens.Spacing.l)
                 }
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        ShareLinkButton(title: detail.vote.cleanTitle, url: HTTPClient.page("/votes/\(id)"))
+                    }
+                }
+            } else if store.loadFailed {
+                ErrorStateView(message: Copy.loadError) { Task { await store.load(id: id, cache: cache) } }
             } else {
                 ProgressView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -31,6 +38,8 @@ struct VoteDetailView: View {
         }
         .background(ThemeColor.background)
         .navigationBarTitleDisplayMode(.inline)
+        .sensoryFeedback(.selection, trigger: tab)
+        .sensoryFeedback(.selection, trigger: selected)
         .task { await store.load(id: id, cache: cache) }
     }
 

@@ -43,6 +43,7 @@ struct VotesFilterSheet: View {
             }
             .navigationTitle(Copy.filterLabel)
             .navigationBarTitleDisplayMode(.inline)
+            .sensoryFeedback(.selection, trigger: store.activeFilterCount)
         }
     }
 }

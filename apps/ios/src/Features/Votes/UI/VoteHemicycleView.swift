@@ -54,7 +54,7 @@ struct VoteHemicycleView: View {
         let block = VStack(alignment: choice == .yes ? .leading : .trailing, spacing: ThemeTokens.Spacing.xs) {
             Text(label).kicker()
             Text("\(value)")
-                .font(.display(hero ? 40 : 32))
+                .font(.display(hero ? ThemeTokens.Display.hero : ThemeTokens.Display.poster))
                 .foregroundStyle(color)
                 .monospacedDigit()
         }

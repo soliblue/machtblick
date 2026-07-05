@@ -3,8 +3,28 @@ import SwiftUI
 struct PartiesView: View {
     let store: PartiesStore
     let cache: ApiCache
+    @State private var refreshTick = 0
 
     var body: some View {
+        Group {
+            if store.parties.isEmpty && store.loadFailed {
+                ErrorStateView(message: Copy.loadError) { Task { await store.load(cache: cache) } }
+            } else if store.parties.isEmpty {
+                ProgressView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                list
+            }
+        }
+        .background(ThemeColor.background)
+        .navigationTitle(Copy.partiesTab)
+        .navigationBarTitleDisplayMode(.large)
+        .sensoryFeedback(.success, trigger: refreshTick)
+        .appDestinations(cache: cache)
+        .task { await store.load(cache: cache) }
+    }
+
+    private var list: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xl) {
                 PartySeatMapView(parties: store.parties)
@@ -25,11 +45,10 @@ struct PartiesView: View {
             }
             .padding(ThemeTokens.Spacing.l)
         }
-        .background(ThemeColor.background)
-        .navigationTitle(Copy.partiesTab)
-        .navigationBarTitleDisplayMode(.inline)
-        .appDestinations(cache: cache)
-        .task { await store.load(cache: cache) }
+        .refreshable {
+            await store.refresh(cache: cache)
+            refreshTick += 1
+        }
     }
 
     @ViewBuilder private func section(caption: String, parties: [PartyListItem]) -> some View {

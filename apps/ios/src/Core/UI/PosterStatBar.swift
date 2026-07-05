@@ -19,7 +19,7 @@ struct PosterStatBar: View {
                 }
             }
             Text(Formatters.percent(value))
-                .font(.display(32))
+                .font(.display(ThemeTokens.Display.poster))
                 .monospacedDigit()
             GeometryReader { geo in
                 ZStack(alignment: .leading) {

@@ -9,6 +9,6 @@ struct PartyBadge: View {
             .foregroundStyle(PartyStyle.color(party))
             .padding(.horizontal, ThemeTokens.Spacing.s)
             .padding(.vertical, ThemeTokens.Spacing.xs)
-            .background(PartyStyle.color(party).opacity(0.18))
+            .background(PartyStyle.color(party).opacity(ThemeTokens.Opacity.s))
     }
 }

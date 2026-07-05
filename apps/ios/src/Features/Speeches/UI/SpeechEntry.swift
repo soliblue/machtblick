@@ -9,7 +9,7 @@ struct SpeechEntry: View {
         Button(action: onOpen) {
             HStack(alignment: .top, spacing: ThemeTokens.Spacing.m) {
                 SpeakerAvatar(name: speech.speakerName, pictureUrl: speech.pictureUrl, size: nested ? 28 : 36)
-                    .padding(.leading, nested ? 4 : 0)
+                    .padding(.leading, nested ? ThemeTokens.Spacing.xs : 0)
                 VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
                     if nested {
                         Text(Copy.zwischenfrage).kicker()

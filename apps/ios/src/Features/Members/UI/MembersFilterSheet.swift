@@ -56,6 +56,8 @@ struct MembersFilterSheet: View {
             }
             .navigationTitle(Copy.filterLabel)
             .navigationBarTitleDisplayMode(.inline)
+            .sensoryFeedback(.selection, trigger: store.activeFilterCount)
+            .sensoryFeedback(.selection, trigger: store.sortDescending)
         }
     }
 }

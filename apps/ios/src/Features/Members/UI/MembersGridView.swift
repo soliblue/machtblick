@@ -4,8 +4,42 @@ struct MembersGridView: View {
     @Bindable var store: MembersStore
     let cache: ApiCache
     @State private var showFilters = false
+    @State private var refreshTick = 0
 
     var body: some View {
+        Group {
+            if store.members.isEmpty && store.loadFailed {
+                ErrorStateView(message: Copy.loadError) { Task { await store.load(cache: cache) } }
+            } else if store.members.isEmpty {
+                ProgressView()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                grid
+            }
+        }
+        .background(ThemeColor.background)
+        .navigationTitle(Copy.membersTab)
+        .navigationBarTitleDisplayMode(.large)
+        .searchable(text: $store.search, prompt: Copy.searchMembers)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button { showFilters = true } label: {
+                    Image(systemName: store.activeFilterCount > 0
+                        ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease")
+                }
+            }
+        }
+        .sheet(isPresented: $showFilters) {
+            MembersFilterSheet(store: store)
+                .presentationDetents([.medium, .large])
+                .presentationDragIndicator(.visible)
+        }
+        .sensoryFeedback(.success, trigger: refreshTick)
+        .appDestinations(cache: cache)
+        .task { await store.load(cache: cache) }
+    }
+
+    private var grid: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
                 DemographicsStrip(members: store.filtered)
@@ -32,24 +66,9 @@ struct MembersGridView: View {
             }
             .padding(ThemeTokens.Spacing.l)
         }
-        .background(ThemeColor.background)
-        .navigationTitle(Copy.membersTab)
-        .navigationBarTitleDisplayMode(.inline)
-        .searchable(text: $store.search, prompt: Copy.searchMembers)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button { showFilters = true } label: {
-                    Image(systemName: store.activeFilterCount > 0
-                        ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease")
-                }
-            }
+        .refreshable {
+            await store.refresh(cache: cache)
+            refreshTick += 1
         }
-        .sheet(isPresented: $showFilters) {
-            MembersFilterSheet(store: store)
-                .presentationDetents([.medium, .large])
-                .presentationDragIndicator(.visible)
-        }
-        .appDestinations(cache: cache)
-        .task { await store.load(cache: cache) }
     }
 }

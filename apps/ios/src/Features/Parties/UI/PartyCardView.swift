@@ -15,7 +15,7 @@ struct PartyCardView: View {
                     .lineLimit(1)
             }
             Text("\(party.seats)")
-                .font(.display(32))
+                .font(.display(ThemeTokens.Display.poster))
                 .monospacedDigit()
             Text("\(Copy.seats) · \(Formatters.percent(Double(party.seats) / Double(max(totalSeats, 1))))")
                 .kicker()

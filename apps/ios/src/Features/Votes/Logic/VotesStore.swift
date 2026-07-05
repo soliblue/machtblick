@@ -5,6 +5,7 @@ import Observation
 final class VotesStore {
     private(set) var votes: [VoteListItem] = []
     private(set) var loaded = false
+    private(set) var loadFailed = false
 
     var proposerFilter: String?
     var resultFilter: VoteResult?
@@ -16,11 +17,22 @@ final class VotesStore {
             votes = cached
         }
         if votes.isEmpty || cache.isStale("/api/votes.json", maxAge: 3600) {
-            if let fresh: [VoteListItem] = await cache.fetch("/api/votes.json") {
-                votes = fresh
-            }
+            await fetchLatest(cache: cache)
         }
         loaded = true
+    }
+
+    func refresh(cache: ApiCache) async {
+        await fetchLatest(cache: cache)
+    }
+
+    private func fetchLatest(cache: ApiCache) async {
+        if let fresh: [VoteListItem] = await cache.fetch("/api/votes.json") {
+            votes = fresh
+            loadFailed = false
+        } else if votes.isEmpty {
+            loadFailed = true
+        }
     }
 
     var hasVoteType: Bool {

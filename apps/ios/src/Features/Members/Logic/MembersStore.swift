@@ -4,6 +4,7 @@ import Observation
 @Observable
 final class MembersStore {
     private(set) var members: [MemberListItem] = []
+    private(set) var loadFailed = false
     var search = ""
     var party: String?
     var state: String?
@@ -57,9 +58,20 @@ final class MembersStore {
             members = cached
         }
         if members.isEmpty || cache.isStale("/api/members.json", maxAge: 3600) {
-            if let fresh: [MemberListItem] = await cache.fetch("/api/members.json") {
-                members = fresh
-            }
+            await fetchLatest(cache: cache)
+        }
+    }
+
+    func refresh(cache: ApiCache) async {
+        await fetchLatest(cache: cache)
+    }
+
+    private func fetchLatest(cache: ApiCache) async {
+        if let fresh: [MemberListItem] = await cache.fetch("/api/members.json") {
+            members = fresh
+            loadFailed = false
+        } else if members.isEmpty {
+            loadFailed = true
         }
     }
 }

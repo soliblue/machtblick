@@ -7,7 +7,7 @@ struct TopicChip: View {
 
     var body: some View {
         Text(text)
-            .font(.system(size: outlined ? 11 : ThemeTokens.Text.s, weight: outlined ? .semibold : .regular))
+            .font(.system(size: ThemeTokens.Text.s, weight: outlined ? .semibold : .regular))
             .textCase(outlined ? .uppercase : nil)
             .tracking(outlined ? 0.9 : 0)
             .foregroundStyle(danger ? ThemeColor.danger : ThemeColor.secondary)

@@ -8,7 +8,7 @@ struct CompactTurnRow: View {
         Button(action: onOpen) {
             HStack(alignment: .top, spacing: ThemeTokens.Spacing.m) {
                 SpeakerAvatar(name: speech.speakerName, pictureUrl: speech.pictureUrl, size: 28)
-                    .padding(.leading, 4)
+                    .padding(.leading, ThemeTokens.Spacing.xs)
                 (Text(speech.lastName).font(.system(size: ThemeTokens.Text.m, weight: .semibold))
                     .foregroundStyle(ThemeColor.fg)
                     + Text(" · ").font(.system(size: ThemeTokens.Text.m)).foregroundStyle(ThemeColor.secondary)

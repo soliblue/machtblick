@@ -16,6 +16,11 @@ enum ThemeTokens {
         static let xl: CGFloat = 26
     }
 
+    enum Display {
+        static let poster: CGFloat = 32
+        static let hero: CGFloat = 40
+    }
+
     enum Spacing {
         static let xs: CGFloat = 4
         static let s: CGFloat = 8

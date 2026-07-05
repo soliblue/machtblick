@@ -30,6 +30,7 @@ struct MemberSpeechesPanel: View {
                 if pageCount > 1 { pager }
             }
         }
+        .sensoryFeedback(.selection, trigger: readerIndex)
         .sheet(isPresented: Binding(get: { readerIndex != nil }, set: { if !$0 { readerIndex = nil } })) {
             if let index = readerIndex, index < readerTurns.count {
                 ReaderView(

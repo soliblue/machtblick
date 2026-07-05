@@ -4,10 +4,13 @@ struct VotesFeedView: View {
     let store: VotesStore
     let cache: ApiCache
     @State private var showFilters = false
+    @State private var refreshTick = 0
 
     var body: some View {
         Group {
-            if store.votes.isEmpty {
+            if store.votes.isEmpty && store.loadFailed {
+                ErrorStateView(message: Copy.loadError) { Task { await store.load(cache: cache) } }
+            } else if store.votes.isEmpty {
                 ProgressView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else if store.filtered.isEmpty {
@@ -27,6 +30,10 @@ struct VotesFeedView: View {
                 }
                 .scrollTargetBehavior(.paging)
                 .scrollIndicators(.hidden)
+                .refreshable {
+                    await store.refresh(cache: cache)
+                    refreshTick += 1
+                }
             }
         }
         .overlay(alignment: .bottom) { filterButton }
@@ -39,6 +46,7 @@ struct VotesFeedView: View {
                 .presentationDetents([.medium, .large])
                 .presentationDragIndicator(.visible)
         }
+        .sensoryFeedback(.success, trigger: refreshTick)
         .task { await store.load(cache: cache) }
     }
 

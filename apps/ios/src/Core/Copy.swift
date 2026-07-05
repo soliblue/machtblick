@@ -106,6 +106,8 @@ enum Copy {
     static let namedVote = "Namentlich"
     static let showOfHands = "Handzeichen"
     static let noResults = "Keine Treffer"
+    static let loadError = "Daten konnten nicht geladen werden."
+    static let retry = "Erneut versuchen"
     static let filterAll = "Alle"
     static let relatedMotions = "Zugehörige Anträge"
 

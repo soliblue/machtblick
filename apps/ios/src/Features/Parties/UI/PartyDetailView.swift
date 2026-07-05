@@ -22,6 +22,14 @@ struct PartyDetailView: View {
                     }
                     .padding(ThemeTokens.Spacing.l)
                 }
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        ShareLinkButton(
+                            title: PartyStyle.label(detail.party), url: HTTPClient.page("/parties/\(slug)"))
+                    }
+                }
+            } else if store.loadFailed {
+                ErrorStateView(message: Copy.loadError) { Task { await store.load(slug: slug, cache: cache) } }
             } else {
                 ProgressView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -29,6 +37,7 @@ struct PartyDetailView: View {
         }
         .background(ThemeColor.background)
         .navigationBarTitleDisplayMode(.inline)
+        .sensoryFeedback(.selection, trigger: tab)
         .task { await store.load(slug: slug, cache: cache) }
     }
 

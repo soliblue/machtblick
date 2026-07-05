@@ -24,6 +24,13 @@ struct MemberDetailView: View {
                     }
                     .padding(ThemeTokens.Spacing.l)
                 }
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        ShareLinkButton(title: detail.name, url: HTTPClient.page("/members/\(id)"))
+                    }
+                }
+            } else if store.loadFailed {
+                ErrorStateView(message: Copy.loadError) { Task { await store.load(id: id, cache: cache) } }
             } else {
                 ProgressView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -31,6 +38,7 @@ struct MemberDetailView: View {
         }
         .background(ThemeColor.background)
         .navigationBarTitleDisplayMode(.inline)
+        .sensoryFeedback(.selection, trigger: tab)
         .task { await store.load(id: id, cache: cache) }
     }
 
@@ -41,7 +49,7 @@ struct MemberDetailView: View {
                     name: detail.name, url: HTTPClient.absolute(detail.pictureUrl), size: 112, circle: true)
                 if let credit = credit(detail) {
                     Text(credit)
-                        .font(.system(size: 10))
+                        .font(.system(size: ThemeTokens.Text.s))
                         .foregroundStyle(ThemeColor.secondary)
                         .lineLimit(1)
                         .frame(width: 112)

@@ -21,6 +21,8 @@ struct DebatePanel: View {
                 DebateThreadView(rows: rows) { speechIndex = $0 }
             }
         }
+        .sensoryFeedback(.selection, trigger: speechIndex)
+        .sensoryFeedback(.selection, trigger: summaryIndex)
         .sheet(
             isPresented: Binding(get: { speechIndex != nil }, set: { if !$0 { speechIndex = nil } })
         ) {
