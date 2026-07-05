@@ -12,6 +12,7 @@ import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { Stamp, type StampVariant } from '@/views/votesList/Stamp'
 import { DebateList } from '@/views/voteDetail/DebateList'
 import { useCopy, useLocale } from '@/lib/i18n'
+import { withLocale } from '@/lib/locale'
 import { AntragSignatoryStrip } from './AntragSignatoryStrip'
 import { AntragTimeline } from './AntragTimeline'
 import { AntragVoteResult } from './AntragVoteResult'
@@ -50,6 +51,9 @@ export function AntragDetail({ data }: Props) {
   const partySummaries = linkedVotes.find((vote) => vote.partySummaries.length > 0)?.partySummaries ?? []
   return (
     <main className="mx-auto max-w-3xl p-l">
+      <a href={withLocale('/motions/', locale)} className="mb-m inline-block text-s caption opacity-l underline-offset-4 hover:underline hover:opacity-100">
+        ← {t.motionsCount}
+      </a>
       <div className="flex items-start justify-between gap-l">
         <div className="min-w-0">
           {laender ? (

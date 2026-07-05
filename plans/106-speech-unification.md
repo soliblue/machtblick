@@ -229,3 +229,17 @@ AntragDetail), `SummaryRow`/`PartySummary` now exported from
 Open for plumber: materialize the Zwischenfrage nesting signal in ETL (replace the
 view-side heuristic). Open for lead: pagination across a conversation is still a Pager
 (15 thread rows/page); "load more" would read better.
+
+## Visibility audit (visibility, 2026-07-05, pre-deploy delta check on dev :5174)
+
+PASS, both locales, all touched routes 200:
+- /speeches/: title/desc/canonical/hreflang(de,en,x-default)/OG/X-card intact, @graph JSON-LD parses. Speech entries SSR-visible in HTML (names + excerpts + "Ganze Rede lesen"); Reader sheet is additive, does not hide crawlable text. Full text stays reachable via speeches JSON endpoints, documented in llms.txt.
+- Vote detail (2026-05-08-1003 sampled): specific title/desc, per-vote OG image path, BreadcrumbList + Event JSON-LD parse, Reden tab content SSR-visible in base URL HTML.
+- /imprint/ + /en/imprint/: new copy renders SSR, "Ahmed Soliman" present, soli.blue link has target="_blank" rel="noreferrer" (implies noopener, sensible), meta updated to match new copy.
+- /members/ + member detail: no meta regressions from tab/pill changes; canonical tab strategy intact (member canonical -> /votes/ tab, sitemap lists only /votes/ tab, motions/speeches tabs prerendered but canonicalized away).
+- /motions/: prerendered, in sitemap with lastmod, referenced by llms.txt. Motion DETAIL pages remain internally linked (crawl path: /members/ -> member -> motions tab -> /motions/{id}/, verified on asar-ayse).
+- tsc clean. noindex on all pages is the expected DEV injection.
+
+FINDING (structural, not fixed): after removing the nav tab, the /motions/ LIST page has zero internal inbound links. No footer link, no back-link/breadcrumb from /motions/{id}/, no link from vote pages. It is a sitemap-and-llms.txt-only orphan; Google treats sitemap-only pages as low priority. Cheapest fixes: footer link next to Impressum/Datenschutz, or a breadcrumb on motion detail pages back to /motions/. UI change, so left to lead/frontend.
+
+Verdict: SHIP OK. The orphan /motions/ list is a follow-up, not a blocker (detail pages, which carry the SEO value, are linked).
