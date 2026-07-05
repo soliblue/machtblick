@@ -349,12 +349,20 @@ function writeJsonEndpoints() {
   db.close()
 }
 
+function latestVoteDate() {
+  const db = new Database(fileURLToPath(new URL('../../db/machtblick.sqlite', import.meta.url)), { readonly: true })
+  const latest = (db.prepare('SELECT max(date) AS d FROM votes WHERE term_id = ?').get(CURRENT_TERM) as { d: string | null }).d
+  db.close()
+  return latest ?? new Date().toISOString().slice(0, 10)
+}
+
 const prerenderedPaths = prerenderPaths()
 writeSitemap(sitemapEntries())
 writeSpeechesStatic()
 writeJsonEndpoints()
 
 export default defineConfig({
+  define: { __DATA_LAST_MODIFIED__: JSON.stringify(latestVoteDate()) },
   server: { port: 3000, host: true, allowedHosts: ['dev.machtblick.de'] },
   resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
   plugins: [

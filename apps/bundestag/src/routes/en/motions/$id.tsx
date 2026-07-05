@@ -26,6 +26,7 @@ export const Route = createFileRoute('/en/motions/$id')({
           summary,
         ].find((c) => c.length <= 165) ?? summary
       : summary
+    const modified = loaderData ? [loaderData.antrag.introducedDate, ...loaderData.linkedVotes.map((v) => v.date)].filter((d): d is string => Boolean(d)).sort().pop() : undefined
     return {
       meta: seoMeta({ title, description: desc, canonical: path, type: 'article' }),
       links: [...canonicalLink(path), ...alternateJsonLink(path)],
@@ -38,7 +39,8 @@ export const Route = createFileRoute('/en/motions/$id')({
             inLanguage: 'de',
             url: `${SITE_URL}${path}/`,
             ...(loaderData.antrag.drucksache ? { legislationIdentifier: loaderData.antrag.drucksache } : {}),
-            ...(loaderData.antrag.introducedDate ? { legislationDate: loaderData.antrag.introducedDate } : {}),
+            ...(loaderData.antrag.introducedDate ? { legislationDate: loaderData.antrag.introducedDate, datePublished: loaderData.antrag.introducedDate } : {}),
+            ...(modified ? { dateModified: modified } : {}),
             ...(loaderData.antrag.abstract ? { abstract: loaderData.antrag.abstract } : {}),
             ...(loaderData.antrag.initiativeFraktion ? { creator: { '@type': 'Organization', name: loaderData.antrag.initiativeFraktion } } : {}),
           })

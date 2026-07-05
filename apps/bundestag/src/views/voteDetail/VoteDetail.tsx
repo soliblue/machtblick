@@ -1,6 +1,7 @@
 import type { ReactElement } from 'react'
 import type { VoteDetail as VoteDetailData } from '@/server/voteDetail'
-import { formatDateShort } from '@/lib/format'
+import { formatDateLong, formatDateShort } from '@/lib/format'
+import { partyLabel } from '@/lib/parties'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { Stamp } from '@/views/votesList/Stamp'
 import { MarkdownInline } from '@/lib/MarkdownInline'
@@ -22,6 +23,40 @@ type Props = {
   data: VoteDetailData & { sponsors: VoteSponsors }
   activeTab: VoteTab
   onTabChange: (t: VoteTab) => void
+}
+
+function voteFactSummary(vote: VoteDetailData['vote'], partySummaries: VoteDetailData['partySummaries'], locale: 'de' | 'en') {
+  const date = formatDateLong(vote.date, locale)
+  const result = locale === 'en' ? (vote.result === 'angenommen' ? 'adopted' : 'rejected') : vote.result
+  if (vote.voteType === 'namentlich') {
+    const countWords = locale === 'en'
+      ? { yes: 'yes', no: 'no', abstain: 'abstained', absent: 'did not vote' }
+      : { yes: 'Ja', no: 'Nein', abstain: 'Enthaltung', absent: 'nicht abgegeben' }
+    const byParty = partySummaries
+      .map((s) => {
+        const counts = ([['yes', s.yes], ['no', s.no], ['abstain', s.abstain], ['absent', s.absent]] as const)
+          .filter(([, n]) => n > 0)
+          .map(([key, n]) => `${n} ${key === 'abstain' && n > 1 && locale === 'de' ? 'Enthaltungen' : countWords[key]}`)
+          .join(', ')
+        return counts ? `${partyLabel(s.party, locale)}: ${counts}` : null
+      })
+      .filter(Boolean)
+      .join('; ')
+    return locale === 'en'
+      ? `Roll-call vote in the German Bundestag on ${date}: ${result} with ${vote.yes} yes votes, ${vote.no} no votes, ${vote.abstain} abstentions and ${vote.absent ?? 0} votes not cast. Result by parliamentary group: ${byParty}.`
+      : `Namentliche Abstimmung im Bundestag am ${date}: ${result} mit ${vote.yes} Ja-Stimmen, ${vote.no} Nein-Stimmen, ${vote.abstain} Enthaltungen und ${vote.absent ?? 0} nicht abgegebenen Stimmen. Ergebnis nach Fraktion: ${byParty}.`
+  }
+  const stanceWords = locale === 'en'
+    ? { yes: 'In favor', no: 'Against', abstain: 'Abstained' }
+    : { yes: 'Dafür', no: 'Dagegen', abstain: 'Enthalten' }
+  const stances = (['yes', 'no', 'abstain'] as const)
+    .map((pos) => [pos, partySummaries.filter((s) => s.position === pos).map((s) => partyLabel(s.party, locale))] as const)
+    .filter(([, parties]) => parties.length > 0)
+    .map(([pos, parties]) => `${stanceWords[pos]}: ${parties.join(', ')}`)
+    .join('. ')
+  return locale === 'en'
+    ? `Vote by show of hands in the German Bundestag on ${date}: ${result}.${stances ? ` ${stances}.` : ''}`
+    : `Abstimmung per Handzeichen im Bundestag am ${date}: ${result}.${stances ? ` ${stances}.` : ''}`
 }
 
 const TAB_PANELS: Record<VoteTab, (data: VoteDetailData) => ReactElement> = {
@@ -70,6 +105,7 @@ export function VoteDetail({ data, activeTab, onTabChange }: Props) {
         <div className="mt-s text-s opacity-l">{t.officialTitle}: {vote.title}</div>
       )}
       {vote.topic && <div className="mt-s text-m opacity-l">{vote.topic}</div>}
+      <p className="sr-only">{voteFactSummary(vote, partySummaries, locale)}</p>
 
       <div className="mt-l">
         <SponsorStrip antraege={sponsors.antraege} />
