@@ -3,6 +3,7 @@ import { Pager } from '@/views/redenSearch/Pager'
 import type { SpeechResult } from '@/server/speeches'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { useMemberSpeeches } from '@/hooks/useMemberSpeeches'
+import { useSpeechPeople } from '@/hooks/useSpeechPeople'
 import { MemberSpeechGroupRow } from './MemberSpeechGroupRow'
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
@@ -11,6 +12,7 @@ export function MemberSpeechesSection({ speeches }: { speeches: SpeechResult[] }
   const locale = useLocale()
   const t = useCopy()
   const speechState = useMemberSpeeches(speeches, locale)
+  const people = useSpeechPeople()
   return (
     <section>
       <div className="mb-m flex flex-wrap items-center gap-m">
@@ -39,8 +41,10 @@ export function MemberSpeechesSection({ speeches }: { speeches: SpeechResult[] }
               group={group}
               open={speechState.openIds.has(group.id)}
               onToggle={() => speechState.toggleOpen(group.id)}
+              query={speechState.query}
               terms={speechState.terms}
               texts={speechState.texts}
+              people={people}
               contextRows={speechState.contextRowsFor(group)}
               contextLoading={speechState.contextLoading}
             />

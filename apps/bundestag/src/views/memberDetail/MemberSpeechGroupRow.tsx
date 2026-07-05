@@ -1,5 +1,8 @@
 import { ChevronDown, ExternalLink } from 'lucide-react'
-import { PartyLogo } from '@/views/votesList/PartyLogo'
+import { DebateThread } from '@/views/speeches/DebateThread'
+import { Reader, type ReaderSpeechItem } from '@/views/speeches/Reader'
+import { buildDebateThread } from '@/hooks/debateThread'
+import { useReader } from '@/hooks/useReader'
 import { formatDateShort } from '@/lib/format'
 import { SERIF } from '@/lib/fonts'
 import { highlight } from '@/lib/highlight'
@@ -17,17 +20,36 @@ type Props = {
   group: MemberSpeechGroup
   open: boolean
   onToggle: () => void
+  query: string
   terms: string[]
   texts?: Record<string, string>
+  people?: Record<string, string>
   contextRows?: SpeechMetaEntry[]
   contextLoading: boolean
 }
 
-export function MemberSpeechGroupRow({ group, open, onToggle, terms, texts, contextRows, contextLoading }: Props) {
+export function MemberSpeechGroupRow({ group, open, onToggle, query, terms, texts, people = {}, contextRows, contextLoading }: Props) {
   const locale = useLocale()
   const t = useCopy()
-  const memberSpeechIds = new Set(group.speeches.map((speech) => speech.id))
   const timelineRows: Array<SpeechResult | SpeechMetaEntry> = contextRows?.length ? contextRows : group.speeches
+  const threadRows = buildDebateThread(timelineRows)
+  const readerItems: ReaderSpeechItem[] = threadRows
+    .filter((row) => row.kind === 'turn')
+    .map(({ speech }) => ({
+      kind: 'speech',
+      ids: 'ids' in speech ? speech.ids : [speech.id],
+      speakerName: speech.speakerName,
+      speakerMemberId: speech.speakerMemberId,
+      speakerRole: speech.speakerRole,
+      party: speech.party,
+      choice: 'choice' in speech ? speech.choice : null,
+      pictureUrl: speech.speakerMemberId ? people[speech.speakerMemberId] ?? null : null,
+      date: speech.date,
+      voteId: group.voteId,
+      voteTitle: group.voteTitle,
+      fallbackText: texts?.[speech.id] ?? speech.excerpt,
+    }))
+  const reader = useReader(readerItems)
   const matchedSpeeches = terms.length
     ? group.speeches.filter((speech) => terms.every((term) => `${speech.speakerName} ${texts?.[speech.id] ?? speech.excerpt}`.toLowerCase().includes(term)))
     : []
@@ -105,25 +127,27 @@ export function MemberSpeechGroupRow({ group, open, onToggle, terms, texts, cont
           {contextLoading && !contextRows ? (
             <div className="text-m opacity-l">{locale === 'en' ? 'Loading context...' : 'Kontext wird geladen...'}</div>
           ) : (
-            <div className="flex flex-col gap-m">
-              {timelineRows.map((speech) => {
-                const isMember = memberSpeechIds.has(speech.id)
-                const body = texts?.[speech.id] ?? speech.excerpt
-                return (
-                  <div key={speech.id} className={isMember ? 'opacity-100' : 'opacity-l'}>
-                    <div className="flex flex-wrap items-center gap-s text-s caption">
-                      <span className={isMember ? 'font-semibold' : ''}>{speech.speakerName}</span>
-                      {speech.speakerRole ? <span className="opacity-l">{speech.speakerRole}</span> : speech.party ? <PartyLogo party={speech.party} size={17} decorative /> : null}
-                    </div>
-                    <div className={isMember ? 'mt-xs whitespace-pre-wrap text-m' : 'mt-xs text-m line-clamp-3'} style={PROSE}>
-                      {highlight(body, terms)}
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
+            <DebateThread
+              rows={threadRows}
+              choiceFor={(speech) => ('choice' in speech ? speech.choice : null)}
+              pictureFor={(speech) => (speech.speakerMemberId ? people[speech.speakerMemberId] ?? null : null)}
+              query={query}
+              onOpenTurn={reader.openAt}
+            />
           )}
         </div>
+      )}
+      {reader.active && (
+        <Reader
+          item={reader.active}
+          index={reader.index}
+          count={reader.count}
+          nextName={reader.nextItem?.speakerName ?? null}
+          query={query}
+          onPrev={reader.prev}
+          onNext={reader.next}
+          onClose={reader.close}
+        />
       )}
     </div>
   )

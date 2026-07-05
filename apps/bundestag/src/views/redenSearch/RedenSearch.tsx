@@ -4,7 +4,9 @@ import { FilterPillRow } from '@/views/votesList/FilterPillRow'
 import { FilterSheet, type FilterSheetGroup } from '@/views/votesList/FilterSheet'
 import { MemberFilterPill } from './MemberFilterPill'
 import { Pager } from './Pager'
-import { SpeechCard } from './SpeechCard'
+import { SpeechEntry } from '@/views/speeches/SpeechEntry'
+import { Reader, type ReaderSpeechItem } from '@/views/speeches/Reader'
+import { useReader } from '@/hooks/useReader'
 import { formatDate, formatDateLong } from '@/lib/format'
 import { useSpeechPeople } from '@/hooks/useSpeechPeople'
 import type { SpeechFeedItem, SpeechFeedResponse } from '@/lib/speechesStatic'
@@ -42,6 +44,22 @@ export function RedenSearch({ data, query, party, date, memberId, page, textsLoa
   const locale = useLocale()
   const t = useCopy()
   const people = useSpeechPeople()
+  const readerItems: ReaderSpeechItem[] = data.items.map((s) => ({
+    kind: 'speech',
+    ids: s.ids,
+    speakerName: s.speakerName,
+    speakerMemberId: s.speakerMemberId,
+    speakerRole: s.speakerRole,
+    party: s.party,
+    choice: s.choice,
+    pictureUrl: s.speakerMemberId ? people[s.speakerMemberId] ?? null : null,
+    date: s.date,
+    voteId: s.voteId,
+    voteTitle: s.voteTitle,
+    fallbackText: s.excerpt,
+  }))
+  const reader = useReader(readerItems)
+  const indexOf = new Map(data.items.map((s, i) => [s.id, i]))
   const memberName = new Map(data.membersOptions.map((o) => [o.id, o.name]))
   const dayLabel = locale === 'en' ? 'Day' : 'Tag'
   const memberLabel = locale === 'en' ? 'Member' : 'Abgeordnete:r'
@@ -83,10 +101,34 @@ export function RedenSearch({ data, query, party, date, memberId, page, textsLoa
       {groupByDate(data.items).map(([day, items]) => (
         <section key={day}>
           <div className="mb-s mt-l text-s caption opacity-l">{formatDateLong(day, locale)}</div>
-          {items.map((s) => <SpeechCard key={s.id} speech={s} query={query} pictureUrl={s.speakerMemberId ? people[s.speakerMemberId] ?? null : null} />)}
+          {items.map((s) => (
+            <SpeechEntry
+              key={s.id}
+              speech={s}
+              mode="card"
+              choice={s.choice}
+              pictureUrl={s.speakerMemberId ? people[s.speakerMemberId] ?? null : null}
+              voteId={s.voteId}
+              voteTitle={s.voteTitle}
+              query={query}
+              onOpen={() => reader.openAt(indexOf.get(s.id) ?? 0)}
+            />
+          ))}
         </section>
       ))}
       {pageCount > 1 && <Pager page={page} pageCount={pageCount} onPage={onPageChange} />}
+      {reader.active && (
+        <Reader
+          item={reader.active}
+          index={reader.index}
+          count={reader.count}
+          nextName={reader.nextItem?.speakerName ?? null}
+          query={query}
+          onPrev={reader.prev}
+          onNext={reader.next}
+          onClose={reader.close}
+        />
+      )}
     </main>
   )
 }
