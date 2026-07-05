@@ -389,3 +389,7 @@ Pre-deploy visibility check for commit 4fd3956 (web changeset = 1f652bd + 536293
 4. Sitemap/robots/llms.txt/api-catalog/_headers: zero diff in this changeset (confirmed via `git diff` on those exact files across the range). Sitemap contains only canonical `/parties/{slug}/profile/` URLs (not the bare `/parties/{slug}/` tab-router parent, which self-referencingly canonicalizes to `/profile/`), no `/api/*.json` entries, no query-string variants. No new HTML routes; `/motions/` index page and `/motions/{id}/` details are unchanged (`publishableAntragIds()` untouched).
 
 Build: PASS. HTML metadata: PASS. Sharing previews: PASS. Crawler access: PASS (unchanged). AI discovery: PASS (unchanged; motions.json gap logged as follow-up, non-blocking). Favicons/manifest: unchanged. Sitemap/JSON alternates: PASS.
+
+## Iteration 2 SHIPPED (2026-07-05)
+Build 2 uploaded to TestFlight (run 28756737710). Web JSON enrichment live on prod (deploy 7d6063a3). All lanes done, review ship-blocker + 3 HIGH fixed, ios-build green at HEAD.
+Deferred to a later iteration (graceful-degrade in app now): motion detail debate section (needs antraege.ts to emit debate + linkedVote partySummaries), /api/motions.json into DataCatalog/llms.txt, cosmetic iOS convention cleanup (multi-type files, token drift), member Verlauf-blocked sort. Speeches full-text (search shards too heavy) still v-next.
