@@ -14,8 +14,8 @@ struct MemberInitiativesPanel: View {
                     .padding(.vertical, ThemeTokens.Spacing.l)
             } else {
                 LazyVStack(alignment: .leading, spacing: 0) {
-                    ForEach(filtered) { initiative in
-                        MemberInitiativeRow(initiative: initiative)
+                    ForEach(Array(filtered.enumerated()), id: \.element.id) { index, initiative in
+                        MemberInitiativeRow(initiative: initiative, showDivider: index > 0)
                     }
                 }
             }

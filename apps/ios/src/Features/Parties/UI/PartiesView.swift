@@ -67,10 +67,7 @@ struct PartiesView: View {
         if !parties.isEmpty {
             VStack(alignment: .leading, spacing: ThemeTokens.Spacing.m) {
                 Text(caption).kicker()
-                LazyVGrid(
-                    columns: Array(repeating: GridItem(.flexible(), spacing: ThemeTokens.Spacing.l), count: 2),
-                    spacing: ThemeTokens.Spacing.l
-                ) {
+                VStack(spacing: ThemeTokens.Spacing.l) {
                     ForEach(parties) { party in
                         NavigationLink(value: AppRoute.party(party.slug)) {
                             PartyCardView(party: party, totalSeats: totalSeats)

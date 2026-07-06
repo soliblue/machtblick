@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MemberVoteRow: View {
     let entry: MemberDetailPayload.HistoryEntry
+    var showDivider = true
 
     var body: some View {
         NavigationLink(value: AppRoute.vote(entry.voteId)) {
@@ -28,7 +29,9 @@ struct MemberVoteRow: View {
             .padding(.vertical, ThemeTokens.Spacing.m)
             .frame(maxWidth: .infinity, alignment: .leading)
             .overlay(alignment: .top) {
-                Rectangle().fill(ThemeColor.border).frame(height: ThemeTokens.Stroke.s)
+                if showDivider {
+                    Rectangle().fill(ThemeColor.border).frame(height: ThemeTokens.Stroke.s)
+                }
             }
         }
         .buttonStyle(.plain)

@@ -20,9 +20,9 @@ struct MemberSpeechesPanel: View {
                     .padding(.vertical, ThemeTokens.Spacing.l)
             } else {
                 LazyVStack(alignment: .leading, spacing: 0) {
-                    ForEach(pageGroups) { group in
+                    ForEach(Array(pageGroups.enumerated()), id: \.element.id) { index, group in
                         MemberSpeechGroupRow(
-                            group: group, expanded: openIds.contains(group.id),
+                            group: group, showDivider: index > 0, expanded: openIds.contains(group.id),
                             onToggle: { toggle(group.id) },
                             onOpen: { turns, index in readerTurns = turns; readerIndex = index })
                     }

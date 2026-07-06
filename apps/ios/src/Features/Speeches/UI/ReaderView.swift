@@ -64,9 +64,13 @@ struct ReaderView: View {
                     StampView(label: choice.label, color: choice.color)
                 }
             case .summary(let summary):
-                Text(PartyStyle.label(summary.party))
-                    .font(.system(size: ThemeTokens.Text.l, weight: .semibold))
-                    .foregroundStyle(PartyStyle.color(summary.party))
+                if PartyStyle.hasLogo(summary.party) {
+                    PartyLogo(party: summary.party, size: ThemeTokens.Icon.l)
+                } else {
+                    Text(PartyStyle.label(summary.party))
+                        .font(.system(size: ThemeTokens.Text.l, weight: .semibold))
+                        .foregroundStyle(PartyStyle.color(summary.party))
+                }
                 Spacer(minLength: 0)
                 StampView(label: summary.stance.label, color: summary.stance.color)
             }

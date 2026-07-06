@@ -5,6 +5,7 @@ struct MemberSpeechGroupRow: View {
     let expanded: Bool
     let onToggle: () -> Void
     let onOpen: ([SpeechSummary], Int) -> Void
+    var showDivider = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
@@ -38,7 +39,9 @@ struct MemberSpeechGroupRow: View {
         .padding(.vertical, ThemeTokens.Spacing.m)
         .frame(maxWidth: .infinity, alignment: .leading)
         .overlay(alignment: .top) {
-            Rectangle().fill(ThemeColor.border).frame(height: ThemeTokens.Stroke.s)
+            if showDivider {
+                Rectangle().fill(ThemeColor.border).frame(height: ThemeTokens.Stroke.s)
+            }
         }
     }
 

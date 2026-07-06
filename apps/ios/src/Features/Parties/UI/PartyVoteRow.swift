@@ -2,6 +2,7 @@ import SwiftUI
 
 struct PartyVoteRow: View {
     let vote: PartyDetailPayload.VoteEntry
+    var showDivider = true
 
     var body: some View {
         NavigationLink(value: AppRoute.vote(vote.voteId)) {
@@ -28,17 +29,28 @@ struct PartyVoteRow: View {
             .padding(.vertical, ThemeTokens.Spacing.m)
             .frame(maxWidth: .infinity, alignment: .leading)
             .overlay(alignment: .top) {
-                Rectangle().fill(ThemeColor.border).frame(height: ThemeTokens.Stroke.s)
+                if showDivider {
+                    Rectangle().fill(ThemeColor.border).frame(height: ThemeTokens.Stroke.s)
+                }
             }
         }
         .buttonStyle(.plain)
     }
 
-    @ViewBuilder private var stance: some View {
-        if vote.partyVote == .mixed || vote.partyVote == .split {
-            ChoicePill(label: Copy.positionMixed)
-        } else {
-            ChoicePill(label: vote.partyVote.label, fill: vote.partyVote.pillFill, textColor: vote.partyVote.pillText)
+    private var stanceLabel: String {
+        (vote.partyVote == .mixed || vote.partyVote == .split) ? Copy.positionMixed : vote.partyVote.label
+    }
+
+    private var stanceColor: Color {
+        switch vote.partyVote {
+        case .yes: return ThemeColor.success
+        case .no: return ThemeColor.danger
+        case .abstain: return ThemeColor.yellow
+        default: return ThemeColor.fg
         }
+    }
+
+    private var stance: some View {
+        StampView(label: stanceLabel, color: stanceColor)
     }
 }

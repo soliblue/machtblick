@@ -32,22 +32,22 @@ struct SpeechEntry: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
-            Text(speech.speakerName)
-                .font(.system(size: ThemeTokens.Text.m, weight: .semibold))
-                .foregroundStyle(ThemeColor.fg)
             HStack(spacing: ThemeTokens.Spacing.s) {
-                if let party = speech.party {
-                    PartyBadge(party: party)
+                if let party = speech.party, PartyStyle.hasLogo(party) {
+                    PartyLogo(party: party, size: ThemeTokens.Icon.m)
                 }
-                if let role = speech.speakerRole {
-                    Text(role)
-                        .font(.system(size: ThemeTokens.Text.s))
-                        .foregroundStyle(ThemeColor.secondary)
-                }
+                Text(speech.speakerName)
+                    .font(.system(size: ThemeTokens.Text.m, weight: .semibold))
+                    .foregroundStyle(ThemeColor.fg)
                 Spacer(minLength: 0)
                 if let choice = speech.choice, choice != .nichtAbgegeben {
                     StampView(label: choice.label, color: choice.color)
                 }
+            }
+            if let role = speech.speakerRole {
+                Text(role)
+                    .font(.system(size: ThemeTokens.Text.s))
+                    .foregroundStyle(ThemeColor.secondary)
             }
         }
     }
