@@ -1,5 +1,4 @@
 import SwiftUI
-import UIKit
 
 private enum RootTab: Hashable {
     case votes
@@ -14,34 +13,31 @@ struct RootTabView: View {
     @State private var partiesStore = PartiesStore()
     @State private var tab: RootTab = .votes
 
-    init(cache: ApiCache) {
-        self.cache = cache
-        let appearance = UITabBarAppearance()
-        appearance.configureWithDefaultBackground()
-        for item in [appearance.stackedLayoutAppearance, appearance.inlineLayoutAppearance, appearance.compactInlineLayoutAppearance] {
-            item.normal.titleTextAttributes = [.foregroundColor: UIColor.clear, .font: UIFont.systemFont(ofSize: 0.01)]
-            item.selected.titleTextAttributes = [.foregroundColor: UIColor.clear, .font: UIFont.systemFont(ofSize: 0.01)]
-        }
-        UITabBar.appearance().standardAppearance = appearance
-        UITabBar.appearance().scrollEdgeAppearance = appearance
-    }
-
     var body: some View {
         TabView(selection: $tab) {
-            Tab(Copy.votesTab, systemImage: "checkmark.seal", value: RootTab.votes) {
+            Tab(value: RootTab.votes) {
                 NavigationStack {
                     VotesFeedView(store: votesStore, cache: cache)
                 }
+            } label: {
+                Image(systemName: "checkmark.seal")
+                    .accessibilityLabel(Copy.votesTab)
             }
-            Tab(Copy.membersTab, systemImage: "person.3", value: RootTab.members) {
+            Tab(value: RootTab.members) {
                 NavigationStack {
                     MembersGridView(store: membersStore, cache: cache)
                 }
+            } label: {
+                Image(systemName: "person.3")
+                    .accessibilityLabel(Copy.membersTab)
             }
-            Tab(Copy.partiesTab, systemImage: "chart.pie", value: RootTab.parties) {
+            Tab(value: RootTab.parties) {
                 NavigationStack {
                     PartiesView(store: partiesStore, cache: cache)
                 }
+            } label: {
+                Image(systemName: "chart.pie")
+                    .accessibilityLabel(Copy.partiesTab)
             }
         }
         .tint(ThemeColor.fg)
