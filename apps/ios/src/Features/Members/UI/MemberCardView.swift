@@ -4,56 +4,18 @@ struct MemberCardView: View {
     let member: MemberListItem
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            Color.clear
-                .aspectRatio(1, contentMode: .fit)
-                .overlay(photo)
-                .clipped()
-            VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
-                Text(member.name)
-                    .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
-                    .lineLimit(2, reservesSpace: true)
-                    .multilineTextAlignment(.leading)
-                HStack(spacing: ThemeTokens.Spacing.xs) {
-                    Circle()
-                        .fill(PartyStyle.color(member.party))
-                        .frame(width: 8, height: 8)
-                    Text(PartyStyle.label(member.party))
-                        .font(.system(size: ThemeTokens.Text.s))
-                        .foregroundStyle(ThemeColor.secondary)
-                        .lineLimit(1)
-                }
-                if let attendance = member.attendance {
-                    VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
-                        Text(Copy.attendance).kicker()
-                        HStack(spacing: ThemeTokens.Spacing.s) {
-                            ZStack(alignment: .leading) {
-                                Rectangle().fill(ThemeColor.border)
-                                GeometryReader { geo in
-                                    Rectangle().fill(ThemeColor.success)
-                                        .frame(width: geo.size.width * min(max(attendance, 0), 1))
-                                }
-                            }
-                            .frame(height: 3)
-                            Text(Formatters.percent(attendance))
-                                .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
-                                .monospacedDigit()
-                        }
-                    }
-                    .padding(.top, ThemeTokens.Spacing.xs)
-                    HStack {
-                        Text(Copy.line).kicker()
-                        Spacer()
-                        Text(member.loyalty.map(Formatters.percent) ?? "-")
-                            .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
-                            .monospacedDigit()
-                    }
-                }
-            }
-            .padding(ThemeTokens.Spacing.s)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .overlay(Rectangle().strokeBorder(ThemeColor.border, lineWidth: ThemeTokens.Stroke.s))
+        Color.clear
+            .aspectRatio(3.0 / 4.0, contentMode: .fit)
+            .overlay(photo)
+            .overlay(
+                LinearGradient(
+                    colors: [.clear, .clear, .black.opacity(0.65)],
+                    startPoint: .top, endPoint: .bottom))
+            .overlay(alignment: .bottomLeading) { nameLabel }
+            .overlay(alignment: .topTrailing) { partyMark }
+            .clipShape(RoundedRectangle(cornerRadius: ThemeTokens.Radius.m))
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("\(member.name), \(PartyStyle.label(member.party))")
     }
 
     private var photo: some View {
@@ -67,6 +29,30 @@ struct MemberCardView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(ThemeColor.surface)
             }
+        }
+    }
+
+    private var nameLabel: some View {
+        Text(member.name)
+            .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
+            .foregroundStyle(.white)
+            .lineLimit(1)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, ThemeTokens.Spacing.s)
+            .padding(.vertical, ThemeTokens.Spacing.xs)
+    }
+
+    @ViewBuilder private var partyMark: some View {
+        if PartyStyle.hasLogo(member.party) {
+            PartyLogo(party: member.party, size: ThemeTokens.Icon.m)
+                .padding(ThemeTokens.Spacing.xs)
+                .background(Circle().fill(.white.opacity(0.9)))
+                .padding(ThemeTokens.Spacing.xs)
+        } else {
+            Circle()
+                .fill(PartyStyle.color(member.party))
+                .frame(width: 10, height: 10)
+                .padding(ThemeTokens.Spacing.s)
         }
     }
 

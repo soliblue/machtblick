@@ -7,6 +7,8 @@ struct ReaderView: View {
     let onPrev: (() -> Void)?
     let onNext: (() -> Void)?
     let onClose: () -> Void
+    @State private var fullText: String?
+    @State private var loadingBody = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -23,6 +25,17 @@ struct ReaderView: View {
             }
         }
         .background(ThemeColor.background)
+        .task(id: item.id) { await loadBody() }
+    }
+
+    private func loadBody() async {
+        if case .speech(let speech) = item {
+            fullText = nil
+            loadingBody = true
+            let body = await SpeechBodyService.shared.text(ids: [speech.id])
+            fullText = body.isEmpty ? speech.excerpt : body
+            loadingBody = false
+        }
     }
 
     @ViewBuilder private var header: some View {
@@ -68,10 +81,16 @@ struct ReaderView: View {
     @ViewBuilder private var content: some View {
         switch item {
         case .speech(let speech):
-            Text(speech.excerpt)
-                .font(.serif(ThemeTokens.Text.l))
-                .foregroundStyle(ThemeColor.fg)
-                .multilineTextAlignment(.leading)
+            if loadingBody {
+                ProgressView()
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, ThemeTokens.Spacing.xl)
+            } else {
+                Text(fullText ?? speech.excerpt)
+                    .font(.serif(ThemeTokens.Text.l))
+                    .foregroundStyle(ThemeColor.fg)
+                    .multilineTextAlignment(.leading)
+            }
         case .summary(let summary):
             VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
                 if let position = summary.positionSummary {

@@ -7,36 +7,44 @@ struct VotesFilterSheet: View {
         NavigationStack {
             Form {
                 if store.hasVoteType {
-                    Section(Copy.filterType) {
-                        Picker(Copy.filterType, selection: $store.voteTypeFilter) {
+                    Section {
+                        Picker(selection: $store.voteTypeFilter) {
                             Text(Copy.filterAll).tag(String?.none)
                             Text(Copy.namedVote).tag(String?("namentlich"))
                             Text(Copy.showOfHands).tag(String?("handzeichen"))
+                        } label: {
+                            Label(Copy.filterType, systemImage: "doc.text")
                         }
                     }
                 }
-                Section(Copy.filterProposer) {
-                    Picker(Copy.filterProposer, selection: $store.proposerFilter) {
+                Section {
+                    Picker(selection: $store.proposerFilter) {
                         Text(Copy.filterAll).tag(String?.none)
                         ForEach(store.availableProposers, id: \.self) { proposer in
                             Text(PartyStyle.label(proposer)).tag(String?(proposer))
                         }
+                    } label: {
+                        Label(Copy.filterProposer, systemImage: "building.columns")
                     }
                 }
-                Section(Copy.resultSection) {
-                    Picker(Copy.resultSection, selection: $store.resultFilter) {
+                Section {
+                    Picker(selection: $store.resultFilter) {
                         Text(Copy.filterAll).tag(VoteResult?.none)
                         Text(Copy.accepted).tag(VoteResult?(.angenommen))
                         Text(Copy.rejected).tag(VoteResult?(.abgelehnt))
+                    } label: {
+                        Label(Copy.resultSection, systemImage: "checkmark.seal")
                     }
                 }
                 if store.hasTopic {
-                    Section(Copy.filterCategory) {
-                        Picker(Copy.filterCategory, selection: $store.topicFilter) {
+                    Section {
+                        Picker(selection: $store.topicFilter) {
                             Text(Copy.filterAll).tag(String?.none)
                             ForEach(store.availableTopics, id: \.self) { topic in
                                 Text(topic).tag(String?(topic))
                             }
+                        } label: {
+                            Label(Copy.filterCategory, systemImage: "tag")
                         }
                     }
                 }

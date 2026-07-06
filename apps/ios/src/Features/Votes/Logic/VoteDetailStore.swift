@@ -4,6 +4,7 @@ import Observation
 @Observable
 final class VoteDetailStore {
     private(set) var detail: VoteDetailPayload?
+    private(set) var signatories: [MotionDetailPayload.Signatory] = []
     private(set) var loadFailed = false
 
     func load(id: String, cache: ApiCache) async {
@@ -17,6 +18,19 @@ final class VoteDetailStore {
                 detail = fresh
             } else if detail == nil {
                 loadFailed = true
+            }
+        }
+        await loadSignatories(cache: cache)
+    }
+
+    private func loadSignatories(cache: ApiCache) async {
+        if let antragId = detail?.antraege?.first?.antragId {
+            let path = "/motions/\(antragId).json"
+            if let cached: MotionDetailPayload = cache.cached(path) {
+                signatories = cached.signatories
+            }
+            if let fresh: MotionDetailPayload = await cache.fetch(path) {
+                signatories = fresh.signatories
             }
         }
     }

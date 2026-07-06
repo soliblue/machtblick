@@ -11,6 +11,11 @@ struct PartySummaryStrip: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(alignment: .top, spacing: ThemeTokens.Spacing.m) {
                         ForEach(Array(summaries.enumerated()), id: \.element.id) { index, summary in
+                            if index > 0 {
+                                Rectangle()
+                                    .fill(ThemeColor.border)
+                                    .frame(width: ThemeTokens.Stroke.s)
+                            }
                             card(summary, index: index)
                         }
                     }
@@ -24,9 +29,13 @@ struct PartySummaryStrip: View {
         Button(action: { onOpen(index) }) {
             VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
                 HStack {
-                    Text(PartyStyle.label(summary.party))
-                        .font(.system(size: ThemeTokens.Text.m, weight: .semibold))
-                        .foregroundStyle(PartyStyle.color(summary.party))
+                    if PartyStyle.hasLogo(summary.party) {
+                        PartyLogo(party: summary.party, size: ThemeTokens.Icon.l)
+                    } else {
+                        Text(PartyStyle.label(summary.party))
+                            .font(.system(size: ThemeTokens.Text.m, weight: .semibold))
+                            .foregroundStyle(PartyStyle.color(summary.party))
+                    }
                     Spacer()
                     StampView(label: summary.stance.label, color: summary.stance.color)
                 }
@@ -44,7 +53,6 @@ struct PartySummaryStrip: View {
             }
             .padding(ThemeTokens.Spacing.l)
             .frame(width: 240, alignment: .topLeading)
-            .overlay(Rectangle().strokeBorder(ThemeColor.border, lineWidth: ThemeTokens.Stroke.s))
         }
         .buttonStyle(.plain)
     }

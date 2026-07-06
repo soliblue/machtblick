@@ -91,7 +91,7 @@ enum Copy {
     static let partySummariesTitle = "Fraktionen im Überblick"
     static let debateTimeline = "Verlauf der Debatte"
     static let readSummary = "Zusammenfassung lesen"
-    static let readFullSpeech = "Auszug lesen"
+    static let readFullSpeech = "Ganze Rede lesen"
     static let searchSpeeches = "Reden durchsuchen"
     static let noSpeechesFound = "Keine Reden gefunden."
     static let zwischenfrage = "Zwischenfrage"

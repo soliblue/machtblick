@@ -101,10 +101,7 @@ struct VoteDetailView: View {
                     .font(.system(size: ThemeTokens.Text.s))
                     .foregroundStyle(ThemeColor.secondary)
             }
-            VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
-                Text(Copy.broughtBy).kicker()
-                ProposerKicker(party: detail.proposingParty ?? Copy.unknown)
-            }
+            AntragSignatoryStrip(signatories: store.signatories)
             if let simplified = detail.vote.summarySimplified {
                 MarkdownText(markdown: simplified, bodySize: ThemeTokens.Text.l)
                     .padding(.top, ThemeTokens.Spacing.xs)

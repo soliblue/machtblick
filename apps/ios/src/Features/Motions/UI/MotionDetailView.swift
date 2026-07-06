@@ -14,7 +14,7 @@ struct MotionDetailView: View {
                         timeline(detail)
                         subjects(detail.antrag)
                         summary(detail.antrag)
-                        signatories(detail.signatories)
+                        AntragSignatoryStrip(signatories: detail.signatories)
                         linkedVotes(detail.linkedVotes)
                         debate(detail)
                         source(detail.antrag)
@@ -119,34 +119,6 @@ struct MotionDetailView: View {
             }
             if let detailText = antrag.summaryDetail {
                 MarkdownText(markdown: detailText)
-            }
-        }
-    }
-
-    @ViewBuilder private func signatories(_ members: [MotionDetailPayload.Signatory]) -> some View {
-        if !members.isEmpty {
-            VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
-                Text(Copy.broughtBy).kicker()
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: ThemeTokens.Spacing.s) {
-                        ForEach(members) { member in
-                            NavigationLink(value: AppRoute.member(member.memberId)) {
-                                VStack(spacing: ThemeTokens.Spacing.xs) {
-                                    MemberAvatar(
-                                        name: member.displayName,
-                                        url: HTTPClient.absolute(member.portraitUrl), size: 48, circle: true)
-                                    Text(member.displayName)
-                                        .font(.system(size: 9))
-                                        .foregroundStyle(ThemeColor.secondary)
-                                        .lineLimit(1)
-                                }
-                                .frame(width: 72)
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                }
-                .edgeToEdgeScroll()
             }
         }
     }

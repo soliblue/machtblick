@@ -25,6 +25,14 @@ struct VotesFeedView: View {
                         ForEach(store.filtered) { vote in
                             VoteCardView(vote: vote, cache: cache)
                                 .containerRelativeFrame(.vertical)
+                                .overlay(alignment: .bottom) {
+                                    if vote.id != store.filtered.last?.id {
+                                        Rectangle()
+                                            .fill(ThemeColor.border)
+                                            .frame(height: ThemeTokens.Stroke.s)
+                                            .padding(.horizontal, ThemeTokens.Spacing.l)
+                                    }
+                                }
                         }
                     }
                     .scrollTargetLayout()

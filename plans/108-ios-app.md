@@ -419,3 +419,26 @@ Web parity for app identity. The top-level lists lost their big titles in Iterat
 - Votes/Members/Parties lists: each holds `@State scrollProgress`, drives it via `onScrollGeometryChange` (contentOffset.y / 140, clamped 0..1), and renders `BrandWordmark(progress:)` in a `.topBarLeading` toolbar item. Votes + Parties dropped `.toolbar(.hidden)` and got an inline empty title (no redundant big title). Members keeps its `.searchable` + trailing filter, brand added leading.
 - Simplification vs web: skipped the sinusoidal pupil jitter (web keys it off continuous window.scrollY; on the paging vote feed that reads as noise) and kept a clean progress-only downward pupil drift. Morph curve, geometry, and colors are otherwise faithful.
 - lead: green-build loop via ios-build.yml, no TestFlight.
+
+## Iteration 5 (2026-07-06, user batch, HOLD deploy until user says)
+1. Votes list: thin light-gray divider between vote cards, NOT full screen width (inset), subtle.
+2. Vote detail "Eingebracht von": show the AUTHOR/signatory people (member portraits + names), like the web AntragSignatoryStrip, NOT the party badge. Data: vote JSON antraege lack signatories; fetch the primary linked antrag's /motions/{id}.json (has signatories[]) and render the author strip. Reuse MotionDetailView signatory strip idiom.
+3. Speeches tab party summaries (PartySummaryStrip): remove the card border; separate cards with a thin VERTICAL divider (same light-gray color as the vote-list divider) instead.
+4. Party summaries: use the party LOGO instead of the party name text (where a logo exists).
+5. FIX: Reader/expanded speech shows only the excerpt, must show FULL text. Web stores full text in sharded JSON /speeches-search-{shard}.json (de) and -en-; shard = abs(h) % 4 where h = (h*31 + id.charCodeAt(i)) | 0 over the speech id. Build a SpeechBodyService: for the Reader's ids, compute shard(s), fetch+cache /speeches-search-{shard}.json (map id->text_full), join, show full text (loading state). Restore "Ganze Rede lesen" affordance once full text loads.
+6. Members grid: redesign the photo card, rounded-corner photo, bottom gradient/blur overlay with the member name (truncate if needed) over the blur, small party logo overlaid top-right. Cleaner, photo-forward.
+7. Filter sheets (votes + members): drop the per-group section labels (redundant with the filter facet name), and add a relevant SF Symbol before each group/option.
+
+### Investigation notes for implementer
+- Speech shard: SHARD_COUNT=4, hash h=(h*31+charCode)|0 over id, shard=abs(h)%4, file /speeches-search-{shard}.json (de) / /speeches-search-en-{shard}.json (en), JSON map speechId->fullText. Merged speeches have multiple ids (join with blank line, see web joinSpeechTexts).
+- Vote authors: /motions/{antragId}.json has signatories[] with portraits; vote detail antraege[0] gives the antragId.
+
+### Log (iteration 5)
+- lead: batch recorded, dispatching opus agent; deploy held per user
+- opus: item 1 done. Inset bottom divider (ThemeColor.border, Stroke.s, horizontal Spacing.l inset) overlaid on each vote card except last in VotesFeedView; paging preserved (overlay adds no height).
+- opus: item 2 done. Extracted AntragSignatoryStrip (Motions/UI) from MotionDetailView; VoteDetailStore now loads first antrag's /motions/{id}.json and exposes signatories; header shows the author strip (kicker Eingebracht von), degrades to hidden when none.
+- opus: item 3 done. PartySummaryStrip card border removed; thin vertical ThemeColor.border divider inserted between cards (full-height Rectangle, Stroke.s width).
+- opus: item 4 done. PartySummaryStrip shows PartyLogo (Icon.l) where PartyStyle.hasLogo, else party name text.
+- opus: item 5 done. SpeechShard (Int32-wrapping hash matching JS (h*31+charCode)|0, abs%4) + SpeechBodyService actor (per-id shard fetch of /speeches-search-{shard}.json, in-memory cache, joins ids with blank line); ReaderView loads full text on open with ProgressView, falls back to excerpt; Copy.readFullSpeech restored to "Ganze Rede lesen".
+- opus: item 6 done. MemberCardView redesigned photo-forward: 3:4 rounded photo, bottom dark gradient with one-line white name, party logo on white circle top-right (colored dot fallback), accessibility label preserved.
+- opus: item 7 done. Votes + Members filter sheets: dropped Section header labels, each picker now uses a Label with an SF Symbol (doc.text/building.columns/checkmark.seal/tag; map/person.2/calendar/signature/arrow.up.arrow.down).
