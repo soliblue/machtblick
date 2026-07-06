@@ -22,6 +22,7 @@ struct VoteDetailView: View {
                         picker(detail)
                         panel(detail)
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(ThemeTokens.Spacing.l)
                 }
                 .toolbar {

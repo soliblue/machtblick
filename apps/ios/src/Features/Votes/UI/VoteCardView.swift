@@ -17,6 +17,11 @@ struct VoteCardView: View {
         vote.partySummaries ?? detailStore.detail?.partySummaries.map(\.counts) ?? []
     }
 
+    private func inlineSummary(_ markdown: String) -> AttributedString {
+        (try? AttributedString(markdown: markdown, options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace)))
+            ?? AttributedString(markdown)
+    }
+
     var body: some View {
         NavigationLink(value: AppRoute.vote(vote.id)) {
             VStack(alignment: .leading, spacing: 0) {
@@ -36,12 +41,17 @@ struct VoteCardView: View {
                     .multilineTextAlignment(.leading)
                     .padding(.top, ThemeTokens.Spacing.m)
                 if let summary {
-                    MarkdownText(markdown: summary, bodySize: ThemeTokens.Text.l)
-                        .foregroundStyle(ThemeColor.fg)
-                        .lineLimit(7)
-                        .padding(.top, ThemeTokens.Spacing.m)
+                    GeometryReader { geo in
+                        Text(inlineSummary(summary))
+                            .font(.serif(ThemeTokens.Text.l))
+                            .foregroundStyle(ThemeColor.fg)
+                            .lineSpacing(3)
+                            .lineLimit(max(1, Int(geo.size.height / 23)))
+                            .truncationMode(.tail)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    }
+                    .padding(.top, ThemeTokens.Spacing.m)
                 }
-                Spacer(minLength: ThemeTokens.Spacing.m)
                 VoteHemicycleView(
                     yes: vote.yes, no: vote.no, abstain: vote.abstain, absent: vote.absent,
                     total: max(vote.totalMembers, 1)
