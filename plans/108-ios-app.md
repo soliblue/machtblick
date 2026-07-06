@@ -442,3 +442,6 @@ Web parity for app identity. The top-level lists lost their big titles in Iterat
 - opus: item 5 done. SpeechShard (Int32-wrapping hash matching JS (h*31+charCode)|0, abs%4) + SpeechBodyService actor (per-id shard fetch of /speeches-search-{shard}.json, in-memory cache, joins ids with blank line); ReaderView loads full text on open with ProgressView, falls back to excerpt; Copy.readFullSpeech restored to "Ganze Rede lesen".
 - opus: item 6 done. MemberCardView redesigned photo-forward: 3:4 rounded photo, bottom dark gradient with one-line white name, party logo on white circle top-right (colored dot fallback), accessibility label preserved.
 - opus: item 7 done. Votes + Members filter sheets: dropped Section header labels, each picker now uses a Label with an SF Symbol (doc.text/building.columns/checkmark.seal/tag; map/person.2/calendar/signature/arrow.up.arrow.down).
+
+## Known issues (batch-fix later, user collecting)
+1. Speech/agenda titles: member Reden tab (and web) shows the raw bundled Tagesordnungspunkt as the row title when a speech has no clean voteTitle (combined debates with many motions concatenated by "–"/":"/Drucksache). Real fix: ETL-generate clean short titles for debate agenda items via local LLM (like vote titles); improves app + website. Affects both platforms (not iOS-specific), no line clamp on either currently.
