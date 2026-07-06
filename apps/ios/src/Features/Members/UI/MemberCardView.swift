@@ -45,9 +45,7 @@ struct MemberCardView: View {
     @ViewBuilder private var partyMark: some View {
         if PartyStyle.hasLogo(member.party) {
             PartyLogo(party: member.party, size: ThemeTokens.Icon.m)
-                .padding(ThemeTokens.Spacing.xs)
-                .background(Circle().fill(.white.opacity(0.9)))
-                .padding(ThemeTokens.Spacing.xs)
+                .padding(ThemeTokens.Spacing.s)
         } else {
             Circle()
                 .fill(PartyStyle.color(member.party))
