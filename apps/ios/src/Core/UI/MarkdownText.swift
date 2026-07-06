@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MarkdownText: View {
     let markdown: String
+    var bodySize: CGFloat = ThemeTokens.Text.m
 
     private enum Block {
         case heading(String)
@@ -19,11 +20,11 @@ struct MarkdownText: View {
                         .padding(.top, ThemeTokens.Spacing.xs)
                 case .bullet(let text):
                     HStack(alignment: .top, spacing: ThemeTokens.Spacing.s) {
-                        Text("–").font(.serif(ThemeTokens.Text.m))
-                        Text(text).font(.serif(ThemeTokens.Text.m))
+                        Text("–").font(.serif(bodySize))
+                        Text(text).font(.serif(bodySize))
                     }
                 case .paragraph(let text):
-                    Text(text).font(.serif(ThemeTokens.Text.m))
+                    Text(text).font(.serif(bodySize))
                 }
             }
         }

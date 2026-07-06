@@ -36,7 +36,7 @@ struct VoteCardView: View {
                     .multilineTextAlignment(.leading)
                     .padding(.top, ThemeTokens.Spacing.m)
                 if let summary {
-                    MarkdownText(markdown: summary)
+                    MarkdownText(markdown: summary, bodySize: ThemeTokens.Text.l)
                         .foregroundStyle(ThemeColor.fg)
                         .lineLimit(7)
                         .padding(.top, ThemeTokens.Spacing.m)
