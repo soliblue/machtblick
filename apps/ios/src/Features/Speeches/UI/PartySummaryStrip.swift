@@ -15,6 +15,7 @@ struct PartySummaryStrip: View {
                         }
                     }
                 }
+                .edgeToEdgeScroll()
             }
         }
     }

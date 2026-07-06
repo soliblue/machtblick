@@ -102,6 +102,7 @@ struct MotionDetailView: View {
                     }
                 }
             }
+            .edgeToEdgeScroll()
         }
     }
 
@@ -145,6 +146,7 @@ struct MotionDetailView: View {
                         }
                     }
                 }
+                .edgeToEdgeScroll()
             }
         }
     }
