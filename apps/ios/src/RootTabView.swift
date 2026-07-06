@@ -1,10 +1,10 @@
 import SwiftUI
+import UIKit
 
 private enum RootTab: Hashable {
     case votes
     case members
     case parties
-    case more
 }
 
 struct RootTabView: View {
@@ -13,6 +13,20 @@ struct RootTabView: View {
     @State private var membersStore = MembersStore()
     @State private var partiesStore = PartiesStore()
     @State private var tab: RootTab = .votes
+
+    init(cache: ApiCache) {
+        self.cache = cache
+        let appearance = UITabBarAppearance()
+        appearance.configureWithDefaultBackground()
+        for item in [appearance.stackedLayoutAppearance, appearance.inlineLayoutAppearance, appearance.compactInlineLayoutAppearance] {
+            item.normal.titleTextAttributes = [.foregroundColor: UIColor.clear]
+            item.selected.titleTextAttributes = [.foregroundColor: UIColor.clear]
+            item.normal.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: .greatestFiniteMagnitude)
+            item.selected.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: .greatestFiniteMagnitude)
+        }
+        UITabBar.appearance().standardAppearance = appearance
+        UITabBar.appearance().scrollEdgeAppearance = appearance
+    }
 
     var body: some View {
         TabView(selection: $tab) {
@@ -29,11 +43,6 @@ struct RootTabView: View {
             Tab(Copy.partiesTab, systemImage: "chart.pie", value: RootTab.parties) {
                 NavigationStack {
                     PartiesView(store: partiesStore, cache: cache)
-                }
-            }
-            Tab(Copy.moreTab, systemImage: "ellipsis.circle", value: RootTab.more) {
-                NavigationStack {
-                    SettingsView(cache: cache)
                 }
             }
         }
