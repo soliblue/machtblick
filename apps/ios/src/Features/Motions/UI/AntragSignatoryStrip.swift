@@ -11,7 +11,7 @@ struct AntragSignatoryStrip: View {
         if !signatories.isEmpty {
             HStack(spacing: ThemeTokens.Spacing.s) {
                 Text(Copy.broughtBy)
-                    .font(.system(size: ThemeTokens.Text.m))
+                    .font(.system(size: ThemeTokens.Text.s))
                     .foregroundStyle(ThemeColor.secondary)
                 HStack(spacing: -10) {
                     ForEach(Array(visible.enumerated()), id: \.element.id) { index, member in
