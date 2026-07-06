@@ -22,9 +22,10 @@ struct MemberSpeechesPanel: View {
                 LazyVStack(alignment: .leading, spacing: 0) {
                     ForEach(Array(pageGroups.enumerated()), id: \.element.id) { index, group in
                         MemberSpeechGroupRow(
-                            group: group, showDivider: index > 0, expanded: openIds.contains(group.id),
+                            group: group, expanded: openIds.contains(group.id),
                             onToggle: { toggle(group.id) },
-                            onOpen: { turns, index in readerTurns = turns; readerIndex = index })
+                            onOpen: { turns, index in readerTurns = turns; readerIndex = index },
+                            showDivider: index > 0)
                     }
                 }
                 if pageCount > 1 { pager }
