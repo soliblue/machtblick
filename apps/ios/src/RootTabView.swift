@@ -19,10 +19,8 @@ struct RootTabView: View {
         let appearance = UITabBarAppearance()
         appearance.configureWithDefaultBackground()
         for item in [appearance.stackedLayoutAppearance, appearance.inlineLayoutAppearance, appearance.compactInlineLayoutAppearance] {
-            item.normal.titleTextAttributes = [.foregroundColor: UIColor.clear]
-            item.selected.titleTextAttributes = [.foregroundColor: UIColor.clear]
-            item.normal.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: .greatestFiniteMagnitude)
-            item.selected.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: .greatestFiniteMagnitude)
+            item.normal.titleTextAttributes = [.foregroundColor: UIColor.clear, .font: UIFont.systemFont(ofSize: 0.01)]
+            item.selected.titleTextAttributes = [.foregroundColor: UIColor.clear, .font: UIFont.systemFont(ofSize: 0.01)]
         }
         UITabBar.appearance().standardAppearance = appearance
         UITabBar.appearance().scrollEdgeAppearance = appearance
