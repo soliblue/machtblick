@@ -5,6 +5,7 @@ struct VotesFeedView: View {
     let cache: ApiCache
     @State private var showFilters = false
     @State private var refreshTick = 0
+    @State private var scrollProgress: Double = 0
     private let filterClearance = ThemeTokens.Spacing.xl * 3
 
     var body: some View {
@@ -31,6 +32,11 @@ struct VotesFeedView: View {
                 }
                 .scrollTargetBehavior(.paging)
                 .scrollIndicators(.hidden)
+                .onScrollGeometryChange(for: Double.self) { geo in
+                    min(1, max(0, geo.contentOffset.y / 140))
+                } action: { _, value in
+                    scrollProgress = value
+                }
                 .safeAreaInset(edge: .bottom) {
                     Color.clear.frame(height: filterClearance)
                 }
@@ -42,7 +48,13 @@ struct VotesFeedView: View {
         }
         .overlay(alignment: .bottom) { filterButton }
         .background(ThemeColor.background)
-        .toolbar(.hidden, for: .navigationBar)
+        .navigationTitle("")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                BrandWordmark(progress: scrollProgress)
+            }
+        }
         .appDestinations(cache: cache)
         .sheet(isPresented: $showFilters) {
             VotesFilterSheet(store: store)

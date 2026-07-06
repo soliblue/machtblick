@@ -5,6 +5,7 @@ struct MembersGridView: View {
     let cache: ApiCache
     @State private var showFilters = false
     @State private var refreshTick = 0
+    @State private var scrollProgress: Double = 0
 
     var body: some View {
         Group {
@@ -22,6 +23,9 @@ struct MembersGridView: View {
         .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $store.search, prompt: Copy.searchMembers)
         .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                BrandWordmark(progress: scrollProgress)
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 Button { showFilters = true } label: {
                     Image(systemName: store.activeFilterCount > 0
@@ -65,6 +69,11 @@ struct MembersGridView: View {
                 }
             }
             .padding(ThemeTokens.Spacing.l)
+        }
+        .onScrollGeometryChange(for: Double.self) { geo in
+            min(1, max(0, geo.contentOffset.y / 140))
+        } action: { _, value in
+            scrollProgress = value
         }
         .refreshable {
             await store.refresh(cache: cache)

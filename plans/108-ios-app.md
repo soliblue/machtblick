@@ -410,3 +410,12 @@ User A/B'd iOS vote feed vs web: web "10x better" on details. Fidelity pass (lay
 
 ### Log
 - lead: implementing, green-build loop via ios-build.yml, no TestFlight.
+
+## Iteration 4: brand wordmark with scroll-to-eyes morph (2026-07-06)
+
+Web parity for app identity. The top-level lists lost their big titles in Iteration 3; this restores the machtblick brand the way the website does it (sticky nav wordmark that morphs into the eyes logo on scroll).
+- `Core/UI/EyesLogo.swift`: exact port of the web SVG (`ScrollEyeWordmark.tsx`, viewBox 0 0 82 36) into a `Canvas`. Two stroked eye paths + two stroked brows (fg, round caps, stroke 3/4), left pupil `ThemeColor.fg`, right pupil `ThemeColor.danger`, all as cubic beziers matching the web path data. `pupilDrift` nudges pupils down with scroll.
+- `Core/UI/BrandWordmark.swift`: `progress`-driven crossfade. Fraunces `Machtblick` (`.display`, text-xl 22) fades/shrinks/shifts left (opacity 1->0, scale 1->0.72, x 0->-6) while the eyes fade/scale in (opacity 0->1, scale 0.78->1), same curve as the web CSS custom props. Respects `accessibilityReduceMotion` (locks to wordmark).
+- Votes/Members/Parties lists: each holds `@State scrollProgress`, drives it via `onScrollGeometryChange` (contentOffset.y / 140, clamped 0..1), and renders `BrandWordmark(progress:)` in a `.topBarLeading` toolbar item. Votes + Parties dropped `.toolbar(.hidden)` and got an inline empty title (no redundant big title). Members keeps its `.searchable` + trailing filter, brand added leading.
+- Simplification vs web: skipped the sinusoidal pupil jitter (web keys it off continuous window.scrollY; on the paging vote feed that reads as noise) and kept a clean progress-only downward pupil drift. Morph curve, geometry, and colors are otherwise faithful.
+- lead: green-build loop via ios-build.yml, no TestFlight.
