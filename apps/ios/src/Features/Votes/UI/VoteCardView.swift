@@ -55,7 +55,6 @@ struct VoteCardView: View {
             }
             .padding(ThemeTokens.Spacing.l)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .overlay(Rectangle().strokeBorder(ThemeColor.border, lineWidth: ThemeTokens.Stroke.s))
             .padding(.horizontal, ThemeTokens.Spacing.m)
             .padding(.vertical, ThemeTokens.Spacing.s)
         }

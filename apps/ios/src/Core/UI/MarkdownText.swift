@@ -20,7 +20,7 @@ struct MarkdownText: View {
                         .padding(.top, ThemeTokens.Spacing.xs)
                 case .bullet(let text):
                     HStack(alignment: .top, spacing: ThemeTokens.Spacing.s) {
-                        Text("–").font(.serif(bodySize))
+                        Text("•").font(.serif(bodySize))
                         Text(text).font(.serif(bodySize))
                     }
                 case .paragraph(let text):

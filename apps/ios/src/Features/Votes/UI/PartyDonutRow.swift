@@ -29,9 +29,11 @@ struct PartyDonutRow: View {
     }
 
     private var ordered: [PartyVoteSummary] {
-        summaries.sorted {
-            Double($0.yes) / Double(max($0.memberCount, 1))
-                > Double($1.yes) / Double(max($1.memberCount, 1))
-        }
+        summaries
+            .filter { PartyStyle.hasPartyLine($0.party) }
+            .sorted {
+                Double($0.yes) / Double(max($0.memberCount, 1))
+                    > Double($1.yes) / Double(max($1.memberCount, 1))
+            }
     }
 }

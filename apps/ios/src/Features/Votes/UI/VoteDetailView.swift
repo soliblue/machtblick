@@ -82,6 +82,8 @@ struct VoteDetailView: View {
 
     private func header(_ detail: VoteDetailPayload) -> some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.m) {
+            if detail.vote.inverted { noticeBox(Copy.invertedNotice) }
+            if detail.vote.isPetitionBundle { noticeBox(Copy.petitionNotice) }
             HStack(spacing: ThemeTokens.Spacing.s) {
                 ProposerKicker(party: detail.proposingParty ?? Copy.unknown)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -99,46 +101,13 @@ struct VoteDetailView: View {
                     .font(.system(size: ThemeTokens.Text.s))
                     .foregroundStyle(ThemeColor.secondary)
             }
-            if let topic = detail.vote.topic {
-                Text(topic)
-                    .font(.system(size: ThemeTokens.Text.m))
-                    .foregroundStyle(ThemeColor.secondary)
+            VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
+                Text(Copy.broughtBy).kicker()
+                ProposerKicker(party: detail.proposingParty ?? Copy.unknown)
             }
-            if detail.vote.inverted { noticeBox(Copy.invertedNotice) }
-            if detail.vote.isPetitionBundle { noticeBox(Copy.petitionNotice) }
             if let simplified = detail.vote.summarySimplified {
-                MarkdownText(markdown: simplified)
+                MarkdownText(markdown: simplified, bodySize: ThemeTokens.Text.l)
                     .padding(.top, ThemeTokens.Spacing.xs)
-            }
-            if let antraege = detail.antraege, !antraege.isEmpty {
-                motions(antraege)
-            }
-        }
-    }
-
-    private func motions(_ antraege: [VoteDetailPayload.Antrag]) -> some View {
-        VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
-            Text(Copy.relatedMotions).kicker()
-            ForEach(antraege) { antrag in
-                NavigationLink(value: AppRoute.motion(antrag.antragId)) {
-                    HStack(spacing: ThemeTokens.Spacing.s) {
-                        Image(systemName: "doc.text").font(.system(size: ThemeTokens.Icon.s))
-                        Text(antrag.type == "gesetzentwurf" ? Copy.billTitle : Copy.motionTitle)
-                            .font(.system(size: ThemeTokens.Text.m, weight: .semibold))
-                        if let drucksache = antrag.drucksache {
-                            Text("\(Copy.drucksacheLabel) \(drucksache)")
-                                .font(.system(size: ThemeTokens.Text.s))
-                                .foregroundStyle(ThemeColor.secondary)
-                        }
-                        Spacer()
-                        Image(systemName: "chevron.right").font(.system(size: ThemeTokens.Text.s))
-                            .foregroundStyle(ThemeColor.secondary)
-                    }
-                    .foregroundStyle(ThemeColor.fg)
-                    .padding(ThemeTokens.Spacing.m)
-                    .overlay(Rectangle().strokeBorder(ThemeColor.border, lineWidth: ThemeTokens.Stroke.s))
-                }
-                .buttonStyle(.plain)
             }
         }
     }
@@ -146,16 +115,13 @@ struct VoteDetailView: View {
     private func ergebnis(_ detail: VoteDetailPayload) -> some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xl) {
             if let url = HTTPClient.absolute(detail.vote.sourceUrl) {
-                VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
-                    Text(Copy.officialDataNotice)
-                        .font(.system(size: ThemeTokens.Text.s))
-                        .foregroundStyle(ThemeColor.secondary)
-                    Link("\(Copy.officialDataLink) ↗", destination: url)
-                        .font(.system(size: ThemeTokens.Text.s))
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(ThemeTokens.Spacing.m)
-                .background(ThemeColor.surface)
+                Text("\(Copy.officialDataNotice) [\(Copy.officialDataLink) ↗](\(url.absoluteString))")
+                    .font(.system(size: ThemeTokens.Text.s))
+                    .foregroundStyle(ThemeColor.secondary)
+                    .tint(ThemeColor.fg)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(ThemeTokens.Spacing.m)
+                    .background(ThemeColor.surface)
             }
             VoteHemicycleView(
                 yes: detail.vote.yes, no: detail.vote.no, abstain: detail.vote.abstain,
@@ -172,22 +138,24 @@ struct VoteDetailView: View {
 
     private func details(_ detail: VoteDetailPayload) -> some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
-            VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
-                Text(Copy.aiSummaryNotice)
-                    .font(.system(size: ThemeTokens.Text.s))
-                    .foregroundStyle(ThemeColor.secondary)
-                if let pdf = detail.antragPdfUrl, let url = HTTPClient.absolute(pdf) {
-                    Link(Copy.fullMotion, destination: url)
-                        .font(.system(size: ThemeTokens.Text.s))
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(ThemeTokens.Spacing.m)
-            .background(ThemeColor.surface)
+            summaryNotice(detail)
+                .font(.system(size: ThemeTokens.Text.s))
+                .foregroundStyle(ThemeColor.secondary)
+                .tint(ThemeColor.fg)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(ThemeTokens.Spacing.m)
+                .background(ThemeColor.surface)
             if let detailText = detail.vote.summaryDetail {
                 MarkdownText(markdown: detailText)
             }
         }
+    }
+
+    private func summaryNotice(_ detail: VoteDetailPayload) -> Text {
+        if let pdf = detail.antragPdfUrl, let url = HTTPClient.absolute(pdf) {
+            return Text("\(Copy.aiSummaryNotice) [\(Copy.fullMotion)](\(url.absoluteString))")
+        }
+        return Text(Copy.aiSummaryNotice)
     }
 
     private func noticeBox(_ text: String) -> some View {
