@@ -24,6 +24,7 @@ struct PartiesView: View {
             ToolbarItem(placement: .topBarLeading) {
                 BrandWordmark(progress: scrollProgress)
             }
+            .sharedBackgroundVisibility(.hidden)
         }
         .sensoryFeedback(.success, trigger: refreshTick)
         .appDestinations(cache: cache)

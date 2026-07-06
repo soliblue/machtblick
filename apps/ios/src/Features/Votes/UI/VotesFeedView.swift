@@ -6,7 +6,6 @@ struct VotesFeedView: View {
     @State private var showFilters = false
     @State private var refreshTick = 0
     @State private var scrollProgress: Double = 0
-    private let filterClearance = ThemeTokens.Spacing.xl * 3
 
     var body: some View {
         Group {
@@ -37,22 +36,25 @@ struct VotesFeedView: View {
                 } action: { _, value in
                     scrollProgress = value
                 }
-                .safeAreaInset(edge: .bottom) {
-                    Color.clear.frame(height: filterClearance)
-                }
                 .refreshable {
                     await store.refresh(cache: cache)
                     refreshTick += 1
                 }
             }
         }
-        .overlay(alignment: .bottom) { filterButton }
         .background(ThemeColor.background)
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 BrandWordmark(progress: scrollProgress)
+            }
+            .sharedBackgroundVisibility(.hidden)
+            ToolbarItem(placement: .topBarTrailing) {
+                Button { showFilters = true } label: {
+                    Image(systemName: store.activeFilterCount > 0
+                        ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease")
+                }
             }
         }
         .appDestinations(cache: cache)
@@ -63,25 +65,5 @@ struct VotesFeedView: View {
         }
         .sensoryFeedback(.success, trigger: refreshTick)
         .task { await store.load(cache: cache) }
-    }
-
-    @ViewBuilder private var filterButton: some View {
-        if !store.votes.isEmpty {
-            Button { showFilters = true } label: {
-                HStack(spacing: ThemeTokens.Spacing.s) {
-                    Image(systemName: "line.3.horizontal.decrease")
-                        .font(.system(size: ThemeTokens.Icon.s))
-                    Text(store.activeFilterCount > 0 ? "\(Copy.filterLabel) · \(store.activeFilterCount)" : Copy.filterLabel)
-                        .font(.system(size: ThemeTokens.Text.m, weight: store.activeFilterCount > 0 ? .semibold : .regular))
-                }
-                .foregroundStyle(ThemeColor.background)
-                .padding(.horizontal, ThemeTokens.Spacing.l)
-                .padding(.vertical, ThemeTokens.Spacing.s)
-                .background(ThemeColor.fg)
-                .clipShape(Capsule())
-                .shadow(color: ThemeColor.fg.opacity(ThemeTokens.Opacity.m), radius: 12, y: 4)
-            }
-            .padding(.bottom, ThemeTokens.Spacing.l)
-        }
     }
 }

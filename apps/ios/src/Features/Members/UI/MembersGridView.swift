@@ -26,6 +26,7 @@ struct MembersGridView: View {
             ToolbarItem(placement: .topBarLeading) {
                 BrandWordmark(progress: scrollProgress)
             }
+            .sharedBackgroundVisibility(.hidden)
             ToolbarItem(placement: .topBarTrailing) {
                 Button { showFilters = true } label: {
                     Image(systemName: store.activeFilterCount > 0
