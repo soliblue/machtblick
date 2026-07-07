@@ -4,55 +4,23 @@ struct DebatePanel: View {
     let speeches: [SpeechSummary]
     let partySummaries: [PartySummaryReader]
     @State private var query = ""
-    @State private var speechIndex: Int?
     @State private var summaryIndex: Int?
-    @State private var showConversation = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
             PartySummaryStrip(summaries: partySummaries) { summaryIndex = $0 }
-            HStack {
-                Text(Copy.debateTimeline).kicker()
-                Spacer(minLength: ThemeTokens.Spacing.s)
-                if !rows.isEmpty {
-                    Button(action: { showConversation = true }) {
-                        Text(Copy.conversation)
-                            .font(.system(size: ThemeTokens.Text.s))
-                            .underline()
-                            .foregroundStyle(ThemeColor.fg)
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
+            Text(Copy.debateTimeline).kicker()
             SearchField(placeholder: Copy.searchSpeeches, text: $query)
-            if rows.isEmpty {
+            if filtered.isEmpty {
                 Text(Copy.noSpeechesFound)
                     .font(.system(size: ThemeTokens.Text.m))
                     .foregroundStyle(ThemeColor.secondary)
                     .padding(.vertical, ThemeTokens.Spacing.l)
             } else {
-                DebateThreadView(rows: rows, terms: terms) { speechIndex = $0 }
+                ConversationThread(speeches: filtered)
             }
         }
-        .fullScreenCover(isPresented: $showConversation) {
-            ConversationView(speeches: speeches)
-        }
-        .sensoryFeedback(.selection, trigger: speechIndex)
         .sensoryFeedback(.selection, trigger: summaryIndex)
-        .sheet(
-            isPresented: Binding(get: { speechIndex != nil }, set: { if !$0 { speechIndex = nil } })
-        ) {
-            if let index = speechIndex, index < speechItems.count {
-                ReaderView(
-                    item: .speech(speechItems[index]), index: index, count: speechItems.count,
-                    terms: terms,
-                    onPrev: index > 0 ? { speechIndex = index - 1 } : nil,
-                    onNext: index + 1 < speechItems.count ? { speechIndex = index + 1 } : nil
-                )
-                .presentationDetents([.large, .medium])
-                .presentationDragIndicator(.visible)
-            }
-        }
         .sheet(
             isPresented: Binding(get: { summaryIndex != nil }, set: { if !$0 { summaryIndex = nil } })
         ) {
@@ -77,17 +45,6 @@ struct DebatePanel: View {
         return speeches.filter { speech in
             let hay = "\(speech.speakerName) \(speech.excerpt)".lowercased()
             return terms.allSatisfy { hay.contains($0) }
-        }
-    }
-
-    private var rows: [DebateThreadRow] {
-        DebateThreadBuilder.rows(from: filtered)
-    }
-
-    private var speechItems: [SpeechSummary] {
-        rows.compactMap { row in
-            if case .turn(let speech, _, _, _) = row { return speech }
-            return nil
         }
     }
 }
