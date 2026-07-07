@@ -59,7 +59,11 @@ struct MemberDetailView: View {
                 Text(detail.name)
                     .font(.display(ThemeTokens.Text.xxl))
                     .multilineTextAlignment(.leading)
-                Text(meta(detail)).kicker()
+                VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
+                    ForEach(meta(detail), id: \.self) { part in
+                        Text(part).kicker()
+                    }
+                }
             }
         }
     }
@@ -70,7 +74,7 @@ struct MemberDetailView: View {
         return "\(Copy.photoLabel): \(author), \(license)"
     }
 
-    private func meta(_ detail: MemberDetailPayload) -> String {
+    private func meta(_ detail: MemberDetailPayload) -> [String] {
         var parts = [PartyStyle.label(detail.party)]
         if !detail.state.isEmpty { parts.append(detail.state) }
         if let mandate = detail.mandateType { parts.append(MemberLabels.mandate(mandate)) }
@@ -81,7 +85,7 @@ struct MemberDetailView: View {
             parts.append("\(Calendar.current.component(.year, from: Date()) - year) \(Copy.years)")
         }
         if let education = detail.education { parts.append(education) }
-        return parts.joined(separator: " · ")
+        return parts
     }
 
     private func stats(_ detail: MemberDetailPayload) -> some View {

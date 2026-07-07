@@ -48,7 +48,6 @@ struct MembersGridView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
                 DemographicsStrip(members: store.filtered)
-                Text("\(store.filtered.count) \(Copy.people)").kicker()
                 if store.filtered.isEmpty {
                     Text(Copy.noMembersFound)
                         .font(.system(size: ThemeTokens.Text.m))
