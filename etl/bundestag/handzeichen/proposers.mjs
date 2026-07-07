@@ -107,12 +107,6 @@ async function fetchDrucksache(dnr) {
   )
 }
 
-async function fetchVorgangDrucksachen(vId) {
-  return getCached(`v-${vId}`, () =>
-    dipFetch(`${API}/drucksache?apikey=${KEY}&f.vorgang=${vId}&format=json`),
-  )
-}
-
 async function resolveProposer(dnr) {
   const res = await fetchDrucksache(dnr)
   const doc = (res.documents ?? []).find((d) => d.herausgeber === 'BT') ?? res.documents?.[0]
@@ -121,15 +115,6 @@ async function resolveProposer(dnr) {
   if (direct) return { proposer: direct, type: sourceType(doc) }
   const fromText = proposerFromText(doc.titel)
   if (fromText) return { proposer: fromText, type: sourceType(doc) }
-  const vId = doc.vorgangsbezug?.[0]?.id
-  if (!vId) return null
-  const v = await fetchVorgangDrucksachen(vId)
-  for (const d of v.documents ?? []) {
-    if (String(d.vorgangsbezug?.[0]?.id ?? '') !== String(vId)) continue
-    if (!SOURCE_TYPES.has(d.drucksachetyp)) continue
-    const p = proposerFromUrheber(d.urheber) ?? proposerFromText(d.titel)
-    if (p) return { proposer: p, type: sourceType(d) }
-  }
   return null
 }
 

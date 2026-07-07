@@ -28,7 +28,6 @@ const candidates = db.prepare(`
   SELECT id, title, clean_title, topic, subject, summary, summary_simplified, summary_detail
   FROM votes
   WHERE procedural = 0
-    AND vote_type != 'hammelsprung'
     AND (? IS NULL OR id = ?)
     AND (? = 0 OR term_id = ?)
   ORDER BY date DESC, bundestag_id DESC

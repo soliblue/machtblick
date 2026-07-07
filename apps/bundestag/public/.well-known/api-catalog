@@ -5,7 +5,8 @@
       "service-desc": [
         { "href": "/api/votes.json", "type": "application/json", "title": "Lean vote index" },
         { "href": "/api/members.json", "type": "application/json", "title": "Lean member index" },
-        { "href": "/api/parties.json", "type": "application/json", "title": "Lean party index" }
+        { "href": "/api/parties.json", "type": "application/json", "title": "Lean party index" },
+        { "href": "/api/motions.json", "type": "application/json", "title": "Lean motion and bill index" }
       ],
       "service-doc": [
         { "href": "/llms.txt", "type": "text/plain" },

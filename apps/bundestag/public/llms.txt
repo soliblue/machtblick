@@ -42,6 +42,7 @@ Machtblick is a public-interest project built from open German datasets. The Bun
 - `/api/votes.json`: Lean vote index.
 - `/api/members.json`: Lean member index.
 - `/api/parties.json`: Lean party index.
+- `/api/motions.json`: Lean motion and bill index.
 - `/votes/{id}.json`: Full vote detail.
 - `/members/{slug}.json`: Full member detail.
 - `/parties/{slug}.json`: Full party detail.
