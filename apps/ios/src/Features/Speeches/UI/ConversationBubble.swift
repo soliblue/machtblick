@@ -5,6 +5,7 @@ struct ConversationBubble: View {
     let trailing: Bool
     let maxWidth: CGFloat
     let expanded: Bool
+    var highlight: Bool = false
     let onExpand: () -> Void
     @State private var fullText: String?
     @State private var loading = false
@@ -28,6 +29,12 @@ struct ConversationBubble: View {
         .padding(ThemeTokens.Spacing.m)
         .frame(maxWidth: maxWidth, alignment: trailing ? .trailing : .leading)
         .background(RoundedRectangle(cornerRadius: 16).fill(tint))
+        .overlay {
+            if highlight {
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(ring, lineWidth: ThemeTokens.Stroke.m)
+            }
+        }
         .frame(maxWidth: .infinity, alignment: trailing ? .trailing : .leading)
     }
 
@@ -69,7 +76,15 @@ struct ConversationBubble: View {
     private var party: String { speech.party ?? "" }
 
     private var tint: Color {
-        speech.party == nil ? ThemeColor.surface : PartyStyle.color(party).opacity(0.13)
+        speech.party == nil
+            ? (highlight ? ThemeColor.elevated : ThemeColor.surface)
+            : PartyStyle.color(party).opacity(highlight ? 0.22 : 0.13)
+    }
+
+    private var ring: Color {
+        speech.party == nil
+            ? ThemeColor.fg.opacity(ThemeTokens.Opacity.m)
+            : PartyStyle.color(party).opacity(ThemeTokens.Opacity.l)
     }
 
     private var canExpand: Bool {

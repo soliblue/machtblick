@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ConversationThread: View {
     let speeches: [SpeechSummary]
+    var highlightMemberId: String? = nil
     @State private var expanded: Set<String> = []
 
     var body: some View {
@@ -13,7 +14,8 @@ struct ConversationThread: View {
                 case .turn(let speech, let nested, _, _):
                     ConversationBubble(
                         speech: speech, trailing: false, maxWidth: .infinity,
-                        expanded: expanded.contains(speech.id)
+                        expanded: expanded.contains(speech.id),
+                        highlight: highlightMemberId != nil && speech.speakerMemberId == highlightMemberId
                     ) {
                         expanded.insert(speech.id)
                     }

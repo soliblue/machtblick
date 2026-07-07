@@ -151,7 +151,7 @@ struct MemberDetailView: View {
         let active = tabs(detail).contains(tab) ? tab : (tabs(detail).first ?? .votes)
         switch active {
         case .votes: MemberVotesPanel(history: detail.history)
-        case .speeches: MemberSpeechesPanel(speeches: detail.speeches)
+        case .speeches: MemberSpeechesPanel(memberId: id, speeches: detail.speeches, cache: cache)
         case .motions: MemberInitiativesPanel(initiatives: detail.initiatives ?? [])
         }
     }

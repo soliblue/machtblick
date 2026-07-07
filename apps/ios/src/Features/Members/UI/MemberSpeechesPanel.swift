@@ -1,12 +1,12 @@
 import SwiftUI
 
 struct MemberSpeechesPanel: View {
+    let memberId: String
     let speeches: [MemberDetailPayload.SpeechEntry]
+    let cache: ApiCache
     @State private var query = ""
     @State private var visibleCount = 8
-    @State private var openIds: Set<String> = []
-    @State private var readerTurns: [SpeechSummary] = []
-    @State private var readerIndex: Int?
+    @State private var openGroup: MemberSpeechGroup?
 
     private let batch = 8
 
@@ -22,11 +22,10 @@ struct MemberSpeechesPanel: View {
             } else {
                 LazyVStack(alignment: .leading, spacing: 0) {
                     ForEach(Array(visibleGroups.enumerated()), id: \.element.id) { index, group in
-                        MemberSpeechGroupRow(
-                            group: group, expanded: openIds.contains(group.id), terms: terms,
-                            onToggle: { toggle(group.id) },
-                            onOpen: { turns, idx in readerTurns = turns; readerIndex = idx },
-                            showDivider: index > 0)
+                        Button { openGroup = group } label: {
+                            ChatInboxRow(group: group, showDivider: index > 0)
+                        }
+                        .buttonStyle(.plain)
                         .onAppear {
                             if index == visibleGroups.count - 1 && visibleCount < filtered.count {
                                 visibleCount += batch
@@ -36,18 +35,9 @@ struct MemberSpeechesPanel: View {
                 }
             }
         }
-        .sensoryFeedback(.selection, trigger: readerIndex)
-        .sheet(isPresented: Binding(get: { readerIndex != nil }, set: { if !$0 { readerIndex = nil } })) {
-            if let index = readerIndex, index < readerTurns.count {
-                ReaderView(
-                    item: .speech(readerTurns[index]), index: index, count: readerTurns.count,
-                    terms: terms,
-                    onPrev: index > 0 ? { readerIndex = index - 1 } : nil,
-                    onNext: index + 1 < readerTurns.count ? { readerIndex = index + 1 } : nil
-                )
-                .presentationDetents([.large, .medium])
-                .presentationDragIndicator(.visible)
-            }
+        .sensoryFeedback(.selection, trigger: openGroup?.id)
+        .fullScreenCover(item: $openGroup) { group in
+            MemberDebateConversation(memberId: memberId, group: group, cache: cache)
         }
     }
 
@@ -62,18 +52,12 @@ struct MemberSpeechesPanel: View {
     private var filtered: [MemberSpeechGroup] {
         guard !terms.isEmpty else { return allGroups }
         return allGroups.filter { group in
-            group.speeches.contains { speech in
-                let hay = "\(speech.speakerName) \(speech.excerpt)".lowercased()
-                return terms.allSatisfy { hay.contains($0) }
-            }
+            let hay = "\(group.title) \(group.main.excerpt)".lowercased()
+            return terms.allSatisfy { hay.contains($0) }
         }
     }
 
     private var visibleGroups: [MemberSpeechGroup] {
         Array(filtered.prefix(visibleCount))
-    }
-
-    private func toggle(_ id: String) {
-        if openIds.contains(id) { openIds.remove(id) } else { openIds.insert(id) }
     }
 }
