@@ -64,7 +64,7 @@ enum Copy {
     static let methodology = "Methodik"
     static let imprint = "Impressum"
     static let privacy = "Datenschutz"
-    static let fontLicense = "Schrift: Fraunces (SIL Open Font License)"
+    static let fontLicense = "Schriften: Fraunces, Newsreader (SIL Open Font License)"
     static let refreshSection = "Daten"
     static let lastRefresh = "Zuletzt aktualisiert"
     static let clearCache = "Cache leeren"

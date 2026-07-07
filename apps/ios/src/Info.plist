@@ -22,6 +22,10 @@
 		<string>Fraunces-Regular.ttf</string>
 		<string>Fraunces-SemiBold.ttf</string>
 		<string>Fraunces-Bold.ttf</string>
+		<string>Newsreader-Regular.ttf</string>
+		<string>Newsreader-Bold.ttf</string>
+		<string>Newsreader-Italic.ttf</string>
+		<string>Newsreader-BoldItalic.ttf</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>

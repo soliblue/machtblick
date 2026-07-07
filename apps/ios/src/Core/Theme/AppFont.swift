@@ -6,6 +6,6 @@ extension Font {
     }
 
     static func serif(_ size: CGFloat) -> Font {
-        .custom("Charter", size: size)
+        .custom("Newsreader", size: size)
     }
 }
