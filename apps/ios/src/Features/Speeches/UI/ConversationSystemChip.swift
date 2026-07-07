@@ -4,18 +4,25 @@ struct ConversationSystemChip: View {
     let speech: SpeechSummary
 
     var body: some View {
-        HStack {
-            Spacer(minLength: 0)
+        HStack(spacing: ThemeTokens.Spacing.m) {
+            rule
             (Text(speech.speakerName).font(.system(size: ThemeTokens.Text.s, weight: .semibold))
                 + Text(" · \(speech.excerpt)").font(.system(size: ThemeTokens.Text.s)))
                 .foregroundStyle(ThemeColor.secondary)
                 .multilineTextAlignment(.center)
                 .lineLimit(3)
-                .padding(.horizontal, ThemeTokens.Spacing.m)
-                .padding(.vertical, ThemeTokens.Spacing.s)
-                .background(Capsule().fill(ThemeColor.surface))
-            Spacer(minLength: 0)
+                .fixedSize(horizontal: false, vertical: true)
+                .layoutPriority(1)
+            rule
         }
-        .padding(.horizontal, ThemeTokens.Spacing.xl)
+        .padding(.horizontal, -ThemeTokens.Spacing.l)
+        .padding(.vertical, ThemeTokens.Spacing.s)
+    }
+
+    private var rule: some View {
+        Rectangle()
+            .fill(ThemeColor.border)
+            .frame(height: ThemeTokens.Stroke.s)
+            .frame(maxWidth: .infinity)
     }
 }
