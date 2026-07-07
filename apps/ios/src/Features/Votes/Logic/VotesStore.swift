@@ -57,7 +57,8 @@ final class VotesStore {
     }
 
     var activeFilterCount: Int {
-        var count = [proposerFilter, topicFilter, voteTypeFilter].filter { $0 != nil }.count
+        var count = [proposerFilter, topicFilter].filter { $0 != nil }.count
+        if voteTypeFilter != "namentlich" { count += 1 }
         if resultFilter != nil { count += 1 }
         return count
     }
