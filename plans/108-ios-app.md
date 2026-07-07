@@ -455,3 +455,16 @@ Web parity for app identity. The top-level lists lost their big titles in Iterat
 
 ## Known issues (batch-fix later, user collecting)
 1. Speech/agenda titles: member Reden tab (and web) shows the raw bundled Tagesordnungspunkt as the row title when a speech has no clean voteTitle (combined debates with many motions concatenated by "–"/":"/Drucksache). Real fix: ETL-generate clean short titles for debate agenda items via local LLM (like vote titles); improves app + website. Affects both platforms (not iOS-specific), no line clamp on either currently.
+
+## Iteration 7: debate-as-conversation (2026-07-07, user idea, HOLD deploy)
+Vote detail (and motion detail) Reden tab: add a button under the debate thread that opens a full-screen WhatsApp-style CHAT view of the whole debate.
+- Button "Als Unterhaltung ansehen" under the DebatePanel debate thread.
+- ConversationView (new, full-screen sheet or push): each speech = a party-colored chat bubble.
+- Arrangement BY STANCE (user approved): speaker's ballot choice drives the side — ja/dafür = RIGHT, nein/dagegen = LEFT, enthalten/nicht_abgegeben/unknown = CENTER-ish (left is fine). Presidium/system rows = centered gray system chips (like WhatsApp date chips).
+- Bubble: subtle party-color tint background, rounded corners (sanctioned chat exception), speaker name + small avatar + party logo, the stamp optional.
+- Truncation: long bubble text clamps ~6 lines with an inline "Mehr anzeigen" that EXPANDS IN PLACE to the full speech text (load via SpeechBodyService.text(ids:)), NO collapse-back (expand-only, like WhatsApp).
+- Zwischenfragen: nested/indented as replies under the speaker.
+- Reuse: DebateThreadBuilder rows / DebatePanel speeches data, SpeechBodyService for full text, PartyStyle colors/logos, SpeakerAvatar.
+
+### Log (iteration 7)
+- claude: 2026-07-07 shipped the conversation view. DebatePanel gains a full-width secondary "Als Unterhaltung ansehen" button under the DebateThreadView (only when speeches exist) presenting ConversationView via .fullScreenCover. New Features/Speeches/UI files: ConversationView (NavigationStack + close X, GeometryReader for 78% max bubble width, rows from DebateThreadBuilder.rows(from: speeches)), ConversationBubble (party-tinted RoundedRectangle 16 chat bubble, side by ballot choice ja=trailing else leading, avatar 24 + name + party logo header mirrored per side, serif body clamped to 6 lines, inline "Mehr anzeigen" that loads full text via SpeechBodyService and expands in place with a tiny spinner, no collapse, expand hidden for contributionType == "short"), ConversationSystemChip (centered gray surface capsule for presidium/system rows). Nested Zwischenfragen get extra inset toward center. Copy keys viewAsConversation/conversation/showMore added (German; Copy.swift is single-locale). Expanded ids tracked in ConversationView @State Set.

@@ -6,6 +6,7 @@ struct DebatePanel: View {
     @State private var query = ""
     @State private var speechIndex: Int?
     @State private var summaryIndex: Int?
+    @State private var showConversation = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
@@ -19,7 +20,11 @@ struct DebatePanel: View {
                     .padding(.vertical, ThemeTokens.Spacing.l)
             } else {
                 DebateThreadView(rows: rows, terms: terms) { speechIndex = $0 }
+                conversationButton
             }
+        }
+        .fullScreenCover(isPresented: $showConversation) {
+            ConversationView(speeches: speeches)
         }
         .sensoryFeedback(.selection, trigger: speechIndex)
         .sensoryFeedback(.selection, trigger: summaryIndex)
@@ -50,6 +55,26 @@ struct DebatePanel: View {
                 .presentationDragIndicator(.visible)
             }
         }
+    }
+
+    private var conversationButton: some View {
+        Button(action: { showConversation = true }) {
+            HStack(spacing: ThemeTokens.Spacing.s) {
+                Image(systemName: "bubble.left.and.bubble.right")
+                    .font(.system(size: ThemeTokens.Icon.s))
+                Text(Copy.viewAsConversation)
+                    .font(.system(size: ThemeTokens.Text.m, weight: .semibold))
+            }
+            .foregroundStyle(ThemeColor.fg)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, ThemeTokens.Spacing.m)
+            .background(RoundedRectangle(cornerRadius: ThemeTokens.Radius.s).fill(ThemeColor.surface))
+            .overlay(
+                RoundedRectangle(cornerRadius: ThemeTokens.Radius.s)
+                    .strokeBorder(ThemeColor.border, lineWidth: ThemeTokens.Stroke.s))
+        }
+        .buttonStyle(.plain)
+        .padding(.top, ThemeTokens.Spacing.s)
     }
 
     private var terms: [String] {
