@@ -6,6 +6,7 @@ struct ConversationBubble: View {
     let maxWidth: CGFloat
     let expanded: Bool
     var highlight: Bool = false
+    var terms: [String] = []
     let onExpand: () -> Void
     @State private var fullText: String?
     @State private var loading = false
@@ -82,7 +83,7 @@ struct ConversationBubble: View {
     }
 
     @ViewBuilder private var speechText: some View {
-        Text(expanded ? (fullText ?? speech.excerpt) : speech.excerpt)
+        Text(displayText)
             .font(.serif(ThemeTokens.Text.l))
             .foregroundStyle(ThemeColor.fg)
             .lineLimit(expanded ? nil : 6)
@@ -95,6 +96,12 @@ struct ConversationBubble: View {
                     loading = false
                 }
             }
+    }
+
+    private var displayText: AttributedString {
+        let raw = expanded ? (fullText ?? speech.excerpt) : speech.excerpt
+        let shown = (!expanded && !terms.isEmpty) ? matchSnippet(raw, terms: terms) : raw
+        return highlighted(shown, terms: terms)
     }
 
     private var party: String { speech.party ?? "" }

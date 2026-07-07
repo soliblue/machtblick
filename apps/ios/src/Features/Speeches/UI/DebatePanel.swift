@@ -17,7 +17,7 @@ struct DebatePanel: View {
                     .foregroundStyle(ThemeColor.secondary)
                     .padding(.vertical, ThemeTokens.Spacing.l)
             } else {
-                ConversationThread(speeches: filtered)
+                ConversationThread(speeches: filtered, terms: terms)
             }
         }
         .sensoryFeedback(.selection, trigger: summaryIndex)
