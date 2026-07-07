@@ -3,33 +3,37 @@ import SwiftUI
 struct MemberSpeechesPanel: View {
     let speeches: [MemberDetailPayload.SpeechEntry]
     @State private var query = ""
-    @State private var page = 0
+    @State private var visibleCount = 8
     @State private var openIds: Set<String> = []
     @State private var readerTurns: [SpeechSummary] = []
     @State private var readerIndex: Int?
 
-    private let pageSize = 5
+    private let batch = 8
 
     var body: some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.m) {
             SearchField(placeholder: Copy.searchSpeeches, text: $query)
-                .onChange(of: query) { page = 0 }
-            if pageGroups.isEmpty {
+                .onChange(of: query) { visibleCount = batch }
+            if filtered.isEmpty {
                 Text(Copy.noSpeechesFound)
                     .font(.system(size: ThemeTokens.Text.m))
                     .foregroundStyle(ThemeColor.secondary)
                     .padding(.vertical, ThemeTokens.Spacing.l)
             } else {
                 LazyVStack(alignment: .leading, spacing: 0) {
-                    ForEach(Array(pageGroups.enumerated()), id: \.element.id) { index, group in
+                    ForEach(Array(visibleGroups.enumerated()), id: \.element.id) { index, group in
                         MemberSpeechGroupRow(
                             group: group, expanded: openIds.contains(group.id), terms: terms,
                             onToggle: { toggle(group.id) },
-                            onOpen: { turns, index in readerTurns = turns; readerIndex = index },
+                            onOpen: { turns, idx in readerTurns = turns; readerIndex = idx },
                             showDivider: index > 0)
+                        .onAppear {
+                            if index == visibleGroups.count - 1 && visibleCount < filtered.count {
+                                visibleCount += batch
+                            }
+                        }
                     }
                 }
-                if pageCount > 1 { pager }
             }
         }
         .sensoryFeedback(.selection, trigger: readerIndex)
@@ -45,27 +49,6 @@ struct MemberSpeechesPanel: View {
                 .presentationDragIndicator(.visible)
             }
         }
-    }
-
-    private var pager: some View {
-        HStack {
-            Button { page = max(0, page - 1) } label: {
-                Image(systemName: "chevron.left").font(.system(size: ThemeTokens.Icon.m))
-            }
-            .disabled(page == 0)
-            Spacer()
-            Text("\(page + 1) / \(pageCount)")
-                .font(.system(size: ThemeTokens.Text.s))
-                .foregroundStyle(ThemeColor.secondary)
-                .monospacedDigit()
-            Spacer()
-            Button { page = min(pageCount - 1, page + 1) } label: {
-                Image(systemName: "chevron.right").font(.system(size: ThemeTokens.Icon.m))
-            }
-            .disabled(page >= pageCount - 1)
-        }
-        .foregroundStyle(ThemeColor.secondary)
-        .padding(.vertical, ThemeTokens.Spacing.s)
     }
 
     private var terms: [String] {
@@ -86,13 +69,8 @@ struct MemberSpeechesPanel: View {
         }
     }
 
-    private var pageCount: Int {
-        max(1, Int(ceil(Double(filtered.count) / Double(pageSize))))
-    }
-
-    private var pageGroups: [MemberSpeechGroup] {
-        let safe = min(page, pageCount - 1)
-        return Array(filtered.dropFirst(safe * pageSize).prefix(pageSize))
+    private var visibleGroups: [MemberSpeechGroup] {
+        Array(filtered.prefix(visibleCount))
     }
 
     private func toggle(_ id: String) {
