@@ -5,8 +5,8 @@ struct BrandWordmark: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     private var morph: Double { reduceMotion ? 0 : min(1, max(0, scrollY / 140)) }
-    private var pupilX: Double { reduceMotion ? 0 : sin(scrollY / 34) * 2.5 }
-    private var pupilY: Double { reduceMotion ? 0 : cos(scrollY / 48) * 1.6 + morph * 1.1 }
+    private var pupilX: Double { reduceMotion ? 0 : sin(scrollY / 280) * 2.5 }
+    private var pupilY: Double { reduceMotion ? 0 : cos(scrollY / 360) * 1.6 + morph * 1.1 }
 
     var body: some View {
         ZStack(alignment: .leading) {
