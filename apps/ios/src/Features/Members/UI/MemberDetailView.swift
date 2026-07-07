@@ -24,6 +24,7 @@ struct MemberDetailView: View {
                     }
                     .padding(ThemeTokens.Spacing.l)
                 }
+                .scrollDismissesKeyboard(.interactively)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         ShareLinkButton(title: detail.name, url: HTTPClient.page("/members/\(id)"))

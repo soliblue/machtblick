@@ -25,6 +25,7 @@ struct VoteDetailView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(ThemeTokens.Spacing.l)
                 }
+                .scrollDismissesKeyboard(.interactively)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         ShareLinkButton(title: detail.vote.cleanTitle, url: HTTPClient.page("/votes/\(id)"))

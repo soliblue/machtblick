@@ -70,6 +70,7 @@ struct MembersGridView: View {
             }
             .padding(ThemeTokens.Spacing.l)
         }
+        .scrollDismissesKeyboard(.interactively)
         .onScrollGeometryChange(for: Double.self) { geo in
                     geo.contentOffset.y
                 } action: { _, value in

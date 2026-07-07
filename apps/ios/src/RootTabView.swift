@@ -42,5 +42,6 @@ struct RootTabView: View {
         }
         .tint(ThemeColor.fg)
         .sensoryFeedback(.selection, trigger: tab)
+        .onAppear { KeyboardDismisser.shared.install() }
     }
 }

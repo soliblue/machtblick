@@ -20,33 +20,14 @@ struct DonationsBar: View {
             GeometryReader { geo in
                 HStack(spacing: 2) {
                     ForEach(Array(sorted.enumerated()), id: \.element.id) { index, donation in
-                        Rectangle()
-                            .fill(ThemeColor.fg.opacity(index.isMultiple(of: 2) ? ThemeTokens.Opacity.l : ThemeTokens.Opacity.m))
-                            .frame(width: width(donation, in: geo.size.width))
+                        DonationSegment(
+                            donation: donation,
+                            width: width(donation, in: geo.size.width),
+                            shade: index.isMultiple(of: 2) ? ThemeTokens.Opacity.l : ThemeTokens.Opacity.m)
                     }
                 }
             }
             .frame(height: 32)
-            VStack(spacing: 0) {
-                ForEach(sorted) { donation in
-                    HStack(alignment: .firstTextBaseline, spacing: ThemeTokens.Spacing.s) {
-                        VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
-                            Text(donation.donor)
-                                .font(.system(size: ThemeTokens.Text.m))
-                                .multilineTextAlignment(.leading)
-                            Text(Formatters.shortDate(donation.dateReceived)).kicker()
-                        }
-                        Spacer()
-                        Text(Formatters.euro(donation.amountEur))
-                            .font(.system(size: ThemeTokens.Text.m, weight: .semibold))
-                            .monospacedDigit()
-                    }
-                    .padding(.vertical, ThemeTokens.Spacing.s)
-                    .overlay(alignment: .top) {
-                        Rectangle().fill(ThemeColor.border).frame(height: ThemeTokens.Stroke.s)
-                    }
-                }
-            }
         }
     }
 

@@ -3,6 +3,7 @@ import SwiftUI
 struct PieDonutView: View {
     let title: String
     let slices: [PieSlice]
+    var maxWidth: CGFloat = 130
     @State private var selected: Int?
 
     private var total: Int { slices.reduce(0) { $0 + $1.value } }
@@ -32,7 +33,7 @@ struct PieDonutView: View {
                 }
             }
             .aspectRatio(1, contentMode: .fit)
-            .frame(maxWidth: 130)
+            .frame(maxWidth: maxWidth)
             .contentShape(Rectangle())
             .onTapGesture { cycle() }
             Text(title).kicker()

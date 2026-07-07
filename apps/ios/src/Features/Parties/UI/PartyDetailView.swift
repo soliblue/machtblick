@@ -24,6 +24,7 @@ struct PartyDetailView: View {
                     }
                     .padding(ThemeTokens.Spacing.l)
                 }
+                .scrollDismissesKeyboard(.interactively)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         ShareLinkButton(
@@ -119,7 +120,7 @@ struct PartyDetailView: View {
     @ViewBuilder private func panel(_ detail: PartyDetailPayload) -> some View {
         let active = tabs(detail).contains(tab) ? tab : .profile
         switch active {
-        case .profile: PartyProfilePanel(detail: detail)
+        case .profile: PartyProfilePanel(detail: detail, cache: cache)
         case .votes: PartyVotesPanel(votes: detail.votes)
         case .history:
             if let history = detail.history {

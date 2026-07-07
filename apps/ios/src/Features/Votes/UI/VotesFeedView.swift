@@ -38,6 +38,7 @@ struct VotesFeedView: View {
                     .scrollTargetLayout()
                 }
                 .scrollTargetBehavior(.paging)
+                .scrollDismissesKeyboard(.interactively)
                 .scrollIndicators(.hidden)
                 .onScrollGeometryChange(for: Double.self) { geo in
                     geo.contentOffset.y
