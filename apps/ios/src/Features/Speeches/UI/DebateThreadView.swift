@@ -2,6 +2,7 @@ import SwiftUI
 
 struct DebateThreadView: View {
     let rows: [DebateThreadRow]
+    var terms: [String] = []
     let onOpenTurn: (Int) -> Void
 
     var body: some View {
@@ -10,6 +11,7 @@ struct DebateThreadView: View {
                 .fill(ThemeColor.border)
                 .frame(width: 1)
                 .padding(.leading, 17)
+                .padding(.top, ThemeTokens.Spacing.xl + 18)
             VStack(alignment: .leading, spacing: 0) {
                 ForEach(rows) { row in
                     switch row {
@@ -17,9 +19,9 @@ struct DebateThreadView: View {
                         SpeechSystemRow(speech: speech)
                     case .turn(let speech, let nested, let compact, let turnIndex):
                         if compact {
-                            CompactTurnRow(speech: speech) { onOpenTurn(turnIndex) }
+                            CompactTurnRow(speech: speech, terms: terms) { onOpenTurn(turnIndex) }
                         } else {
-                            SpeechEntry(speech: speech, nested: nested) { onOpenTurn(turnIndex) }
+                            SpeechEntry(speech: speech, nested: nested, terms: terms) { onOpenTurn(turnIndex) }
                         }
                     }
                 }

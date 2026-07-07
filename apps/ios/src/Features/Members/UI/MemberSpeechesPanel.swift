@@ -12,7 +12,8 @@ struct MemberSpeechesPanel: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.m) {
-            searchField
+            SearchField(placeholder: Copy.searchSpeeches, text: $query)
+                .onChange(of: query) { page = 0 }
             if pageGroups.isEmpty {
                 Text(Copy.noSpeechesFound)
                     .font(.system(size: ThemeTokens.Text.m))
@@ -22,7 +23,7 @@ struct MemberSpeechesPanel: View {
                 LazyVStack(alignment: .leading, spacing: 0) {
                     ForEach(Array(pageGroups.enumerated()), id: \.element.id) { index, group in
                         MemberSpeechGroupRow(
-                            group: group, expanded: openIds.contains(group.id),
+                            group: group, expanded: openIds.contains(group.id), terms: terms,
                             onToggle: { toggle(group.id) },
                             onOpen: { turns, index in readerTurns = turns; readerIndex = index },
                             showDivider: index > 0)
@@ -36,29 +37,14 @@ struct MemberSpeechesPanel: View {
             if let index = readerIndex, index < readerTurns.count {
                 ReaderView(
                     item: .speech(readerTurns[index]), index: index, count: readerTurns.count,
+                    terms: terms,
                     onPrev: index > 0 ? { readerIndex = index - 1 } : nil,
-                    onNext: index + 1 < readerTurns.count ? { readerIndex = index + 1 } : nil,
-                    onClose: { readerIndex = nil }
+                    onNext: index + 1 < readerTurns.count ? { readerIndex = index + 1 } : nil
                 )
                 .presentationDetents([.large, .medium])
                 .presentationDragIndicator(.visible)
             }
         }
-    }
-
-    private var searchField: some View {
-        HStack(spacing: ThemeTokens.Spacing.s) {
-            Image(systemName: "magnifyingglass").font(.system(size: ThemeTokens.Icon.s))
-                .foregroundStyle(ThemeColor.secondary)
-            TextField(Copy.searchSpeeches, text: $query)
-                .font(.system(size: ThemeTokens.Text.m))
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
-                .onChange(of: query) { page = 0 }
-        }
-        .padding(.horizontal, ThemeTokens.Spacing.s)
-        .padding(.vertical, ThemeTokens.Spacing.s)
-        .overlay(Rectangle().strokeBorder(ThemeColor.border, lineWidth: ThemeTokens.Stroke.s))
     }
 
     private var pager: some View {

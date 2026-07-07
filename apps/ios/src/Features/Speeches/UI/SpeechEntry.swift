@@ -3,6 +3,7 @@ import SwiftUI
 struct SpeechEntry: View {
     let speech: SpeechSummary
     var nested = false
+    var terms: [String] = []
     let onOpen: () -> Void
 
     var body: some View {
@@ -15,8 +16,8 @@ struct SpeechEntry: View {
                         Text(Copy.zwischenfrage).kicker()
                     }
                     header
-                    Text(speech.excerpt)
-                        .font(.serif(ThemeTokens.Text.m))
+                    Text(highlighted(speech.excerpt, terms: terms))
+                        .font(.serif(ThemeTokens.Text.l))
                         .foregroundStyle(ThemeColor.fg)
                         .lineLimit(nested ? nil : 4)
                         .multilineTextAlignment(.leading)

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CompactTurnRow: View {
     let speech: SpeechSummary
+    var terms: [String] = []
     let onOpen: () -> Void
 
     var body: some View {
@@ -12,7 +13,7 @@ struct CompactTurnRow: View {
                 (Text(speech.lastName).font(.system(size: ThemeTokens.Text.m, weight: .semibold))
                     .foregroundStyle(ThemeColor.fg)
                     + Text(" · ").font(.system(size: ThemeTokens.Text.m)).foregroundStyle(ThemeColor.secondary)
-                    + Text(speech.excerpt).font(.serif(ThemeTokens.Text.m)).foregroundStyle(ThemeColor.fg))
+                    + Text(highlighted(speech.excerpt, terms: terms)).font(.serif(ThemeTokens.Text.m)).foregroundStyle(ThemeColor.fg))
                     .lineLimit(2)
                     .multilineTextAlignment(.leading)
                 Spacer(minLength: 0)

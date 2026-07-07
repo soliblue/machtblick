@@ -144,7 +144,7 @@ struct VoteDetailView: View {
                 .padding(ThemeTokens.Spacing.m)
                 .background(ThemeColor.surface)
             if let detailText = detail.vote.summaryDetail {
-                MarkdownText(markdown: detailText)
+                MarkdownText(markdown: detailText, bodySize: ThemeTokens.Text.l)
             }
         }
     }

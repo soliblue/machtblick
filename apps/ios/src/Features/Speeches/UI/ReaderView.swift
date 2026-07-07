@@ -4,9 +4,9 @@ struct ReaderView: View {
     let item: ReaderItem
     let index: Int
     let count: Int
+    var terms: [String] = []
     let onPrev: (() -> Void)?
     let onNext: (() -> Void)?
-    let onClose: () -> Void
     @State private var fullText: String?
     @State private var loadingBody = false
 
@@ -44,18 +44,15 @@ struct ReaderView: View {
             case .speech(let speech):
                 SpeakerAvatar(name: speech.speakerName, pictureUrl: speech.pictureUrl, size: 36)
                 VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
-                    Text(speech.speakerName)
-                        .font(.system(size: ThemeTokens.Text.m, weight: .semibold))
                     HStack(spacing: ThemeTokens.Spacing.s) {
-                        if let party = speech.party { PartyBadge(party: party) }
-                        if let role = speech.speakerRole {
-                            Text(role).font(.system(size: ThemeTokens.Text.s))
-                                .foregroundStyle(ThemeColor.secondary)
+                        if let party = speech.party, PartyStyle.hasLogo(party) {
+                            PartyLogo(party: party, size: ThemeTokens.Icon.m)
                         }
+                        Text(speech.speakerName)
+                            .font(.system(size: ThemeTokens.Text.m, weight: .semibold))
                     }
-                    if let date = speech.date {
-                        Text(Formatters.shortDate(date))
-                            .font(.system(size: ThemeTokens.Text.s))
+                    if let role = speech.speakerRole {
+                        Text(role).font(.system(size: ThemeTokens.Text.s))
                             .foregroundStyle(ThemeColor.secondary)
                     }
                 }
@@ -74,10 +71,6 @@ struct ReaderView: View {
                 Spacer(minLength: 0)
                 StampView(label: summary.stance.label, color: summary.stance.color)
             }
-            Button(action: onClose) {
-                Image(systemName: "xmark").font(.system(size: ThemeTokens.Icon.l))
-                    .foregroundStyle(ThemeColor.secondary)
-            }
         }
         .padding(ThemeTokens.Spacing.l)
     }
@@ -90,7 +83,7 @@ struct ReaderView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, ThemeTokens.Spacing.xl)
             } else {
-                Text(fullText ?? speech.excerpt)
+                Text(highlighted(fullText ?? speech.excerpt, terms: terms))
                     .font(.serif(ThemeTokens.Text.l))
                     .foregroundStyle(ThemeColor.fg)
                     .multilineTextAlignment(.leading)
@@ -98,7 +91,7 @@ struct ReaderView: View {
         case .summary(let summary):
             VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
                 if let position = summary.positionSummary {
-                    Text(position).font(.serif(ThemeTokens.Text.m))
+                    Text(position).font(.serif(ThemeTokens.Text.l))
                 }
                 if let points = summary.keyPoints {
                     MarkdownText(markdown: points)

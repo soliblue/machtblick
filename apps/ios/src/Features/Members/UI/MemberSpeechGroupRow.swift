@@ -3,6 +3,7 @@ import SwiftUI
 struct MemberSpeechGroupRow: View {
     let group: MemberSpeechGroup
     let expanded: Bool
+    var terms: [String] = []
     let onToggle: () -> Void
     let onOpen: ([SpeechSummary], Int) -> Void
     var showDivider = true
@@ -27,9 +28,9 @@ struct MemberSpeechGroupRow: View {
             }
             .buttonStyle(.plain)
             if expanded {
-                DebateThreadView(rows: rows) { onOpen(turns, $0) }
+                DebateThreadView(rows: rows, terms: terms) { onOpen(turns, $0) }
             } else {
-                Text(group.main.excerpt)
+                Text(highlighted(group.main.excerpt, terms: terms))
                     .font(.serif(ThemeTokens.Text.m))
                     .foregroundStyle(ThemeColor.secondary)
                     .lineLimit(2)

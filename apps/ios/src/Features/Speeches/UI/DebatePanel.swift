@@ -11,14 +11,14 @@ struct DebatePanel: View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
             PartySummaryStrip(summaries: partySummaries) { summaryIndex = $0 }
             Text(Copy.debateTimeline).kicker()
-            searchField
+            SearchField(placeholder: Copy.searchSpeeches, text: $query)
             if rows.isEmpty {
                 Text(Copy.noSpeechesFound)
                     .font(.system(size: ThemeTokens.Text.m))
                     .foregroundStyle(ThemeColor.secondary)
                     .padding(.vertical, ThemeTokens.Spacing.l)
             } else {
-                DebateThreadView(rows: rows) { speechIndex = $0 }
+                DebateThreadView(rows: rows, terms: terms) { speechIndex = $0 }
             }
         }
         .sensoryFeedback(.selection, trigger: speechIndex)
@@ -29,9 +29,9 @@ struct DebatePanel: View {
             if let index = speechIndex, index < speechItems.count {
                 ReaderView(
                     item: .speech(speechItems[index]), index: index, count: speechItems.count,
+                    terms: terms,
                     onPrev: index > 0 ? { speechIndex = index - 1 } : nil,
-                    onNext: index + 1 < speechItems.count ? { speechIndex = index + 1 } : nil,
-                    onClose: { speechIndex = nil }
+                    onNext: index + 1 < speechItems.count ? { speechIndex = index + 1 } : nil
                 )
                 .presentationDetents([.large, .medium])
                 .presentationDragIndicator(.visible)
@@ -44,27 +44,12 @@ struct DebatePanel: View {
                 ReaderView(
                     item: .summary(partySummaries[index]), index: index, count: partySummaries.count,
                     onPrev: index > 0 ? { summaryIndex = index - 1 } : nil,
-                    onNext: index + 1 < partySummaries.count ? { summaryIndex = index + 1 } : nil,
-                    onClose: { summaryIndex = nil }
+                    onNext: index + 1 < partySummaries.count ? { summaryIndex = index + 1 } : nil
                 )
                 .presentationDetents([.large, .medium])
                 .presentationDragIndicator(.visible)
             }
         }
-    }
-
-    private var searchField: some View {
-        HStack(spacing: ThemeTokens.Spacing.s) {
-            Image(systemName: "magnifyingglass").font(.system(size: ThemeTokens.Icon.s))
-                .foregroundStyle(ThemeColor.secondary)
-            TextField(Copy.searchSpeeches, text: $query)
-                .font(.system(size: ThemeTokens.Text.m))
-                .textInputAutocapitalization(.never)
-                .autocorrectionDisabled()
-        }
-        .padding(.horizontal, ThemeTokens.Spacing.s)
-        .padding(.vertical, ThemeTokens.Spacing.s)
-        .overlay(Rectangle().strokeBorder(ThemeColor.border, lineWidth: ThemeTokens.Stroke.s))
     }
 
     private var terms: [String] {

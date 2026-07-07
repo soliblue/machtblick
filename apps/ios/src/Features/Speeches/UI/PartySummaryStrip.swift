@@ -40,7 +40,7 @@ struct PartySummaryStrip: View {
                     StampView(label: summary.stance.label, color: summary.stance.color)
                 }
                 Text(summary.positionSummary ?? "")
-                    .font(.serif(ThemeTokens.Text.m))
+                    .font(.serif(ThemeTokens.Text.l))
                     .foregroundStyle(ThemeColor.fg)
                     .lineLimit(5)
                     .multilineTextAlignment(.leading)
