@@ -34,12 +34,12 @@ struct SpeechEntry: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
             HStack(spacing: ThemeTokens.Spacing.s) {
-                if let party = speech.party, PartyStyle.hasLogo(party) {
-                    PartyLogo(party: party, size: ThemeTokens.Icon.m)
+                if let memberId = speech.speakerMemberId {
+                    NavigationLink(value: AppRoute.member(memberId)) { name }
+                        .buttonStyle(.plain)
+                } else {
+                    name
                 }
-                Text(speech.speakerName)
-                    .font(.system(size: ThemeTokens.Text.m, weight: .semibold))
-                    .foregroundStyle(ThemeColor.fg)
                 Spacer(minLength: 0)
                 if let choice = speech.choice, choice != .nichtAbgegeben {
                     StampView(label: choice.label, color: choice.color)
@@ -50,6 +50,17 @@ struct SpeechEntry: View {
                     .font(.system(size: ThemeTokens.Text.s))
                     .foregroundStyle(ThemeColor.secondary)
             }
+        }
+    }
+
+    private var name: some View {
+        HStack(spacing: ThemeTokens.Spacing.s) {
+            if let party = speech.party, PartyStyle.hasLogo(party) {
+                PartyLogo(party: party, size: ThemeTokens.Icon.m)
+            }
+            Text(speech.speakerName)
+                .font(.system(size: ThemeTokens.Text.m, weight: .semibold))
+                .foregroundStyle(ThemeColor.fg)
         }
     }
 

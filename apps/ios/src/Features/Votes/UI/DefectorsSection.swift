@@ -5,35 +5,25 @@ struct DefectorsSection: View {
 
     var body: some View {
         if !defectors.isEmpty {
-            VStack(alignment: .leading, spacing: ThemeTokens.Spacing.m) {
+            VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
                 Text(Copy.defectorsSection).kicker()
                 ForEach(defectors) { group in
-                    VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
+                    VStack(alignment: .leading, spacing: 0) {
                         HStack(spacing: ThemeTokens.Spacing.s) {
-                            PartyBadge(party: group.party)
-                            Text("\(Copy.majority): \(group.majority.label)")
-                                .font(.system(size: ThemeTokens.Text.s))
-                                .foregroundStyle(ThemeColor.secondary)
-                            Spacer()
-                        }
-                        ForEach(group.members) { member in
-                            NavigationLink(value: AppRoute.member(member.id)) {
-                                HStack(spacing: ThemeTokens.Spacing.s) {
-                                    MemberAvatar(
-                                        name: member.name, url: HTTPClient.absolute(member.pictureUrl), size: 32)
-                                    Text(member.name).font(.system(size: ThemeTokens.Text.m))
-                                    Spacer()
-                                    Text(member.choice.label)
-                                        .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
-                                        .foregroundStyle(member.choice.color)
-                                }
+                            if PartyStyle.hasLogo(group.party) {
+                                PartyLogo(party: group.party, size: ThemeTokens.Icon.m)
+                            } else {
+                                Text(PartyStyle.label(group.party))
+                                    .font(.system(size: ThemeTokens.Text.m, weight: .semibold))
+                                    .foregroundStyle(ThemeColor.fg)
                             }
-                            .buttonStyle(.plain)
+                            Text("\(Copy.majority): \(group.majority.label)").kicker()
+                            Spacer(minLength: 0)
+                        }
+                        ForEach(Array(group.members.enumerated()), id: \.element.id) { index, member in
+                            DefectorRow(member: member, showDivider: index > 0)
                         }
                     }
-                    .padding(ThemeTokens.Spacing.m)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .overlay(Rectangle().strokeBorder(ThemeColor.border, lineWidth: ThemeTokens.Stroke.s))
                 }
             }
         }

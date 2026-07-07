@@ -39,21 +39,45 @@ struct ConversationBubble: View {
     }
 
     @ViewBuilder private var header: some View {
+        HStack(spacing: ThemeTokens.Spacing.s) {
+            if trailing {
+                logo
+                identity
+            } else {
+                identity
+                logo
+            }
+        }
+    }
+
+    @ViewBuilder private var identity: some View {
+        if let memberId = speech.speakerMemberId {
+            NavigationLink(value: AppRoute.member(memberId)) { identityContent }
+                .buttonStyle(.plain)
+        } else {
+            identityContent
+        }
+    }
+
+    @ViewBuilder private var identityContent: some View {
         let avatar = SpeakerAvatar(name: speech.speakerName, pictureUrl: speech.pictureUrl, size: 24)
         let name = Text(speech.speakerName)
             .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
             .foregroundStyle(ThemeColor.fg)
-        let logo = PartyStyle.hasLogo(party) ? PartyLogo(party: party, size: ThemeTokens.Icon.s) : nil
         HStack(spacing: ThemeTokens.Spacing.s) {
             if trailing {
-                logo
                 name
                 avatar
             } else {
                 avatar
                 name
-                logo
             }
+        }
+    }
+
+    @ViewBuilder private var logo: some View {
+        if PartyStyle.hasLogo(party) {
+            PartyLogo(party: party, size: ThemeTokens.Icon.s)
         }
     }
 

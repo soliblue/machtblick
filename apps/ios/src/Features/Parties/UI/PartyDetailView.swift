@@ -18,6 +18,7 @@ struct PartyDetailView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xl) {
                         header(detail)
+                        demographics(detail)
                         picker(detail)
                         panel(detail)
                     }
@@ -59,6 +60,13 @@ struct PartyDetailView: View {
                 PosterStatBar(label: Copy.attendance, value: attendance(detail))
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
+        }
+    }
+
+    @ViewBuilder private func demographics(_ detail: PartyDetailPayload) -> some View {
+        let partyMembers = store.members.filter { $0.party == detail.party }
+        if !partyMembers.isEmpty {
+            DemographicsStrip(members: partyMembers, showFaction: false)
         }
     }
 
@@ -111,7 +119,7 @@ struct PartyDetailView: View {
     @ViewBuilder private func panel(_ detail: PartyDetailPayload) -> some View {
         let active = tabs(detail).contains(tab) ? tab : .profile
         switch active {
-        case .profile: PartyProfilePanel(detail: detail, members: store.members)
+        case .profile: PartyProfilePanel(detail: detail)
         case .votes: PartyVotesPanel(votes: detail.votes)
         case .history:
             if let history = detail.history {

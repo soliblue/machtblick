@@ -3,6 +3,7 @@ import Foundation
 struct MemberSpeechGroup: Identifiable {
     let id: String
     let date: String
+    let debateGroupId: String?
     let voteId: String?
     let voteTitle: String?
     let agendaTitle: String?
@@ -39,8 +40,10 @@ enum MemberSpeechGrouping {
             let items = buckets[k]!.sorted { $0.position < $1.position }
             let main = items.max { $0.excerpt.count < $1.excerpt.count } ?? items[0]
             let voteBearer = items.first { $0.voteId != nil } ?? main
+            let debateGroupId = items.first { ($0.debateGroupId?.isEmpty == false) }?.debateGroupId
             return MemberSpeechGroup(
-                id: k, date: main.date, voteId: voteBearer.voteId, voteTitle: voteBearer.voteTitle,
+                id: k, date: main.date, debateGroupId: debateGroupId, voteId: voteBearer.voteId,
+                voteTitle: voteBearer.voteTitle,
                 agendaTitle: main.agendaTitle, agendaItem: main.agendaItem, speeches: items, main: main,
                 shortCount: items.filter(isShort).count)
         }

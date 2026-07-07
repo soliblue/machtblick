@@ -46,7 +46,6 @@ enum Copy {
     static let donationsSection = "Großspenden"
     static let donationsTotal = "Gesamt"
     static let alignmentsSection = "Übereinstimmung"
-    static let membersCount = "Abgeordnete"
 
     static let motionTitle = "Antrag"
     static let billTitle = "Gesetzentwurf"
@@ -147,7 +146,6 @@ enum Copy {
     static let noVoteData = "Keine Abstimmungsdaten"
     static let noPartyLine = "Keine Fraktionslinie"
     static let photoLabel = "Foto"
-    static let successRateLabel = "Erfolgsquote"
     static let tabMotions = "Anträge"
     static let filterLine = "Linie"
     static let filterVote = "Stimme"
@@ -167,7 +165,6 @@ enum Copy {
     static let fraktionslosLabel = "Fraktionslos"
     static let ofBundestag = "des Bundestags"
     static let acceptedCountSuffix = "angenommen"
-    static let resultsMatchedSuffix = "Ergebnissen entsprachen der Linie der Fraktion"
     static let partyLineLabel = "Fraktionslinie"
     static let partyVotedLabel = "Fraktion stimmte"
     static let sharedVotesSuffix = "gemeinsamen Abstimmungen"
