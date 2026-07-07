@@ -11,7 +11,19 @@ struct DebatePanel: View {
     var body: some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
             PartySummaryStrip(summaries: partySummaries) { summaryIndex = $0 }
-            Text(Copy.debateTimeline).kicker()
+            HStack {
+                Text(Copy.debateTimeline).kicker()
+                Spacer(minLength: ThemeTokens.Spacing.s)
+                if !rows.isEmpty {
+                    Button(action: { showConversation = true }) {
+                        Text(Copy.conversation)
+                            .font(.system(size: ThemeTokens.Text.s))
+                            .underline()
+                            .foregroundStyle(ThemeColor.fg)
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
             SearchField(placeholder: Copy.searchSpeeches, text: $query)
             if rows.isEmpty {
                 Text(Copy.noSpeechesFound)
@@ -20,7 +32,6 @@ struct DebatePanel: View {
                     .padding(.vertical, ThemeTokens.Spacing.l)
             } else {
                 DebateThreadView(rows: rows, terms: terms) { speechIndex = $0 }
-                conversationButton
             }
         }
         .fullScreenCover(isPresented: $showConversation) {
@@ -55,26 +66,6 @@ struct DebatePanel: View {
                 .presentationDragIndicator(.visible)
             }
         }
-    }
-
-    private var conversationButton: some View {
-        Button(action: { showConversation = true }) {
-            HStack(spacing: ThemeTokens.Spacing.s) {
-                Image(systemName: "bubble.left.and.bubble.right")
-                    .font(.system(size: ThemeTokens.Icon.s))
-                Text(Copy.viewAsConversation)
-                    .font(.system(size: ThemeTokens.Text.m, weight: .semibold))
-            }
-            .foregroundStyle(ThemeColor.fg)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, ThemeTokens.Spacing.m)
-            .background(RoundedRectangle(cornerRadius: ThemeTokens.Radius.s).fill(ThemeColor.surface))
-            .overlay(
-                RoundedRectangle(cornerRadius: ThemeTokens.Radius.s)
-                    .strokeBorder(ThemeColor.border, lineWidth: ThemeTokens.Stroke.s))
-        }
-        .buttonStyle(.plain)
-        .padding(.top, ThemeTokens.Spacing.s)
     }
 
     private var terms: [String] {

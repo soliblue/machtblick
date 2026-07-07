@@ -20,6 +20,7 @@ struct PartyCardView: View {
                         .font(.display(ThemeTokens.Display.poster))
                         .monospacedDigit()
                 }
+                .frame(width: 120, alignment: .leading)
                 Rectangle()
                     .fill(ThemeColor.border)
                     .frame(width: ThemeTokens.Stroke.s)

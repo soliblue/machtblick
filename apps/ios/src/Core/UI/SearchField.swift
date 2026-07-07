@@ -15,9 +15,6 @@ struct SearchField: View {
         }
         .padding(.horizontal, ThemeTokens.Spacing.m)
         .padding(.vertical, ThemeTokens.Spacing.s)
-        .background(RoundedRectangle(cornerRadius: ThemeTokens.Radius.s).fill(ThemeColor.surface))
-        .overlay(
-            RoundedRectangle(cornerRadius: ThemeTokens.Radius.s)
-                .strokeBorder(ThemeColor.border, lineWidth: ThemeTokens.Stroke.s))
+        .background(RoundedRectangle(cornerRadius: ThemeTokens.Radius.m).fill(ThemeColor.surface))
     }
 }

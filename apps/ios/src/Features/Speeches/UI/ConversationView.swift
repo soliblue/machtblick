@@ -37,16 +37,14 @@ struct ConversationView: View {
     }
 
     private func bubble(speech: SpeechSummary, nested: Bool, width: CGFloat) -> some View {
-        let trailing = speech.choice == .ja
-        return ConversationBubble(
-            speech: speech, trailing: trailing, maxWidth: width * 0.78,
+        ConversationBubble(
+            speech: speech, trailing: false, maxWidth: width * 0.82,
             expanded: expanded.contains(speech.id)
         ) {
             expanded.insert(speech.id)
         }
         .padding(.horizontal, ThemeTokens.Spacing.l)
-        .padding(.leading, nested && !trailing ? ThemeTokens.Spacing.xl : 0)
-        .padding(.trailing, nested && trailing ? ThemeTokens.Spacing.xl : 0)
+        .padding(.leading, nested ? ThemeTokens.Spacing.xl : 0)
     }
 
     private var rows: [DebateThreadRow] {
