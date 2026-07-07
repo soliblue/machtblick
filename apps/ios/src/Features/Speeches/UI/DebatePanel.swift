@@ -4,11 +4,10 @@ struct DebatePanel: View {
     let speeches: [SpeechSummary]
     let partySummaries: [PartySummaryReader]
     @State private var query = ""
-    @State private var summaryIndex: Int?
 
     var body: some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
-            PartySummaryStrip(summaries: partySummaries) { summaryIndex = $0 }
+            PartySummaryStrip(summaries: partySummaries)
             Text(Copy.debateTimeline).kicker()
             SearchField(placeholder: Copy.searchSpeeches, text: $query)
             if filtered.isEmpty {
@@ -18,20 +17,6 @@ struct DebatePanel: View {
                     .padding(.vertical, ThemeTokens.Spacing.l)
             } else {
                 ConversationThread(speeches: filtered, terms: terms)
-            }
-        }
-        .sensoryFeedback(.selection, trigger: summaryIndex)
-        .sheet(
-            isPresented: Binding(get: { summaryIndex != nil }, set: { if !$0 { summaryIndex = nil } })
-        ) {
-            if let index = summaryIndex, index < partySummaries.count {
-                ReaderView(
-                    item: .summary(partySummaries[index]), index: index, count: partySummaries.count,
-                    onPrev: index > 0 ? { summaryIndex = index - 1 } : nil,
-                    onNext: index + 1 < partySummaries.count ? { summaryIndex = index + 1 } : nil
-                )
-                .presentationDetents([.large, .medium])
-                .presentationDragIndicator(.visible)
             }
         }
     }
