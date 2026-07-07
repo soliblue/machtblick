@@ -61,8 +61,7 @@ struct VotesFeedView: View {
             .sharedBackgroundVisibility(.hidden)
             ToolbarItem(placement: .topBarTrailing) {
                 Button { showFilters = true } label: {
-                    Image(systemName: store.activeFilterCount > 0
-                        ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease")
+                    Image(systemName: "line.3.horizontal.decrease")
                 }
             }
         }
