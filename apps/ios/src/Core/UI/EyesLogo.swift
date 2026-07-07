@@ -2,7 +2,8 @@ import SwiftUI
 
 struct EyesLogo: View {
     var height: CGFloat = 20
-    var pupilDrift: Double = 0
+    var pupilX: Double = 0
+    var pupilY: Double = 0
 
     private var scale: CGFloat { height / 36 }
 
@@ -41,7 +42,7 @@ struct EyesLogo: View {
             ctx.stroke(brows, with: .color(ThemeColor.fg), style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round))
 
             var pupils = ctx
-            pupils.translateBy(x: 0, y: CGFloat(pupilDrift) * 1.6)
+            pupils.translateBy(x: CGFloat(pupilX) / scale, y: CGFloat(pupilY) / scale)
             pupils.fill(Path(ellipseIn: CGRect(x: 17.2, y: 15.2, width: 7.6, height: 7.6)), with: .color(ThemeColor.fg))
             pupils.fill(Path(ellipseIn: CGRect(x: 57.2, y: 15.2, width: 7.6, height: 7.6)), with: .color(ThemeColor.danger))
         }

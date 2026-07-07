@@ -5,7 +5,7 @@ struct VotesFeedView: View {
     let cache: ApiCache
     @State private var showFilters = false
     @State private var refreshTick = 0
-    @State private var scrollProgress: Double = 0
+    @State private var scrollY: Double = 0
 
     var body: some View {
         Group {
@@ -40,9 +40,9 @@ struct VotesFeedView: View {
                 .scrollTargetBehavior(.paging)
                 .scrollIndicators(.hidden)
                 .onScrollGeometryChange(for: Double.self) { geo in
-                    min(1, max(0, geo.contentOffset.y / 140))
+                    geo.contentOffset.y
                 } action: { _, value in
-                    scrollProgress = value
+                    scrollY = value
                 }
                 .refreshable {
                     await store.refresh(cache: cache)
@@ -55,7 +55,7 @@ struct VotesFeedView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                BrandWordmark(progress: scrollProgress)
+                BrandWordmark(scrollY: scrollY)
             }
             .sharedBackgroundVisibility(.hidden)
             ToolbarItem(placement: .topBarTrailing) {

@@ -5,7 +5,7 @@ struct MembersGridView: View {
     let cache: ApiCache
     @State private var showFilters = false
     @State private var refreshTick = 0
-    @State private var scrollProgress: Double = 0
+    @State private var scrollY: Double = 0
 
     var body: some View {
         Group {
@@ -24,7 +24,7 @@ struct MembersGridView: View {
         .searchable(text: $store.search, prompt: Copy.searchMembers)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                BrandWordmark(progress: scrollProgress)
+                BrandWordmark(scrollY: scrollY)
             }
             .sharedBackgroundVisibility(.hidden)
             ToolbarItem(placement: .topBarTrailing) {
@@ -71,9 +71,9 @@ struct MembersGridView: View {
             .padding(ThemeTokens.Spacing.l)
         }
         .onScrollGeometryChange(for: Double.self) { geo in
-            min(1, max(0, geo.contentOffset.y / 140))
-        } action: { _, value in
-            scrollProgress = value
+                    geo.contentOffset.y
+                } action: { _, value in
+                    scrollY = value
         }
         .refreshable {
             await store.refresh(cache: cache)

@@ -1,10 +1,12 @@
 import SwiftUI
 
 struct BrandWordmark: View {
-    var progress: Double = 0
+    var scrollY: Double = 0
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    private var morph: Double { reduceMotion ? 0 : min(1, max(0, progress)) }
+    private var morph: Double { reduceMotion ? 0 : min(1, max(0, scrollY / 140)) }
+    private var pupilX: Double { reduceMotion ? 0 : sin(scrollY / 34) * 2.5 }
+    private var pupilY: Double { reduceMotion ? 0 : cos(scrollY / 48) * 1.6 + morph * 1.1 }
 
     var body: some View {
         ZStack(alignment: .leading) {
@@ -14,7 +16,7 @@ struct BrandWordmark: View {
                 .opacity(1 - morph)
                 .scaleEffect(1 - morph * 0.28, anchor: .leading)
                 .offset(x: morph * -6)
-            EyesLogo(height: 20, pupilDrift: morph)
+            EyesLogo(height: 20, pupilX: pupilX, pupilY: pupilY)
                 .opacity(morph)
                 .scaleEffect(0.78 + morph * 0.22, anchor: .leading)
         }
