@@ -45,6 +45,15 @@ struct MarkdownText: View {
     }
 
     private func inline(_ text: String) -> AttributedString {
-        (try? AttributedString(markdown: text)) ?? AttributedString(text)
+        var attr = (try? AttributedString(markdown: text)) ?? AttributedString(text)
+        for run in attr.runs {
+            let intent = run.inlinePresentationIntent ?? []
+            attr[run.range].font = .serif(
+                bodySize,
+                bold: intent.contains(.stronglyEmphasized),
+                italic: intent.contains(.emphasized))
+            attr[run.range].inlinePresentationIntent = nil
+        }
+        return attr
     }
 }
