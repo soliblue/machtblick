@@ -41,6 +41,7 @@ struct RootTabView: View {
                     .accessibilityLabel(Copy.partiesTab)
             }
         }
+        .tabBarMinimizeBehavior(.onScrollDown)
         .environment(flagsStore)
         .tint(ThemeColor.fg)
         .sensoryFeedback(.selection, trigger: tab)
