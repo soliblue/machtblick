@@ -1,16 +1,9 @@
 import SwiftUI
 
-private enum PartyTab: Hashable {
-    case profile
-    case votes
-    case history
-}
-
 struct PartyDetailView: View {
     let slug: String
     let cache: ApiCache
     @State private var store = PartyDetailStore()
-    @State private var tab: PartyTab = .profile
 
     var body: some View {
         Group {
@@ -19,8 +12,8 @@ struct PartyDetailView: View {
                     VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xl) {
                         header(detail)
                         demographics(detail)
-                        picker(detail)
-                        panel(detail)
+                        PartyProfilePanel(detail: detail, cache: cache)
+                        history(detail)
                     }
                     .padding(ThemeTokens.Spacing.l)
                 }
@@ -40,8 +33,13 @@ struct PartyDetailView: View {
         }
         .background(ThemeColor.background)
         .navigationBarTitleDisplayMode(.inline)
-        .sensoryFeedback(.selection, trigger: tab)
         .task { await store.load(slug: slug, cache: cache) }
+    }
+
+    @ViewBuilder private func history(_ detail: PartyDetailPayload) -> some View {
+        if let history = detail.history, history.chartPoints.count >= 2 {
+            PartyHistoryPanel(history: history, party: detail.party)
+        }
     }
 
     private func header(_ detail: PartyDetailPayload) -> some View {
@@ -90,42 +88,5 @@ struct PartyDetailView: View {
 
     private func attendance(_ detail: PartyDetailPayload) -> Double {
         store.lean?.attendance ?? detail.attendance
-    }
-
-    private func tabs(_ detail: PartyDetailPayload) -> [PartyTab] {
-        var available: [PartyTab] = [.profile]
-        if !detail.votes.isEmpty { available.append(.votes) }
-        if (detail.history?.chartPoints.count ?? 0) >= 2 { available.append(.history) }
-        return available
-    }
-
-    private func tabLabel(_ tab: PartyTab) -> String {
-        switch tab {
-        case .profile: return Copy.tabProfile
-        case .votes: return Copy.votesSection
-        case .history: return Copy.tabHistory
-        }
-    }
-
-    @ViewBuilder private func picker(_ detail: PartyDetailPayload) -> some View {
-        let available = tabs(detail)
-        if available.count > 1 {
-            Picker("", selection: $tab) {
-                ForEach(available, id: \.self) { Text(tabLabel($0)).tag($0) }
-            }
-            .pickerStyle(.segmented)
-        }
-    }
-
-    @ViewBuilder private func panel(_ detail: PartyDetailPayload) -> some View {
-        let active = tabs(detail).contains(tab) ? tab : .profile
-        switch active {
-        case .profile: PartyProfilePanel(detail: detail, cache: cache)
-        case .votes: PartyVotesPanel(votes: detail.votes)
-        case .history:
-            if let history = detail.history {
-                PartyHistoryPanel(history: history, party: detail.party)
-            }
-        }
     }
 }

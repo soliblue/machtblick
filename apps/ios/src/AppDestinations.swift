@@ -13,6 +13,8 @@ extension View {
                     PartyDetailView(slug: slug, cache: cache)
                 case .motion(let id):
                     MotionDetailView(id: id, cache: cache)
+                case .proposals(let party, let voteIds):
+                    PartyProposalsFeed(party: party, voteIds: voteIds, cache: cache)
                 }
             }
             .toolbar(.hidden, for: .tabBar)

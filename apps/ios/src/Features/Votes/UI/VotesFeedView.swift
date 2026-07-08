@@ -20,35 +20,10 @@ struct VotesFeedView: View {
                     .foregroundStyle(ThemeColor.secondary)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
-                ScrollView {
-                    LazyVStack(spacing: 0) {
-                        ForEach(store.filtered) { vote in
-                            VoteCardView(vote: vote, cache: cache)
-                                .containerRelativeFrame(.vertical)
-                                .overlay(alignment: .bottom) {
-                                    if vote.id != store.filtered.last?.id {
-                                        Rectangle()
-                                            .fill(ThemeColor.border)
-                                            .frame(height: ThemeTokens.Stroke.s)
-                                            .padding(.horizontal, ThemeTokens.Spacing.l)
-                                    }
-                                }
-                        }
-                    }
-                    .scrollTargetLayout()
-                }
-                .scrollTargetBehavior(.paging)
-                .scrollDismissesKeyboard(.interactively)
-                .scrollIndicators(.hidden)
-                .onScrollGeometryChange(for: Double.self) { geo in
-                    geo.contentOffset.y
-                } action: { _, value in
-                    scrollY = value
-                }
-                .refreshable {
-                    await store.refresh(cache: cache)
-                    refreshTick += 1
-                }
+                VotesFeedList(
+                    votes: store.filtered, cache: cache,
+                    onScroll: { scrollY = $0 },
+                    onRefresh: { await store.refresh(cache: cache); refreshTick += 1 })
             }
         }
         .background(ThemeColor.background)

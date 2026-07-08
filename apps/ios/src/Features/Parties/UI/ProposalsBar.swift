@@ -1,12 +1,11 @@
 import SwiftUI
 
 struct ProposalsBar: View {
+    let party: String
     let proposals: [PartyDetailPayload.Proposal]
-    let cache: ApiCache
-    @State private var showSheet = false
 
     var body: some View {
-        Button { showSheet = true } label: {
+        NavigationLink(value: AppRoute.proposals(party: party, voteIds: proposals.map(\.voteId))) {
             VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
                 HStack {
                     Text(Copy.tabMotions).kicker()
@@ -27,9 +26,6 @@ struct ProposalsBar: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .sheet(isPresented: $showSheet) {
-            ProposalsSheet(proposals: proposals, cache: cache)
-        }
     }
 
     private var accepted: Int {

@@ -3,4 +3,5 @@ enum AppRoute: Hashable {
     case member(String)
     case party(String)
     case motion(Int)
+    case proposals(party: String, voteIds: [String])
 }

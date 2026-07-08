@@ -7,7 +7,7 @@ struct PartyProfilePanel: View {
     var body: some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xl) {
             if !detail.proposals.isEmpty {
-                ProposalsBar(proposals: detail.proposals, cache: cache)
+                ProposalsBar(party: detail.party, proposals: detail.proposals)
             }
             if !detail.alignments.isEmpty {
                 AlignmentList(alignments: detail.alignments)
