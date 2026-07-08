@@ -7,7 +7,7 @@ struct DebatePanel: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
-            PartySummaryStrip(summaries: partySummaries)
+            PartySummaryStrip(summaries: partySummaries, speeches: speeches)
             Text(Copy.debateTimeline).kicker()
             SearchField(placeholder: Copy.searchSpeeches, text: $query)
             if filtered.isEmpty {

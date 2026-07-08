@@ -13,7 +13,7 @@ struct ConversationSystemChip: View {
                     .font(.system(size: ThemeTokens.Text.s))
             }
             .foregroundStyle(ThemeColor.secondary)
-            .multilineTextAlignment(.center)
+            .multilineTextAlignment(.leading)
             .lineLimit(3)
             .fixedSize(horizontal: false, vertical: true)
             .layoutPriority(1)

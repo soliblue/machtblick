@@ -41,13 +41,9 @@ struct ConversationBubble: View {
 
     @ViewBuilder private var header: some View {
         HStack(spacing: ThemeTokens.Spacing.s) {
-            if trailing {
-                logo
-                identity
-            } else {
-                identity
-                logo
-            }
+            identity
+            Spacer(minLength: ThemeTokens.Spacing.s)
+            logo
         }
     }
 
