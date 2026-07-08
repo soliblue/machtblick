@@ -7,12 +7,7 @@ struct PartySummaryBubble: View {
     var body: some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
             HStack(spacing: ThemeTokens.Spacing.s) {
-                if PartyStyle.hasLogo(summary.party) {
-                    PartyLogo(party: summary.party, size: ThemeTokens.Icon.m)
-                }
-                Text(PartyStyle.label(summary.party))
-                    .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
-                    .foregroundStyle(ThemeColor.fg)
+                identity
                 Spacer(minLength: 0)
                 StampView(label: summary.stance.label, color: summary.stance.color)
             }
@@ -46,6 +41,26 @@ struct PartySummaryBubble: View {
         .padding(ThemeTokens.Spacing.m)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(RoundedRectangle(cornerRadius: 16).fill(tint))
+    }
+
+    @ViewBuilder private var identity: some View {
+        if PartyStyle.hasPartyLine(summary.party) {
+            NavigationLink(value: AppRoute.party(PartyStyle.slug(summary.party))) { identityContent }
+                .buttonStyle(.plain)
+        } else {
+            identityContent
+        }
+    }
+
+    private var identityContent: some View {
+        HStack(spacing: ThemeTokens.Spacing.s) {
+            if PartyStyle.hasLogo(summary.party) {
+                PartyLogo(party: summary.party, size: ThemeTokens.Icon.m)
+            }
+            Text(PartyStyle.label(summary.party))
+                .font(.system(size: ThemeTokens.Text.l, weight: .semibold))
+                .foregroundStyle(ThemeColor.fg)
+        }
     }
 
     private var tint: Color {

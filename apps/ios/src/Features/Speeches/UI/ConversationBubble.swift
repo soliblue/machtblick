@@ -63,7 +63,7 @@ struct ConversationBubble: View {
     @ViewBuilder private var identityContent: some View {
         let avatar = SpeakerAvatar(name: speech.speakerName, pictureUrl: speech.pictureUrl, size: 24)
         let name = Text(speech.speakerName)
-            .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
+            .font(.system(size: ThemeTokens.Text.l, weight: .semibold))
             .foregroundStyle(ThemeColor.fg)
         HStack(spacing: ThemeTokens.Spacing.s) {
             if trailing {
