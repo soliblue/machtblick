@@ -22,7 +22,7 @@ struct MemberSpeechesPanel: View {
             } else {
                 LazyVStack(alignment: .leading, spacing: 0) {
                     ForEach(Array(visibleGroups.enumerated()), id: \.element.id) { index, group in
-                        ChatInboxRow(group: group, showDivider: index > 0, onOpen: { openGroup = group })
+                        ChatInboxRow(group: group, showDivider: index > 0, terms: terms, onOpen: { openGroup = group })
                             .onAppear {
                                 if index == visibleGroups.count - 1 && visibleCount < filtered.count {
                                     visibleCount += batch
@@ -49,7 +49,7 @@ struct MemberSpeechesPanel: View {
     private var filtered: [MemberSpeechGroup] {
         guard !terms.isEmpty else { return allGroups }
         return allGroups.filter { group in
-            let hay = "\(group.title) \(group.main.excerpt)".lowercased()
+            let hay = ("\(group.title) " + group.speeches.map(\.excerpt).joined(separator: " ")).lowercased()
             return terms.allSatisfy { hay.contains($0) }
         }
     }

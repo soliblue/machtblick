@@ -3,15 +3,16 @@ import SwiftUI
 struct ChatInboxRow: View {
     let group: MemberSpeechGroup
     var showDivider = true
+    var terms: [String] = []
     let onOpen: () -> Void
 
     var body: some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
-            Text(group.title)
+            Text(highlighted(group.title, terms: terms))
                 .font(.display(ThemeTokens.Text.l))
                 .foregroundStyle(ThemeColor.fg)
                 .multilineTextAlignment(.leading)
-            Text(group.main.excerpt)
+            Text(excerpt)
                 .font(.serif(ThemeTokens.Text.l))
                 .foregroundStyle(ThemeColor.fg)
                 .lineLimit(3)
@@ -36,6 +37,14 @@ struct ChatInboxRow: View {
                 Rectangle().fill(ThemeColor.border).frame(height: ThemeTokens.Stroke.s)
             }
         }
+    }
+
+    private var excerpt: AttributedString {
+        guard !terms.isEmpty else { return AttributedString(group.main.excerpt) }
+        let source = group.speeches.first { speech in
+            terms.contains { speech.excerpt.range(of: $0, options: .caseInsensitive) != nil }
+        }?.excerpt ?? group.main.excerpt
+        return highlighted(matchSnippet(source, terms: terms), terms: terms)
     }
 
     private var tint: Color {
