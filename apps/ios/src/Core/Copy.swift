@@ -112,6 +112,10 @@ enum Copy {
     static let loadError = "Daten konnten nicht geladen werden."
     static let retry = "Erneut versuchen"
     static let filterAll = "Alle"
+    static let flagFilter = "Markierung"
+    static let flagSaved = "Gespeichert"
+    static let flagSeen = "Gesehen"
+    static let flagUnseen = "Ungesehen"
     static let relatedMotions = "Zugehörige Anträge"
 
     static let filterFaction = "Fraktion"

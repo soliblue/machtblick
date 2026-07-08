@@ -9,6 +9,7 @@ private enum VoteTab: Hashable {
 struct VoteDetailView: View {
     let id: String
     let cache: ApiCache
+    @Environment(VoteFlagsStore.self) private var flags
     @State private var store = VoteDetailStore()
     @State private var tab: VoteTab = .ergebnis
     @State private var selected: VoteChoice?
@@ -27,6 +28,15 @@ struct VoteDetailView: View {
                 }
                 .scrollDismissesKeyboard(.interactively)
                 .toolbar {
+                    ToolbarItemGroup(placement: .topBarTrailing) {
+                        Button { flags.toggleSaved(id) } label: {
+                            Image(systemName: flags.isSaved(id) ? "bookmark.fill" : "bookmark")
+                        }
+                        Button { flags.toggleSeen(id) } label: {
+                            Image(systemName: flags.isSeen(id) ? "checkmark.circle.fill" : "checkmark.circle")
+                        }
+                    }
+                    ToolbarSpacer(.fixed, placement: .topBarTrailing)
                     ToolbarItem(placement: .topBarTrailing) {
                         ShareLinkButton(title: detail.vote.cleanTitle, url: HTTPClient.page("/votes/\(id)"))
                     }
@@ -42,6 +52,8 @@ struct VoteDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .sensoryFeedback(.selection, trigger: tab)
         .sensoryFeedback(.selection, trigger: selected)
+        .sensoryFeedback(.selection, trigger: flags.isSaved(id))
+        .sensoryFeedback(.selection, trigger: flags.isSeen(id))
         .task { await store.load(id: id, cache: cache) }
     }
 

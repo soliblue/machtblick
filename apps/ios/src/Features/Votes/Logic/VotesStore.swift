@@ -11,6 +11,7 @@ final class VotesStore {
     var resultFilter: VoteResult?
     var topicFilter: String?
     var voteTypeFilter: String? = "namentlich"
+    var flagFilter: VoteFlagFilter = .all
 
     func load(cache: ApiCache) async {
         if votes.isEmpty, let cached: [VoteListItem] = cache.cached("/api/votes.json") {
@@ -59,6 +60,7 @@ final class VotesStore {
     var activeFilterCount: Int {
         var count = [proposerFilter, topicFilter, voteTypeFilter].filter { $0 != nil }.count
         if resultFilter != nil { count += 1 }
+        if flagFilter != .all { count += 1 }
         return count
     }
 

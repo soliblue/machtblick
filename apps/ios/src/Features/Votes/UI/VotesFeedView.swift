@@ -3,9 +3,21 @@ import SwiftUI
 struct VotesFeedView: View {
     let store: VotesStore
     let cache: ApiCache
+    @Environment(VoteFlagsStore.self) private var flags
     @State private var showFilters = false
     @State private var refreshTick = 0
     @State private var scrollY: Double = 0
+
+    private var visible: [VoteListItem] {
+        store.filtered.filter { vote in
+            switch store.flagFilter {
+            case .all: return true
+            case .saved: return flags.isSaved(vote.id)
+            case .seen: return flags.isSeen(vote.id)
+            case .unseen: return !flags.isSeen(vote.id)
+            }
+        }
+    }
 
     var body: some View {
         Group {
@@ -14,14 +26,14 @@ struct VotesFeedView: View {
             } else if store.votes.isEmpty {
                 ProgressView()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-            } else if store.filtered.isEmpty {
+            } else if visible.isEmpty {
                 Text(Copy.noResults)
                     .font(.system(size: ThemeTokens.Text.m))
                     .foregroundStyle(ThemeColor.secondary)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 VotesFeedList(
-                    votes: store.filtered, cache: cache,
+                    votes: visible, cache: cache,
                     onScroll: { scrollY = $0 },
                     onRefresh: { await store.refresh(cache: cache); refreshTick += 1 })
             }

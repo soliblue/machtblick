@@ -6,6 +6,15 @@ struct VotesFilterSheet: View {
     var body: some View {
         NavigationStack {
             Form {
+                Section {
+                    Picker(selection: $store.flagFilter) {
+                        ForEach(VoteFlagFilter.allCases, id: \.self) { filter in
+                            Text(filter.label).tag(filter)
+                        }
+                    } label: {
+                        Label(Copy.flagFilter, systemImage: "bookmark")
+                    }
+                }
                 if store.hasVoteType {
                     Section {
                         Picker(selection: $store.voteTypeFilter) {

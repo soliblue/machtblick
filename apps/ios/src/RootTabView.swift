@@ -11,6 +11,7 @@ struct RootTabView: View {
     @State private var votesStore = VotesStore()
     @State private var membersStore = MembersStore()
     @State private var partiesStore = PartiesStore()
+    @State private var flagsStore = VoteFlagsStore()
     @State private var tab: RootTab = .votes
 
     var body: some View {
@@ -40,6 +41,7 @@ struct RootTabView: View {
                     .accessibilityLabel(Copy.partiesTab)
             }
         }
+        .environment(flagsStore)
         .tint(ThemeColor.fg)
         .sensoryFeedback(.selection, trigger: tab)
         .onAppear { KeyboardDismisser.shared.install() }
