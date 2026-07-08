@@ -6,13 +6,17 @@ struct ConversationSystemChip: View {
     var body: some View {
         HStack(spacing: ThemeTokens.Spacing.m) {
             rule
-            (Text(speech.speakerName).font(.system(size: ThemeTokens.Text.s, weight: .semibold))
-                + Text(" · \(speech.excerpt)").font(.system(size: ThemeTokens.Text.s)))
-                .foregroundStyle(ThemeColor.secondary)
-                .multilineTextAlignment(.center)
-                .lineLimit(3)
-                .fixedSize(horizontal: false, vertical: true)
-                .layoutPriority(1)
+            VStack(spacing: 2) {
+                Text(speech.speakerName)
+                    .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
+                Text(speech.excerpt)
+                    .font(.system(size: ThemeTokens.Text.s))
+            }
+            .foregroundStyle(ThemeColor.secondary)
+            .multilineTextAlignment(.center)
+            .lineLimit(3)
+            .fixedSize(horizontal: false, vertical: true)
+            .layoutPriority(1)
             rule
         }
         .padding(.horizontal, -ThemeTokens.Spacing.l)

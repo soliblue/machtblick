@@ -22,10 +22,6 @@
 		<string>Fraunces-Regular.ttf</string>
 		<string>Fraunces-SemiBold.ttf</string>
 		<string>Fraunces-Bold.ttf</string>
-		<string>Lora-Regular.ttf</string>
-		<string>Lora-Bold.ttf</string>
-		<string>Lora-Italic.ttf</string>
-		<string>Lora-BoldItalic.ttf</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
