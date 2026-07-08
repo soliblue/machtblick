@@ -61,6 +61,8 @@ struct ConversationBubble: View {
         let name = Text(speech.speakerName)
             .font(.system(size: ThemeTokens.Text.l, weight: .semibold))
             .foregroundStyle(ThemeColor.fg)
+            .lineLimit(1)
+            .truncationMode(.tail)
         HStack(spacing: ThemeTokens.Spacing.s) {
             if trailing {
                 name
