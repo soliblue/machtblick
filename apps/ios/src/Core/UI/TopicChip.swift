@@ -7,6 +7,8 @@ struct TopicChip: View {
 
     var body: some View {
         Text(text)
+            .lineLimit(1)
+            .fixedSize()
             .font(.system(size: ThemeTokens.Text.s, weight: outlined ? .semibold : .regular))
             .textCase(outlined ? .uppercase : nil)
             .tracking(outlined ? 0.9 : 0)

@@ -23,11 +23,14 @@ struct MemberInitiativeRow: View {
                     Text("\(initiative.signatoryCount) \(Copy.signatoriesSuffix)").kicker()
                 }
                 if !initiative.sachgebiet.isEmpty {
-                    HStack(spacing: ThemeTokens.Spacing.xs) {
-                        ForEach(Array(initiative.sachgebiet.prefix(3)), id: \.self) { topic in
-                            TopicChip(text: topic)
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: ThemeTokens.Spacing.xs) {
+                            ForEach(initiative.sachgebiet, id: \.self) { topic in
+                                TopicChip(text: topic)
+                            }
                         }
                     }
+                    .edgeToEdgeScroll()
                 }
             }
             .padding(.vertical, ThemeTokens.Spacing.m)
