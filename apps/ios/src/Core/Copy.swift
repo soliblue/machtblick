@@ -153,6 +153,7 @@ enum Copy {
     static let deviatedFromLine = "Abweichend von Linie"
     static let contribution = "Beitrag"
     static let contributions = "Beiträge"
+    static let viewFullDebate = "Ganze Debatte ansehen"
     static let shortSuffix = "kurz"
     static let searchMotions = "Anträge durchsuchen"
     static let signatoriesSuffix = "Unterzeichner"

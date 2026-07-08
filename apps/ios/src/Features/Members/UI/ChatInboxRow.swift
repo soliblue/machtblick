@@ -3,36 +3,34 @@ import SwiftUI
 struct ChatInboxRow: View {
     let group: MemberSpeechGroup
     var showDivider = true
+    let onOpen: () -> Void
 
     var body: some View {
-        HStack(alignment: .top, spacing: ThemeTokens.Spacing.m) {
-            glyph
-            VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
-                HStack(alignment: .firstTextBaseline, spacing: ThemeTokens.Spacing.s) {
-                    Text(group.title)
-                        .font(.display(ThemeTokens.Text.l))
-                        .foregroundStyle(ThemeColor.fg)
-                        .lineLimit(2)
-                        .multilineTextAlignment(.leading)
-                    Spacer(minLength: ThemeTokens.Spacing.s)
-                    Text(Formatters.shortDate(group.date))
-                        .font(.system(size: ThemeTokens.Text.s))
-                        .foregroundStyle(ThemeColor.secondary)
-                        .fixedSize()
+        VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
+            Text(group.title)
+                .font(.display(ThemeTokens.Text.l))
+                .foregroundStyle(ThemeColor.fg)
+                .multilineTextAlignment(.leading)
+            Text(group.main.excerpt)
+                .font(.serif(ThemeTokens.Text.l))
+                .foregroundStyle(ThemeColor.fg)
+                .lineLimit(3)
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(ThemeTokens.Spacing.m)
+                .background(RoundedRectangle(cornerRadius: 16).fill(tint))
+            Button(action: onOpen) {
+                HStack(spacing: ThemeTokens.Spacing.xs) {
+                    Text(Copy.viewFullDebate)
+                        .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
+                    Image(systemName: "chevron.right").font(.system(size: ThemeTokens.Text.s))
                 }
-                Text(group.main.excerpt)
-                    .font(.serif(ThemeTokens.Text.m))
-                    .foregroundStyle(ThemeColor.secondary)
-                    .lineLimit(1)
-                    .multilineTextAlignment(.leading)
-                Text("\(group.speeches.count) \(Copy.contributions)")
-                    .font(.system(size: ThemeTokens.Text.s))
-                    .foregroundStyle(ThemeColor.secondary)
+                .foregroundStyle(accent)
             }
+            .buttonStyle(.plain)
         }
         .padding(.vertical, ThemeTokens.Spacing.m)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .contentShape(Rectangle())
         .overlay(alignment: .top) {
             if showDivider {
                 Rectangle().fill(ThemeColor.border).frame(height: ThemeTokens.Stroke.s)
@@ -40,11 +38,13 @@ struct ChatInboxRow: View {
         }
     }
 
-    private var glyph: some View {
-        Image(systemName: "bubble.left.and.bubble.right.fill")
-            .font(.system(size: ThemeTokens.Icon.m))
-            .foregroundStyle(ThemeColor.secondary)
-            .frame(width: 40, height: 40)
-            .background(RoundedRectangle(cornerRadius: ThemeTokens.Radius.m).fill(ThemeColor.surface))
+    private var tint: Color {
+        let party = group.main.party ?? ""
+        return PartyStyle.hasPartyLine(party) ? PartyStyle.color(party).opacity(0.13) : ThemeColor.surface
+    }
+
+    private var accent: Color {
+        let party = group.main.party ?? ""
+        return PartyStyle.hasPartyLine(party) ? PartyStyle.color(party) : ThemeColor.fg
     }
 }

@@ -22,15 +22,12 @@ struct MemberSpeechesPanel: View {
             } else {
                 LazyVStack(alignment: .leading, spacing: 0) {
                     ForEach(Array(visibleGroups.enumerated()), id: \.element.id) { index, group in
-                        Button { openGroup = group } label: {
-                            ChatInboxRow(group: group, showDivider: index > 0)
-                        }
-                        .buttonStyle(.plain)
-                        .onAppear {
-                            if index == visibleGroups.count - 1 && visibleCount < filtered.count {
-                                visibleCount += batch
+                        ChatInboxRow(group: group, showDivider: index > 0, onOpen: { openGroup = group })
+                            .onAppear {
+                                if index == visibleGroups.count - 1 && visibleCount < filtered.count {
+                                    visibleCount += batch
+                                }
                             }
-                        }
                     }
                 }
             }
