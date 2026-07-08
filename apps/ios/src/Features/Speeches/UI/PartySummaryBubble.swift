@@ -6,9 +6,12 @@ struct PartySummaryBubble: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.s) {
-            identity
-            if !speakers.isEmpty {
-                AvatarPile(people: speakers)
+            HStack(spacing: ThemeTokens.Spacing.s) {
+                logo
+                Spacer(minLength: ThemeTokens.Spacing.s)
+                if !speakers.isEmpty {
+                    AvatarPile(people: speakers)
+                }
             }
             Text(summary.positionSummary ?? "")
                 .font(.serif(ThemeTokens.Text.l))
@@ -21,23 +24,22 @@ struct PartySummaryBubble: View {
         .background(RoundedRectangle(cornerRadius: 16).fill(tint))
     }
 
-    @ViewBuilder private var identity: some View {
+    @ViewBuilder private var logo: some View {
         if PartyStyle.hasPartyLine(summary.party) {
-            NavigationLink(value: AppRoute.party(PartyStyle.slug(summary.party))) { identityContent }
+            NavigationLink(value: AppRoute.party(PartyStyle.slug(summary.party))) { logoMark }
                 .buttonStyle(.plain)
         } else {
-            identityContent
+            logoMark
         }
     }
 
-    private var identityContent: some View {
-        HStack(spacing: ThemeTokens.Spacing.s) {
-            if PartyStyle.hasLogo(summary.party) {
-                PartyLogo(party: summary.party, size: ThemeTokens.Icon.m)
-            }
+    @ViewBuilder private var logoMark: some View {
+        if PartyStyle.hasLogo(summary.party) {
+            PartyLogo(party: summary.party, size: ThemeTokens.Icon.xl)
+        } else {
             Text(PartyStyle.label(summary.party))
                 .font(.system(size: ThemeTokens.Text.l, weight: .semibold))
-                .foregroundStyle(ThemeColor.fg)
+                .foregroundStyle(PartyStyle.color(summary.party))
         }
     }
 
