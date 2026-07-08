@@ -6,11 +6,11 @@ extension Font {
     }
 
     static func serif(_ size: CGFloat) -> Font {
-        .system(size: size, design: .rounded)
+        .custom("Lora-Regular", size: size)
     }
 
     static func serif(_ size: CGFloat, bold: Bool, italic: Bool) -> Font {
-        let font = Font.system(size: size, weight: bold ? .bold : .regular, design: .rounded)
-        return italic ? font.italic() : font
+        let face = bold && italic ? "Lora-BoldItalic" : bold ? "Lora-Bold" : italic ? "Lora-Italic" : "Lora-Regular"
+        return .custom(face, size: size)
     }
 }
