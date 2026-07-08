@@ -17,7 +17,14 @@ struct AlignmentList: View {
 
     private func row(_ alignment: PartyDetailPayload.Alignment) -> some View {
         HStack(spacing: ThemeTokens.Spacing.m) {
-            Circle().fill(PartyStyle.color(alignment.party)).frame(width: 10, height: 10)
+            Group {
+                if PartyStyle.hasLogo(alignment.party) {
+                    PartyLogo(party: alignment.party, size: ThemeTokens.Icon.m)
+                } else {
+                    Circle().fill(PartyStyle.color(alignment.party)).frame(width: 10, height: 10)
+                }
+            }
+            .frame(width: 40, alignment: .leading)
             VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xs) {
                 GeometryReader { geo in
                     ZStack(alignment: .leading) {
