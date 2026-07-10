@@ -202,6 +202,19 @@ function prerenderPaths(): string[] {
     paths.push(`/en/parties/${slug}/votes/`)
     paths.push(`/en/parties/${slug}/history/`)
   }
+  const parliamentSlug: Record<string, string> = { eu: 'eu', be: 'berlin', by: 'bayern' }
+  for (const [dbKey, section] of Object.entries(parliamentSlug)) {
+    paths.push(`/${section}/`, `/${section}/members/`, `/${section}/parties/`)
+    for (const v of db.prepare('SELECT id FROM mp_votes WHERE parliament = ?').all(dbKey) as Array<{ id: string }>) {
+      paths.push(`/${section}/votes/${v.id}/`)
+    }
+    for (const m of db.prepare('SELECT DISTINCT member_id AS id FROM mp_member_votes WHERE parliament = ?').all(dbKey) as Array<{ id: string }>) {
+      paths.push(`/${section}/members/${m.id}/`)
+    }
+    for (const p of db.prepare('SELECT slug FROM mp_parties WHERE parliament = ?').all(dbKey) as Array<{ slug: string }>) {
+      paths.push(`/${section}/parties/${p.slug}/`)
+    }
+  }
   db.close()
   return paths
 }

@@ -52,7 +52,10 @@
     "etl:translations": "node etl/bundestag/translations/run.mjs",
     "etl:antrag-description-translations": "node etl/bundestag/antrag-description-translations/run.mjs",
     "etl:antrag-title-translations": "node etl/bundestag/antrag-title-translations/run.mjs",
-    "etl:speech-translations": "node etl/bundestag/speech-translations/run.mjs"
+    "etl:speech-translations": "node etl/bundestag/speech-translations/run.mjs",
+    "etl:europarl:fetch": "node etl/europarl/fetch.mjs",
+    "etl:europarl": "node etl/europarl/ingest.mjs",
+    "etl:landtage": "node etl/abgeordnetenwatch/ingest.mjs"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.11",

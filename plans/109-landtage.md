@@ -80,4 +80,5 @@ Realistic scope: a Bayern pilot is mostly a NEW ETL adapter + a schema discrimin
 
 ## Log
 - 2026-07-09 lead: created plan, dispatched research agent.
+- 2026-07-10 plumber: pilot ETL shipped as `etl/abgeordnetenwatch/` (Bayern + Berlin into the `mp_*` tables, plan 111). Research findings held up exactly: 64 Bayern polls, Berlin needed the previous term appended (3 current + 9 prior).
 - 2026-07-09 research agent: appended findings. Verified abgeordnetenwatch v2 API live (poll counts per state, per-member ballots on Bayern/Berlin polls, CC0 license, member mandates, no photos/speeches). abgeordnetenwatch is the unified source; recommend Bayern + NRW pilot via one ETL adapter; biggest risk is thin roll-call coverage per state.

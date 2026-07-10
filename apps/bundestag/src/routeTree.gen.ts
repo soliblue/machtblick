@@ -19,6 +19,7 @@ import { Route as PartiesIndexRouteImport } from './routes/parties/index'
 import { Route as MotionsIndexRouteImport } from './routes/motions/index'
 import { Route as MembersIndexRouteImport } from './routes/members/index'
 import { Route as EnIndexRouteImport } from './routes/en/index'
+import { Route as SectionIndexRouteImport } from './routes/$section/index'
 import { Route as VotesIdRouteImport } from './routes/votes/$id'
 import { Route as MotionsIdRouteImport } from './routes/motions/$id'
 import { Route as EnPrivacyRouteImport } from './routes/en/privacy'
@@ -33,6 +34,8 @@ import { Route as EnSpeechesIndexRouteImport } from './routes/en/speeches/index'
 import { Route as EnPartiesIndexRouteImport } from './routes/en/parties/index'
 import { Route as EnMotionsIndexRouteImport } from './routes/en/motions/index'
 import { Route as EnMembersIndexRouteImport } from './routes/en/members/index'
+import { Route as SectionPartiesIndexRouteImport } from './routes/$section/parties/index'
+import { Route as SectionMembersIndexRouteImport } from './routes/$section/members/index'
 import { Route as PartiesIdVotesRouteImport } from './routes/parties/$id/votes'
 import { Route as PartiesIdProfileRouteImport } from './routes/parties/$id/profile'
 import { Route as PartiesIdHistoryRouteImport } from './routes/parties/$id/history'
@@ -41,6 +44,9 @@ import { Route as MembersIdSpeechesRouteImport } from './routes/members/$id/spee
 import { Route as MembersIdMotionsRouteImport } from './routes/members/$id/motions'
 import { Route as EnVotesIdRouteImport } from './routes/en/votes/$id'
 import { Route as EnMotionsIdRouteImport } from './routes/en/motions/$id'
+import { Route as SectionVotesIdRouteImport } from './routes/$section/votes/$id'
+import { Route as SectionPartiesSlugRouteImport } from './routes/$section/parties/$slug'
+import { Route as SectionMembersIdRouteImport } from './routes/$section/members/$id'
 import { Route as EnPartiesIdRouteRouteImport } from './routes/en/parties/$id/route'
 import { Route as EnMembersIdRouteRouteImport } from './routes/en/members/$id/route'
 import { Route as EnPartiesIdIndexRouteImport } from './routes/en/parties/$id/index'
@@ -100,6 +106,11 @@ const MembersIndexRoute = MembersIndexRouteImport.update({
 const EnIndexRoute = EnIndexRouteImport.update({
   id: '/en/',
   path: '/en/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SectionIndexRoute = SectionIndexRouteImport.update({
+  id: '/$section/',
+  path: '/$section/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VotesIdRoute = VotesIdRouteImport.update({
@@ -172,6 +183,16 @@ const EnMembersIndexRoute = EnMembersIndexRouteImport.update({
   path: '/en/members/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SectionPartiesIndexRoute = SectionPartiesIndexRouteImport.update({
+  id: '/$section/parties/',
+  path: '/$section/parties/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SectionMembersIndexRoute = SectionMembersIndexRouteImport.update({
+  id: '/$section/members/',
+  path: '/$section/members/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PartiesIdVotesRoute = PartiesIdVotesRouteImport.update({
   id: '/votes',
   path: '/votes',
@@ -210,6 +231,21 @@ const EnVotesIdRoute = EnVotesIdRouteImport.update({
 const EnMotionsIdRoute = EnMotionsIdRouteImport.update({
   id: '/en/motions/$id',
   path: '/en/motions/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SectionVotesIdRoute = SectionVotesIdRouteImport.update({
+  id: '/$section/votes/$id',
+  path: '/$section/votes/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SectionPartiesSlugRoute = SectionPartiesSlugRouteImport.update({
+  id: '/$section/parties/$slug',
+  path: '/$section/parties/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SectionMembersIdRoute = SectionMembersIdRouteImport.update({
+  id: '/$section/members/$id',
+  path: '/$section/members/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EnPartiesIdRouteRoute = EnPartiesIdRouteRouteImport.update({
@@ -275,6 +311,7 @@ export interface FileRoutesByFullPath {
   '/en/privacy': typeof EnPrivacyRoute
   '/motions/$id': typeof MotionsIdRoute
   '/votes/$id': typeof VotesIdRoute
+  '/$section/': typeof SectionIndexRoute
   '/en/': typeof EnIndexRoute
   '/members/': typeof MembersIndexRoute
   '/motions/': typeof MotionsIndexRoute
@@ -283,6 +320,9 @@ export interface FileRoutesByFullPath {
   '/votes/': typeof VotesIndexRoute
   '/en/members/$id': typeof EnMembersIdRouteRouteWithChildren
   '/en/parties/$id': typeof EnPartiesIdRouteRouteWithChildren
+  '/$section/members/$id': typeof SectionMembersIdRoute
+  '/$section/parties/$slug': typeof SectionPartiesSlugRoute
+  '/$section/votes/$id': typeof SectionVotesIdRoute
   '/en/motions/$id': typeof EnMotionsIdRoute
   '/en/votes/$id': typeof EnVotesIdRoute
   '/members/$id/motions': typeof MembersIdMotionsRoute
@@ -291,6 +331,8 @@ export interface FileRoutesByFullPath {
   '/parties/$id/history': typeof PartiesIdHistoryRoute
   '/parties/$id/profile': typeof PartiesIdProfileRoute
   '/parties/$id/votes': typeof PartiesIdVotesRoute
+  '/$section/members/': typeof SectionMembersIndexRoute
+  '/$section/parties/': typeof SectionPartiesIndexRoute
   '/en/members/': typeof EnMembersIndexRoute
   '/en/motions/': typeof EnMotionsIndexRoute
   '/en/parties/': typeof EnPartiesIndexRoute
@@ -317,12 +359,16 @@ export interface FileRoutesByTo {
   '/en/privacy': typeof EnPrivacyRoute
   '/motions/$id': typeof MotionsIdRoute
   '/votes/$id': typeof VotesIdRoute
+  '/$section': typeof SectionIndexRoute
   '/en': typeof EnIndexRoute
   '/members': typeof MembersIndexRoute
   '/motions': typeof MotionsIndexRoute
   '/parties': typeof PartiesIndexRoute
   '/speeches': typeof SpeechesIndexRoute
   '/votes': typeof VotesIndexRoute
+  '/$section/members/$id': typeof SectionMembersIdRoute
+  '/$section/parties/$slug': typeof SectionPartiesSlugRoute
+  '/$section/votes/$id': typeof SectionVotesIdRoute
   '/en/motions/$id': typeof EnMotionsIdRoute
   '/en/votes/$id': typeof EnVotesIdRoute
   '/members/$id/motions': typeof MembersIdMotionsRoute
@@ -331,6 +377,8 @@ export interface FileRoutesByTo {
   '/parties/$id/history': typeof PartiesIdHistoryRoute
   '/parties/$id/profile': typeof PartiesIdProfileRoute
   '/parties/$id/votes': typeof PartiesIdVotesRoute
+  '/$section/members': typeof SectionMembersIndexRoute
+  '/$section/parties': typeof SectionPartiesIndexRoute
   '/en/members': typeof EnMembersIndexRoute
   '/en/motions': typeof EnMotionsIndexRoute
   '/en/parties': typeof EnPartiesIndexRoute
@@ -360,6 +408,7 @@ export interface FileRoutesById {
   '/en/privacy': typeof EnPrivacyRoute
   '/motions/$id': typeof MotionsIdRoute
   '/votes/$id': typeof VotesIdRoute
+  '/$section/': typeof SectionIndexRoute
   '/en/': typeof EnIndexRoute
   '/members/': typeof MembersIndexRoute
   '/motions/': typeof MotionsIndexRoute
@@ -368,6 +417,9 @@ export interface FileRoutesById {
   '/votes/': typeof VotesIndexRoute
   '/en/members/$id': typeof EnMembersIdRouteRouteWithChildren
   '/en/parties/$id': typeof EnPartiesIdRouteRouteWithChildren
+  '/$section/members/$id': typeof SectionMembersIdRoute
+  '/$section/parties/$slug': typeof SectionPartiesSlugRoute
+  '/$section/votes/$id': typeof SectionVotesIdRoute
   '/en/motions/$id': typeof EnMotionsIdRoute
   '/en/votes/$id': typeof EnVotesIdRoute
   '/members/$id/motions': typeof MembersIdMotionsRoute
@@ -376,6 +428,8 @@ export interface FileRoutesById {
   '/parties/$id/history': typeof PartiesIdHistoryRoute
   '/parties/$id/profile': typeof PartiesIdProfileRoute
   '/parties/$id/votes': typeof PartiesIdVotesRoute
+  '/$section/members/': typeof SectionMembersIndexRoute
+  '/$section/parties/': typeof SectionPartiesIndexRoute
   '/en/members/': typeof EnMembersIndexRoute
   '/en/motions/': typeof EnMotionsIndexRoute
   '/en/parties/': typeof EnPartiesIndexRoute
@@ -406,6 +460,7 @@ export interface FileRouteTypes {
     | '/en/privacy'
     | '/motions/$id'
     | '/votes/$id'
+    | '/$section/'
     | '/en/'
     | '/members/'
     | '/motions/'
@@ -414,6 +469,9 @@ export interface FileRouteTypes {
     | '/votes/'
     | '/en/members/$id'
     | '/en/parties/$id'
+    | '/$section/members/$id'
+    | '/$section/parties/$slug'
+    | '/$section/votes/$id'
     | '/en/motions/$id'
     | '/en/votes/$id'
     | '/members/$id/motions'
@@ -422,6 +480,8 @@ export interface FileRouteTypes {
     | '/parties/$id/history'
     | '/parties/$id/profile'
     | '/parties/$id/votes'
+    | '/$section/members/'
+    | '/$section/parties/'
     | '/en/members/'
     | '/en/motions/'
     | '/en/parties/'
@@ -448,12 +508,16 @@ export interface FileRouteTypes {
     | '/en/privacy'
     | '/motions/$id'
     | '/votes/$id'
+    | '/$section'
     | '/en'
     | '/members'
     | '/motions'
     | '/parties'
     | '/speeches'
     | '/votes'
+    | '/$section/members/$id'
+    | '/$section/parties/$slug'
+    | '/$section/votes/$id'
     | '/en/motions/$id'
     | '/en/votes/$id'
     | '/members/$id/motions'
@@ -462,6 +526,8 @@ export interface FileRouteTypes {
     | '/parties/$id/history'
     | '/parties/$id/profile'
     | '/parties/$id/votes'
+    | '/$section/members'
+    | '/$section/parties'
     | '/en/members'
     | '/en/motions'
     | '/en/parties'
@@ -490,6 +556,7 @@ export interface FileRouteTypes {
     | '/en/privacy'
     | '/motions/$id'
     | '/votes/$id'
+    | '/$section/'
     | '/en/'
     | '/members/'
     | '/motions/'
@@ -498,6 +565,9 @@ export interface FileRouteTypes {
     | '/votes/'
     | '/en/members/$id'
     | '/en/parties/$id'
+    | '/$section/members/$id'
+    | '/$section/parties/$slug'
+    | '/$section/votes/$id'
     | '/en/motions/$id'
     | '/en/votes/$id'
     | '/members/$id/motions'
@@ -506,6 +576,8 @@ export interface FileRouteTypes {
     | '/parties/$id/history'
     | '/parties/$id/profile'
     | '/parties/$id/votes'
+    | '/$section/members/'
+    | '/$section/parties/'
     | '/en/members/'
     | '/en/motions/'
     | '/en/parties/'
@@ -535,6 +607,7 @@ export interface RootRouteChildren {
   EnPrivacyRoute: typeof EnPrivacyRoute
   MotionsIdRoute: typeof MotionsIdRoute
   VotesIdRoute: typeof VotesIdRoute
+  SectionIndexRoute: typeof SectionIndexRoute
   EnIndexRoute: typeof EnIndexRoute
   MembersIndexRoute: typeof MembersIndexRoute
   MotionsIndexRoute: typeof MotionsIndexRoute
@@ -543,8 +616,13 @@ export interface RootRouteChildren {
   VotesIndexRoute: typeof VotesIndexRoute
   EnMembersIdRouteRoute: typeof EnMembersIdRouteRouteWithChildren
   EnPartiesIdRouteRoute: typeof EnPartiesIdRouteRouteWithChildren
+  SectionMembersIdRoute: typeof SectionMembersIdRoute
+  SectionPartiesSlugRoute: typeof SectionPartiesSlugRoute
+  SectionVotesIdRoute: typeof SectionVotesIdRoute
   EnMotionsIdRoute: typeof EnMotionsIdRoute
   EnVotesIdRoute: typeof EnVotesIdRoute
+  SectionMembersIndexRoute: typeof SectionMembersIndexRoute
+  SectionPartiesIndexRoute: typeof SectionPartiesIndexRoute
   EnMembersIndexRoute: typeof EnMembersIndexRoute
   EnMotionsIndexRoute: typeof EnMotionsIndexRoute
   EnPartiesIndexRoute: typeof EnPartiesIndexRoute
@@ -622,6 +700,13 @@ declare module '@tanstack/react-router' {
       path: '/en'
       fullPath: '/en/'
       preLoaderRoute: typeof EnIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$section/': {
+      id: '/$section/'
+      path: '/$section'
+      fullPath: '/$section/'
+      preLoaderRoute: typeof SectionIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/votes/$id': {
@@ -722,6 +807,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EnMembersIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$section/parties/': {
+      id: '/$section/parties/'
+      path: '/$section/parties'
+      fullPath: '/$section/parties/'
+      preLoaderRoute: typeof SectionPartiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$section/members/': {
+      id: '/$section/members/'
+      path: '/$section/members'
+      fullPath: '/$section/members/'
+      preLoaderRoute: typeof SectionMembersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/parties/$id/votes': {
       id: '/parties/$id/votes'
       path: '/votes'
@@ -776,6 +875,27 @@ declare module '@tanstack/react-router' {
       path: '/en/motions/$id'
       fullPath: '/en/motions/$id'
       preLoaderRoute: typeof EnMotionsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$section/votes/$id': {
+      id: '/$section/votes/$id'
+      path: '/$section/votes/$id'
+      fullPath: '/$section/votes/$id'
+      preLoaderRoute: typeof SectionVotesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$section/parties/$slug': {
+      id: '/$section/parties/$slug'
+      path: '/$section/parties/$slug'
+      fullPath: '/$section/parties/$slug'
+      preLoaderRoute: typeof SectionPartiesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$section/members/$id': {
+      id: '/$section/members/$id'
+      path: '/$section/members/$id'
+      fullPath: '/$section/members/$id'
+      preLoaderRoute: typeof SectionMembersIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/en/parties/$id': {
@@ -933,6 +1053,7 @@ const rootRouteChildren: RootRouteChildren = {
   EnPrivacyRoute: EnPrivacyRoute,
   MotionsIdRoute: MotionsIdRoute,
   VotesIdRoute: VotesIdRoute,
+  SectionIndexRoute: SectionIndexRoute,
   EnIndexRoute: EnIndexRoute,
   MembersIndexRoute: MembersIndexRoute,
   MotionsIndexRoute: MotionsIndexRoute,
@@ -941,8 +1062,13 @@ const rootRouteChildren: RootRouteChildren = {
   VotesIndexRoute: VotesIndexRoute,
   EnMembersIdRouteRoute: EnMembersIdRouteRouteWithChildren,
   EnPartiesIdRouteRoute: EnPartiesIdRouteRouteWithChildren,
+  SectionMembersIdRoute: SectionMembersIdRoute,
+  SectionPartiesSlugRoute: SectionPartiesSlugRoute,
+  SectionVotesIdRoute: SectionVotesIdRoute,
   EnMotionsIdRoute: EnMotionsIdRoute,
   EnVotesIdRoute: EnVotesIdRoute,
+  SectionMembersIndexRoute: SectionMembersIndexRoute,
+  SectionPartiesIndexRoute: SectionPartiesIndexRoute,
   EnMembersIndexRoute: EnMembersIndexRoute,
   EnMotionsIndexRoute: EnMotionsIndexRoute,
   EnPartiesIndexRoute: EnPartiesIndexRoute,
