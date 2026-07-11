@@ -6,7 +6,7 @@ struct VotesFeedView: View {
     @Environment(VoteFlagsStore.self) private var flags
     @State private var showFilters = false
     @State private var refreshTick = 0
-    @State private var scrollY: Double = 0
+    @State private var scroll = ScrollPositionModel()
 
     private var visible: [VoteListItem] {
         store.filtered.filter { vote in
@@ -34,7 +34,7 @@ struct VotesFeedView: View {
             } else {
                 VotesFeedList(
                     votes: visible, cache: cache,
-                    onScroll: { scrollY = $0 },
+                    onScroll: { scroll.y = $0 },
                     onRefresh: { await store.refresh(cache: cache); refreshTick += 1 })
             }
         }
@@ -43,7 +43,7 @@ struct VotesFeedView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                BrandWordmark(scrollY: scrollY)
+                BrandWordmark(scroll: scroll)
             }
             .sharedBackgroundVisibility(.hidden)
             ToolbarItem(placement: .topBarTrailing) {

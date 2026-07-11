@@ -136,6 +136,8 @@ position summary below. The logo links to the party page. There is no stance
 stamp, clamp, expand action, or reader action on a party summary.
 Every bubble in a summary rail uses the height of the longest summary in that rail.
 
+The vote-detail header keeps party, result stamp, save, and seen controls. It does not show the vote date.
+
 Speech turns expand inline. Presidium and procedural contributions render as
 full-width rule rows between bubbles.
 

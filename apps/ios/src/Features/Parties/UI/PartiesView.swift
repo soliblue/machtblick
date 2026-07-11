@@ -4,7 +4,7 @@ struct PartiesView: View {
     let store: PartiesStore
     let cache: ApiCache
     @State private var refreshTick = 0
-    @State private var scrollY: Double = 0
+    @State private var scroll = ScrollPositionModel()
 
     var body: some View {
         Group {
@@ -22,7 +22,7 @@ struct PartiesView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                BrandWordmark(scrollY: scrollY)
+                BrandWordmark(scroll: scroll)
             }
             .sharedBackgroundVisibility(.hidden)
         }
@@ -56,7 +56,7 @@ struct PartiesView: View {
         .onScrollGeometryChange(for: Double.self) { geo in
                     geo.contentOffset.y
                 } action: { _, value in
-                    scrollY = value
+                    scroll.y = value
         }
         .refreshable {
             await store.refresh(cache: cache)

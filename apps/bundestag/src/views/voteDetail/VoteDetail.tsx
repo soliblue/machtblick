@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react'
 import { Bookmark, BookmarkCheck, Eye, EyeOff } from 'lucide-react'
 import type { VoteDetail as VoteDetailData } from '@/server/voteDetail'
-import { formatDateLong, formatDateShort } from '@/lib/format'
+import { formatDateLong } from '@/lib/format'
 import { partyLabel } from '@/lib/parties'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
@@ -106,7 +106,6 @@ export function VoteDetail({ data, activeTab, onTabChange, isSaved, isSeen, onTo
         </span>
         <Stamp variant={vote.result} rotated={false} />
         <div className="flex items-center gap-xs justify-self-end">
-          <span className="whitespace-nowrap text-s caption opacity-l">{formatDateShort(vote.date, locale)}</span>
           <Tooltip>
             <TooltipTrigger asChild>
               <button

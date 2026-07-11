@@ -1,12 +1,12 @@
 import SwiftUI
 
 struct BrandWordmark: View {
-    var scrollY: Double = 0
+    let scroll: ScrollPositionModel
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    private var morph: Double { reduceMotion ? 0 : min(1, max(0, scrollY / 140)) }
-    private var pupilX: Double { reduceMotion ? 0 : sin(scrollY / 280) * 2.5 }
-    private var pupilY: Double { reduceMotion ? 0 : cos(scrollY / 360) * 1.6 + morph * 1.1 }
+    private var morph: Double { reduceMotion ? 0 : min(1, max(0, scroll.y / 140)) }
+    private var pupilX: Double { reduceMotion ? 0 : sin(scroll.y / 280) * 2.5 }
+    private var pupilY: Double { reduceMotion ? 0 : cos(scroll.y / 360) * 1.6 + morph * 1.1 }
 
     var body: some View {
         ZStack(alignment: .leading) {
