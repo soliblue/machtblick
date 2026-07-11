@@ -58,6 +58,16 @@ jobs:
             -derivedDataPath "$RUNNER_TEMP/machtblick-build" \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
 
+      - name: Check compiled localization bundles
+        run: |
+          xcrun swiftc \
+            apps/ios/src/Core/Localization/AppLanguage.swift \
+            apps/ios/src/Core/Localization/AppLocale.swift \
+            apps/ios/scripts/LocalizedBundleContractCheck.swift \
+            -o "$RUNNER_TEMP/machtblick-localized-bundle-contract"
+          "$RUNNER_TEMP/machtblick-localized-bundle-contract" \
+            "$RUNNER_TEMP/machtblick-build/Build/Products/Debug-iphonesimulator/Machtblick.app"
+
       - name: Smoke launch German and English
         timeout-minutes: 5
         run: |

@@ -1,13 +1,8 @@
 import Foundation
 
 enum Copy {
-    private static var bundle: Bundle {
-        Bundle.main.path(forResource: AppLocale.current.rawValue, ofType: "lproj")
-            .flatMap(Bundle.init(path:)) ?? .main
-    }
-
     private static func localized(_ key: String) -> String {
-        bundle.localizedString(forKey: key, value: key, table: nil)
+        AppLocale.current.localized(key)
     }
 
     private static func formatted(_ key: String, _ arguments: CVarArg...) -> String {
