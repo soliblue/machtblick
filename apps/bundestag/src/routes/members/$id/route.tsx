@@ -13,6 +13,9 @@ export const Route = createFileRoute('/members/$id')({
   loader: ({ params }) => getMember({ data: params.id }),
   staleTime: Infinity,
   shouldReload: false,
+  validateSearch: (search: Record<string, unknown>): { line?: 'abw' } => ({
+    line: search.line === 'abw' ? 'abw' : undefined,
+  }),
   head: ({ loaderData, params }) => {
     const path = `/members/${params.id}/votes`
     const dataPath = `/members/${params.id}`
@@ -24,7 +27,7 @@ export const Route = createFileRoute('/members/$id')({
         description: loaderData
           ? loaderData.loyalty !== null
             ? `${who} im Bundestag: ${pct(loaderData.attendance)} Anwesenheit und ${pct(loaderData.loyalty)} Linientreue bei namentlichen Abstimmungen.`
-            : `${who} im Bundestag: ${pct(loaderData.attendance)} Anwesenheit bei namentlichen Abstimmungen. Reden und Anträge im Überblick.`
+            : `${who} im Bundestag: ${pct(loaderData.attendance)} Anwesenheit bei namentlichen Abstimmungen. Reden im Überblick.`
           : 'Abstimmungsverhalten, Anwesenheit und Linientreue im Deutschen Bundestag.',
         canonical: path,
         type: 'profile',
@@ -66,8 +69,9 @@ export const Route = createFileRoute('/members/$id')({
 
 function MemberDetailLayout() {
   const data = Route.useLoaderData()
+  const { line } = Route.useSearch()
   return (
-    <MemberDetailShell data={data}>
+    <MemberDetailShell data={data} deviationsOnly={line === 'abw'}>
       <Outlet />
     </MemberDetailShell>
   )

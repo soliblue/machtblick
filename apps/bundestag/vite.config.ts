@@ -178,11 +178,9 @@ function prerenderPaths(): string[] {
     paths.push(`/members/${m.id}/`)
     paths.push(`/members/${m.id}/votes/`)
     paths.push(`/members/${m.id}/speeches/`)
-    paths.push(`/members/${m.id}/motions/`)
     paths.push(`/en/members/${m.id}/`)
     paths.push(`/en/members/${m.id}/votes/`)
     paths.push(`/en/members/${m.id}/speeches/`)
-    paths.push(`/en/members/${m.id}/motions/`)
   }
   const parties = db.prepare(`
     SELECT DISTINCT s.party FROM vote_party_summaries s

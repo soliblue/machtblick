@@ -14,9 +14,9 @@ this member highlighted. Speech turns expand inline inside the debate.
 | Erika Musterfrau                            |
 | SPD / Hessen / Direktmandat                 |
 |                                             |
-| +-----------+-----------+-----------+       |
-| | Stimmen   | Reden     | Antraege  |       |
-| +-----------+-----------+-----------+       |
+| +-------------------+-------------------+   |
+| | Abstimmungen      | Reden             |   |
+| +-------------------+-------------------+   |
 |                                             |
 | [ Reden durchsuchen..................... ]  |
 |                                             |

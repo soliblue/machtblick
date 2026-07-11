@@ -9,7 +9,7 @@ Machtblick is a public-interest project built from open German datasets. The Bun
 - [Sitemap](https://machtblick.de/sitemap.xml): Complete list of prerendered public URLs.
 - [Votes feed](https://machtblick.de/votes.xml): Atom feed of the 50 latest votes with result and summary (German, the site's primary language).
 - [Votes](https://machtblick.de/votes/): Bundestag vote feed; each vote is a result card with verdict, sponsor, date, yes/no tallies, per-party breakdown, and a plain-language summary.
-- [Members](https://machtblick.de/members/): Bundestag members with party, state, attendance, vote behavior, speeches, and motions.
+- [Members](https://machtblick.de/members/): Bundestag members with party, state, attendance, vote behavior, and speeches.
 - [Speeches](https://machtblick.de/speeches/): Searchable Bundestag speeches.
 - [Motions](https://machtblick.de/motions/): Motions and bills with status, plain-language summary, and linked votes.
 - [Parties](https://machtblick.de/parties/): Parliamentary groups with seats, cohesion, proposals, members, and voting alignment.
@@ -30,8 +30,8 @@ Machtblick is a public-interest project built from open German datasets. The Bun
 - `/votes/{id}/`: Vote detail with seating-chart result, per-party breakdown, deviating members, sponsor, speeches, related motions, and source documents.
 - `/motions/{id}/`: Motion or bill detail with summary, status, print document, signatories, and linked votes.
 - `/members/`: Member list, optionally filtered with `?party=` and `?state=`.
-- `/members/{slug}/votes/`: Canonical member detail with voting record, attendance, speeches, and motions.
-- `/members/{slug}/speeches/` and `/members/{slug}/motions/`: Member detail tabs that canonicalize to the voting record.
+- `/members/{slug}/votes/`: Canonical member detail with voting record, attendance, and speeches.
+- `/members/{slug}/speeches/`: Member speeches tab. Legacy `/members/{slug}/motions/` and `/members/{slug}/antraege/` URLs redirect to the voting record.
 - `/parties/`: Parliamentary group overview.
 - `/parties/{slug}/`: Canonical party detail with profile, history, proposals, members, cohesion, and alignment.
 - `/parties/{slug}/profile/`, `/parties/{slug}/votes/`, and `/parties/{slug}/history/`: Legacy party routes that canonicalize to the consolidated detail page.

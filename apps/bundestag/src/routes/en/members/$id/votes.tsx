@@ -1,32 +1,12 @@
-import { useState } from 'react'
-import { createFileRoute, useLoaderData, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, useLoaderData } from '@tanstack/react-router'
 import { VotingRecordTab } from '@/views/memberDetail/VotingRecordTab'
-
-type Search = { line?: string }
 
 export const Route = createFileRoute('/en/members/$id/votes')({
   component: AbstimmungenRoute,
-  validateSearch: (s: Record<string, unknown>): Search => ({
-    line: typeof s.line === 'string' ? s.line : undefined,
-  }),
 })
 
 function AbstimmungenRoute() {
   const data = useLoaderData({ from: '/en/members/$id' })
   const { line } = Route.useSearch()
-  const navigate = useNavigate({ from: Route.fullPath })
-  const params = Route.useParams()
-  const [choiceFilter, setChoiceFilter] = useState<string | null>(null)
-  const setLineFilter = (v: string | null) => {
-    navigate({ to: '/en/members/$id/votes/', params, search: { line: v ?? undefined } })
-  }
-  return (
-    <VotingRecordTab
-      history={data?.history ?? []}
-      lineFilter={line ?? null}
-      setLineFilter={setLineFilter}
-      choiceFilter={choiceFilter}
-      setChoiceFilter={setChoiceFilter}
-    />
-  )
+  return <VotingRecordTab history={(data?.history ?? []).filter((vote) => line !== 'abw' || vote.defected === true)} />
 }

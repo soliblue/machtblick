@@ -13,6 +13,9 @@ export const Route = createFileRoute('/en/members/$id')({
   loader: ({ params }) => getMember({ data: { id: params.id, locale: 'en' } }),
   staleTime: Infinity,
   shouldReload: false,
+  validateSearch: (search: Record<string, unknown>): { line?: 'abw' } => ({
+    line: search.line === 'abw' ? 'abw' : undefined,
+  }),
   head: ({ loaderData, params }) => {
     const path = `/en/members/${params.id}/votes`
     const dataPath = `/en/members/${params.id}`
@@ -24,7 +27,7 @@ export const Route = createFileRoute('/en/members/$id')({
         description: loaderData
           ? loaderData.loyalty !== null
             ? `${who} in the German Bundestag: ${pct(loaderData.attendance)} attendance and ${pct(loaderData.loyalty)} party-line loyalty in roll-call votes.`
-            : `${who} in the German Bundestag: ${pct(loaderData.attendance)} attendance in roll-call votes, plus speeches and motions.`
+            : `${who} in the German Bundestag: ${pct(loaderData.attendance)} attendance in roll-call votes, plus speeches.`
           : 'Voting record, attendance, and party-line voting in the German Bundestag.',
         canonical: path,
         type: 'profile',
@@ -66,8 +69,9 @@ export const Route = createFileRoute('/en/members/$id')({
 
 function MemberDetailLayout() {
   const data = Route.useLoaderData()
+  const { line } = Route.useSearch()
   return (
-    <MemberDetailShell data={data}>
+    <MemberDetailShell data={data} deviationsOnly={line === 'abw'}>
       <Outlet />
     </MemberDetailShell>
   )

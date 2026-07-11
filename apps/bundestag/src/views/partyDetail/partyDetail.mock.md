@@ -37,10 +37,6 @@ web URLs remain available through redirects or equivalent route handling.
 |                                             |
 | GROSSSPENDEN                 4 / 200.000 E |
 | [############|######|####|##]              |
-| Muster Holding GmbH             80.000 E   |
-| 12. MRZ 2026                                |
-| Beispiel Stiftung               60.000 E   |
-| 04. FEB 2026                                |
 |                                             |
 | ANTEIL AM BUNDESTAG          2017 - heute  |
 |       32% .                                 |
@@ -77,10 +73,6 @@ web URLs remain available through redirects or equivalent route handling.
 |                                                                      |
 | GROSSSPENDEN                                      4 / 200.000 E      |
 | [########################|###########|######|###]                    |
-| Muster Holding GmbH                                  80.000 E        |
-| 12. MRZ 2026                                                          |
-| Beispiel Stiftung                                    60.000 E        |
-| 04. FEB 2026                                                          |
 |                                                                      |
 | ANTEIL AM BUNDESTAG                                  2017 - heute    |
 | chart and event strip, same Verlauf visual language                  |
@@ -106,8 +98,8 @@ The visible tab rail does not return.
 - Proposal stacked bar opens a filtered vote feed for this party's proposals.
 - Alignment rows link to the compared party and expose shared-vote counts with
   Tooltip.
-- Donation segments expose donor details with Tooltip. Donor list is always
-  visible below the bar.
+- Donation segments expose donor details with Tooltip without a persistent
+  donor list below the bar.
 - History chart retains the existing chart and event-strip interaction.
 - Legacy `/parties/:id/profile/`, `/votes/`, and `/history/` URLs remain
   available through redirects or route handling.
@@ -131,7 +123,6 @@ who it aligns with, who funds it, and how its Bundestag share changed over time.
 | Alignment rows | m semibold tabular values | py-s | PartyLogo, Tooltip |
 | Alignment bars | h-3px success fill | gap-m | none |
 | Donation bar | h-8, gap 2px | mb-m | Tooltip |
-| Donor rows | m name, s uppercase date, m semibold amount | py-s | none |
 | History chart | s labels opacity-l | mt-l | recharts exception |
 
 Colors: party color only for the identity dot and history line or area. Positive

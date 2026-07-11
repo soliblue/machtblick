@@ -1,13 +1,13 @@
-import type { MemberVoteRow } from '@/server/memberDetail'
+import type { MemberVoteChoice } from '@/server/memberDetail'
 import { useCopy } from '@/lib/i18n'
 
-const STYLE: Record<Exclude<MemberVoteRow['choice'], 'nicht_abgegeben'>, { background: string; color: string }> = {
+const STYLE: Record<Exclude<MemberVoteChoice, 'nicht_abgegeben'>, { background: string; color: string }> = {
   ja: { background: 'var(--color-success)', color: 'var(--color-background)' },
   nein: { background: 'var(--color-danger)', color: 'var(--color-background)' },
   enthalten: { background: 'var(--color-yellow)', color: 'var(--color-fg)' },
 }
 
-type Props = { choice: MemberVoteRow['choice'] }
+type Props = { choice: MemberVoteChoice }
 
 export function VoteChoicePill({ choice }: Props) {
   const t = useCopy()

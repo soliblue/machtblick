@@ -40,9 +40,10 @@ export function VoteDetailTabs({ active, availableTabs, onChange }: Props) {
             onClick={() => onChange(tab.id)}
             className={
               isActive
-                ? 'rounded-[6px] bg-background px-s py-s text-center text-m font-semibold opacity-100 shadow-[0_1px_2px_rgba(10,10,10,0.08)]'
-                : 'rounded-[6px] px-s py-s text-center text-m font-regular opacity-l transition-opacity hover:opacity-100'
+                ? 'bg-background px-s py-s text-center text-m font-semibold opacity-100 shadow-[0_1px_2px_rgba(10,10,10,0.08)]'
+                : 'px-s py-s text-center text-m font-regular opacity-l transition-opacity hover:opacity-100'
             }
+            style={{ borderRadius: 'calc(var(--radius-m) - var(--spacing-xs))' }}
           >
             {tab.label}
           </button>

@@ -37,7 +37,7 @@ export function VoteCard({ vote }: Props) {
         <h2
           lang={locale}
           className="mt-m line-clamp-4 font-display text-xl font-semibold leading-[1.15] decoration-1 underline-offset-[3px] group-hover:underline"
-          style={{ textWrap: 'pretty' }}
+          style={{ hyphens: 'auto', overflowWrap: 'break-word', wordBreak: 'normal', textWrap: 'pretty' }}
         >
           {vote.cleanTitle}
         </h2>

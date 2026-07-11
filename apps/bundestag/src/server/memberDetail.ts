@@ -8,12 +8,14 @@ import { majorityChoice } from './majorityChoice'
 import { CURRENT_TERM } from './term'
 import { resolvePictureUrl } from './photoManifest'
 import { speechTranslationMap, voteTranslationMap } from './translations'
-import { loadMemberInitiatives, type MemberInitiativeRow } from './memberInitiatives'
 import type { MandateType, MemberSex } from './members'
 import { hasPartyLine } from '../lib/parties'
 import type { SpeechResult } from './speeches'
+import type { VoteListItem } from './votes'
 import { normalizeLocale, type Locale } from '../lib/locale'
 import { requireVoteCleanTitle, requireVoteTitleText } from '../lib/voteTitles'
+
+export type MemberVoteChoice = 'ja' | 'nein' | 'enthalten' | 'nicht_abgegeben'
 
 export type MemberVoteRow = {
   voteId: string
@@ -21,10 +23,12 @@ export type MemberVoteRow = {
   title: string
   cleanTitle: string
   result: 'angenommen' | 'abgelehnt'
-  choice: 'ja' | 'nein' | 'enthalten' | 'nicht_abgegeben'
+  choice: MemberVoteChoice
   party: string
-  partyMajority: string
+  partyMajority: MemberVoteChoice | ''
   defected: boolean | null
+  proposingParty: VoteListItem['proposingParty']
+  partySummaries: VoteListItem['partySummaries']
 }
 
 export type MemberDetail = {
@@ -46,7 +50,6 @@ export type MemberDetail = {
   sex: MemberSex | null
   education: string | null
   sameAs: string[]
-  initiatives: MemberInitiativeRow[]
   mandateType: MandateType | null
   listState: string | null
   constituencyNumber: string | null
@@ -100,6 +103,7 @@ export const getMember = createServerFn({ method: 'GET' })
         title: votes.title,
         cleanTitle: votes.cleanTitle,
         result: votes.result,
+        proposingParty: votes.initiator,
       })
       .from(voteMembers)
       .innerJoin(votes, eq(votes.id, voteMembers.voteId))
@@ -110,7 +114,21 @@ export const getMember = createServerFn({ method: 'GET' })
     const affList = loadAffiliationsByMember().get(id) ?? []
     const summaries = db.select().from(votePartySummaries).all()
     const majByVoteParty = new Map<string, string>()
-    for (const s of summaries) majByVoteParty.set(`${s.voteId} ${s.party}`, majorityChoice(s))
+    const summariesByVote = new Map<string, VoteListItem['partySummaries']>()
+    for (const s of summaries) {
+      majByVoteParty.set(`${s.voteId} ${s.party}`, majorityChoice(s))
+      const rows = summariesByVote.get(s.voteId) ?? []
+      rows.push({
+        party: s.party,
+        position: s.position,
+        members: s.members ?? 0,
+        yes: s.yes ?? 0,
+        no: s.no ?? 0,
+        abstain: s.abstain ?? 0,
+        absent: s.absent ?? 0,
+      })
+      summariesByVote.set(s.voteId, rows)
+    }
     let absent = 0
     let loyalMatches = 0
     let loyalEligible = 0
@@ -136,8 +154,10 @@ export const getMember = createServerFn({ method: 'GET' })
         result: r.result,
         choice: r.choice,
         party,
-        partyMajority: maj,
+        partyMajority: maj as MemberVoteChoice | '',
         defected,
+        proposingParty: r.proposingParty,
+        partySummaries: summariesByVote.get(r.voteId) ?? [],
       }
     })
     const currentParty = affList.find((a) => a.validTo === null)?.party ?? ''
@@ -212,7 +232,6 @@ export const getMember = createServerFn({ method: 'GET' })
         ...(demoRow?.awProfileUrl ? [demoRow.awProfileUrl] : []),
         ...(demoRow?.wikidataQid ? [`https://www.wikidata.org/wiki/${demoRow.wikidataQid}`] : []),
       ],
-      initiatives: loadMemberInitiatives(id, locale),
       mandateType: m.mandateType === 'direkt' || m.mandateType === 'liste' ? m.mandateType : null,
       listState: m.listState,
       constituencyNumber: m.constituencyNumber,
