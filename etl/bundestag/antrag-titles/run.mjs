@@ -1,15 +1,13 @@
-import { spawn } from 'node:child_process'
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs'
-import { tmpdir } from 'node:os'
+import { existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
 import { pLimit } from '../polarity/limit.mjs'
 import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
+import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
+import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
 
-const root = fileURLToPath(new URL('../../..', import.meta.url))
 const schemaPath = fileURLToPath(new URL('./output-schema.json', import.meta.url))
-const model = process.env.CODEX_MODEL ?? 'gpt-5.4-mini'
 const timeoutMs = Number(process.env.CODEX_TIMEOUT_MS ?? 240000)
 const batchSize = Number(argValue('--batch-size') ?? 40)
 const concurrency = Number(argValue('--concurrency') ?? 2)
@@ -37,7 +35,7 @@ const selected = rowLimit > 0 ? rows.slice(0, rowLimit) : rows
 const batches = []
 for (let i = 0; i < selected.length; i += batchSize) batches.push(selected.slice(i, i + batchSize))
 
-console.log(`antrag title jobs: ${selected.length}/${rows.length} rows, ${batches.length} batches, db=${dbPath}, model=${model}`)
+console.log(`antrag title jobs: ${selected.length}/${rows.length} rows, ${batches.length} batches, db=${dbPath}, model=${PREPROCESSING_MODEL}, reasoning=${PREPROCESSING_REASONING_EFFORT}`)
 
 const update = db.prepare('UPDATE antraege SET clean_title = ? WHERE id = ?')
 const limit = pLimit(concurrency)
@@ -53,7 +51,12 @@ await Promise.all(batches.map((batch, index) =>
       title: row.title,
       summary: row.summary,
     }))
-    const output = await runCodex(buildPrompt(items))
+    const output = await runPreprocessingCodex({
+      prompt: buildPrompt(items),
+      schemaPath,
+      timeoutMs,
+      tmpPrefix: 'machtblick-antrag-title-codex-',
+    })
     writeOutput(output)
     console.log(`batch ${index + 1}/${batches.length}`)
   }),
@@ -98,49 +101,6 @@ function ensureSchema() {
   const columns = db.prepare('PRAGMA table_info(antraege)').all()
   const hasCleanTitle = columns.some((column) => column.name === 'clean_title')
   if (!hasCleanTitle) db.prepare('ALTER TABLE antraege ADD COLUMN clean_title text').run()
-}
-
-function runCodex(prompt) {
-  const dir = mkdtempSync(join(tmpdir(), 'machtblick-antrag-title-codex-'))
-  const outPath = join(dir, 'out.json')
-  return new Promise((resolve, reject) => {
-    let settled = false
-    const c = spawn('codex', [
-      '-a', 'never',
-      'exec',
-      '--model', model,
-      '-c', 'model_reasoning_effort="low"',
-      '--sandbox', 'read-only',
-      '--output-schema', schemaPath,
-      '--output-last-message', outPath,
-      '--cd', root,
-      '--ephemeral',
-      '-',
-    ], { stdio: ['pipe', 'pipe', 'pipe'] })
-    let stderr = ''
-    const timer = setTimeout(() => {
-      settled = true
-      c.kill('SIGTERM')
-      rmSync(dir, { recursive: true, force: true })
-      reject(new Error(`codex timed out after ${timeoutMs}ms`))
-    }, timeoutMs)
-    c.stderr.on('data', (d) => (stderr += d))
-    c.on('close', (code) => {
-      clearTimeout(timer)
-      if (settled) return
-      settled = true
-      if (code !== 0) {
-        rmSync(dir, { recursive: true, force: true })
-        reject(new Error(`codex exit ${code}: ${stderr}`))
-        return
-      }
-      const text = readFileSync(outPath, 'utf8')
-      rmSync(dir, { recursive: true, force: true })
-      resolve(JSON.parse(text))
-    })
-    c.stdin.write(prompt)
-    c.stdin.end()
-  })
 }
 
 function cleanText(value) {

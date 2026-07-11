@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto'
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
+import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
 const TEXT_DIR = join(HERE, 'text')
@@ -95,9 +96,9 @@ async function runPdfjs(pdf) {
   return pages.join('\n\n')
 }
 
-function runClaudeOcr(pdf) {
+async function runModelOcr(pdf) {
   const prompt = OCR_PROMPT.replace('__PDF_PATH__', pdf)
-  return execFileSync('claude', ['-p', prompt, '--model', 'claude-haiku-4-5'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }).trim()
+  return runPreprocessingCodex({ prompt, timeoutMs: 600000, tmpPrefix: 'machtblick-pdf-text-' })
 }
 
 export async function extractPdf(drucksacheId, pdfUrl) {
@@ -107,7 +108,7 @@ export async function extractPdf(drucksacheId, pdfUrl) {
   if (!existsSync(pdf)) await download(pdfUrl, pdf)
   let text = clean(runPdftotext(pdf))
   if (text.length < MIN_CHARS) text = clean(await runPdfjs(pdf))
-  if (text.length < MIN_CHARS) text = clean(runClaudeOcr(pdf))
+  if (text.length < MIN_CHARS) text = clean(await runModelOcr(pdf))
   writeFileSync(cached, text)
   return text
 }

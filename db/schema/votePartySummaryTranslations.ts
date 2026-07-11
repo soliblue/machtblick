@@ -12,6 +12,7 @@ export const votePartySummaryTranslations = sqliteTable(
     dissentNote: text('dissent_note'),
     sourceHash: text('source_hash').notNull(),
     model: text('model').notNull(),
+    modelReasoningEffort: text('model_reasoning_effort'),
     promptVersion: text('prompt_version').notNull(),
     translatedAt: text('translated_at').notNull(),
   },

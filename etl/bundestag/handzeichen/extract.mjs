@@ -1,55 +1,22 @@
 import { readFile, writeFile, readdir, mkdir } from 'node:fs/promises'
 import { join } from 'node:path'
-import { spawn } from 'node:child_process'
+import { fileURLToPath } from 'node:url'
+import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
 
 const BLOCKS = new URL('./blocks/', import.meta.url).pathname
 const OUT = new URL('./extracted/', import.meta.url).pathname
 await mkdir(OUT, { recursive: true })
 
-const SCHEMA = JSON.stringify({
-  type: 'object',
-  required: ['votes'],
-  properties: {
-    votes: {
-      type: 'array',
-      items: {
-        type: 'object',
-        required: ['index', 'title', 'outcome', 'vote_type', 'ja', 'nein', 'enth'],
-        properties: {
-          index: { type: 'integer' },
-          title: { type: 'string' },
-          drucksache: { type: 'array', items: { type: 'string' } },
-          outcome: { type: 'string', enum: ['angenommen', 'abgelehnt', 'unklar'] },
-          vote_type: { type: 'string', enum: ['handzeichen', 'hammelsprung', 'namentlich'] },
-          ja: { type: 'array', items: { type: 'string', enum: ['CDU/CSU', 'SPD', 'AfD', 'B90/Grüne', 'Die Linke', 'BSW', 'FDP', 'fraktionslos'] } },
-          nein: { type: 'array', items: { type: 'string', enum: ['CDU/CSU', 'SPD', 'AfD', 'B90/Grüne', 'Die Linke', 'BSW', 'FDP', 'fraktionslos'] } },
-          enth: { type: 'array', items: { type: 'string', enum: ['CDU/CSU', 'SPD', 'AfD', 'B90/Grüne', 'Die Linke', 'BSW', 'FDP', 'fraktionslos'] } },
-        },
-      },
-    },
-  },
-})
-
+const schemaPath = fileURLToPath(new URL('./extract-schema.json', import.meta.url))
 const SYSTEM = (await readFile(new URL('../../../prompts/etl/bundestag/handzeichen-extract-system.md', import.meta.url), 'utf8')).trimEnd()
 const PROMPT_TEMPLATE = (await readFile(new URL('../../../prompts/etl/bundestag/handzeichen-extract.md', import.meta.url), 'utf8')).trimEnd()
 
-async function callClaude(prompt) {
-  return new Promise((resolve, reject) => {
-    const c = spawn('claude', ['-p', '--model', 'sonnet', '--output-format', 'json', '--json-schema', SCHEMA, '--append-system-prompt', SYSTEM, prompt], { stdio: ['ignore', 'pipe', 'pipe'] })
-    let out = ''
-    let err = ''
-    c.stdout.on('data', (d) => (out += d))
-    c.stderr.on('data', (d) => (err += d))
-    c.on('close', (code) => {
-      if (code !== 0) return reject(new Error(`exit ${code}: ${err || out.slice(0, 500)}`))
-      try {
-        const r = JSON.parse(out)
-        if (r.is_error) return reject(new Error(r.result || 'claude error'))
-        resolve(r.structured_output)
-      } catch (e) {
-        reject(new Error(`parse fail: ${e.message} :: ${out.slice(0, 500)}`))
-      }
-    })
+async function callModel(prompt) {
+  return runPreprocessingCodex({
+    prompt,
+    schemaPath,
+    systemPrompt: SYSTEM,
+    tmpPrefix: 'machtblick-handzeichen-extract-',
   })
 }
 
@@ -83,7 +50,7 @@ async function processJob(job) {
     const prompt = PROMPT_TEMPLATE
       .replace('__COUNT__', String(batch.length))
       .replace('__BLOCKS__', batch.map((b, k) => `--- Block index=${i + k} ---\n${b.block}`).join('\n\n'))
-    const res = await callClaude(prompt).catch((e) => {
+    const res = await callModel(prompt).catch((e) => {
       throw new Error(`${job.file} batch ${i / BATCH_SIZE + 1} failed: ${e.message}`)
     })
     allVotes.push(...res.votes)

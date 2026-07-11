@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["votes"],
+  "properties": {
+    "votes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["index", "subject", "summary", "context"],
+        "properties": {
+          "index": { "type": "integer" },
+          "subject": { "type": "string" },
+          "summary": { "type": "string" },
+          "context": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

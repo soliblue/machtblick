@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["votes"],
+  "properties": {
+    "votes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["index", "title", "drucksache", "outcome", "vote_type", "ja", "nein", "enth"],
+        "properties": {
+          "index": { "type": "integer" },
+          "title": { "type": "string" },
+          "drucksache": { "type": "array", "items": { "type": "string" } },
+          "outcome": { "type": "string", "enum": ["angenommen", "abgelehnt", "unklar"] },
+          "vote_type": { "type": "string", "enum": ["handzeichen", "hammelsprung", "namentlich"] },
+          "ja": { "type": "array", "items": { "type": "string", "enum": ["CDU/CSU", "SPD", "AfD", "B90/Grüne", "Die Linke", "BSW", "FDP", "fraktionslos"] } },
+          "nein": { "type": "array", "items": { "type": "string", "enum": ["CDU/CSU", "SPD", "AfD", "B90/Grüne", "Die Linke", "BSW", "FDP", "fraktionslos"] } },
+          "enth": { "type": "array", "items": { "type": "string", "enum": ["CDU/CSU", "SPD", "AfD", "B90/Grüne", "Die Linke", "BSW", "FDP", "fraktionslos"] } }
+        }
+      }
+    }
+  }
+}

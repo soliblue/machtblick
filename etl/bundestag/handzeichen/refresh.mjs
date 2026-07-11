@@ -17,7 +17,7 @@ await run('node', [join(HERE, 'fetch.mjs')])
 console.log('→ segment')
 await run('node', [join(HERE, 'segment.mjs')])
 
-console.log('→ extract (claude -p)')
+console.log('→ extract')
 await run('node', [join(HERE, 'extract.mjs')])
 
 console.log('→ write to db')

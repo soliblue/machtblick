@@ -1,15 +1,14 @@
-import { spawn } from 'node:child_process'
 import { createHash } from 'node:crypto'
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs'
-import { tmpdir } from 'node:os'
+import { existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
 import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
+import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
+import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
+import { ensureTextColumn } from '../preprocessing/schema.mjs'
 
-const root = fileURLToPath(new URL('../../..', import.meta.url))
 const schemaPath = fileURLToPath(new URL('./output-schema.json', import.meta.url))
-const model = process.env.CODEX_MODEL ?? 'gpt-5.5'
 const concurrency = Number(argValue('--concurrency') ?? 2)
 const maxWords = Number(argValue('--max-words') ?? 2200)
 const maxItems = Number(argValue('--max-items') ?? 8)
@@ -42,22 +41,26 @@ const jobs = rows
 
 const selected = limit > 0 ? jobs.slice(0, limit) : jobs
 const batches = batchJobs(selected, maxWords, maxItems)
-console.log(`speech translation jobs: ${selected.length}/${jobs.length} eligible, batches=${batches.length}, maxWords=${maxWords}, maxItems=${maxItems}, db=${dbPath}, model=${model}`)
+console.log(`speech translation jobs: ${selected.length}/${jobs.length} eligible, batches=${batches.length}, maxWords=${maxWords}, maxItems=${maxItems}, db=${dbPath}, model=${PREPROCESSING_MODEL}, reasoning=${PREPROCESSING_REASONING_EFFORT}`)
 
 let cursor = 0
 const workers = Array.from({ length: Math.min(concurrency, batches.length) }, async () => {
   while (cursor < batches.length) {
     const batch = batches[cursor]
     cursor++
-    const output = await runCodex(buildPrompt({
-      speeches: batch.map(({ row }) => ({
-        speech_id: row.id,
-        speaker_name: row.speaker_name,
-        speaker_role: row.speaker_role,
-        party: row.party,
-        text_full: row.text_full,
-      })),
-    }))
+    const output = await runPreprocessingCodex({
+      prompt: buildPrompt({
+        speeches: batch.map(({ row }) => ({
+          speech_id: row.id,
+          speaker_name: row.speaker_name,
+          speaker_role: row.speaker_role,
+          party: row.party,
+          text_full: row.text_full,
+        })),
+      }),
+      schemaPath,
+      tmpPrefix: 'machtblick-speech-translation-',
+    })
     writeBatch(batch, output)
     console.log(batch.map(({ row }) => row.id).join(', '))
   }
@@ -115,48 +118,18 @@ function ensureSchema() {
       text_full text NOT NULL,
       source_hash text NOT NULL,
       model text NOT NULL,
+      model_reasoning_effort text,
       prompt_version text NOT NULL,
       translated_at text NOT NULL,
       PRIMARY KEY(speech_id, locale),
       FOREIGN KEY (speech_id) REFERENCES speeches(id)
     )
   `).run()
+  ensureTextColumn(db, 'speech_translations', 'model_reasoning_effort')
 }
 
 function sourceHash(value) {
   return createHash('sha256').update(JSON.stringify(value)).digest('hex')
-}
-
-function runCodex(prompt) {
-  const dir = mkdtempSync(join(tmpdir(), 'machtblick-speech-translation-'))
-  const outPath = join(dir, 'out.json')
-  return new Promise((resolve, reject) => {
-    const c = spawn('codex', [
-      '-a', 'never',
-      'exec',
-      '--model', model,
-      '--sandbox', 'read-only',
-      '--output-schema', schemaPath,
-      '--output-last-message', outPath,
-      '--cd', root,
-      '--ephemeral',
-      '-',
-    ], { stdio: ['pipe', 'pipe', 'pipe'] })
-    let stderr = ''
-    c.stderr.on('data', (d) => (stderr += d))
-    c.on('close', (code) => {
-      if (code !== 0) {
-        rmSync(dir, { recursive: true, force: true })
-        reject(new Error(`codex exit ${code}: ${stderr}`))
-        return
-      }
-      const text = readFileSync(outPath, 'utf8')
-      rmSync(dir, { recursive: true, force: true })
-      resolve(JSON.parse(text))
-    })
-    c.stdin.write(prompt)
-    c.stdin.end()
-  })
 }
 
 function writeBatch(batch, output) {
@@ -168,16 +141,17 @@ function writeBatch(batch, output) {
     const text = clean(translated.text_full) ?? job.row.text_full
     db.prepare(`
       INSERT INTO speech_translations (
-        speech_id, locale, text_excerpt, text_full, source_hash, model, prompt_version, translated_at
-      ) VALUES (?, 'en', ?, ?, ?, ?, ?, ?)
+        speech_id, locale, text_excerpt, text_full, source_hash, model, model_reasoning_effort, prompt_version, translated_at
+      ) VALUES (?, 'en', ?, ?, ?, ?, ?, ?, ?)
       ON CONFLICT(speech_id, locale) DO UPDATE SET
         text_excerpt = excluded.text_excerpt,
         text_full = excluded.text_full,
         source_hash = excluded.source_hash,
         model = excluded.model,
+        model_reasoning_effort = excluded.model_reasoning_effort,
         prompt_version = excluded.prompt_version,
         translated_at = excluded.translated_at
-    `).run(job.row.id, excerpt(text), text, job.sourceHash, model, PROMPT_VERSION, now)
+    `).run(job.row.id, excerpt(text), text, job.sourceHash, PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT, PROMPT_VERSION, now)
   }
 }
 

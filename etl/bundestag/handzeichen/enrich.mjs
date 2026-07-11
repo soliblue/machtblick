@@ -1,49 +1,20 @@
-import { readFile, writeFile, readdir, stat } from 'node:fs/promises'
+import { readFile, writeFile, readdir } from 'node:fs/promises'
 import { join } from 'node:path'
-import { spawn } from 'node:child_process'
+import { fileURLToPath } from 'node:url'
+import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
 
 const EXTRACTED = new URL('./extracted/', import.meta.url).pathname
 
-const SCHEMA = JSON.stringify({
-  type: 'object',
-  required: ['votes'],
-  properties: {
-    votes: {
-      type: 'array',
-      items: {
-        type: 'object',
-        required: ['index', 'subject', 'summary', 'context'],
-        properties: {
-          index: { type: 'integer' },
-          subject: { type: 'string' },
-          summary: { type: 'string' },
-          context: { type: 'array', items: { type: 'string' } },
-        },
-      },
-    },
-  },
-})
-
+const schemaPath = fileURLToPath(new URL('./enrich-schema.json', import.meta.url))
 const SYSTEM = (await readFile(new URL('../../../prompts/etl/bundestag/handzeichen-enrich-system.md', import.meta.url), 'utf8')).trimEnd()
 const PROMPT_TEMPLATE = (await readFile(new URL('../../../prompts/etl/bundestag/handzeichen-enrich.md', import.meta.url), 'utf8')).trimEnd()
 
-async function callClaude(prompt) {
-  return new Promise((resolve, reject) => {
-    const c = spawn('claude', ['-p', '--model', 'sonnet', '--output-format', 'json', '--json-schema', SCHEMA, '--append-system-prompt', SYSTEM, prompt], { stdio: ['ignore', 'pipe', 'pipe'] })
-    let out = ''
-    let err = ''
-    c.stdout.on('data', (d) => (out += d))
-    c.stderr.on('data', (d) => (err += d))
-    c.on('close', (code) => {
-      if (code !== 0) return reject(new Error(`exit ${code}: ${err}`))
-      try {
-        const r = JSON.parse(out)
-        if (r.is_error) return reject(new Error(r.result || 'claude error'))
-        resolve(r.structured_output)
-      } catch (e) {
-        reject(new Error(`parse fail: ${e.message} :: ${out.slice(0, 500)}`))
-      }
-    })
+async function callModel(prompt) {
+  return runPreprocessingCodex({
+    prompt,
+    schemaPath,
+    systemPrompt: SYSTEM,
+    tmpPrefix: 'machtblick-handzeichen-enrich-',
   })
 }
 
@@ -76,7 +47,7 @@ async function processJob(job) {
         return `--- Block index=${v.index} ---\nTitle: ${v.title}\nOutcome: ${v.outcome}\nDrucksache: ${(v.drucksache ?? []).join(', ')}\nProse:\n${block}`
       }).join('\n\n'))
     try {
-      const res = await callClaude(prompt)
+      const res = await callModel(prompt)
       const byIndex = new Map(res.votes.map((r) => [r.index, r]))
       for (const { v } of batch) {
         const enr = byIndex.get(v.index)

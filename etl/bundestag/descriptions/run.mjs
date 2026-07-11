@@ -7,6 +7,8 @@ import { extractPdf } from './extractPdf.mjs'
 import { generateDescriptions } from './llm.mjs'
 import { PROMPT_VERSION } from './prompt.mjs'
 import { pLimit } from '../polarity/limit.mjs'
+import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
+import { ensureTextColumn } from '../preprocessing/schema.mjs'
 
 const dbPath = process.env.MACHTBLICK_DB ?? findDbPath()
 const db = new Database(dbPath)
@@ -30,21 +32,22 @@ console.log(`descriptions: ${selected.length}/${candidates.length} candidates`)
 
 const updateVote = db.prepare(`UPDATE votes SET summary_simplified = ?, summary_detail = ? WHERE id = ?`)
 const upsertDecision = db.prepare(`
-  INSERT INTO vote_description_decisions (vote_id, drucksache_id, source_pdf_url, model, generated_at, prompt_version)
-  VALUES (?, ?, ?, 'sonnet', ?, ?)
-  ON CONFLICT(vote_id) DO UPDATE SET drucksache_id = excluded.drucksache_id, source_pdf_url = excluded.source_pdf_url, model = excluded.model, generated_at = excluded.generated_at, prompt_version = excluded.prompt_version
+  INSERT INTO vote_description_decisions (vote_id, drucksache_id, source_pdf_url, model, model_reasoning_effort, generated_at, prompt_version)
+  VALUES (?, ?, ?, ?, ?, ?, ?)
+  ON CONFLICT(vote_id) DO UPDATE SET drucksache_id = excluded.drucksache_id, source_pdf_url = excluded.source_pdf_url, model = excluded.model, model_reasoning_effort = excluded.model_reasoning_effort, generated_at = excluded.generated_at, prompt_version = excluded.prompt_version
 `)
 const antragByDrucksache = db.prepare(`SELECT id FROM antraege WHERE wahlperiode = 21 AND drucksache = ?`)
 const upsertAntragDescription = db.prepare(`
   INSERT INTO antrag_descriptions (
-    antrag_id, summary_simplified, summary_detail, source_vote_id, source_pdf_url, model, generated_at, prompt_version
-  ) VALUES (?, ?, ?, ?, ?, 'sonnet', ?, ?)
+    antrag_id, summary_simplified, summary_detail, source_vote_id, source_pdf_url, model, model_reasoning_effort, generated_at, prompt_version
+  ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   ON CONFLICT(antrag_id) DO UPDATE SET
     summary_simplified = excluded.summary_simplified,
     summary_detail = excluded.summary_detail,
     source_vote_id = excluded.source_vote_id,
     source_pdf_url = excluded.source_pdf_url,
     model = excluded.model,
+    model_reasoning_effort = excluded.model_reasoning_effort,
     generated_at = excluded.generated_at,
     prompt_version = excluded.prompt_version
 `)
@@ -78,9 +81,9 @@ async function processVote(row) {
     const { summarySimplified, summaryDetail } = await generateDescriptions(row.title, text, picked.kind)
     const generatedAt = new Date().toISOString()
     updateVote.run(summarySimplified, summaryDetail, row.id)
-    upsertDecision.run(row.id, picked.drucksacheId, picked.pdfUrl, generatedAt, PROMPT_VERSION)
+    upsertDecision.run(row.id, picked.drucksacheId, picked.pdfUrl, PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT, generatedAt, PROMPT_VERSION)
     const antraege = antragByDrucksache.all(picked.drucksacheId)
-    if (antraege.length === 1) upsertAntragDescription.run(antraege[0].id, summarySimplified, summaryDetail, row.id, picked.pdfUrl, generatedAt, PROMPT_VERSION)
+    if (antraege.length === 1) upsertAntragDescription.run(antraege[0].id, summarySimplified, summaryDetail, row.id, picked.pdfUrl, PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT, generatedAt, PROMPT_VERSION)
     counts[picked.kind] = (counts[picked.kind] ?? 0) + 1
     const total = counts.antrag + counts.petitionen + counts.wahleinspruch + counts.verordnung + counts.unterrichtung
     if (total % 5 === 0) console.log(`  ${total}/${selected.length - skippedNoPdf} done`)
@@ -123,10 +126,13 @@ function ensureSchema() {
       source_vote_id text,
       source_pdf_url text,
       model text,
+      model_reasoning_effort text,
       generated_at text,
       prompt_version integer,
       FOREIGN KEY (antrag_id) REFERENCES antraege(id),
       FOREIGN KEY (source_vote_id) REFERENCES votes(id)
     )
   `).run()
+  ensureTextColumn(db, 'vote_description_decisions', 'model_reasoning_effort')
+  ensureTextColumn(db, 'antrag_descriptions', 'model_reasoning_effort')
 }

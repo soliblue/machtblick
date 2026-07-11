@@ -1,16 +1,15 @@
-import { spawn } from 'node:child_process'
 import { createHash } from 'node:crypto'
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs'
-import { tmpdir } from 'node:os'
+import { existsSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
+import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
+import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
+import { ensureTextColumn } from '../preprocessing/schema.mjs'
 
 const PROMPT_VERSION = 'antrag-translation-en-v1'
-const root = fileURLToPath(new URL('../../..', import.meta.url))
 const schemaPath = fileURLToPath(new URL('./output-schema.json', import.meta.url))
 const promptTemplate = readFileSync(fileURLToPath(new URL('../../../prompts/etl/bundestag/antrag-description-translations.md', import.meta.url)), 'utf8').trimEnd()
-const model = process.env.CODEX_MODEL ?? 'gpt-5.5'
 const timeoutMs = Number(process.env.CODEX_TIMEOUT_MS ?? 180000)
 const concurrency = Number(argValue('--concurrency') ?? 2)
 const batchSize = Number(argValue('--batch-size') ?? 8)
@@ -40,7 +39,7 @@ const jobs = candidates
 
 const selected = limit > 0 ? jobs.slice(0, limit) : jobs
 const batches = chunk(selected, batchSize)
-console.log(`antrag translation jobs: ${selected.length}/${jobs.length} eligible, batches=${batches.length}, batchSize=${batchSize}, db=${dbPath}, model=${model}`)
+console.log(`antrag translation jobs: ${selected.length}/${jobs.length} eligible, batches=${batches.length}, batchSize=${batchSize}, db=${dbPath}, model=${PREPROCESSING_MODEL}, reasoning=${PREPROCESSING_REASONING_EFFORT}`)
 
 let cursor = 0
 let completed = 0
@@ -51,7 +50,12 @@ const workers = Array.from({ length: Math.min(concurrency, batches.length) }, as
     const batch = batches[cursor]
     cursor++
     try {
-      const output = await runCodex(buildPrompt(batch.map((job) => job.row)))
+      const output = await runPreprocessingCodex({
+        prompt: buildPrompt(batch.map((job) => job.row)),
+        schemaPath,
+        timeoutMs,
+        tmpPrefix: 'machtblick-antrag-translation-',
+      })
       writeBatch(batch, output)
       completed += batch.length
       console.log(batch.map((job) => job.row.antrag_id).join(', '))
@@ -93,12 +97,14 @@ function ensureSchema() {
       summary_detail text,
       source_hash text,
       model text,
+      model_reasoning_effort text,
       prompt_version text,
       translated_at text,
       PRIMARY KEY(antrag_id, locale),
       FOREIGN KEY (antrag_id) REFERENCES antraege(id)
     )
   `).run()
+  ensureTextColumn(db, 'antrag_description_translations', 'model_reasoning_effort')
 }
 
 function sourceHash(summarySimplified, summaryDetail) {
@@ -120,48 +126,6 @@ function buildPrompt(rows) {
   return promptTemplate.replace('__INPUT_JSON__', JSON.stringify({ rows }, null, 2)) + '\n'
 }
 
-function runCodex(prompt) {
-  const dir = mkdtempSync(join(tmpdir(), 'machtblick-antrag-translation-'))
-  const outPath = join(dir, 'out.json')
-  return new Promise((resolve, reject) => {
-    let settled = false
-    const c = spawn('codex', [
-      '-a', 'never',
-      'exec',
-      '--model', model,
-      '--sandbox', 'read-only',
-      '--output-schema', schemaPath,
-      '--output-last-message', outPath,
-      '--cd', root,
-      '--ephemeral',
-      '-',
-    ], { stdio: ['pipe', 'pipe', 'pipe'] })
-    let stderr = ''
-    const timer = setTimeout(() => {
-      settled = true
-      c.kill('SIGTERM')
-      rmSync(dir, { recursive: true, force: true })
-      reject(new Error(`codex timed out after ${timeoutMs}ms`))
-    }, timeoutMs)
-    c.stderr.on('data', (d) => (stderr += d))
-    c.on('close', (code) => {
-      clearTimeout(timer)
-      if (settled) return
-      settled = true
-      if (code !== 0) {
-        rmSync(dir, { recursive: true, force: true })
-        reject(new Error(`codex exit ${code}: ${stderr}`))
-        return
-      }
-      const text = readFileSync(outPath, 'utf8')
-      rmSync(dir, { recursive: true, force: true })
-      resolve(JSON.parse(text))
-    })
-    c.stdin.write(prompt)
-    c.stdin.end()
-  })
-}
-
 function writeBatch(batch, output) {
   const byId = new Map(output.translations.map((t) => [t.antrag_id, t]))
   const now = new Date().toISOString()
@@ -170,13 +134,14 @@ function writeBatch(batch, output) {
     if (!translated) throw new Error(`missing Antrag translation for ${job.row.antrag_id}`)
     db.prepare(`
       INSERT INTO antrag_description_translations (
-        antrag_id, locale, summary_simplified, summary_detail, source_hash, model, prompt_version, translated_at
-      ) VALUES (?, 'en', ?, ?, ?, ?, ?, ?)
+        antrag_id, locale, summary_simplified, summary_detail, source_hash, model, model_reasoning_effort, prompt_version, translated_at
+      ) VALUES (?, 'en', ?, ?, ?, ?, ?, ?, ?)
       ON CONFLICT(antrag_id, locale) DO UPDATE SET
         summary_simplified = excluded.summary_simplified,
         summary_detail = excluded.summary_detail,
         source_hash = excluded.source_hash,
         model = excluded.model,
+        model_reasoning_effort = excluded.model_reasoning_effort,
         prompt_version = excluded.prompt_version,
         translated_at = excluded.translated_at
     `).run(
@@ -184,7 +149,8 @@ function writeBatch(batch, output) {
       clean(translated.summary_simplified),
       clean(translated.summary_detail),
       job.hash,
-      model,
+      PREPROCESSING_MODEL,
+      PREPROCESSING_REASONING_EFFORT,
       PROMPT_VERSION,
       now,
     )

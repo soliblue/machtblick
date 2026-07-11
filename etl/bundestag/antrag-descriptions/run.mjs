@@ -1,15 +1,14 @@
-import { spawn } from 'node:child_process'
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs'
-import { tmpdir } from 'node:os'
+import { existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
 import { extractPdf } from '../descriptions/extractPdf.mjs'
 import { buildPrompt, PROMPT_VERSION } from '../descriptions/prompt.mjs'
+import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
+import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
+import { ensureTextColumn } from '../preprocessing/schema.mjs'
 
-const root = fileURLToPath(new URL('../../..', import.meta.url))
 const schemaPath = fileURLToPath(new URL('./output-schema.json', import.meta.url))
-const model = process.env.CODEX_MODEL ?? 'gpt-5.5'
 const timeoutMs = Number(process.env.CODEX_TIMEOUT_MS ?? 240000)
 const concurrency = Number(argValue('--concurrency') ?? 2)
 const limit = Number(argValue('--limit') ?? 0)
@@ -33,7 +32,7 @@ const candidates = db.prepare(`
 `).all(antragFilter ?? null, antragFilter ?? null, force ? 1 : 0)
 
 const selected = limit > 0 ? candidates.slice(0, limit) : candidates
-console.log(`antrag description jobs: ${selected.length}/${candidates.length} eligible, db=${dbPath}, model=${model}`)
+console.log(`antrag description jobs: ${selected.length}/${candidates.length} eligible, db=${dbPath}, model=${PREPROCESSING_MODEL}, reasoning=${PREPROCESSING_REASONING_EFFORT}`)
 
 let cursor = 0
 let completed = 0
@@ -50,7 +49,12 @@ const workers = Array.from({ length: Math.min(concurrency, selected.length) }, a
         skipped++
         console.warn(`x ${row.id} text too short (${row.drucksache})`)
       } else {
-        const output = await runCodex(buildPrompt(row.title, text, 'antrag'))
+        const output = await runPreprocessingCodex({
+          prompt: buildPrompt(row.title, text, 'antrag'),
+          schemaPath,
+          timeoutMs,
+          tmpPrefix: 'machtblick-antrag-codex-',
+        })
         writeSummary(row, output)
         completed++
         console.log(`${row.id} ${row.drucksache}`)
@@ -93,54 +97,14 @@ function ensureSchema() {
       source_vote_id text,
       source_pdf_url text,
       model text,
+      model_reasoning_effort text,
       generated_at text,
       prompt_version integer,
       FOREIGN KEY (antrag_id) REFERENCES antraege(id),
       FOREIGN KEY (source_vote_id) REFERENCES votes(id)
     )
   `).run()
-}
-
-function runCodex(prompt) {
-  const dir = mkdtempSync(join(tmpdir(), 'machtblick-antrag-codex-'))
-  const outPath = join(dir, 'out.json')
-  return new Promise((resolve, reject) => {
-    let settled = false
-    const c = spawn('codex', [
-      '-a', 'never',
-      'exec',
-      '--model', model,
-      '--sandbox', 'read-only',
-      '--output-schema', schemaPath,
-      '--output-last-message', outPath,
-      '--cd', root,
-      '--ephemeral',
-      '-',
-    ], { stdio: ['pipe', 'pipe', 'pipe'] })
-    let stderr = ''
-    const timer = setTimeout(() => {
-      settled = true
-      c.kill('SIGTERM')
-      rmSync(dir, { recursive: true, force: true })
-      reject(new Error(`codex timed out after ${timeoutMs}ms`))
-    }, timeoutMs)
-    c.stderr.on('data', (d) => (stderr += d))
-    c.on('close', (code) => {
-      clearTimeout(timer)
-      if (settled) return
-      settled = true
-      if (code !== 0) {
-        rmSync(dir, { recursive: true, force: true })
-        reject(new Error(`codex exit ${code}: ${stderr}`))
-        return
-      }
-      const text = readFileSync(outPath, 'utf8')
-      rmSync(dir, { recursive: true, force: true })
-      resolve(JSON.parse(text))
-    })
-    c.stdin.write(prompt)
-    c.stdin.end()
-  })
+  ensureTextColumn(db, 'antrag_descriptions', 'model_reasoning_effort')
 }
 
 function writeSummary(row, output) {
@@ -149,17 +113,18 @@ function writeSummary(row, output) {
   if (!summarySimplified || !summaryDetail) throw new Error(`incomplete output for ${row.id}`)
   db.prepare(`
     INSERT INTO antrag_descriptions (
-      antrag_id, summary_simplified, summary_detail, source_vote_id, source_pdf_url, model, generated_at, prompt_version
-    ) VALUES (?, ?, ?, NULL, ?, ?, ?, ?)
+      antrag_id, summary_simplified, summary_detail, source_vote_id, source_pdf_url, model, model_reasoning_effort, generated_at, prompt_version
+    ) VALUES (?, ?, ?, NULL, ?, ?, ?, ?, ?)
     ON CONFLICT(antrag_id) DO UPDATE SET
       summary_simplified = excluded.summary_simplified,
       summary_detail = excluded.summary_detail,
       source_vote_id = excluded.source_vote_id,
       source_pdf_url = excluded.source_pdf_url,
       model = excluded.model,
+      model_reasoning_effort = excluded.model_reasoning_effort,
       generated_at = excluded.generated_at,
       prompt_version = excluded.prompt_version
-  `).run(row.id, summarySimplified, summaryDetail, row.drucksache_pdf_url, model, new Date().toISOString(), PROMPT_VERSION)
+  `).run(row.id, summarySimplified, summaryDetail, row.drucksache_pdf_url, PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT, new Date().toISOString(), PROMPT_VERSION)
 }
 
 function cleanText(value) {

@@ -1,13 +1,16 @@
-import { spawn } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
+import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
+import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
+import { ensureTextColumn } from '../preprocessing/schema.mjs'
 
+const PROMPT_VERSION = 'antrag-title-translation-en-v1'
 const promptTemplate = readFileSync(fileURLToPath(new URL('../../../prompts/etl/bundestag/antrag-title-translations.md', import.meta.url)), 'utf8').trimEnd()
-const model = process.env.CLAUDE_MODEL ?? 'sonnet'
-const timeoutMs = Number(process.env.CLAUDE_TIMEOUT_MS ?? 240000)
+const schemaPath = fileURLToPath(new URL('./output-schema.json', import.meta.url))
+const timeoutMs = Number(process.env.CODEX_TIMEOUT_MS ?? 240000)
 const concurrency = Number(argValue('--concurrency') ?? 3)
 const batchSize = Number(argValue('--batch-size') ?? 20)
 const limit = Number(argValue('--limit') ?? 0)
@@ -35,7 +38,7 @@ const jobs = candidates
 
 const selected = limit > 0 ? jobs.slice(0, limit) : jobs
 const batches = chunk(selected, batchSize)
-console.log(`antrag title translation jobs: ${selected.length}/${candidates.length} eligible, batches=${batches.length}, batchSize=${batchSize}, db=${dbPath}, model=${model}`)
+console.log(`antrag title translation jobs: ${selected.length}/${candidates.length} eligible, batches=${batches.length}, batchSize=${batchSize}, db=${dbPath}, model=${PREPROCESSING_MODEL}, reasoning=${PREPROCESSING_REASONING_EFFORT}`)
 if (dryRun) {
   db.close()
   process.exit(0)
@@ -50,7 +53,12 @@ const workers = Array.from({ length: Math.min(concurrency, batches.length) }, as
     const batch = batches[cursor]
     cursor++
     try {
-      const output = await runClaude(buildPrompt(batch.map((job) => job.row)))
+      const output = await runPreprocessingCodex({
+        prompt: buildPrompt(batch.map((job) => job.row)),
+        schemaPath,
+        timeoutMs,
+        tmpPrefix: 'machtblick-antrag-title-translation-',
+      })
       writeBatch(batch, output)
       completed += batch.length
       console.log(batch.map((job) => job.row.id).join(', '))
@@ -86,8 +94,8 @@ function findDbPath() {
 
 function ensureSchema() {
   const columns = db.prepare('PRAGMA table_info(antrag_description_translations)').all().map((c) => c.name)
-  for (const column of ['title', 'clean_title', 'title_source_hash']) {
-    if (!columns.includes(column)) db.prepare(`ALTER TABLE antrag_description_translations ADD COLUMN ${column} text`).run()
+  for (const column of ['title', 'clean_title', 'title_source_hash', 'title_model', 'title_model_reasoning_effort', 'title_prompt_version']) {
+    if (!columns.includes(column)) ensureTextColumn(db, 'antrag_description_translations', column)
   }
 }
 
@@ -105,48 +113,12 @@ function buildPrompt(rows) {
   return promptTemplate.replace('__INPUT_JSON__', JSON.stringify({ rows: rows.map((r) => ({ antrag_id: r.id, title: r.title, clean_title: r.clean_title })) }, null, 2)) + '\n'
 }
 
-function runClaude(prompt) {
-  return new Promise((resolve, reject) => {
-    let settled = false
-    const c = spawn('claude', ['-p', '--model', model, '--output-format', 'json'], { stdio: ['pipe', 'pipe', 'pipe'] })
-    let stdout = ''
-    let stderr = ''
-    const timer = setTimeout(() => {
-      settled = true
-      c.kill('SIGTERM')
-      reject(new Error(`claude timed out after ${timeoutMs}ms`))
-    }, timeoutMs)
-    c.stdout.on('data', (d) => (stdout += d))
-    c.stderr.on('data', (d) => (stderr += d))
-    c.on('close', (code) => {
-      clearTimeout(timer)
-      if (settled) return
-      settled = true
-      if (code !== 0) {
-        reject(new Error(`claude exit ${code}: ${stderr}`))
-        return
-      }
-      const env = JSON.parse(stdout)
-      const result = env.result ?? env
-      const text = typeof result === 'string' ? result : JSON.stringify(result)
-      const match = text.match(/\{[\s\S]*\}/)
-      if (!match) {
-        reject(new Error(`no JSON object in claude output: ${text.slice(0, 200)}`))
-        return
-      }
-      resolve(JSON.parse(match[0]))
-    })
-    c.stdin.write(prompt)
-    c.stdin.end()
-  })
-}
-
 function writeBatch(batch, output) {
   const byId = new Map(output.translations.map((t) => [t.antrag_id, t]))
   const now = new Date().toISOString()
   const update = db.prepare(`
     UPDATE antrag_description_translations
-    SET title = ?, clean_title = ?, title_source_hash = ?, translated_at = ?
+    SET title = ?, clean_title = ?, title_source_hash = ?, title_model = ?, title_model_reasoning_effort = ?, title_prompt_version = ?, translated_at = ?
     WHERE antrag_id = ? AND locale = 'en'
   `)
   for (const job of batch) {
@@ -154,7 +126,7 @@ function writeBatch(batch, output) {
     if (!translated) throw new Error(`missing title translation for ${job.row.id}`)
     const title = clean(translated.title)
     if (!title) throw new Error(`empty title translation for ${job.row.id}`)
-    update.run(title, job.row.clean_title ? clean(translated.clean_title) : null, job.hash, now, job.row.id)
+    update.run(title, job.row.clean_title ? clean(translated.clean_title) : null, job.hash, PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT, PROMPT_VERSION, now, job.row.id)
   }
 }
 

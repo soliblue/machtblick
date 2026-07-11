@@ -10,6 +10,7 @@ export const speechTranslations = sqliteTable(
     textFull: text('text_full').notNull(),
     sourceHash: text('source_hash').notNull(),
     model: text('model').notNull(),
+    modelReasoningEffort: text('model_reasoning_effort'),
     promptVersion: text('prompt_version').notNull(),
     translatedAt: text('translated_at').notNull(),
   },

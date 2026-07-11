@@ -1,16 +1,14 @@
-import { spawn } from 'node:child_process'
 import { createHash } from 'node:crypto'
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs'
-import { tmpdir } from 'node:os'
+import { existsSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
 import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
+import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
+import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
+import { ensureTextColumn } from '../preprocessing/schema.mjs'
 
-const root = fileURLToPath(new URL('../../..', import.meta.url))
 const schemaPath = fileURLToPath(new URL('./output-schema-batch.json', import.meta.url))
-const model = process.env.CODEX_MODEL ?? 'gpt-5.5'
-const provider = process.env.TRANSLATION_PROVIDER ?? 'codex'
 const concurrency = Number(argValue('--concurrency') ?? 2)
 const batchSize = Number(argValue('--batch-size') ?? 4)
 const limit = Number(argValue('--limit') ?? 0)
@@ -71,7 +69,7 @@ for (const vote of candidates) {
 
 const selected = limit > 0 ? jobs.slice(0, limit) : jobs
 const batches = chunk(selected, batchSize)
-console.log(`translation jobs: ${selected.length}/${jobs.length} eligible, batches=${batches.length}, batchSize=${batchSize}, db=${dbPath}, provider=${provider}, model=${model}`)
+console.log(`translation jobs: ${selected.length}/${jobs.length} eligible, batches=${batches.length}, batchSize=${batchSize}, db=${dbPath}, model=${PREPROCESSING_MODEL}, reasoning=${PREPROCESSING_REASONING_EFFORT}`)
 if (dryRun) {
   db.close()
   process.exit(0)
@@ -82,17 +80,21 @@ const workers = Array.from({ length: Math.min(concurrency, batches.length) }, as
   while (cursor < batches.length) {
     const batch = batches[cursor]
     cursor++
-    const output = await runModel(buildPrompt({
-      jobs: batch.map((job) => ({
-        vote: job.vote,
-        party_summaries: job.summaries.map((s) => ({
-          party: s.party,
-          position_summary: s.position_summary,
-          key_points: s.key_points,
-          dissent_note: s.dissent_note,
+    const output = await runPreprocessingCodex({
+      prompt: buildPrompt({
+        jobs: batch.map((job) => ({
+          vote: job.vote,
+          party_summaries: job.summaries.map((s) => ({
+            party: s.party,
+            position_summary: s.position_summary,
+            key_points: s.key_points,
+            dissent_note: s.dissent_note,
+          })),
         })),
-      })),
-    }))
+      }),
+      schemaPath,
+      tmpPrefix: 'machtblick-translation-',
+    })
     writeBatch(batch, output)
     console.log(batch.map((job) => job.vote.id).join(', '))
   }
@@ -139,6 +141,7 @@ function ensureSchema() {
       summary_detail text,
       source_hash text NOT NULL,
       model text NOT NULL,
+      model_reasoning_effort text,
       prompt_version text NOT NULL,
       translated_at text NOT NULL,
       PRIMARY KEY(vote_id, locale),
@@ -155,6 +158,7 @@ function ensureSchema() {
       dissent_note text,
       source_hash text NOT NULL,
       model text NOT NULL,
+      model_reasoning_effort text,
       prompt_version text NOT NULL,
       translated_at text NOT NULL,
       PRIMARY KEY(vote_id, party, locale),
@@ -169,79 +173,20 @@ function ensureSchema() {
       summary_detail text,
       source_hash text,
       model text,
+      model_reasoning_effort text,
       prompt_version text,
       translated_at text,
       PRIMARY KEY(antrag_id, locale),
       FOREIGN KEY (antrag_id) REFERENCES antraege(id)
     )
   `).run()
+  ensureTextColumn(db, 'vote_translations', 'model_reasoning_effort')
+  ensureTextColumn(db, 'vote_party_summary_translations', 'model_reasoning_effort')
+  ensureTextColumn(db, 'antrag_description_translations', 'model_reasoning_effort')
 }
 
 function sourceHash(value) {
   return createHash('sha256').update(JSON.stringify(value)).digest('hex')
-}
-
-function runModel(prompt) {
-  return provider === 'claude' ? runClaude(prompt) : runCodex(prompt)
-}
-
-function runCodex(prompt) {
-  const dir = mkdtempSync(join(tmpdir(), 'machtblick-translation-'))
-  const outPath = join(dir, 'out.json')
-  return new Promise((resolve, reject) => {
-    const c = spawn('codex', [
-      '-a', 'never',
-      'exec',
-      '--model', model,
-      '--sandbox', 'read-only',
-      '--output-schema', schemaPath,
-      '--output-last-message', outPath,
-      '--cd', root,
-      '--ephemeral',
-      '-',
-    ], { stdio: ['pipe', 'pipe', 'pipe'] })
-    let stderr = ''
-    c.stderr.on('data', (d) => (stderr += d))
-    c.on('close', (code) => {
-      if (code !== 0) {
-        rmSync(dir, { recursive: true, force: true })
-        reject(new Error(`codex exit ${code}: ${stderr}`))
-        return
-      }
-      const text = readFileSync(outPath, 'utf8')
-      rmSync(dir, { recursive: true, force: true })
-      resolve(JSON.parse(text))
-    })
-    c.stdin.write(prompt)
-    c.stdin.end()
-  })
-}
-
-function runClaude(prompt) {
-  return new Promise((resolve, reject) => {
-    const c = spawn('claude', ['-p', '--model', model, '--output-format', 'json'], { stdio: ['pipe', 'pipe', 'pipe'] })
-    let stdout = ''
-    let stderr = ''
-    c.stdout.on('data', (d) => (stdout += d))
-    c.stderr.on('data', (d) => (stderr += d))
-    c.on('close', (code) => {
-      if (code !== 0) {
-        reject(new Error(`claude exit ${code}: ${stderr}`))
-        return
-      }
-      const env = JSON.parse(stdout)
-      const result = env.result ?? env
-      const text = typeof result === 'string' ? result : JSON.stringify(result)
-      const match = text.match(/\{[\s\S]*\}/)
-      if (!match) {
-        reject(new Error(`no JSON object in claude output: ${text.slice(0, 200)}`))
-        return
-      }
-      resolve(JSON.parse(match[0]))
-    })
-    c.stdin.write(prompt)
-    c.stdin.end()
-  })
 }
 
 function writeTranslations(job, output) {
@@ -250,8 +195,8 @@ function writeTranslations(job, output) {
   db.prepare(`
     INSERT INTO vote_translations (
       vote_id, locale, title, clean_title, topic, subject, summary, summary_simplified, summary_detail,
-      source_hash, model, prompt_version, translated_at
-    ) VALUES (?, 'en', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      source_hash, model, model_reasoning_effort, prompt_version, translated_at
+    ) VALUES (?, 'en', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(vote_id, locale) DO UPDATE SET
       title = excluded.title,
       clean_title = excluded.clean_title,
@@ -262,6 +207,7 @@ function writeTranslations(job, output) {
       summary_detail = excluded.summary_detail,
       source_hash = excluded.source_hash,
       model = excluded.model,
+      model_reasoning_effort = excluded.model_reasoning_effort,
       prompt_version = excluded.prompt_version,
       translated_at = excluded.translated_at
   `).run(
@@ -274,7 +220,8 @@ function writeTranslations(job, output) {
     clean(vote.summary_simplified),
     clean(vote.summary_detail),
     job.voteHash,
-    model,
+    PREPROCESSING_MODEL,
+    PREPROCESSING_REASONING_EFFORT,
     PROMPT_VERSION,
     now,
   )
@@ -287,14 +234,15 @@ function writeTranslations(job, output) {
       db.prepare(`
         INSERT INTO vote_party_summary_translations (
           vote_id, party, locale, position_summary, key_points, dissent_note,
-          source_hash, model, prompt_version, translated_at
-        ) VALUES (?, ?, 'en', ?, ?, ?, ?, ?, ?, ?)
+          source_hash, model, model_reasoning_effort, prompt_version, translated_at
+        ) VALUES (?, ?, 'en', ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(vote_id, party, locale) DO UPDATE SET
           position_summary = excluded.position_summary,
           key_points = excluded.key_points,
           dissent_note = excluded.dissent_note,
           source_hash = excluded.source_hash,
           model = excluded.model,
+          model_reasoning_effort = excluded.model_reasoning_effort,
           prompt_version = excluded.prompt_version,
           translated_at = excluded.translated_at
       `).run(
@@ -304,7 +252,8 @@ function writeTranslations(job, output) {
         clean(translated.key_points),
         clean(translated.dissent_note),
         hash,
-        model,
+        PREPROCESSING_MODEL,
+        PREPROCESSING_REASONING_EFFORT,
         PROMPT_VERSION,
         now,
       )
@@ -322,13 +271,14 @@ function syncAntragTranslation(job, vote, now) {
   if (matches.length === 1) {
     db.prepare(`
       INSERT INTO antrag_description_translations (
-        antrag_id, locale, summary_simplified, summary_detail, source_hash, model, prompt_version, translated_at
-      ) VALUES (?, 'en', ?, ?, ?, ?, ?, ?)
+        antrag_id, locale, summary_simplified, summary_detail, source_hash, model, model_reasoning_effort, prompt_version, translated_at
+      ) VALUES (?, 'en', ?, ?, ?, ?, ?, ?, ?)
       ON CONFLICT(antrag_id, locale) DO UPDATE SET
         summary_simplified = excluded.summary_simplified,
         summary_detail = excluded.summary_detail,
         source_hash = excluded.source_hash,
         model = excluded.model,
+        model_reasoning_effort = excluded.model_reasoning_effort,
         prompt_version = excluded.prompt_version,
         translated_at = excluded.translated_at
     `).run(
@@ -336,7 +286,8 @@ function syncAntragTranslation(job, vote, now) {
       clean(vote.summary_simplified),
       clean(vote.summary_detail),
       job.voteHash,
-      model,
+      PREPROCESSING_MODEL,
+      PREPROCESSING_REASONING_EFFORT,
       PROMPT_VERSION,
       now,
     )

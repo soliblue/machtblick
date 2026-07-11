@@ -8,6 +8,7 @@ export const votePartySummaryDecisions = sqliteTable(
     party: text('party').notNull(),
     sourceSpeechIds: text('source_speech_ids').notNull(),
     model: text('model').notNull(),
+    modelReasoningEffort: text('model_reasoning_effort'),
     promptVersion: text('prompt_version').notNull(),
     generatedAt: text('generated_at').notNull(),
   },
