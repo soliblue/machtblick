@@ -1,0 +1,5 @@
+Machtblick requires no account or sign-in. All features are available immediately after launch.
+
+The app presents public parliamentary data from the German Bundestag. It uses read-only HTTPS requests to machtblick.de and stores downloaded public data, saved votes, and seen status locally on the device.
+
+Automated summaries are clearly labeled in the app and may contain errors. Original source links are provided where available.
