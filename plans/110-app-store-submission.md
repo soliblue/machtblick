@@ -16,11 +16,12 @@ Prepare and submit Machtblick iOS 1.0 for App Review using the existing TestFlig
 - Storefront language: German
 - Support URL: https://machtblick.de/
 - Privacy URL: https://machtblick.de/privacy/
-- Submission uses the existing processed TestFlight build unless App Store Connect rejects it
+- Submission requires a new iPhone-only TestFlight build to replace build 25
 - No legal, tax, trader, encryption, or content-rights declaration is inferred without repository or account evidence
 
 ## Screenshot Set
 - Capture on the largest App Store Connect iPhone slot supported by the shipping target
+- Ship only the native iPhone device family and omit iPad screenshots
 - Present each real app screen inside a straight-on device frame with editorial headline copy
 - Use a quiet neutral background, one semantic accent, Fraunces display type, and a subtle hemicycle pattern
 - Omit the logo and sequence number so the headline, subtitle, and app screen use the full composition
@@ -42,3 +43,4 @@ Prepare and submit Machtblick iOS 1.0 for App Review using the existing TestFlig
 - lead: 2026-07-11 captured live party-summary and debate-thread states from the vote Reden tab, rendered six iPhone and three iPad assets, and verified exact App Store dimensions
 - lead: 2026-07-11 user requested another 2x subtitle-size increase for phone-scale legibility across both formats
 - lead: 2026-07-11 user refined the enlarged subtitle scale down by 15 percent to preserve separation from the device frame
+- lead: 2026-07-11 user removed native iPad support; build 25 must be replaced by a new iPhone-only TestFlight build
