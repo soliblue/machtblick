@@ -29,7 +29,7 @@ struct RootTabView: View {
                     MembersGridView(store: membersStore, cache: cache)
                 }
             } label: {
-                Image(systemName: "person.3")
+                Image(systemName: "person.2")
                     .accessibilityLabel(Copy.membersTab)
             }
             Tab(value: RootTab.parties) {
