@@ -69,11 +69,10 @@ jobs:
           xcrun simctl install "$SMOKE_UDID" "$RUNNER_TEMP/machtblick-build/Build/Products/Debug-iphonesimulator/Machtblick.app"
           mkdir -p "$RUNNER_TEMP/machtblick-smoke"
           for LANGUAGE in de en; do
-            xcrun simctl spawn "$SMOKE_UDID" defaults write soli.Machtblick appLanguage -string "$LANGUAGE"
-            LAUNCH_OUTPUT="$(xcrun simctl launch --terminate-running-process "$SMOKE_UDID" soli.Machtblick)"
+            LAUNCH_OUTPUT="$(xcrun simctl launch --terminate-running-process "$SMOKE_UDID" soli.Machtblick -appLanguage "$LANGUAGE")"
             APP_PID="${LAUNCH_OUTPUT##*: }"
             sleep 8
-            xcrun simctl spawn "$SMOKE_UDID" kill -0 "$APP_PID"
+            kill -0 "$APP_PID"
             xcrun simctl io "$SMOKE_UDID" screenshot "$RUNNER_TEMP/machtblick-smoke/$LANGUAGE.png"
             xcrun simctl terminate "$SMOKE_UDID" soli.Machtblick
           done
