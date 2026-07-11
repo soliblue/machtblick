@@ -1,11 +1,16 @@
 import Foundation
 
 enum Copy {
-    private static func localized(_ key: String.LocalizationValue) -> String {
-        String(localized: key, locale: AppLocale.current.locale)
+    private static var bundle: Bundle {
+        Bundle.main.path(forResource: AppLocale.current.rawValue, ofType: "lproj")
+            .flatMap(Bundle.init(path:)) ?? .main
     }
 
-    private static func formatted(_ key: String.LocalizationValue, _ arguments: CVarArg...) -> String {
+    private static func localized(_ key: String) -> String {
+        bundle.localizedString(forKey: key, value: key, table: nil)
+    }
+
+    private static func formatted(_ key: String, _ arguments: CVarArg...) -> String {
         String(
             format: localized(key), locale: AppLocale.current.locale,
             arguments: arguments)
