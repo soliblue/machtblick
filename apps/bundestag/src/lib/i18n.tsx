@@ -1,7 +1,7 @@
 import { createContext, useContext, type ReactNode } from 'react'
 import type { Locale } from './locale'
 
-const copy = {
+export const copy = {
   de: {
     navVotes: 'Abstimmungen',
     navMotions: 'Anträge',
@@ -60,6 +60,11 @@ const copy = {
     aboutData: 'Über die Daten',
     imprint: 'Impressum',
     privacy: 'Datenschutz',
+    testFlightPromptTitle: 'Machtblick fürs iPhone',
+    testFlightPromptDescription: 'Teste die Machtblick App vorab mit TestFlight.',
+    testFlightPromptAction: 'In TestFlight öffnen',
+    testFlightPromptDismiss: 'Nicht jetzt',
+    testFlightPromptClose: 'Schließen',
     menuOpen: 'Menü öffnen',
     menuClose: 'Menü schließen',
     previousPage: 'Vorherige Seite',
@@ -269,6 +274,11 @@ const copy = {
     aboutData: 'About the data',
     imprint: 'Imprint',
     privacy: 'Privacy',
+    testFlightPromptTitle: 'Machtblick for iPhone',
+    testFlightPromptDescription: 'Try the Machtblick app early with TestFlight.',
+    testFlightPromptAction: 'Open in TestFlight',
+    testFlightPromptDismiss: 'Not now',
+    testFlightPromptClose: 'Close',
     menuOpen: 'Open menu',
     menuClose: 'Close menu',
     previousPage: 'Previous page',

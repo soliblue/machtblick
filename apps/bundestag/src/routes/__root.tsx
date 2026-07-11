@@ -3,12 +3,14 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { StampFilter } from '@/views/votesList/StampFilter'
 import { Nav } from '@/views/nav/Nav'
+import { TestFlightPrompt } from '@/views/nav/TestFlightPrompt'
 import { Footer } from '@/views/nav/Footer'
 import globalsCss from '../styles/globals.css?url'
 import { seoMeta, SITE_IMAGE, SITE_NAME, SITE_URL } from '@/lib/seo'
-import { LocaleProvider } from '@/lib/i18n'
+import { copy, LocaleProvider } from '@/lib/i18n'
 import { localeFromPath } from '@/lib/locale'
 import { NotFoundPage } from '@/views/notFound/NotFoundPage'
+import { useTestFlightPrompt } from '@/hooks/useTestFlightPrompt'
 
 const queryClient = new QueryClient()
 
@@ -108,6 +110,8 @@ export const Route = createRootRoute({
 function RootComponent() {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
   const locale = localeFromPath(pathname)
+  const t = copy[locale]
+  const testFlightPrompt = useTestFlightPrompt()
   return (
     <html lang={locale} prefix="og: https://ogp.me/ns#">
       <head>
@@ -119,6 +123,15 @@ function RootComponent() {
             <TooltipProvider delayDuration={200}>
               <StampFilter />
               <Nav />
+              <TestFlightPrompt
+                visible={testFlightPrompt.visible}
+                title={t.testFlightPromptTitle}
+                description={t.testFlightPromptDescription}
+                actionLabel={t.testFlightPromptAction}
+                dismissLabel={t.testFlightPromptDismiss}
+                closeLabel={t.testFlightPromptClose}
+                onDismiss={testFlightPrompt.dismiss}
+              />
               <Outlet />
               <Footer />
             </TooltipProvider>
