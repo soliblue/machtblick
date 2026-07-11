@@ -135,11 +135,11 @@ body { background: ${shot.background}; color: #0a0a0a; font-family: -apple-syste
 .canvas { position: relative; width: 100%; height: 100%; overflow: hidden; }
 .header { position: absolute; z-index: 3; top: ${shot.device === "phone" ? 84 : 74}px; left: ${shot.device === "phone" ? 86 : 112}px; right: ${shot.device === "phone" ? 86 : 112}px; }
 h1 { width: ${shot.device === "phone" ? 1060 : 1740}px; margin: 0; font-family: Fraunces, Georgia, serif; font-size: ${shot.device === "phone" ? 100 : 118}px; font-weight: 600; line-height: 0.98; letter-spacing: 0; }
-.subtitle { width: ${shot.device === "phone" ? 1020 : 1650}px; margin-top: ${shot.device === "phone" ? 32 : 30}px; font-size: ${shot.device === "phone" ? 46 : 54}px; line-height: 1.18; color: rgba(10, 10, 10, 0.7); }
+.subtitle { width: ${shot.device === "phone" ? 1080 : 1760}px; margin-top: ${shot.device === "phone" ? 28 : 26}px; font-size: ${shot.device === "phone" ? 78 : 92}px; line-height: 1.06; color: rgba(10, 10, 10, 0.7); }
 .rule { width: ${shot.device === "phone" ? 154 : 210}px; height: ${shot.device === "phone" ? 9 : 11}px; margin-top: ${shot.device === "phone" ? 38 : 34}px; background: ${shot.accent}; }
 .hemicycle { position: absolute; z-index: 1; top: ${shot.device === "phone" ? 292 : 250}px; right: ${shot.device === "phone" ? -120 : 30}px; width: ${shot.device === "phone" ? 620 : 760}px; height: ${shot.device === "phone" ? 310 : 380}px; opacity: 0.15; }
 .hemicycle i { position: absolute; display: block; border: ${shot.device === "phone" ? 8 : 10}px dotted #0a0a0a; border-bottom: 0; border-radius: 760px 760px 0 0; }
-.device-wrap { position: absolute; z-index: 2; top: ${shot.device === "phone" ? 650 : 560}px; left: 50%; transform: translateX(-50%); }
+.device-wrap { position: absolute; z-index: 2; top: 680px; left: 50%; transform: translateX(-50%); }
 .device { position: relative; background: #111; box-shadow: 0 36px 80px rgba(10, 10, 10, 0.2); }
 .device.phone { width: 920px; padding: 25px; border-radius: 120px; }
 .device.tablet { width: 1600px; padding: 28px; border-radius: 88px; }

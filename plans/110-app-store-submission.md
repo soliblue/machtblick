@@ -40,3 +40,5 @@ Prepare and submit Machtblick iOS 1.0 for App Review using the existing TestFlig
 - lead: 2026-07-11 user approved the visual direction and requested two additional vote-related screenshots for speech summaries and the underlying speeches
 - lead: 2026-07-11 user requested larger subtitles and removal of the top logo and sequence numbers across the complete screenshot set
 - lead: 2026-07-11 captured live party-summary and debate-thread states from the vote Reden tab, rendered six iPhone and three iPad assets, and verified exact App Store dimensions
+- lead: 2026-07-11 user requested another 2x subtitle-size increase for phone-scale legibility across both formats
+- lead: 2026-07-11 user refined the enlarged subtitle scale down by 15 percent to preserve separation from the device frame
