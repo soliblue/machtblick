@@ -59,10 +59,10 @@ jobs:
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
 
       - name: Smoke launch German and English
+        timeout-minutes: 5
         run: |
           IOS_RUNTIME="$(xcrun simctl list runtimes --json | python3 -c 'import json,sys; rows=[x for x in json.load(sys.stdin)["runtimes"] if x["isAvailable"] and x["name"].startswith("iOS")]; print(max(rows, key=lambda x: tuple(map(int, x["version"].split("."))))["identifier"])')"
-          IPHONE_TYPE="$(xcrun simctl list devicetypes --json | python3 -c 'import json,sys; rows=[x for x in json.load(sys.stdin)["devicetypes"] if x["name"].startswith("iPhone")]; print(rows[-1]["identifier"])')"
-          SMOKE_UDID="$(xcrun simctl create 'Machtblick Smoke' "$IPHONE_TYPE" "$IOS_RUNTIME")"
+          SMOKE_UDID="$(xcrun simctl list devices available --json | python3 -c 'import json,sys; print(next(x["udid"] for x in json.load(sys.stdin)["devices"][sys.argv[1]] if x["name"].startswith("iPhone") and x["state"] == "Shutdown"))' "$IOS_RUNTIME")"
           echo "SMOKE_UDID=$SMOKE_UDID" >> "$GITHUB_ENV"
           xcrun simctl boot "$SMOKE_UDID"
           xcrun simctl bootstatus "$SMOKE_UDID" -b
@@ -86,6 +86,6 @@ jobs:
           path: ${{ runner.temp }}/machtblick-smoke/*.png
           if-no-files-found: ignore
 
-      - name: Delete smoke simulator
+      - name: Shut down smoke simulator
         if: always() && env.SMOKE_UDID != ''
-        run: xcrun simctl delete "$SMOKE_UDID"
+        run: xcrun simctl shutdown "$SMOKE_UDID"
