@@ -6,9 +6,9 @@ Prepare and submit Machtblick iOS 1.0 for App Review using the existing TestFlig
 ## Status
 - App Store Connect audit: done
 - Simulator build and screenshot capture: done
-- German metadata and compliance: in progress
-- Build attachment and validation: todo
-- App Review submission: todo
+- German metadata and compliance: blocked on content-rights confirmation
+- Build attachment and validation: done
+- App Review submission: blocked on content-rights confirmation
 
 ## Contracts
 - App Store record: Machtblick, Apple ID 6787755187, iOS 1.0
@@ -44,3 +44,8 @@ Prepare and submit Machtblick iOS 1.0 for App Review using the existing TestFlig
 - lead: 2026-07-11 user requested another 2x subtitle-size increase for phone-scale legibility across both formats
 - lead: 2026-07-11 user refined the enlarged subtitle scale down by 15 percent to preserve separation from the device frame
 - lead: 2026-07-11 user removed native iPad support; build 25 must be replaced by a new iPhone-only TestFlight build
+- lead: 2026-07-11 uploaded iPhone-only build 26, attached it to version 1.0, and replaced the draft media with the six framed iPhone screenshots
+- lead: 2026-07-11 saved German metadata, review information, News category, 13+ age rating, no-data-collected privacy label, free worldwide pricing, and automatic release
+- lead: 2026-07-11 disabled untested Apple silicon Mac and Apple Vision Pro availability
+- lead: 2026-07-11 App Store Connect validation reported one remaining requirement: Content Rights Information
+- lead: 2026-07-11 repository evidence identifies Bundestag Open Data, DIP, and Wikimedia Commons portraits with per-photo CC attribution; account-holder confirmation remains required before declaring all necessary rights
