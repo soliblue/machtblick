@@ -69,7 +69,7 @@ platform :ios do
       build_number: latest_testflight_build_number(
         api_key: api_key,
         app_identifier: "soli.Machtblick"
-      ),
+      ).to_s,
       metadata_path: "fastlane/metadata",
       screenshots_path: "fastlane/screenshots",
       skip_binary_upload: true,

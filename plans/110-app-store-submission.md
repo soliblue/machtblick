@@ -30,3 +30,4 @@ Prepare and submit Machtblick iOS 1.0 for App Review using the existing TestFlig
 - lead: 2026-07-11 captured four iPhone screenshots at 1284 x 2778 and three selected iPad screenshots at 2064 x 2752
 - lead: 2026-07-11 prepared German product metadata, review notes, Fastlane asset upload lane, and GitHub workflow
 - lead: 2026-07-11 prepared factual age questionnaire responses, calculated rating 13+, not saved pending action-time confirmation
+- lead: 2026-07-11 first asset workflow resolved TestFlight build 1.0 (25), then stopped before upload because Fastlane required a string build number
