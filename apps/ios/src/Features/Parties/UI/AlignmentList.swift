@@ -36,7 +36,7 @@ struct AlignmentList: View {
                 .frame(height: 3)
                 Text(
                     Copy.sharedVotesAgreement(
-                        Formatters.percent(alignment.agreement), alignment.sharedVotes))
+                        Formatters.percent(alignment.agreement), count: alignment.sharedVotes))
                     .font(.system(size: ThemeTokens.Text.s))
                     .foregroundStyle(ThemeColor.secondary)
             }
