@@ -20,7 +20,7 @@ export function VoteCard({ vote }: Props) {
   const { ref: summaryRef, lines: summaryLines } = useFittedLineClamp<HTMLDivElement>()
   const accepted = vote.result === 'angenommen'
   return (
-    <article className="group relative flex h-full flex-col border border-fg/15 bg-background p-l desk:grid desk:h-auto desk:grid-cols-[minmax(0,1fr)_280px] desk:gap-x-xl">
+    <article className="group relative flex h-full flex-col bg-background p-l desk:grid desk:h-auto desk:grid-cols-[minmax(0,1fr)_280px] desk:gap-x-xl">
       <a
         href={withLocale(`/votes/${vote.id}/`, locale)}
         className="absolute inset-0"

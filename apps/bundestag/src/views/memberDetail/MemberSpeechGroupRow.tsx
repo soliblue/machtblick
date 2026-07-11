@@ -1,154 +1,80 @@
-import { ChevronDown, ExternalLink } from 'lucide-react'
-import { DebateThread } from '@/views/speeches/DebateThread'
-import { Reader, type ReaderSpeechItem } from '@/views/speeches/Reader'
-import { buildDebateThread } from '@/hooks/debateThread'
-import { useReader } from '@/hooks/useReader'
+import { ChevronRight, ExternalLink } from 'lucide-react'
 import { formatDateShort } from '@/lib/format'
 import { SERIF } from '@/lib/fonts'
 import { highlight } from '@/lib/highlight'
+import { PARTY_COLOR } from '@/lib/parties'
+import { renderSnippet } from '@/lib/snippet'
 import { withLocale } from '@/lib/locale'
-import { makeSnippet, renderSnippet } from '@/lib/snippet'
 import { useCopy, useLocale } from '@/lib/i18n'
-import type { SpeechResult } from '@/server/speeches'
-import type { SpeechMetaEntry } from '@/lib/speechesStatic'
-import type { MemberSpeechGroup } from '@/hooks/memberSpeechGroups'
+import { memberSpeechGroupTitle, type MemberSpeechGroup } from '@/hooks/memberSpeechGroups'
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 8%, transparent)'
-const PROSE = { fontFamily: SERIF, lineHeight: 1.45 }
 
 type Props = {
   group: MemberSpeechGroup
-  open: boolean
-  onToggle: () => void
-  query: string
   terms: string[]
-  texts?: Record<string, string>
-  people?: Record<string, string>
-  contextRows?: SpeechMetaEntry[]
-  contextLoading: boolean
+  preview: { body: string; snippet: string | null }
+  onOpen: () => void
 }
 
-export function MemberSpeechGroupRow({ group, open, onToggle, query, terms, texts, people = {}, contextRows, contextLoading }: Props) {
+export function MemberSpeechGroupRow({ group, terms, preview, onOpen }: Props) {
   const locale = useLocale()
   const t = useCopy()
-  const timelineRows: Array<SpeechResult | SpeechMetaEntry> = contextRows?.length ? contextRows : group.speeches
-  const threadRows = buildDebateThread(timelineRows)
-  const readerItems: ReaderSpeechItem[] = threadRows
-    .filter((row) => row.kind === 'turn')
-    .map(({ speech }) => ({
-      kind: 'speech',
-      ids: 'ids' in speech ? speech.ids : [speech.id],
-      speakerName: speech.speakerName,
-      speakerMemberId: speech.speakerMemberId,
-      speakerRole: speech.speakerRole,
-      party: speech.party,
-      choice: 'choice' in speech ? speech.choice : null,
-      pictureUrl: speech.speakerMemberId ? people[speech.speakerMemberId] ?? null : null,
-      date: speech.date,
-      voteId: group.voteId,
-      voteTitle: group.voteTitle,
-      fallbackText: texts?.[speech.id] ?? speech.excerpt,
-    }))
-  const reader = useReader(readerItems)
-  const matchedSpeeches = terms.length
-    ? group.speeches.filter((speech) => terms.every((term) => `${speech.speakerName} ${texts?.[speech.id] ?? speech.excerpt}`.toLowerCase().includes(term)))
-    : []
-  const contributions = `${group.speeches.length} ${group.speeches.length === 1 ? t.contribution : t.contributions}`
+  const color = PARTY_COLOR[group.main.party ?? ''] ?? 'var(--color-fg)'
+  const title = memberSpeechGroupTitle(group, locale === 'en' ? 'Speech' : 'Rede')
   const shortLabel = group.shortCount > 0
     ? locale === 'en'
       ? `${group.shortCount} short`
       : `${group.shortCount} kurz`
     : null
   return (
-    <div className="border-t py-m" style={{ borderColor: ROW_BORDER }}>
-      <div
-        role="button"
-        tabIndex={0}
-        aria-expanded={open}
-        onClick={onToggle}
-        onKeyDown={(event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault()
-            onToggle()
-          }
-        }}
-        className="cursor-pointer"
-      >
-        <div className="grid grid-cols-[1fr_auto] items-start gap-m">
-          <div className="min-w-0">
-            <div className="font-display text-l font-semibold" style={{ overflowWrap: 'anywhere' }}>
-              {group.voteTitle ?? group.agendaTitle ?? group.agendaItem ?? (locale === 'en' ? 'Speech' : 'Rede')}
-            </div>
-            <div className="mt-s flex flex-wrap items-center gap-x-s gap-y-xs text-s caption">
-              <span className="opacity-l">{formatDateShort(group.date, locale)}</span>
-              <span className="opacity-l" aria-hidden="true">·</span>
-              <span className="opacity-l">{contributions}</span>
-              {shortLabel && (
-                <>
-                  <span className="opacity-l" aria-hidden="true">·</span>
-                  <span className="opacity-l">{shortLabel}</span>
-                </>
-              )}
-              {group.voteId && (
-                <>
-                  <span className="opacity-l" aria-hidden="true">·</span>
-                  <a
-                    href={withLocale(`/votes/${group.voteId}/`, locale)}
-                    onClick={(event) => event.stopPropagation()}
-                    className="relative z-10 inline-flex items-center gap-xs opacity-l hover:opacity-100"
-                  >
-                    {locale === 'en' ? 'Vote' : 'Abstimmung'}
-                    <ExternalLink size={14} aria-hidden="true" />
-                  </a>
-                </>
-              )}
-            </div>
-          </div>
-          <ChevronDown
-            size={17}
-            className="mt-xs opacity-l transition-transform"
-            style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
-          />
-        </div>
-        {open ? null : terms.length && matchedSpeeches.length ? (
-          <div className="mt-s flex flex-col gap-xs text-m opacity-l" style={PROSE}>
-            {matchedSpeeches.slice(0, 2).map((speech) => {
-              const body = texts?.[speech.id] ?? speech.excerpt
-              const snippet = makeSnippet(body, terms)
-              return <div key={speech.id}>{snippet ? renderSnippet(snippet) : highlight(body, terms)}</div>
-            })}
-          </div>
-        ) : (
-          <div className="mt-s text-m opacity-l line-clamp-2" style={PROSE}>{highlight(group.main.excerpt, terms)}</div>
+    <article className="border-t py-m" style={{ borderColor: ROW_BORDER }}>
+      <div className="grid gap-s desk:grid-cols-[minmax(0,1fr)_auto] desk:items-start">
+        <h2 className="font-display text-l font-semibold leading-tight" style={{ overflowWrap: 'anywhere' }}>
+          {highlight(title, terms)}
+        </h2>
+        <div className="text-s caption opacity-l desk:pt-xs">{formatDateShort(group.date, locale)}</div>
+      </div>
+      <div className="mt-s flex flex-wrap items-center gap-x-s gap-y-xs text-s caption opacity-l">
+        <span>{group.speeches.length} {group.speeches.length === 1 ? t.contribution : t.contributions}</span>
+        {shortLabel && (
+          <>
+            <span aria-hidden="true">/</span>
+            <span>{shortLabel}</span>
+          </>
+        )}
+        {group.voteId && (
+          <>
+            <span aria-hidden="true">/</span>
+            <a
+              href={withLocale(`/votes/${group.voteId}/`, locale)}
+              className="relative z-10 inline-flex items-center gap-xs hover:opacity-100"
+            >
+              {t.toVote}
+              <ExternalLink size={14} aria-hidden="true" />
+            </a>
+          </>
         )}
       </div>
-      {open && (
-        <div className="mt-m">
-          {contextLoading && !contextRows ? (
-            <div className="text-m opacity-l">{locale === 'en' ? 'Loading context...' : 'Kontext wird geladen...'}</div>
-          ) : (
-            <DebateThread
-              rows={threadRows}
-              choiceFor={(speech) => ('choice' in speech ? speech.choice : null)}
-              pictureFor={(speech) => (speech.speakerMemberId ? people[speech.speakerMemberId] ?? null : null)}
-              query={query}
-              onOpenTurn={reader.openAt}
-            />
-          )}
-        </div>
-      )}
-      {reader.active && (
-        <Reader
-          item={reader.active}
-          index={reader.index}
-          count={reader.count}
-          nextName={reader.nextItem?.speakerName ?? null}
-          query={query}
-          onPrev={reader.prev}
-          onNext={reader.next}
-          onClose={reader.close}
-        />
-      )}
-    </div>
+      <div
+        className="mt-m rounded-m p-m text-m line-clamp-3"
+        style={{
+          background: `color-mix(in oklab, ${color} 12%, transparent)`,
+          border: `1px solid color-mix(in oklab, ${color} 28%, transparent)`,
+          fontFamily: SERIF,
+          lineHeight: 1.45,
+        }}
+      >
+        {preview.snippet ? renderSnippet(preview.snippet) : highlight(preview.body, terms)}
+      </div>
+      <button
+        type="button"
+        onClick={onOpen}
+        className="mt-s inline-flex items-center gap-xs text-s font-semibold transition-opacity hover:opacity-70"
+      >
+        <span>{t.viewFullDebate}</span>
+        <ChevronRight size={17} aria-hidden="true" />
+      </button>
+    </article>
   )
 }

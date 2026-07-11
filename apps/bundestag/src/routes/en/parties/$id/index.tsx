@@ -1,7 +1,11 @@
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { createFileRoute, useLoaderData } from '@tanstack/react-router'
+import { PartyDetailShell } from '@/views/partyDetail/PartyDetailShell'
 
 export const Route = createFileRoute('/en/parties/$id/')({
-  beforeLoad: ({ params }) => {
-    throw redirect({ to: '/en/parties/$id/profile/', params: { id: params.id } })
-  },
+  component: PartyRoute,
 })
+
+function PartyRoute() {
+  const data = useLoaderData({ from: '/en/parties/$id' })
+  return <PartyDetailShell data={data.detail} history={data.history} />
+}

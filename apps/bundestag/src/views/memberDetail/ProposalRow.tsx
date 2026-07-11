@@ -27,7 +27,7 @@ export function ProposalRow({ row }: Props) {
       <a href={voteHref ?? antragHref} className="font-display text-l font-semibold underline-offset-4 hover:underline" style={{ overflowWrap: 'anywhere' }}>{title}</a>
       <div className="mt-s flex flex-wrap items-center gap-x-s gap-y-xs text-s caption">
         {statusLabel && (
-          <span className={`w-fit border border-current px-s py-[2px] text-[11px] font-semibold ${row.beratungsstand === 'Abgelehnt' ? 'text-danger' : 'opacity-l'}`}>
+          <span className={`w-fit rounded-m border border-current px-s py-[2px] text-[11px] font-semibold ${row.beratungsstand === 'Abgelehnt' ? 'text-danger' : 'opacity-l'}`}>
             {statusLabel}
           </span>
         )}
@@ -47,7 +47,7 @@ export function ProposalRow({ row }: Props) {
       {row.sachgebiet.length > 0 ? (
         <div className="mt-s flex flex-wrap gap-xs">
           {row.sachgebiet.slice(0, 3).map((topic) => (
-            <span key={topic} className="border px-s py-[2px] text-s opacity-l" style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}>{topic}</span>
+            <span key={topic} className="rounded-m border px-s py-[2px] text-s opacity-l" style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}>{topic}</span>
           ))}
         </div>
       ) : null}

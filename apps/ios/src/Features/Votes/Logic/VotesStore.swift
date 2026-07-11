@@ -10,7 +10,7 @@ final class VotesStore {
     var proposerFilter: String?
     var resultFilter: VoteResult?
     var topicFilter: String?
-    var voteTypeFilter: String? = "namentlich"
+    var voteTypeFilter: String?
     var flagFilter: VoteFlagFilter = .all
 
     func load(cache: ApiCache) async {

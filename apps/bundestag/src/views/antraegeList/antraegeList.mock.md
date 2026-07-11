@@ -135,7 +135,7 @@ single sentence.
   orphan and the 404 problem just moves). Order: Abstimmungen · Anträge ·
   Abgeordnete · Reden · Fraktionen. Lead sign-off needed (5th nav item).
 - **Card**: VoteCard shell recipe (white bg, hairline + double shadow, 3px top
-  border + chip only when decided, radius 0, padding l, stretched link).
+  border + chip only when decided, radius-m, padding l, stretched link).
   Verdict chip variants: ABGELEHNT danger; ANGENOMMEN and VERKÜNDET success
   (two labels, one color; Verkündet is the stronger claim, show it when
   reached).
@@ -148,7 +148,7 @@ single sentence.
 | Element | Text size | Weight | Spacing | Component |
 |---|---|---|---|---|
 | Count caption | s uppercase, ls 0.08em | regular, opacity-l | mb-m | — |
-| Card | — | — | p-l, mb-m, hairline + double shadow, radius 0 | card recipe |
+| Card | — | — | p-l, mb-m, hairline + double shadow, radius-m | card recipe |
 | Verdict chip / top border | 11px uppercase, ls 0.14em | semibold, white on success/danger | 3px border, chip straddles | chip idiom |
 | Kicker | s uppercase, ls 0.08em | regular, fg@70 | gap-s | PartyLogo 17 |
 | Status text (undecided) | s uppercase, ls 0.08em | regular, opacity-l | right slot | — |

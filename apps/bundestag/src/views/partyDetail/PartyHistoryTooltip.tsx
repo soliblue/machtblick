@@ -24,7 +24,7 @@ export function PartyHistoryTooltip({ active, payload }: TooltipProps) {
   const pct = (point.pctOfTotal * 100).toFixed(1).replace('.', locale === 'de' ? ',' : '.') + '%'
   return (
     <div
-      className="bg-surface p-m text-s"
+      className="rounded-m bg-surface p-m text-s"
       style={{ border: `1px solid ${border}`, minWidth: 220 }}
     >
       <div className="text-m font-semibold">{point.termNumber}. {t.electoralTerm}</div>

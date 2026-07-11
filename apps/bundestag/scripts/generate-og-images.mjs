@@ -10,6 +10,7 @@ const DANGER = '#B54E5E'
 const YELLOW = '#D2BF72'
 const ABSENT = '#C6C6C6'
 const FG = '#0A0A0A'
+const BRAND_EYES = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 82 36"><path d="M8.4 16.8C12.2 12.2 16.3 10.2 21 10.2C27 10.2 31.1 12.7 35 19C31.1 25.3 27 27.8 21 27.8C16.3 27.8 12.2 25.8 8.4 21.2C7.6 20.2 7.6 17.8 8.4 16.8Z" fill="none" stroke="#0A0A0A" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/><path d="M73.6 16.8C69.8 12.2 65.7 10.2 61 10.2C55 10.2 50.9 12.7 47 19C50.9 25.3 55 27.8 61 27.8C65.7 27.8 69.8 25.8 73.6 21.2C74.4 20.2 74.4 17.8 73.6 16.8Z" fill="none" stroke="#0A0A0A" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/><path d="M9 3.8C16 1.6 24 1.4 32 3.5M50 3.5C58 1.4 66 1.6 73 3.8" fill="none" stroke="#0A0A0A" stroke-linecap="round" stroke-width="4"/><circle cx="21" cy="19" fill="#0A0A0A" r="3.8"/><circle cx="61" cy="19" fill="#B54E5E" r="3.8"/></svg>`
 const PARTY_LINE_EXCLUDED = new Set(['fraktionslos', 'Bundesregierung'])
 const PARTY_SHORT = { 'CDU/CSU': 'CDU/CSU', SPD: 'SPD', AfD: 'AfD', 'B90/Grüne': 'GRÜNE', 'Die Linke': 'LINKE' }
 const PARTIES = [
@@ -100,6 +101,13 @@ function logoImg(slug, height) {
   }
 }
 
+function brandLogo(height) {
+  return {
+    type: 'img',
+    props: { width: Math.round(height * (82 / 36)), height, src: `data:image/svg+xml;base64,${Buffer.from(BRAND_EYES).toString('base64')}` },
+  }
+}
+
 function frame(edgeColor, chipText, children) {
   return el('div', { width: 1200, height: 630, display: 'flex', flexDirection: 'column', backgroundColor: '#FFFFFF', fontFamily: 'Fraunces', color: FG }, [
     el('div', { height: 12, width: 1200, backgroundColor: edgeColor, display: 'flex' }),
@@ -173,14 +181,47 @@ function partyCard(party) {
   ])
 }
 
+function defaultCard() {
+  return el('div', { width: 1200, height: 630, display: 'flex', flexDirection: 'column', backgroundColor: '#FFFFFF', fontFamily: 'Fraunces', color: FG }, [
+    el('div', { height: 14, width: 1200, backgroundColor: FG, display: 'flex' }),
+    el('div', { display: 'flex', flexDirection: 'column', flexGrow: 1, padding: '64px 76px 58px' }, [
+      el('div', { display: 'flex', alignItems: 'center', gap: 24 }, [
+        brandLogo(72),
+        el('div', { display: 'flex', fontSize: 42, fontWeight: 600 }, 'Machtblick'),
+      ]),
+      el('div', { display: 'flex', marginTop: 66, fontSize: 82, fontWeight: 600, lineHeight: 1.04 }, 'Bundestag transparent.'),
+      el('div', { display: 'flex', marginTop: 26, maxWidth: 940, fontSize: 30, fontWeight: 600, lineHeight: 1.3, opacity: 0.7 }, 'Abstimmungen, Abgeordnete und Fraktionen verständlich auf einen Blick.'),
+      el('div', { display: 'flex', flexGrow: 1 }),
+      el('div', { display: 'flex', alignItems: 'center', justifyContent: 'space-between' }, [
+        el('div', { display: 'flex', gap: 10 }, [
+          el('div', { width: 72, height: 10, borderRadius: 5, backgroundColor: '#2176B5', display: 'flex' }),
+          el('div', { width: 72, height: 10, borderRadius: 5, backgroundColor: '#DE4651', display: 'flex' }),
+          el('div', { width: 72, height: 10, borderRadius: 5, backgroundColor: '#38964F', display: 'flex' }),
+        ]),
+        el('div', { display: 'flex', fontSize: 22, fontWeight: 600, letterSpacing: 2, opacity: 0.7 }, 'MACHTBLICK.DE'),
+      ]),
+    ]),
+  ])
+}
+
 async function render(node, path) {
   const svg = await satori(node, { width: 1200, height: 630, fonts })
   writeFileSync(path, new Resvg(svg, { fitTo: { mode: 'width', value: 1200 } }).render().asPng())
 }
 
+function writeFavicons() {
+  const svg = BRAND_EYES.replace('viewBox="0 0 82 36"', 'viewBox="0 -25 82 82"')
+  writeFileSync(`${root}public/favicon.svg`, svg)
+  for (const [name, size] of [['favicon-16x16.png', 16], ['favicon-32x32.png', 32], ['apple-touch-icon.png', 180]]) {
+    writeFileSync(`${root}public/${name}`, new Resvg(svg, { fitTo: { mode: 'width', value: size } }).render().asPng())
+  }
+}
+
 const only = process.argv[2]
 const targets = only ? votes.filter((v) => v.id === only || votes.indexOf(v) < Number(only)) : votes
 const started = Date.now()
+writeFavicons()
+await render(defaultCard(), `${root}public/og-image.png`)
 for (const vote of targets) await render(voteCard(vote), `${root}public/og/votes/${vote.id}.png`)
 for (const party of PARTIES) await render(partyCard(party), `${root}public/og/parties/${party.slug}.png`)
-console.log(`og-images: ${targets.length} votes + ${PARTIES.length} parties in ${((Date.now() - started) / 1000).toFixed(1)}s -> public/og`)
+console.log(`og-images: default + ${targets.length} votes + ${PARTIES.length} parties in ${((Date.now() - started) / 1000).toFixed(1)}s -> public/og`)

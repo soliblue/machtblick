@@ -294,8 +294,8 @@ function sitemapEntries(): SitemapEntry[] {
   for (const p of parties) {
     const slug = slugMap[p.party]
     if (slug) {
-      entries.push({ path: `/parties/${slug}/profile/`, lastmod: latest })
-      entries.push({ path: `/en/parties/${slug}/profile/`, lastmod: latest })
+      entries.push({ path: `/parties/${slug}/`, lastmod: latest })
+      entries.push({ path: `/en/parties/${slug}/`, lastmod: latest })
     }
   }
   db.close()
@@ -355,7 +355,7 @@ function writeVotesFeed() {
   const db = new Database(fileURLToPath(new URL('../../db/machtblick.sqlite', import.meta.url)), { readonly: true })
   const votes = db.prepare(`
     SELECT id, date, title, clean_title, result, coalesce(summary_simplified, summary, subject, title) AS summary
-    FROM votes WHERE term_id = ? AND procedural = 0 AND vote_type != 'hammelsprung'
+    FROM votes WHERE term_id = ? AND procedural = 0 AND is_petition_bundle = 0 AND vote_type != 'hammelsprung'
     ORDER BY date DESC, bundestag_id DESC LIMIT 50
   `).all(CURRENT_TERM) as Array<{ id: string; date: string; title: string; clean_title: string | null; result: 'angenommen' | 'abgelehnt'; summary: string }>
   db.close()

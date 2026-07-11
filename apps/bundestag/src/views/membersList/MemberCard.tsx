@@ -1,22 +1,21 @@
 import type { MemberListItem } from '@/server/members'
 import { PartyLogo } from '@/views/votesList/PartyLogo'
 import { initials } from '@/lib/initials'
-import { pct } from '@/lib/format'
-import { partyLabel } from '@/lib/parties'
-import { useCopy, useLocale } from '@/lib/i18n'
+import { PARTY_COLOR, PARTY_LOGO, partyLabel } from '@/lib/parties'
+import { useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
 
 type Props = { member: MemberListItem; index?: number }
 
 export function MemberCard({ member, index = 0 }: Props) {
-  const t = useCopy()
   const locale = useLocale()
+  const color = PARTY_COLOR[member.party] ?? 'var(--color-fg)'
   return (
-    <div className="relative flex flex-col border border-fg/15 bg-background transition-opacity hover:opacity-80">
+    <div className="group relative aspect-[3/4] overflow-hidden rounded-m bg-surface transition-opacity hover:opacity-85">
       <a
         href={withLocale(`/members/${member.id}/votes/`, locale)}
-        className="absolute inset-0 z-10"
-        aria-label={`${member.name}, ${partyLabel(member.party, locale)}, ${member.state}, ${t.attendance} ${pct(member.attendance)}`}
+        className="absolute inset-0 z-20"
+        aria-label={`${member.name}, ${partyLabel(member.party, locale)}, ${member.state}`}
       />
       {member.pictureUrl ? (
         <img
@@ -25,29 +24,24 @@ export function MemberCard({ member, index = 0 }: Props) {
           loading={index < 12 ? 'eager' : 'lazy'}
           fetchPriority={index < 5 ? 'high' : undefined}
           decoding="async"
-          className="aspect-square w-full object-cover"
+          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
         />
       ) : (
-        <div className="flex aspect-square w-full items-center justify-center bg-surface">
+        <div className="flex h-full w-full items-center justify-center bg-surface">
           <span className="text-xl font-semibold opacity-m">{initials(member.name)}</span>
         </div>
       )}
-      <div className="flex flex-1 flex-col p-s desk:p-m">
-        <p className="min-h-[2lh] text-s font-semibold line-clamp-2 desk:text-m" style={{ overflowWrap: 'anywhere' }}>{member.name}</p>
-        <p className="mt-xs flex min-w-0 items-center gap-xs text-s">
+      <div className="absolute right-0 top-0 z-10 p-s">
+        {PARTY_LOGO[member.party] ? (
           <PartyLogo party={member.party} size={17} decorative />
-          <span className="truncate opacity-l">{member.state}</span>
-        </p>
-        <span className="mt-m whitespace-nowrap text-s caption opacity-l">{t.attendance}</span>
-        <div className="mt-xs flex items-center gap-s">
-          <div className="h-[3px] min-w-0 flex-1 bg-fg/15">
-            <div className="h-full bg-success" style={{ width: pct(member.attendance) }} />
-          </div>
-          <span className="text-s font-semibold tabular-nums">{pct(member.attendance)}</span>
-        </div>
-        <div className="mt-s flex items-baseline justify-between gap-s">
-          <span className="min-w-0 truncate text-s caption opacity-l">{t.line}</span>
-          <span className="text-s font-semibold tabular-nums">{member.loyalty === null ? '-' : pct(member.loyalty)}</span>
+        ) : (
+          <span className="h-[14px] w-[14px] rounded-full" style={{ background: color }} />
+        )}
+      </div>
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 z-10 p-s text-background">
+        <div className="text-s font-semibold leading-tight line-clamp-2 desk:text-m" style={{ overflowWrap: 'anywhere' }}>
+          {member.name}
         </div>
       </div>
     </div>

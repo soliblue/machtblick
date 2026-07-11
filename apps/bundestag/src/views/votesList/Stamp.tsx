@@ -60,6 +60,7 @@ export function Stamp({ variant, size = 's', rotated = true }: Props) {
         border: `2.5px solid ${color}`,
         outline: `1px solid ${color}`,
         outlineOffset: '2px',
+        borderRadius: 'var(--radius-s)',
         color: `color-mix(in srgb, ${color} 45%, var(--color-fg))`,
         opacity,
         transform: `rotate(${rotated ? rotate : 0}deg)`,

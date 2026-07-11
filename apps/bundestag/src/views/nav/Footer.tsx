@@ -11,7 +11,9 @@ export function Footer() {
       className="mt-xl"
       style={{ borderTop: '1px solid color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
     >
-      <div className="mx-auto flex max-w-3xl justify-end gap-l px-l py-l text-s">
+      <div className="mx-auto flex max-w-3xl flex-wrap justify-end gap-l px-l py-l text-s">
+        <a href={withLocale('/motions/', locale)} className={linkClass}>{t.navMotions}</a>
+        <a href={withLocale('/speeches/', locale)} className={linkClass}>{t.navSpeeches}</a>
         <a href={withLocale('/methodology/', locale)} className={linkClass}>{t.aboutData}</a>
         <a href={withLocale('/imprint/', locale)} className={linkClass}>{t.imprint}</a>
         <a href={withLocale('/privacy/', locale)} className={linkClass}>{t.privacy}</a>

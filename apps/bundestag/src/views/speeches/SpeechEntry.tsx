@@ -91,7 +91,7 @@ export function SpeechEntry({ speech, mode, choice = null, pictureUrl = null, vo
     return (
       <article
         {...interactive}
-        className="mb-m cursor-pointer border border-fg/15 bg-background p-l"
+        className="mb-m cursor-pointer rounded-m border border-fg/15 bg-background p-l"
       >
         <div className="grid grid-cols-[36px_minmax(0,1fr)] items-center gap-m">
           <SpeakerAvatar name={speech.speakerName} pictureUrl={pictureUrl} />

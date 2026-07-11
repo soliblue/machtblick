@@ -31,18 +31,17 @@ export function MemberDetailTabs({ memberId, votes, speeches, proposals }: Props
     }))
   return tabs.length > 0 ? (
     <nav
-      className="-mx-l mt-l mb-l grid border-y"
-      style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)', gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }}
+      className="mb-l grid gap-xs rounded-m border border-fg/15 bg-surface p-xs"
+      style={{ gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }}
     >
-      {tabs.map((tab, i) => (
+      {tabs.map((tab) => (
         <Link
           key={tab.to}
           to={tab.to}
           params={{ id: memberId }}
-          className="-mb-px border-b-2 border-transparent py-m text-center text-m font-regular opacity-l transition-opacity hover:opacity-100"
-          style={i > 0 ? { borderLeft: '1px solid color-mix(in oklab, var(--color-fg) 15%, transparent)' } : undefined}
+          className="min-w-0 rounded-m px-s py-s text-center text-s font-regular opacity-l transition-[background,opacity] hover:opacity-100"
           activeProps={{
-            className: '-mb-px py-m text-center text-m font-semibold opacity-100 border-b-2 border-fg bg-surface',
+            className: 'min-w-0 rounded-m bg-background px-s py-s text-center text-s font-semibold opacity-100 shadow-[0_1px_2px_rgba(10,10,10,0.08)]',
           }}
         >
           <span className="block truncate">{tab.label}</span>

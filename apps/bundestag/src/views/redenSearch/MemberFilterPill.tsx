@@ -54,7 +54,7 @@ export function MemberFilterPill({ label, options, value, onChange }: Props) {
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-haspopup="listbox"
-        className="inline-flex shrink-0 items-center gap-s border px-m py-xs text-m transition-colors hover:bg-surface"
+        className="inline-flex shrink-0 items-center gap-s rounded-m border px-m py-xs text-m transition-colors hover:bg-surface"
         style={{ borderColor: BORDER, background: value ? 'var(--color-surface)' : 'transparent' }}
       >
         {selected ? <span className="font-semibold">{selected.name}</span> : <span>{label}</span>}
@@ -78,7 +78,7 @@ export function MemberFilterPill({ label, options, value, onChange }: Props) {
         <div
           ref={menuRef}
           role="listbox"
-          className="fixed z-50 flex w-[260px] flex-col bg-background p-xs shadow-lg"
+          className="fixed z-50 flex w-[260px] flex-col overflow-hidden rounded-m bg-background p-xs shadow-lg"
           style={{ left: pos.left, top: pos.top, border: `1px solid ${BORDER}` }}
         >
           <input
@@ -88,7 +88,7 @@ export function MemberFilterPill({ label, options, value, onChange }: Props) {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Suchen"
             aria-label="Abgeordnete suchen"
-            className="mb-xs w-full border bg-transparent px-s py-xs text-m outline-none focus:border-fg"
+            className="mb-xs w-full rounded-m border bg-transparent px-s py-xs text-m outline-none focus:border-fg"
             style={{ borderColor: BORDER }}
           />
           <div className="max-h-[320px] overflow-y-auto">
@@ -105,7 +105,7 @@ export function MemberFilterPill({ label, options, value, onChange }: Props) {
                     onChange(o.id === value ? null : o.id)
                     setOpen(false)
                   }}
-                  className="block w-full px-s py-xs text-left text-m hover:bg-surface"
+                  className="block w-full rounded-m px-s py-xs text-left text-m hover:bg-surface"
                   style={{ background: o.id === value ? 'var(--color-surface)' : 'transparent' }}
                 >
                   {o.name}

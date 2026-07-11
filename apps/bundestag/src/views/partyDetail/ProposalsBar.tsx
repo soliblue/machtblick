@@ -4,9 +4,9 @@ import { formatDate } from '@/lib/format'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
 
-type Props = { proposals: PartyProposal[] }
+type Props = { proposals: PartyProposal[]; party: string }
 
-export function ProposalsBar({ proposals }: Props) {
+export function ProposalsBar({ proposals, party }: Props) {
   const total = proposals.length
   const accepted = proposals.filter((p) => p.result === 'angenommen').length
   const locale = useLocale()
@@ -18,17 +18,20 @@ export function ProposalsBar({ proposals }: Props) {
         <span>{t.proposals}</span>
         <span>{accepted} / {total} {t.acceptedCount}</span>
       </div>
-      <div className="mt-s flex h-8 w-full gap-[2px] overflow-hidden">
+      <a
+        href={`${withLocale('/votes/', locale)}?party=${encodeURIComponent(party)}`}
+        className="mt-s flex h-8 w-full gap-[2px] overflow-hidden transition-opacity hover:opacity-80"
+        aria-label={`${t.proposals}: ${accepted} / ${total} ${t.acceptedCount}`}
+      >
         {proposals.map((p) => (
           <Tooltip key={p.voteId}>
             <TooltipTrigger asChild>
-              <a
-                href={withLocale(`/votes/${p.voteId}/`, locale)}
+              <span
                 className="flex-1 transition-opacity hover:opacity-70"
                 style={{
                   background: p.result === 'angenommen' ? 'var(--color-success)' : 'var(--color-danger)',
                 }}
-                aria-label={`${p.cleanTitle} · ${resultLabel[p.result]}`}
+                aria-hidden="true"
               />
             </TooltipTrigger>
             <TooltipContent>
@@ -37,7 +40,7 @@ export function ProposalsBar({ proposals }: Props) {
             </TooltipContent>
           </Tooltip>
         ))}
-      </div>
+      </a>
     </div>
   )
 }

@@ -46,7 +46,7 @@ export const Route = createFileRoute('/en/members/$id')({
             memberOf: {
               '@type': hasPartyLine(loaderData.party) ? 'PoliticalParty' : 'Organization',
               name: loaderData.party,
-              ...(PARTY_SLUG[loaderData.party] ? { url: `${SITE_URL}/en/parties/${PARTY_SLUG[loaderData.party]}/profile/` } : {}),
+              ...(PARTY_SLUG[loaderData.party] ? { url: `${SITE_URL}/en/parties/${PARTY_SLUG[loaderData.party]}/` } : {}),
             },
             ...(loaderData.state
               ? {

@@ -20,7 +20,7 @@ struct PartySummaryBubble: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(ThemeTokens.Spacing.m)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .background(RoundedRectangle(cornerRadius: 16).fill(tint))
     }
 

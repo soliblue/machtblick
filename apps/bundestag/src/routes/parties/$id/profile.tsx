@@ -1,11 +1,7 @@
-import { createFileRoute, useLoaderData } from '@tanstack/react-router'
-import { PartyProfilePanel } from '@/views/partyDetail/PartyProfilePanel'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/parties/$id/profile')({
-  component: ProfilRoute,
+  beforeLoad: ({ params }) => {
+    throw redirect({ to: '/parties/$id/', params: { id: params.id }, replace: true })
+  },
 })
-
-function ProfilRoute() {
-  const data = useLoaderData({ from: '/parties/$id' })
-  return data ? <PartyProfilePanel data={data} /> : null
-}

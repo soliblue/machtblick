@@ -1,51 +1,128 @@
 # Member speeches tab
 
-Route: `/members/$id/speeches`
+Route: `/members/:id/speeches`
 
-## Layout
+Plan 114 parity contract. The list unit is a debate appearance, not a raw XML
+speech fragment. Rows use the iOS inbox anatomy and open the full debate with
+this member highlighted. Speech turns expand inline inside the debate.
+
+## Mobile
 
 ```
-+------------------------------------------------------------+
-| [Search Reden]                                             |
-|                                                            |
-| Bundesweites Moratorium des Windindustrieausbaus           v |
-| 08.05.2026  6 Beitraege  3 kurz                            |
-| Herr Praesident! Werte Kollegen! Also eines ist in der...   |
-|                                                            |
-| Aktuelle Stunde: Mitversicherung von Familien...           v |
-| 26.03.2026  1 Beitrag                                      |
-| Danke schoen, Frau Moll; dann lernen wir uns so auch...     |
-|                                                            |
-| Antrag zur Einsetzung einer Enquete-Kommission             ^ |
-| 19.03.2026  2 Beitraege  1 kurz                            |
-|                                                            |
-| Verlauf                                                     |
-|   Sprecherin A  SPD                                         |
-|   ... unmittelbarer vorheriger Beitrag ...                  |
-|                                                            |
-|   Carolin Bachmann  AfD                                     |
-|   Frau Praesidentin! Werte Kollegen! Ich wende mich...      |
-|                                                            |
-|   Carolin Bachmann  AfD                                     |
-|   Setzen Sie mit uns die Enquete-Kommission ein. Danke.     |
-+------------------------------------------------------------+
++---------------------------------------------+
+| (foto) Erika Musterfrau                     |
+| Erika Musterfrau                            |
+| SPD / Hessen / Direktmandat                 |
+|                                             |
+| +-----------+-----------+-----------+       |
+| | Stimmen   | Reden     | Antraege  |       |
+| +-----------+-----------+-----------+       |
+|                                             |
+| [ Reden durchsuchen..................... ]  |
+|                                             |
+| Krankenhausversorgung sichern              |
+| 25.06.2026 / 6 Beitraege / 3 kurz          |
+| .-----------------------------------------. |
+| | Die Finanzierung muss in der Flaeche... | |  party-tinted excerpt
+| '-----------------------------------------' |
+| Ganze Debatte ansehen >                     |
+| ------------------------------------------- |
+| Aktuelle Stunde: Pflege                    |
+| 12.06.2026 / 1 Beitrag                     |
+| .-----------------------------------------. |
+| | Danke, Frau Praesidentin. Wir muessen...| |
+| '-----------------------------------------' |
+| Ganze Debatte ansehen >                     |
++---------------------------------------------+
 ```
 
-## Intent
+Opening a row:
 
-The tab is still named `Reden`, but the count and list unit are debate appearances, grouped by date and agenda item. Raw XML speaker fragments stay available inside the expanded group as `Beitraege`.
+```
++---------------------------------------------+
+| Krankenhausversorgung sichern          X    |
+|                                             |
+| ------------------------------------------- |
+| Praesidium: Aussprache wird eroeffnet.       |
+| ------------------------------------------- |
+|                                             |
+| .-----------------------------------------. |
+| | (foto) Max Mustermann          CDU/CSU  | |
+| | Wir unterstuetzen die Vorlage, weil ... | |
+| '-----------------------------------------' |
+| .=========================================. |
+| | (foto) Erika Musterfrau          SPD    | |  highlighted member
+| | Die Finanzierung muss in der Flaeche... | |
+| | Mehr anzeigen                           | |
+| '=========================================' |
+|      .------------------------------------. |
+|      | (foto) Paul Probe          Gruene | |
+|      | Zwischenfrage: Wie soll das ...   | |
+|      '------------------------------------' |
++---------------------------------------------+
+```
 
-Short replies never stand alone in the list. They appear only inside the group timeline, next to nearby context rows when metadata is loaded.
+## Desktop
 
-Search matches every underlying contribution, including short replies. Results still return grouped rows so the count and navigation stay stable.
+```
++----------------------------------------------------------------------+
+| Header and segmented member tabs stay above this panel                |
+|                                                                      |
+| [ Reden durchsuchen................................................] |
+|                                                                      |
+| Krankenhausversorgung sichern                          25.06.2026    |
+| 6 Beitraege / 3 kurz                                                |
+| .------------------------------------------------------------------. |
+| | Die Finanzierung muss in der Flaeche verlaesslich sein ...       | |
+| '------------------------------------------------------------------' |
+| Ganze Debatte ansehen >                                             |
+| -------------------------------------------------------------------- |
+| Aktuelle Stunde: Pflege                               12.06.2026    |
+| 1 Beitrag                                                            |
+| .------------------------------------------------------------------. |
+| | Danke, Frau Praesidentin. Wir muessen die Einrichtungen ...      | |
+| '------------------------------------------------------------------' |
+| Ganze Debatte ansehen >                                             |
++----------------------------------------------------------------------+
+```
+
+Desktop keeps the same row anatomy and may present the opened debate as a
+centered dialog or route-backed panel. It must preserve content order, inline
+speech expansion, and the highlighted member state. Native full-screen cover and
+haptics are not copied literally.
+
+## Filters / interactions
+
+- Search matches title, agenda labels, speaker names, and all underlying
+  contribution text. Results remain grouped by debate appearance.
+- Short replies never stand alone in the list. They appear inside the opened
+  debate near their surrounding turns.
+- Row action opens the full debate. The current member's turns are highlighted.
+- Speech turns expand inline with "Mehr anzeigen". The separate reader is not
+  the primary interaction.
+- If the debate is tied to a vote, the opened surface includes a contextual vote
+  link but does not replace the conversation.
+
+## What This Emphasizes
+
+At a glance: where this member actually appeared in parliamentary debates, with
+their own contribution visible before procedural fragments.
 
 ## Tokens
 
-| Element | Text size | Weight | Spacing |
+| Element | Size / weight | Spacing | Component |
 |---|---|---|---|
-| Search input | m | regular | py-xs |
-| Group title | m | semibold | gap-s |
-| Group date | s | regular | mt-xs |
-| Contribution count | s | regular | mt-xs |
-| Excerpt | m | regular | mt-s |
-| Expanded timeline | m | regular | pl-m |
+| Search input | m regular | px-m py-s | Input anatomy |
+| Inbox title | l display semibold | mb-s | button row |
+| Inbox meta | s regular opacity-l | gap-s | none |
+| Excerpt bubble | l Lora serif regular | p-m | party-tinted bubble |
+| Row divider | none | py-m | border fg opacity-s |
+| Open action | s semibold | mt-s | Button text |
+| Debate title | l display semibold | p-l | dialog or route header |
+| Speech bubble | l Lora serif regular | p-m | SpeakerAvatar, PartyLogo |
+| Highlight ring | none | stroke-m | member highlight |
+| System row | s regular opacity-l | py-m | full-width rules |
+
+Colors: party tint is identity for debate context only. The highlighted member
+ring uses the member party color at opacity-l. Neutral metadata uses foreground
+opacity-l.

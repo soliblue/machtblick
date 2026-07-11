@@ -40,7 +40,7 @@ export function PartyDonutGrid({ summaries, selected = null }: Props) {
             <div key={p.party} className="flex min-w-0 flex-col items-center gap-xs">
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <a href={withLocale(`/parties/${PARTY_SLUG[p.party] ?? p.party}/votes/`, locale)} aria-label={label}>
+                  <a href={withLocale(`/parties/${PARTY_SLUG[p.party] ?? p.party}/`, locale)} aria-label={label}>
                     <VoteDistributionDonut yes={p.yes} no={p.no} abstain={p.abstain} absent={p.absent} size={72} selected={selected} />
                   </a>
                 </TooltipTrigger>

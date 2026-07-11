@@ -16,7 +16,7 @@ export function DetailTab({ data }: Props) {
           <> {t.fullMotion} <a href={data.antragPdfUrl} target="_blank" rel="noreferrer" className="underline">{drucksache ? `Drucksache ${drucksache} (PDF)` : t.sourcePdf}</a>.</>
         )}
       </div>
-      <Markdown>{vote.summaryDetail}</Markdown>
+      <Markdown serif>{vote.summaryDetail}</Markdown>
     </section>
   ) : (
     <p className="text-m opacity-l">{t.noSimplifiedSummary}</p>

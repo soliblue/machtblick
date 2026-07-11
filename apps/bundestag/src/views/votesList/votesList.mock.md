@@ -13,8 +13,8 @@ app nav.
 Mobile filters (amendments 14+15): no pill row. A floating pill-shaped button, bottom
 center, safe-area aware, `fg` fill with `background` text (inverted so it pops over the
 feed; pill shape and dark fill are deliberate exceptions to radius-0), lucide funnel
-icon + localized "Filter · n" where n counts all active filter values INCLUDING the
-default type (default view reads "Filter · 1"), semibold when n > 0. Tapping opens a
+icon + localized "Filter · n" where n counts all active filter values. The default
+view has no vote-type filter and reads "Filter · 0", semibold when n > 0. Tapping opens a
 bottom sheet: drag handle, one caption-labeled group per filter (Typ, Antragsteller,
 Ergebnis, Kategorie), options as bordered chips, selected = surface bg + semibold + ×,
 applies immediately on select, tap selected again to clear, dismisses on backdrop tap
@@ -24,7 +24,7 @@ or swipe-down. Same filter state and URL semantics as the pills.
 
 Mobile: one vote per screen. The chamber itself is the result: a hemicycle of 630 seat
 dots, green mass vs red mass, counts flanking. Swipe = next vote.
-Desktop: the SAME card, re-flowed wide: per sitting day, one wide card per vote with
+Desktop: the SAME unframed vote surface, re-flowed wide: one vote per row with
 text left (kicker, headline, summary) and the result right (hemicycle + donut row).
 One ingredient set on both devices (phase 4 unification).
 
@@ -84,10 +84,10 @@ Snap feed mechanics:
 - `html { scroll-snap-type: y mandatory; scroll-padding-top: 52px }` (app nav height).
 - Each feed cell: `scroll-snap-align: start; scroll-snap-stop: always;
   height: calc(100svh - 52px - 44px)`, padding `s m 0` (8px gap between cards).
-- Card inside: `bg-background` (white; user rejected the surface gray), 1px
-  `text @ opacity-s` border PLUS a soft elevation shadow (user amendment: cards get a
-  real card effect), **radius 0** (deliberate user decision for consistency, overriding
-  the earlier radius-l exception; sharp corners everywhere again), padding l, flex
+- Card inside: `bg-background` (white; user rejected the surface gray), with
+  no outer border or shadow. An inset `elevated` hairline separates adjacent votes,
+  matching the iOS feed. The unframed content surface needs no container radius,
+  uses padding l, and remains a flex
   column, overflow hidden. The 44px remainder shows the next card's top edge and kicker
   line; that peek is the only swipe indicator. No dots, no rails.
 - Card links via the stretched-link idiom (absolute inset `<a>` with the full
@@ -140,7 +140,7 @@ everything after, stacked.
 
 ```
 | Machtblick  Abstimmungen Abgeordnete ...                                       |  <- app topbar
-| v [Namentlich x] [Antragsteller v] [Ergebnis v] [Kategorie v]                  |  <- pill row, sticky, unchanged
+| v [Typ v] [Antragsteller v] [Ergebnis v] [Kategorie v]                         |  <- pill row, sticky, unchanged
 |                                                                                |
 | SITZUNG VOM 11. JUNI 2026                                       4 ABSTIMMUNGEN |  <- dayline: plain caption, NO rule
 | .----------------------------------------------------------------------------. |
@@ -161,9 +161,9 @@ everything after, stacked.
 | .----------------------------------------------------------------------------. |
 ```
 
-- Container 1120px centered, cards stacked vertically with gap l; natural height
+- Container centered, vote surfaces stacked vertically with an inset gray divider; natural height
   (no 100svh), height driven by the right column (~330px).
-- Card = the same article: white bg, hairline border, double shadow, radius 0,
+- Vote surface = the same article: white bg, no border or shadow,
   padding l. Grid `[minmax(0,1fr) | 380px]`, column-gap 48px, no column rule (the
   gap alone separates, per prototype).
 - LEFT: kicker (proposer logo/text + `·` + short date left, straight Stamp size m
@@ -186,11 +186,9 @@ everything after, stacked.
 
 ## Why (decisions, do not relitigate)
 
-- **Card, not stack:** full-screen loose sections read as a broken page; the bounded
-  card with border + shadow peeking at the fold makes the snap feed legible as
-  swipeable cards. User amendments after the first build: white card on white page
-  (surface gray rejected), elevation via shadow, radius 0 (sharp corners everywhere,
-  no exception; the earlier radius-l sanction is revoked).
+- **Paged vote surface:** the fixed-height mobile surface and next-vote peek make the
+  snap feed legible as swipeable content. The frame and shadow are removed in favor
+  of the iOS inset divider treatment.
 - **Hemicycle as the result viz:** user picked it over half-donut and margin-donut.
   It is data-honest (one dot = one seat, absences visible) and it is the app's own
   visual language (mirrors /parties/), colored by vote instead of party.
@@ -233,8 +231,8 @@ everything after, stacked.
 Text: xxl only for nothing here (mobile title and desktop headline are xl 22); s for
 captions/legends/footers, m for desc/dek. Display numerals 40px (flank counts) are the
 poster-token extension from plan 102 phase 2, mobile only. Weights regular/semibold.
-Spacing xs/s/m/l/xl as annotated. Radius 0 everywhere (user decision; mobile cards get
-border + shadow instead). Bars 6px, stroke gaps 2px, min segment 3px. Colors:
+Spacing xs/s/m/l/xl as annotated. Framed controls use radius-m; vote surfaces are
+unframed. Bars 6px, stroke gaps 2px, min segment 3px. Colors:
 success/danger/fg-opacity ladder (70/40/15), three backgrounds; mobile card bg =
 `background`. Components: existing FilterPill row; everything else is bespoke view code
 (no new shadcn primitives needed).

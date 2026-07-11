@@ -6,6 +6,7 @@ import { seoMeta, canonicalLink, alternateJsonLink, breadcrumbJsonLd, jsonLd, SI
 import { formatDateLong } from '@/lib/format'
 import { partyLabel } from '@/lib/parties'
 import { NotFoundPage } from '@/views/notFound/NotFoundPage'
+import { useVoteFlags } from '@/hooks/useVoteFlags'
 
 type Search = { tab?: VoteTab }
 
@@ -94,12 +95,17 @@ function VoteDetailRoute() {
   const data = Route.useLoaderData()
   const { tab } = Route.useSearch()
   const navigate = useNavigate({ from: Route.fullPath })
+  const { savedIds, seenIds, toggleSaved, toggleSeen } = useVoteFlags()
   const active = tab ?? 'ergebnis'
   return (
     <VoteDetail
       data={data}
       activeTab={active}
       onTabChange={(t) => navigate({ search: (s) => ({ ...s, tab: t === 'ergebnis' ? undefined : t }), resetScroll: false, replace: true })}
+      isSaved={savedIds.has(data.vote.id)}
+      isSeen={seenIds.has(data.vote.id)}
+      onToggleSaved={() => toggleSaved(data.vote.id)}
+      onToggleSeen={() => toggleSeen(data.vote.id)}
     />
   )
 }

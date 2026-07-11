@@ -207,7 +207,7 @@ hemicycle showing the physical majority).
 | Section captions | s uppercase, ls 0.08em | regular, opacity-l | mt-xl mb-s | `.caption` |
 | Summary / detail prose | m serif (Charter), leading 1.45 | regular | — | Markdown(Inline) |
 | AI notice / source | s | regular, opacity-l | mt-s / mt-xl | link underline |
-| Vote result card | — | — | p-l, mb-m, hairline + double shadow, 3px top border, radius 0 | card recipe |
+| Vote result card | — | — | p-l, mb-m, hairline + double shadow, 3px top border, radius-m | card recipe |
 | Vote card title | l | semibold | mt-m | link |
 | Hemicycle numerals | 32px font-display tabular-nums | semibold | — | shared hemicycle |
 | Party donuts | — | — | grid gap-l | VoteDistributionDonut 72 + Tooltip |

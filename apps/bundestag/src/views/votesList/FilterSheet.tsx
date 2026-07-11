@@ -88,7 +88,7 @@ export function FilterSheet({ groups, activeCount, sort }: Props) {
           <div
             ref={panelRef}
             tabIndex={-1}
-            className="absolute inset-x-0 bottom-0 max-h-[75svh] overflow-y-auto border-t bg-background px-l outline-none"
+            className="absolute inset-x-0 bottom-0 max-h-[75svh] overflow-y-auto rounded-t-m border-t bg-background px-l outline-none"
             style={{
               borderColor: HAIR,
               paddingBottom: 'calc(24px + env(safe-area-inset-bottom))',
@@ -121,7 +121,7 @@ export function FilterSheet({ groups, activeCount, sort }: Props) {
                       onChange={(e) => setQueries((q) => ({ ...q, [g.key]: e.target.value }))}
                       placeholder={g.label}
                       aria-label={g.label}
-                      className="mb-s w-full border bg-transparent px-s py-xs text-m outline-none focus:border-fg"
+                      className="mb-s w-full rounded-m border bg-transparent px-s py-xs text-m outline-none focus:border-fg"
                       style={{ borderColor: HAIR }}
                     />
                   )}
@@ -131,7 +131,7 @@ export function FilterSheet({ groups, activeCount, sort }: Props) {
                         key={opt}
                         type="button"
                         onClick={() => g.onChange(opt === g.value ? null : opt)}
-                        className={`border px-m py-s text-m ${opt === g.value ? 'bg-surface font-semibold' : ''}`}
+                        className={`rounded-m border px-m py-s text-m ${opt === g.value ? 'bg-surface font-semibold' : ''}`}
                         style={{ borderColor: HAIR }}
                       >
                         {g.format(opt)}
@@ -153,7 +153,7 @@ export function FilterSheet({ groups, activeCount, sort }: Props) {
                       key={o.key}
                       type="button"
                       onClick={() => sort.onSelect(o.key)}
-                      className={`border px-m py-s text-m ${o.key === sort.value ? 'bg-surface font-semibold' : ''}`}
+                      className={`rounded-m border px-m py-s text-m ${o.key === sort.value ? 'bg-surface font-semibold' : ''}`}
                       style={{ borderColor: HAIR }}
                     >
                       {o.label}

@@ -37,7 +37,7 @@ const clipSummary = (s: string | null) => {
 export const listVotes = createServerFn({ method: 'GET' })
   .inputValidator(normalizeLocale)
   .handler(async ({ data: locale }): Promise<VoteListItem[]> => {
-  const allRows = db.select().from(votes).where(and(eq(votes.termId, CURRENT_TERM), eq(votes.procedural, false))).orderBy(desc(votes.date), desc(votes.bundestagId)).all()
+  const allRows = db.select().from(votes).where(and(eq(votes.termId, CURRENT_TERM), eq(votes.procedural, false), eq(votes.isPetitionBundle, false))).orderBy(desc(votes.date), desc(votes.bundestagId)).all()
   const rows = (SHOW_HAMMELSPRUNG ? allRows : allRows.filter((r) => r.voteType !== 'hammelsprung')).sort(compareVotesNewest)
   const translations = voteTranslationMap(rows.map((r) => r.id), locale)
   const allSummaries = db.select().from(votePartySummaries).all()

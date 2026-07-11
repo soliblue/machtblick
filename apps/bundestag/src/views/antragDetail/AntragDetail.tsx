@@ -1,4 +1,4 @@
-import { Calendar, ExternalLink, Landmark } from 'lucide-react'
+import { Calendar, Landmark } from 'lucide-react'
 import { useMemo } from 'react'
 import type { AntragDetail as AntragDetailData } from '@/server/antraege'
 import type { MemberVoteRow } from '@/server/memberDetail'
@@ -12,8 +12,9 @@ import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { Stamp, type StampVariant } from '@/views/votesList/Stamp'
 import { DebateList } from '@/views/voteDetail/DebateList'
 import { useCopy, useLocale } from '@/lib/i18n'
-import { withLocale } from '@/lib/locale'
 import { AntragSignatoryStrip } from './AntragSignatoryStrip'
+import { AntragSource } from './AntragSource'
+import { AntragSubjectChips } from './AntragSubjectChips'
 import { AntragTimeline } from './AntragTimeline'
 import { AntragVoteResult } from './AntragVoteResult'
 
@@ -51,9 +52,6 @@ export function AntragDetail({ data }: Props) {
   const partySummaries = linkedVotes.find((vote) => vote.partySummaries.length > 0)?.partySummaries ?? []
   return (
     <main className="mx-auto max-w-3xl p-l">
-      <a href={withLocale('/motions/', locale)} className="mb-m inline-block text-s caption opacity-l underline-offset-4 hover:underline hover:opacity-100">
-        ← {t.motionsCount}
-      </a>
       <div className="flex items-start justify-between gap-l">
         <div className="min-w-0">
           {laender ? (
@@ -76,7 +74,7 @@ export function AntragDetail({ data }: Props) {
         <div className="mt-s text-s opacity-l">{t.officialTitle}: {antrag.title}</div>
       ) : null}
       <div className="mt-m flex flex-wrap items-center gap-m text-m">
-        <span className="inline-flex h-[20px] items-center border border-fg/40 px-s text-[11px] font-semibold uppercase leading-none" style={{ letterSpacing: '0.14em' }}>
+        <span className="inline-flex h-[20px] items-center rounded-m border border-fg/40 px-s text-[11px] font-semibold uppercase leading-none" style={{ letterSpacing: '0.14em' }}>
           {antrag.type === 'gesetzentwurf' ? t.bill : t.motion}
         </span>
         {antrag.introducedDate ? <span className="opacity-l desk:hidden">{formatDate(antrag.introducedDate)}</span> : null}
@@ -88,24 +86,25 @@ export function AntragDetail({ data }: Props) {
           <div className="mt-s"><PartyBadge party={antrag.initiativeFraktion} /></div>
         </>
       )}
-      <div className="mt-l flex flex-col gap-l desk:flex-row desk:items-center">
-        <div className="min-w-0 flex-1">
-          <AntragTimeline
-            type={antrag.type}
-            beratungsstand={antrag.beratungsstand}
-            introducedDate={antrag.introducedDate}
-            vote={linkedVotes.length > 0 ? { result: linkedVotes[0].result, date: linkedVotes[0].date } : null}
-          />
+      <section className="mt-xl">
+        <div className="mb-m text-s caption opacity-l">{t.procedure}</div>
+        <div className="flex flex-col gap-l desk:flex-row desk:items-center">
+          <div className="min-w-0 flex-1">
+            <AntragTimeline
+              type={antrag.type}
+              beratungsstand={antrag.beratungsstand}
+              introducedDate={antrag.introducedDate}
+              vote={linkedVotes.length > 0 ? { result: linkedVotes[0].result, date: linkedVotes[0].date } : null}
+            />
+          </div>
+          {stamp ? <div className="shrink-0"><Stamp variant={stamp} size="m" /></div> : null}
         </div>
-        {stamp ? <div className="shrink-0"><Stamp variant={stamp} size="m" /></div> : null}
-      </div>
+      </section>
 
-      <div className="mt-l">
-        <AntragSignatoryStrip signatories={signatories} />
-      </div>
+      <AntragSubjectChips subjects={antrag.sachgebiet} />
 
       {summary ? (
-        <div className="mb-l">
+        <section className="mt-xl">
           <div className="mb-s text-s caption opacity-l">{t.proposalSummary}</div>
           {antrag.summarySimplified
             ? <p className="text-m leading-[1.45]" style={{ fontFamily: SERIF }}><MarkdownInline>{antrag.summarySimplified}</MarkdownInline></p>
@@ -113,30 +112,26 @@ export function AntragDetail({ data }: Props) {
           {antrag.summarySimplified && (
             <p className="mt-s text-s opacity-l">
               {t.aiSummaryNotice}
-              {antrag.drucksachePdfUrl ? (
-                <> {t.fullMotion} <a href={antrag.drucksachePdfUrl} target="_blank" rel="noreferrer" className="underline">{antrag.drucksache ? `Drucksache ${antrag.drucksache} (PDF)` : t.sourcePdf}</a>.</>
-              ) : null}
             </p>
           )}
-        </div>
+        </section>
       ) : null}
 
       {antrag.summaryDetail ? (
-        <section className="mb-l">
+        <section className={summary ? 'mt-l' : 'mt-xl'}>
           <Markdown serif>{antrag.summaryDetail}</Markdown>
         </section>
-      ) : antrag.drucksachePdfUrl ? (
-        <div className="mb-l">
-          <a href={antrag.drucksachePdfUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-xs text-m underline-offset-4 hover:underline">
-            <span>{locale === 'en' ? 'Full document' : 'Vollständige Drucksache'}</span>
-            <ExternalLink size={17} />
-          </a>
+      ) : null}
+
+      {signatories.length > 0 ? (
+        <div className="mt-xl">
+          <AntragSignatoryStrip signatories={signatories} />
         </div>
       ) : null}
 
       {linkedVotes.length > 0 ? (
-        <section className="mb-l">
-          <div className="mb-m text-s caption opacity-l">{locale === 'en' ? 'Votes' : 'Abstimmungen'}</div>
+        <section className="mt-xl">
+          <div className="mb-m text-s caption opacity-l">{t.votes}</div>
           <div className="flex flex-col pt-s">
             {linkedVotes.map((vote) => <AntragVoteResult key={vote.id} vote={vote} />)}
           </div>
@@ -144,12 +139,13 @@ export function AntragDetail({ data }: Props) {
       ) : null}
 
       {debate.length > 0 ? (
-        <DebateList speeches={debate} source={data.debateSource} ballotByMember={ballotByMember} partySummaries={partySummaries} />
+        <section className="mt-xl">
+          <div className="mb-m text-s caption opacity-l">{locale === 'en' ? 'Debate' : 'Debatte'}</div>
+          <DebateList speeches={debate} source={data.debateSource} ballotByMember={ballotByMember} partySummaries={partySummaries} />
+        </section>
       ) : null}
 
-      <p className="mt-xl text-s opacity-l">
-        <a href="https://dip.bundestag.de" target="_blank" rel="noreferrer" className="underline-offset-4 hover:underline">{t.dipSource} ↗</a>
-      </p>
+      <AntragSource pdfUrl={antrag.drucksachePdfUrl} />
     </main>
   )
 }

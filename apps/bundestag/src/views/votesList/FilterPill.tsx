@@ -10,12 +10,14 @@ type Props = {
   value: string | null
   onChange: (value: string | null) => void
   formatOption?: (opt: string) => string
+  inactiveValue?: string
 }
 
-export function FilterPill({ label, options, value, onChange, formatOption }: Props) {
+export function FilterPill({ label, options, value, onChange, formatOption, inactiveValue }: Props) {
   const t = useCopy()
   const locale = useLocale()
   const fmt = (opt: string) => formatOption?.(opt) ?? partyLabel(opt, locale)
+  const active = value !== null && value !== inactiveValue
   const [open, setOpen] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -61,15 +63,15 @@ export function FilterPill({ label, options, value, onChange, formatOption }: Pr
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-haspopup="listbox"
-        className="relative inline-flex shrink-0 items-center gap-s border px-m py-xs text-m transition-colors before:absolute before:inset-x-0 before:-inset-y-s before:content-[''] hover:bg-surface"
+        className="relative inline-flex shrink-0 items-center gap-s rounded-m border px-m py-xs text-m transition-colors before:absolute before:inset-x-0 before:-inset-y-s before:content-[''] hover:bg-surface"
         style={{
           borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)',
-          background: value ? 'var(--color-surface)' : 'transparent',
+          background: active ? 'var(--color-surface)' : 'transparent',
         }}
       >
         {value && PARTY_LOGO[value] ? <PartyLogo party={value} size={14} decorative /> : null}
         {value ? <span className="font-semibold">{fmt(value)}</span> : <span>{label}</span>}
-        {value && (
+        {active && (
           <span
             role="button"
             tabIndex={0}
@@ -89,7 +91,7 @@ export function FilterPill({ label, options, value, onChange, formatOption }: Pr
         <div
           ref={menuRef}
           role="listbox"
-          className="fixed z-50 flex min-w-[180px] flex-col bg-background p-xs shadow-lg"
+          className="fixed z-50 flex min-w-[180px] flex-col overflow-hidden rounded-m bg-background p-xs shadow-lg"
           style={{ left: pos.left, top: pos.top, border: '1px solid color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
         >
           {options.map((opt) => (
@@ -102,7 +104,7 @@ export function FilterPill({ label, options, value, onChange, formatOption }: Pr
                 onChange(opt === value ? null : opt)
                 setOpen(false)
               }}
-              className="flex items-center gap-s px-s py-xs text-left text-m hover:bg-surface"
+              className="flex items-center gap-s rounded-m px-s py-xs text-left text-m hover:bg-surface"
               style={{ background: opt === value ? 'var(--color-surface)' : 'transparent' }}
             >
               {PARTY_LOGO[opt] && <PartyLogo party={opt} size={14} decorative />}

@@ -9,7 +9,7 @@ type Props = {
 export function AntragSignatoryStrip({ signatories }: Props) {
   const t = useCopy()
   return signatories.length > 0 ? (
-    <div className="mb-l flex h-[32px] items-center gap-s">
+    <div className="flex h-[32px] items-center gap-s">
       <span className="text-s opacity-l">{t.broughtBy}</span>
       <SponsorPile signatories={signatories} />
     </div>

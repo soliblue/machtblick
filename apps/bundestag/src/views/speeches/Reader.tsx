@@ -101,7 +101,7 @@ export function Reader({ item, index, count, nextName = null, query = '', onPrev
         aria-label={label}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
-        className="absolute inset-x-0 bottom-0 top-[64px] flex flex-col bg-background shadow-[0_1px_3px_rgba(10,10,10,0.08),0_6px_16px_rgba(10,10,10,0.07)] outline-none desk:inset-auto desk:left-1/2 desk:top-1/2 desk:h-[85vh] desk:w-[90vw] desk:max-w-[42rem] desk:-translate-x-1/2 desk:-translate-y-1/2 desk:border desk:border-fg/15"
+        className="absolute inset-x-0 bottom-0 top-[64px] flex flex-col bg-background shadow-[0_1px_3px_rgba(10,10,10,0.08),0_6px_16px_rgba(10,10,10,0.07)] outline-none desk:inset-auto desk:left-1/2 desk:top-1/2 desk:h-[85vh] desk:w-[90vw] desk:max-w-[42rem] desk:-translate-x-1/2 desk:-translate-y-1/2 desk:overflow-hidden desk:rounded-m desk:border desk:border-fg/15"
       >
         <div className="flex justify-center pt-s desk:hidden">
           <span className="h-[4px] w-[36px] rounded-full bg-fg/15" />

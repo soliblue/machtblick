@@ -16,7 +16,6 @@ type Props = {
 }
 
 export function VoteDetailTabs({ active, availableTabs, onChange }: Props) {
-  const border = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
   const t = useCopy()
   const tabs = TABS
     .filter((tab) => availableTabs[tab.id])
@@ -29,10 +28,10 @@ export function VoteDetailTabs({ active, availableTabs, onChange }: Props) {
     }))
   return (
     <nav
-      className="-mx-l mt-l mb-l grid border-y"
-      style={{ borderColor: border, gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }}
+      className="mt-l mb-l grid gap-xs rounded-m border border-fg/15 bg-surface p-xs"
+      style={{ gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }}
     >
-      {tabs.map((tab, i) => {
+      {tabs.map((tab) => {
         const isActive = tab.id === active
         return (
           <button
@@ -41,10 +40,9 @@ export function VoteDetailTabs({ active, availableTabs, onChange }: Props) {
             onClick={() => onChange(tab.id)}
             className={
               isActive
-                ? '-mb-px py-m text-center text-l font-semibold opacity-100 border-b-2 border-fg bg-surface'
-                : '-mb-px border-b-2 border-transparent py-m text-center text-l font-regular opacity-l transition-opacity hover:opacity-100'
+                ? 'rounded-[6px] bg-background px-s py-s text-center text-m font-semibold opacity-100 shadow-[0_1px_2px_rgba(10,10,10,0.08)]'
+                : 'rounded-[6px] px-s py-s text-center text-m font-regular opacity-l transition-opacity hover:opacity-100'
             }
-            style={i > 0 ? { borderLeft: `1px solid ${border}` } : undefined}
           >
             {tab.label}
           </button>

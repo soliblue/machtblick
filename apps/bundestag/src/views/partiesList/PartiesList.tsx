@@ -27,7 +27,7 @@ export function PartiesList({ parties }: Props) {
         <h2 className="text-s caption opacity-l">
           {t.government} · <span className="tabular-nums">{t.seatsOfTotal.replace('{sum}', String(governingSeats)).replace('{total}', String(totalSeats))}</span>
         </h2>
-        <div className="mt-s grid grid-cols-2 gap-s desk:gap-m">
+        <div className="mt-s flex flex-col">
           {governing.map((p) => (
             <PartyCard key={p.slug} party={p} totalSeats={totalSeats} />
           ))}
@@ -37,13 +37,13 @@ export function PartiesList({ parties }: Props) {
         <h2 className="text-s caption opacity-l">
           {t.opposition} · <span className="tabular-nums">{oppositionSeats}</span> {t.seats}
         </h2>
-        <div className="mt-s grid grid-cols-2 gap-s desk:grid-cols-3 desk:gap-m">
+        <div className="mt-s flex flex-col">
           {opposition.map((p) => (
             <PartyCard key={p.slug} party={p} totalSeats={totalSeats} />
           ))}
         </div>
       </section>
-      {fraktionslos && (
+      {fraktionslos ? (
         <a
           href={`${withLocale('/members/', locale)}?party=${encodeURIComponent(fraktionslos.party)}`}
           className="mt-l flex w-fit items-center gap-s text-s caption opacity-l transition-opacity hover:opacity-100"
@@ -51,7 +51,7 @@ export function PartiesList({ parties }: Props) {
           <span>{partyLabel(fraktionslos.party, locale)} · <span className="tabular-nums">{fraktionslos.seats}</span> {t.seats}</span>
           <ArrowRight size={14} aria-hidden="true" />
         </a>
-      )}
+      ) : null}
     </main>
   )
 }

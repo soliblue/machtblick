@@ -22,7 +22,7 @@ export function AntragVoteResult({ vote }: Props) {
   return (
     <section
       aria-label={[vote.cleanTitle, accepted ? t.accepted : t.rejected, `${t.yes} ${vote.yes}`, `${t.no} ${vote.no}`, `${t.abstention} ${vote.abstain}`].join(' · ')}
-      className="relative mb-m border border-fg/15 bg-background p-l"
+      className="relative mb-m overflow-hidden rounded-m border border-fg/15 bg-background p-l"
       style={{ borderTop: `3px solid ${accepted ? 'var(--color-success)' : 'var(--color-danger)'}` }}
     >
       <div
@@ -39,7 +39,7 @@ export function AntragVoteResult({ vote }: Props) {
           {kickerStamps.map((stamp) => (
             <span
               key={stamp}
-              className="inline-flex h-[20px] items-center border border-fg/40 px-s text-[11px] font-semibold uppercase leading-none"
+              className="inline-flex h-[20px] items-center rounded-m border border-fg/40 px-s text-[11px] font-semibold uppercase leading-none"
               style={{ letterSpacing: '0.14em' }}
             >
               {t.stampClose[stamp]}

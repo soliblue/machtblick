@@ -34,7 +34,7 @@ export function DefectorList({ defectors, partySummaries }: Props) {
       {defectors.map((d) => (
         <div key={d.party}>
           <div className="flex items-center gap-s border-b pb-s" style={{ borderColor: HAIRLINE }}>
-            <a href={withLocale(`/parties/${PARTY_SLUG[d.party] ?? d.party}/votes/`, locale)} aria-label={partyLabel(d.party, locale)}>
+            <a href={withLocale(`/parties/${PARTY_SLUG[d.party] ?? d.party}/`, locale)} aria-label={partyLabel(d.party, locale)}>
               <PartyLogo party={d.party} size={20} decorative />
             </a>
             <span

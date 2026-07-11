@@ -99,7 +99,7 @@ function partyAt(affiliations: AffiliationRow[], date: string): string {
 export function leanVotes(db: Database.Database) {
   const rows = db.prepare(`
     SELECT id, date, title, clean_title, topic, summary_simplified, initiator, result, yes, no, abstain, absent, vote_type, bundestag_id
-    FROM votes WHERE term_id = ${CURRENT_TERM} AND procedural = 0 AND vote_type != 'hammelsprung'
+    FROM votes WHERE term_id = ${CURRENT_TERM} AND procedural = 0 AND is_petition_bundle = 0 AND vote_type != 'hammelsprung'
     ORDER BY date DESC, bundestag_id DESC
   `).all() as Array<Pick<VoteRow, 'id' | 'date' | 'title' | 'clean_title' | 'topic' | 'summary_simplified' | 'initiator' | 'result' | 'yes' | 'no' | 'abstain' | 'absent' | 'vote_type' | 'bundestag_id'>>
   rows.sort(compareVotesNewest)

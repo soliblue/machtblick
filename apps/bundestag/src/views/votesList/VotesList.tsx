@@ -1,5 +1,6 @@
 import type { VoteTypeFilter, VoteResultFilter } from '@/hooks/useVoteListFilters'
 import type { VoteDayGroup } from '@/hooks/useVoteDayGroups'
+import { VOTE_FLAG_FILTERS, type VoteFlagFilter } from '@/hooks/useVoteFlags'
 import { VISIBLE_VOTE_TYPES } from '@/lib/voteTypes'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { partyLabel } from '@/lib/parties'
@@ -22,9 +23,11 @@ type Props = {
   topic: string | null
   onTopicChange: (value: string | null) => void
   availableTopics: string[]
+  flagFilter: VoteFlagFilter
+  onFlagFilterChange: (value: VoteFlagFilter) => void
 }
 
-export function VotesList({ groups, proposingParty, onProposingPartyChange, availableParties, voteType, onVoteTypeChange, result, onResultChange, topic, onTopicChange, availableTopics }: Props) {
+export function VotesList({ groups, proposingParty, onProposingPartyChange, availableParties, voteType, onVoteTypeChange, result, onResultChange, topic, onTopicChange, availableTopics, flagFilter, onFlagFilterChange }: Props) {
   const t = useCopy()
   const locale = useLocale()
   const typeLabels: Record<VoteTypeFilter, string> = {
@@ -36,20 +39,30 @@ export function VotesList({ groups, proposingParty, onProposingPartyChange, avai
     angenommen: t.accepted,
     abgelehnt: t.rejected,
   }
+  const flagLabels: Record<VoteFlagFilter, string> = { all: t.all, saved: t.saved, seen: t.seen, unseen: t.unseen }
   const flat = groups.flatMap((g) => g.votes)
   const sheetGroups: FilterSheetGroup[] = [
+    { key: 'flag', label: t.status, options: [...VOTE_FLAG_FILTERS], value: flagFilter, onChange: (v) => onFlagFilterChange((v ?? 'all') as VoteFlagFilter), format: (o) => flagLabels[o as VoteFlagFilter] },
     { key: 'type', label: t.type, options: [...VISIBLE_VOTE_TYPES], value: voteType, onChange: (v) => onVoteTypeChange(v as VoteTypeFilter | null), format: (o) => typeLabels[o as VoteTypeFilter] },
     { key: 'party', label: t.proposer, options: availableParties, value: proposingParty, onChange: onProposingPartyChange, format: (o) => partyLabel(o, locale) },
     { key: 'result', label: t.result, options: ['angenommen', 'abgelehnt'], value: result, onChange: (v) => onResultChange(v as VoteResultFilter | null), format: (o) => resultLabels[o as VoteResultFilter] },
     ...(availableTopics.length > 0 ? [{ key: 'topic', label: t.category, options: availableTopics, value: topic, onChange: onTopicChange, format: (o: string) => o }] : []),
   ]
-  const activeCount = [voteType, proposingParty, result, topic].filter(Boolean).length
+  const activeCount = [voteType, proposingParty, result, topic].filter(Boolean).length + (flagFilter === 'all' ? 0 : 1)
   return (
     <>
       <style>{'@media (max-width:699px){html{scroll-snap-type:y mandatory;scroll-padding-top:52px}}'}</style>
       <div className="sticky top-[54px] z-20 hidden border-b border-fg/15 bg-background desk:block">
         <div className="px-l py-s desk:mx-auto desk:max-w-3xl">
           <FilterPillRow className="">
+            <FilterPill
+              label={t.status}
+              options={[...VOTE_FLAG_FILTERS]}
+              value={flagFilter}
+              onChange={(v) => onFlagFilterChange((v ?? 'all') as VoteFlagFilter)}
+              formatOption={(o) => flagLabels[o as VoteFlagFilter]}
+              inactiveValue="all"
+            />
             <FilterPill
               label={t.type}
               options={VISIBLE_VOTE_TYPES}
@@ -91,18 +104,27 @@ export function VotesList({ groups, proposingParty, onProposingPartyChange, avai
       <div className="desk:hidden">
         <FilterSheet groups={sheetGroups} activeCount={activeCount} />
         {flat.map((v, i) => (
-          <div key={v.id} id={v.id} className="h-[calc(100svh-96px)] snap-start snap-always px-m pt-l">
+          <div
+            key={v.id}
+            id={v.id}
+            className={`relative h-[calc(100svh-96px)] snap-start snap-always px-m pt-l ${i < flat.length - 1 ? 'after:absolute after:inset-x-l after:bottom-0 after:h-px after:bg-elevated' : ''}`}
+          >
             <LazyVoteCard vote={v} eager={i < EAGER_CARDS} />
           </div>
         ))}
       </div>
-      <main className="mx-auto hidden max-w-3xl flex-col gap-xl px-l pb-[64px] pt-xl desk:flex">
+      <main className="mx-auto hidden max-w-3xl flex-col px-l pb-[64px] pt-m desk:flex">
         {flat.map((v, i) => (
-          <div key={v.id} id={`d-${v.id}`}>
+          <div
+            key={v.id}
+            id={`d-${v.id}`}
+            className={`relative py-m ${i < flat.length - 1 ? 'after:absolute after:inset-x-l after:bottom-0 after:h-px after:bg-elevated' : ''}`}
+          >
             <LazyVoteCard vote={v} eager={i < EAGER_CARDS} />
           </div>
         ))}
       </main>
+      {flat.length === 0 && <p className="mx-auto max-w-3xl px-l py-xl text-center text-m opacity-l">{t.noData}</p>}
     </>
   )
 }

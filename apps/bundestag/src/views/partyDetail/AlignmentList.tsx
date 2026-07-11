@@ -15,9 +15,13 @@ export function AlignmentList({ alignments }: Props) {
     <div className="flex flex-col">
       {alignments.map((a) => {
         const slug = PARTY_SLUG[a.party]
+        const label = partyLabel(a.party, locale)
         const row = (
-          <div className="grid grid-cols-[44px_minmax(0,1fr)_3.5rem] items-center gap-m py-s">
-            <PartyLogo party={a.party} size={20} />
+          <div className="grid grid-cols-[112px_minmax(0,1fr)_3.5rem] items-center gap-m py-s">
+            <span className="flex min-w-0 items-center gap-s">
+              <PartyLogo party={a.party} size={20} decorative />
+              <span className="truncate text-m font-semibold">{label}</span>
+            </span>
             <div className="h-[3px] bg-fg/15">
               <div className="h-full bg-success" style={{ width: pct(a.agreement) }} />
             </div>
@@ -29,8 +33,8 @@ export function AlignmentList({ alignments }: Props) {
             <TooltipTrigger asChild>
               {slug ? (
                 <a
-                  href={withLocale(`/parties/${slug}/profile/`, locale)}
-                  aria-label={partyLabel(a.party, locale)}
+                  href={withLocale(`/parties/${slug}/`, locale)}
+                  aria-label={label}
                   className="block transition-opacity hover:opacity-80"
                 >
                   {row}

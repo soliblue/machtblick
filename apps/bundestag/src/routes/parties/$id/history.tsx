@@ -1,21 +1,7 @@
-import { createFileRoute, useLoaderData } from '@tanstack/react-router'
-import { PartyHistoryPanel } from '@/views/partyDetail/PartyHistoryPanel'
-import { PARTY_COLOR, PARTY_LABEL } from '@/lib/parties'
-import { getPartyHistory } from '@/server/getPartyHistory'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/parties/$id/history')({
-  loader: ({ params }) => getPartyHistory({ data: params.id }),
-  component: VerlaufRoute,
+  beforeLoad: ({ params }) => {
+    throw redirect({ to: '/parties/$id/', params: { id: params.id }, replace: true })
+  },
 })
-
-function VerlaufRoute() {
-  const parent = useLoaderData({ from: '/parties/$id' })
-  const history = Route.useLoaderData()
-  return parent ? (
-    <PartyHistoryPanel
-      history={history}
-      partyLabel={PARTY_LABEL[parent.party] ?? parent.party}
-      partyColor={PARTY_COLOR[parent.party] ?? 'var(--color-gray)'}
-    />
-  ) : null
-}

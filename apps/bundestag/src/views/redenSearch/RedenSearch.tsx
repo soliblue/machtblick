@@ -78,7 +78,7 @@ export function RedenSearch({ data, query, party, date, memberId, page, textsLoa
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
           placeholder={t.searchSpeeches}
-          className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
+          className="w-full rounded-m border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
           style={{ borderColor: ROW_BORDER }}
         />
         {textsLoading && <div className="mt-xs text-s opacity-l">{t.searchIndexLoading}</div>}

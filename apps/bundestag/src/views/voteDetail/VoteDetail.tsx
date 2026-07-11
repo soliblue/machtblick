@@ -1,10 +1,13 @@
 import type { ReactElement } from 'react'
+import { Bookmark, BookmarkCheck, Eye, EyeOff } from 'lucide-react'
 import type { VoteDetail as VoteDetailData } from '@/server/voteDetail'
 import { formatDateLong, formatDateShort } from '@/lib/format'
 import { partyLabel } from '@/lib/parties'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { Stamp } from '@/views/votesList/Stamp'
 import { MarkdownInline } from '@/lib/MarkdownInline'
+import { SERIF } from '@/lib/fonts'
 import { VoteDetailTabs } from './VoteDetailTabs'
 import { ResultTab } from './ResultTab'
 import { DetailTab } from './DetailTab'
@@ -23,6 +26,10 @@ type Props = {
   data: VoteDetailData & { sponsors: VoteSponsors }
   activeTab: VoteTab
   onTabChange: (t: VoteTab) => void
+  isSaved: boolean
+  isSeen: boolean
+  onToggleSaved: () => void
+  onToggleSeen: () => void
 }
 
 function voteFactSummary(vote: VoteDetailData['vote'], partySummaries: VoteDetailData['partySummaries'], locale: 'de' | 'en') {
@@ -65,10 +72,12 @@ const TAB_PANELS: Record<VoteTab, (data: VoteDetailData) => ReactElement> = {
   reden: (data) => <SpeechesTab data={data} />,
 }
 
-export function VoteDetail({ data, activeTab, onTabChange }: Props) {
+export function VoteDetail({ data, activeTab, onTabChange, isSaved, isSeen, onToggleSaved, onToggleSeen }: Props) {
   const { vote, partySummaries, proposingParty, sponsors } = data
   const locale = useLocale()
   const t = useCopy()
+  const savedLabel = isSaved ? t.unsaveVote : t.saveVote
+  const seenLabel = isSeen ? t.markUnseen : t.markSeen
   const availableTabs: Record<VoteTab, boolean> = {
     ergebnis: true,
     details: Boolean(vote.summaryDetail),
@@ -96,7 +105,39 @@ export function VoteDetail({ data, activeTab, onTabChange }: Props) {
           <PartyBadge party={proposingParty} compact logoSize={17} />
         </span>
         <Stamp variant={vote.result} rotated={false} />
-        <span className="justify-self-end whitespace-nowrap text-s caption opacity-l">{formatDateShort(vote.date, locale)}</span>
+        <div className="flex items-center gap-xs justify-self-end">
+          <span className="whitespace-nowrap text-s caption opacity-l">{formatDateShort(vote.date, locale)}</span>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                type="button"
+                aria-label={savedLabel}
+                aria-pressed={isSaved}
+                onClick={onToggleSaved}
+                className="inline-flex h-[32px] w-[32px] items-center justify-center rounded-m border bg-background opacity-l transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+                style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
+              >
+                {isSaved ? <BookmarkCheck size={17} aria-hidden="true" /> : <Bookmark size={17} aria-hidden="true" />}
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>{savedLabel}</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                type="button"
+                aria-label={seenLabel}
+                aria-pressed={isSeen}
+                onClick={onToggleSeen}
+                className="inline-flex h-[32px] w-[32px] items-center justify-center rounded-m border bg-background opacity-l transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+                style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
+              >
+                {isSeen ? <Eye size={17} aria-hidden="true" /> : <EyeOff size={17} aria-hidden="true" />}
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>{seenLabel}</TooltipContent>
+          </Tooltip>
+        </div>
       </div>
       <h1 lang={locale} className="mt-m font-display text-xl font-semibold leading-[1.15]" style={{ textWrap: 'pretty' }}>
         {vote.cleanTitle}
@@ -114,8 +155,8 @@ export function VoteDetail({ data, activeTab, onTabChange }: Props) {
       {(vote.summarySimplified || vote.summary) && (
         <div className="mb-l">
           {vote.summarySimplified
-            ? <p className="text-m"><MarkdownInline>{vote.summarySimplified}</MarkdownInline></p>
-            : <p className="text-m">{vote.summary}</p>}
+            ? <p className="text-m" style={{ fontFamily: SERIF }}><MarkdownInline>{vote.summarySimplified}</MarkdownInline></p>
+            : <p className="text-m" style={{ fontFamily: SERIF }}>{vote.summary}</p>}
         </div>
       )}
 

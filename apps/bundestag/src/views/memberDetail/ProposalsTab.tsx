@@ -39,7 +39,7 @@ export function ProposalsTab({ proposals, statusFilter, setStatusFilter, topicFi
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={locale === 'en' ? 'Search motions' : 'Anträge durchsuchen'}
-          className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
+          className="w-full rounded-m border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
           style={{ borderColor: BORDER }}
         />
       </div>
@@ -79,13 +79,13 @@ export function ProposalsTab({ proposals, statusFilter, setStatusFilter, topicFi
           {filtered.map((row) => <ProposalRow key={row.antragId} row={row} />)}
         </div>
       ) : (
-        <div className="border p-xl text-center text-m opacity-l" style={{ borderColor: BORDER }}>
+        <div className="rounded-m border p-xl text-center text-m opacity-l" style={{ borderColor: BORDER }}>
           <div className="font-semibold opacity-100">{locale === 'en' ? 'No matching motions' : 'Keine passenden Anträge'}</div>
         </div>
       )}
     </section>
   ) : (
-    <div className="border p-xl text-center text-m opacity-l" style={{ borderColor: BORDER }}>
+    <div className="rounded-m border p-xl text-center text-m opacity-l" style={{ borderColor: BORDER }}>
       <div className="font-semibold opacity-100">{locale === 'en' ? 'No proposals in term 21' : 'Keine Anträge in WP21'}</div>
     </div>
   )

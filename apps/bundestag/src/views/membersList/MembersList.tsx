@@ -64,7 +64,7 @@ export function MembersList({
   const t = useCopy()
   return (
     <>
-      <div className="mx-auto max-w-5xl px-l pb-m pt-l">
+      <div className="mx-auto max-w-3xl px-l pb-m pt-l">
         <h1 className="sr-only">{t.members}</h1>
         <div className="relative">
           <Search size={14} className="absolute left-s top-1/2 -translate-y-1/2 opacity-l" />
@@ -73,12 +73,12 @@ export function MembersList({
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
             placeholder={t.searchMembers}
-            className="w-full border border-fg/15 bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
+            className="w-full rounded-m border border-fg/15 bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
           />
         </div>
       </div>
       <div className="sticky top-[54px] z-20 border-b border-fg/15 bg-background">
-        <div className="px-l py-s desk:mx-auto desk:max-w-5xl">
+        <div className="px-l py-s desk:mx-auto desk:max-w-3xl">
           <FilterPillRow className="">
             <FilterPill label={t.parliamentaryGroup} options={availableParties} value={party} onChange={onPartyChange} />
             <FilterPill label={t.state} options={availableStates} value={state} onChange={onStateChange} />
@@ -106,7 +106,7 @@ export function MembersList({
           </FilterPillRow>
         </div>
       </div>
-      <main className="mx-auto max-w-5xl px-l pb-[64px] pt-l">
+      <main className="mx-auto max-w-3xl px-l pb-[64px] pt-l">
         <MembersStatsStrip stats={stats} />
         <div className="mb-m mt-l flex items-center justify-between">
           <span className="text-s caption opacity-l">{members.length} {t.people}</span>
@@ -115,7 +115,7 @@ export function MembersList({
         {members.length === 0 ? (
           <p className="py-xl text-center text-s opacity-l">{t.noMembersFound}</p>
         ) : (
-          <div className="grid grid-cols-3 gap-s sm:grid-cols-4 lg:grid-cols-5 desk:gap-m">
+          <div className="grid grid-cols-3 gap-s sm:grid-cols-4 desk:gap-m">
             {members.map((m, i) => <MemberCard key={m.id} member={m} index={i} />)}
           </div>
         )}

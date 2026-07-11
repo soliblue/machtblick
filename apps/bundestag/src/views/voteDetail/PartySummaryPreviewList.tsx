@@ -1,10 +1,9 @@
-import { ChevronRight } from 'lucide-react'
-import { PARTY_LOGO, partyLabel } from '@/lib/parties'
+import { hasPartyLine, PARTY_COLOR, PARTY_LOGO, PARTY_SLUG, partyLabel } from '@/lib/parties'
 import { PartyLogo } from '@/views/votesList/PartyLogo'
-import { Stamp, type StanceStampVariant } from '@/views/votesList/Stamp'
 import { SERIF } from '@/lib/fonts'
 import { MarkdownInline } from '@/lib/MarkdownInline'
-import type { Stance } from '@/views/speeches/StanceText'
+import { withLocale } from '@/lib/locale'
+import { AvatarPile, type AvatarPilePerson } from '@/views/speeches/AvatarPile'
 import { useCopy, useLocale } from '@/lib/i18n'
 
 export type PartySummary = {
@@ -18,49 +17,50 @@ export type SummaryRow = PartySummary & { yes: number; no: number; abstain: numb
 
 type Props = {
   summaries: SummaryRow[]
-  onOpen: (index: number) => void
+  speakersByParty?: Map<string, AvatarPilePerson[]>
 }
 
-export const stanceOf = (s: SummaryRow): Stance =>
-  s.abstain > s.yes && s.abstain > s.no ? 'abstain' : s.yes > s.no ? 'yes' : s.no > s.yes ? 'no' : 'split'
-
-const STANCE_STAMP: Record<Stance, StanceStampVariant> = { yes: 'dafuer', no: 'dagegen', abstain: 'enthalten', split: 'gespalten' }
-
-export function PartySummaryPreviewList({ summaries, onOpen }: Props) {
-  const t = useCopy()
+export function PartySummaryPreviewList({ summaries, speakersByParty }: Props) {
   const locale = useLocale()
+  const t = useCopy()
   return summaries.length > 0 ? (
     <section className="mb-l">
       <div className="mb-s text-s caption opacity-l">
-        {t.partySummaries} · {summaries.length} {t.groupsCount}
+        {t.partySummaries} · {summaries.length}
       </div>
-      <div className="-mx-l flex gap-m overflow-x-auto px-l pb-m pt-xs [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {summaries.map((s, index) => {
-          const label = partyLabel(s.party, locale)
-          return (
-            <button
-              key={s.party}
-              type="button"
-              onClick={() => onOpen(index)}
-              aria-label={`${t.openPartySummary} ${label}`}
-              className="flex w-[240px] flex-none flex-col border border-fg/15 bg-background p-l text-left outline-none transition-colors hover:bg-surface focus-visible:bg-surface"
-            >
-              <span className="flex w-full items-center justify-between gap-m">
-                {PARTY_LOGO[s.party]
-                  ? <PartyLogo party={s.party} size={20} decorative />
-                  : <span className="truncate text-m font-semibold">{label}</span>}
-                <Stamp variant={STANCE_STAMP[stanceOf(s)]} size="s" rotated={false} />
-              </span>
-              <span className="mt-s line-clamp-5 text-m" style={{ fontFamily: SERIF, lineHeight: 1.45 }}>
-                <MarkdownInline>{s.positionSummary ?? ''}</MarkdownInline>
-              </span>
-              <span className="mt-m flex w-full items-center justify-between text-s opacity-l">
-                <span>{t.readSummary}</span>
-                <ChevronRight size={17} className="shrink-0" aria-hidden="true" />
-              </span>
-            </button>
-          )
-        })}
+      <div className="scroll-rail -mx-l overflow-x-auto pb-m pt-xs [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex w-max items-stretch gap-m px-l">
+          {summaries.map((s) => {
+            const label = partyLabel(s.party, locale)
+            const color = PARTY_COLOR[s.party] ?? 'var(--color-fg)'
+            const logo = PARTY_LOGO[s.party]
+              ? <PartyLogo party={s.party} size={26} decorative />
+              : <span className="text-l font-semibold" style={{ color }}>{label}</span>
+            return (
+              <article
+                key={s.party}
+                className="flex w-[320px] flex-none flex-col rounded-m p-m desk:w-[400px]"
+                style={{
+                  background: hasPartyLine(s.party) ? `color-mix(in oklab, ${color} 13%, var(--color-background))` : 'var(--color-surface)',
+                }}
+              >
+                <div className="flex items-center justify-between gap-s">
+                  {PARTY_SLUG[s.party] ? (
+                    <a href={withLocale(`/parties/${PARTY_SLUG[s.party]}/`, locale)} aria-label={label} className="hover:opacity-80">
+                      {logo}
+                    </a>
+                  ) : (
+                    logo
+                  )}
+                  <AvatarPile people={speakersByParty?.get(s.party) ?? []} />
+                </div>
+                <div className="mt-s text-l" style={{ fontFamily: SERIF, lineHeight: 1.45 }}>
+                  <MarkdownInline>{s.positionSummary ?? ''}</MarkdownInline>
+                </div>
+              </article>
+            )
+          })}
+        </div>
       </div>
     </section>
   ) : null

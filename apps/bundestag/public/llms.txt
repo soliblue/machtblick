@@ -33,8 +33,8 @@ Machtblick is a public-interest project built from open German datasets. The Bun
 - `/members/{slug}/votes/`: Canonical member detail with voting record, attendance, speeches, and motions.
 - `/members/{slug}/speeches/` and `/members/{slug}/motions/`: Member detail tabs that canonicalize to the voting record.
 - `/parties/`: Parliamentary group overview.
-- `/parties/{slug}/profile/`: Canonical party detail with profile, votes, history, proposals, members, cohesion, and alignment.
-- `/parties/{slug}/votes/` and `/parties/{slug}/history/`: Party detail tabs that canonicalize to the profile.
+- `/parties/{slug}/`: Canonical party detail with profile, history, proposals, members, cohesion, and alignment.
+- `/parties/{slug}/profile/`, `/parties/{slug}/votes/`, and `/parties/{slug}/history/`: Legacy party routes that canonicalize to the consolidated detail page.
 - English equivalents use `/en/` before the path.
 
 ## JSON Data

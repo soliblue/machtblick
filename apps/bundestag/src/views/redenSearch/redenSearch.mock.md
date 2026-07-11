@@ -70,7 +70,7 @@ identity. The three filters move behind the floating filter pill + bottom sheet
 ```
 
 - Card: white `background`, 1px `text @ opacity-s` border + soft double shadow,
-  radius 0, padding l, mb-m between cards. No top-edge chip (a speech has no verdict;
+  radius-m, padding l, mb-m between cards. No top-edge chip (a speech has no verdict;
   the stance pill is the speaker's ballot, inline right).
 - The card is NOT a stretched link; it is the expand button (existing
   role="button" behavior). Name, party logo, and vote link are z-raised links
@@ -165,7 +165,7 @@ vote pages where it explains debate flow.
 |---|---|---|---|---|
 | Search input | m | regular | mb-m | Input (existing style) |
 | Count caption / day caption | s uppercase, ls 0.08em | regular, opacity-l | mb-s / mt-l | — |
-| Card | — | — | p-l, mb-m, hairline + double shadow, radius 0 | Card recipe |
+| Card | — | — | p-l, mb-m, hairline + double shadow, radius-m | Card recipe |
 | Speaker name | m | semibold | gap-s header row | link |
 | Minister role sub-line | s uppercase, ls 0.08em | regular, opacity-l | mt-xs | — |
 | Party logo | 16px height | — | — | PartyLogo |

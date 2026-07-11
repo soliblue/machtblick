@@ -40,7 +40,7 @@ export function SortControl({ sortKey, sortDir, onSort }: Props) {
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={`${t.sortBy} ${labels[sortKey]}, ${sortDir === 'asc' ? t.ascending : t.descending}`}
-        className="inline-flex items-center gap-s border bg-surface px-m py-xs text-m"
+        className="inline-flex items-center gap-s rounded-m border bg-surface px-m py-xs text-m"
         style={{ borderColor: HAIR }}
       >
         <span className="opacity-l">{t.sortLabel}</span>
@@ -49,7 +49,7 @@ export function SortControl({ sortKey, sortDir, onSort }: Props) {
       {open && (
         <div
           role="listbox"
-          className="absolute right-0 top-full z-30 mt-xs flex min-w-[180px] flex-col bg-background p-xs shadow-lg"
+          className="absolute right-0 top-full z-30 mt-xs flex min-w-[180px] flex-col overflow-hidden rounded-m bg-background p-xs shadow-lg"
           style={{ border: `1px solid ${HAIR}` }}
         >
           {(Object.keys(labels) as MemberSortKey[]).map((k) => (
@@ -62,7 +62,7 @@ export function SortControl({ sortKey, sortDir, onSort }: Props) {
                 onSort(k)
                 setOpen(false)
               }}
-              className="flex items-center justify-between gap-s px-s py-xs text-left text-m hover:bg-surface"
+              className="flex items-center justify-between gap-s rounded-m px-s py-xs text-left text-m hover:bg-surface"
               style={{ background: k === sortKey ? 'var(--color-surface)' : 'transparent' }}
             >
               <span>{labels[k]}</span>

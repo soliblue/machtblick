@@ -22,7 +22,7 @@ export function AntragCard({ antrag }: Props) {
   const showLogo = !laender && !!antrag.initiativeFraktion && antrag.initiativeFraktion.split(',').some((p) => PARTY_LOGO[p.trim()])
   return (
     <article
-      className="group relative mb-m border border-fg/15 bg-background p-l"
+      className="group relative mb-m overflow-hidden rounded-m border border-fg/15 bg-background p-l"
       style={decided ? { borderTop: `3px solid ${accepted ? 'var(--color-success)' : 'var(--color-danger)'}` } : undefined}
     >
       <a

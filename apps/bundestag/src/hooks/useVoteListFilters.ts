@@ -1,8 +1,11 @@
 import { useMemo } from 'react'
 import type { VoteListItem } from '@/server/votes'
+import type { VoteFlagFilter } from '@/hooks/useVoteFlags'
 
 export type VoteTypeFilter = VoteListItem['voteType']
 export type VoteResultFilter = VoteListItem['result']
+
+const EMPTY_IDS = new Set<string>()
 
 export function useVoteListFilters(
   votes: VoteListItem[],
@@ -11,6 +14,9 @@ export function useVoteListFilters(
   result: VoteResultFilter | null,
   topic: string | null,
   query: string = '',
+  flagFilter: VoteFlagFilter = 'all',
+  savedIds: ReadonlySet<string> = EMPTY_IDS,
+  seenIds: ReadonlySet<string> = EMPTY_IDS,
 ) {
   const availableParties = useMemo(() => {
     const set = new Set<string>()
@@ -32,8 +38,11 @@ export function useVoteListFilters(
       if (voteType && v.voteType !== voteType) return false
       if (result && v.result !== result) return false
       if (topic && v.topic !== topic) return false
+      if (flagFilter === 'saved' && !savedIds.has(v.id)) return false
+      if (flagFilter === 'seen' && !seenIds.has(v.id)) return false
+      if (flagFilter === 'unseen' && seenIds.has(v.id)) return false
       return true
     })
-  }, [votes, proposingParty, voteType, result, topic, query])
+  }, [votes, proposingParty, voteType, result, topic, query, flagFilter, savedIds, seenIds])
   return { filtered, availableParties, availableTopics }
 }

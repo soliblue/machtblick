@@ -1,1 +1,1 @@
-export const SERIF = "Charter, 'Bitstream Charter', Georgia, 'Times New Roman', serif"
+export const SERIF = "Lora, Georgia, 'Times New Roman', serif"

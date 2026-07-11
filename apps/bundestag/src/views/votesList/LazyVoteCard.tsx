@@ -12,7 +12,7 @@ export function LazyVoteCard({ vote, eager }: Props) {
   return near ? (
     <VoteCard vote={vote} />
   ) : (
-    <article ref={ref} className="flex h-full flex-col justify-center border border-fg/15 bg-background p-l desk:min-h-[240px]">
+    <article ref={ref} className="flex h-full flex-col justify-center bg-background p-l desk:min-h-[240px]">
       <h2 lang={locale} className="font-display text-xl font-semibold leading-[1.15]" style={{ textWrap: 'pretty' }}>
         <a href={withLocale(`/votes/${vote.id}/`, locale)} className="decoration-1 underline-offset-[3px] hover:underline">
           {vote.cleanTitle}

@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react'
 import type { MemberDetail as MemberDetailData } from '@/server/memberDetail'
-import { PartyLogo } from '@/views/votesList/PartyLogo'
 import { pct } from '@/lib/format'
-import { hasPartyLine, PARTY_LOGO, PARTY_SLUG, partyLabel } from '@/lib/parties'
+import { hasPartyLine, partyLabel } from '@/lib/parties'
 import { MemberDetailTabs } from './MemberDetailTabs'
 import { MemberPortrait } from './MemberPortrait'
 import { MemberStatBar } from './MemberStatBar'
@@ -20,9 +19,8 @@ export function MemberDetailShell({ data, children }: Props) {
   const locale = useLocale()
   const speechGroups = groupMemberSpeeches(data.speeches)
   const missed = data.history.filter((r) => r.choice === 'nicht_abgegeben').length
-  const partySlug = PARTY_SLUG[data.party]
   const meta = [
-    ...(PARTY_LOGO[data.party] ? [] : [partyLabel(data.party, locale)]),
+    partyLabel(data.party, locale),
     ...(data.state ? [data.state] : []),
     ...(data.mandateType ? [t.mandateLabels[data.mandateType]] : []),
     ...(data.mandateType === 'direkt' && data.constituencyName ? [data.constituencyName] : []),
@@ -30,7 +28,7 @@ export function MemberDetailShell({ data, children }: Props) {
     ...(data.education ? [data.education] : []),
   ]
   return (
-    <main className="mx-auto max-w-3xl p-l">
+    <main className="mx-auto max-w-3xl px-l pb-[64px] pt-l">
       <div className="mb-l grid grid-cols-[112px_minmax(0,1fr)] gap-l desk:grid-cols-[128px_minmax(0,1fr)]">
         <div className="desk:row-span-2">
           <MemberPortrait
@@ -42,24 +40,12 @@ export function MemberDetailShell({ data, children }: Props) {
           />
         </div>
         <div className="min-w-0">
-          <h1 className="flex flex-col gap-s font-display text-xxl font-semibold desk:flex-row desk:flex-wrap desk:items-center desk:gap-m">
-            {partySlug && PARTY_LOGO[data.party] && (
-              <a
-                href={withLocale(`/parties/${partySlug}/`, locale)}
-                className="w-fit transition-opacity hover:opacity-80"
-                aria-label={partyLabel(data.party, locale)}
-              >
-                <PartyLogo party={data.party} size={26} decorative />
-              </a>
-            )}
+          <h1 className="font-display text-xxl font-semibold">
             <span style={{ overflowWrap: 'anywhere' }}>{data.name}</span>
           </h1>
-          <div className="mt-s flex flex-wrap items-center gap-x-s gap-y-xs text-s caption opacity-l">
+          <div className="mt-s flex flex-col gap-xs text-s caption opacity-l">
             {meta.map((item, i) => (
-              <span key={`${item}-${i}`} className="inline-flex items-baseline gap-s" style={{ overflowWrap: 'anywhere' }}>
-                <span>{item}</span>
-                {i < meta.length - 1 && <span aria-hidden="true">·</span>}
-              </span>
+              <span key={`${item}-${i}`} style={{ overflowWrap: 'anywhere' }}>{item}</span>
             ))}
           </div>
         </div>

@@ -1,5 +1,6 @@
 import type { SpeechResult } from '@/server/speeches'
 import type { SpeechMetaEntry } from '@/lib/speechesStatic'
+import type { Locale } from '@/lib/locale'
 
 export type MemberSpeechGroup = {
   id: string
@@ -43,20 +44,15 @@ export function groupMemberSpeeches(speeches: SpeechResult[]): MemberSpeechGroup
   }).sort((a, b) => b.date.localeCompare(a.date) || a.main.position - b.main.position)
 }
 
-export function contextRowsForGroup(meta: SpeechMetaEntry[], group: MemberSpeechGroup): SpeechMetaEntry[] {
-  const rows = meta
+export function memberSpeechGroupTitle(group: MemberSpeechGroup, fallback: string): string {
+  return group.voteTitle ?? group.agendaTitle ?? group.agendaItem ?? fallback
+}
+
+export function contextRowsForGroup(meta: SpeechMetaEntry[], group: MemberSpeechGroup, locale: Locale = 'de'): SpeechMetaEntry[] {
+  return meta
     .filter((speech) => speechGroupKey(speech) === group.id)
     .sort((a, b) => a.position - b.position)
-  const memberIds = new Set(group.speeches.map((speech) => speech.id))
-  const keep = new Set<string>()
-  for (let i = 0; i < rows.length; i++) {
-    if (memberIds.has(rows[i].id)) {
-      if (rows[i - 1]) keep.add(rows[i - 1].id)
-      keep.add(rows[i].id)
-      if (rows[i + 1]) keep.add(rows[i + 1].id)
-    }
-  }
-  return rows.filter((speech) => keep.has(speech.id))
+    .map((speech) => locale === 'en' ? { ...speech, voteTitle: speech.voteTitleEn ?? speech.voteTitle } : speech)
 }
 
 function speechGroupKey(speech: Pick<SpeechResult, 'date' | 'agendaItem' | 'voteId' | 'id'>) {

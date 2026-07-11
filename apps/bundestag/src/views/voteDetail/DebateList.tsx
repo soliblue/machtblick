@@ -2,18 +2,19 @@ import { useMemo, useState } from 'react'
 import { Search } from 'lucide-react'
 import { Pager } from '@/views/redenSearch/Pager'
 import { DebateThread } from '@/views/speeches/DebateThread'
-import { Reader, type ReaderSpeechItem, type ReaderSummaryItem } from '@/views/speeches/Reader'
+import { Reader, type ReaderSpeechItem } from '@/views/speeches/Reader'
 import { buildDebateThread } from '@/hooks/debateThread'
 import { useReader } from '@/hooks/useReader'
 import { tokenize } from '@/lib/highlight'
 import { makeSnippet } from '@/lib/snippet'
 import { loadSpeechTexts, speechTextsLoaded, type SpeechBallotChoice } from '@/lib/speechesStatic'
-import { PARTY_ORDER, partyLabel } from '@/lib/parties'
+import { PARTY_ORDER } from '@/lib/parties'
 import { useQuery } from '@tanstack/react-query'
 import type { MemberVoteRow } from '@/server/memberDetail'
 import type { SpeechSummary } from '@/server/speeches'
-import { PartySummaryPreviewList, stanceOf, type SummaryRow } from './PartySummaryPreviewList'
+import { PartySummaryPreviewList, type SummaryRow } from './PartySummaryPreviewList'
 import { useCopy, useLocale } from '@/lib/i18n'
+import type { AvatarPilePerson } from '@/views/speeches/AvatarPile'
 
 type BallotEntry = { choice: MemberVoteRow['choice']; pictureUrl: string | null }
 type Props = { speeches: SpeechSummary[]; source: 'direct' | 'related'; ballotByMember: Map<string, BallotEntry>; partySummaries: SummaryRow[] }
@@ -24,13 +25,14 @@ const PAGE_SIZE = 15
 export function DebateList({ speeches, source, ballotByMember, partySummaries }: Props) {
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(0)
+  const [fullTextRequested, setFullTextRequested] = useState(false)
   const locale = useLocale()
   const t = useCopy()
   const terms = tokenize(query)
   const texts = useQuery({
     queryKey: ['speech-texts', locale],
     queryFn: () => loadSpeechTexts(locale),
-    enabled: terms.length > 0,
+    enabled: terms.length > 0 || fullTextRequested,
     staleTime: Infinity,
   })
   const textsLoading = terms.length > 0 && !speechTextsLoaded(locale)
@@ -60,14 +62,28 @@ export function DebateList({ speeches, source, ballotByMember, partySummaries }:
     const seen = new Set(ordered.map((s) => s.party))
     return [...ordered, ...partySummaries.filter((s) => s.positionSummary && !seen.has(s.party))]
   }, [partySummaries])
-  const summaryItems: ReaderSummaryItem[] = summaries.map((s) => ({
-    kind: 'summary',
-    party: s.party,
-    stance: stanceOf(s),
-    positionSummary: s.positionSummary ?? null,
-    keyPoints: s.keyPoints ?? null,
-    dissentNote: s.dissentNote ?? null,
-  }))
+  const speakersByParty = useMemo(() => {
+    const byParty = new Map<string, AvatarPilePerson[]>()
+    const seen = new Map<string, Set<string>>()
+    for (const speech of speeches) {
+      if (speech.party && speech.speakerMemberId) {
+        const partySeen = seen.get(speech.party) ?? new Set<string>()
+        if (!partySeen.has(speech.speakerMemberId)) {
+          partySeen.add(speech.speakerMemberId)
+          seen.set(speech.party, partySeen)
+          byParty.set(speech.party, [
+            ...(byParty.get(speech.party) ?? []),
+            {
+              id: speech.speakerMemberId,
+              name: speech.speakerName,
+              pictureUrl: ballotByMember.get(speech.speakerMemberId)?.pictureUrl ?? null,
+            },
+          ])
+        }
+      }
+    }
+    return byParty
+  }, [speeches, ballotByMember])
   const speechItems: ReaderSpeechItem[] = rows
     .filter((row) => row.kind === 'turn')
     .map(({ speech }) => ({
@@ -84,11 +100,10 @@ export function DebateList({ speeches, source, ballotByMember, partySummaries }:
       voteTitle: null,
       fallbackText: texts.data?.[speech.id] ?? speech.excerpt,
     }))
-  const summaryReader = useReader(summaryItems)
   const speechReader = useReader(speechItems)
   return (
     <section className="mb-l">
-      <PartySummaryPreviewList summaries={summaries} onOpen={summaryReader.openAt} />
+      <PartySummaryPreviewList summaries={summaries} speakersByParty={speakersByParty} />
       <div className="mb-s text-s caption opacity-l">
         {source === 'related' ? t.relatedSpeechesForVote : t.debateTimeline}
       </div>
@@ -102,7 +117,7 @@ export function DebateList({ speeches, source, ballotByMember, partySummaries }:
             setPage(0)
           }}
           placeholder={t.searchSpeeches}
-          className="w-full border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
+          className="w-full rounded-m border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
           style={{ borderColor: ROW_BORDER }}
         />
         {textsLoading && <div className="mt-xs text-s opacity-l">{t.searchIndexLoading}</div>}
@@ -116,22 +131,14 @@ export function DebateList({ speeches, source, ballotByMember, partySummaries }:
           rows={slice}
           choiceFor={choiceFor}
           pictureFor={(s) => ballotFor(s)?.pictureUrl ?? null}
+          fullTextFor={(s) => texts.data?.[s.id] ?? null}
+          fullTextLoading={texts.isFetching}
+          onExpandTurn={() => setFullTextRequested(true)}
           query={query}
           onOpenTurn={speechReader.openAt}
         />
       )}
       {pageCount > 1 && <Pager page={safePage} pageCount={pageCount} onPage={setPage} />}
-      {summaryReader.active && (
-        <Reader
-          item={summaryReader.active}
-          index={summaryReader.index}
-          count={summaryReader.count}
-          nextName={summaryReader.nextItem ? partyLabel(summaryReader.nextItem.party, locale) : null}
-          onPrev={summaryReader.prev}
-          onNext={summaryReader.next}
-          onClose={summaryReader.close}
-        />
-      )}
       {speechReader.active && (
         <Reader
           item={speechReader.active}
