@@ -73,7 +73,7 @@ platform :ios do
       metadata_path: "fastlane/metadata",
       screenshots_path: "fastlane/screenshots",
       skip_binary_upload: true,
-      overwrite_screenshots: true,
+      sync_screenshots: true,
       force: true,
       submit_for_review: false,
       automatic_release: true,

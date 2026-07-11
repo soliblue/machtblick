@@ -6,6 +6,7 @@
   "workspaces": ["db", "etl/*", "apps/*"],
   "scripts": {
     "agents:sync": "node scripts/sync-codex-agents.mjs",
+    "ios:screenshots": "node fastlane/render-app-store-screenshots.mjs",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
