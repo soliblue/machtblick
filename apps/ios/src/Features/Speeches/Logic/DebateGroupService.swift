@@ -2,7 +2,7 @@ import Foundation
 
 enum DebateGroupService {
     static func speeches(debateGroupId: String, cache: ApiCache) async -> [SpeechSummary] {
-        let path = "/speeches-meta.json"
+        let path = AppLocale.current.dataPath("/speeches-meta.json")
         var meta: [SpeechMetaEntry]? = cache.cached(path)
         if meta == nil || cache.isStale(path, maxAge: 86400) {
             if let fresh: [SpeechMetaEntry] = await cache.fetch(path) { meta = fresh }

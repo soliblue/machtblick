@@ -107,9 +107,10 @@
 				};
 			};
 			buildConfigurationList = MB00000000000000000000B0 /* Build configuration list for PBXProject "iOS" */;
-			developmentRegion = en;
+			developmentRegion = de;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				de,
 				en,
 				Base,
 			);

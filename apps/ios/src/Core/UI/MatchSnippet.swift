@@ -4,7 +4,11 @@ func matchSnippet(_ text: String, terms: [String], context: Int = 100) -> String
     let active = terms.filter { !$0.isEmpty }
     guard !active.isEmpty else { return text }
     let first = active
-        .compactMap { text.range(of: $0, options: .caseInsensitive) }
+        .compactMap {
+            text.range(
+                of: $0, options: [.caseInsensitive, .diacriticInsensitive],
+                locale: AppLocale.current.locale)
+        }
         .min { $0.lowerBound < $1.lowerBound }
     guard let match = first else { return text }
     let lower = text.distance(from: text.startIndex, to: match.lowerBound)

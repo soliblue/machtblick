@@ -21,7 +21,7 @@ enum HTTPClient {
     }
 
     static func page(_ path: String) -> URL {
-        URL(string: path, relativeTo: base)!.absoluteURL
+        URL(string: AppLocale.current.localizedPath(path), relativeTo: base)!.absoluteURL
     }
 
     static func memberPhoto(_ memberId: String) -> URL? {

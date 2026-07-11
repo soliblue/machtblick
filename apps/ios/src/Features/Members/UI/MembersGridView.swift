@@ -31,6 +31,7 @@ struct MembersGridView: View {
                 Button { showFilters = true } label: {
                     Image(systemName: "line.3.horizontal.decrease")
                 }
+                .accessibilityLabel(Copy.filterLabel)
             }
         }
         .sheet(isPresented: $showFilters) {

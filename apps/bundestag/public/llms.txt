@@ -40,14 +40,20 @@ Machtblick is a public-interest project built from open German datasets. The Bun
 ## JSON Data
 
 - `/api/votes.json`: Lean vote index.
+- `/en/api/votes.json`: Lean English vote index.
 - `/api/members.json`: Lean member index.
+- `/en/api/members.json`: Lean English member index.
 - `/api/parties.json`: Lean party index.
+- `/en/api/parties.json`: Lean English party index.
 - `/api/motions.json`: Lean motion and bill index.
-- `/votes/{id}.json`: Full vote detail.
-- `/members/{slug}.json`: Full member detail.
-- `/parties/{slug}.json`: Full party detail.
-- `/motions/{id}.json`: Full German motion detail.
-- `/en/motions/{id}.json`: Full English motion detail.
+- `/en/api/motions.json`: Lean English motion and bill index.
+- `/votes/{id}.json` and `/en/votes/{id}.json`: Full German and English vote detail.
+- `/members/{slug}.json` and `/en/members/{slug}.json`: Full German and English member detail.
+- `/parties/{slug}.json` and `/en/parties/{slug}.json`: Full German and English party detail.
+- `/motions/{id}.json` and `/en/motions/{id}.json`: Full German and English motion detail.
+- `/speeches-meta.json` and `/en/speeches-meta.json`: German and English speech metadata.
+- `/speeches-people.json` and `/en/speeches-people.json`: Member portrait lookup for speeches.
+- `/speeches-search-{0..3}.json` and `/en/speeches-search-{0..3}.json`: Sharded German and English speech bodies.
 - `/.well-known/api-catalog`: Machine-readable list of these endpoints (RFC 9727 linkset).
 
 All JSON is static, regenerated with each data refresh (weekly during sitting periods), and needs no API key.

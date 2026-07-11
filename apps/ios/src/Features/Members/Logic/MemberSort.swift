@@ -7,7 +7,7 @@ enum MemberSort: CaseIterable {
         switch self {
         case .name: return Copy.sortName
         case .attendance: return Copy.attendance
-        case .loyalty: return Copy.line
+        case .loyalty: return Copy.loyalty
         }
     }
 

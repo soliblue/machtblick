@@ -15,9 +15,12 @@ struct ReaderView: View {
             header
             Rectangle().fill(ThemeColor.border).frame(height: ThemeTokens.Stroke.s)
             ScrollView {
-                content
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(ThemeTokens.Spacing.l)
+                VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
+                    TranslationFallbackNotice()
+                    content
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(ThemeTokens.Spacing.l)
             }
             if count > 1 {
                 Rectangle().fill(ThemeColor.border).frame(height: ThemeTokens.Stroke.s)
@@ -112,6 +115,7 @@ struct ReaderView: View {
                 Image(systemName: "chevron.left").font(.system(size: ThemeTokens.Icon.m))
             }
             .disabled(onPrev == nil)
+            .accessibilityLabel(Copy.previousLabel)
             Spacer()
             Text("\(index + 1) / \(count)")
                 .font(.system(size: ThemeTokens.Text.s))
@@ -122,6 +126,7 @@ struct ReaderView: View {
                 Image(systemName: "chevron.right").font(.system(size: ThemeTokens.Icon.m))
             }
             .disabled(onNext == nil)
+            .accessibilityLabel(Copy.nextLabel)
         }
         .foregroundStyle(ThemeColor.secondary)
         .padding(.horizontal, ThemeTokens.Spacing.l)

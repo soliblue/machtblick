@@ -13,7 +13,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: macos-15
-    timeout-minutes: 30
+    timeout-minutes: 45
 
     steps:
       - uses: actions/checkout@v4
@@ -22,6 +22,30 @@ jobs:
         run: |
           sudo xcode-select -s /Applications/Xcode_26.2.app
           xcodebuild -version
+
+      - name: Check localizations
+        run: node apps/ios/scripts/check-localizations.mjs
+
+      - name: Check language contract
+        run: |
+          xcrun swiftc \
+            apps/ios/src/Core/Localization/AppLanguage.swift \
+            apps/ios/src/Core/Localization/AppLocale.swift \
+            apps/ios/src/Core/UI/Formatters.swift \
+            apps/ios/scripts/LanguageContractCheck.swift \
+            -o "$RUNNER_TEMP/machtblick-language-contract"
+          "$RUNNER_TEMP/machtblick-language-contract"
+
+      - name: Check member payload compatibility
+        run: |
+          xcrun swiftc \
+            apps/ios/src/Features/Votes/Logic/PartyPosition.swift \
+            apps/ios/src/Features/Votes/Logic/VoteResult.swift \
+            apps/ios/src/Features/Votes/Logic/BallotChoice.swift \
+            apps/ios/src/Features/Members/Logic/MemberDetailPayload.swift \
+            apps/ios/scripts/MemberPayloadContractCheck.swift \
+            -o "$RUNNER_TEMP/machtblick-member-payload-contract"
+          "$RUNNER_TEMP/machtblick-member-payload-contract"
 
       - name: Install fastlane
         run: gem install fastlane
@@ -70,6 +94,15 @@ jobs:
         run: |
           cd fastlane
           fastlane ios beta_local
+
+      - name: Verify public TestFlight link
+        run: |
+          python3 - <<'PY'
+          import urllib.request
+          body = urllib.request.urlopen("https://testflight.apple.com/join/r7RVrgtr").read().decode()
+          assert "Join the Machtblick beta" in body
+          print("Public Machtblick TestFlight link is live.")
+          PY
 
       - name: Revoke dev cert created by this run
         if: always()

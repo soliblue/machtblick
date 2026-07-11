@@ -25,7 +25,7 @@ extension BallotChoice {
         case .ja: return Copy.yes
         case .nein: return Copy.no
         case .enthalten: return Copy.abstain
-        case .nichtAbgegeben: return Copy.absent
+        case .nichtAbgegeben: return Copy.notCast
         }
     }
 }

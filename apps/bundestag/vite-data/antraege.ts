@@ -1,7 +1,12 @@
 import type Database from 'better-sqlite3'
 import { requireVoteCleanTitle } from '../src/lib/voteTitles'
 import { resolvePictureUrl } from '../src/server/photoManifest'
-import { latestSeatsByParty } from './votes'
+import {
+  motionTranslation,
+  voteTranslation,
+  type StaticLocale,
+  type StaticTranslations,
+} from './translations'
 
 type AntragRow = {
   id: number
@@ -47,7 +52,7 @@ function parseJson<T>(value: string | null, fallback: T): T {
   return value ? JSON.parse(value) as T : fallback
 }
 
-export function leanMotions(db: Database.Database) {
+export function leanMotions(db: Database.Database, locale: StaticLocale, translations: StaticTranslations) {
   const rows = db.prepare(`
     SELECT a.id, a.type, a.title, a.clean_title, a.drucksache, a.initiative_fraktion, a.introduced_date, a.beratungsstand
     FROM antraege a
@@ -64,15 +69,15 @@ export function leanMotions(db: Database.Database) {
     introduced_date: string | null
     beratungsstand: string | null
   }>
-  return rows.map((r) => ({
-    id: r.id,
-    type: r.type,
-    title: r.title,
-    cleanTitle: r.clean_title,
-    drucksache: r.drucksache,
-    initiativeFraktion: r.initiative_fraktion,
-    introducedDate: r.introduced_date,
-    beratungsstand: r.beratungsstand,
+  return rows.map((row) => ({
+    id: row.id,
+    type: row.type,
+    title: motionTranslation(translations, locale, row.id)?.title ?? row.title,
+    cleanTitle: motionTranslation(translations, locale, row.id)?.clean_title ?? row.clean_title,
+    drucksache: row.drucksache,
+    initiativeFraktion: row.initiative_fraktion,
+    introducedDate: row.introduced_date,
+    beratungsstand: row.beratungsstand,
   }))
 }
 
@@ -84,17 +89,23 @@ function cleanAbstract(value: string | null) {
     .trim() || null
 }
 
-export function fullAntrag(db: Database.Database, id: number, locale: 'de' | 'en' = 'de') {
+export function fullAntrag(
+  db: Database.Database,
+  id: number,
+  locale: StaticLocale,
+  translations: StaticTranslations,
+  seats: Map<string, number>,
+) {
   const row = db.prepare(`
     SELECT
       a.*,
-      COALESCE(t.summary_simplified, ad.summary_simplified) AS summary_simplified,
-      COALESCE(t.summary_detail, ad.summary_detail) AS summary_detail
+      ad.summary_simplified AS summary_simplified,
+      ad.summary_detail AS summary_detail
     FROM antraege a
     LEFT JOIN antrag_descriptions ad ON ad.antrag_id = a.id
-    LEFT JOIN antrag_description_translations t ON t.antrag_id = a.id AND t.locale = ?
     WHERE a.id = ?
-  `).get(locale, id) as AntragRow
+  `).get(id) as AntragRow
+  const translatedMotion = motionTranslation(translations, locale, id)
   const signatories = db.prepare(`
     SELECT ans.member_id, m.first_name, m.last_name, m.picture_url
     FROM antrag_signatories ans
@@ -120,7 +131,6 @@ export function fullAntrag(db: Database.Database, id: number, locale: 'de' | 'en
       positionsByVote.set(p.vote_id, arr)
     }
   }
-  const seats = latestSeatsByParty(db)
   function voteCounts(v: VoteRow) {
     if (v.vote_type === 'namentlich') {
       return { yes: v.yes ?? 0, no: v.no ?? 0, abstain: v.abstain ?? 0, absent: v.absent ?? 0, totalMembers: v.total_members ?? 0 }
@@ -138,8 +148,8 @@ export function fullAntrag(db: Database.Database, id: number, locale: 'de' | 'en
     antrag: {
       id: row.id,
       type: row.type,
-      title: row.title,
-      cleanTitle: row.clean_title,
+      title: translatedMotion?.title ?? row.title,
+      cleanTitle: translatedMotion?.clean_title ?? row.clean_title,
       abstract: cleanAbstract(row.abstract),
       beratungsstand: row.beratungsstand,
       initiativeFraktion: row.initiative_fraktion,
@@ -148,8 +158,8 @@ export function fullAntrag(db: Database.Database, id: number, locale: 'de' | 'en
       drucksachePdfUrl: row.drucksache_pdf_url,
       sachgebiet: parseJson<string[]>(row.sachgebiet, []),
       deskriptor: parseJson<Array<{ name: string; typ: string }>>(row.deskriptor, []),
-      summarySimplified: row.summary_simplified,
-      summaryDetail: row.summary_detail,
+      summarySimplified: translatedMotion?.summary_simplified ?? row.summary_simplified,
+      summaryDetail: translatedMotion?.summary_detail ?? row.summary_detail,
     },
     signatories: signatories.map((s) => ({
       memberId: s.member_id,
@@ -157,7 +167,11 @@ export function fullAntrag(db: Database.Database, id: number, locale: 'de' | 'en
       portraitUrl: resolvePictureUrl(s.member_id, s.picture_url),
     })),
     linkedVotes: linkedVotes.map((v) => {
-      const titled = requireVoteCleanTitle({ id: v.id, title: v.title, cleanTitle: v.clean_title })
+      const titled = requireVoteCleanTitle({
+        id: v.id,
+        title: v.title,
+        cleanTitle: voteTranslation(translations, locale, v.id)?.clean_title ?? v.clean_title,
+      })
       return {
         id: v.id,
         date: v.date,

@@ -11,8 +11,11 @@ struct MemberDebateConversation: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                content
-                    .padding(ThemeTokens.Spacing.l)
+                VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
+                    TranslationFallbackNotice()
+                    content
+                }
+                .padding(ThemeTokens.Spacing.l)
             }
             .background(ThemeColor.background)
             .navigationTitle(group.title)

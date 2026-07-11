@@ -9,7 +9,7 @@ final class VoteDetailStore {
 
     func load(id: String, cache: ApiCache) async {
         loadFailed = false
-        let path = "/votes/\(id).json"
+        let path = AppLocale.current.dataPath("/votes/\(id).json")
         if detail == nil, let cached: VoteDetailPayload = cache.cached(path) {
             detail = cached
         }
@@ -25,7 +25,7 @@ final class VoteDetailStore {
 
     private func loadSignatories(cache: ApiCache) async {
         if let antragId = detail?.antraege?.first?.antragId {
-            let path = "/motions/\(antragId).json"
+            let path = AppLocale.current.dataPath("/motions/\(antragId).json")
             if let cached: MotionDetailPayload = cache.cached(path) {
                 signatories = cached.signatories
             }

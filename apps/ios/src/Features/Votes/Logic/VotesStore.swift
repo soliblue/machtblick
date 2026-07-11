@@ -13,11 +13,13 @@ final class VotesStore {
     var voteTypeFilter: String?
     var flagFilter: VoteFlagFilter = .all
 
+    private var path: String { AppLocale.current.dataPath("/api/votes.json") }
+
     func load(cache: ApiCache) async {
-        if votes.isEmpty, let cached: [VoteListItem] = cache.cached("/api/votes.json") {
+        if votes.isEmpty, let cached: [VoteListItem] = cache.cached(path) {
             votes = cached
         }
-        if votes.isEmpty || cache.isStale("/api/votes.json", maxAge: 3600) {
+        if votes.isEmpty || cache.isStale(path, maxAge: 3600) {
             await fetchLatest(cache: cache)
         }
         loaded = true
@@ -28,7 +30,7 @@ final class VotesStore {
     }
 
     private func fetchLatest(cache: ApiCache) async {
-        if let fresh: [VoteListItem] = await cache.fetch("/api/votes.json") {
+        if let fresh: [VoteListItem] = await cache.fetch(path) {
             votes = fresh
             loadFailed = false
         } else if votes.isEmpty {
@@ -45,7 +47,9 @@ final class VotesStore {
     }
 
     var availableProposers: [String] {
-        Array(Set(votes.compactMap(\.initiator))).sorted()
+        Array(Set(votes.compactMap(\.initiator))).sorted {
+            $0.compare($1, locale: AppLocale.current.locale) == .orderedAscending
+        }
     }
 
     var availableTopics: [String] {
@@ -53,7 +57,11 @@ final class VotesStore {
         for vote in votes {
             if let topic = vote.topic { counts[topic, default: 0] += 1 }
         }
-        return counts.sorted { $0.value > $1.value || ($0.value == $1.value && $0.key < $1.key) }
+        return counts.sorted {
+            $0.value > $1.value
+                || ($0.value == $1.value
+                    && $0.key.compare($1.key, locale: AppLocale.current.locale) == .orderedAscending)
+        }
             .map(\.key)
     }
 

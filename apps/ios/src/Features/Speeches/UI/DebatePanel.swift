@@ -7,6 +7,7 @@ struct DebatePanel: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.l) {
+            TranslationFallbackNotice()
             PartySummaryStrip(summaries: partySummaries, speeches: speeches)
             Text(Copy.debateTimeline).kicker()
             SearchField(placeholder: Copy.searchSpeeches, text: $query)
@@ -22,13 +23,13 @@ struct DebatePanel: View {
     }
 
     private var terms: [String] {
-        query.lowercased().split(separator: " ").map(String.init)
+        query.lowercased(with: AppLocale.current.locale).split(separator: " ").map(String.init)
     }
 
     private var filtered: [SpeechSummary] {
         guard !terms.isEmpty else { return speeches }
         return speeches.filter { speech in
-            let hay = "\(speech.speakerName) \(speech.excerpt)".lowercased()
+            let hay = "\(speech.speakerName) \(speech.excerpt)".lowercased(with: AppLocale.current.locale)
             return terms.allSatisfy { hay.contains($0) }
         }
     }

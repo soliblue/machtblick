@@ -32,9 +32,11 @@ struct VoteDetailView: View {
                         Button { flags.toggleSaved(id) } label: {
                             Image(systemName: flags.isSaved(id) ? "bookmark.fill" : "bookmark")
                         }
+                        .accessibilityLabel(flags.isSaved(id) ? Copy.removeSavedVote : Copy.saveVote)
                         Button { flags.toggleSeen(id) } label: {
                             Image(systemName: flags.isSeen(id) ? "checkmark.circle.fill" : "checkmark.circle")
                         }
+                        .accessibilityLabel(flags.isSeen(id) ? Copy.markVoteUnseen : Copy.markVoteSeen)
                     }
                     ToolbarSpacer(.fixed, placement: .topBarTrailing)
                     ToolbarItem(placement: .topBarTrailing) {

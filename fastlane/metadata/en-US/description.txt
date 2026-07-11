@@ -1,0 +1,16 @@
+Machtblick makes it clear how the German Bundestag decides.
+
+Explore recorded votes, understand the results, and see how parliamentary groups and individual members voted. Clear visualizations, accessible summaries, and direct links to original sources help you follow parliamentary decisions.
+
+With Machtblick, you can:
+
+• browse and filter current and previous votes
+• understand results and majorities at a glance
+• review the voting record of individual members
+• compare parliamentary groups by seats, attendance, cohesion, and positions
+• trace motions and debates back to official documents
+• save interesting votes and mark the ones you have read
+
+The data comes from publicly available sources of the German Bundestag and other transparently identified sources. Automatically generated summaries are clearly marked and may contain errors.
+
+Machtblick is independent, free, and ad-free. There are no accounts, no tracking, and no in-app purchases.

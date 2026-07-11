@@ -6,11 +6,13 @@ final class PartiesStore {
     private(set) var parties: [PartyListItem] = []
     private(set) var loadFailed = false
 
+    private var path: String { AppLocale.current.dataPath("/api/parties.json") }
+
     func load(cache: ApiCache) async {
-        if parties.isEmpty, let cached: [PartyListItem] = cache.cached("/api/parties.json") {
+        if parties.isEmpty, let cached: [PartyListItem] = cache.cached(path) {
             parties = cached
         }
-        if parties.isEmpty || cache.isStale("/api/parties.json", maxAge: 3600) {
+        if parties.isEmpty || cache.isStale(path, maxAge: 3600) {
             await fetchLatest(cache: cache)
         }
     }
@@ -20,7 +22,7 @@ final class PartiesStore {
     }
 
     private func fetchLatest(cache: ApiCache) async {
-        if let fresh: [PartyListItem] = await cache.fetch("/api/parties.json") {
+        if let fresh: [PartyListItem] = await cache.fetch(path) {
             parties = fresh
             loadFailed = false
         } else if parties.isEmpty {

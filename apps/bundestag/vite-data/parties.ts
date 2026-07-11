@@ -1,6 +1,7 @@
 import type Database from 'better-sqlite3'
 import { requireVoteCleanTitle } from '../src/lib/voteTitles'
 import { partyHistory } from './partyHistory'
+import { voteTranslation, type StaticLocale, type StaticTranslations } from './translations'
 
 type SummaryRow = {
   vote_id: string
@@ -90,7 +91,7 @@ export function leanParties(db: Database.Database) {
   return out
 }
 
-export function fullParty(db: Database.Database, slug: string) {
+export function fullParty(db: Database.Database, slug: string, locale: StaticLocale, translations: StaticTranslations) {
   const party = SLUG_TO_PARTY[slug]
   const summaries = db.prepare(`
     SELECT vps.vote_id, vps.members, vps.yes, vps.no, vps.abstain, vps.absent,
@@ -102,7 +103,11 @@ export function fullParty(db: Database.Database, slug: string) {
   `).all(party) as Array<SummaryRow & { date: string; title: string; clean_title: string | null; result: 'angenommen' | 'abgelehnt'; document: string | null; vote_type: string }>
   const namentlich = summaries.filter((s) => s.vote_type === 'namentlich' && s.yes != null)
   const voteRows = namentlich.map((s) => {
-    const titled = requireVoteCleanTitle({ id: s.vote_id, title: s.title, cleanTitle: s.clean_title })
+    const titled = requireVoteCleanTitle({
+      id: s.vote_id,
+      title: s.title,
+      cleanTitle: voteTranslation(translations, locale, s.vote_id)?.clean_title ?? s.clean_title,
+    })
     const top = Math.max(s.yes, s.no, s.abstain)
     const partyVote =
       s.yes === top && s.yes > s.no && s.yes > s.abstain ? 'yes'
@@ -184,7 +189,11 @@ export function fullParty(db: Database.Database, slug: string) {
   const proposals: Array<{ voteId: string; date: string; title: string; cleanTitle: string | null; result: 'angenommen' | 'abgelehnt' }> = []
   for (const v of allVotes) {
     if (v.initiator !== party) continue
-    const titled = requireVoteCleanTitle({ id: v.id, title: v.title, cleanTitle: v.clean_title })
+    const titled = requireVoteCleanTitle({
+      id: v.id,
+      title: v.title,
+      cleanTitle: voteTranslation(translations, locale, v.id)?.clean_title ?? v.clean_title,
+    })
     proposalsTotal += 1
     if (v.result === 'angenommen') proposalsAccepted += 1
     proposals.push({ voteId: v.id, date: v.date, title: titled.title, cleanTitle: titled.cleanTitle, result: v.result })

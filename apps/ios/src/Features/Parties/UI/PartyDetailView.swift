@@ -53,7 +53,7 @@ struct PartyDetailView: View {
             HStack(alignment: .top, spacing: ThemeTokens.Spacing.l) {
                 PosterStatBar(
                     label: Copy.cohesion, value: cohesion(detail),
-                    sub: (text: "\(detail.votes.count) \(Copy.votesSection)", danger: false)
+                    sub: (text: Copy.voteCount(detail.votes.count), danger: false)
                 )
                 .frame(maxWidth: .infinity, alignment: .leading)
                 PosterStatBar(label: Copy.attendance, value: attendance(detail))
@@ -74,7 +74,7 @@ struct PartyDetailView: View {
         if PartyStyle.hasPartyLine(detail.party) {
             parts.append(PartyStyle.isGoverning(detail.party) ? Copy.govLabel : Copy.oppositionLabel)
         }
-        parts.append("\(seats(detail)) \(Copy.seats)")
+        parts.append(Copy.seatCount(seats(detail)))
         return parts.joined(separator: " · ")
     }
 

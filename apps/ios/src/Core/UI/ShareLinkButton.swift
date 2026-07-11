@@ -8,5 +8,6 @@ struct ShareLinkButton: View {
         ShareLink(item: url, subject: Text(title), message: Text(title)) {
             Image(systemName: "square.and.arrow.up")
         }
+        .accessibilityLabel(Copy.shareAction)
     }
 }

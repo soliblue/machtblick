@@ -13,7 +13,7 @@ struct PartyHistoryChart: View {
         let yMax = (points.map { $0.pctOfTotal * 100 }.max() ?? 0).rounded(.up) + 1
         Chart {
             ForEach(events) { event in
-                RuleMark(x: .value("Wahlperiode", event.anchorTerm))
+                RuleMark(x: .value(Copy.electoralTerm, event.anchorTerm))
                     .foregroundStyle(ThemeColor.fg.opacity(ThemeTokens.Opacity.m))
                     .lineStyle(StrokeStyle(lineWidth: ThemeTokens.Stroke.s, dash: [4, 4]))
                     .annotation(
@@ -25,17 +25,17 @@ struct PartyHistoryChart: View {
             }
             ForEach(points, id: \.termNumber) { point in
                 let pct = point.pctOfTotal * 100
-                AreaMark(x: .value("Wahlperiode", point.termNumber), y: .value("Anteil", pct))
+                AreaMark(x: .value(Copy.electoralTerm, point.termNumber), y: .value(Copy.share, pct))
                     .interpolationMethod(.monotone)
                     .foregroundStyle(
                         LinearGradient(
                             colors: [color.opacity(ThemeTokens.Opacity.m), color.opacity(0)],
                             startPoint: .top, endPoint: .bottom))
-                LineMark(x: .value("Wahlperiode", point.termNumber), y: .value("Anteil", pct))
+                LineMark(x: .value(Copy.electoralTerm, point.termNumber), y: .value(Copy.share, pct))
                     .interpolationMethod(.monotone)
                     .foregroundStyle(color)
                     .lineStyle(StrokeStyle(lineWidth: ThemeTokens.Stroke.l))
-                PointMark(x: .value("Wahlperiode", point.termNumber), y: .value("Anteil", pct))
+                PointMark(x: .value(Copy.electoralTerm, point.termNumber), y: .value(Copy.share, pct))
                     .foregroundStyle(color)
                     .symbolSize(40)
                     .annotation(position: .top, spacing: ThemeTokens.Spacing.xs) {
@@ -70,13 +70,13 @@ struct PartyHistoryChart: View {
     }
 
     private func percentLabel(_ pct: Double) -> String {
-        String(format: "%.1f", pct).replacingOccurrences(of: ".", with: ",") + "%"
+        Formatters.percent(pct / 100, fractionDigits: 1)
     }
 
     private func eventLabel(_ event: AnchoredEvent) -> some View {
         HStack(spacing: ThemeTokens.Spacing.xs) {
             Image(systemName: event.systemImage).font(.system(size: ThemeTokens.Icon.s))
-            Text(event.labelDe).font(.system(size: ThemeTokens.Text.s))
+            Text(Copy.partyHistoryEvent(event.labelDe)).font(.system(size: ThemeTokens.Text.s))
         }
         .foregroundStyle(ThemeColor.secondary)
         .frame(maxWidth: 140, alignment: .leading)

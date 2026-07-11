@@ -34,7 +34,9 @@ struct AlignmentList: View {
                     }
                 }
                 .frame(height: 3)
-                Text("\(Formatters.percent(alignment.agreement)) \(Copy.beiWord) \(alignment.sharedVotes) \(Copy.sharedVotesSuffix)")
+                Text(
+                    Copy.sharedVotesAgreement(
+                        Formatters.percent(alignment.agreement), alignment.sharedVotes))
                     .font(.system(size: ThemeTokens.Text.s))
                     .foregroundStyle(ThemeColor.secondary)
             }

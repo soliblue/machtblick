@@ -94,7 +94,7 @@ export function breadcrumbJsonLd(items: Array<{ name: string; path: string }>) {
 
 export function alternateJsonLink(path: string) {
   const base = path.length > 1 ? path.replace(/\/$/, '') : path
-  const normalized = base.startsWith('/en/motions/') ? base : base === '/en' ? '/' : base.startsWith('/en/') ? base.slice(3) : base
+  const normalized = base === '/en' ? '/' : base
   return [{ rel: 'alternate', type: 'application/json', href: `${normalized}.json` }]
 }
 

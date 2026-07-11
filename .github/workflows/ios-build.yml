@@ -24,6 +24,30 @@ jobs:
           sudo xcode-select -s /Applications/Xcode_26.2.app
           xcodebuild -version
 
+      - name: Check localizations
+        run: node apps/ios/scripts/check-localizations.mjs
+
+      - name: Check language contract
+        run: |
+          xcrun swiftc \
+            apps/ios/src/Core/Localization/AppLanguage.swift \
+            apps/ios/src/Core/Localization/AppLocale.swift \
+            apps/ios/src/Core/UI/Formatters.swift \
+            apps/ios/scripts/LanguageContractCheck.swift \
+            -o "$RUNNER_TEMP/machtblick-language-contract"
+          "$RUNNER_TEMP/machtblick-language-contract"
+
+      - name: Check member payload compatibility
+        run: |
+          xcrun swiftc \
+            apps/ios/src/Features/Votes/Logic/PartyPosition.swift \
+            apps/ios/src/Features/Votes/Logic/VoteResult.swift \
+            apps/ios/src/Features/Votes/Logic/BallotChoice.swift \
+            apps/ios/src/Features/Members/Logic/MemberDetailPayload.swift \
+            apps/ios/scripts/MemberPayloadContractCheck.swift \
+            -o "$RUNNER_TEMP/machtblick-member-payload-contract"
+          "$RUNNER_TEMP/machtblick-member-payload-contract"
+
       - name: Build without signing
         run: |
           set -o pipefail
@@ -31,5 +55,37 @@ jobs:
             -project apps/ios/iOS.xcodeproj \
             -scheme Machtblick \
             -destination 'generic/platform=iOS Simulator' \
-            -derivedDataPath /tmp/machtblick-build \
+            -derivedDataPath "$RUNNER_TEMP/machtblick-build" \
             CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO
+
+      - name: Smoke launch German and English
+        run: |
+          IOS_RUNTIME="$(xcrun simctl list runtimes --json | python3 -c 'import json,sys; rows=[x for x in json.load(sys.stdin)["runtimes"] if x["isAvailable"] and x["name"].startswith("iOS")]; print(max(rows, key=lambda x: tuple(map(int, x["version"].split("."))))["identifier"])')"
+          IPHONE_TYPE="$(xcrun simctl list devicetypes --json | python3 -c 'import json,sys; rows=[x for x in json.load(sys.stdin)["devicetypes"] if x["name"].startswith("iPhone")]; print(rows[-1]["identifier"])')"
+          SMOKE_UDID="$(xcrun simctl create 'Machtblick Smoke' "$IPHONE_TYPE" "$IOS_RUNTIME")"
+          echo "SMOKE_UDID=$SMOKE_UDID" >> "$GITHUB_ENV"
+          xcrun simctl boot "$SMOKE_UDID"
+          xcrun simctl bootstatus "$SMOKE_UDID" -b
+          xcrun simctl install "$SMOKE_UDID" "$RUNNER_TEMP/machtblick-build/Build/Products/Debug-iphonesimulator/Machtblick.app"
+          mkdir -p "$RUNNER_TEMP/machtblick-smoke"
+          for LANGUAGE in de en; do
+            xcrun simctl spawn "$SMOKE_UDID" defaults write soli.Machtblick appLanguage -string "$LANGUAGE"
+            LAUNCH_OUTPUT="$(xcrun simctl launch --terminate-running-process "$SMOKE_UDID" soli.Machtblick)"
+            APP_PID="${LAUNCH_OUTPUT##*: }"
+            sleep 8
+            xcrun simctl spawn "$SMOKE_UDID" kill -0 "$APP_PID"
+            xcrun simctl io "$SMOKE_UDID" screenshot "$RUNNER_TEMP/machtblick-smoke/$LANGUAGE.png"
+            xcrun simctl terminate "$SMOKE_UDID" soli.Machtblick
+          done
+
+      - name: Upload smoke screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bilingual-simulator-smoke
+          path: ${{ runner.temp }}/machtblick-smoke/*.png
+          if-no-files-found: ignore
+
+      - name: Delete smoke simulator
+        if: always() && env.SMOKE_UDID != ''
+        run: xcrun simctl delete "$SMOKE_UDID"

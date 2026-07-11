@@ -18,6 +18,8 @@ struct PartyLineFingerprint: View {
                                 .frame(width: width(key, in: geo.size.width))
                         }
                         .buttonStyle(.plain)
+                        .accessibilityLabel("\(label(key)), \(Copy.voteCount(count(key)))")
+                        .accessibilityAddTraits(selected == key ? .isSelected : [])
                     }
                 }
             }

@@ -1,12 +1,17 @@
 import type Database from 'better-sqlite3'
+import type { MemberDetail, MemberVoteChoice, MemberVoteRow } from '../src/server/memberDetail'
 import { requireVoteCleanTitle, requireVoteTitleText } from '../src/lib/voteTitles'
 import { resolvePictureUrl } from '../src/server/photoManifest'
+import {
+  speechTranslation,
+  voteTranslation,
+  type StaticLocale,
+  type StaticTranslations,
+} from './translations'
 
 type MemberRow = {
   id: string
   name: string
-  first_name: string
-  last_name: string
   picture_url: string | null
   picture_author: string | null
   picture_license: string | null
@@ -43,7 +48,7 @@ function loadDemographicsMap(db: Database.Database) {
     FROM member_abgeordnetenwatch
   `).all() as DemographicsRow[]
   const out = new Map<string, { yearOfBirth: number | null; sex: Sex | null }>()
-  for (const r of rows) out.set(r.member_id, { yearOfBirth: r.year_of_birth ?? null, sex: normalizeSex(r.sex) })
+  for (const row of rows) out.set(row.member_id, { yearOfBirth: row.year_of_birth ?? null, sex: normalizeSex(row.sex) })
   return out
 }
 
@@ -51,12 +56,14 @@ type VoteMemberRow = {
   vote_id: string
   member_id: string
   state: string
-  choice: string
+  choice: MemberVoteChoice
 }
 
 type SummaryRow = {
   vote_id: string
   party: string
+  position: 'yes' | 'no' | 'abstain' | 'mixed'
+  members: number | null
   yes: number | null
   no: number | null
   abstain: number | null
@@ -68,14 +75,6 @@ type AffiliationRow = {
   party: string
   valid_from: string
   valid_to: string | null
-}
-
-type VoteRow = {
-  id: string
-  date: string
-  title: string
-  clean_title: string | null
-  result: 'angenommen' | 'abgelehnt'
 }
 
 type SpeechJoinRow = {
@@ -92,148 +91,107 @@ type SpeechJoinRow = {
   debate_group_id: string | null
   contribution_type: string | null
   vote_id: string | null
-  vote_title: string | null
   vote_clean_title: string | null
 }
 
-type InitiativeRow = {
-  id: number
-  title: string
-  clean_title: string | null
-  beratungsstand: string | null
-  introduced_date: string | null
-  drucksache_pdf_url: string | null
-  sachgebiet: string | null
-}
-
-type InitiativeVoteRow = {
-  antrag_id: number
-  vote_id: string
-  date: string
-  title: string
-  clean_title: string | null
-  result: 'angenommen' | 'abgelehnt'
+export type MemberBuildData = {
+  majorityByVoteParty: Map<string, MemberVoteChoice>
+  summariesByVote: Map<string, MemberVoteRow['partySummaries']>
+  translations: StaticTranslations
 }
 
 const PARTY_LINE_EXCLUDED = new Set(['fraktionslos', 'Bundesregierung'])
 const CURRENT_TERM = 21
 
-function loadInitiatives(db: Database.Database, memberId: string) {
-  const rows = db.prepare(`
-    SELECT a.id, a.title, a.clean_title, a.beratungsstand, a.introduced_date, a.drucksache_pdf_url, a.sachgebiet
-    FROM antrag_signatories ans
-    INNER JOIN antraege a ON a.id = ans.antrag_id
-    INNER JOIN antrag_descriptions ad ON ad.antrag_id = a.id
-    WHERE ans.member_id = ? AND a.wahlperiode = ${CURRENT_TERM}
-    ORDER BY a.introduced_date DESC
-  `).all(memberId) as InitiativeRow[]
-  const ids = rows.map((r) => r.id)
-  if (!ids.length) return []
-  const placeholders = ids.map(() => '?').join(', ')
-  const counts = new Map(
-    (db.prepare(`SELECT antrag_id, count(*) AS n FROM antrag_signatories WHERE antrag_id IN (${placeholders}) GROUP BY antrag_id`)
-      .all(...ids) as Array<{ antrag_id: number; n: number }>).map((r) => [r.antrag_id, r.n]),
-  )
-  const voteRows = db.prepare(`
-    SELECT va.antrag_id, v.id AS vote_id, v.date, v.title, v.clean_title, v.result
-    FROM vote_antraege va
-    INNER JOIN votes v ON v.id = va.vote_id
-    WHERE va.antrag_id IN (${placeholders}) AND v.term_id = ${CURRENT_TERM} AND v.procedural = 0 AND v.vote_type != 'hammelsprung'
-    ORDER BY v.date DESC
-  `).all(...ids) as InitiativeVoteRow[]
-  const votesByAntrag = new Map<number, Array<{ voteId: string; date: string; title: string; cleanTitle: string; result: 'angenommen' | 'abgelehnt' }>>()
-  for (const r of voteRows) {
-    const titled = requireVoteCleanTitle({ id: r.vote_id, title: r.title, cleanTitle: r.clean_title })
-    const arr = votesByAntrag.get(r.antrag_id) ?? []
-    arr.push({ voteId: r.vote_id, date: r.date, title: titled.title, cleanTitle: titled.cleanTitle, result: r.result })
-    votesByAntrag.set(r.antrag_id, arr)
-  }
-  return rows.map((r) => ({
-    antragId: r.id,
-    title: r.title,
-    cleanTitle: r.clean_title,
-    beratungsstand: r.beratungsstand,
-    introducedDate: r.introduced_date,
-    drucksachePdfUrl: r.drucksache_pdf_url,
-    sachgebiet: r.sachgebiet ? JSON.parse(r.sachgebiet) as string[] : [],
-    signatoryCount: counts.get(r.id) ?? 1,
-    linkedVotes: votesByAntrag.get(r.id) ?? [],
-  }))
-}
-
 function partyAt(affiliations: AffiliationRow[], date: string): string {
-  const hit = affiliations.find((a) => a.valid_from <= date && (a.valid_to === null || a.valid_to >= date))
-  return hit?.party ?? ''
+  return affiliations.find((row) => row.valid_from <= date && (row.valid_to === null || row.valid_to >= date))?.party ?? ''
 }
 
-function majorityChoice(s: SummaryRow): string {
-  const c = [
-    ['ja', s.yes ?? 0],
-    ['nein', s.no ?? 0],
-    ['enthalten', s.abstain ?? 0],
-    ['nicht_abgegeben', s.absent ?? 0],
-  ] as const
-  return c.reduce((a, b) => (b[1] > a[1] ? b : a), c[0])[0]
+function majorityChoice(summary: SummaryRow): MemberVoteChoice {
+  return ([
+    ['ja', summary.yes ?? 0],
+    ['nein', summary.no ?? 0],
+    ['enthalten', summary.abstain ?? 0],
+    ['nicht_abgegeben', summary.absent ?? 0],
+  ] as const).reduce((a, b) => (b[1] > a[1] ? b : a))[0]
 }
 
-export function leanMembers(db: Database.Database) {
-  const allMembers = db.prepare('SELECT id, name, mandate_type FROM members').all() as Array<Pick<MemberRow, 'id' | 'name' | 'mandate_type'>>
-  const voteDate = new Map(
-    (db.prepare(`SELECT id, date FROM votes WHERE term_id = ${CURRENT_TERM} AND procedural = 0`).all() as Array<{ id: string; date: string }>).map((v) => [v.id, v.date]),
-  )
-  const vmRows = (db.prepare('SELECT vote_id, member_id, state, choice FROM vote_members').all() as VoteMemberRow[])
-    .filter((r) => voteDate.has(r.vote_id))
-  const currentParty = new Map(
-    (db.prepare(`SELECT member_id, party FROM member_affiliations WHERE term_id = ${CURRENT_TERM} AND valid_to IS NULL`).all() as Array<{ member_id: string; party: string }>).map((a) => [a.member_id, a.party]),
-  )
-  const affByMember = new Map<string, AffiliationRow[]>()
-  for (const a of db.prepare(`SELECT member_id, party, valid_from, valid_to FROM member_affiliations WHERE term_id = ${CURRENT_TERM}`).all() as AffiliationRow[]) {
-    const arr = affByMember.get(a.member_id) ?? []
-    arr.push(a)
-    affByMember.set(a.member_id, arr)
-  }
-  const majByVoteParty = new Map<string, string>()
-  for (const s of db.prepare(`
-    SELECT vps.vote_id, vps.party, vps.yes, vps.no, vps.abstain, vps.absent
+export function loadMemberBuildData(db: Database.Database, translations: StaticTranslations): MemberBuildData {
+  const majorityByVoteParty = new Map<string, MemberVoteChoice>()
+  const summariesByVote = new Map<string, MemberVoteRow['partySummaries']>()
+  for (const summary of db.prepare(`
+    SELECT vps.vote_id, vps.party, vps.position, vps.members, vps.yes, vps.no, vps.abstain, vps.absent
     FROM vote_party_summaries vps
     INNER JOIN votes v ON v.id = vps.vote_id
     WHERE v.term_id = ${CURRENT_TERM}
-  `).all() as SummaryRow[]) majByVoteParty.set(`${s.vote_id} ${s.party}`, majorityChoice(s))
-  const ballotsByMember = new Map<string, Array<{ voteId: string; date: string; choice: string }>>()
+  `).all() as SummaryRow[]) {
+    majorityByVoteParty.set(`${summary.vote_id} ${summary.party}`, majorityChoice(summary))
+    const rows = summariesByVote.get(summary.vote_id) ?? []
+    rows.push({
+      party: summary.party,
+      position: summary.position,
+      members: summary.members ?? 0,
+      yes: summary.yes ?? 0,
+      no: summary.no ?? 0,
+      abstain: summary.abstain ?? 0,
+      absent: summary.absent ?? 0,
+    })
+    summariesByVote.set(summary.vote_id, rows)
+  }
+  return { majorityByVoteParty, summariesByVote, translations }
+}
+
+export function leanMembers(db: Database.Database, data: MemberBuildData) {
+  const allMembers = db.prepare('SELECT id, name, mandate_type FROM members').all() as Array<Pick<MemberRow, 'id' | 'name' | 'mandate_type'>>
+  const voteDate = new Map(
+    (db.prepare(`SELECT id, date FROM votes WHERE term_id = ${CURRENT_TERM} AND procedural = 0`).all() as Array<{ id: string; date: string }>).map((vote) => [vote.id, vote.date]),
+  )
+  const voteMembers = (db.prepare('SELECT vote_id, member_id, state, choice FROM vote_members').all() as VoteMemberRow[])
+    .filter((row) => voteDate.has(row.vote_id))
+  const currentParty = new Map(
+    (db.prepare(`SELECT member_id, party FROM member_affiliations WHERE term_id = ${CURRENT_TERM} AND valid_to IS NULL`).all() as Array<{ member_id: string; party: string }>).map((row) => [row.member_id, row.party]),
+  )
+  const affiliationsByMember = new Map<string, AffiliationRow[]>()
+  for (const affiliation of db.prepare(`SELECT member_id, party, valid_from, valid_to FROM member_affiliations WHERE term_id = ${CURRENT_TERM}`).all() as AffiliationRow[]) {
+    const rows = affiliationsByMember.get(affiliation.member_id) ?? []
+    rows.push(affiliation)
+    affiliationsByMember.set(affiliation.member_id, rows)
+  }
+  const ballotsByMember = new Map<string, Array<{ voteId: string; date: string; choice: MemberVoteChoice }>>()
   const stateByMember = new Map<string, string>()
-  for (const r of vmRows) {
-    if (!stateByMember.has(r.member_id)) stateByMember.set(r.member_id, r.state)
-    const arr = ballotsByMember.get(r.member_id) ?? []
-    arr.push({ voteId: r.vote_id, date: voteDate.get(r.vote_id)!, choice: r.choice })
-    ballotsByMember.set(r.member_id, arr)
+  for (const row of voteMembers) {
+    if (!stateByMember.has(row.member_id)) stateByMember.set(row.member_id, row.state)
+    const ballots = ballotsByMember.get(row.member_id) ?? []
+    ballots.push({ voteId: row.vote_id, date: voteDate.get(row.vote_id)!, choice: row.choice })
+    ballotsByMember.set(row.member_id, ballots)
   }
   const demographics = loadDemographicsMap(db)
   return allMembers
-    .filter((m) => ballotsByMember.has(m.id))
-    .map((m) => {
-      const demo = demographics.get(m.id)
-      const ballots = ballotsByMember.get(m.id)!
-      const affiliations = affByMember.get(m.id) ?? []
+    .filter((member) => ballotsByMember.has(member.id))
+    .map((member) => {
+      const demo = demographics.get(member.id)
+      const ballots = ballotsByMember.get(member.id)!
+      const affiliations = affiliationsByMember.get(member.id) ?? []
       let absent = 0
       let loyalMatches = 0
       let loyalEligible = 0
-      for (const b of ballots) {
-        const party = partyAt(affiliations, b.date)
+      for (const ballot of ballots) {
+        const party = partyAt(affiliations, ballot.date)
         const eligible = !!party && !PARTY_LINE_EXCLUDED.has(party)
-        if (b.choice === 'nicht_abgegeben') absent++
+        if (ballot.choice === 'nicht_abgegeben') absent++
         else if (eligible) {
           loyalEligible++
-          if (b.choice === (majByVoteParty.get(`${b.voteId} ${party}`) ?? '')) loyalMatches++
+          if (ballot.choice === (data.majorityByVoteParty.get(`${ballot.voteId} ${party}`) ?? '')) loyalMatches++
         }
       }
       return {
-        id: m.id,
-        name: m.name,
-        party: currentParty.get(m.id) ?? '',
-        state: stateByMember.get(m.id) ?? '',
+        id: member.id,
+        name: member.name,
+        party: currentParty.get(member.id) ?? '',
+        state: stateByMember.get(member.id) ?? '',
         yearOfBirth: demo?.yearOfBirth ?? null,
         sex: demo?.sex ?? null,
-        mandateType: normalizeMandate(m.mandate_type),
+        mandateType: normalizeMandate(member.mandate_type),
         attendance: 1 - absent / ballots.length,
         loyalty: loyalEligible > 0 ? loyalMatches / loyalEligible : null,
       }
@@ -241,61 +199,84 @@ export function leanMembers(db: Database.Database) {
     .sort((a, b) => a.name.localeCompare(b.name, 'de'))
 }
 
-export function fullMember(db: Database.Database, id: string) {
-  const m = db.prepare('SELECT * FROM members WHERE id = ?').get(id) as MemberRow
-  const demoRow = db.prepare(`
+export function fullMember(
+  db: Database.Database,
+  id: string,
+  locale: StaticLocale,
+  data: MemberBuildData,
+): MemberDetail {
+  const member = db.prepare('SELECT * FROM members WHERE id = ?').get(id) as MemberRow
+  const demographics = db.prepare(`
     SELECT json_extract(raw_json, '$.year_of_birth') AS year_of_birth,
-           json_extract(raw_json, '$.sex') AS sex
+           json_extract(raw_json, '$.sex') AS sex,
+           json_extract(raw_json, '$.education') AS education,
+           json_extract(raw_json, '$.abgeordnetenwatch_url') AS aw_profile_url,
+           json_extract(raw_json, '$.qid_wikidata') AS wikidata_qid
     FROM member_abgeordnetenwatch
     WHERE member_id = ?
-  `).get(id) as { year_of_birth: number | null; sex: string | null } | undefined
-  const yearOfBirth = demoRow?.year_of_birth ?? null
-  const sex = normalizeSex(demoRow?.sex ?? null)
-  const vmRows = db.prepare(`
-    SELECT vm.vote_id, vm.state, vm.choice, v.date, v.title, v.clean_title, v.result
+  `).get(id) as {
+    year_of_birth: number | null
+    sex: string | null
+    education: string | null
+    aw_profile_url: string | null
+    wikidata_qid: string | null
+  } | undefined
+  const voteRows = db.prepare(`
+    SELECT vm.vote_id, vm.state, vm.choice, v.date, v.title, v.clean_title, v.result, v.initiator
     FROM vote_members vm
     INNER JOIN votes v ON v.id = vm.vote_id
     WHERE vm.member_id = ? AND v.term_id = ${CURRENT_TERM} AND v.procedural = 0
     ORDER BY v.date DESC
-  `).all(id) as Array<{ vote_id: string; state: string; choice: string; date: string; title: string; clean_title: string | null; result: 'angenommen' | 'abgelehnt' }>
-  const affiliations = db.prepare(`SELECT member_id, party, valid_from, valid_to FROM member_affiliations WHERE term_id = ${CURRENT_TERM} AND member_id = ?`).all(id) as AffiliationRow[]
-  const allSummaries = db.prepare(`
-    SELECT vps.vote_id, vps.party, vps.yes, vps.no, vps.abstain, vps.absent
-    FROM vote_party_summaries vps
-    INNER JOIN votes v ON v.id = vps.vote_id
-    WHERE v.term_id = ${CURRENT_TERM}
-  `).all() as SummaryRow[]
-  const majByVoteParty = new Map<string, string>()
-  for (const s of allSummaries) majByVoteParty.set(`${s.vote_id} ${s.party}`, majorityChoice(s))
+  `).all(id) as Array<{
+    vote_id: string
+    state: string
+    choice: MemberVoteChoice
+    date: string
+    title: string
+    clean_title: string | null
+    result: 'angenommen' | 'abgelehnt'
+    initiator: string | null
+  }>
+  const affiliations = db.prepare(`
+    SELECT member_id, party, valid_from, valid_to
+    FROM member_affiliations
+    WHERE term_id = ${CURRENT_TERM} AND member_id = ?
+  `).all(id) as AffiliationRow[]
   let absent = 0
   let loyalMatches = 0
   let loyalEligible = 0
   let defections = 0
-  const history = vmRows.map((r) => {
-    const titled = requireVoteCleanTitle({ id: r.vote_id, title: r.title, cleanTitle: r.clean_title })
-    const party = partyAt(affiliations, r.date)
-    const maj = majByVoteParty.get(`${r.vote_id} ${party}`) ?? ''
+  const history: MemberVoteRow[] = voteRows.map((row) => {
+    const translated = voteTranslation(data.translations, locale, row.vote_id)
+    const titled = requireVoteCleanTitle({
+      id: row.vote_id,
+      title: row.title,
+      cleanTitle: translated?.clean_title ?? row.clean_title,
+    })
+    const party = partyAt(affiliations, row.date)
+    const majority = data.majorityByVoteParty.get(`${row.vote_id} ${party}`) ?? ''
     const eligible = !!party && !PARTY_LINE_EXCLUDED.has(party)
-    const defected = r.choice === 'nicht_abgegeben' ? false : eligible ? r.choice !== maj : null
-    if (r.choice === 'nicht_abgegeben') absent++
+    const defected = row.choice === 'nicht_abgegeben' ? false : eligible ? row.choice !== majority : null
+    if (row.choice === 'nicht_abgegeben') absent++
     else if (eligible) {
       loyalEligible++
-      if (r.choice === maj) loyalMatches++
+      if (row.choice === majority) loyalMatches++
       else defections++
     }
     return {
-      voteId: r.vote_id,
-      date: r.date,
+      voteId: row.vote_id,
+      date: row.date,
       title: titled.title,
       cleanTitle: titled.cleanTitle,
-      result: r.result,
-      choice: r.choice,
+      result: row.result,
+      choice: row.choice,
       party,
-      partyMajority: maj,
+      partyMajority: majority,
       defected,
+      proposingParty: row.initiator,
+      partySummaries: data.summariesByVote.get(row.vote_id) ?? [],
     }
   })
-  const currentParty = affiliations.find((a) => a.valid_to === null)?.party ?? ''
   const speechRows = db.prepare(`
     WITH linked_votes AS (
       SELECT speech_id, vote_id, row_number() OVER (
@@ -311,55 +292,62 @@ export function fullMember(db: Database.Database, id: string) {
            sdgs.group_id AS debate_group_id,
            sdgs.contribution_type AS contribution_type,
            v.id AS vote_id,
-           v.title AS vote_title,
            v.clean_title AS vote_clean_title
     FROM speeches s
     LEFT JOIN linked_votes lv ON lv.speech_id = s.id AND lv.rn = 1
-    LEFT JOIN votes v ON v.id = lv.vote_id AND v.term_id = 21 AND v.procedural = 0 AND v.vote_type != 'hammelsprung'
+    LEFT JOIN votes v ON v.id = lv.vote_id AND v.term_id = ${CURRENT_TERM} AND v.procedural = 0 AND v.vote_type != 'hammelsprung'
     LEFT JOIN speech_debate_group_speeches sdgs ON sdgs.speech_id = s.id
     LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
     LEFT JOIN plenary_agenda_items pai ON pai.session_id = s.session_id AND pai.date = s.date AND pai.agenda_item = s.agenda_item
     WHERE s.speaker_member_id = ?
     ORDER BY s.date DESC, COALESCE(sdgs.position, s.position) ASC
   `).all(id) as SpeechJoinRow[]
-  const speeches = speechRows.map((row) => ({
-    id: row.id,
-    speakerName: row.speaker_name,
-    speakerMemberId: row.speaker_member_id,
-    speakerRole: row.speaker_role,
-    party: row.party,
-    position: row.position,
-    excerpt: row.text_excerpt,
-    date: row.date,
-    agendaItem: row.agenda_item,
-    agendaTitle: row.agenda_title,
-    debateGroupId: row.debate_group_id,
-    contributionType: row.contribution_type,
-    voteId: row.vote_id,
-    voteTitle: requireVoteTitleText(row.vote_id, row.vote_clean_title),
-    snippet: null,
-  }))
   return {
     id,
-    name: m.name,
-    party: currentParty,
-    state: vmRows[0]?.state ?? '',
-    attendance: vmRows.length ? 1 - absent / vmRows.length : 0,
+    name: member.name,
+    party: affiliations.find((row) => row.valid_to === null)?.party ?? '',
+    state: voteRows[0]?.state ?? '',
+    attendance: voteRows.length ? 1 - absent / voteRows.length : 0,
     loyalty: loyalEligible > 0 ? loyalMatches / loyalEligible : null,
-    votesAppeared: vmRows.length,
+    votesAppeared: voteRows.length,
     defections,
     history,
-    speeches,
-    initiatives: loadInitiatives(db, id),
-    pictureUrl: resolvePictureUrl(id, m.picture_url),
-    pictureAuthor: m.picture_author,
-    pictureLicense: m.picture_license,
-    pictureSourceUrl: m.picture_source_url,
-    yearOfBirth,
-    sex,
-    mandateType: normalizeMandate(m.mandate_type),
-    listState: m.list_state,
-    constituencyNumber: m.constituency_number,
-    constituencyName: m.constituency_name,
+    speeches: speechRows.map((row) => ({
+      id: row.id,
+      speakerName: row.speaker_name,
+      speakerMemberId: row.speaker_member_id,
+      speakerRole: row.speaker_role,
+      party: row.party,
+      position: row.position,
+      excerpt: speechTranslation(data.translations, locale, row.id)?.text_excerpt ?? row.text_excerpt,
+      date: row.date,
+      agendaItem: row.agenda_item,
+      agendaTitle: row.agenda_title,
+      debateGroupId: row.debate_group_id,
+      contributionType: row.contribution_type,
+      voteId: row.vote_id,
+      voteTitle: requireVoteTitleText(
+        row.vote_id,
+        row.vote_id
+          ? voteTranslation(data.translations, locale, row.vote_id)?.clean_title ?? row.vote_clean_title
+          : null,
+      ),
+      snippet: null,
+    })),
+    pictureUrl: resolvePictureUrl(id, member.picture_url),
+    pictureAuthor: member.picture_author,
+    pictureLicense: member.picture_license,
+    pictureSourceUrl: member.picture_source_url,
+    yearOfBirth: demographics?.year_of_birth ?? null,
+    sex: normalizeSex(demographics?.sex ?? null),
+    education: demographics?.education ?? null,
+    sameAs: [
+      ...(demographics?.aw_profile_url ? [demographics.aw_profile_url] : []),
+      ...(demographics?.wikidata_qid ? [`https://www.wikidata.org/wiki/${demographics.wikidata_qid}`] : []),
+    ],
+    mandateType: normalizeMandate(member.mandate_type),
+    listState: member.list_state,
+    constituencyNumber: member.constituency_number,
+    constituencyName: member.constituency_name,
   }
 }

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev --port 3000 --host",
-    "build": "node scripts/fetch-member-photos.mjs && node scripts/generate-og-images.mjs && vite build",
+    "build": "node scripts/fetch-member-photos.mjs && node scripts/generate-og-images.mjs && vite build && node scripts/check-ios-static-locales.mjs",
     "start": "vite preview --port 3000",
     "indexnow": "node scripts/indexnow-ping.mjs"
   },

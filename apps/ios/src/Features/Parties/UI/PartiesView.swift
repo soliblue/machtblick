@@ -36,13 +36,13 @@ struct PartiesView: View {
             VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xl) {
                 PartySeatMapView(parties: store.parties)
                 section(
-                    caption: "\(Copy.govLabel) · \(governingSeats) \(Copy.vonWord) \(totalSeats) \(Copy.seatsGenitive)",
+                    caption: Copy.governmentSeats(governingSeats, total: totalSeats),
                     parties: governing)
-                section(caption: "\(Copy.oppositionLabel) · \(oppositionSeats) \(Copy.seats)", parties: opposition)
+                section(caption: Copy.oppositionSeats(oppositionSeats), parties: opposition)
                 if let loose = fraktionslos {
                     NavigationLink(value: AppRoute.party(loose.slug)) {
                         HStack(spacing: ThemeTokens.Spacing.s) {
-                            Text("\(Copy.fraktionslosLabel) · \(loose.seats) \(Copy.seats)").kicker()
+                            Text(Copy.unaffiliatedSeats(loose.seats)).kicker()
                             Image(systemName: "arrow.right").font(.system(size: ThemeTokens.Icon.s))
                                 .foregroundStyle(ThemeColor.secondary)
                         }

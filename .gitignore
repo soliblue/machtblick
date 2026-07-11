@@ -32,10 +32,14 @@ apps/bundestag/public/speeches-meta.json
 apps/bundestag/public/speeches-search-*.json
 apps/bundestag/public/speeches/
 apps/bundestag/public/api/
+apps/bundestag/public/en/api/
 apps/bundestag/public/antraege/*.json
 apps/bundestag/public/en/antraege/*.json
 apps/bundestag/public/motions/*.json
 apps/bundestag/public/en/motions/*.json
+apps/bundestag/public/en/speeches-meta.json
+apps/bundestag/public/en/speeches-people.json
+apps/bundestag/public/en/speeches-search-*.json
 apps/bundestag/public/en/members/*.json
 apps/bundestag/public/en/parties/*.json
 apps/bundestag/public/en/votes/*.json

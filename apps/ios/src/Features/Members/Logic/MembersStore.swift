@@ -14,6 +14,8 @@ final class MembersStore {
     var sort: MemberSort = .name
     var sortDescending = false
 
+    private var path: String { AppLocale.current.dataPath("/api/members.json") }
+
     var filtered: [MemberListItem] {
         members
             .filter { member in
@@ -22,12 +24,17 @@ final class MembersStore {
                     && (sex == nil || member.sex == sex)
                     && (ageBucket == nil || AgeBucket.of(member.yearOfBirth) == ageBucket)
                     && (mandate == nil || member.mandateType == mandate)
-                    && (search.isEmpty || member.name.localizedStandardContains(search))
+                    && (search.isEmpty
+                        || member.name.range(
+                            of: search, options: [.caseInsensitive, .diacriticInsensitive],
+                            locale: AppLocale.current.locale) != nil)
             }
             .sorted { lhs, rhs in
                 switch sort {
                 case .name:
-                    let order = lhs.lastName.localizedCompare(rhs.lastName)
+                    let order = lhs.lastName.compare(
+                        rhs.lastName, options: [.caseInsensitive, .diacriticInsensitive],
+                        locale: AppLocale.current.locale)
                     return sortDescending ? order == .orderedDescending : order == .orderedAscending
                 case .attendance:
                     let l = lhs.attendance ?? -1, r = rhs.attendance ?? -1
@@ -48,7 +55,9 @@ final class MembersStore {
     }
 
     var states: [String] {
-        Array(Set(members.map(\.state))).filter { !$0.isEmpty }.sorted()
+        Array(Set(members.map(\.state))).filter { !$0.isEmpty }.sorted {
+            $0.compare($1, locale: AppLocale.current.locale) == .orderedAscending
+        }
     }
 
     var sexes: [String] {
@@ -64,10 +73,10 @@ final class MembersStore {
     }
 
     func load(cache: ApiCache) async {
-        if members.isEmpty, let cached: [MemberListItem] = cache.cached("/api/members.json") {
+        if members.isEmpty, let cached: [MemberListItem] = cache.cached(path) {
             members = cached
         }
-        if members.isEmpty || cache.isStale("/api/members.json", maxAge: 3600) {
+        if members.isEmpty || cache.isStale(path, maxAge: 3600) {
             await fetchLatest(cache: cache)
         }
     }
@@ -77,7 +86,7 @@ final class MembersStore {
     }
 
     private func fetchLatest(cache: ApiCache) async {
-        if let fresh: [MemberListItem] = await cache.fetch("/api/members.json") {
+        if let fresh: [MemberListItem] = await cache.fetch(path) {
             members = fresh
             loadFailed = false
         } else if members.isEmpty {

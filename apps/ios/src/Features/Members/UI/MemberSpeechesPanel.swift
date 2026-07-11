@@ -12,6 +12,7 @@ struct MemberSpeechesPanel: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.m) {
+            TranslationFallbackNotice()
             SearchField(placeholder: Copy.searchSpeeches, text: $query)
                 .onChange(of: query) { visibleCount = batch }
             if filtered.isEmpty {
@@ -39,7 +40,7 @@ struct MemberSpeechesPanel: View {
     }
 
     private var terms: [String] {
-        query.lowercased().split(separator: " ").map(String.init)
+        query.lowercased(with: AppLocale.current.locale).split(separator: " ").map(String.init)
     }
 
     private var allGroups: [MemberSpeechGroup] {
@@ -49,7 +50,8 @@ struct MemberSpeechesPanel: View {
     private var filtered: [MemberSpeechGroup] {
         guard !terms.isEmpty else { return allGroups }
         return allGroups.filter { group in
-            let hay = ("\(group.title) " + group.speeches.map(\.excerpt).joined(separator: " ")).lowercased()
+            let hay = ("\(group.title) " + group.speeches.map(\.excerpt).joined(separator: " "))
+                .lowercased(with: AppLocale.current.locale)
             return terms.allSatisfy { hay.contains($0) }
         }
     }

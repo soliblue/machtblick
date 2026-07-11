@@ -2,6 +2,13 @@ import type Database from 'better-sqlite3'
 import { compareVotesNewest } from '../src/lib/voteOrdering'
 import { resolvePictureUrl } from '../src/server/photoManifest'
 import { requireVoteCleanTitle } from '../src/lib/voteTitles'
+import {
+  partySummaryTranslation,
+  speechTranslation,
+  voteTranslation,
+  type StaticLocale,
+  type StaticTranslations,
+} from './translations'
 
 type VoteRow = {
   id: string
@@ -68,6 +75,12 @@ type AffiliationRow = {
   valid_to: string | null
 }
 
+export type VoteBuildData = {
+  affiliationsByMember: Map<string, AffiliationRow[]>
+  seats: Map<string, number>
+  translations: StaticTranslations
+}
+
 type SpeechRow = {
   id: string
   speaker_name: string
@@ -96,7 +109,17 @@ function partyAt(affiliations: AffiliationRow[], date: string): string {
   return hit?.party ?? ''
 }
 
-export function leanVotes(db: Database.Database) {
+export function loadVoteBuildData(db: Database.Database, translations: StaticTranslations): VoteBuildData {
+  const affiliationsByMember = new Map<string, AffiliationRow[]>()
+  for (const affiliation of db.prepare('SELECT member_id, party, valid_from, valid_to FROM member_affiliations').all() as AffiliationRow[]) {
+    const rows = affiliationsByMember.get(affiliation.member_id) ?? []
+    rows.push(affiliation)
+    affiliationsByMember.set(affiliation.member_id, rows)
+  }
+  return { affiliationsByMember, seats: latestSeatsByParty(db), translations }
+}
+
+export function leanVotes(db: Database.Database, locale: StaticLocale, data: VoteBuildData) {
   const rows = db.prepare(`
     SELECT id, date, title, clean_title, topic, summary_simplified, initiator, result, yes, no, abstain, absent, vote_type, bundestag_id
     FROM votes WHERE term_id = ${CURRENT_TERM} AND procedural = 0 AND is_petition_bundle = 0 AND vote_type != 'hammelsprung'
@@ -119,17 +142,28 @@ export function leanVotes(db: Database.Database) {
     if (seatsByParty.size >= 6) break
   }
   return rows.map((v) => {
-    const titled = requireVoteCleanTitle({ id: v.id, title: v.title, cleanTitle: v.clean_title })
+    const translated = voteTranslation(data.translations, locale, v.id)
+    const titled = requireVoteCleanTitle({ id: v.id, title: v.title, cleanTitle: translated?.clean_title ?? v.clean_title })
     const summaries = byVote.get(v.id) ?? []
     const partySummaries = summaries.map((s) =>
       v.vote_type === 'namentlich'
-        ? { party: s.party, position: s.position, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0 }
-        : { party: s.party, position: s.position, yes: 0, no: 0, abstain: 0, absent: 0 },
+        ? { party: s.party, position: s.position, members: s.members ?? 0, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0 }
+        : {
+            party: s.party,
+            position: s.position,
+            members: data.seats.get(s.party) ?? 0,
+            yes: s.position === 'yes' ? data.seats.get(s.party) ?? 0 : 0,
+            no: s.position === 'no' ? data.seats.get(s.party) ?? 0 : 0,
+            abstain: s.position === 'abstain' ? data.seats.get(s.party) ?? 0 : 0,
+            absent: 0,
+          },
     )
     const base = {
       id: v.id, title: titled.title, cleanTitle: titled.cleanTitle, date: v.date,
       result: v.result, initiator: v.initiator,
-      voteType: v.vote_type, topic: v.topic, summarySimplified: v.summary_simplified,
+      voteType: v.vote_type,
+      topic: translated ? translated.topic : v.topic,
+      summarySimplified: translated ? translated.summary_simplified : v.summary_simplified,
       partySummaries,
     }
     if (v.vote_type === 'namentlich' && v.yes != null) {
@@ -146,35 +180,44 @@ export function leanVotes(db: Database.Database) {
   })
 }
 
-export function fullVote(db: Database.Database, id: string) {
+export function fullVote(db: Database.Database, id: string, locale: StaticLocale, data: VoteBuildData) {
   const voteRow = db.prepare('SELECT * FROM votes WHERE id = ?').get(id) as VoteRow
+  const translatedVote = voteTranslation(data.translations, locale, id)
   const documents = db.prepare('SELECT * FROM vote_documents WHERE vote_id = ?').all(id) as DocumentRow[]
   const summaryRows = db.prepare('SELECT * FROM vote_party_summaries WHERE vote_id = ?').all(id) as SummaryRow[]
-  const seats = latestSeatsByParty(db)
   const partySummaries = summaryRows.map((s) => {
+    const translatedSummary = partySummaryTranslation(data.translations, locale, s.vote_id, s.party)
     if (voteRow.vote_type === 'namentlich') {
       return {
         voteId: s.vote_id, party: s.party, position: s.position,
         members: s.members ?? 0, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0,
-        positionSummary: s.position_summary, keyPoints: s.key_points, dissentNote: s.dissent_note,
+        positionSummary: translatedSummary?.position_summary ?? s.position_summary,
+        keyPoints: translatedSummary?.key_points ?? s.key_points,
+        dissentNote: translatedSummary?.dissent_note ?? s.dissent_note,
       }
     }
-    const m = seats.get(s.party) ?? 0
+    const m = data.seats.get(s.party) ?? 0
     return {
       voteId: s.vote_id, party: s.party, position: s.position, members: m,
       yes: s.position === 'yes' ? m : 0,
       no: s.position === 'no' ? m : 0,
       abstain: s.position === 'abstain' ? m : 0,
       absent: 0,
-      positionSummary: s.position_summary, keyPoints: s.key_points, dissentNote: s.dissent_note,
+      positionSummary: translatedSummary?.position_summary ?? s.position_summary,
+      keyPoints: translatedSummary?.key_points ?? s.key_points,
+      dissentNote: translatedSummary?.dissent_note ?? s.dissent_note,
     }
   })
   const vote = voteRow.vote_type === 'namentlich'
     ? requireVoteCleanTitle({
         id: voteRow.id, bundestagId: null as number | null, voteType: voteRow.vote_type, date: voteRow.date,
-        agendaItem: voteRow.agenda_item, title: voteRow.title, cleanTitle: voteRow.clean_title, topic: voteRow.topic,
-        subject: voteRow.subject, summary: voteRow.summary, summarySimplified: voteRow.summary_simplified,
-        summaryDetail: voteRow.summary_detail, document: voteRow.document, initiator: voteRow.initiator,
+        agendaItem: voteRow.agenda_item, title: voteRow.title, cleanTitle: translatedVote?.clean_title ?? voteRow.clean_title,
+        topic: translatedVote ? translatedVote.topic : voteRow.topic,
+        subject: translatedVote ? translatedVote.subject : voteRow.subject,
+        summary: translatedVote ? translatedVote.summary : voteRow.summary,
+        summarySimplified: translatedVote ? translatedVote.summary_simplified : voteRow.summary_simplified,
+        summaryDetail: translatedVote ? translatedVote.summary_detail : voteRow.summary_detail,
+        document: voteRow.document, initiator: voteRow.initiator,
         result: voteRow.result, procedural: false, inverted: !!voteRow.inverted, isPetitionBundle: !!voteRow.is_petition_bundle,
         totalMembers: voteRow.total_members ?? 0, yes: voteRow.yes ?? 0, no: voteRow.no ?? 0,
         abstain: voteRow.abstain ?? 0, absent: voteRow.absent ?? 0, sourceUrl: voteRow.source_url,
@@ -186,9 +229,13 @@ export function fullVote(db: Database.Database, id: string) {
         const abstain = partySummaries.reduce((a, s) => a + s.abstain, 0)
         return requireVoteCleanTitle({
           id: voteRow.id, bundestagId: null as number | null, voteType: voteRow.vote_type, date: voteRow.date,
-          agendaItem: voteRow.agenda_item, title: voteRow.title, cleanTitle: voteRow.clean_title, topic: voteRow.topic,
-          subject: voteRow.subject, summary: voteRow.summary, summarySimplified: voteRow.summary_simplified,
-          summaryDetail: voteRow.summary_detail, document: voteRow.document, initiator: voteRow.initiator,
+          agendaItem: voteRow.agenda_item, title: voteRow.title, cleanTitle: translatedVote?.clean_title ?? voteRow.clean_title,
+          topic: translatedVote ? translatedVote.topic : voteRow.topic,
+          subject: translatedVote ? translatedVote.subject : voteRow.subject,
+          summary: translatedVote ? translatedVote.summary : voteRow.summary,
+          summarySimplified: translatedVote ? translatedVote.summary_simplified : voteRow.summary_simplified,
+          summaryDetail: translatedVote ? translatedVote.summary_detail : voteRow.summary_detail,
+          document: voteRow.document, initiator: voteRow.initiator,
           result: voteRow.result, procedural: false, inverted: !!voteRow.inverted, isPetitionBundle: !!voteRow.is_petition_bundle,
           totalMembers: yes + no + abstain, yes, no, abstain, absent: 0, sourceUrl: voteRow.source_url,
           contextJson: voteRow.context_json, procedureJson: voteRow.procedure_json, fetchedAt: '',
@@ -200,14 +247,7 @@ export function fullVote(db: Database.Database, id: string) {
     INNER JOIN members m ON m.id = vm.member_id
     WHERE vm.vote_id = ?
   `).all(id) as VoteMemberRow[]
-  const affiliations = db.prepare('SELECT member_id, party, valid_from, valid_to FROM member_affiliations').all() as AffiliationRow[]
-  const affByMember = new Map<string, AffiliationRow[]>()
-  for (const a of affiliations) {
-    const arr = affByMember.get(a.member_id) ?? []
-    arr.push(a)
-    affByMember.set(a.member_id, arr)
-  }
-  const vmRows = rawVmRows.map((r) => ({ ...r, party: partyAt(affByMember.get(r.member_id) ?? [], voteRow.date) }))
+  const vmRows = rawVmRows.map((r) => ({ ...r, party: partyAt(data.affiliationsByMember.get(r.member_id) ?? [], voteRow.date) }))
   const majorityByParty = new Map<string, string>()
   for (const s of partySummaries) {
     const choices = [
@@ -258,7 +298,7 @@ export function fullVote(db: Database.Database, id: string) {
     debateGroupId: r.debate_group_id,
     contributionType: r.contribution_type,
     position: r.position,
-    excerpt: r.text_excerpt,
+    excerpt: speechTranslation(data.translations, locale, r.id)?.text_excerpt ?? r.text_excerpt,
   }))
   const debateSource = speechRows.some((r) => r.debate_source === 'related' || r.date !== voteRow.date) ? 'related' : 'direct'
   const descRow = db.prepare('SELECT source_pdf_url FROM vote_description_decisions WHERE vote_id = ?').get(id) as DescriptionDecisionRow | undefined

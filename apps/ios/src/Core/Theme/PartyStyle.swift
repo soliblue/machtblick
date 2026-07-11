@@ -51,9 +51,13 @@ enum PartyStyle {
 
     static func label(_ party: String) -> String {
         switch party {
-        case "B90/Grüne": return "Grüne"
-        case "Die Linke": return "Linke"
-        case "": return "Unbekannt"
+        case "B90/Grüne": return Copy.greensLabel
+        case "Die Linke": return Copy.leftLabel
+        case "fraktionslos": return Copy.fraktionslosLabel
+        case "Bundesregierung": return Copy.government
+        case "Petitionsausschuss": return Copy.petitionsCommitteeLabel
+        case "Wahlprüfungsausschuss": return Copy.electionReviewCommitteeLabel
+        case "": return Copy.unknown
         default: return party
         }
     }

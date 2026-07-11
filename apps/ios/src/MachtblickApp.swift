@@ -5,6 +5,7 @@ import SwiftUI
 struct MachtblickApp: App {
     let container: ModelContainer
     let cache: ApiCache
+    @State private var appLanguage = AppLanguage.persisted
     @State private var motionLink: MotionLink?
 
     init() {
@@ -15,7 +16,7 @@ struct MachtblickApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RootTabView(cache: cache)
+            RootTabView(cache: cache, appLanguage: $appLanguage)
                 .preferredColorScheme(.light)
                 .sheet(item: $motionLink) { link in
                     NavigationStack {
@@ -30,6 +31,7 @@ struct MachtblickApp: App {
                         motionLink = MotionLink(id: id)
                     }
                 }
+                .environment(\.locale, appLanguage.resolved.locale)
         }
         .modelContainer(container)
     }

@@ -1,9 +1,19 @@
+import Foundation
 import SwiftUI
 
 struct VoteCardView: View {
+    @Environment(\.locale) private var locale
+
     let vote: VoteListItem
     let cache: ApiCache
+
     @State private var detailStore = VoteDetailStore()
+
+    private var title: AttributedString {
+        var title = AttributedString(vote.cleanTitle)
+        title.languageIdentifier = locale.identifier
+        return title
+    }
 
     private var needsDetail: Bool {
         vote.summarySimplified == nil && vote.partySummaries == nil
@@ -34,7 +44,7 @@ struct VoteCardView: View {
                         .lineLimit(1)
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 }
-                Text(vote.cleanTitle)
+                Text(title)
                     .font(.display(ThemeTokens.Text.xl))
                     .foregroundStyle(ThemeColor.fg)
                     .lineLimit(4)
