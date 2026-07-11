@@ -23,7 +23,9 @@ Prepare and submit Machtblick iOS 1.0 for App Review using the existing TestFlig
 - Capture on the largest App Store Connect iPhone slot supported by the shipping target
 - Present each real app screen inside a straight-on device frame with editorial headline copy
 - Use a quiet neutral background, one semantic accent, Fraunces display type, and a subtle hemicycle pattern
-- Show the vote feed, a vote result, the members explorer, and a party profile
+- Omit the logo and sequence number so the headline, subtitle, and app screen use the full composition
+- Size the subtitle for phone-scale App Store browsing rather than desktop inspection
+- Show the vote feed, a vote result, party speech summaries, the related debate thread, the members explorer, and a party profile
 - Use live public data and avoid transient loading or error states
 
 ## Log
@@ -35,3 +37,6 @@ Prepare and submit Machtblick iOS 1.0 for App Review using the existing TestFlig
 - lead: 2026-07-11 first asset workflow resolved TestFlight build 1.0 (25), then stopped before upload because Fastlane required a string build number
 - lead: 2026-07-11 user requested framed editorial screenshots with headline copy; raw captures moved to fastlane/screenshot-source and deterministic renderer added
 - lead: 2026-07-11 Fastlane upload changed to checksum-based screenshot sync after Apple's initial processing delay caused each raw asset to be retried once
+- lead: 2026-07-11 user approved the visual direction and requested two additional vote-related screenshots for speech summaries and the underlying speeches
+- lead: 2026-07-11 user requested larger subtitles and removal of the top logo and sequence numbers across the complete screenshot set
+- lead: 2026-07-11 captured live party-summary and debate-thread states from the vote Reden tab, rendered six iPhone and three iPad assets, and verified exact App Store dimensions

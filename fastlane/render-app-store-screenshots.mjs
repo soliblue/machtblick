@@ -20,7 +20,6 @@ const shots = [
         device: "phone",
         width: 1284,
         height: 2778,
-        sequence: "01/04",
         title: "Was der Bundestag beschließt",
         subtitle: "Abstimmungen mit Kontext statt nur Titel.",
         background: "#f2f6f1",
@@ -32,19 +31,39 @@ const shots = [
         device: "phone",
         width: 1284,
         height: 2778,
-        sequence: "02/04",
         title: "Wer dafür und dagegen stimmt",
         subtitle: "Ergebnis und Fraktionslinien auf einen Blick.",
         background: "#f7f7f7",
         accent: "linear-gradient(90deg, #70ae78 0 50%, #b94f61 50% 100%)",
     },
     {
-        source: "iphone-abgeordnete.png",
-        output: "03-iphone-65-abgeordnete.png",
+        source: "iphone-reden-zusammenfassung.png",
+        output: "03-iphone-65-reden-zusammenfassung.png",
         device: "phone",
         width: 1284,
         height: 2778,
-        sequence: "03/04",
+        title: "Was die Fraktionen dazu sagen",
+        subtitle: "Positionen aus den Reden kompakt zusammengefasst.",
+        background: "#f2f4f7",
+        accent: "#7189b8",
+    },
+    {
+        source: "iphone-reden.png",
+        output: "04-iphone-65-reden.png",
+        device: "phone",
+        width: 1284,
+        height: 2778,
+        title: "Wie die Debatte verlief",
+        subtitle: "Alle Redebeiträge in ihrer Reihenfolge nachvollziehen.",
+        background: "#f7f7f7",
+        accent: "#828ca0",
+    },
+    {
+        source: "iphone-abgeordnete.png",
+        output: "05-iphone-65-abgeordnete.png",
+        device: "phone",
+        width: 1284,
+        height: 2778,
         title: "Wer im Bundestag sitzt",
         subtitle: "Nach Alter, Geschlecht und Fraktion filtern.",
         background: "#f2f4f7",
@@ -52,11 +71,10 @@ const shots = [
     },
     {
         source: "iphone-fraktion.png",
-        output: "04-iphone-65-fraktion.png",
+        output: "06-iphone-65-fraktion.png",
         device: "phone",
         width: 1284,
         height: 2778,
-        sequence: "04/04",
         title: "So stimmt eine Fraktion",
         subtitle: "Geschlossenheit, Anwesenheit und Anträge im Blick.",
         background: "#f4f4f2",
@@ -68,7 +86,6 @@ const shots = [
         device: "tablet",
         width: 2064,
         height: 2752,
-        sequence: "01/03",
         title: "Alle Abgeordneten im Überblick",
         subtitle: "Nach Alter, Geschlecht und Fraktion filtern.",
         background: "#f2f4f7",
@@ -80,7 +97,6 @@ const shots = [
         device: "tablet",
         width: 2064,
         height: 2752,
-        sequence: "02/03",
         title: "Jede Stimme nachvollziehbar",
         subtitle: "Abstimmungen und Anträge pro Abgeordnetem.",
         background: "#f2f6f1",
@@ -92,7 +108,6 @@ const shots = [
         device: "tablet",
         width: 2064,
         height: 2752,
-        sequence: "03/03",
         title: "Fraktionslinien sichtbar gemacht",
         subtitle: "Geschlossenheit und Übereinstimmung direkt vergleichen.",
         background: "#f4f4f2",
@@ -118,18 +133,13 @@ for (const shot of shots) {
 html, body { width: ${shot.width}px; height: ${shot.height}px; margin: 0; overflow: hidden; }
 body { background: ${shot.background}; color: #0a0a0a; font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; }
 .canvas { position: relative; width: 100%; height: 100%; overflow: hidden; }
-.header { position: absolute; z-index: 3; top: ${shot.device === "phone" ? 86 : 74}px; left: ${shot.device === "phone" ? 86 : 112}px; right: ${shot.device === "phone" ? 86 : 112}px; }
-.meta { display: flex; align-items: center; justify-content: space-between; font-size: ${shot.device === "phone" ? 27 : 32}px; letter-spacing: 0.08em; text-transform: uppercase; }
-.brand { display: flex; align-items: center; gap: 17px; font-weight: 600; }
-.eyes { display: flex; gap: 5px; }
-.eye { position: relative; width: ${shot.device === "phone" ? 30 : 36}px; height: ${shot.device === "phone" ? 19 : 23}px; border: 3px solid #0a0a0a; border-radius: 50%; }
-.eye::after { content: ""; position: absolute; width: ${shot.device === "phone" ? 7 : 9}px; height: ${shot.device === "phone" ? 7 : 9}px; left: 50%; top: 50%; border-radius: 50%; background: #b94f61; transform: translate(-50%, -50%); }
-h1 { width: ${shot.device === "phone" ? 1010 : 1650}px; margin: ${shot.device === "phone" ? 64 : 54}px 0 0; font-family: Fraunces, Georgia, serif; font-size: ${shot.device === "phone" ? 92 : 108}px; font-weight: 600; line-height: 0.98; letter-spacing: 0; }
-.subtitle { width: ${shot.device === "phone" ? 920 : 1460}px; margin-top: ${shot.device === "phone" ? 30 : 28}px; font-size: ${shot.device === "phone" ? 36 : 42}px; line-height: 1.22; color: rgba(10, 10, 10, 0.7); }
+.header { position: absolute; z-index: 3; top: ${shot.device === "phone" ? 84 : 74}px; left: ${shot.device === "phone" ? 86 : 112}px; right: ${shot.device === "phone" ? 86 : 112}px; }
+h1 { width: ${shot.device === "phone" ? 1060 : 1740}px; margin: 0; font-family: Fraunces, Georgia, serif; font-size: ${shot.device === "phone" ? 100 : 118}px; font-weight: 600; line-height: 0.98; letter-spacing: 0; }
+.subtitle { width: ${shot.device === "phone" ? 1020 : 1650}px; margin-top: ${shot.device === "phone" ? 32 : 30}px; font-size: ${shot.device === "phone" ? 46 : 54}px; line-height: 1.18; color: rgba(10, 10, 10, 0.7); }
 .rule { width: ${shot.device === "phone" ? 154 : 210}px; height: ${shot.device === "phone" ? 9 : 11}px; margin-top: ${shot.device === "phone" ? 38 : 34}px; background: ${shot.accent}; }
 .hemicycle { position: absolute; z-index: 1; top: ${shot.device === "phone" ? 292 : 250}px; right: ${shot.device === "phone" ? -120 : 30}px; width: ${shot.device === "phone" ? 620 : 760}px; height: ${shot.device === "phone" ? 310 : 380}px; opacity: 0.15; }
 .hemicycle i { position: absolute; display: block; border: ${shot.device === "phone" ? 8 : 10}px dotted #0a0a0a; border-bottom: 0; border-radius: 760px 760px 0 0; }
-.device-wrap { position: absolute; z-index: 2; top: ${shot.device === "phone" ? 690 : 602}px; left: 50%; transform: translateX(-50%); }
+.device-wrap { position: absolute; z-index: 2; top: ${shot.device === "phone" ? 650 : 560}px; left: 50%; transform: translateX(-50%); }
 .device { position: relative; background: #111; box-shadow: 0 36px 80px rgba(10, 10, 10, 0.2); }
 .device.phone { width: 920px; padding: 25px; border-radius: 120px; }
 .device.tablet { width: 1600px; padding: 28px; border-radius: 88px; }
@@ -146,10 +156,6 @@ h1 { width: ${shot.device === "phone" ? 1010 : 1650}px; margin: ${shot.device ==
 <body>
 <main class="canvas">
   <header class="header">
-    <div class="meta">
-      <div class="brand"><span class="eyes"><span class="eye"></span><span class="eye"></span></span>Machtblick</div>
-      <div>${shot.sequence}</div>
-    </div>
     <h1>${shot.title}</h1>
     <div class="subtitle">${shot.subtitle}</div>
     <div class="rule"></div>
