@@ -6,9 +6,9 @@ Prepare and submit Machtblick iOS 1.0 for App Review using the existing TestFlig
 ## Status
 - App Store Connect audit: done
 - Simulator build and screenshot capture: done
-- German metadata and compliance: blocked on content-rights confirmation
+- German metadata and compliance: done
 - Build attachment and validation: done
-- App Review submission: blocked on content-rights confirmation
+- App Review submission: done
 
 ## Contracts
 - App Store record: Machtblick, Apple ID 6787755187, iOS 1.0
@@ -49,3 +49,5 @@ Prepare and submit Machtblick iOS 1.0 for App Review using the existing TestFlig
 - lead: 2026-07-11 disabled untested Apple silicon Mac and Apple Vision Pro availability
 - lead: 2026-07-11 App Store Connect validation reported one remaining requirement: Content Rights Information
 - lead: 2026-07-11 repository evidence identifies Bundestag Open Data, DIP, and Wikimedia Commons portraits with per-photo CC attribution; account-holder confirmation remains required before declaring all necessary rights
+- lead: 2026-07-11 user confirmed the app has the necessary rights to its third-party content and the declaration was saved in App Store Connect
+- lead: 2026-07-11 submitted iOS 1.0 build 26 for App Review and verified Apple's 1 Item Submitted confirmation
