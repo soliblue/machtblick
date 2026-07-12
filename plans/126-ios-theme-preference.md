@@ -13,7 +13,7 @@ Add a persistent iOS appearance preference that follows the phone by default and
 - Verify light, dark, persistence, and language behavior: done
 - Commit and push: done
 - Public iOS build: done
-- Activate and verify the TestFlight build: in progress
+- Activate and verify the TestFlight build: done
 
 ## Contracts
 
@@ -48,3 +48,7 @@ Add a persistent iOS appearance preference that follows the phone by default and
 - 2026-07-12 scribe: committed the implementation as `ab462d7` and the corrected appearance row rendering as `8eee194`, then pushed both to `main`.
 - 2026-07-12 deployment: build 32 processed as valid, passed beta review, and joined the public group, but remained `BETA_APPROVED` because the lane disabled external tester notifications. The strict availability check correctly rejected that incomplete state, and the run revoked its temporary certificate and cleaned up signing material.
 - 2026-07-12 lead: retained the `IN_BETA_TESTING` release gate and added external tester activation to the release path instead of treating approval alone as deployment.
+- 2026-07-12 reviewers: independently confirmed the activation request matches Apple's current schema, targets one valid build in the existing public group, keeps secrets environment-only, and safely runs beside the signed verifier under a per-build concurrency key.
+- 2026-07-12 scribe: committed the activation fix as `45c6df6` and pushed it to `main`. Future uploads notify external testers automatically; the owner-only recovery input can activate an approved existing build without rebuilding or touching signing material.
+- 2026-07-12 deployment: signed run `29187954430` uploaded and processed Machtblick 1.0 build 33 from `8eee194`. Recovery run `29188310473` activated external testing, after which both runs observed `processing=VALID`, `external=IN_BETA_TESTING`, and `public_group=True` for build 33. The signed run revoked its temporary development certificate and cleaned up all signing files.
+- 2026-07-12 public Mac: final run `29188308763` on `45c6df6` passed release-script syntax, unsigned compilation, compiled localization checks, all seeded language and appearance launch scenarios, the real appearance-switching and relaunch UI test, artifact uploads, and simulator cleanup.
