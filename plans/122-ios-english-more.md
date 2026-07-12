@@ -14,7 +14,7 @@ This plan now governs implementation of the approved product and technical contr
 - ASCII source-of-truth mocks: done
 - Implementation: done
 - Local data, localization, TypeScript, and production-build verification: done
-- macOS build and compiled localization checks: done on the implemented source, final release-workflow commit rerun in progress
+- macOS build, compiled localization checks, and stored German and English relaunch smoke: done on `a8e96fc`
 - Bilingual production data deployment: awaiting explicit production authorization
 - Public TestFlight distribution and exact-build verification: prepared, awaiting production data deployment
 - English App Store screenshots: deferred to the public App Store release, English metadata is done
@@ -172,3 +172,4 @@ The surface uses a native grouped `List` or `Form`, a native three-option picker
 - 2026-07-11 lead: completed a final plan audit, replaced accessibility-only tab icons with visible localized labels, and retained token-compliant donut labels while preserving the member highlight contract.
 - 2026-07-11 lead: hardened TestFlight delivery to pin Fastlane 2.237.0, resolve the exact enabled public beta group, capture one build number, supply bilingual test notes, wait for processing, distribute externally, and verify iOS 1.0, valid processing, group membership, and external state `IN_BETA_TESTING`.
 - 2026-07-11 lead: verified the public TestFlight invitation remains live and not full. The production English JSON remains undeployed, so final public TestFlight dispatch stays paused until the user explicitly authorizes the required production web deployment.
+- 2026-07-12 lead: GitHub run `29173216628` passed catalog, language, member DTO, release-script, Xcode, compiled-bundle, persistent relaunch, screenshot, and cleanup gates on `a8e96fc`. German rendered the complete localized feed and visible Abstimmungen, Abgeordnete, Fraktionen, and Mehr labels. English rendered localized Votes, Members, Parties, More, and the expected load error because production English data is still 404.

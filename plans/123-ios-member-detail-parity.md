@@ -17,7 +17,8 @@ This plan now governs the native implementation against the committed website so
 - Implementation: done
 - Static contract, TypeScript, and production-build verification: done
 - macOS build, DTO contract, compiled localization contract, and initial bilingual process smoke: done
-- Final labeled-tab simulator rerun, production static deployment, and public TestFlight verification: in progress
+- Final labeled-tab simulator rerun: done on `a8e96fc`
+- Production static deployment and public TestFlight verification: awaiting production authorization
 
 ## Baseline and scope
 
@@ -289,3 +290,4 @@ Contracts:
 - 2026-07-11 lead: audited the completed native port against every plan contract. Visible localized tab labels were restored, the member-only donut scaling stays isolated from default rows, and the explicitly required shared yes-share order remains consistent across normal and highlighted rows.
 - 2026-07-11 lead: verified the web member overhaul is live, but the German static member JSON still lacks proposer, party summaries, and education and still contains initiatives. English app-data endpoints remain 404, confirming that the final bilingual static deployment is required before TestFlight.
 - 2026-07-11 lead: the Xcode 26.2 gate compiles the app, decodes legacy and enriched member payloads, validates compiled German and English resources, and launches both locales. Public TestFlight delivery now verifies the exact processed build reaches the public external group rather than checking the invitation page alone.
+- 2026-07-12 lead: GitHub run `29173216628` passed on `a8e96fc`, including persisted German and English second launches and visible localized root-tab labels. Native English data and enriched production member cards remain gated only by the undeployed static web layer.
