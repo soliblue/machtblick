@@ -9,7 +9,7 @@ struct MemberDetailPayload: Decodable {
         let result: VoteResult
         let choice: BallotChoice
         let party: String
-        let partyMajority: String
+        let partyMajority: String?
         let defected: Bool?
         let proposingParty: String?
         let partySummaries: [PartyVoteSummary]?

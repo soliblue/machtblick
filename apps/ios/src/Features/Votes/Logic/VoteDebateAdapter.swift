@@ -10,7 +10,7 @@ enum VoteDebateAdapter {
                 speakerRole: entry.speakerRole, party: entry.party, excerpt: entry.excerpt,
                 contributionType: entry.contributionType, date: entry.date,
                 choice: entry.speakerMemberId.flatMap { choices[$0] },
-                pictureUrl: entry.speakerMemberId.map { "/members-photos/\($0).jpg" })
+                pictureUrl: entry.speakerMemberId.map(Endpoints.memberPhoto))
         }
     }
 

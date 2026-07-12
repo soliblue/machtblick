@@ -14,7 +14,7 @@ const ensure = (endpoint: string) => {
 
 const pageName = (n: number) => `page-${String(n).padStart(5, '0')}.json`
 
-export function listPages(endpoint: string) {
+function listPages(endpoint: string) {
   const d = ensure(endpoint)
   return readdirSync(d).filter((f) => f.startsWith('page-') && f.endsWith('.json')).sort()
 }

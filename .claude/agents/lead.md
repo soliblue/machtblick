@@ -17,7 +17,7 @@ Dispatch via the Agent tool with `subagent_type`:
 | Agent | Owns | Invoke when |
 |----------|---------|----------------|
 | designer | ASCII mocks, IA, layout decisions | Before any new view is built |
-| plumber  | ETL, `db/schema.ts`, source quirks | New data source or schema change |
+| plumber  | ETL, `db/schema/`, source quirks | New data source or schema change |
 | backend  | API, exported router/contract types | Schema is ready and a view needs data |
 | frontend | React + TanStack views and hooks | Mock and types exist |
 | tester | Browser verification | Before deploys that change user-visible behavior |
@@ -56,7 +56,7 @@ Subagents share **no context** with you or each other. The only shared language 
 ## Architectural ground rules
 
 - Monorepo with `apps/<app-name>/` self-contained per app. Apps may use shared root utilities but not reach into each other.
-- Stack: React + TanStack everywhere (Router, Query, Table, Form), Vite, Drizzle + Postgres, Node worker for ETL on cron.
+- Stack: React + TanStack everywhere (Router, Query, Table, Form), Vite, Drizzle + SQLite, Node workers for ETL on cron.
 - Small files. Aggressive splitting over growth.
 - Separate views (presentational) from logic (hooks, data layer). Routes are thin glue.
 - ASCII mocks are the source of truth for layout intent. Commit them next to the views they describe.

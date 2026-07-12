@@ -1,6 +1,5 @@
 import type Database from 'better-sqlite3'
-
-export type StaticLocale = 'de' | 'en'
+import type { Locale } from '../src/lib/locale'
 
 export type VoteTranslation = {
   vote_id: string
@@ -79,23 +78,23 @@ export function loadStaticTranslations(db: Database.Database): StaticTranslation
   }
 }
 
-export function voteTranslation(translations: StaticTranslations, locale: StaticLocale, voteId: string) {
+export function voteTranslation(translations: StaticTranslations, locale: Locale, voteId: string) {
   return locale === 'en' ? translations.votes.get(voteId) : undefined
 }
 
-export function speechTranslation(translations: StaticTranslations, locale: StaticLocale, speechId: string) {
+export function speechTranslation(translations: StaticTranslations, locale: Locale, speechId: string) {
   return locale === 'en' ? translations.speeches.get(speechId) : undefined
 }
 
 export function partySummaryTranslation(
   translations: StaticTranslations,
-  locale: StaticLocale,
+  locale: Locale,
   voteId: string,
   party: string,
 ) {
   return locale === 'en' ? translations.partySummaries.get(partySummaryTranslationKey(voteId, party)) : undefined
 }
 
-export function motionTranslation(translations: StaticTranslations, locale: StaticLocale, motionId: number) {
+export function motionTranslation(translations: StaticTranslations, locale: Locale, motionId: number) {
   return locale === 'en' ? translations.motions.get(motionId) : undefined
 }

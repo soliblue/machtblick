@@ -3,7 +3,7 @@
 Machtblick makes public German political data easier to understand. It combines official parliamentary records with a web app and a native iOS app focused on Bundestag votes, members, parties, motions, and speeches.
 
 - Website: [machtblick.de](https://machtblick.de)
-- TestFlight: [Join the Machtblick beta](https://testflight.apple.com/join/r7RVrgtr)
+- iOS app: [Machtblick on the App Store](https://apps.apple.com/us/app/machtblick/id6787755187)
 - Data methodology: [machtblick.de/methodology](https://machtblick.de/methodology/)
 
 ## Repository map
@@ -32,15 +32,21 @@ Install the root workspace with Node.js 22 or later:
 npm install
 ```
 
-Run the Bundestag app after providing the local generated database and assets:
+Local development needs no `.env` file (`.env.example` documents the optional deploy, data, and iOS variables). The app reads a generated SQLite database at `db/machtblick.sqlite`; see [db/README.md](db/README.md) for how to get one.
+
+Run the Bundestag app after providing the local generated database:
 
 ```sh
 npm run dev -w @machtblick/bundestag
 ```
 
-Open `apps/ios/iOS.xcodeproj` in the Xcode version used by the checked-in iOS workflow to build the native app.
+Open `apps/ios/iOS.xcodeproj` in the Xcode version used by the checked-in iOS workflow to build the native app; see [apps/ios/README.md](apps/ios/README.md).
 
 Never commit `.env` files, generated databases, signing certificates, provisioning profiles, App Store Connect keys, or downloaded portrait files.
+
+## Scheduled data refresh
+
+A weekly systemd timer (unit templates in `scripts/systemd/`) starts an operator-run agent session that follows the runbook in `prompts/auto-refresh.md`: it checks upstream Bundestag data, runs the needed ETL and derived refreshes in their required order, verifies the result, and deploys only when every gate passes. It is not needed for local development.
 
 ## Security and contributions
 
@@ -48,6 +54,6 @@ Use [SECURITY.md](SECURITY.md) for vulnerability reports and [CONTRIBUTING.md](C
 
 ## Rights and attribution
 
-No top-level open source license has been granted for the Machtblick source code. Public availability permits inspection and GitHub's standard fork functionality, but does not grant broader rights to reproduce, distribute, or create derivative works.
+The Machtblick source code is licensed under the GNU Affero General Public License v3.0, see [LICENSE](LICENSE). You may use, modify, and self-host it; derivative works and network-hosted deployments must remain open under the same terms.
 
 Third-party data, documents, fonts, images, and marks retain their own terms. See [NOTICE.md](NOTICE.md).

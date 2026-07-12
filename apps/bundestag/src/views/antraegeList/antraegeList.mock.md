@@ -147,16 +147,16 @@ single sentence.
 
 | Element | Text size | Weight | Spacing | Component |
 |---|---|---|---|---|
-| Count caption | s uppercase, ls 0.08em | regular, opacity-l | mb-m | — |
-| Card | — | — | p-l, mb-m, hairline + double shadow, radius-m | card recipe |
+| Count caption | s uppercase, ls 0.08em | regular, opacity-l | mb-m | |
+| Card | | | p-l, mb-m, hairline + double shadow, radius-m | card recipe |
 | Verdict chip / top border | 11px uppercase, ls 0.14em | semibold, white on success/danger | 3px border, chip straddles | chip idiom |
 | Kicker | s uppercase, ls 0.08em | regular, fg@70 | gap-s | PartyLogo 17 |
-| Status text (undecided) | s uppercase, ls 0.08em | regular, opacity-l | right slot | — |
+| Status text (undecided) | s uppercase, ls 0.08em | regular, opacity-l | right slot | |
 | Title | xl font-display | semibold | mt-s, clamp 3 (mob) / 2 (desk) | link (stretched) |
-| Summary | m serif (Charter), leading 1.45 | regular | mt-s, clamp 3 | — |
-| Result line counts | m tabular-nums | semibold, success/danger | mt-m, gap-l | — |
-| Result line date | s | regular, opacity-l | ml-auto | — |
-| Filters / pager | existing | — | — | FilterPill(Row), FilterSheet, Pager |
+| Summary | m serif (Charter), leading 1.45 | regular | mt-s, clamp 3 | |
+| Result line counts | m tabular-nums | semibold, success/danger | mt-m, gap-l | |
+| Result line date | s | regular, opacity-l | ml-auto | |
+| Filters / pager | existing | | | FilterPill(Row), FilterSheet, Pager |
 
 Colors: success/danger only on the chip and result counts; party color only in
 the kicker logo. Radius 0; floating filter pill is the sanctioned exception.

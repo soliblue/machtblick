@@ -97,7 +97,6 @@ type Speaker = {
 type Segment = { speaker: Speaker; text: string; continuation: boolean; index: number }
 
 function splitRedeBySpeaker(rede: Node): Segment[] {
-  const items = (rede[':@'] ? rede : rede) as Node
   const kids = childItems(rede)
   const segments: Segment[] = []
   let current: { speaker: Speaker | null; paragraphs: string[]; continuation: boolean } = { speaker: null, paragraphs: [], continuation: false }

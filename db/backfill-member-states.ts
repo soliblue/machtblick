@@ -2,28 +2,11 @@ import Database from 'better-sqlite3'
 import { XMLParser } from 'fast-xml-parser'
 import { existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
+import { STATE_BY_CODE } from '../etl/_shared/states.mjs'
 
 const db = new Database(fileURLToPath(new URL('./machtblick.sqlite', import.meta.url)))
 const stammdatenPath = fileURLToPath(new URL('../etl/bundestag-stammdaten/raw/MDB_STAMMDATEN.XML', import.meta.url))
 
-const CODE_TO_STATE: Record<string, string> = {
-  BW: 'Baden-Württemberg',
-  BY: 'Bayern',
-  BE: 'Berlin',
-  BB: 'Brandenburg',
-  HB: 'Bremen',
-  HH: 'Hamburg',
-  HE: 'Hessen',
-  MV: 'Mecklenburg-Vorpommern',
-  NI: 'Niedersachsen',
-  NW: 'Nordrhein-Westfalen',
-  RP: 'Rheinland-Pfalz',
-  SL: 'Saarland',
-  SN: 'Sachsen',
-  ST: 'Sachsen-Anhalt',
-  SH: 'Schleswig-Holstein',
-  TH: 'Thüringen',
-}
 
 const WAHLKREIS_RANGES: Array<[number, number, string]> = [
   [1, 11, 'Schleswig-Holstein'],
@@ -56,7 +39,7 @@ if (existsSync(stammdatenPath)) {
   for (const mdb of asArray(tree.DOCUMENT.MDB)) {
     for (const wp of asArray(mdb.WAHLPERIODEN.WAHLPERIODE) as Array<{ WP: string | number; LISTE?: string; WKR_LAND?: string }>) {
       if (Number(wp.WP) !== 21) continue
-      const state = CODE_TO_STATE[String(wp.LISTE ?? '')] ?? CODE_TO_STATE[String(wp.WKR_LAND ?? '')]
+      const state = STATE_BY_CODE[String(wp.LISTE ?? '')] ?? STATE_BY_CODE[String(wp.WKR_LAND ?? '')]
       if (state) stammdatenState.set(String(mdb.ID).padStart(8, '0'), state)
     }
   }

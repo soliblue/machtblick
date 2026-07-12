@@ -4,13 +4,11 @@ import { members, voteMembers, votePartySummaries, votes } from '@machtblick/db/
 import { eq, and } from 'drizzle-orm'
 import { getCurrentPartyMap, loadAffiliationsByMember, partyAt } from './memberParty'
 import { loadDemographics } from './demographics'
-import { majorityChoice } from './majorityChoice'
+import { majorityChoice, type PartyMajority } from './majorityChoice'
 import { CURRENT_TERM } from './term'
 import { resolvePictureUrl } from './photoManifest'
-import { hasPartyLine } from '../lib/parties'
-
-export type MemberSex = 'm' | 'f' | 'd'
-export type MandateType = 'direkt' | 'liste'
+import { hasPartyLine } from '@/lib/parties'
+import { parseMandate, type MandateType, type MemberSex } from '@/lib/memberFacets'
 
 export type MemberListItem = {
   id: string
@@ -33,17 +31,18 @@ export const listMembers = createServerFn({ method: 'GET' }).handler(async (): P
   const dateByVote = new Map(nonProceduralVotes.map((v) => [v.id, v.date]))
   const vmRows = db.select().from(voteMembers).all().filter((r) => dateByVote.has(r.voteId))
   const summaries = db.select().from(votePartySummaries).all().filter((s) => dateByVote.has(s.voteId))
-  const majByVoteParty = new Map<string, string>()
-  for (const s of summaries) majByVoteParty.set(`${s.voteId} ${s.party}`, majorityChoice(s))
+  const majByVoteParty = new Map<string, PartyMajority>()
+  for (const s of summaries) {
+    const maj = majorityChoice(s)
+    if (maj) majByVoteParty.set(`${s.voteId} ${s.party}`, maj)
+  }
   const affByMember = loadAffiliationsByMember()
   const currentPartyByMember = getCurrentPartyMap()
   const demographics = loadDemographics()
-  const mandateByMember = new Map(allMembers.map((m) => [m.id, m.mandateType]))
-  const pictureByMember = new Map(allMembers.map((m) => [m.id, m.pictureUrl]))
-  const stats = new Map<string, { name: string; lastName: string; party: string; state: string; total: number; absent: number; loyalMatches: number; loyalEligible: number }>()
+  const stats = new Map<string, { name: string; lastName: string; party: string; state: string; mandateType: string | null; pictureUrl: string | null; total: number; absent: number; loyalMatches: number; loyalEligible: number }>()
   for (const m of allMembers) {
     if (!currentPartyByMember.has(m.id)) continue
-    stats.set(m.id, { name: m.name, lastName: m.lastName, party: currentPartyByMember.get(m.id) ?? '', state: '', total: 0, absent: 0, loyalMatches: 0, loyalEligible: 0 })
+    stats.set(m.id, { name: m.name, lastName: m.lastName, party: currentPartyByMember.get(m.id) ?? '', state: '', mandateType: m.mandateType, pictureUrl: m.pictureUrl, total: 0, absent: 0, loyalMatches: 0, loyalEligible: 0 })
   }
   for (const r of vmRows) {
     const s = stats.get(r.memberId)
@@ -53,10 +52,10 @@ export const listMembers = createServerFn({ method: 'GET' }).handler(async (): P
     if (r.choice === 'nicht_abgegeben') s.absent++
     else {
       const partyAtVote = partyAt(affByMember.get(r.memberId), dateByVote.get(r.voteId)!)
-      if (hasPartyLine(partyAtVote)) {
+      const maj = majByVoteParty.get(`${r.voteId} ${partyAtVote}`)
+      if (hasPartyLine(partyAtVote) && maj) {
         s.loyalEligible++
-        const maj = majByVoteParty.get(`${r.voteId} ${partyAtVote}`)
-        if (maj && maj === r.choice) s.loyalMatches++
+        if (maj === r.choice) s.loyalMatches++
       }
     }
   }
@@ -75,8 +74,8 @@ export const listMembers = createServerFn({ method: 'GET' }).handler(async (): P
       loyalty: s.loyalEligible > 0 ? s.loyalMatches / s.loyalEligible : null,
       yearOfBirth: demo?.yearOfBirth ?? null,
       sex: demo?.sex ?? null,
-      mandateType: mandateByMember.get(id) === 'direkt' || mandateByMember.get(id) === 'liste' ? (mandateByMember.get(id) as MandateType) : null,
-      pictureUrl: resolvePictureUrl(id, pictureByMember.get(id) ?? null),
+      mandateType: parseMandate(s.mandateType),
+      pictureUrl: resolvePictureUrl(id, s.pictureUrl),
     })
   }
   out.sort((a, b) => a.lastName.localeCompare(b.lastName, 'de') || a.name.localeCompare(b.name, 'de'))

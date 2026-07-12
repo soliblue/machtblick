@@ -1,22 +1,17 @@
 import { useEffect, useRef } from 'react'
 import { ChevronLeft, ChevronRight, X } from 'lucide-react'
 import { SpeakerAvatar } from './SpeakerAvatar'
-import type { Stance } from './StanceText'
 import { Stamp } from '@/views/votesList/Stamp'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
-import { PartyLogo } from '@/views/votesList/PartyLogo'
-import { Markdown } from '@/lib/Markdown'
 import { useSpeechBody } from '@/hooks/useSpeechBody'
-import { highlight, tokenize } from '@/lib/highlight'
+import { highlight, tokenize } from '@/components/highlight'
 import { SERIF } from '@/lib/fonts'
 import { formatDate } from '@/lib/format'
-import { partyLabel } from '@/lib/parties'
 import type { SpeechBallotChoice } from '@/lib/speechesStatic'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
 
-export type ReaderSpeechItem = {
-  kind: 'speech'
+export type ReaderItem = {
   ids: string[]
   speakerName: string
   speakerMemberId: string | null
@@ -29,17 +24,6 @@ export type ReaderSpeechItem = {
   voteTitle: string | null
   fallbackText: string
 }
-
-export type ReaderSummaryItem = {
-  kind: 'summary'
-  party: string
-  stance: Stance
-  positionSummary: string | null
-  keyPoints: string | null
-  dissentNote: string | null
-}
-
-export type ReaderItem = ReaderSpeechItem | ReaderSummaryItem
 
 type Props = {
   item: ReaderItem
@@ -58,7 +42,7 @@ export function Reader({ item, index, count, nextName = null, query = '', onPrev
   const t = useCopy()
   const locale = useLocale()
   const panelRef = useRef<HTMLElement>(null)
-  const body = useSpeechBody(item.kind === 'speech' ? item.ids : [], item.kind === 'speech', locale)
+  const body = useSpeechBody(item.ids, true, locale)
   useEffect(() => {
     const trigger = document.activeElement as HTMLElement | null
     const panel = panelRef.current
@@ -90,7 +74,6 @@ export function Reader({ item, index, count, nextName = null, query = '', onPrev
       trigger?.focus()
     }
   }, [])
-  const label = item.kind === 'summary' ? `${t.partySummaryAria} ${partyLabel(item.party, locale)}` : item.speakerName
   return (
     <div className="fixed inset-0 z-50" role="presentation" onClick={onClose}>
       <div className="absolute inset-0 bg-black/40" />
@@ -98,7 +81,7 @@ export function Reader({ item, index, count, nextName = null, query = '', onPrev
         ref={panelRef}
         role="dialog"
         aria-modal="true"
-        aria-label={label}
+        aria-label={item.speakerName}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
         className="absolute inset-x-0 bottom-0 top-[64px] flex flex-col bg-background shadow-[0_1px_3px_rgba(10,10,10,0.08),0_6px_16px_rgba(10,10,10,0.07)] outline-none desk:inset-auto desk:left-1/2 desk:top-1/2 desk:h-[85vh] desk:w-[90vw] desk:max-w-[42rem] desk:-translate-x-1/2 desk:-translate-y-1/2 desk:overflow-hidden desk:rounded-m desk:border desk:border-fg/15"
@@ -107,78 +90,46 @@ export function Reader({ item, index, count, nextName = null, query = '', onPrev
           <span className="h-[4px] w-[36px] rounded-full bg-fg/15" />
         </div>
         <header className="flex items-center gap-m border-b p-l pt-s desk:pt-l" style={{ borderColor: HAIR }}>
-          {item.kind === 'speech' ? (
-            <>
-              <SpeakerAvatar name={item.speakerName} pictureUrl={item.pictureUrl} />
-              <div className="min-w-0 flex-1">
-                <div className="text-m font-semibold">
-                  {item.speakerMemberId ? (
-                    <a href={withLocale(`/members/${item.speakerMemberId}/votes/`, locale)} className="hover:opacity-80">
-                      {item.speakerName}
-                    </a>
-                  ) : (
-                    item.speakerName
-                  )}
-                </div>
-                <div className="mt-xs flex flex-wrap items-center gap-s">
-                  {item.party && <PartyBadge party={item.party} compact logoSize={16} />}
-                  {item.speakerRole && <span className="text-s caption opacity-l">{item.speakerRole}</span>}
-                </div>
-                {(item.date || (item.voteId && item.voteTitle)) && (
-                  <div className="mt-xs truncate text-s opacity-l">
-                    {item.date && formatDate(item.date)}
-                    {item.date && item.voteId && item.voteTitle && ' · '}
-                    {item.voteId && item.voteTitle && (
-                      <a href={withLocale(`/votes/${item.voteId}/`, locale)} className="hover:opacity-100">
-                        {t.toVote}: {item.voteTitle}
-                      </a>
-                    )}
-                  </div>
+          <SpeakerAvatar name={item.speakerName} pictureUrl={item.pictureUrl} />
+          <div className="min-w-0 flex-1">
+            <div className="text-m font-semibold">
+              {item.speakerMemberId ? (
+                <a href={withLocale(`/members/${item.speakerMemberId}/votes/`, locale)} className="hover:opacity-80">
+                  {item.speakerName}
+                </a>
+              ) : (
+                item.speakerName
+              )}
+            </div>
+            <div className="mt-xs flex flex-wrap items-center gap-s">
+              {item.party && <PartyBadge party={item.party} compact logoSize={16} />}
+              {item.speakerRole && <span className="text-s caption opacity-l">{item.speakerRole}</span>}
+            </div>
+            {(item.date || (item.voteId && item.voteTitle)) && (
+              <div className="mt-xs truncate text-s opacity-l">
+                {item.date && formatDate(item.date)}
+                {item.date && item.voteId && item.voteTitle && ' · '}
+                {item.voteId && item.voteTitle && (
+                  <a href={withLocale(`/votes/${item.voteId}/`, locale)} className="hover:opacity-100">
+                    {t.toVote}: {item.voteTitle}
+                  </a>
                 )}
               </div>
-              {item.choice && (
-                <span className="shrink-0">
-                  <Stamp variant={item.choice === 'enthalten' ? 'enthalten' : item.choice} rotated={false} />
-                </span>
-              )}
-            </>
-          ) : (
-            <>
-              <PartyLogo party={item.party} size={26} decorative />
-              <div className="min-w-0 flex-1">
-                <div className="text-m font-semibold">{partyLabel(item.party, locale)}</div>
-              </div>
-              <span className="shrink-0">
-                <Stamp
-                  variant={item.stance === 'yes' ? 'dafuer' : item.stance === 'no' ? 'dagegen' : item.stance === 'abstain' ? 'enthalten' : 'gespalten'}
-                  rotated={false}
-                />
-              </span>
-            </>
+            )}
+          </div>
+          {item.choice && (
+            <span className="shrink-0">
+              <Stamp variant={item.choice === 'enthalten' ? 'enthalten' : item.choice} rotated={false} />
+            </span>
           )}
           <button type="button" onClick={onClose} aria-label={t.close} className="shrink-0 p-xs opacity-l hover:opacity-100">
             <X size={19} />
           </button>
         </header>
         <div className="flex-1 overflow-y-auto p-l">
-          {item.kind === 'speech' ? (
-            <div className="whitespace-pre-wrap text-l" style={{ fontFamily: SERIF, lineHeight: 1.45 }}>
-              {highlight(body.data?.text || item.fallbackText, tokenize(query))}
-            </div>
-          ) : (
-            <>
-              {item.positionSummary && <p className="whitespace-pre-line text-m leading-relaxed">{item.positionSummary}</p>}
-              {item.keyPoints && (
-                <div className="mt-l">
-                  <Markdown>{item.keyPoints}</Markdown>
-                </div>
-              )}
-              {item.dissentNote && <p className="mt-l text-s opacity-l">{item.dissentNote}</p>}
-              <p className="mt-l border-t pt-m text-s opacity-l" style={{ borderColor: HAIR }}>
-                {t.partySummaryNotice}
-              </p>
-            </>
-          )}
+          <div className="whitespace-pre-wrap text-l" style={{ fontFamily: SERIF, lineHeight: 1.45 }}>
+            {highlight(body.data?.text || item.fallbackText, tokenize(query))}
+          </div>
         </div>
         {count > 1 && (
           <footer className="flex items-center justify-between gap-m border-t px-l py-m text-s" style={{ borderColor: HAIR }}>
@@ -192,9 +143,7 @@ export function Reader({ item, index, count, nextName = null, query = '', onPrev
               <ChevronLeft size={17} />
             </button>
             <span className="opacity-l">
-              {item.kind === 'speech'
-                ? t.contributionOf.replace('{i}', String(index + 1)).replace('{n}', String(count))
-                : `${index + 1} ${t.of} ${count}`}
+              {t.contributionOf.replace('{i}', String(index + 1)).replace('{n}', String(count))}
             </span>
             <button
               type="button"

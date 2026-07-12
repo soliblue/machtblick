@@ -95,8 +95,6 @@ enum Copy {
     static var zwischenfrage: String { localized("copy.zwischenfrage") }
     static var showMore: String { localized("copy.showMore") }
     static var close: String { localized("copy.close") }
-    static var previousLabel: String { localized("copy.previousLabel") }
-    static var nextLabel: String { localized("copy.nextLabel") }
 
     static var filterLabel: String { localized("copy.filterLabel") }
     static var filterType: String { localized("copy.filterType") }
@@ -160,7 +158,6 @@ enum Copy {
     static var petitionsCommitteeLabel: String { localized("copy.petitionsCommitteeLabel") }
     static var electionReviewCommitteeLabel: String { localized("copy.electionReviewCommitteeLabel") }
     static var acceptedCountSuffix: String { localized("copy.acceptedCountSuffix") }
-    static var partyLineLabel: String { localized("copy.partyLineLabel") }
     static var shareOfBundestag: String { localized("copy.shareOfBundestag") }
     static var sinceToday: String { localized("copy.sinceToday") }
 

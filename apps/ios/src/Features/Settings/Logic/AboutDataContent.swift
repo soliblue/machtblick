@@ -5,6 +5,11 @@ enum AboutDataContent {
         locale == .de ? german : english
     }
 
+    private static let opendata = URL(string: "https://www.bundestag.de/services/opendata")!
+    private static let dip = URL(string: "https://dip.bundestag.de/")!
+    private static let commons = URL(string: "https://commons.wikimedia.org/")!
+    private static let abgeordnetenwatch = URL(string: "https://www.abgeordnetenwatch.de/")!
+
     private static let german = SettingsContent(
         title: "Über die Daten",
         sections: [
@@ -15,22 +20,22 @@ enum AboutDataContent {
                         [
                             SettingsContentSource(
                                 name: "Bundestag Open Data",
-                                url: URL(string: "https://www.bundestag.de/services/opendata")!,
+                                url: opendata,
                                 display: "bundestag.de",
                                 description: "Namentliche Abstimmungen und Stammdaten der Abgeordneten (XML)"),
                             SettingsContentSource(
                                 name: "DIP",
-                                url: URL(string: "https://dip.bundestag.de/")!,
+                                url: dip,
                                 display: "dip.bundestag.de",
                                 description: "Metadaten zu Anträgen und Drucksachen über die DIP-API des Bundestages"),
                             SettingsContentSource(
                                 name: "Wikimedia Commons",
-                                url: URL(string: "https://commons.wikimedia.org/")!,
+                                url: commons,
                                 display: "commons.wikimedia.org",
                                 description: "Porträts der Abgeordneten, CC-Lizenzhinweis direkt am jeweiligen Foto"),
                             SettingsContentSource(
                                 name: "abgeordnetenwatch.de",
-                                url: URL(string: "https://www.abgeordnetenwatch.de/")!,
+                                url: abgeordnetenwatch,
                                 display: "abgeordnetenwatch.de",
                                 description: "Porträtverweise und Profildaten"),
                         ],
@@ -71,22 +76,22 @@ enum AboutDataContent {
                         [
                             SettingsContentSource(
                                 name: "Bundestag Open Data",
-                                url: URL(string: "https://www.bundestag.de/services/opendata")!,
+                                url: opendata,
                                 display: "bundestag.de",
                                 description: "Roll call votes and member master data (XML)"),
                             SettingsContentSource(
                                 name: "DIP",
-                                url: URL(string: "https://dip.bundestag.de/")!,
+                                url: dip,
                                 display: "dip.bundestag.de",
                                 description: "Motion and parliamentary paper metadata via the DIP API of the Bundestag"),
                             SettingsContentSource(
                                 name: "Wikimedia Commons",
-                                url: URL(string: "https://commons.wikimedia.org/")!,
+                                url: commons,
                                 display: "commons.wikimedia.org",
                                 description: "Member portraits, CC attribution shown at each photo"),
                             SettingsContentSource(
                                 name: "abgeordnetenwatch.de",
-                                url: URL(string: "https://www.abgeordnetenwatch.de/")!,
+                                url: abgeordnetenwatch,
                                 display: "abgeordnetenwatch.de",
                                 description: "Portrait references and profile data"),
                         ],

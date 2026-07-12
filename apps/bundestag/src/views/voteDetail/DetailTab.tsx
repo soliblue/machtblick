@@ -1,5 +1,5 @@
 import type { VoteDetail as VoteDetailData } from '@/server/voteDetail'
-import { Markdown } from '@/lib/Markdown'
+import { Markdown } from '@/components/Markdown'
 import { useCopy } from '@/lib/i18n'
 
 type Props = { data: VoteDetailData }

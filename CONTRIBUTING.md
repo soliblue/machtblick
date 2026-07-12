@@ -1,6 +1,6 @@
 # Contributing
 
-Issues and focused pull requests are welcome.
+Issues and focused pull requests are welcome. By contributing you agree your work is licensed under the project's AGPL-3.0 license (see LICENSE).
 
 Open an issue before beginning a large feature or data-model change. Every implementation change needs a numbered plan under `plans/` that records its goal, status, contracts, open questions, and append-only work log.
 

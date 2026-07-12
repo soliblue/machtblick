@@ -1,7 +1,6 @@
-import { existsSync } from 'node:fs'
-import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
+import { argValue, findDbPath, normalizeDashes } from '../../_shared/worker.mjs'
 import { extractPdf } from '../descriptions/extractPdf.mjs'
 import { buildPrompt, PROMPT_VERSION } from '../descriptions/prompt.mjs'
 import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
@@ -70,24 +69,6 @@ await Promise.all(workers)
 console.log(`done. completed=${completed} skipped=${skipped} failed=${failed}`)
 db.close()
 
-function argValue(name) {
-  const i = process.argv.indexOf(name)
-  return i >= 0 ? process.argv[i + 1] : null
-}
-
-function findDbPath() {
-  const sourceAdjacent = fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url))
-  if (existsSync(sourceAdjacent)) return sourceAdjacent
-  let dir = process.cwd()
-  while (true) {
-    const candidate = join(dir, 'db', 'machtblick.sqlite')
-    if (existsSync(candidate)) return candidate
-    const parent = dirname(dir)
-    if (parent === dir) return sourceAdjacent
-    dir = parent
-  }
-}
-
 function ensureSchema() {
   db.prepare(`
     CREATE TABLE IF NOT EXISTS antrag_descriptions (
@@ -108,8 +89,8 @@ function ensureSchema() {
 }
 
 function writeSummary(row, output) {
-  const summarySimplified = cleanText(output.summary_simplified)
-  const summaryDetail = cleanText(output.summary_detail)
+  const summarySimplified = normalizeDashes(output.summary_simplified)
+  const summaryDetail = normalizeDashes(output.summary_detail)
   if (!summarySimplified || !summaryDetail) throw new Error(`incomplete output for ${row.id}`)
   db.prepare(`
     INSERT INTO antrag_descriptions (
@@ -127,9 +108,3 @@ function writeSummary(row, output) {
   `).run(row.id, summarySimplified, summaryDetail, row.drucksache_pdf_url, PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT, new Date().toISOString(), PROMPT_VERSION)
 }
 
-function cleanText(value) {
-  return String(value ?? '')
-    .replaceAll('\u2014', ', ')
-    .replaceAll('\u2013', '-')
-    .trim()
-}

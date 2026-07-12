@@ -1,7 +1,9 @@
 import type Database from 'better-sqlite3'
 import { mkdirSync, rmSync, writeFileSync } from 'node:fs'
+import type { Locale } from '../src/lib/locale'
 import { resolvePictureUrl } from '../src/server/photoManifest'
-import { speechTranslation, voteTranslation, type StaticLocale, type StaticTranslations } from './translations'
+import { debateContextJoins, linkedVoteJoin, linkedVotesCte } from '../src/server/speechVoteSql'
+import { speechTranslation, voteTranslation, type StaticTranslations } from './translations'
 
 type SpeechRow = {
   id: string
@@ -54,7 +56,7 @@ function excerpt(text: string) {
   return text.length > 160 ? `${text.slice(0, 160).replace(/\s+\S*$/, '')}…` : text
 }
 
-function buildMeta(rows: SpeechRow[], locale: StaticLocale, translations: StaticTranslations) {
+function buildMeta(rows: SpeechRow[], locale: Locale, translations: StaticTranslations) {
   const meta: MetaEntry[] = []
   for (const row of rows) {
     if (row.speaker_role && PRESIDIUM_ROLE.test(row.speaker_role)) continue
@@ -101,13 +103,7 @@ export function writeSpeechesStatic(
   translations: StaticTranslations,
 ) {
   const rows = db.prepare(`
-    WITH linked_votes AS (
-      SELECT speech_id, vote_id, row_number() OVER (
-        PARTITION BY speech_id
-        ORDER BY confidence DESC, CASE source WHEN 'direct' THEN 0 ELSE 1 END, vote_id
-      ) AS rn
-      FROM speech_vote_links
-    )
+    ${linkedVotesCte}
     SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party,
            COALESCE(sdgs.position, s.position) AS position,
            s.text_full, s.date, s.agenda_item,
@@ -118,12 +114,9 @@ export function writeSpeechesStatic(
            v.clean_title AS vote_clean_title,
            vm.choice AS ballot_choice
     FROM speeches s
-    LEFT JOIN linked_votes lv ON lv.speech_id = s.id AND lv.rn = 1
-    LEFT JOIN votes v ON v.id = lv.vote_id AND v.term_id = 21 AND v.procedural = 0 AND v.vote_type != 'hammelsprung'
+    ${linkedVoteJoin}
     LEFT JOIN vote_members vm ON vm.vote_id = v.id AND vm.member_id = s.speaker_member_id
-    LEFT JOIN speech_debate_group_speeches sdgs ON sdgs.speech_id = s.id
-    LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
-    LEFT JOIN plenary_agenda_items pai ON pai.session_id = s.session_id AND pai.date = s.date AND pai.agenda_item = s.agenda_item
+    ${debateContextJoins}
     ORDER BY s.date DESC, COALESCE(sdgs.position, s.position) ASC
   `).all() as SpeechRow[]
   const pictures = new Map(

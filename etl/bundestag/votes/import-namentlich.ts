@@ -2,18 +2,16 @@ import Database from 'better-sqlite3'
 import * as XLSX from 'xlsx'
 import { createHash } from 'node:crypto'
 import { fileURLToPath } from 'node:url'
-import { normalizeFractionLabel } from '../../abgeordnetenwatch-terms/parties.ts'
+import { normalizeFractionLabel } from '../../_shared/parties.ts'
+import { HONORIFICS, NAME_PARTICLES } from '../../_shared/names.ts'
+import { AW_API, AW_UA } from '../../_shared/awClient.ts'
 
 const db = new Database(fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url)))
 const TERM_ID = Number(arg('--term') ?? 21)
 const AW_PERIOD_ID = Number(arg('--aw-period') ?? 161)
-const UA = 'machtblick-bundestag/0.1 (https://github.com/soliblue/machtblick; hello@machtblick.de)'
 const LIST_URL = 'https://www.bundestag.de/ajax/filterlist/de/parlament/plenum/abstimmung/liste/462112-462112'
 const DETAIL_LIST_URL = 'https://www.bundestag.de/ajax/filterlist/de/parlament/plenum/abstimmung/abstimmungen/484422-484422'
-const AW = 'https://www.abgeordnetenwatch.de/api/v2'
 const SOURCE_ID = Number(arg('--source-id') ?? 0) || null
-const NAME_PARTICLES = new Set(['von', 'van', 'de', 'der', 'den', 'dos', 'da', 'di', 'du', 'le', 'la', 'zu', 'auf', 'freiherr', 'graf', 'edler', 'edle', 'baron', 'baronin'])
-const HONORIFICS = new Set(['dr', 'prof', 'med', 'hc', 'h', 'c', 'dent', 'rer', 'nat', 'phil', 'jur', 'ing', 'mult', 'habil', 'mag', 'lic', 'theol', 'dipl', 'pol'])
 const MEMBER_ALIASES = new Map([
   ['thomas max ladzinski', 'ladzinski-thomas'],
   ['daniel zerbin', 'zerbin-prof-dr-daniel'],
@@ -23,7 +21,7 @@ let enodiaCookie = ''
 type LinkItem = { date: string; title: string; description: string | null; initiator: string | null; pdfUrl: string | null; xlsxUrl: string; sourceUrl: string; sourceId: number | null }
 type DetailItem = { date: string; title: string; description: string; initiator: string | null; sourceId: number }
 type ExistingVote = { id: string; title: string; cleanTitle: string | null }
-type VoteRow = { party: string; last: string; first: string; yes: number; no: number; abstain: number; invalid: number; absent: number }
+type VoteRow = { party: string; last: string; first: string; yes: number; no: number; abstain: number; absent: number }
 type Mandate = {
   id: number
   id_external_administration: string | null
@@ -68,7 +66,7 @@ async function importMandates() {
       db.prepare(`
         INSERT INTO members (id, name, first_name, last_name, bt_mdb_id)
         VALUES (?, ?, ?, ?, ?)
-        ON CONFLICT(id) DO UPDATE SET bt_mdb_id = coalesce(members.bt_mdb_id, excluded.bt_mdb_id)
+        ON CONFLICT(id) DO UPDATE SET bt_mdb_id = COALESCE(members.bt_mdb_id, excluded.bt_mdb_id)
       `).run(memberId, `${name.first} ${name.last}`, name.first, name.last, mandate.id_external_administration?.padStart(8, '0') ?? null)
       membersWritten++
       db.prepare(`
@@ -149,12 +147,12 @@ async function importVotes() {
         INSERT INTO votes (id, term_id, bundestag_id, vote_type, date, title, clean_title, summary, document, initiator, result, total_members, yes, no, abstain, absent, source_url, fetched_at)
         VALUES (?, ?, ?, 'namentlich', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(id) DO UPDATE SET
-          bundestag_id = coalesce(votes.bundestag_id, excluded.bundestag_id),
+          bundestag_id = COALESCE(votes.bundestag_id, excluded.bundestag_id),
           title = excluded.title,
-          clean_title = coalesce(votes.clean_title, excluded.clean_title),
+          clean_title = COALESCE(votes.clean_title, excluded.clean_title),
           summary = excluded.summary,
           document = excluded.document,
-          initiator = coalesce(votes.initiator, excluded.initiator),
+          initiator = COALESCE(votes.initiator, excluded.initiator),
           result = excluded.result,
           total_members = excluded.total_members,
           yes = excluded.yes,
@@ -217,7 +215,7 @@ async function fetchAwMandates() {
   let start = 0
   const size = 200
   while (true) {
-    const res = await fetch(`${AW}/candidacies-mandates?parliament_period=${AW_PERIOD_ID}&type=mandate&range_start=${start}&range_end=${size}`, { headers: { 'User-Agent': UA, Accept: 'application/json' } })
+    const res = await fetch(`${AW_API}/candidacies-mandates?parliament_period=${AW_PERIOD_ID}&type=mandate&range_start=${start}&range_end=${size}`, { headers: { 'User-Agent': AW_UA, Accept: 'application/json' } })
     if (!res.ok) throw new Error(`AW mandates ${res.status}: ${await res.text()}`)
     const json = (await res.json()) as AwMandatesResponse
     out.push(...json.data)
@@ -338,12 +336,11 @@ async function fetchVoteRows(url: string) {
     yes: Number(r[7] ?? 0),
     no: Number(r[8] ?? 0),
     abstain: Number(r[9] ?? 0),
-    invalid: Number(r[10] ?? 0),
     absent: Number(r[11] ?? 0),
   })).filter((r) => r.term === TERM_ID && r.party && r.last && r.first)
 }
 
-function summaries(rows: ReturnType<typeof countableRows>) {
+function summaries(rows: Awaited<ReturnType<typeof fetchVoteRows>>) {
   const byParty = new Map<string, { party: string; members: number; yes: number; no: number; abstain: number; absent: number }>()
   for (const row of rows) {
     const s = byParty.get(row.party) ?? { party: row.party, members: 0, yes: 0, no: 0, abstain: 0, absent: 0 }
@@ -358,7 +355,7 @@ function summaries(rows: ReturnType<typeof countableRows>) {
   return [...byParty.values()].map((s) => ({ ...s, position: position(s) }))
 }
 
-function countRows(rows: ReturnType<typeof countableRows>) {
+function countRows(rows: Awaited<ReturnType<typeof fetchVoteRows>>) {
   return rows.reduce((a, r) => ({
     total: a.total + 1,
     yes: a.yes + (choice(r) === 'ja' ? 1 : 0),
@@ -366,10 +363,6 @@ function countRows(rows: ReturnType<typeof countableRows>) {
     abstain: a.abstain + (choice(r) === 'enthalten' ? 1 : 0),
     absent: a.absent + (choice(r) === 'nicht_abgegeben' ? 1 : 0),
   }), { total: 0, yes: 0, no: 0, abstain: 0, absent: 0 })
-}
-
-function countableRows() {
-  return [] as Array<VoteRow & { term: number; session: number; number: number }>
 }
 
 function choice(row: VoteRow) {
@@ -480,7 +473,7 @@ function titleKey(title: string) {
 }
 
 async function fetchBundestag(url: string) {
-  const res = await fetch(url, { headers: enodiaCookie ? { 'User-Agent': UA, Cookie: enodiaCookie } : { 'User-Agent': UA } })
+  const res = await fetch(url, { headers: enodiaCookie ? { 'User-Agent': AW_UA, Cookie: enodiaCookie } : { 'User-Agent': AW_UA } })
   if (!res.headers.get('content-type')?.includes('text/html')) return res
   const body = await res.clone().text()
   if (!body.includes('Enodia Verification')) return res
@@ -489,11 +482,11 @@ async function fetchBundestag(url: string) {
   const challenge = JSON.parse(Buffer.from(envelope.split('.')[0], 'base64url').toString()).content.challenge as string
   const key = await fetch('https://www.bundestag.de/.enodia/verify', {
     method: 'POST',
-    headers: enodiaCookie ? { 'User-Agent': UA, Cookie: enodiaCookie } : { 'User-Agent': UA },
+    headers: enodiaCookie ? { 'User-Agent': AW_UA, Cookie: enodiaCookie } : { 'User-Agent': AW_UA },
     body: `${solvePow(challenge)}-${envelope}`,
   }).then((r) => r.text())
   enodiaCookie = `enodia=${key}`
-  return await fetch(url, { headers: { 'User-Agent': UA, Cookie: enodiaCookie } })
+  return await fetch(url, { headers: { 'User-Agent': AW_UA, Cookie: enodiaCookie } })
 }
 
 function solvePow(challenge: string) {

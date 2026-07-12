@@ -15,6 +15,8 @@ const sessionNumberRe = /<sitzungsnr>(\d+)<\/sitzungsnr>/
 const sessionDateRe = /sitzung-datum="([^"]+)"/
 const verlaufOpenRe = /<sitzungsverlauf>/
 const verlaufCloseRe = /<\/sitzungsverlauf>/
+const stageSuffixDe = { second: '(2. Beratung)', third: '(3. Beratung)', final: '(Schlussabstimmung)' } as const
+const stageSuffixEn = { second: '(second reading)', third: '(third reading)', final: '(final vote)' } as const
 
 type VoteRow = {
   id: string
@@ -41,7 +43,6 @@ type TranslationRow = {
 
 type TopBlock = {
   date: string
-  sessionId: string
   topId: string
   order: number
   drucksachen: Set<string>
@@ -202,7 +203,7 @@ db.transaction(() => {
       }
 
       const stage = readingStage(row.title)
-      const suffix = stage ? germanSuffix(stage) : null
+      const suffix = stage ? stageSuffixDe[stage] : null
       if (suffix) {
         const nextTitle = `${baseTitle} ${suffix}`
         if (row.clean_title !== nextTitle) {
@@ -211,7 +212,7 @@ db.transaction(() => {
         }
       }
 
-      const englishSuffixValue = stage ? englishSuffix(stage) : null
+      const englishSuffixValue = stage ? stageSuffixEn[stage] : null
       for (const t of translationsByVote.get(row.id) ?? []) {
         if (t.locale !== 'en' || !englishSuffixValue) continue
         const englishBase = sourceEnglishTitle || stripStage(t.clean_title ?? '')
@@ -249,7 +250,6 @@ db.transaction(() => {
 })()
 
 const blocks = topBlocks()
-const voteDocuments = db.prepare('SELECT label FROM vote_documents WHERE vote_id = ?')
 const directSpeechCount = db.prepare('SELECT COUNT(*) AS c FROM speeches WHERE date = ? AND agenda_item = ?')
 const linkedSpeechCount = db.prepare('SELECT COUNT(*) AS c FROM speeches WHERE vote_id = ?')
 const speechBlockCount = db.prepare(`
@@ -320,10 +320,6 @@ console.log(`related speeches linked: ${relatedSpeeches}`)
 
 db.close()
 
-function hasMetadata(row: VoteRow) {
-  return Boolean(row.document || row.initiator || row.summary || row.summary_simplified || row.summary_detail || row.subject || row.topic)
-}
-
 function missingCopiedMetadata(row: VoteRow, source: VoteRow) {
   return Boolean(
     (!row.document && source.document)
@@ -339,7 +335,7 @@ function missingCopiedMetadata(row: VoteRow, source: VoteRow) {
 }
 
 function readingSourceScore(row: VoteRow) {
-  return (hasMetadata(row) ? 100 : 0)
+  return (row.document || row.initiator || row.summary || row.summary_simplified || row.summary_detail || row.subject || row.topic ? 100 : 0)
     + ((documentCount.get(row.id) as CountRow).c > 0 ? 30 : 0)
     + ((antragCount.get(row.id) as CountRow).c > 0 ? 20 : 0)
     + ((decisionCount.get(row.id) as CountRow).c > 0 ? 20 : 0)
@@ -439,14 +435,6 @@ function readingStage(title: string): 'second' | 'third' | 'final' | null {
   return null
 }
 
-function germanSuffix(stage: 'second' | 'third' | 'final') {
-  return stage === 'second' ? '(2. Beratung)' : stage === 'third' ? '(3. Beratung)' : '(Schlussabstimmung)'
-}
-
-function englishSuffix(stage: 'second' | 'third' | 'final') {
-  return stage === 'second' ? '(second reading)' : stage === 'third' ? '(third reading)' : '(final vote)'
-}
-
 function stemKey(title: string) {
   return normalizeText(stripStage(title))
 }
@@ -471,7 +459,7 @@ function normalizeText(value: string) {
 function drucksachenForVote(voteId: string, document: string) {
   const out = new Set<string>()
   for (const match of document.matchAll(drucksacheRe)) out.add(match[0])
-  for (const row of voteDocuments.all(voteId) as Array<{ label: string }>) {
+  for (const row of documentLabelsForVote.all(voteId) as Array<{ label: string }>) {
     for (const match of row.label.matchAll(drucksacheRe)) out.add(match[0])
   }
   return out
@@ -484,7 +472,6 @@ function topBlocks() {
     const sessionNumber = xml.match(sessionNumberRe)?.[1]
     const date = parseGermanDate(xml.match(sessionDateRe)?.[1])
     if (!sessionNumber || !date) continue
-    const sessionId = `21-${Number(sessionNumber)}`
     const body = xml.slice(xml.match(verlaufOpenRe)?.index ?? 0, xml.match(verlaufCloseRe)?.index ?? xml.length)
     const events: Array<{ idx: number; kind: 'open' | 'close'; topId?: string }> = []
     for (const match of body.matchAll(topOpenRe)) events.push({ idx: match.index!, kind: 'open', topId: match[1] })
@@ -502,7 +489,7 @@ function topBlocks() {
           const drucksachen = new Set([...segment.matchAll(drucksacheRe)].map((match) => match[0]))
           const formalDrucksachen = new Set<string>()
           for (const tDrs of segment.matchAll(tDrsParaRe)) for (const match of tDrs[1].matchAll(drucksacheRe)) formalDrucksachen.add(match[0])
-          out.push({ date, sessionId, topId: top.topId, order: order++, drucksachen, formalDrucksachen })
+          out.push({ date, topId: top.topId, order: order++, drucksachen, formalDrucksachen })
         }
       }
     }

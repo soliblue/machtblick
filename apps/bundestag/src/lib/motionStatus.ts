@@ -1,5 +1,7 @@
 export type MotionStatusBucket = 'angenommen' | 'abgelehnt' | 'im-verfahren' | 'nicht-beraten'
 
+export const MOTION_STATUS_BUCKETS: MotionStatusBucket[] = ['angenommen', 'abgelehnt', 'im-verfahren', 'nicht-beraten']
+
 const ACCEPTED_STATES = new Set(['Angenommen', 'Verabschiedet', 'Verkündet', 'Abgeschlossen'])
 
 const OFF_TRACK_STATES = [

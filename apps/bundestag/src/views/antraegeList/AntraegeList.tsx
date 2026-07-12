@@ -1,7 +1,6 @@
 import type { AntragListItem } from '@/server/antraege'
 import type { AntragTypeFilter } from '@/hooks/useAntragListFilters'
-import { MOTION_STATUS_BUCKETS } from '@/hooks/useAntragListFilters'
-import type { MotionStatusBucket } from '@/lib/motionStatus'
+import { MOTION_STATUS_BUCKETS, type MotionStatusBucket } from '@/lib/motionStatus'
 import { partyLabel } from '@/lib/parties'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { AntragCard } from './AntragCard'
@@ -42,7 +41,7 @@ export function AntraegeList({ items, type, onTypeChange, proposer, onProposerCh
     <>
       <div className="sticky top-[54px] z-20 hidden border-b border-fg/15 bg-background desk:block">
         <div className="px-l py-s desk:mx-auto desk:max-w-3xl">
-          <FilterPillRow className="">
+          <FilterPillRow>
             <FilterPill label={t.type} options={['antrag', 'gesetzentwurf']} value={type} onChange={(v) => onTypeChange(v as AntragTypeFilter | null)} formatOption={(o) => typeLabels[o as AntragTypeFilter]} />
             <FilterPill label={t.proposer} options={availableProposers} value={proposer} onChange={onProposerChange} formatOption={proposerLabel} />
             <FilterPill label={t.status} options={MOTION_STATUS_BUCKETS} value={status} onChange={(v) => onStatusChange(v as MotionStatusBucket | null)} formatOption={(o) => t.motionBuckets[o as MotionStatusBucket]} />

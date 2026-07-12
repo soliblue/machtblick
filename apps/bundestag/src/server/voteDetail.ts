@@ -4,14 +4,16 @@ import { db } from '@machtblick/db/client'
 import { votes, voteDocuments, votePartySummaries, voteMembers, members, voteDescriptionDecisions } from '@machtblick/db/schema'
 import { eq, sql } from 'drizzle-orm'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
+import { majorityChoice, type PartyMajority } from './majorityChoice'
 import { resolvePictureUrl } from './photoManifest'
-import { getChamberSize, getSeatsByParty } from './seats'
+import { getChamberSize } from './seats'
 import { overlayVote, partySummaryTranslationMap, speechTranslationMap, voteTranslationMap } from './translations'
-import { hasPartyLine } from '../lib/parties'
-import { SHOW_HAMMELSPRUNG } from '../lib/voteTypes'
+import { isRelatedDebate } from './speechVoteSql'
+import { hasPartyLine } from '@/lib/parties'
+import { SHOW_HAMMELSPRUNG } from '@/lib/voteTypes'
 import type { SpeechSummary } from './speeches'
-import { normalizeLocale, type Locale } from '../lib/locale'
-import { requireVoteCleanTitle } from '../lib/voteTitles'
+import { normalizeLocale, type Locale } from '@/lib/locale'
+import { requireVoteCleanTitle } from '@/lib/voteTitles'
 
 export type VoteDebateSource = 'direct' | 'related'
 
@@ -64,7 +66,7 @@ function loadDebateForVote(voteId: string, date: string, locale: Locale): { spee
       position: row.position,
       excerpt: translations.get(row.id)?.textExcerpt ?? row.text_excerpt,
     })),
-    source: rows.some((row) => row.debate_source === 'related' || row.date !== date) ? 'related' : 'direct',
+    source: rows.some((row) => isRelatedDebate(row, date)) ? 'related' : 'direct',
   }
 }
 
@@ -82,19 +84,6 @@ export type VoteDetail = {
   antragPdfUrl: string | null
 }
 
-function voteDocumentRoleUrl(voteId: string): string | null {
-  const row = db.get(sql`
-    SELECT vd.url
-    FROM vote_document_roles vdr
-    INNER JOIN vote_documents vd ON vd.id = vdr.document_id AND vd.vote_id = vdr.vote_id
-    WHERE vdr.vote_id = ${voteId}
-      AND vdr.role IN ('primary_antrag', 'antrag')
-    ORDER BY CASE vdr.role WHEN 'primary_antrag' THEN 0 ELSE 1 END, vd.id
-    LIMIT 1
-  `) as { url: string } | undefined
-  return row?.url ?? null
-}
-
 export const getVote = createServerFn({ method: 'GET' })
   .inputValidator((input: string | { id: string; locale?: Locale }) => typeof input === 'string' ? { id: input, locale: 'de' as Locale } : { id: input.id, locale: normalizeLocale(input.locale) })
   .handler(async ({ data }): Promise<VoteDetail> => {
@@ -106,20 +95,9 @@ export const getVote = createServerFn({ method: 'GET' })
     const summaryTranslations = partySummaryTranslationMap([id], locale)
     const documents = db.select().from(voteDocuments).where(eq(voteDocuments.voteId, id)).all()
     const summaryRows = db.select().from(votePartySummaries).where(eq(votePartySummaries.voteId, id)).all()
-    const seats = getSeatsByParty()
     const partySummaries = summaryRows.map((s) => {
       const t = summaryTranslations.get(`${id} ${s.party}`)
-      if (voteRow.voteType === 'namentlich') {
-        return { ...s, positionSummary: t?.positionSummary ?? s.positionSummary, keyPoints: t?.keyPoints ?? s.keyPoints, dissentNote: t?.dissentNote ?? s.dissentNote, members: s.members ?? 0, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0 }
-      }
-      const m = seats.get(s.party) ?? 0
-      return {
-        ...s, positionSummary: t?.positionSummary ?? s.positionSummary, keyPoints: t?.keyPoints ?? s.keyPoints, dissentNote: t?.dissentNote ?? s.dissentNote, members: m,
-        yes: s.position === 'yes' ? m : 0,
-        no: s.position === 'no' ? m : 0,
-        abstain: s.position === 'abstain' ? m : 0,
-        absent: 0,
-      }
+      return { ...s, positionSummary: t?.positionSummary ?? s.positionSummary, keyPoints: t?.keyPoints ?? s.keyPoints, dissentNote: t?.dissentNote ?? s.dissentNote, members: s.members ?? 0, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0 }
     })
     const localizedVote = overlayVote(voteRow, translations)
     if (!localizedVote.cleanTitle?.trim()) throw notFound()
@@ -145,16 +123,10 @@ export const getVote = createServerFn({ method: 'GET' })
       .all()
     const affByMember = loadAffiliationsByMember()
     const vmRows = rawVmRows.map((r) => ({ ...r, party: partyAt(affByMember.get(r.memberId), voteRow.date) }))
-    const majorityByParty = new Map<string, string>()
+    const majorityByParty = new Map<string, PartyMajority>()
     for (const s of partySummaries) {
-      const choices = [
-        ['ja', s.yes],
-        ['nein', s.no],
-        ['enthalten', s.abstain],
-        ['nicht_abgegeben', s.absent],
-      ] as const
-      const top = choices.reduce((a, b) => (b[1] > a[1] ? b : a))
-      majorityByParty.set(s.party, top[0])
+      const maj = majorityChoice(s)
+      if (maj) majorityByParty.set(s.party, maj)
     }
     const defectorsByParty = new Map<string, Array<{ id: string; name: string; choice: string; pictureUrl: string | null }>>()
     for (const r of vmRows) {
@@ -179,7 +151,15 @@ export const getVote = createServerFn({ method: 'GET' })
       debate: debate.speeches,
       debateSource: debate.source,
       antragPdfUrl: db.select({ url: voteDescriptionDecisions.sourcePdfUrl }).from(voteDescriptionDecisions).where(eq(voteDescriptionDecisions.voteId, id)).get()?.url
-        ?? voteDocumentRoleUrl(id)
+        ?? (db.get(sql`
+          SELECT vd.url
+          FROM vote_document_roles vdr
+          INNER JOIN vote_documents vd ON vd.id = vdr.document_id AND vd.vote_id = vdr.vote_id
+          WHERE vdr.vote_id = ${id}
+            AND vdr.role IN ('primary_antrag', 'antrag')
+          ORDER BY CASE vdr.role WHEN 'primary_antrag' THEN 0 ELSE 1 END, vd.id
+          LIMIT 1
+        `) as { url: string } | undefined)?.url
         ?? null,
     }
   })

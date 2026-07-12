@@ -1,15 +1,13 @@
 import { createHash } from 'node:crypto'
-import { existsSync, readFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
+import { argValue, chunk, findDbPath, normalizeDashes } from '../../_shared/worker.mjs'
+import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
 import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
 import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
 import { ensureTextColumn } from '../preprocessing/schema.mjs'
 
-const PROMPT_VERSION = 'antrag-translation-en-v1'
 const schemaPath = fileURLToPath(new URL('./output-schema.json', import.meta.url))
-const promptTemplate = readFileSync(fileURLToPath(new URL('../../../prompts/etl/bundestag/antrag-description-translations.md', import.meta.url)), 'utf8').trimEnd()
 const timeoutMs = Number(process.env.CODEX_TIMEOUT_MS ?? 180000)
 const concurrency = Number(argValue('--concurrency') ?? 2)
 const batchSize = Number(argValue('--batch-size') ?? 8)
@@ -70,24 +68,6 @@ await Promise.all(workers)
 console.log(`done. completed=${completed} failed=${failed}`)
 db.close()
 
-function argValue(name) {
-  const i = process.argv.indexOf(name)
-  return i >= 0 ? process.argv[i + 1] : null
-}
-
-function findDbPath() {
-  const sourceAdjacent = fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url))
-  if (existsSync(sourceAdjacent)) return sourceAdjacent
-  let dir = process.cwd()
-  while (true) {
-    const candidate = join(dir, 'db', 'machtblick.sqlite')
-    if (existsSync(candidate)) return candidate
-    const parent = dirname(dir)
-    if (parent === dir) return sourceAdjacent
-    dir = parent
-  }
-}
-
 function ensureSchema() {
   db.prepare(`
     CREATE TABLE IF NOT EXISTS antrag_description_translations (
@@ -116,16 +96,6 @@ function stale(antragId, hash) {
   return row?.source_hash !== hash
 }
 
-function chunk(items, size) {
-  const chunks = []
-  for (let i = 0; i < items.length; i += size) chunks.push(items.slice(i, i + size))
-  return chunks
-}
-
-function buildPrompt(rows) {
-  return promptTemplate.replace('__INPUT_JSON__', JSON.stringify({ rows }, null, 2)) + '\n'
-}
-
 function writeBatch(batch, output) {
   const byId = new Map(output.translations.map((t) => [t.antrag_id, t]))
   const now = new Date().toISOString()
@@ -146,8 +116,8 @@ function writeBatch(batch, output) {
         translated_at = excluded.translated_at
     `).run(
       job.row.antrag_id,
-      clean(translated.summary_simplified),
-      clean(translated.summary_detail),
+      normalizeDashes(translated.summary_simplified),
+      normalizeDashes(translated.summary_detail),
       job.hash,
       PREPROCESSING_MODEL,
       PREPROCESSING_REASONING_EFFORT,
@@ -157,9 +127,3 @@ function writeBatch(batch, output) {
   }
 }
 
-function clean(value) {
-  return String(value ?? '')
-    .replaceAll('\u2014', ', ')
-    .replaceAll('\u2013', '-')
-    .trim()
-}

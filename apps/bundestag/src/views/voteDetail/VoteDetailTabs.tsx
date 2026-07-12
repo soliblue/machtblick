@@ -1,13 +1,5 @@
-import type { VoteTab } from './VoteDetail'
+import { VOTE_TABS, type VoteTab } from './VoteDetail'
 import { useCopy } from '@/lib/i18n'
-
-type Tab = { id: VoteTab; label: string }
-
-const TABS: Tab[] = [
-  { id: 'ergebnis', label: 'Ergebnis' },
-  { id: 'details', label: 'Details' },
-  { id: 'reden', label: 'Reden' },
-]
 
 type Props = {
   active: VoteTab
@@ -17,27 +9,20 @@ type Props = {
 
 export function VoteDetailTabs({ active, availableTabs, onChange }: Props) {
   const t = useCopy()
-  const tabs = TABS
-    .filter((tab) => availableTabs[tab.id])
-    .map((tab) => ({
-      ...tab,
-      label:
-        tab.id === 'ergebnis' ? t.result
-        : tab.id === 'details' ? t.details
-        : t.speeches,
-    }))
+  const labels: Record<VoteTab, string> = { ergebnis: t.result, details: t.details, reden: t.speeches }
+  const tabs = VOTE_TABS.filter((tab) => availableTabs[tab])
   return (
     <nav
       className="mt-l mb-l grid gap-xs rounded-m border border-fg/15 bg-surface p-xs"
       style={{ gridTemplateColumns: `repeat(${tabs.length}, minmax(0, 1fr))` }}
     >
       {tabs.map((tab) => {
-        const isActive = tab.id === active
+        const isActive = tab === active
         return (
           <button
-            key={tab.id}
+            key={tab}
             type="button"
-            onClick={() => onChange(tab.id)}
+            onClick={() => onChange(tab)}
             className={
               isActive
                 ? 'bg-background px-s py-s text-center text-m font-semibold opacity-100 shadow-[0_1px_2px_rgba(10,10,10,0.08)]'
@@ -45,7 +30,7 @@ export function VoteDetailTabs({ active, availableTabs, onChange }: Props) {
             }
             style={{ borderRadius: 'calc(var(--radius-m) - var(--spacing-xs))' }}
           >
-            {tab.label}
+            {labels[tab]}
           </button>
         )
       })}

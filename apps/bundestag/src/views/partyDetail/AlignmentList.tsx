@@ -1,5 +1,5 @@
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
-import type { PartyAlignment } from '@/server/partyDetail'
+import type { PartyAlignment } from '@/server/partyStats'
 import { PARTY_SLUG, partyLabel } from '@/lib/parties'
 import { PartyLogo } from '@/views/votesList/PartyLogo'
 import { pct } from '@/lib/format'

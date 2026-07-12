@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
-import type { MemberListItem, MemberSex } from '@/server/members'
-import { AGE_BUCKETS, ageBucketFor, type AgeBucket } from '@/lib/ageBuckets'
+import type { MemberListItem } from '@/server/members'
+import { AGE_BUCKETS, ageBucketFor, type AgeBucket, type MemberSex } from '@/lib/memberFacets'
 import { PARTY_COLOR, partyLabel } from '@/lib/parties'
 import { useCopy, useLocale } from '@/lib/i18n'
 

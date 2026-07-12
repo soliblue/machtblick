@@ -5,8 +5,7 @@ import { sql } from 'drizzle-orm'
 import { db } from '@machtblick/db/client'
 import { speechDebateGroupSpeeches, speeches, speechTranslations, speechVoteLinks, members, votes } from '@machtblick/db/schema'
 import { parseProtocol, type SpeechRow } from './parse.ts'
-
-const HONORIFICS = new Set(['dr', 'prof', 'med', 'hc', 'h', 'c', 'dent', 'rer', 'nat', 'phil', 'jur', 'ing', 'mult', 'habil', 'mag', 'lic', 'theol', 'dipl', 'pol'])
+import { HONORIFICS } from '../_shared/names.ts'
 const rawDir = fileURLToPath(new URL('./raw/xml/', import.meta.url))
 
 const membersByKey = new Map<string, string>()

@@ -1,4 +1,4 @@
-# Member detail — Abstimmungen tab
+# Member detail, Abstimmungen tab
 
 > **Superseded (plan 105 round 9).** The Abstimmungen redesign now lives in
 > `memberDetail.mock.md`: options 1-3 below are retired (the topic galaxy has no
@@ -27,21 +27,21 @@ Four text columns. The eye can't tell at a glance:
 - *When in her term did the defections cluster?*
 - *Which topics make her break ranks?*
 
-The story is in the data — `defected`, `result`, `topic`, `date` — but a table flattens it. Three directions follow, ordered by recommendation.
+The story is in the data (`defected`, `result`, `topic`, `date`), but a table flattens it. Three directions follow, ordered by recommendation.
 
 ---
 
-## Option 1 (recommended) — **Term ribbon + topic galaxy**
+## Option 1 (recommended): **Term ribbon + topic galaxy**
 
 A two-strata header tells the *story* before the list does. Below, the list is denser than today but only because the chart above carries the gestalt.
 
-### Strata 1 — Term ribbon
+### Strata 1: Term ribbon
 A single horizontal stripe spanning the full term. One thin vertical tick per vote, in chronological order, colored by the MP's choice. **Defections are taller ticks**, so abweichend votes literally stick out of the ribbon. Below the ribbon, year labels.
 
-### Strata 2 — Topic galaxy
+### Strata 2: Topic galaxy
 A horizontal stacked bar of all votes, segmented by `topic`, sized by count, colored by **defection rate within that topic**. Hover any segment → tooltip with topic name + n votes + n defections. Tap → filters the list below.
 
-### Strata 3 — Filtered list
+### Strata 3: Filtered list
 The list keeps current FilterPills (Linie, Stimme) plus the implicit topic filter from the galaxy. Rows are one-liners with a colored left **square** (4×16px) encoding choice, a tiny "ABW" dot if defected, and the chamber outcome as a faint trailing chip.
 
 ### Desktop
@@ -103,7 +103,7 @@ Ribbon stays full-width (it's the whole point). Topic galaxy collapses to a vert
 │   14.06.24 · Energie         │
 │   abgelehnt                  │
 │ ──────────────────────────── │
-│ ▓•Bürgergeld Reform — Drit…  │
+│ ▓•Bürgergeld Reform: Drit…  │
 │   22.03.24 · Soziales · ABW  │
 │   angenommen                 │
 └──────────────────────────────┘
@@ -118,11 +118,11 @@ Ribbon stays full-width (it's the whole point). Topic galaxy collapses to a vert
 You see her **loyalty pattern across the term in one stripe** (where the taller red ticks cluster), and **which policy areas she breaks on** (Energie segment glowing red). The list is supporting evidence, not the headline.
 
 ### Rationale
-This is the only option that answers the journalist's question — *when and on what does she break?* — without reading rows. It mirrors the chart-driven idiom of the party detail page (stat pies, alignment bars) rather than the list idiom of votes/list, which is the right reference because *we are summarizing one person*, not browsing many votes.
+This is the only option that answers the journalist's question (*when and on what does she break?*) without reading rows. It mirrors the chart-driven idiom of the party detail page (stat pies, alignment bars) rather than the list idiom of votes/list, which is the right reference because *we are summarizing one person*, not browsing many votes.
 
 ---
 
-## Option 2 — **Choice waffle by quarter**
+## Option 2: **Choice waffle by quarter**
 
 Drop the list as the primary view. Replace it with a calendar-style waffle: one square per vote, arranged left-to-right by date, wrapped into rows of ~20. Color = choice. Defected squares get a black hairline outline. Tap any square to open a detail strip below.
 
@@ -145,7 +145,7 @@ Drop the list as the primary view. Replace it with a calendar-style waffle: one 
 │                                                                │
 │ ⌕ Tap eine Kachel für Details                                  │
 │ ┌──────────────────────────────────────────────────┐           │
-│ │ Bürgergeld Reform — Drittes Gesetz zur Änderung… │           │
+│ │ Bürgergeld Reform: Drittes Gesetz zur Änderung… │           │
 │ │ 22.03.2024 · Soziales · ANGENOMMEN               │           │
 │ │ Stimme: Ja  ·  ABWEICHEND von Fraktion           │           │
 │ └──────────────────────────────────────────────────┘           │
@@ -168,7 +168,7 @@ Drop the list as the primary view. Replace it with a calendar-style waffle: one 
 │ ▢Nicht 22  ⟦⟧Abw 4           │
 │                              │
 │ ┌──────────────────────────┐ │
-│ │ Bürgergeld Reform — Drit…│ │
+│ │ Bürgergeld Reform: Drit…│ │
 │ │ 22.03.24 · Soziales      │ │
 │ │ Ja · ABW · angenommen    │ │
 │ └──────────────────────────┘ │
@@ -177,18 +177,18 @@ Drop the list as the primary view. Replace it with a calendar-style waffle: one 
 
 ### Filters / interactions
 - Tap a square → reveals detail card below; second tap clears.
-- FilterPills (Linie, Stimme) recolor or dim the waffle in place — non-matching squares fade to opacity-s.
+- FilterPills (Linie, Stimme) recolor or dim the waffle in place. Non-matching squares fade to opacity-s.
 - Optional: hover row label "2024 Q1" → all other quarters dim.
 
 ### What it emphasizes at a glance
 **Volume and rhythm.** You see this MP voted ~20 times in Q2 2023 (busy session) versus 5 times in summer. Streaks of identical color reveal months of party-line discipline; a sudden run of red squares is a phase of rebellion.
 
 ### Rationale
-Beautiful, dense, scannable. Closest to GitHub's contribution graph — instantly familiar. Downside: hard to find a *specific* vote by title without scrolling the detail card. Best for analytic browsing, weaker for "show me that one vote I read about."
+Beautiful, dense, scannable. Closest to GitHub's contribution graph, instantly familiar. Downside: hard to find a *specific* vote by title without scrolling the detail card. Best for analytic browsing, weaker for "show me that one vote I read about."
 
 ---
 
-## Option 3 — **Topic-grouped card list (hybrid)**
+## Option 3: **Topic-grouped card list (hybrid)**
 
 Keep a list shape, but group rows by `topic` with a header per group that summarizes choice mix and defection count via a mini stacked bar. Inside each group, rows are slim cards (mirroring votes/list's card-row idiom but compressed). This is the most conservative of the three.
 
@@ -237,7 +237,7 @@ Same structure, groups collapse by default except the first; mini bar stays full
 **Thematic load and topical loyalty.** You can scan the group bars to compare how this MP votes Ja vs Nein across policy areas, and see which area harbors her defections. Less time-aware than Option 1 (no chronology) but more findable than Option 2.
 
 ### Rationale
-Safe middle ground. It's the existing party-detail's `AlignmentList` idiom turned inward. Pick this if the user wants minimal change to the underlying list semantics — but it loses the "when did she break?" axis entirely. Topic isn't always populated, so an "Ohne Kategorie" group will appear.
+Safe middle ground. It's the existing party-detail's `AlignmentList` idiom turned inward. Pick this if the user wants minimal change to the underlying list semantics, but it loses the "when did she break?" axis entirely. Topic isn't always populated, so an "Ohne Kategorie" group will appear.
 
 ---
 
@@ -245,7 +245,7 @@ Safe middle ground. It's the existing party-detail's `AlignmentList` idiom turne
 
 | Token | Used for |
 |---|---|
-| Text xl/22 | (none — page h1 lives outside tab) |
+| Text xl/22 | (none, page h1 lives outside tab) |
 | Text l/16 | row title |
 | Text m/14 | meta line, group header label |
 | Text s/12 | uppercase 0.08em section captions, year/quarter labels, chip text |
@@ -263,8 +263,8 @@ Safe middle ground. It's the existing party-detail's `AlignmentList` idiom turne
 | Color danger | high-defection topic fill, abweichend tick, ABW chip |
 | Color fg | neutral text, Enthalten fill |
 | Components | FilterPill (kept), Badge (ABW chip, topic chip), Tooltip (ribbon tick, topic segment), Skeleton (load state) |
-| Components not used | Table (replaced), Card (no chrome — borders only), Select (FilterPill covers) |
+| Components not used | Table (replaced), Card (no chrome, borders only), Select (FilterPill covers) |
 
 ## Recommendation
 
-**Option 1.** It's the only one that respects the user's stated criterion — the list should *tell the story before you read it*. Ribbon answers "when," topic galaxy answers "on what," list is evidence. Option 2 is the most beautiful but weakest for findability. Option 3 is safe but loses chronology, which is half the value of an MP's record.
+**Option 1.** It's the only one that respects the user's stated criterion: the list should *tell the story before you read it*. Ribbon answers "when," topic galaxy answers "on what," list is evidence. Option 2 is the most beautiful but weakest for findability. Option 3 is safe but loses chronology, which is half the value of an MP's record.

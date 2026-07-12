@@ -13,7 +13,7 @@ final class VotesStore {
     var voteTypeFilter: String?
     var flagFilter: VoteFlagFilter = .all
 
-    private var path: String { AppLocale.current.dataPath("/api/votes.json") }
+    private var path: String { AppLocale.current.dataPath(Endpoints.votes) }
 
     func load(cache: ApiCache) async {
         if votes.isEmpty, let cached: [VoteListItem] = cache.cached(path) {

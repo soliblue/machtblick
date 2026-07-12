@@ -3,6 +3,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { parseAgendaProtocol } from '../etl/bundestag-reden-xml/agenda.ts'
+import { CURRENT_TERM } from '../apps/bundestag/src/server/term.ts'
 import { PARTY_ALIAS_SEED_ROWS, normalizePartyList } from './partyPatterns'
 
 type AgendaRow = {
@@ -35,7 +36,6 @@ type DocumentRow = {
   vote_id: string
   label: string
   title: string
-  url: string
 }
 
 const dbPath = process.env.MACHTBLICK_DB ?? fileURLToPath(new URL('./machtblick.sqlite', import.meta.url))
@@ -52,16 +52,18 @@ const summary = db.transaction(() => {
   const aliases = materializePartyAliases()
   const agendas = materializeAgendaItems()
   const abstracts = materializeAntraege()
+  const handzeichenTallies = materializeHandzeichenTallies()
   const speechGroups = materializeSpeechDebateGroups()
   const speechVoteLinks = materializeSpeechVoteLinks()
   const voteDebates = materializeVoteDebateGroups()
   const documentRoles = materializeVoteDocumentRoles()
-  return { aliases, agendas, abstracts, speechGroups, speechVoteLinks, voteDebates, documentRoles }
+  return { aliases, agendas, abstracts, handzeichenTallies, speechGroups, speechVoteLinks, voteDebates, documentRoles }
 })()
 
 console.log(`party aliases: ${summary.aliases.aliases}, normalized speeches: ${summary.aliases.speeches}, normalized antraege: ${summary.aliases.antraege}`)
 console.log(`agenda items: ${summary.agendas}`)
 console.log(`antrag abstracts: ${summary.abstracts}`)
+console.log(`handzeichen tallies: ${summary.handzeichenTallies.tallies}, purged seatless-party rows: ${summary.handzeichenTallies.purged}`)
 console.log(`speech debate groups: ${summary.speechGroups.groups}, memberships: ${summary.speechGroups.memberships}`)
 console.log(`speech vote links: direct=${summary.speechVoteLinks.direct}, agenda=${summary.speechVoteLinks.agenda}`)
 console.log(`vote debate groups: ${summary.voteDebates}`)
@@ -204,6 +206,42 @@ function plainText(value: string | null) {
     .trim() || null
 }
 
+function materializeHandzeichenTallies() {
+  const seated = db.prepare('SELECT party_name FROM party_seat_history WHERE term_id = ?').all(CURRENT_TERM) as Array<{ party_name: string }>
+  const purged = seated.length
+    ? db.prepare(`
+        DELETE FROM vote_party_summaries
+        WHERE party NOT IN (${seated.map(() => '?').join(', ')})
+          AND vote_id IN (SELECT id FROM votes WHERE term_id = ? AND vote_type != 'namentlich')
+      `).run(...seated.map((row) => row.party_name), CURRENT_TERM).changes
+    : 0
+  const seats = new Map<string, number>()
+  const namentlich = db.prepare("SELECT id FROM votes WHERE term_id = ? AND vote_type = 'namentlich' ORDER BY date DESC LIMIT 20").all(CURRENT_TERM) as Array<{ id: string }>
+  for (const vote of namentlich) {
+    const rows = db.prepare('SELECT party, members FROM vote_party_summaries WHERE vote_id = ?').all(vote.id) as Array<{ party: string; members: number | null }>
+    for (const row of rows) if (row.members && !seats.has(row.party)) seats.set(row.party, row.members)
+  }
+  const rows = db.prepare(`
+    SELECT vps.vote_id, vps.party, vps.position
+    FROM vote_party_summaries vps
+    INNER JOIN votes v ON v.id = vps.vote_id
+    WHERE v.vote_type != 'namentlich'
+  `).all() as Array<{ vote_id: string; party: string; position: 'yes' | 'no' | 'abstain' | 'mixed' }>
+  const update = db.prepare('UPDATE vote_party_summaries SET members = @members, yes = @yes, no = @no, abstain = @abstain, absent = 0 WHERE vote_id = @voteId AND party = @party')
+  for (const row of rows) {
+    const m = seats.get(row.party) ?? 0
+    update.run({
+      members: m,
+      yes: row.position === 'yes' ? m : 0,
+      no: row.position === 'no' ? m : 0,
+      abstain: row.position === 'abstain' ? m : 0,
+      voteId: row.vote_id,
+      party: row.party,
+    })
+  }
+  return { tallies: rows.length, purged }
+}
+
 function materializeSpeechDebateGroups() {
   db.prepare('DELETE FROM vote_debate_groups').run()
   db.prepare('DELETE FROM speech_debate_group_speeches').run()
@@ -252,7 +290,7 @@ function materializeSpeechVoteLinks() {
              (
                SELECT av.id
                FROM votes av
-               WHERE av.term_id = 21
+               WHERE av.term_id = ?
                  AND av.procedural = 0
                  AND av.vote_type != 'hammelsprung'
                  AND av.date = s.date
@@ -264,7 +302,7 @@ function materializeSpeechVoteLinks() {
       WHERE s.vote_id IS NULL AND s.agenda_item IS NOT NULL
     )
     WHERE vote_id IS NOT NULL
-  `).run().changes
+  `).run(CURRENT_TERM).changes
   return { direct, agenda }
 }
 
@@ -275,8 +313,8 @@ function materializeVoteDebateGroups() {
     SELECT v.id, sdg.id, 'direct', 'unreviewed'
     FROM votes v
     INNER JOIN speech_debate_groups sdg ON sdg.date = v.date AND sdg.agenda_item = v.agenda_item
-    WHERE v.term_id = 21 AND v.procedural = 0 AND v.vote_type != 'hammelsprung' AND v.agenda_item IS NOT NULL
-  `).run()
+    WHERE v.term_id = ? AND v.procedural = 0 AND v.vote_type != 'hammelsprung' AND v.agenda_item IS NOT NULL
+  `).run(CURRENT_TERM)
   db.prepare(`
     INSERT OR IGNORE INTO vote_debate_groups (vote_id, group_id, source, review_status)
     SELECT svl.vote_id, sdgs.group_id, CASE WHEN v.date = s.date THEN 'direct' ELSE 'related' END, 'unreviewed'
@@ -297,7 +335,7 @@ function materializeVoteDocumentRoles() {
     INNER JOIN vote_documents vd ON vd.vote_id = vdd.vote_id AND (vd.url = vdd.source_pdf_url OR vd.label = vdd.drucksache_id)
   `).run().changes
   const roleVotes = new Set((db.prepare("SELECT DISTINCT vote_id FROM vote_document_roles WHERE role IN ('primary_antrag', 'antrag')").all() as Array<{ vote_id: string }>).map((row) => row.vote_id))
-  const docs = db.prepare('SELECT id, vote_id, label, title, url FROM vote_documents ORDER BY vote_id, id').all() as DocumentRow[]
+  const docs = db.prepare('SELECT id, vote_id, label, title FROM vote_documents ORDER BY vote_id, id').all() as DocumentRow[]
   const byVote = new Map<string, DocumentRow[]>()
   const insert = db.prepare("INSERT OR IGNORE INTO vote_document_roles (vote_id, document_id, role, source, review_status) VALUES (?, ?, 'primary_antrag', 'title_prefix', 'unreviewed')")
   let inferred = 0

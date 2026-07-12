@@ -16,6 +16,11 @@ const inputClass = 'absolute inset-0 z-10 cursor-pointer appearance-none focus-v
 
 export function ThemePicker({ value, label, systemLabel, lightLabel, darkLabel, onChange }: Props) {
   const name = useId()
+  const options = [
+    { mode: 'system' as const, title: systemLabel, Icon: Monitor },
+    { mode: 'light' as const, title: lightLabel, Icon: Sun },
+    { mode: 'dark' as const, title: darkLabel, Icon: Moon },
+  ]
   return (
     <fieldset
       role="radiogroup"
@@ -24,18 +29,12 @@ export function ThemePicker({ value, label, systemLabel, lightLabel, darkLabel, 
       style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
     >
       <legend className="sr-only">{label}</legend>
-      <label className={`${optionClass} ${value === 'system' ? 'bg-surface opacity-100' : 'opacity-l'}`} title={systemLabel}>
-        <input className={inputClass} type="radio" name={name} value="system" checked={value === 'system'} onChange={() => onChange('system')} aria-label={systemLabel} />
-        <Monitor size={14} aria-hidden="true" />
-      </label>
-      <label className={`${optionClass} border-l border-fg/15 ${value === 'light' ? 'bg-surface opacity-100' : 'opacity-l'}`} title={lightLabel}>
-        <input className={inputClass} type="radio" name={name} value="light" checked={value === 'light'} onChange={() => onChange('light')} aria-label={lightLabel} />
-        <Sun size={14} aria-hidden="true" />
-      </label>
-      <label className={`${optionClass} border-l border-fg/15 ${value === 'dark' ? 'bg-surface opacity-100' : 'opacity-l'}`} title={darkLabel}>
-        <input className={inputClass} type="radio" name={name} value="dark" checked={value === 'dark'} onChange={() => onChange('dark')} aria-label={darkLabel} />
-        <Moon size={14} aria-hidden="true" />
-      </label>
+      {options.map(({ mode, title, Icon }, i) => (
+        <label key={mode} className={`${optionClass}${i ? ' border-l border-fg/15' : ''} ${value === mode ? 'bg-surface opacity-100' : 'opacity-l'}`} title={title}>
+          <input className={inputClass} type="radio" name={name} value={mode} checked={value === mode} onChange={() => onChange(mode)} aria-label={title} />
+          <Icon size={14} aria-hidden="true" />
+        </label>
+      ))}
     </fieldset>
   )
 }

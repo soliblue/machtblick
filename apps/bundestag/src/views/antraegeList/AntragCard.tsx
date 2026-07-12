@@ -5,6 +5,7 @@ import { isLaenderInitiative } from '@/lib/bundeslaender'
 import { motionStatusBucket } from '@/lib/motionStatus'
 import { PARTY_LOGO, partyLabel } from '@/lib/parties'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
+import { VerdictChip } from '@/components/VerdictChip'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
 
@@ -30,14 +31,7 @@ export function AntragCard({ antrag }: Props) {
         className="absolute inset-0"
         aria-label={[antrag.title, typeLabel, decided ? chipLabel : t.motionBuckets[bucket]].join(' · ')}
       />
-      {decided && (
-        <div
-          className="pointer-events-none absolute left-1/2 top-0 z-[1] flex h-[22px] -translate-x-1/2 -translate-y-1/2 items-center justify-center px-xl text-[11px] font-semibold uppercase leading-none text-white"
-          style={{ letterSpacing: '0.14em', textIndent: '0.14em', background: accepted ? 'var(--color-success)' : 'var(--color-danger)' }}
-        >
-          {chipLabel}
-        </div>
-      )}
+      {decided && <VerdictChip accepted={accepted}>{chipLabel}</VerdictChip>}
       <p className="flex min-w-0 items-center gap-s overflow-hidden text-s caption">
         <span className="min-w-0 truncate">
           {showLogo

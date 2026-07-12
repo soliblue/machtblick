@@ -1,12 +1,17 @@
 import type Database from 'better-sqlite3'
+import type { Locale } from '../src/lib/locale'
+import { hasPartyLine } from '../src/lib/parties'
 import { compareVotesNewest } from '../src/lib/voteOrdering'
+import { majorityChoice, type PartyMajority } from '../src/server/majorityChoice'
 import { resolvePictureUrl } from '../src/server/photoManifest'
+import { isRelatedDebate } from '../src/server/speechVoteSql'
+import { CURRENT_TERM } from '../src/server/term'
 import { requireVoteCleanTitle } from '../src/lib/voteTitles'
+import { partyAt, type AffiliationRow } from './affiliations'
 import {
   partySummaryTranslation,
   speechTranslation,
   voteTranslation,
-  type StaticLocale,
   type StaticTranslations,
 } from './translations'
 
@@ -68,16 +73,8 @@ type VoteMemberRow = {
   state: string
 }
 
-type AffiliationRow = {
-  member_id: string
-  party: string
-  valid_from: string
-  valid_to: string | null
-}
-
 export type VoteBuildData = {
   affiliationsByMember: Map<string, AffiliationRow[]>
-  seats: Map<string, number>
   translations: StaticTranslations
 }
 
@@ -101,14 +98,6 @@ type DescriptionDecisionRow = {
   source_pdf_url: string
 }
 
-const PARTY_LINE_EXCLUDED = new Set(['fraktionslos', 'Bundesregierung'])
-const CURRENT_TERM = 21
-
-function partyAt(affiliations: AffiliationRow[], date: string): string {
-  const hit = affiliations.find((a) => a.valid_from <= date && (a.valid_to === null || a.valid_to >= date))
-  return hit?.party ?? ''
-}
-
 export function loadVoteBuildData(db: Database.Database, translations: StaticTranslations): VoteBuildData {
   const affiliationsByMember = new Map<string, AffiliationRow[]>()
   for (const affiliation of db.prepare('SELECT member_id, party, valid_from, valid_to FROM member_affiliations').all() as AffiliationRow[]) {
@@ -116,10 +105,10 @@ export function loadVoteBuildData(db: Database.Database, translations: StaticTra
     rows.push(affiliation)
     affiliationsByMember.set(affiliation.member_id, rows)
   }
-  return { affiliationsByMember, seats: latestSeatsByParty(db), translations }
+  return { affiliationsByMember, translations }
 }
 
-export function leanVotes(db: Database.Database, locale: StaticLocale, data: VoteBuildData) {
+export function leanVotes(db: Database.Database, locale: Locale, data: VoteBuildData) {
   const rows = db.prepare(`
     SELECT id, date, title, clean_title, topic, summary_simplified, initiator, result, yes, no, abstain, absent, vote_type, bundestag_id
     FROM votes WHERE term_id = ${CURRENT_TERM} AND procedural = 0 AND is_petition_bundle = 0 AND vote_type != 'hammelsprung'
@@ -127,140 +116,90 @@ export function leanVotes(db: Database.Database, locale: StaticLocale, data: Vot
   `).all() as Array<Pick<VoteRow, 'id' | 'date' | 'title' | 'clean_title' | 'topic' | 'summary_simplified' | 'initiator' | 'result' | 'yes' | 'no' | 'abstain' | 'absent' | 'vote_type' | 'bundestag_id'>>
   rows.sort(compareVotesNewest)
   const allSummaries = db.prepare('SELECT vote_id, party, position, members, yes, no, abstain, absent FROM vote_party_summaries').all() as SummaryRow[]
-  const seatsByParty = new Map<string, number>()
   const byVote = new Map<string, SummaryRow[]>()
   for (const s of allSummaries) {
     const arr = byVote.get(s.vote_id) ?? []
     arr.push(s)
     byVote.set(s.vote_id, arr)
   }
-  for (const r of rows) {
-    if (r.vote_type !== 'namentlich') continue
-    for (const s of byVote.get(r.id) ?? []) {
-      if (s.members && !seatsByParty.has(s.party)) seatsByParty.set(s.party, s.members)
-    }
-    if (seatsByParty.size >= 6) break
-  }
   return rows.map((v) => {
     const translated = voteTranslation(data.translations, locale, v.id)
     const titled = requireVoteCleanTitle({ id: v.id, title: v.title, cleanTitle: translated?.clean_title ?? v.clean_title })
-    const summaries = byVote.get(v.id) ?? []
-    const partySummaries = summaries.map((s) =>
-      v.vote_type === 'namentlich'
-        ? { party: s.party, position: s.position, members: s.members ?? 0, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0 }
-        : {
-            party: s.party,
-            position: s.position,
-            members: data.seats.get(s.party) ?? 0,
-            yes: s.position === 'yes' ? data.seats.get(s.party) ?? 0 : 0,
-            no: s.position === 'no' ? data.seats.get(s.party) ?? 0 : 0,
-            abstain: s.position === 'abstain' ? data.seats.get(s.party) ?? 0 : 0,
-            absent: 0,
-          },
-    )
+    const partySummaries = (byVote.get(v.id) ?? []).map((s) => ({
+      party: s.party, position: s.position, members: s.members ?? 0, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0,
+    }))
     const base = {
       id: v.id, title: titled.title, cleanTitle: titled.cleanTitle, date: v.date,
       result: v.result, initiator: v.initiator,
       voteType: v.vote_type,
-      topic: translated ? translated.topic : v.topic,
-      summarySimplified: translated ? translated.summary_simplified : v.summary_simplified,
+      topic: translated?.topic ?? v.topic,
+      summarySimplified: translated?.summary_simplified ?? v.summary_simplified,
       partySummaries,
     }
     if (v.vote_type === 'namentlich' && v.yes != null) {
       return { ...base, yes: v.yes, no: v.no!, abstain: v.abstain!, absent: v.absent! }
     }
-    let yes = 0, no = 0, abstain = 0
-    for (const s of summaries) {
-      const seats = seatsByParty.get(s.party) ?? 0
-      if (s.position === 'yes') yes += seats
-      else if (s.position === 'no') no += seats
-      else if (s.position === 'abstain') abstain += seats
+    return {
+      ...base,
+      yes: partySummaries.reduce((a, s) => a + s.yes, 0),
+      no: partySummaries.reduce((a, s) => a + s.no, 0),
+      abstain: partySummaries.reduce((a, s) => a + s.abstain, 0),
+      absent: 0,
     }
-    return { ...base, yes, no, abstain, absent: 0 }
   })
 }
 
-export function fullVote(db: Database.Database, id: string, locale: StaticLocale, data: VoteBuildData) {
+export function fullVote(db: Database.Database, id: string, locale: Locale, data: VoteBuildData) {
   const voteRow = db.prepare('SELECT * FROM votes WHERE id = ?').get(id) as VoteRow
   const translatedVote = voteTranslation(data.translations, locale, id)
   const documents = db.prepare('SELECT * FROM vote_documents WHERE vote_id = ?').all(id) as DocumentRow[]
   const summaryRows = db.prepare('SELECT * FROM vote_party_summaries WHERE vote_id = ?').all(id) as SummaryRow[]
   const partySummaries = summaryRows.map((s) => {
     const translatedSummary = partySummaryTranslation(data.translations, locale, s.vote_id, s.party)
-    if (voteRow.vote_type === 'namentlich') {
-      return {
-        voteId: s.vote_id, party: s.party, position: s.position,
-        members: s.members ?? 0, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0,
-        positionSummary: translatedSummary?.position_summary ?? s.position_summary,
-        keyPoints: translatedSummary?.key_points ?? s.key_points,
-        dissentNote: translatedSummary?.dissent_note ?? s.dissent_note,
-      }
-    }
-    const m = data.seats.get(s.party) ?? 0
     return {
-      voteId: s.vote_id, party: s.party, position: s.position, members: m,
-      yes: s.position === 'yes' ? m : 0,
-      no: s.position === 'no' ? m : 0,
-      abstain: s.position === 'abstain' ? m : 0,
-      absent: 0,
+      voteId: s.vote_id, party: s.party, position: s.position,
+      members: s.members ?? 0, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0,
       positionSummary: translatedSummary?.position_summary ?? s.position_summary,
       keyPoints: translatedSummary?.key_points ?? s.key_points,
       dissentNote: translatedSummary?.dissent_note ?? s.dissent_note,
     }
   })
-  const vote = voteRow.vote_type === 'namentlich'
-    ? requireVoteCleanTitle({
-        id: voteRow.id, bundestagId: null as number | null, voteType: voteRow.vote_type, date: voteRow.date,
-        agendaItem: voteRow.agenda_item, title: voteRow.title, cleanTitle: translatedVote?.clean_title ?? voteRow.clean_title,
-        topic: translatedVote ? translatedVote.topic : voteRow.topic,
-        subject: translatedVote ? translatedVote.subject : voteRow.subject,
-        summary: translatedVote ? translatedVote.summary : voteRow.summary,
-        summarySimplified: translatedVote ? translatedVote.summary_simplified : voteRow.summary_simplified,
-        summaryDetail: translatedVote ? translatedVote.summary_detail : voteRow.summary_detail,
-        document: voteRow.document, initiator: voteRow.initiator,
-        result: voteRow.result, procedural: false, inverted: !!voteRow.inverted, isPetitionBundle: !!voteRow.is_petition_bundle,
-        totalMembers: voteRow.total_members ?? 0, yes: voteRow.yes ?? 0, no: voteRow.no ?? 0,
-        abstain: voteRow.abstain ?? 0, absent: voteRow.absent ?? 0, sourceUrl: voteRow.source_url,
-        contextJson: voteRow.context_json, procedureJson: voteRow.procedure_json, fetchedAt: '',
-      })
+  const counts = voteRow.vote_type === 'namentlich'
+    ? { totalMembers: voteRow.total_members ?? 0, yes: voteRow.yes ?? 0, no: voteRow.no ?? 0, abstain: voteRow.abstain ?? 0, absent: voteRow.absent ?? 0 }
     : (() => {
         const yes = partySummaries.reduce((a, s) => a + s.yes, 0)
         const no = partySummaries.reduce((a, s) => a + s.no, 0)
         const abstain = partySummaries.reduce((a, s) => a + s.abstain, 0)
-        return requireVoteCleanTitle({
-          id: voteRow.id, bundestagId: null as number | null, voteType: voteRow.vote_type, date: voteRow.date,
-          agendaItem: voteRow.agenda_item, title: voteRow.title, cleanTitle: translatedVote?.clean_title ?? voteRow.clean_title,
-          topic: translatedVote ? translatedVote.topic : voteRow.topic,
-          subject: translatedVote ? translatedVote.subject : voteRow.subject,
-          summary: translatedVote ? translatedVote.summary : voteRow.summary,
-          summarySimplified: translatedVote ? translatedVote.summary_simplified : voteRow.summary_simplified,
-          summaryDetail: translatedVote ? translatedVote.summary_detail : voteRow.summary_detail,
-          document: voteRow.document, initiator: voteRow.initiator,
-          result: voteRow.result, procedural: false, inverted: !!voteRow.inverted, isPetitionBundle: !!voteRow.is_petition_bundle,
-          totalMembers: yes + no + abstain, yes, no, abstain, absent: 0, sourceUrl: voteRow.source_url,
-          contextJson: voteRow.context_json, procedureJson: voteRow.procedure_json, fetchedAt: '',
-        })
+        return { totalMembers: yes + no + abstain, yes, no, abstain, absent: 0 }
       })()
+  const vote = requireVoteCleanTitle({
+    id: voteRow.id, bundestagId: null as number | null, voteType: voteRow.vote_type, date: voteRow.date,
+    agendaItem: voteRow.agenda_item, title: voteRow.title, cleanTitle: translatedVote?.clean_title ?? voteRow.clean_title,
+    topic: translatedVote?.topic ?? voteRow.topic,
+    subject: translatedVote?.subject ?? voteRow.subject,
+    summary: translatedVote?.summary ?? voteRow.summary,
+    summarySimplified: translatedVote?.summary_simplified ?? voteRow.summary_simplified,
+    summaryDetail: translatedVote?.summary_detail ?? voteRow.summary_detail,
+    document: voteRow.document, initiator: voteRow.initiator,
+    result: voteRow.result, procedural: false, inverted: !!voteRow.inverted, isPetitionBundle: !!voteRow.is_petition_bundle,
+    ...counts, sourceUrl: voteRow.source_url,
+    contextJson: voteRow.context_json, procedureJson: voteRow.procedure_json, fetchedAt: '',
+  })
   const rawVmRows = db.prepare(`
     SELECT vm.member_id, vm.choice, m.name, m.picture_url, vm.state
     FROM vote_members vm
     INNER JOIN members m ON m.id = vm.member_id
     WHERE vm.vote_id = ?
   `).all(id) as VoteMemberRow[]
-  const vmRows = rawVmRows.map((r) => ({ ...r, party: partyAt(data.affiliationsByMember.get(r.member_id) ?? [], voteRow.date) }))
-  const majorityByParty = new Map<string, string>()
+  const vmRows = rawVmRows.map((r) => ({ ...r, party: partyAt(data.affiliationsByMember.get(r.member_id), voteRow.date) }))
+  const majorityByParty = new Map<string, PartyMajority>()
   for (const s of partySummaries) {
-    const choices = [
-      ['ja', s.yes],
-      ['nein', s.no],
-      ['enthalten', s.abstain],
-      ['nicht_abgegeben', s.absent],
-    ] as const
-    majorityByParty.set(s.party, choices.reduce((a, b) => (b[1] > a[1] ? b : a))[0])
+    const maj = majorityChoice(s)
+    if (maj) majorityByParty.set(s.party, maj)
   }
   const defectorsByParty = new Map<string, Array<{ id: string; name: string; choice: string; pictureUrl: string | null }>>()
   for (const r of vmRows) {
-    if (PARTY_LINE_EXCLUDED.has(r.party) || !r.party) continue
+    if (!hasPartyLine(r.party)) continue
     const maj = majorityByParty.get(r.party)
     if (!maj || r.choice === maj || r.choice === 'nicht_abgegeben') continue
     const arr = defectorsByParty.get(r.party) ?? []
@@ -300,7 +239,7 @@ export function fullVote(db: Database.Database, id: string, locale: StaticLocale
     position: r.position,
     excerpt: speechTranslation(data.translations, locale, r.id)?.text_excerpt ?? r.text_excerpt,
   }))
-  const debateSource = speechRows.some((r) => r.debate_source === 'related' || r.date !== voteRow.date) ? 'related' : 'direct'
+  const debateSource = speechRows.some((r) => isRelatedDebate(r, voteRow.date)) ? 'related' : 'direct'
   const descRow = db.prepare('SELECT source_pdf_url FROM vote_description_decisions WHERE vote_id = ?').get(id) as DescriptionDecisionRow | undefined
   const antragPdfUrl = descRow?.source_pdf_url
     ?? (db.prepare(`
@@ -336,15 +275,3 @@ export function fullVote(db: Database.Database, id: string, locale: StaticLocale
   }
 }
 
-export function latestSeatsByParty(db: Database.Database): Map<string, number> {
-  const out = new Map<string, number>()
-  const namentlich = db.prepare(`
-    SELECT id FROM votes WHERE term_id = ${CURRENT_TERM} AND vote_type = 'namentlich' ORDER BY date DESC LIMIT 20
-  `).all() as Array<{ id: string }>
-  for (const v of namentlich) {
-    const rows = db.prepare('SELECT party, members FROM vote_party_summaries WHERE vote_id = ?').all(v.id) as Array<{ party: string; members: number | null }>
-    for (const r of rows) if (r.members && !out.has(r.party)) out.set(r.party, r.members)
-    if (out.size >= 6) break
-  }
-  return out
-}

@@ -1,13 +1,11 @@
 import { sql } from 'drizzle-orm'
 import { db } from '@machtblick/db/client'
 import { members } from '@machtblick/db/schema'
+import { HONORIFICS, NAME_PARTICLES } from '../_shared/names.ts'
 
 const UA = 'machtblick-bundestag/0.1 (https://github.com/soliblue/machtblick; hello@machtblick.de)'
 const SPARQL = 'https://query.wikidata.org/sparql'
 const COMMONS_API = 'https://commons.wikimedia.org/w/api.php'
-
-const HONORIFICS = new Set(['dr', 'prof', 'med', 'hc', 'h', 'c', 'dent', 'rer', 'nat', 'phil', 'jur', 'ing', 'mult', 'habil', 'mag', 'lic', 'theol', 'dipl', 'pol'])
-const NAME_PARTICLES = new Set(['von', 'van', 'de', 'der', 'den', 'dos', 'da', 'di', 'du', 'le', 'la', 'zu', 'auf', 'freiherr', 'graf', 'edler', 'edle', 'baron', 'baronin'])
 
 const query = `
 SELECT ?item ?itemLabel ?image ?btMdbId ?firstName ?lastName WHERE {

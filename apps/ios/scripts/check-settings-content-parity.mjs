@@ -183,7 +183,12 @@ const nativeTokens = (source) =>
     .sort((a, b) => a.index - b.index)
     .map(({ token }) => token)
 const localizedSegments = (path) => {
-  const source = read(path)
+  const raw = read(path)
+  const source = [...raw.matchAll(/private static let (\w+) = URL\(string: "([^"]*)"\)!/g)].reduce(
+    (text, [, name, url]) =>
+      text.replace(new RegExp(`\\burl: ${name}\\b`, "g"), `url: URL(string: "${url}")!`),
+    raw,
+  )
   const german = source.indexOf("private static let german")
   const english = source.indexOf("private static let english")
   if (german < 0 || english < 0 || german > english) {

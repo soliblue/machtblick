@@ -7,6 +7,8 @@ import type { VoteChoice } from '@/views/votesList/VoteDistributionDonut'
 import { VoteHemicycle } from '@/views/votesList/VoteHemicycle'
 import { deriveStamps } from '@/views/votesList/deriveStamps'
 import { PartyDonutGrid } from '@/views/voteDetail/PartyDonutGrid'
+import { KickerChip } from '@/components/KickerChip'
+import { VerdictChip } from '@/components/VerdictChip'
 
 type Props = {
   vote: AntragLinkedVote
@@ -25,26 +27,13 @@ export function AntragVoteResult({ vote }: Props) {
       className="relative mb-m overflow-hidden rounded-m border border-fg/15 bg-background p-l"
       style={{ borderTop: `3px solid ${accepted ? 'var(--color-success)' : 'var(--color-danger)'}` }}
     >
-      <div
-        className="pointer-events-none absolute left-1/2 top-0 z-[1] flex h-[22px] -translate-x-1/2 -translate-y-1/2 items-center justify-center px-xl text-[11px] font-semibold uppercase leading-none text-white"
-        style={{ letterSpacing: '0.14em', textIndent: '0.14em', background: accepted ? 'var(--color-success)' : 'var(--color-danger)' }}
-      >
-        {accepted ? t.accepted : t.rejected}
-      </div>
+      <VerdictChip accepted={accepted}>{accepted ? t.accepted : t.rejected}</VerdictChip>
       <div className="mt-s flex flex-wrap items-center gap-s">
         <span className="text-s caption opacity-l">
           {formatDateShort(vote.date, locale)} · {vote.voteType === 'namentlich' ? t.namedVote : vote.voteType === 'handzeichen' ? t.showOfHands : t.division}
         </span>
         <span className="ml-auto flex flex-wrap gap-s">
-          {kickerStamps.map((stamp) => (
-            <span
-              key={stamp}
-              className="inline-flex h-[20px] items-center rounded-m border border-fg/40 px-s text-[11px] font-semibold uppercase leading-none"
-              style={{ letterSpacing: '0.14em' }}
-            >
-              {t.stampClose[stamp]}
-            </span>
-          ))}
+          {kickerStamps.map((stamp) => <KickerChip key={stamp}>{t.stampClose[stamp]}</KickerChip>)}
         </span>
       </div>
       <a href={withLocale(`/votes/${vote.id}/`, locale)} className="mt-m block text-l font-semibold underline-offset-4 hover:underline">

@@ -1,4 +1,4 @@
-import type { Ref } from 'react'
+import { memo, type Ref } from 'react'
 import type { VoteListItem } from '@/server/votes'
 import { useLocale } from '@/lib/i18n'
 import { partyLabel } from '@/lib/parties'
@@ -10,7 +10,7 @@ type Props = {
   highlight?: { party: string; color: string; targetRef?: Ref<HTMLDivElement> }
 }
 
-export function PartyDonutRow({ partySummaries, highlight }: Props) {
+export const PartyDonutRow = memo(function PartyDonutRow({ partySummaries, highlight }: Props) {
   const locale = useLocale()
   const parties = partiesByJaShare(partySummaries)
   return (
@@ -40,4 +40,4 @@ export function PartyDonutRow({ partySummaries, highlight }: Props) {
       })}
     </div>
   )
-}
+})

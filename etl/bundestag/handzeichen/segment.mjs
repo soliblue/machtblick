@@ -1,5 +1,5 @@
 import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises'
-import { join, basename } from 'node:path'
+import { join } from 'node:path'
 
 const RAW = new URL('./raw/', import.meta.url).pathname
 const OUT = new URL('./blocks/', import.meta.url).pathname

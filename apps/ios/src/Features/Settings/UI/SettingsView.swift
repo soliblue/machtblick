@@ -73,7 +73,7 @@ struct SettingsView: View {
                             Text(Copy.lastRefresh)
                                 .font(.system(size: ThemeTokens.Text.m))
                             Text(
-                                cache.fetchedAt(appLanguage.resolved.dataPath("/api/votes.json"))
+                                cache.fetchedAt(appLanguage.resolved.dataPath(Endpoints.votes))
                                     .map(Formatters.dateTime) ?? Copy.never
                             )
                             .font(.system(size: ThemeTokens.Text.m))
@@ -85,7 +85,7 @@ struct SettingsView: View {
                     .accessibilityElement(children: .combine)
                     MoreDivider()
                     ShareLink(
-                        item: URL(string: "https://testflight.apple.com/join/r7RVrgtr")!,
+                        item: URL(string: "https://apps.apple.com/us/app/machtblick/id6787755187")!,
                         subject: Text(Copy.shareMachtblick), message: Text(Copy.shareMessage)
                     ) {
                         HStack(spacing: ThemeTokens.Spacing.m) {

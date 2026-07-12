@@ -7,5 +7,5 @@ export const Route = createFileRoute('/parties/$id/')({
 
 function PartyRoute() {
   const data = useLoaderData({ from: '/parties/$id' })
-  return <PartyDetailShell data={data.detail} history={data.history} />
+  return data ? <PartyDetailShell data={data.detail} history={data.history} /> : null
 }

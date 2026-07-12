@@ -1,4 +1,4 @@
-import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/utils'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
 import { hasPartyLine, PARTY_COLOR, PARTY_LOGO, PARTY_SLUG, partyLabel } from '@/lib/parties'
@@ -35,15 +35,21 @@ export function PartyBadge({ party, compact = false, logoSize = 20 }: Props) {
     ) : logo
   }
   const badge = (
-    <Badge
-      className="border-transparent"
+    <span
+      data-slot="badge"
+      data-variant="default"
+      className={cn(
+        'inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden border border-transparent px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg]:size-3',
+        'bg-primary text-primary-foreground [a&]:hover:bg-primary/90',
+        'border-transparent',
+      )}
       style={{
         background: `color-mix(in oklab, ${color} 18%, transparent)`,
         color,
       }}
     >
       {partyLabel(party, locale)}
-    </Badge>
+    </span>
   )
   return slug ? (
     <a

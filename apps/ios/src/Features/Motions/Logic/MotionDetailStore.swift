@@ -8,7 +8,7 @@ final class MotionDetailStore {
 
     func load(id: Int, cache: ApiCache) async {
         loadFailed = false
-        let path = AppLocale.current.dataPath("/motions/\(id).json")
+        let path = AppLocale.current.dataPath(Endpoints.motion(id))
         if detail == nil, let cached: MotionDetailPayload = cache.cached(path) {
             detail = cached
         }

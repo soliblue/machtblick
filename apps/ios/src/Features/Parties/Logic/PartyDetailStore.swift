@@ -10,9 +10,9 @@ final class PartyDetailStore {
 
     func load(slug: String, cache: ApiCache) async {
         loadFailed = false
-        let path = AppLocale.current.dataPath("/parties/\(slug).json")
-        let membersPath = AppLocale.current.dataPath("/api/members.json")
-        if let parties: [PartyListItem] = cache.cached(AppLocale.current.dataPath("/api/parties.json")) {
+        let path = AppLocale.current.dataPath(Endpoints.party(slug))
+        let membersPath = AppLocale.current.dataPath(Endpoints.members)
+        if let parties: [PartyListItem] = cache.cached(AppLocale.current.dataPath(Endpoints.parties)) {
             lean = parties.first { $0.slug == slug }
         }
         if members.isEmpty, let cached: [MemberListItem] = cache.cached(membersPath) {

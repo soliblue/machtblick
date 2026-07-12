@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
-import type { MandateType, MemberListItem, MemberSex } from '@/server/members'
-import { AGE_BUCKETS, ageBucketFor, isAgeBucket, isMandateType, isSex, type AgeBucket } from '@/lib/ageBuckets'
+import type { MemberListItem } from '@/server/members'
+import { AGE_BUCKETS, ageBucketFor, isMandateType, isSex, type AgeBucket, type MandateType, type MemberSex } from '@/lib/memberFacets'
+import { distinctSorted } from '@/lib/distinctSorted'
 
 export type MemberSortKey = 'name' | 'attendance' | 'loyalty'
 export type SortDir = 'asc' | 'desc'
@@ -12,20 +13,18 @@ export function useMemberListFilters(
   sex: MemberSex | null,
   ageBucket: AgeBucket | null,
   mandateType: MandateType | null,
-  query: string = '',
+  query: string,
 ) {
   const [sortKey, setSortKey] = useState<MemberSortKey>('name')
   const [sortDir, setSortDir] = useState<SortDir>('asc')
-  const availableParties = useMemo(() => {
-    const set = new Set<string>()
-    for (const m of members) if (m.party) set.add(m.party)
-    return Array.from(set).sort()
-  }, [members])
-  const availableStates = useMemo(() => {
-    const set = new Set<string>()
-    for (const m of members) if (m.state) set.add(m.state)
-    return Array.from(set).sort((a, b) => a.localeCompare(b, 'de'))
-  }, [members])
+  const availableParties = useMemo(
+    () => distinctSorted(members.map((m) => m.party).filter((p): p is string => Boolean(p))),
+    [members],
+  )
+  const availableStates = useMemo(
+    () => distinctSorted(members.map((m) => m.state).filter((s): s is string => Boolean(s)), 'de'),
+    [members],
+  )
   const availableSexes = useMemo(() => {
     const set = new Set<MemberSex>()
     for (const m of members) if (isSex(m.sex)) set.add(m.sex)
@@ -51,7 +50,7 @@ export function useMemberListFilters(
       if (party && m.party !== party) return false
       if (state && m.state !== state) return false
       if (sex && m.sex !== sex) return false
-      if (ageBucket && (!isAgeBucket(ageBucket) || ageBucketFor(m.yearOfBirth) !== ageBucket)) return false
+      if (ageBucket && ageBucketFor(m.yearOfBirth) !== ageBucket) return false
       if (mandateType && m.mandateType !== mandateType) return false
       return true
     })

@@ -59,30 +59,29 @@ export const getVoteSponsors = createServerFn({ method: 'GET' })
       .where(inArray(antragSignatories.antragId, antragIds))
       .all()
     const affByMember = loadAffiliationsByMember()
-    type Row = (typeof sigRows)[number]
-    const byAntrag = new Map<number, Row[]>()
+    const byAntrag = new Map<number, typeof sigRows>()
     for (const r of sigRows) {
       const arr = byAntrag.get(r.antragId) ?? []
       arr.push(r)
       byAntrag.set(r.antragId, arr)
     }
-    const result: VoteSponsorAntrag[] = antragRows.map((a) => {
-      const rows = (byAntrag.get(a.id) ?? []).sort(
-        (x, y) => x.lastName.localeCompare(y.lastName, 'de') || x.firstName.localeCompare(y.firstName, 'de'),
-      )
-      const signatories: VoteSponsorMember[] = rows.map((r) => ({
-        memberId: r.memberId,
-        displayName: `${r.firstName} ${r.lastName}`,
-        partyAtDate: partyAt(affByMember.get(r.memberId), vote.date) || null,
-        portraitUrl: resolvePictureUrl(r.memberId, r.pictureUrl),
-      }))
-      return {
-        antragId: a.id,
-        type: a.type,
-        title: a.title,
-        drucksache: a.drucksache,
-        signatories,
-      }
-    })
-    return { antraege: result }
+    return {
+      antraege: antragRows.map((a) => {
+        const rows = (byAntrag.get(a.id) ?? []).sort(
+          (x, y) => x.lastName.localeCompare(y.lastName, 'de') || x.firstName.localeCompare(y.firstName, 'de'),
+        )
+        return {
+          antragId: a.id,
+          type: a.type,
+          title: a.title,
+          drucksache: a.drucksache,
+          signatories: rows.map((r) => ({
+            memberId: r.memberId,
+            displayName: `${r.firstName} ${r.lastName}`,
+            partyAtDate: partyAt(affByMember.get(r.memberId), vote.date) || null,
+            portraitUrl: resolvePictureUrl(r.memberId, r.pictureUrl),
+          })),
+        }
+      }),
+    }
   })

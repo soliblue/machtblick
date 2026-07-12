@@ -5,7 +5,6 @@ import { useCopy, useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
 
 type Props = { party: PartyListItem; totalSeats: number }
-const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 
 export function PartyCard({ party, totalSeats }: Props) {
   const t = useCopy()
@@ -16,7 +15,7 @@ export function PartyCard({ party, totalSeats }: Props) {
     <a
       href={withLocale(`/parties/${party.slug}/`, locale)}
       className="grid grid-cols-[120px_1px_minmax(0,1fr)] gap-m border-b py-m transition-opacity hover:opacity-80"
-      style={{ borderColor: ROW_BORDER }}
+      style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
       aria-label={`${label}, ${party.seats} ${t.seats}, ${isGoverning(party.party) ? t.government : t.opposition}, ${t.cohesion} ${pct(party.cohesion)}, ${t.attendance} ${pct(party.attendance)}`}
     >
       <div className="min-w-0">

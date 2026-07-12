@@ -1,16 +1,12 @@
 import { sql } from 'drizzle-orm'
 import { db } from '@machtblick/db/client'
 import { members, memberAbgeordnetenwatch } from '@machtblick/db/schema'
+import { HONORIFICS, NAME_PARTICLES } from '../_shared/names.ts'
+import { AW_API, AW_UA, awJson, awText, sleep } from '../_shared/awClient.ts'
 
-const UA = 'machtblick-bundestag/0.1 (https://github.com/soliblue/machtblick; hello@machtblick.de)'
-const AW = 'https://www.abgeordnetenwatch.de/api/v2'
 const WP21 = 161
 const CONCURRENCY = 2
 const DELAY_MS = 600
-const MAX_RETRIES = 8
-
-const HONORIFICS = new Set(['dr', 'prof', 'med', 'hc', 'h', 'c', 'dent', 'rer', 'nat', 'phil', 'jur', 'ing', 'mult', 'habil', 'mag', 'lic', 'theol', 'dipl', 'pol'])
-const NAME_PARTICLES = new Set(['von', 'van', 'de', 'der', 'den', 'dos', 'da', 'di', 'du', 'le', 'la', 'zu', 'auf', 'freiherr', 'graf', 'edler', 'edle', 'baron', 'baronin'])
 
 type Mandate = {
   id: number
@@ -32,8 +28,8 @@ const mandates: Mandate[] = []
 let rangeStart = 0
 const pageSize = 200
 while (true) {
-  const url = `${AW}/candidacies-mandates?parliament_period=${WP21}&type=mandate&range_start=${rangeStart}&range_end=${rangeStart + pageSize}`
-  const res = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/json' } })
+  const url = `${AW_API}/candidacies-mandates?parliament_period=${WP21}&type=mandate&range_start=${rangeStart}&range_end=${rangeStart + pageSize}`
+  const res = await fetch(url, { headers: { 'User-Agent': AW_UA, Accept: 'application/json' } })
   if (!res.ok) throw new Error(`AW list ${res.status}: ${await res.text()}`)
   const json = (await res.json()) as AwListResponse
   mandates.push(...json.data)
@@ -67,10 +63,10 @@ let processed = 0
 await pool(todo, CONCURRENCY, async (m) => {
   const pid = m.politician.id
   const slug = m.politician.abgeordnetenwatch_url.split('/').pop() ?? ''
-  const pJson = await fetchJson<AwSingleResponse>(`${AW}/politicians/${pid}`)
+  const pJson = await awJson<AwSingleResponse>(`${AW_API}/politicians/${pid}`)
   const pol = pJson.data
   await sleep(DELAY_MS)
-  const html = await fetchText(`https://www.abgeordnetenwatch.de/profile/${slug}`)
+  const html = await awText(`https://www.abgeordnetenwatch.de/profile/${slug}`)
   const pictureUrl = scrapePicture(html)
   await sleep(DELAY_MS)
   const member = matchMember(pol)
@@ -132,30 +128,6 @@ function scrapePicture(html: string): string | null {
   return `https://www.abgeordnetenwatch.de/${path}`
 }
 
-async function fetchWithRetry(url: string, headers: Record<string, string>): Promise<Response | null> {
-  for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
-    const res = await fetch(url, { headers }).catch((e: Error) => ({ ok: false, status: 0, text: async () => e.message } as unknown as Response))
-    if (res.ok) return res
-    if (res.status === 404) return null
-    const wait = Math.min(60000, 1500 * Math.pow(2, attempt))
-    console.log(`  ${res.status} on ${url}, backing off ${wait}ms`)
-    await sleep(wait)
-  }
-  throw new Error(`fetch ${url} exhausted retries`)
-}
-
-async function fetchJson<T>(url: string): Promise<T> {
-  const res = await fetchWithRetry(url, { 'User-Agent': UA, Accept: 'application/json' })
-  if (!res) throw new Error(`fetch ${url} 404`)
-  return (await res.json()) as T
-}
-
-async function fetchText(url: string): Promise<string> {
-  const res = await fetchWithRetry(url, { 'User-Agent': UA })
-  if (!res) return ''
-  return await res.text()
-}
-
 async function pool<T>(items: T[], n: number, fn: (item: T) => Promise<void>) {
   let i = 0
   const workers = Array.from({ length: n }, async () => {
@@ -165,10 +137,6 @@ async function pool<T>(items: T[], n: number, fn: (item: T) => Promise<void>) {
     }
   })
   await Promise.all(workers)
-}
-
-function sleep(ms: number) {
-  return new Promise((r) => setTimeout(r, ms))
 }
 
 function firstToken(s: string) {

@@ -3,14 +3,14 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { StampFilter } from '@/views/votesList/StampFilter'
 import { Nav } from '@/views/nav/Nav'
-import { TestFlightPrompt } from '@/views/nav/TestFlightPrompt'
+import { AppStorePrompt } from '@/views/nav/AppStorePrompt'
 import { Footer } from '@/views/nav/Footer'
 import globalsCss from '../styles/globals.css?url'
 import { seoMeta, SITE_IMAGE, SITE_NAME, SITE_URL } from '@/lib/seo'
 import { copy, LocaleProvider } from '@/lib/i18n'
 import { localeFromPath } from '@/lib/locale'
 import { NotFoundPage } from '@/views/notFound/NotFoundPage'
-import { useTestFlightPrompt } from '@/hooks/useTestFlightPrompt'
+import { useAppStorePrompt } from '@/hooks/useAppStorePrompt'
 import { useTheme } from '@/hooks/useTheme'
 
 const queryClient = new QueryClient()
@@ -30,6 +30,7 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: 'preconnect', href: 'https://www.abgeordnetenwatch.de' },
+      { rel: 'preload', href: '/fonts/fraunces-latin-600-normal.woff2', as: 'font', type: 'font/woff2', crossOrigin: 'anonymous' },
       { rel: 'stylesheet', href: globalsCss },
       { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
       { rel: 'icon', href: '/favicon.svg', type: 'image/svg+xml' },
@@ -148,7 +149,7 @@ function RootComponent() {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
   const locale = localeFromPath(pathname)
   const t = copy[locale]
-  const testFlightPrompt = useTestFlightPrompt()
+  const appStorePrompt = useAppStorePrompt()
   const theme = useTheme()
   return (
     <html lang={locale} prefix="og: https://ogp.me/ns#" suppressHydrationWarning>
@@ -161,14 +162,14 @@ function RootComponent() {
             <TooltipProvider delayDuration={200}>
               <StampFilter />
               <Nav theme={theme.theme} onThemeChange={theme.selectTheme} />
-              <TestFlightPrompt
-                visible={testFlightPrompt.visible}
-                title={t.testFlightPromptTitle}
-                description={t.testFlightPromptDescription}
-                actionLabel={t.testFlightPromptAction}
-                dismissLabel={t.testFlightPromptDismiss}
-                closeLabel={t.testFlightPromptClose}
-                onDismiss={testFlightPrompt.dismiss}
+              <AppStorePrompt
+                visible={appStorePrompt.visible}
+                title={t.appStorePromptTitle}
+                description={t.appStorePromptDescription}
+                actionLabel={t.appStorePromptAction}
+                dismissLabel={t.appStorePromptDismiss}
+                closeLabel={t.appStorePromptClose}
+                onDismiss={appStorePrompt.dismiss}
               />
               <Outlet />
               <Footer />

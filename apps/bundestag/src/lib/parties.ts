@@ -66,6 +66,14 @@ export const SLUG_TO_PARTY: Record<string, string> = Object.fromEntries(
   Object.entries(PARTY_SLUG).map(([k, v]) => [v, k]),
 )
 
+export const DONATION_PARTY_NAMES: Record<string, string[]> = {
+  'CDU/CSU': ['CDU', 'CSU'],
+  SPD: ['SPD'],
+  AfD: ['AfD'],
+  'B90/Grüne': ['B90/Grüne'],
+  'Die Linke': ['Die Linke'],
+}
+
 const GOVERNING_PARTIES = ['CDU/CSU', 'SPD']
 
 export const isGoverning = (party: string) => GOVERNING_PARTIES.includes(party)

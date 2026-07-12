@@ -8,7 +8,7 @@ final class MemberDetailStore {
 
     func load(id: String, cache: ApiCache) async {
         loadFailed = false
-        let path = AppLocale.current.dataPath("/members/\(id).json")
+        let path = AppLocale.current.dataPath(Endpoints.member(id))
         if detail == nil, let cached: MemberDetailPayload = cache.cached(path) {
             detail = cached
         }

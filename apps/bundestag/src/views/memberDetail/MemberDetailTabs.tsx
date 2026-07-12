@@ -1,5 +1,9 @@
-import { Link } from '../../lib/Link'
+import { Link as TanStackLink } from '@tanstack/react-router'
 import { useCopy, useLocale } from '@/lib/i18n'
+
+const Link = ((props: Parameters<typeof TanStackLink>[0]) => (
+  <TanStackLink reloadDocument {...props} />
+)) as typeof TanStackLink
 
 type Props = {
   memberId: string
@@ -8,8 +12,8 @@ type Props = {
 }
 
 const TABS = [
-  { to: '/members/$id/votes/', enTo: '/en/members/$id/votes/', label: 'Abstimmungen', count: 'votes' },
-  { to: '/members/$id/speeches/', enTo: '/en/members/$id/speeches/', label: 'Reden', count: 'speeches' },
+  { to: '/members/$id/votes/', enTo: '/en/members/$id/votes/', count: 'votes' },
+  { to: '/members/$id/speeches/', enTo: '/en/members/$id/speeches/', count: 'speeches' },
 ] as const
 
 export function MemberDetailTabs({ memberId, votes, speeches }: Props) {
@@ -17,14 +21,10 @@ export function MemberDetailTabs({ memberId, votes, speeches }: Props) {
   const t = useCopy()
   const counts = { votes, speeches }
   const tabs = TABS
-    .filter((tab) => locale === 'de' || tab.enTo)
     .filter((tab) => counts[tab.count] > 0)
     .map((tab) => ({
-      ...tab,
-      to: locale === 'en' && tab.enTo ? tab.enTo : tab.to,
-      label:
-        tab.to === '/members/$id/votes/' ? t.votes
-        : t.speeches,
+      to: locale === 'en' ? tab.enTo : tab.to,
+      label: tab.count === 'votes' ? t.votes : t.speeches,
     }))
   return tabs.length > 0 ? (
     <nav

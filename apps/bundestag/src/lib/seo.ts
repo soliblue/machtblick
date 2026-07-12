@@ -43,11 +43,7 @@ export function seoMeta({ title, description, canonical, type = 'website', image
   ]
 }
 
-type CanonicalLinkOptions = {
-  englishAlternate?: boolean
-}
-
-export function canonicalLink(path: string, options: CanonicalLinkOptions = {}) {
+export function canonicalLink(path: string) {
   const canonical = pagePath(path)
   const base = canonical === '/en/' ? '/' : canonical.startsWith('/en/') ? canonical.slice(3) : canonical
   const english = base === '/' ? '/en/' : `/en${base}`
@@ -55,13 +51,13 @@ export function canonicalLink(path: string, options: CanonicalLinkOptions = {}) 
   return [
     { rel: 'canonical', href: `${SITE_URL}${canonical}` },
     { rel: 'alternate', [hreflang]: 'de', href: `${SITE_URL}${base}` },
-    ...(options.englishAlternate ?? true ? [{ rel: 'alternate', [hreflang]: 'en', href: `${SITE_URL}${english}` }] : []),
+    { rel: 'alternate', [hreflang]: 'en', href: `${SITE_URL}${english}` },
     { rel: 'alternate', [hreflang]: 'x-default', href: `${SITE_URL}${base}` },
   ]
 }
 
 export function jsonLd(data: object) {
-  return [{ type: 'application/ld+json', children: JSON.stringify(data) }]
+  return [{ type: 'application/ld+json', children: JSON.stringify(data).replace(/</g, '\\u003c') }]
 }
 
 export function plainDescription(text: string, max = 160) {

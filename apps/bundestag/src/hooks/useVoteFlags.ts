@@ -17,10 +17,6 @@ const listeners = new Set<() => void>()
 let snapshot = emptySnapshot
 let initialized = false
 
-export function isVoteFlagFilter(value: unknown): value is VoteFlagFilter {
-  return typeof value === 'string' && (VOTE_FLAG_FILTERS as readonly string[]).includes(value)
-}
-
 function readIds(key: string) {
   return new Set(JSON.parse(window.localStorage.getItem(key) ?? '[]') as string[])
 }

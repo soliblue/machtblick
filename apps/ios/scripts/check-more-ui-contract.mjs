@@ -8,7 +8,7 @@ const tabs = read("apps/ios/src/RootTabView.swift")
 const app = read("apps/ios/src/MachtblickApp.swift")
 const settings = read("apps/ios/src/Features/Settings/UI/SettingsView.swift")
 const footer = read("apps/bundestag/src/views/nav/Footer.tsx")
-const webCopy = read("apps/bundestag/src/lib/i18n.tsx")
+const webCopy = read("apps/bundestag/src/lib/copy/de.ts") + read("apps/bundestag/src/lib/copy/en.ts")
 const strings = read("apps/ios/src/Localizable.xcstrings")
 const pickerRow = read("apps/ios/src/Features/Settings/UI/MorePickerRow.swift")
 const theme = read("apps/ios/src/Core/Theme/AppTheme.swift")
@@ -64,7 +64,7 @@ requireFragments(footer, "Footer.tsx", [
   'rel="noreferrer"',
   "{t.sourceCode}",
 ])
-requireFragments(webCopy, "i18n.tsx", [
+requireFragments(webCopy, "lib/copy", [
   "aboutData: 'Daten'",
   "sourceCode: 'Code'",
   "aboutData: 'Data'",

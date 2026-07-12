@@ -1,5 +1,5 @@
 import type { MemberStats } from '@/hooks/useMemberStats'
-import type { AgeBucket } from '@/lib/ageBuckets'
+import type { AgeBucket } from '@/lib/memberFacets'
 import { PieDonut } from './PieDonut'
 
 type Props = { data: MemberStats['age'] }

@@ -1,7 +1,6 @@
-import { existsSync } from 'node:fs'
-import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
+import { argValue, findDbPath, normalizeDashes } from '../../_shared/worker.mjs'
 import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
 import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
 import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
@@ -71,24 +70,6 @@ const workers = Array.from({ length: Math.min(concurrency, selected.length) }, a
 await Promise.all(workers)
 db.close()
 
-function argValue(name) {
-  const i = process.argv.indexOf(name)
-  return i >= 0 ? process.argv[i + 1] : null
-}
-
-function findDbPath() {
-  const sourceAdjacent = fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url))
-  if (existsSync(sourceAdjacent)) return sourceAdjacent
-  let dir = process.cwd()
-  while (true) {
-    const candidate = join(dir, 'db', 'machtblick.sqlite')
-    if (existsSync(candidate)) return candidate
-    const parent = dirname(dir)
-    if (parent === dir) return sourceAdjacent
-    dir = parent
-  }
-}
-
 function ensureSchema() {
   const columns = db.prepare('PRAGMA table_info(vote_party_summaries)').all().map((c) => c.name)
   if (!columns.includes('position_summary')) db.prepare('ALTER TABLE vote_party_summaries ADD COLUMN position_summary text').run()
@@ -145,9 +126,9 @@ function filterSpeeches(rows) {
 }
 
 function writeSummary({ row, speeches }, output) {
-  const summary = cleanText(output.position_summary)
-  const points = output.key_points.map(cleanText).filter(Boolean).map((p) => `- ${p}`).join('\n')
-  const dissent = output.dissent_note ? cleanText(output.dissent_note) : null
+  const summary = normalizeDashes(output.position_summary)
+  const points = output.key_points.map(normalizeDashes).filter(Boolean).map((p) => `- ${p}`).join('\n')
+  const dissent = output.dissent_note ? normalizeDashes(output.dissent_note) : null
   if (!summary) throw new Error(`empty summary for ${row.vote_id} ${row.party}`)
   db.prepare(`
     UPDATE vote_party_summaries
@@ -166,9 +147,3 @@ function writeSummary({ row, speeches }, output) {
   `).run(row.vote_id, row.party, JSON.stringify(speeches.map((s) => s.id)), PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT, PROMPT_VERSION, new Date().toISOString())
 }
 
-function cleanText(text) {
-  return String(text ?? '')
-    .replaceAll('\u2014', ', ')
-    .replaceAll('\u2013', '-')
-    .trim()
-}

@@ -2,14 +2,14 @@ import { useMemo, useState } from 'react'
 import { Search } from 'lucide-react'
 import { Pager } from '@/views/redenSearch/Pager'
 import { DebateThread } from '@/views/speeches/DebateThread'
-import { Reader, type ReaderSpeechItem } from '@/views/speeches/Reader'
-import { buildDebateThread } from '@/hooks/debateThread'
+import { Reader, type ReaderItem } from '@/views/speeches/Reader'
+import { buildDebateThread } from '@/lib/debateThread'
 import { useReader } from '@/hooks/useReader'
-import { tokenize } from '@/lib/highlight'
-import { makeSnippet } from '@/lib/snippet'
-import { loadSpeechTexts, speechTextsLoaded, type SpeechBallotChoice } from '@/lib/speechesStatic'
+import { tokenize } from '@/components/highlight'
+import { makeSnippet } from '@/components/snippet'
+import { speechTextsLoaded, type SpeechBallotChoice } from '@/lib/speechesStatic'
 import { PARTY_ORDER } from '@/lib/parties'
-import { useQuery } from '@tanstack/react-query'
+import { useSpeechTexts } from '@/hooks/useSpeechTexts'
 import type { MemberVoteRow } from '@/server/memberDetail'
 import type { SpeechSummary } from '@/server/speeches'
 import { PartySummaryPreviewList, type SummaryRow } from './PartySummaryPreviewList'
@@ -19,7 +19,6 @@ import type { AvatarPilePerson } from '@/views/speeches/AvatarPile'
 type BallotEntry = { choice: MemberVoteRow['choice']; pictureUrl: string | null }
 type Props = { speeches: SpeechSummary[]; source: 'direct' | 'related'; ballotByMember: Map<string, BallotEntry>; partySummaries: SummaryRow[] }
 
-const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 const PAGE_SIZE = 15
 
 export function DebateList({ speeches, source, ballotByMember, partySummaries }: Props) {
@@ -29,12 +28,7 @@ export function DebateList({ speeches, source, ballotByMember, partySummaries }:
   const locale = useLocale()
   const t = useCopy()
   const terms = tokenize(query)
-  const texts = useQuery({
-    queryKey: ['speech-texts', locale],
-    queryFn: () => loadSpeechTexts(locale),
-    enabled: terms.length > 0 || fullTextRequested,
-    staleTime: Infinity,
-  })
+  const texts = useSpeechTexts(locale, terms.length > 0 || fullTextRequested)
   const textsLoading = terms.length > 0 && !speechTextsLoaded(locale)
   const ballotFor = (s: SpeechSummary) => (s.speakerMemberId ? ballotByMember.get(s.speakerMemberId) : undefined)
   const choiceFor = (s: SpeechSummary): SpeechBallotChoice | null => {
@@ -84,10 +78,9 @@ export function DebateList({ speeches, source, ballotByMember, partySummaries }:
     }
     return byParty
   }, [speeches, ballotByMember])
-  const speechItems: ReaderSpeechItem[] = rows
+  const speechItems: ReaderItem[] = rows
     .filter((row) => row.kind === 'turn')
     .map(({ speech }) => ({
-      kind: 'speech',
       ids: [speech.id],
       speakerName: speech.speakerName,
       speakerMemberId: speech.speakerMemberId,
@@ -118,7 +111,7 @@ export function DebateList({ speeches, source, ballotByMember, partySummaries }:
           }}
           placeholder={t.searchSpeeches}
           className="w-full rounded-m border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
-          style={{ borderColor: ROW_BORDER }}
+          style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
         />
         {textsLoading && <div className="mt-xs text-s opacity-l">{t.searchIndexLoading}</div>}
       </div>

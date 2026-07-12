@@ -59,8 +59,3 @@ export function underlyingTitleFromCache(doc) {
   return bezug.replace(/\s+/g, ' ').trim()
 }
 
-export function isBeschlussempfehlungZurAblehnung(doc) {
-  if (doc?.drucksachetyp !== 'Beschlussempfehlung') return false
-  const t = (doc?.titel ?? '').toLowerCase()
-  return /ablehnung|abzulehnen/.test(t)
-}

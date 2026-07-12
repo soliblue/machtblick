@@ -1,18 +1,15 @@
 import { useEffect, useRef } from 'react'
-import { useQuery } from '@tanstack/react-query'
 import { ExternalLink, X } from 'lucide-react'
 import { DebateThread } from '@/views/speeches/DebateThread'
-import { buildDebateThread } from '@/hooks/debateThread'
+import { buildDebateThread } from '@/lib/debateThread'
 import { formatDateShort } from '@/lib/format'
 import { PARTY_COLOR } from '@/lib/parties'
 import { withLocale } from '@/lib/locale'
 import { useCopy, useLocale } from '@/lib/i18n'
 import type { SpeechMetaEntry } from '@/lib/speechesStatic'
-import { loadSpeechTexts } from '@/lib/speechesStatic'
-import { memberSpeechGroupTitle, type MemberSpeechGroup } from '@/hooks/memberSpeechGroups'
+import { useSpeechTexts } from '@/hooks/useSpeechTexts'
+import { memberSpeechGroupTitle, type MemberSpeechGroup } from '@/lib/memberSpeechGroups'
 import type { SpeechSummary } from '@/server/speeches'
-
-const HAIR = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 
 type Props = {
   group: MemberSpeechGroup
@@ -29,14 +26,8 @@ export function MemberDebateDialog({ group, rows, loading, query, people, member
   const locale = useLocale()
   const t = useCopy()
   const panelRef = useRef<HTMLElement>(null)
-  const title = memberSpeechGroupTitle(group, locale === 'en' ? 'Speech' : 'Rede')
   const baseRows: SpeechSummary[] = rows?.length ? rows : group.speeches
-  const threadRows = buildDebateThread(baseRows)
-  const texts = useQuery({
-    queryKey: ['speech-texts', locale],
-    queryFn: () => loadSpeechTexts(locale),
-    staleTime: Infinity,
-  })
+  const texts = useSpeechTexts(locale)
   useEffect(() => {
     const trigger = document.activeElement as HTMLElement | null
     const panel = panelRef.current
@@ -80,10 +71,10 @@ export function MemberDebateDialog({ group, rows, loading, query, people, member
         onClick={(event) => event.stopPropagation()}
         className="absolute inset-0 flex flex-col bg-background outline-none desk:inset-auto desk:left-1/2 desk:top-1/2 desk:h-[85vh] desk:w-[90vw] desk:max-w-3xl desk:-translate-x-1/2 desk:-translate-y-1/2 desk:overflow-hidden desk:rounded-m desk:border desk:border-fg/15"
       >
-        <header className="flex items-start gap-m border-b p-l" style={{ borderColor: HAIR }}>
+        <header className="flex items-start gap-m border-b p-l" style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}>
           <div className="min-w-0 flex-1">
             <h2 id="member-debate-title" className="font-display text-l font-semibold leading-tight" style={{ overflowWrap: 'anywhere' }}>
-              {title}
+              {memberSpeechGroupTitle(group, locale === 'en' ? 'Speech' : 'Rede')}
             </h2>
             <div className="mt-s flex flex-wrap items-center gap-x-s gap-y-xs text-s caption opacity-l">
               <span>{formatDateShort(group.date, locale)}</span>
@@ -107,7 +98,7 @@ export function MemberDebateDialog({ group, rows, loading, query, people, member
             <div className="py-xl text-center text-m opacity-l">{locale === 'en' ? 'Loading debate...' : 'Debatte wird geladen...'}</div>
           ) : (
             <DebateThread
-              rows={threadRows}
+              rows={buildDebateThread(baseRows)}
               pictureFor={(speech) => speech.speakerMemberId ? people[speech.speakerMemberId] ?? null : null}
               fullTextFor={(speech) => texts.data?.[speech.id]}
               fullTextLoading={texts.isLoading}

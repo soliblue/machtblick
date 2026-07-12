@@ -14,8 +14,6 @@ type PointPayload = {
   partyNameAtTime: string
 }
 
-const border = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
-
 export function PartyHistoryTooltip({ active, payload }: TooltipProps) {
   const locale = useLocale()
   const t = useCopy()
@@ -25,7 +23,7 @@ export function PartyHistoryTooltip({ active, payload }: TooltipProps) {
   return (
     <div
       className="rounded-m bg-surface p-m text-s"
-      style={{ border: `1px solid ${border}`, minWidth: 220 }}
+      style={{ border: '1px solid color-mix(in oklab, var(--color-fg) 15%, transparent)', minWidth: 220 }}
     >
       <div className="text-m font-semibold">{point.termNumber}. {t.electoralTerm}</div>
       <div className="opacity-l">{point.termLabel}</div>

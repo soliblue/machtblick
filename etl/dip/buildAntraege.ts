@@ -1,7 +1,7 @@
 import type { Vorgang, Vorgangsposition } from './types.ts'
 import { antragVorgangstypToSlug, isAntragIntroducingPosition, isGesetzentwurfPosition } from './normalize.ts'
 import { antraege } from '@machtblick/db/schema'
-import { normalizePartyList } from '../../db/partyPatterns'
+import { normalizePartyList } from '../_shared/parties.ts'
 
 type Row = typeof antraege.$inferInsert
 

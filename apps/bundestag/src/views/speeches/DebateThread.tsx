@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ConversationBubble } from './ConversationBubble'
 import { ConversationSystemChip } from './ConversationSystemChip'
-import type { ThreadRow } from '@/hooks/debateThread'
+import type { ThreadRow } from '@/lib/debateThread'
 import type { SpeechSummary } from '@/server/speeches'
 import type { SpeechBallotChoice } from '@/lib/speechesStatic'
 

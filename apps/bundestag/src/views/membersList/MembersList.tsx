@@ -1,5 +1,5 @@
 import { Search } from 'lucide-react'
-import type { MandateType, MemberListItem, MemberSex } from '@/server/members'
+import type { MemberListItem } from '@/server/members'
 import { MemberCard } from './MemberCard'
 import { MembersStatsStrip } from './MembersStatsStrip'
 import { SortControl } from './SortControl'
@@ -8,7 +8,7 @@ import { FilterPill } from '@/views/votesList/FilterPill'
 import { FilterPillRow } from '@/views/votesList/FilterPillRow'
 import { FilterSheet, type FilterSheetGroup, type FilterSheetSort } from '@/views/votesList/FilterSheet'
 import type { MemberSortKey, SortDir } from '@/hooks/useMemberListFilters'
-import { isAgeBucket, isMandateType, isSex, type AgeBucket } from '@/lib/ageBuckets'
+import { isAgeBucket, isMandateType, isSex, type AgeBucket, type MandateType, type MemberSex } from '@/lib/memberFacets'
 import { partyLabel } from '@/lib/parties'
 import { useCopy, useLocale } from '@/lib/i18n'
 
@@ -79,7 +79,7 @@ export function MembersList({
       </div>
       <div className="sticky top-[54px] z-20 border-b border-fg/15 bg-background">
         <div className="px-l py-s desk:mx-auto desk:max-w-3xl">
-          <FilterPillRow className="">
+          <FilterPillRow>
             <FilterPill label={t.parliamentaryGroup} options={availableParties} value={party} onChange={onPartyChange} />
             <FilterPill label={t.state} options={availableStates} value={state} onChange={onStateChange} />
             <FilterPill

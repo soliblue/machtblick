@@ -1,10 +1,9 @@
 import { sql } from 'drizzle-orm'
 import { db } from '@machtblick/db/client'
 import { bundestagTerms, partySeatHistory, partyLineageMembers } from '@machtblick/db/schema'
-import { normalizeFractionLabel } from './parties.ts'
+import { normalizeFractionLabel } from '../_shared/parties.ts'
+import { AW_API, awJson } from '../_shared/awClient.ts'
 
-const UA = 'machtblick-bundestag/0.1 (https://github.com/soliblue/machtblick; hello@machtblick.de)'
-const AW = 'https://www.abgeordnetenwatch.de/api/v2'
 const BUNDESTAG_PARLIAMENT_ID = 5
 
 type ParliamentPeriod = {
@@ -27,10 +26,7 @@ type AwMandatesResponse = {
   data: Mandate[]
 }
 
-const periodsRes = await fetch(`${AW}/parliament-periods?type=legislature&parliament=${BUNDESTAG_PARLIAMENT_ID}&range_end=200`, {
-  headers: { 'User-Agent': UA, Accept: 'application/json' },
-})
-const periodsJson = (await periodsRes.json()) as AwPeriodsResponse
+const periodsJson = await awJson<AwPeriodsResponse>(`${AW_API}/parliament-periods?type=legislature&parliament=${BUNDESTAG_PARLIAMENT_ID}&range_end=200`)
 const periods = periodsJson.data.sort((a, b) => a.start_date_period.localeCompare(b.start_date_period))
 console.log(`bundestag parliament-periods: ${periods.length}`)
 
@@ -113,9 +109,7 @@ function buildLineageLookup(periodStart: string, periodEnd: string | null) {
 }
 
 async function fetchAllMandates(periodId: number): Promise<Mandate[]> {
-  const url = `${AW}/candidacies-mandates?parliament_period=${periodId}&type=mandate&range_start=0&range_end=1000`
-  const res = await fetch(url, { headers: { 'User-Agent': UA, Accept: 'application/json' } })
-  const json = (await res.json()) as AwMandatesResponse
+  const json = await awJson<AwMandatesResponse>(`${AW_API}/candidacies-mandates?parliament_period=${periodId}&type=mandate&range_start=0&range_end=1000`)
   if (json.meta.result.total > 1000) throw new Error(`period ${periodId} has ${json.meta.result.total} mandates, exceeds AW page cap of 1000`)
   return json.data
 }

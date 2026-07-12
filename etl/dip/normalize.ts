@@ -8,6 +8,6 @@ export function isAntragIntroducingPosition(p: { vorgangsposition: string }) {
   return p.vorgangsposition === 'Antrag'
 }
 
-export function isGesetzentwurfPosition(p: { vorgangsposition: string; zuordnung?: string }) {
+export function isGesetzentwurfPosition(p: { vorgangsposition: string }) {
   return p.vorgangsposition === 'Gesetzentwurf'
 }

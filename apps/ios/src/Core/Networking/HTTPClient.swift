@@ -25,6 +25,6 @@ enum HTTPClient {
     }
 
     static func memberPhoto(_ memberId: String) -> URL? {
-        URL(string: "/members-photos/\(memberId).jpg", relativeTo: base)
+        URL(string: Endpoints.memberPhoto(memberId), relativeTo: base)
     }
 }

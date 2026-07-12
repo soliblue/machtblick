@@ -1,7 +1,5 @@
 import Database from 'better-sqlite3'
-import { existsSync } from 'node:fs'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { argValue, findDbPath } from '../../_shared/worker.mjs'
 import { pickAntragWithFallback } from './pickAntrag.mjs'
 import { extractPdf } from './extractPdf.mjs'
 import { generateDescriptions } from './llm.mjs'
@@ -98,24 +96,6 @@ await Promise.all(selected.map((row) => limit(() => processVote(row))))
 console.log(`done. total=${selected.length}/${candidates.length} skipped_no_pdf=${skippedNoPdf} llm_failure=${llmFailure}`)
 console.log(`  by kind: antrag=${counts.antrag} petitionen=${counts.petitionen} wahleinspruch=${counts.wahleinspruch} verordnung=${counts.verordnung} unterrichtung=${counts.unterrichtung}`)
 db.close()
-
-function argValue(name) {
-  const i = process.argv.indexOf(name)
-  return i >= 0 ? process.argv[i + 1] : null
-}
-
-function findDbPath() {
-  const sourceAdjacent = fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url))
-  if (existsSync(sourceAdjacent)) return sourceAdjacent
-  let dir = process.cwd()
-  while (true) {
-    const candidate = join(dir, 'db', 'machtblick.sqlite')
-    if (existsSync(candidate)) return candidate
-    const parent = dirname(dir)
-    if (parent === dir) return sourceAdjacent
-    dir = parent
-  }
-}
 
 function ensureSchema() {
   db.prepare(`

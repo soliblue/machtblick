@@ -4,9 +4,8 @@ import { XMLParser } from 'fast-xml-parser'
 import { sql } from 'drizzle-orm'
 import { db } from '@machtblick/db/client'
 import { members } from '@machtblick/db/schema'
-
-const HONORIFICS = new Set(['dr', 'prof', 'med', 'hc', 'h', 'c', 'dent', 'rer', 'nat', 'phil', 'jur', 'ing', 'mult', 'habil', 'mag', 'lic', 'theol', 'dipl', 'pol'])
-const NAME_PARTICLES = new Set(['von', 'van', 'de', 'der', 'den', 'dos', 'da', 'di', 'du', 'le', 'la', 'zu', 'auf', 'freiherr', 'graf', 'edler', 'edle', 'baron', 'baronin'])
+import { HONORIFICS, NAME_PARTICLES } from '../_shared/names.ts'
+import { STATE_BY_CODE } from '../_shared/states.mjs'
 const xmlPath = fileURLToPath(new URL('./raw/MDB_STAMMDATEN.XML', import.meta.url))
 const xml = readFileSync(xmlPath, 'utf8')
 
@@ -36,25 +35,6 @@ type Mandate = {
   constituencyName: string | null
 }
 
-const STATE_BY_LISTE: Record<string, string> = {
-  BW: 'Baden-Württemberg',
-  BY: 'Bayern',
-  BE: 'Berlin',
-  BB: 'Brandenburg',
-  HB: 'Bremen',
-  HH: 'Hamburg',
-  HE: 'Hessen',
-  MV: 'Mecklenburg-Vorpommern',
-  NI: 'Niedersachsen',
-  NW: 'Nordrhein-Westfalen',
-  RP: 'Rheinland-Pfalz',
-  SL: 'Saarland',
-  SN: 'Sachsen',
-  ST: 'Sachsen-Anhalt',
-  SH: 'Schleswig-Holstein',
-  TH: 'Thüringen',
-}
-
 const byKey = new Map<string, { id: string; first: string; last: string }[]>()
 const byFirstTokenKey = new Map<string, { id: string; first: string; last: string }[]>()
 const mandateByMdbId = new Map<string, Mandate>()
@@ -74,7 +54,7 @@ for (const m of wp21Feed) {
     const listeCode = wp21.LISTE ? String(wp21.LISTE) : null
     mandateByMdbId.set(id, {
       mandateType,
-      listState: listeCode && STATE_BY_LISTE[listeCode] ? STATE_BY_LISTE[listeCode] : listeCode,
+      listState: listeCode && STATE_BY_CODE[listeCode] ? STATE_BY_CODE[listeCode] : listeCode,
       constituencyNumber: wp21.WKR_NUMMER ? String(wp21.WKR_NUMMER) : null,
       constituencyName: wp21.WKR_NAME ? String(wp21.WKR_NAME) : null,
     })

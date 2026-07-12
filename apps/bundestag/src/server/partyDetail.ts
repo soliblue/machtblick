@@ -3,19 +3,16 @@ import { notFound } from '@tanstack/react-router'
 import { db } from '@machtblick/db/client'
 import { votes, votePartySummaries, voteMembers, members, partyDonations } from '@machtblick/db/schema'
 import { desc, eq, and, inArray } from 'drizzle-orm'
-import { SLUG_TO_PARTY, hasPartyLine } from '@/lib/parties'
-import { AGE_BUCKETS, ageBucketFor, type AgeBucket } from '@/lib/ageBuckets'
+import { DONATION_PARTY_NAMES, SLUG_TO_PARTY, hasPartyLine } from '@/lib/parties'
+import { AGE_BUCKETS, ageBucketFor, type AgeBucket, type MemberSex } from '@/lib/memberFacets'
 import { getCurrentPartyMap } from './memberParty'
 import { loadDemographics } from './demographics'
-import type { MemberSex } from './members'
-import { attendance, cohesion } from './partyStats'
+import { attendance, cohesion, majorityPosition, partyAlignments, partyVote, successCounts, type PartyAlignment, type PartyVote } from './partyStats'
 import { getChamberSize } from './seats'
 import { CURRENT_TERM } from './term'
 import { voteTranslationMap } from './translations'
 import { normalizeLocale, type Locale } from '@/lib/locale'
 import { requireVoteCleanTitle } from '@/lib/voteTitles'
-
-export type PartyVote = 'yes' | 'no' | 'abstain' | 'split'
 
 export type PartyVoteRow = {
   voteId: string
@@ -38,12 +35,6 @@ export type PartyMemberRow = {
   state: string
 }
 
-export type PartyAlignment = {
-  party: string
-  agreement: number
-  sharedVotes: number
-}
-
 export type PartyProposal = {
   voteId: string
   date: string
@@ -57,14 +48,6 @@ export type PartyDonation = {
   donor: string
   amountEur: number
   dateReceived: string
-}
-
-const DONATION_PARTY_NAMES: Record<string, string[]> = {
-  'CDU/CSU': ['CDU', 'CSU'],
-  SPD: ['SPD'],
-  AfD: ['AfD'],
-  'B90/Grüne': ['B90/Grüne'],
-  'Die Linke': ['Die Linke'],
 }
 
 export type PartyDemographics = {
@@ -94,15 +77,6 @@ export type PartyDetail = {
   alignments: PartyAlignment[]
 }
 
-function majorityPosition(s: { yes: number | null; no: number | null; abstain: number | null }): 'yes' | 'no' | null {
-  const yes = s.yes ?? 0
-  const no = s.no ?? 0
-  const abstain = s.abstain ?? 0
-  if (yes > no && yes > abstain) return 'yes'
-  if (no > yes && no > abstain) return 'no'
-  return null
-}
-
 export const getParty = createServerFn({ method: 'GET' })
   .inputValidator((input: string | { slug: string; locale?: Locale }) => typeof input === 'string' ? { slug: input, locale: 'de' as Locale } : { slug: input.slug, locale: normalizeLocale(input.locale) })
   .handler(async ({ data }): Promise<PartyDetail> => {
@@ -121,34 +95,27 @@ export const getParty = createServerFn({ method: 'GET' })
         title: votes.title,
         cleanTitle: votes.cleanTitle,
         result: votes.result,
-        voteType: votes.voteType,
       })
       .from(votePartySummaries)
       .innerJoin(votes, eq(votes.id, votePartySummaries.voteId))
-      .where(and(eq(votePartySummaries.party, party), eq(votes.termId, CURRENT_TERM), eq(votes.procedural, false)))
+      .where(and(eq(votePartySummaries.party, party), eq(votes.termId, CURRENT_TERM), eq(votes.procedural, false), eq(votes.voteType, 'namentlich')))
       .orderBy(desc(votes.date))
       .all()
       .filter((s) => s.yes != null)
     const summaryTranslations = voteTranslationMap(summaries.map((s) => s.voteId), locale)
-    const voteRows: PartyVoteRow[] = summaries.filter((s) => s.voteType === 'namentlich').map((s) => {
+    const voteRows: PartyVoteRow[] = summaries.map((s) => {
       const t = summaryTranslations.get(s.voteId)
       const titled = requireVoteCleanTitle({ id: s.voteId, title: s.title, cleanTitle: t?.cleanTitle ?? s.cleanTitle })
       const yes = s.yes ?? 0
       const no = s.no ?? 0
       const abstain = s.abstain ?? 0
-      const top = Math.max(yes, no, abstain)
-      const partyVote: PartyVote =
-        yes === top && yes > no && yes > abstain ? 'yes'
-        : no === top && no > yes && no > abstain ? 'no'
-        : abstain === top && abstain > yes && abstain > no ? 'abstain'
-        : 'split'
       return {
         voteId: s.voteId,
         date: s.date,
         title: titled.title,
         cleanTitle: titled.cleanTitle,
         result: s.result,
-        partyVote,
+        partyVote: partyVote({ yes, no, abstain }),
         cohesion: hasPartyLine(party) ? cohesion(s) : null,
         yes,
         no,
@@ -200,32 +167,8 @@ export const getParty = createServerFn({ method: 'GET' })
       if (!byVote.has(s.voteId)) byVote.set(s.voteId, new Map())
       byVote.get(s.voteId)!.set(s.party, pos)
     }
-    const pairCounts = new Map<string, { matched: number; shared: number }>()
-    for (const positions of byVote.values()) {
-      const selfPos = positions.get(party)
-      if (!selfPos) continue
-      for (const [other, otherPos] of positions) {
-        if (other === party || other === 'fraktionslos' || !otherPos) continue
-        const c = pairCounts.get(other) ?? { matched: 0, shared: 0 }
-        c.shared += 1
-        if (otherPos === selfPos) c.matched += 1
-        pairCounts.set(other, c)
-      }
-    }
-    const alignments: PartyAlignment[] = Array.from(pairCounts.entries())
-      .filter(([, c]) => c.shared > 0)
-      .map(([p, c]) => ({ party: p, agreement: c.matched / c.shared, sharedVotes: c.shared }))
-      .sort((a, b) => b.agreement - a.agreement)
-    let successDecided = 0
-    let successMatched = 0
-    for (const r of voteRows) {
-      if (r.partyVote === 'yes' || r.partyVote === 'no') {
-        successDecided += 1
-        const wanted = r.partyVote === 'yes' ? 'angenommen' : 'abgelehnt'
-        if (r.result === wanted) successMatched += 1
-      }
-    }
-    const successRate = successDecided ? successMatched / successDecided : 0
+    const alignments = partyAlignments(byVote, party)
+    const success = successCounts(voteRows)
     let proposalsTotal = 0
     let proposalsAccepted = 0
     const proposals: PartyProposal[] = []
@@ -251,26 +194,22 @@ export const getParty = createServerFn({ method: 'GET' })
       .where(inArray(partyDonations.party, donationNames))
       .orderBy(desc(partyDonations.amountEur))
       .all()
-    const donationsTotalEur = donationRows.reduce((a, d) => a + d.amountEur, 0)
-    const seats = voteRows[0]?.members ?? 0
-    const avgCoh = summaries.reduce((a, s) => a + cohesion(s), 0) / Math.max(summaries.length, 1)
-    const avgAtt = summaries.reduce((a, s) => a + attendance(s), 0) / Math.max(summaries.length, 1)
     return {
       slug,
       party,
-      seats,
+      seats: voteRows[0]?.members ?? 0,
       chamberSeats: getChamberSize(),
-      cohesion: avgCoh,
-      attendance: avgAtt,
-      successRate,
-      successMatched,
-      successDecided,
+      cohesion: summaries.reduce((a, s) => a + cohesion(s), 0) / Math.max(summaries.length, 1),
+      attendance: summaries.reduce((a, s) => a + attendance(s), 0) / Math.max(summaries.length, 1),
+      successRate: success.decided ? success.matched / success.decided : 0,
+      successMatched: success.matched,
+      successDecided: success.decided,
       demographics: { sex: sexCounts, age: ageCounts },
       proposalsTotal,
       proposalsAccepted,
       proposals,
       donations: donationRows,
-      donationsTotalEur,
+      donationsTotalEur: donationRows.reduce((a, d) => a + d.amountEur, 0),
       donationsCount: donationRows.length,
       votes: voteRows,
       members: memberRows,

@@ -4,16 +4,17 @@ import { db } from '@machtblick/db/client'
 import { memberAbgeordnetenwatch, members, voteMembers, votePartySummaries, votes } from '@machtblick/db/schema'
 import { eq, desc, and, sql } from 'drizzle-orm'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
-import { majorityChoice } from './majorityChoice'
+import { majorityChoice, type PartyMajority } from './majorityChoice'
 import { CURRENT_TERM } from './term'
+import { debateContextJoins, linkedVoteJoin, linkedVotesCte } from './speechVoteSql'
 import { resolvePictureUrl } from './photoManifest'
 import { speechTranslationMap, voteTranslationMap } from './translations'
-import type { MandateType, MemberSex } from './members'
-import { hasPartyLine } from '../lib/parties'
+import { parseMandate, parseSex, type MandateType, type MemberSex } from '@/lib/memberFacets'
+import { hasPartyLine } from '@/lib/parties'
 import type { SpeechResult } from './speeches'
 import type { VoteListItem } from './votes'
-import { normalizeLocale, type Locale } from '../lib/locale'
-import { requireVoteCleanTitle, requireVoteTitleText } from '../lib/voteTitles'
+import { normalizeLocale, type Locale } from '@/lib/locale'
+import { requireVoteCleanTitle, requireVoteTitleText } from '@/lib/voteTitles'
 
 export type MemberVoteChoice = 'ja' | 'nein' | 'enthalten' | 'nicht_abgegeben'
 
@@ -25,7 +26,7 @@ export type MemberVoteRow = {
   result: 'angenommen' | 'abgelehnt'
   choice: MemberVoteChoice
   party: string
-  partyMajority: MemberVoteChoice | ''
+  partyMajority: PartyMajority | null
   defected: boolean | null
   proposingParty: VoteListItem['proposingParty']
   partySummaries: VoteListItem['partySummaries']
@@ -91,9 +92,6 @@ export const getMember = createServerFn({ method: 'GET' })
       .from(memberAbgeordnetenwatch)
       .where(eq(memberAbgeordnetenwatch.memberId, id))
       .get()
-    const sex = demoRow?.sex === 'm' || demoRow?.sex === 'f' || demoRow?.sex === 'd' ? (demoRow.sex as MemberSex) : null
-    const yearOfBirth = demoRow?.yearOfBirth ?? null
-    const education = demoRow?.education ?? null
     const vmRows = db
       .select({
         voteId: voteMembers.voteId,
@@ -113,10 +111,11 @@ export const getMember = createServerFn({ method: 'GET' })
     const historyTranslations = voteTranslationMap(vmRows.map((r) => r.voteId), locale)
     const affList = loadAffiliationsByMember().get(id) ?? []
     const summaries = db.select().from(votePartySummaries).all()
-    const majByVoteParty = new Map<string, string>()
+    const majByVoteParty = new Map<string, PartyMajority>()
     const summariesByVote = new Map<string, VoteListItem['partySummaries']>()
     for (const s of summaries) {
-      majByVoteParty.set(`${s.voteId} ${s.party}`, majorityChoice(s))
+      const maj = majorityChoice(s)
+      if (maj) majByVoteParty.set(`${s.voteId} ${s.party}`, maj)
       const rows = summariesByVote.get(s.voteId) ?? []
       rows.push({
         party: s.party,
@@ -137,8 +136,8 @@ export const getMember = createServerFn({ method: 'GET' })
       const t = historyTranslations.get(r.voteId)
       const titled = requireVoteCleanTitle({ id: r.voteId, title: r.title, cleanTitle: t?.cleanTitle ?? r.cleanTitle })
       const party = partyAt(affList, r.date)
-      const maj = majByVoteParty.get(`${r.voteId} ${party}`) ?? ''
-      const eligible = hasPartyLine(party)
+      const maj = majByVoteParty.get(`${r.voteId} ${party}`) ?? null
+      const eligible = hasPartyLine(party) && maj !== null
       const defected = r.choice === 'nicht_abgegeben' ? false : eligible ? r.choice !== maj : null
       if (r.choice === 'nicht_abgegeben') absent++
       else if (eligible) {
@@ -154,7 +153,7 @@ export const getMember = createServerFn({ method: 'GET' })
         result: r.result,
         choice: r.choice,
         party,
-        partyMajority: maj as MemberVoteChoice | '',
+        partyMajority: maj,
         defected,
         proposingParty: r.proposingParty,
         partySummaries: summariesByVote.get(r.voteId) ?? [],
@@ -162,13 +161,7 @@ export const getMember = createServerFn({ method: 'GET' })
     })
     const currentParty = affList.find((a) => a.validTo === null)?.party ?? ''
     const memberSpeeches = db.all(sql`
-      WITH linked_votes AS (
-        SELECT speech_id, vote_id, row_number() OVER (
-          PARTITION BY speech_id
-          ORDER BY confidence DESC, CASE source WHEN 'direct' THEN 0 ELSE 1 END, vote_id
-        ) AS rn
-        FROM speech_vote_links
-      )
+      ${sql.raw(linkedVotesCte)}
       SELECT s.id, s.speaker_name, s.speaker_member_id, s.speaker_role, s.party,
              COALESCE(sdgs.position, s.position) AS position,
              s.text_excerpt, s.date, s.agenda_item,
@@ -179,11 +172,8 @@ export const getMember = createServerFn({ method: 'GET' })
              v.title AS vote_title,
              v.clean_title AS vote_clean_title
       FROM speeches s
-      LEFT JOIN linked_votes lv ON lv.speech_id = s.id AND lv.rn = 1
-      LEFT JOIN votes v ON v.id = lv.vote_id AND v.term_id = 21 AND v.procedural = 0 AND v.vote_type != 'hammelsprung'
-      LEFT JOIN speech_debate_group_speeches sdgs ON sdgs.speech_id = s.id
-      LEFT JOIN speech_debate_groups sdg ON sdg.id = sdgs.group_id
-      LEFT JOIN plenary_agenda_items pai ON pai.session_id = s.session_id AND pai.date = s.date AND pai.agenda_item = s.agenda_item
+      ${sql.raw(linkedVoteJoin)}
+      ${sql.raw(debateContextJoins)}
       WHERE s.speaker_member_id = ${id}
       ORDER BY s.date DESC, COALESCE(sdgs.position, s.position) ASC
     `) as MemberSpeechJoinRow[]
@@ -225,14 +215,14 @@ export const getMember = createServerFn({ method: 'GET' })
       pictureAuthor: m.pictureAuthor,
       pictureLicense: m.pictureLicense,
       pictureSourceUrl: m.pictureSourceUrl,
-      yearOfBirth,
-      sex,
-      education,
+      yearOfBirth: demoRow?.yearOfBirth ?? null,
+      sex: parseSex(demoRow?.sex ?? null),
+      education: demoRow?.education ?? null,
       sameAs: [
         ...(demoRow?.awProfileUrl ? [demoRow.awProfileUrl] : []),
         ...(demoRow?.wikidataQid ? [`https://www.wikidata.org/wiki/${demoRow.wikidataQid}`] : []),
       ],
-      mandateType: m.mandateType === 'direkt' || m.mandateType === 'liste' ? m.mandateType : null,
+      mandateType: parseMandate(m.mandateType),
       listState: m.listState,
       constituencyNumber: m.constituencyNumber,
       constituencyName: m.constituencyName,

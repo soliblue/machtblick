@@ -1,6 +1,5 @@
 export type Locale = 'de' | 'en'
 
-
 export function localeFromPath(pathname: string): Locale {
   return pathname === '/en' || pathname.startsWith('/en/') ? 'en' : 'de'
 }

@@ -7,7 +7,7 @@ import { MemberDetailTabs } from './MemberDetailTabs'
 import { MemberPortrait } from './MemberPortrait'
 import { MemberStatValue } from './MemberStatValue'
 import { useCopy, useLocale } from '@/lib/i18n'
-import { groupMemberSpeeches } from '@/hooks/memberSpeechGroups'
+import { groupMemberSpeeches } from '@/lib/memberSpeechGroups'
 import { PartyLogo } from '@/views/votesList/PartyLogo'
 
 type Props = {

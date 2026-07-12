@@ -69,7 +69,7 @@ function isStructuralBoundary(p) {
   return p.klasse === 'T_fett' || (p.klasse === 'T_ZP_NaS' && /^\s*(TOP|ZP|Tagesordnungspunkt|Zusatzpunkt)\b/i.test(p.text))
 }
 
-export function findClauseByTitle(xml, title) {
+function findClauseByTitle(xml, title) {
   const ps = paragraphs(xml)
   const wanted = normalize(title)
   const foldedWanted = fold(title)
@@ -86,12 +86,12 @@ export function findClauseByTitle(xml, title) {
   return null
 }
 
-export function parseVoteId(id) {
+function parseVoteId(id) {
   const m = id.match(/^pp(\d+)-(\d+)-/)
   return m ? { period: Number(m[1]), sitzung: Number(m[2]) } : null
 }
 
-export function parseDrucksachen(document) {
+function parseDrucksachen(document) {
   if (!document) return []
   return [...document.matchAll(/\b\d+\/\d+\b/g)].map((x) => x[0])
 }
@@ -147,7 +147,7 @@ function clauseFromDrucksacheStructured(xml, drucksache) {
   return null
 }
 
-export function extractClauseForDrucksache(xml, drucksache) {
+function extractClauseForDrucksache(xml, drucksache) {
   const structured = clauseFromDrucksacheStructured(xml, drucksache)
   if (structured) return structured
   const indices = []

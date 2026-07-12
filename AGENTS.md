@@ -13,7 +13,7 @@ Specialists:
 | Agent | Owns |
 |---|---|
 | designer | ASCII mocks, IA |
-| plumber | ETL, `db/schema.ts` |
+| plumber | ETL, `db/schema/` |
 | backend | API, exported router types |
 | frontend | React + TanStack views and hooks |
 | tester | Browser verification |
@@ -51,15 +51,15 @@ Context rot destroys intelligence. Every word in instructions, skills, agents, a
 machtblick/
   apps/
     bundestag/        # transparency platform for Bundestag votes, members, parties
+      build/          # build-time generators: prerender paths, sitemap, feeds, JSON endpoints
       src/views/      # presentational only, no fetching, no business logic
+      src/components/ # shared presentational pieces used across views
       src/hooks/      # TanStack Query hooks, derived state, business logic
       src/routes/     # TanStack Router file-based routes, thin glue
       src/server/     # API server functions, owns exported router types
       src/lib/        # app-local types and utilities
-  packages/
-    ui/               # shared primitives, added only when a second app needs them
-  db/                 # Drizzle schema and migrations, shared across apps
-  etl/                # Node workers, one folder per upstream source, run on cron
+  db/                 # Drizzle schema (db/schema/), migrations, normalization scripts
+  etl/                # Node importers, one folder per upstream source, plus _shared and _oneshot
   .claude/
     agents/           # source agent instructions
   .codex/
@@ -93,7 +93,7 @@ Live preview of the local checkout is at `https://dev.machtblick.de`, served by 
 - **No absolute filesystem paths in checked-in files.** Scripts, configs, agent definitions, and docs use repo-relative paths
 - **Fix data, not symptoms.** When app logic has to compensate for messy data, the fix belongs in ETL or a checked-in DB normalization script under `db/`, not in the read path. No invisible one-off database edits: every data correction must be reproducible for the next refresh, either by updating the importer or by adding an idempotent checked-in normalization or migration script and referencing it from the plan. Derived public-data fields that humans may review, like titles, mappings, classifications, and labels, must be materialized through ETL or SQL before the app reads them
 - **LLM work in ETL goes through local agent CLIs, not provider APIs.** Prefer `codex exec`; use `claude -p --model sonnet --output-format json` only when a task explicitly needs Claude
-- **Every route must prerender.** New dynamic segment or nested tab means updating `apps/<app>/vite.config.ts > prerenderPaths()` in the same change
+- **Every route must prerender.** New dynamic segment or nested tab means updating `prerenderPaths()` in `apps/<app>/build/prerenderPaths.ts` in the same change
 - **Server functions only run at build time.** A view needing data from a server fn must trigger it from a route `loader` and read with `Route.useLoaderData()`. Never call a server function from `useQuery`
 
 ## Design
@@ -106,7 +106,7 @@ Tokens are fixed. Reach for one of these before inventing a value.
 | Font weight | `regular` (400), `semibold` (600). Only two, ever |
 | Icon size | `s/m/l/xl` = 14/17/19/26 |
 | Spacing | `xs/s/m/l/xl` = 4/8/12/16/24 |
-| Radius | `s/m/l` = 8/14/20 |
+| Radius | 0. Sharp corners everywhere. The `s/m/l` = 8/14/20 scale and the full pill exist only for floating controls |
 | Stroke | `s/m/l` = 1/1.5/2 px |
 | Opacity | `s/m/l` = 0.15/0.4/0.7 |
 | Palette (light, default) | `background` = white, `surface` = subtle off-white, `elevated` = slightly darker. Three shades total |

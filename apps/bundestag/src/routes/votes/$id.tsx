@@ -2,9 +2,7 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { getVote } from '@/server/voteDetail'
 import { getVoteSponsors } from '@/server/voteSponsors'
 import { VoteDetail, type VoteTab, isVoteTab } from '@/views/voteDetail/VoteDetail'
-import { seoMeta, canonicalLink, alternateJsonLink, breadcrumbJsonLd, jsonLd, SITE_URL } from '@/lib/seo'
-import { formatDateLong } from '@/lib/format'
-import { partyLabel } from '@/lib/parties'
+import { voteDetailHead } from '@/lib/routeHeads'
 import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 import { useVoteFlags } from '@/hooks/useVoteFlags'
 
@@ -24,71 +22,7 @@ export const Route = createFileRoute('/votes/$id')({
   validateSearch: (search: Record<string, unknown>): Search => ({
     tab: isVoteTab(search.tab) ? search.tab : undefined,
   }),
-  head: ({ loaderData, params }) => {
-    const path = `/votes/${params.id}`
-    const v = loaderData?.vote
-    const headline = v?.cleanTitle ?? null
-    const namentlich = v?.voteType === 'namentlich'
-    const title = v && headline ? (namentlich ? `${headline}: ${v.yes} zu ${v.no}` : headline) : 'Abstimmung'
-    const result = v ? `${v.result.charAt(0).toUpperCase()}${v.result.slice(1)}` : ''
-    const lead = v && headline
-      ? namentlich
-        ? `${result} mit ${v.yes} zu ${v.no} Stimmen: ${headline}.`
-        : `${result}: ${headline}.`
-      : 'Namentliche Abstimmung im Deutschen Bundestag.'
-    const core = v && headline ? `${lead} ${namentlich ? 'Namentliche Abstimmung' : 'Abstimmung'} im Bundestag am ${formatDateLong(v.date)}.` : lead
-    const full = v && headline ? `${core} Antragsteller: ${loaderData?.proposingParty ?? 'unbekannt'}.` : lead
-    const stanceWords = { yes: 'Dafür', no: 'Dagegen', abstain: 'Enthalten' } as const
-    const stances = !namentlich && loaderData
-      ? (['yes', 'no', 'abstain'] as const)
-          .map((pos) => [pos, loaderData.partySummaries.filter((s) => s.position === pos).map((s) => partyLabel(s.party))] as const)
-          .filter(([, parties]) => parties.length)
-          .map(([pos, parties]) => `${stanceWords[pos]}: ${parties.join(', ')}`)
-          .join('. ')
-      : ''
-    const desc = (stances ? [`${full} ${stances}.`, `${core} ${stances}.`, full, core, lead] : [full, core, lead]).find((c) => c.length <= 160) ?? lead
-    const ogImage = namentlich
-      ? { image: `/og/votes/${params.id}.png`, imageAlt: `Abstimmungsergebnis im Bundestag: ${headline ?? 'Abstimmung'}` }
-      : {}
-    return {
-      meta: [
-        ...seoMeta({ title, description: desc, canonical: path, type: 'article', ...ogImage }),
-        ...(v ? [{ property: 'article:published_time', content: v.date }] : []),
-      ],
-      links: [...canonicalLink(path), ...alternateJsonLink(path)],
-      scripts: [
-        ...breadcrumbJsonLd([
-          { name: 'Abstimmungen', path: '/votes' },
-          { name: headline ?? 'Abstimmung', path },
-        ]),
-        ...(v && headline
-          ? jsonLd({
-              '@context': 'https://schema.org',
-              '@type': 'Event',
-              '@id': `${SITE_URL}${path}/`,
-              name: headline,
-              startDate: v.date,
-              location: { '@type': 'Place', name: 'Deutscher Bundestag', address: { '@type': 'PostalAddress', addressLocality: 'Berlin', addressCountry: 'DE' } },
-              organizer: { '@type': 'GovernmentOrganization', name: 'Deutscher Bundestag' },
-              url: `${SITE_URL}${path}/`,
-              description: v.voteType === 'namentlich'
-                ? `Namentliche Abstimmung am ${formatDateLong(v.date)}: ${v.result}. ${v.yes} Ja, ${v.no} Nein, ${v.abstain} Enthaltungen, ${v.absent} nicht abgegeben.`
-                : `Abstimmung am ${formatDateLong(v.date)}: ${v.result}.`,
-              ...(loaderData?.sponsors.antraege.length && loaderData.sponsors.antraege.length <= 3
-                ? {
-                    about: loaderData.sponsors.antraege.map((a) => ({
-                      '@type': 'Legislation',
-                      name: a.title,
-                      url: `${SITE_URL}/motions/${a.antragId}/`,
-                      ...(a.drucksache ? { legislationIdentifier: a.drucksache } : {}),
-                    })),
-                  }
-                : {}),
-            })
-          : []),
-      ],
-    }
-  },
+  head: ({ loaderData, params }) => voteDetailHead(loaderData, params, 'de'),
 })
 
 function VoteDetailRoute() {
@@ -96,11 +30,10 @@ function VoteDetailRoute() {
   const { tab } = Route.useSearch()
   const navigate = useNavigate({ from: Route.fullPath })
   const { savedIds, seenIds, toggleSaved, toggleSeen } = useVoteFlags()
-  const active = tab ?? 'ergebnis'
   return (
     <VoteDetail
       data={data}
-      activeTab={active}
+      activeTab={tab ?? 'ergebnis'}
       onTabChange={(t) => navigate({ search: (s) => ({ ...s, tab: t === 'ergebnis' ? undefined : t }), resetScroll: false, replace: true })}
       isSaved={savedIds.has(data.vote.id)}
       isSeen={seenIds.has(data.vote.id)}

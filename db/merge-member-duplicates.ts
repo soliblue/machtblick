@@ -1,10 +1,8 @@
 import Database from 'better-sqlite3'
 import { fileURLToPath } from 'node:url'
+import { HONORIFICS, NAME_PARTICLES } from '../etl/_shared/names.ts'
 
 const db = new Database(fileURLToPath(new URL('./machtblick.sqlite', import.meta.url)))
-
-const HONORIFICS = new Set('dr prof med hc h c dent rer nat phil jur ing mult habil mag lic theol dipl pol'.split(' '))
-const PARTICLES = new Set('von van de der den dos da di du le la zu auf freiherr graf edler edle baron baronin'.split(' '))
 
 type Member = { id: string; firstName: string; lastName: string; btMdbId: string | null }
 
@@ -16,7 +14,7 @@ function relaxedKey(first: string, last: string) {
     .normalize('NFD')
     .replace(/\p{M}/gu, '')
     .split(/[^a-z0-9]+/)
-    .filter((t) => t && !HONORIFICS.has(t) && !PARTICLES.has(t))
+    .filter((t) => t && !HONORIFICS.has(t) && !NAME_PARTICLES.has(t))
     .join(' ')
 }
 
@@ -71,13 +69,13 @@ const selectMandates = db.prepare('SELECT id, term_id AS termId, valid_from AS v
 const findMandate = db.prepare('SELECT id FROM member_mandates WHERE member_id = ? AND term_id = ? AND valid_from IS ?')
 const fillMandate = db.prepare(`
   UPDATE member_mandates SET
-    bt_mdb_id = coalesce(bt_mdb_id, (SELECT bt_mdb_id FROM member_mandates WHERE id = @src)),
-    aw_politician_id = coalesce(aw_politician_id, (SELECT aw_politician_id FROM member_mandates WHERE id = @src)),
-    aw_mandate_id = coalesce(aw_mandate_id, (SELECT aw_mandate_id FROM member_mandates WHERE id = @src)),
-    mandate_type = coalesce(mandate_type, (SELECT mandate_type FROM member_mandates WHERE id = @src)),
-    list_state = coalesce(list_state, (SELECT list_state FROM member_mandates WHERE id = @src)),
-    constituency_number = coalesce(constituency_number, (SELECT constituency_number FROM member_mandates WHERE id = @src)),
-    constituency_name = coalesce(constituency_name, (SELECT constituency_name FROM member_mandates WHERE id = @src))
+    bt_mdb_id = COALESCE(bt_mdb_id, (SELECT bt_mdb_id FROM member_mandates WHERE id = @src)),
+    aw_politician_id = COALESCE(aw_politician_id, (SELECT aw_politician_id FROM member_mandates WHERE id = @src)),
+    aw_mandate_id = COALESCE(aw_mandate_id, (SELECT aw_mandate_id FROM member_mandates WHERE id = @src)),
+    mandate_type = COALESCE(mandate_type, (SELECT mandate_type FROM member_mandates WHERE id = @src)),
+    list_state = COALESCE(list_state, (SELECT list_state FROM member_mandates WHERE id = @src)),
+    constituency_number = COALESCE(constituency_number, (SELECT constituency_number FROM member_mandates WHERE id = @src)),
+    constituency_name = COALESCE(constituency_name, (SELECT constituency_name FROM member_mandates WHERE id = @src))
   WHERE id = @dst
 `)
 const deleteMandate = db.prepare('DELETE FROM member_mandates WHERE id = ?')
@@ -94,16 +92,16 @@ const moveSignatories = db.prepare('UPDATE OR IGNORE antrag_signatories SET memb
 const deleteSignatories = db.prepare('DELETE FROM antrag_signatories WHERE member_id = ?')
 const fillMember = db.prepare(`
   UPDATE members SET
-    bt_mdb_id = coalesce(bt_mdb_id, (SELECT bt_mdb_id FROM members WHERE id = @src)),
-    dip_person_id = coalesce(dip_person_id, (SELECT dip_person_id FROM members WHERE id = @src)),
-    picture_url = coalesce(picture_url, (SELECT picture_url FROM members WHERE id = @src)),
-    picture_author = coalesce(picture_author, (SELECT picture_author FROM members WHERE id = @src)),
-    picture_license = coalesce(picture_license, (SELECT picture_license FROM members WHERE id = @src)),
-    picture_source_url = coalesce(picture_source_url, (SELECT picture_source_url FROM members WHERE id = @src)),
-    mandate_type = coalesce(mandate_type, (SELECT mandate_type FROM members WHERE id = @src)),
-    list_state = coalesce(list_state, (SELECT list_state FROM members WHERE id = @src)),
-    constituency_number = coalesce(constituency_number, (SELECT constituency_number FROM members WHERE id = @src)),
-    constituency_name = coalesce(constituency_name, (SELECT constituency_name FROM members WHERE id = @src))
+    bt_mdb_id = COALESCE(bt_mdb_id, (SELECT bt_mdb_id FROM members WHERE id = @src)),
+    dip_person_id = COALESCE(dip_person_id, (SELECT dip_person_id FROM members WHERE id = @src)),
+    picture_url = COALESCE(picture_url, (SELECT picture_url FROM members WHERE id = @src)),
+    picture_author = COALESCE(picture_author, (SELECT picture_author FROM members WHERE id = @src)),
+    picture_license = COALESCE(picture_license, (SELECT picture_license FROM members WHERE id = @src)),
+    picture_source_url = COALESCE(picture_source_url, (SELECT picture_source_url FROM members WHERE id = @src)),
+    mandate_type = COALESCE(mandate_type, (SELECT mandate_type FROM members WHERE id = @src)),
+    list_state = COALESCE(list_state, (SELECT list_state FROM members WHERE id = @src)),
+    constituency_number = COALESCE(constituency_number, (SELECT constituency_number FROM members WHERE id = @src)),
+    constituency_name = COALESCE(constituency_name, (SELECT constituency_name FROM members WHERE id = @src))
   WHERE id = @dst
 `)
 const deleteMember = db.prepare('DELETE FROM members WHERE id = ?')

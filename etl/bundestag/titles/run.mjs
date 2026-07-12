@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { extractDrucksachen, readDrucksacheCache, underlyingTitleFromCache } from '../polarity/rule.mjs'
 import { pLimit } from '../polarity/limit.mjs'
 import { cleanTitleWithLLM } from './llm.mjs'
+import { argValue } from '../../_shared/worker.mjs'
 
 const DB_PATH = fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url))
 const args = new Set(process.argv.slice(2))
@@ -51,16 +52,15 @@ const whereClean = force ? '' : 'AND v.clean_title IS NULL'
 const rows = db.prepare(`
   SELECT v.id, v.title, v.document, v.summary_simplified, v.inverted, v.is_petition_bundle,
     v.procedural, v.vote_type, v.clean_title, p.rewritten_title
-  FROM votes
-  v LEFT JOIN vote_polarity_decisions p ON p.vote_id = v.id
+  FROM votes v
+  LEFT JOIN vote_polarity_decisions p ON p.vote_id = v.id
   WHERE (? IS NULL OR v.id = ?)
     ${whereClean}
 `).all(voteFilter, voteFilter)
 
-const candidates = rows
-const work = sampleLimit ? candidates.slice(0, sampleLimit) : candidates
+const work = sampleLimit ? rows.slice(0, sampleLimit) : rows
 
-console.log(`titles: ${candidates.length} missing of ${rows.length} visible rows; processing ${work.length}${dryRun ? ' (dry-run)' : ''}`)
+console.log(`titles: ${rows.length} candidate rows; processing ${work.length}${dryRun ? ' (dry-run)' : ''}`)
 
 const update = db.prepare(`UPDATE votes SET clean_title = ? WHERE id = ?`)
 
@@ -147,7 +147,3 @@ for (const item of outcomes) {
 console.log(`done. processed=${work.length} written=${written} direct=${direct} kept_original=${nulled} low_skipped=${lowSkipped} failed=${failed}`)
 db.close()
 
-function argValue(name) {
-  const i = process.argv.indexOf(name)
-  return i >= 0 ? process.argv[i + 1] : null
-}

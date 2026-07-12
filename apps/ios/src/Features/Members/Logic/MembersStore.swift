@@ -14,7 +14,7 @@ final class MembersStore {
     var sort: MemberSort = .name
     var sortDescending = false
 
-    private var path: String { AppLocale.current.dataPath("/api/members.json") }
+    private var path: String { AppLocale.current.dataPath(Endpoints.members) }
 
     var filtered: [MemberListItem] {
         members

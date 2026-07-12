@@ -1,14 +1,12 @@
 import { createHash } from 'node:crypto'
-import { existsSync, readFileSync } from 'node:fs'
-import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
+import { argValue, chunk, findDbPath } from '../../_shared/worker.mjs'
+import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
 import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
 import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
 import { ensureTextColumn } from '../preprocessing/schema.mjs'
 
-const PROMPT_VERSION = 'antrag-title-translation-en-v1'
-const promptTemplate = readFileSync(fileURLToPath(new URL('../../../prompts/etl/bundestag/antrag-title-translations.md', import.meta.url)), 'utf8').trimEnd()
 const schemaPath = fileURLToPath(new URL('./output-schema.json', import.meta.url))
 const timeoutMs = Number(process.env.CODEX_TIMEOUT_MS ?? 240000)
 const concurrency = Number(argValue('--concurrency') ?? 3)
@@ -74,24 +72,6 @@ console.log(`done. completed=${completed} failed=${failed}`)
 db.close()
 if (failed > 0) process.exit(1)
 
-function argValue(name) {
-  const i = process.argv.indexOf(name)
-  return i >= 0 ? process.argv[i + 1] : null
-}
-
-function findDbPath() {
-  const sourceAdjacent = fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url))
-  if (existsSync(sourceAdjacent)) return sourceAdjacent
-  let dir = process.cwd()
-  while (true) {
-    const candidate = join(dir, 'db', 'machtblick.sqlite')
-    if (existsSync(candidate)) return candidate
-    const parent = dirname(dir)
-    if (parent === dir) return sourceAdjacent
-    dir = parent
-  }
-}
-
 function ensureSchema() {
   const columns = db.prepare('PRAGMA table_info(antrag_description_translations)').all().map((c) => c.name)
   for (const column of ['title', 'clean_title', 'title_source_hash', 'title_model', 'title_model_reasoning_effort', 'title_prompt_version']) {
@@ -101,16 +81,6 @@ function ensureSchema() {
 
 function sourceHash(title, cleanTitle) {
   return createHash('sha256').update(JSON.stringify({ title, cleanTitle })).digest('hex')
-}
-
-function chunk(items, size) {
-  const chunks = []
-  for (let i = 0; i < items.length; i += size) chunks.push(items.slice(i, i + size))
-  return chunks
-}
-
-function buildPrompt(rows) {
-  return promptTemplate.replace('__INPUT_JSON__', JSON.stringify({ rows: rows.map((r) => ({ antrag_id: r.id, title: r.title, clean_title: r.clean_title })) }, null, 2)) + '\n'
 }
 
 function writeBatch(batch, output) {

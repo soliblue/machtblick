@@ -2,7 +2,7 @@ import { createServerFn } from '@tanstack/react-start'
 import { db } from '@machtblick/db/client'
 import { votes, votePartySummaries } from '@machtblick/db/schema'
 import { desc, eq, and } from 'drizzle-orm'
-import { SLUG_TO_PARTY } from '@/lib/parties'
+import { PARTY_SLUG } from '@/lib/parties'
 import { attendance, cohesion } from './partyStats'
 import { CURRENT_TERM } from './term'
 
@@ -31,15 +31,12 @@ export const listParties = createServerFn({ method: 'GET' }).handler(async (): P
   }
   const out: PartyListItem[] = []
   for (const [party, list] of byParty) {
-    if (list.length === 0) continue
-    const avgCoh = list.reduce((a, s) => a + cohesion(s), 0) / list.length
-    const avgAtt = list.reduce((a, s) => a + attendance(s), 0) / list.length
     out.push({
-      slug: Object.entries(SLUG_TO_PARTY).find(([, p]) => p === party)?.[0] ?? party.toLowerCase(),
+      slug: PARTY_SLUG[party] ?? party.toLowerCase(),
       party,
       seats: seatsByParty.get(party) ?? 0,
-      cohesion: avgCoh,
-      attendance: avgAtt,
+      cohesion: list.reduce((a, s) => a + cohesion(s), 0) / list.length,
+      attendance: list.reduce((a, s) => a + attendance(s), 0) / list.length,
     })
   }
   out.sort((a, b) => b.seats - a.seats)

@@ -70,14 +70,17 @@ Run derived refreshes after source data is current, in this order (titles and de
 3. `npm run etl:descriptions`
 4. `npm run etl:antrag-descriptions`
 5. `npm run etl:votes:backfill-agenda`
-6. `npm run db:materialize`
-7. `npm run etl:party-positions`
-8. `npm run etl:translations`
-9. `npm run etl:antrag-description-translations`
-10. `npm run etl:antrag-title-translations`
-11. `npm run etl:speech-translations`
+6. `npm run db:normalize:reading-pairs`
+7. `npm run db:materialize`
+8. `npm run etl:party-positions`
+9. `npm run etl:translations`
+10. `npm run etl:antrag-description-translations`
+11. `npm run etl:antrag-title-translations`
+12. `npm run etl:speech-translations`
 
 `etl:antrag-title-translations` fills English `title`/`clean_title` on `antrag_description_translations` for every motion that already has an English description translation. It is hash-keyed on the German title pair and idempotent; it must run after `etl:antrag-titles` and `etl:antrag-description-translations`, otherwise new English motion pages render German titles.
+
+`db:normalize:reading-pairs` propagates metadata, documents, descriptions, and clean-title stage labels across 2./3.-Beratung sibling votes of the same bill and links related speeches to namentliche Schlussabstimmungen whose debate happened at an earlier reading. It is idempotent (NULL-only fills, INSERT OR IGNORE copies) and must run after `etl:votes:backfill-agenda` and before `db:materialize`, because materialization consumes the `speeches.vote_id` links and copied `agenda_item` values it writes. It also runs inside `etl:handzeichen:refresh`.
 
 `etl:votes:namentlich` does not self-materialize: it ingests votes but sets neither `votes.agenda_item` nor the speech↔vote linkage. `etl:votes:backfill-agenda` (sets `agenda_item` from protocol XML) and `db:materialize` (rebuilds `vote_debate_groups`) must run after any vote ingest and before `etl:party-positions`, otherwise linked votes resolve to zero speeches and get no party-position summaries. Both are idempotent. `etl:handzeichen:refresh` already runs this sequence internally for handzeichen and namentlich votes; the standalone steps cover the namentlich-only ingest.
 

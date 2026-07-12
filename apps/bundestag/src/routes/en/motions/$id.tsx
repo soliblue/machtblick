@@ -1,9 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { getAntrag } from '@/server/antraege'
 import { AntragDetail } from '@/views/antragDetail/AntragDetail'
-import { seoMeta, canonicalLink, alternateJsonLink, jsonLd, breadcrumbJsonLd, plainDescription, SITE_URL } from '@/lib/seo'
-import { formatDateLong } from '@/lib/format'
-import { motionStatusBucket } from '@/lib/motionStatus'
+import { motionDetailHead } from '@/lib/routeHeads'
 import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 
 export const Route = createFileRoute('/en/motions/$id')({
@@ -11,48 +9,7 @@ export const Route = createFileRoute('/en/motions/$id')({
   errorComponent: NotFoundPage,
   notFoundComponent: NotFoundPage,
   loader: ({ params }) => getAntrag({ data: { id: params.id, locale: 'en' } }),
-  head: ({ loaderData, params }) => {
-    const path = `/en/motions/${params.id}`
-    const a = loaderData?.antrag
-    const name = a?.cleanTitle ?? a?.title ?? 'Motion'
-    const status = { angenommen: 'adopted', abgelehnt: 'rejected', 'im-verfahren': 'in progress', 'nicht-beraten': 'not yet debated' }[motionStatusBucket(a?.beratungsstand ?? null)]
-    const title = status === 'adopted' || status === 'rejected' ? `${name}: ${status}` : name
-    const summary = plainDescription(a?.summarySimplified ?? a?.abstract ?? 'Motion in the German Bundestag.')
-    const dated = `${a?.type === 'gesetzentwurf' ? 'Bill' : 'Motion'}${a?.introducedDate ? ` introduced ${formatDateLong(a.introducedDate, 'en')}` : ''}`
-    const desc = a
-      ? [
-          `${summary} ${dated}${a.initiativeFraktion ? ` (${a.initiativeFraktion})` : ''}, status: ${status}.`,
-          `${summary} ${dated}, status: ${status}.`,
-          summary,
-        ].find((c) => c.length <= 165) ?? summary
-      : summary
-    const modified = loaderData ? [loaderData.antrag.introducedDate, ...loaderData.linkedVotes.map((v) => v.date)].filter((d): d is string => Boolean(d)).sort().pop() : undefined
-    return {
-      meta: seoMeta({ title, description: desc, canonical: path, type: 'article' }),
-      links: [...canonicalLink(path), ...alternateJsonLink(path)],
-      scripts: [
-        ...breadcrumbJsonLd([
-          { name: 'Motions', path: '/en/motions' },
-          { name, path },
-        ]),
-        ...(loaderData
-          ? jsonLd({
-            '@context': 'https://schema.org',
-            '@type': 'Legislation',
-            name,
-            legislationType: loaderData.antrag.type === 'gesetzentwurf' ? 'Gesetzentwurf' : 'Antrag',
-            inLanguage: 'de',
-            url: `${SITE_URL}${path}/`,
-            ...(loaderData.antrag.drucksache ? { legislationIdentifier: loaderData.antrag.drucksache } : {}),
-            ...(loaderData.antrag.introducedDate ? { legislationDate: loaderData.antrag.introducedDate, datePublished: loaderData.antrag.introducedDate } : {}),
-            ...(modified ? { dateModified: modified } : {}),
-            ...(loaderData.antrag.abstract ? { abstract: loaderData.antrag.abstract } : {}),
-            ...(loaderData.antrag.initiativeFraktion ? { creator: { '@type': 'Organization', name: loaderData.antrag.initiativeFraktion } } : {}),
-            })
-          : []),
-      ],
-    }
-  },
+  head: ({ loaderData, params }) => motionDetailHead(loaderData, params, 'en'),
 })
 
 function AntragDetailRoute() {

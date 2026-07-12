@@ -1,4 +1,4 @@
-import { canonicalPartyToken } from '../../db/partyPatterns'
+import { canonicalPartyToken } from '../_shared/parties.ts'
 
 const LAENDER = new Set([
   'baden-württemberg', 'baden-wuerttemberg',

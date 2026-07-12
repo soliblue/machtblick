@@ -8,36 +8,19 @@ function slugify(input: string) {
     .replace(/^-+|-+$/g, '')
 }
 
-export function splitAwLabel(label: string) {
-  const parts = label.trim().split(/\s+/)
-  return { firstName: parts.slice(0, -1).join(' '), lastName: parts[parts.length - 1] }
-}
-
 export function buildAwMatcher(memberIds: Set<string>) {
-  const matched = new Map<string, string>()
   const unmatched: string[] = []
   function match(label: string): string | null {
-    const { firstName, lastName } = splitAwLabel(label)
-    const lastSlug = slugify(lastName)
-    const firstSlug = slugify(firstName)
-    const direct = `${lastSlug}-${firstSlug}`
-    if (memberIds.has(direct)) {
-      matched.set(label, direct)
-      return direct
-    }
+    const parts = label.trim().split(/\s+/)
+    const lastSlug = slugify(parts[parts.length - 1])
+    const firstSlug = slugify(parts.slice(0, -1).join(' '))
+    if (memberIds.has(`${lastSlug}-${firstSlug}`)) return `${lastSlug}-${firstSlug}`
     const firstTokens = firstSlug.split('-').filter(Boolean)
-    const candidates = [...memberIds].filter((id) => id.startsWith(`${lastSlug}-`))
-    const scored = candidates
-      .map((id) => {
-        const rest = id.slice(lastSlug.length + 1).split('-')
-        const overlap = firstTokens.filter((t) => rest.includes(t)).length
-        return { id, overlap }
-      })
-      .sort((a, b) => b.overlap - a.overlap)
-    if (scored[0] && scored[0].overlap > 0) {
-      matched.set(label, scored[0].id)
-      return scored[0].id
-    }
+    const best = [...memberIds]
+      .filter((id) => id.startsWith(`${lastSlug}-`))
+      .map((id) => ({ id, overlap: firstTokens.filter((t) => id.slice(lastSlug.length + 1).split('-').includes(t)).length }))
+      .sort((a, b) => b.overlap - a.overlap)[0]
+    if (best && best.overlap > 0) return best.id
     unmatched.push(label)
     return null
   }

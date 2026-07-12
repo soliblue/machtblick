@@ -1,11 +1,5 @@
-import type { votePartySummaries } from '@machtblick/db/schema'
+export type PartyMajority = 'ja' | 'nein' | 'enthalten'
 
-export function majorityChoice(s: typeof votePartySummaries.$inferSelect): string {
-  const c = [
-    ['ja', s.yes ?? 0],
-    ['nein', s.no ?? 0],
-    ['enthalten', s.abstain ?? 0],
-    ['nicht_abgegeben', s.absent ?? 0],
-  ] as const
-  return c.reduce((a, b) => (b[1] > a[1] ? b : a), c[0])[0]
+export function majorityChoice(s: { position: 'yes' | 'no' | 'abstain' | 'mixed' }): PartyMajority | null {
+  return s.position === 'yes' ? 'ja' : s.position === 'no' ? 'nein' : s.position === 'abstain' ? 'enthalten' : null
 }

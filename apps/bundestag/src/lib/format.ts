@@ -1,13 +1,15 @@
+import type { Locale } from './locale'
+
 export function formatDate(iso: string) {
   const [y, m, d] = iso.split('-')
   return `${d}.${m}.${y}`
 }
 
-export function formatDateLong(iso: string, locale: 'de' | 'en' = 'de') {
+export function formatDateLong(iso: string, locale: Locale = 'de') {
   return new Date(`${iso}T12:00:00`).toLocaleDateString(locale === 'de' ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
 }
 
-export function formatDateShort(iso: string, locale: 'de' | 'en' = 'de') {
+export function formatDateShort(iso: string, locale: Locale = 'de') {
   return new Date(`${iso}T12:00:00`).toLocaleDateString(locale === 'de' ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 

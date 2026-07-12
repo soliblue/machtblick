@@ -1,8 +1,6 @@
-import { createHash } from 'node:crypto'
-import { existsSync } from 'node:fs'
-import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
+import { argValue, chunk, findDbPath, sourceHash, trimOrNull } from '../../_shared/worker.mjs'
 import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
 import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
 import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
@@ -103,30 +101,6 @@ const workers = Array.from({ length: Math.min(concurrency, batches.length) }, as
 await Promise.all(workers)
 db.close()
 
-function argValue(name) {
-  const i = process.argv.indexOf(name)
-  return i >= 0 ? process.argv[i + 1] : null
-}
-
-function chunk(items, size) {
-  const chunks = []
-  for (let i = 0; i < items.length; i += size) chunks.push(items.slice(i, i + size))
-  return chunks
-}
-
-function findDbPath() {
-  const sourceAdjacent = fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url))
-  if (existsSync(sourceAdjacent)) return sourceAdjacent
-  let dir = process.cwd()
-  while (true) {
-    const candidate = join(dir, 'db', 'machtblick.sqlite')
-    if (existsSync(candidate)) return candidate
-    const parent = dirname(dir)
-    if (parent === dir) return sourceAdjacent
-    dir = parent
-  }
-}
-
 function ensureSchema() {
   db.prepare(`
     CREATE TABLE IF NOT EXISTS vote_translations (
@@ -185,10 +159,6 @@ function ensureSchema() {
   ensureTextColumn(db, 'antrag_description_translations', 'model_reasoning_effort')
 }
 
-function sourceHash(value) {
-  return createHash('sha256').update(JSON.stringify(value)).digest('hex')
-}
-
 function writeTranslations(job, output) {
   const now = new Date().toISOString()
   const vote = output.vote
@@ -212,13 +182,13 @@ function writeTranslations(job, output) {
       translated_at = excluded.translated_at
   `).run(
     job.vote.id,
-    clean(vote.title) ?? job.vote.title,
-    clean(vote.clean_title),
-    clean(vote.topic),
-    clean(vote.subject),
-    clean(vote.summary),
-    clean(vote.summary_simplified),
-    clean(vote.summary_detail),
+    trimOrNull(vote.title) ?? job.vote.title,
+    trimOrNull(vote.clean_title),
+    trimOrNull(vote.topic),
+    trimOrNull(vote.subject),
+    trimOrNull(vote.summary),
+    trimOrNull(vote.summary_simplified),
+    trimOrNull(vote.summary_detail),
     job.voteHash,
     PREPROCESSING_MODEL,
     PREPROCESSING_REASONING_EFFORT,
@@ -248,9 +218,9 @@ function writeTranslations(job, output) {
       `).run(
         job.vote.id,
         source.party,
-        clean(translated.position_summary),
-        clean(translated.key_points),
-        clean(translated.dissent_note),
+        trimOrNull(translated.position_summary),
+        trimOrNull(translated.key_points),
+        trimOrNull(translated.dissent_note),
         hash,
         PREPROCESSING_MODEL,
         PREPROCESSING_REASONING_EFFORT,
@@ -283,8 +253,8 @@ function syncAntragTranslation(job, vote, now) {
         translated_at = excluded.translated_at
     `).run(
       matches[0].id,
-      clean(vote.summary_simplified),
-      clean(vote.summary_detail),
+      trimOrNull(vote.summary_simplified),
+      trimOrNull(vote.summary_detail),
       job.voteHash,
       PREPROCESSING_MODEL,
       PREPROCESSING_REASONING_EFFORT,
@@ -303,6 +273,3 @@ function writeBatch(batch, output) {
   }
 }
 
-function clean(value) {
-  return typeof value === 'string' && value.trim() ? value.trim() : null
-}

@@ -147,11 +147,10 @@ vote pages where it explains debate flow.
     against the concatenation of the merged texts; total counts drop accordingly.
   - `hooks/useSpeechBody`: accept `ids: string[]` (default `[id]`), join shard
     texts with a blank line. DebateList keeps passing a single id.
-- `searchSpeeches` in `server/speeches.ts` (build-time only, unused by this page)
-  is untouched; member-detail speech tabs (server data) are untouched.
-- SpeechRow is shared with DebateList and memberDetail: add the card variant as a
-  wrapper (`SpeechCard`) around the existing row internals rather than forking;
-  the plain-row rendering (vote pages, member tabs) keeps its current look.
+- Member-detail speech tabs (server data from `server/speeches.ts`) are
+  untouched.
+- SpeechEntry renders the /reden result card; debate threads (vote pages, member
+  tabs) use ConversationBubble instead of sharing this row.
 - Serif = the same Charter `SERIF` stack VoteCard uses. Excerpts get typographic
   quotes only if trivially prependable; otherwise render the raw excerpt without
   quote marks (no fabricated punctuation).
@@ -164,17 +163,17 @@ vote pages where it explains debate flow.
 | Element | Text size | Weight | Spacing | Component |
 |---|---|---|---|---|
 | Search input | m | regular | mb-m | Input (existing style) |
-| Count caption / day caption | s uppercase, ls 0.08em | regular, opacity-l | mb-s / mt-l | — |
-| Card | — | — | p-l, mb-m, hairline + double shadow, radius-m | Card recipe |
+| Count caption / day caption | s uppercase, ls 0.08em | regular, opacity-l | mb-s / mt-l | |
+| Card | | | p-l, mb-m, hairline + double shadow, radius-m | Card recipe |
 | Speaker name | m | semibold | gap-s header row | link |
-| Minister role sub-line | s uppercase, ls 0.08em | regular, opacity-l | mt-xs | — |
-| Party logo | 16px height | — | — | PartyLogo |
+| Minister role sub-line | s uppercase, ls 0.08em | regular, opacity-l | mt-xs | |
+| Party logo | 16px height | | | PartyLogo |
 | Stance pill | 11px uppercase, ls 0.14em | semibold, white on choice color | right-aligned | VoteChoicePill |
 | Vote link | s | regular, opacity-l -> 100 on hover | mt-xs | link |
-| Excerpt / full text | m serif (Charter), leading 1.45 | regular | mt-s, clamp 4 (mob) / 3 (desk) | — |
+| Excerpt / full text | m serif (Charter), leading 1.45 | regular | mt-s, clamp 4 (mob) / 3 (desk) | |
 | Expand affordance | s | regular, opacity-l | mt-s | chevron 17 |
-| Filter pills / sheet | existing | — | — | FilterPill(Row), FilterSheet, floating pill |
-| Pager | existing | — | mt-l | Pager |
+| Filter pills / sheet | existing | | | FilterPill(Row), FilterSheet, floating pill |
+| Pager | existing | | mt-l | Pager |
 
 Colors: choice colors only (success/danger/yellow) on the stance pill; party color
 only in the logo. Radius 0; avatar circles and the floating filter pill are the

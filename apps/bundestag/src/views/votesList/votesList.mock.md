@@ -176,8 +176,9 @@ everything after, stacked.
   its flex-1 container on desk so it contributes zero intrinsic height; the right
   column therefore sets the row height, useFittedLineClamp measures the leftover and
   sets -webkit-line-clamp; the pre-hydration head-stylesheet script does the same
-  before React loads (desktop wrappers get `d-{id}` ids; zero-height hidden trees
-  are skipped). Short summaries end naturally and leave calm whitespace.
+  before React loads (one shared DOM tree per card, clamp targets found via
+  `[data-clamp-summary]` and the card's own id). Short summaries end naturally
+  and leave calm whitespace.
 - Dayline = plain caption row (text-s caps: "Sitzung vom {date}" fg@70 left,
   "{n} Abstimmungen" fg@40 right), NO 2px rule (retired with the ledger).
 - Card is one stretched link, same aria-label as mobile.

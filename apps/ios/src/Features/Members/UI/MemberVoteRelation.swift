@@ -4,7 +4,7 @@ struct MemberVoteRelation: View {
     let entry: MemberDetailPayload.HistoryEntry
 
     private var partyMajority: BallotChoice? {
-        BallotChoice(rawValue: entry.partyMajority)
+        entry.partyMajority.flatMap(BallotChoice.init)
     }
 
     private var summaries: [PartyVoteSummary] {

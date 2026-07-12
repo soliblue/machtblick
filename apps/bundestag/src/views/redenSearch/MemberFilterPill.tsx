@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import type { MemberOption } from '@/server/speeches'
+import { useCopy } from '@/lib/i18n'
 
 type Props = {
   label: string
@@ -12,21 +13,22 @@ type Props = {
 const BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
 
 export function MemberFilterPill({ label, options, value, onChange }: Props) {
+  const t = useCopy()
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
-  const buttonRef = useRef<HTMLButtonElement>(null)
+  const pillRef = useRef<HTMLSpanElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
   const [pos, setPos] = useState<{ left: number; top: number } | null>(null)
   useLayoutEffect(() => {
-    if (!open || !buttonRef.current) return
-    const r = buttonRef.current.getBoundingClientRect()
+    if (!open || !pillRef.current) return
+    const r = pillRef.current.getBoundingClientRect()
     setPos({ left: r.left, top: r.bottom + 4 })
   }, [open])
   useEffect(() => {
     if (!open) return
     const close = (e: MouseEvent) => {
       const t = e.target as Node
-      if (buttonRef.current?.contains(t)) return
+      if (pillRef.current?.contains(t)) return
       if (menuRef.current?.contains(t)) return
       setOpen(false)
     }
@@ -48,32 +50,31 @@ export function MemberFilterPill({ label, options, value, onChange }: Props) {
   }, [options, query])
   return (
     <>
-      <button
-        ref={buttonRef}
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-        aria-haspopup="listbox"
-        className="inline-flex shrink-0 items-center gap-s rounded-m border px-m py-xs text-m transition-colors hover:bg-surface"
+      <span
+        ref={pillRef}
+        className="relative inline-flex shrink-0 items-center gap-s rounded-m border px-m py-xs text-m transition-colors hover:bg-surface"
         style={{ borderColor: BORDER, background: value ? 'var(--color-surface)' : 'transparent' }}
       >
-        {selected ? <span className="font-semibold">{selected.name}</span> : <span>{label}</span>}
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          aria-haspopup="listbox"
+          className="flex items-center gap-s before:absolute before:inset-0 before:content-['']"
+        >
+          {selected ? <span className="font-semibold">{selected.name}</span> : <span>{label}</span>}
+        </button>
         {value && (
-          <span
-            role="button"
-            tabIndex={0}
-            aria-label="Filter zurücksetzen"
-            onClick={(e) => {
-              e.stopPropagation()
-              onChange(null)
-            }}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.stopPropagation(); onChange(null) } }}
-            className="opacity-l hover:opacity-100"
+          <button
+            type="button"
+            aria-label={t.resetFilter}
+            onClick={() => onChange(null)}
+            className="relative z-10 opacity-l hover:opacity-100"
           >
             ×
-          </span>
+          </button>
         )}
-      </button>
+      </span>
       {open && pos && createPortal(
         <div
           ref={menuRef}

@@ -62,6 +62,9 @@ await run('npx', ['tsx', join(HERE, '..', '..', '..', 'db', 'normalize-vote-titl
 console.log('→ backfill agenda_item from plenarprotokoll XML')
 await run('npx', ['tsx', join(HERE, '..', 'votes', 'backfillAgendaItem.ts')])
 
+console.log('→ reading-pair normalization (2./3. Beratung siblings + related speeches)')
+await run('npx', ['tsx', join(HERE, '..', '..', '..', 'db', 'normalize-reading-pairs-and-related-speeches.ts')])
+
 console.log('→ materialize derived data (speech↔vote linkage)')
 await run('npx', ['tsx', join(HERE, '..', '..', '..', 'db', 'materialize-derived-data.ts')])
 

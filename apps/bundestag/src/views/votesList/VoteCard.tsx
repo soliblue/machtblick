@@ -3,14 +3,13 @@ import { formatDateShort } from '@/lib/format'
 import { SERIF } from '@/lib/fonts'
 import { useCopy, useLocale } from '@/lib/i18n'
 import { withLocale } from '@/lib/locale'
-import { MarkdownInline } from '@/lib/MarkdownInline'
+import { MarkdownInline } from '@/components/MarkdownInline'
 import { PartyBadge } from './PartyBadge'
 import { Stamp } from './Stamp'
 import { VoteHemicycle } from './VoteHemicycle'
 import { PartyDonutRow } from './PartyDonutRow'
 import { deriveDescription } from './deriveDek'
 import { useFittedLineClamp } from '@/hooks/useFittedLineClamp'
-
 
 type Props = { vote: VoteListItem }
 

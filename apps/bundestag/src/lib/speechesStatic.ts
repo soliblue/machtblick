@@ -4,7 +4,7 @@ import type {
   SpeechSearchParams,
   SpeechSearchResponse,
 } from '@/server/speeches'
-import { makeSnippet } from './snippet'
+import { makeSnippet } from '@/components/snippet'
 import type { Locale } from './locale'
 
 export type SpeechBallotChoice = 'ja' | 'nein' | 'enthalten'
@@ -24,14 +24,14 @@ export type SpeechFeedResponse = Omit<SpeechSearchResponse, 'items'> & { items: 
 
 const PAGE_SIZE = 8
 
-let metaCache: Promise<SpeechMetaEntry[]> | null = null
+let metaCache: Partial<Record<Locale, Promise<SpeechMetaEntry[]>>> = {}
 let peopleCache: Promise<Record<string, string>> | null = null
 let textCache: Partial<Record<Locale, Promise<Record<string, string>>>> = {}
 let textsResolved: Partial<Record<Locale, boolean>> = {}
 
-export function loadSpeechMeta(): Promise<SpeechMetaEntry[]> {
-  metaCache ??= fetchJson<SpeechMetaEntry[]>('/speeches-meta.json')
-  return metaCache
+export function loadSpeechMeta(locale: Locale = 'de'): Promise<SpeechMetaEntry[]> {
+  metaCache[locale] ??= fetchJson<SpeechMetaEntry[]>(locale === 'en' ? '/en/speeches-meta.json' : '/speeches-meta.json')
+  return metaCache[locale]
 }
 
 export function loadSpeechPeople(): Promise<Record<string, string>> {
@@ -87,14 +87,14 @@ export function joinSpeechTexts(ids: string[], texts: Record<string, string>): s
 }
 
 export async function searchSpeechesStatic(params: SpeechSearchParams, locale: Locale = 'de'): Promise<SpeechFeedResponse> {
-  const meta = await loadSpeechMeta()
+  const meta = await loadSpeechMeta(locale)
   const q = params.q?.trim() ?? ''
   const party = params.party?.trim() ?? ''
   const date = params.date?.trim() ?? ''
   const memberId = params.memberId?.trim() ?? ''
   const page = Math.max(0, params.page ?? 0)
   const terms = tokens(q)
-  const texts = terms.length || locale === 'en' ? await loadSpeechTexts(locale) : null
+  const texts = terms.length > 0 ? await loadSpeechTexts(locale) : null
 
   const body = (s: SpeechMetaEntry) => (texts ? joinSpeechTexts(s.ids, texts) || s.excerpt : s.excerpt)
   const filtered = meta.filter((s) => {
@@ -116,7 +116,6 @@ export async function searchSpeechesStatic(params: SpeechSearchParams, locale: L
     return {
       ...s,
       voteTitle: locale === 'en' ? voteTitleEn ?? s.voteTitle : s.voteTitle,
-      excerpt: locale === 'en' && texts ? body(entry).slice(0, 220) : s.excerpt,
       snippet: q && texts ? makeSnippet(body(entry), terms) : null,
     }
   })

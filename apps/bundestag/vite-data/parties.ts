@@ -1,12 +1,16 @@
 import type Database from 'better-sqlite3'
+import { DONATION_PARTY_NAMES, PARTY_SLUG, SLUG_TO_PARTY, hasPartyLine } from '../src/lib/parties'
+import type { Locale } from '../src/lib/locale'
 import { requireVoteCleanTitle } from '../src/lib/voteTitles'
+import type { PartyListItem } from '../src/server/parties'
+import { attendance, cohesion, majorityPosition, partyAlignments, partyVote, successCounts } from '../src/server/partyStats'
+import { CURRENT_TERM } from '../src/server/term'
 import { partyHistory } from './partyHistory'
-import { voteTranslation, type StaticLocale, type StaticTranslations } from './translations'
+import { voteTranslation, type StaticTranslations } from './translations'
 
 type SummaryRow = {
   vote_id: string
   party: string
-  position: string
   members: number
   yes: number
   no: number
@@ -19,43 +23,6 @@ type DonationRow = {
   donor: string
   amount_eur: number
   date_received: string
-}
-
-const SLUG_TO_PARTY: Record<string, string> = {
-  'cdu-csu': 'CDU/CSU',
-  spd: 'SPD',
-  afd: 'AfD',
-  gruene: 'B90/Grüne',
-  linke: 'Die Linke',
-  fraktionslos: 'fraktionslos',
-}
-
-const PARTY_TO_SLUG: Record<string, string> = Object.fromEntries(Object.entries(SLUG_TO_PARTY).map(([k, v]) => [v, k]))
-
-const PARTY_LINE_EXCLUDED = new Set(['fraktionslos', 'Bundesregierung'])
-const CURRENT_TERM = 21
-
-const DONATION_PARTY_NAMES: Record<string, string[]> = {
-  'CDU/CSU': ['CDU', 'CSU'],
-  SPD: ['SPD'],
-  AfD: ['AfD'],
-  'B90/Grüne': ['B90/Grüne'],
-  'Die Linke': ['Die Linke'],
-}
-
-function cohesion(s: { yes: number; no: number; abstain: number }) {
-  const decided = s.yes + s.no + s.abstain
-  return decided ? Math.max(s.yes, s.no, s.abstain) / decided : 0
-}
-
-function attendance(s: { members: number; absent: number }) {
-  return s.members ? 1 - s.absent / s.members : 0
-}
-
-function majorityPosition(s: { yes: number; no: number; abstain: number }): 'yes' | 'no' | null {
-  if (s.yes > s.no && s.yes > s.abstain) return 'yes'
-  if (s.no > s.yes && s.no > s.abstain) return 'no'
-  return null
 }
 
 export function leanParties(db: Database.Database) {
@@ -76,52 +43,45 @@ export function leanParties(db: Database.Database) {
   if (latestId) {
     for (const s of summaries) if (s.vote_id === latestId) seatsByParty.set(s.party, s.members)
   }
-  const out: Array<{ slug: string; party: string; seats: number; cohesion: number; attendance: number }> = []
+  const out: PartyListItem[] = []
   for (const [party, list] of byParty) {
-    if (!list.length) continue
     out.push({
-      slug: PARTY_TO_SLUG[party] ?? party.toLowerCase(),
+      slug: PARTY_SLUG[party] ?? party.toLowerCase(),
       party,
       seats: seatsByParty.get(party) ?? 0,
-      cohesion: list.reduce((a: number, s: SummaryRow) => a + cohesion(s), 0) / list.length,
-      attendance: list.reduce((a: number, s: SummaryRow) => a + attendance(s), 0) / list.length,
+      cohesion: list.reduce((a, s) => a + cohesion(s), 0) / list.length,
+      attendance: list.reduce((a, s) => a + attendance(s), 0) / list.length,
     })
   }
   out.sort((a, b) => b.seats - a.seats)
   return out
 }
 
-export function fullParty(db: Database.Database, slug: string, locale: StaticLocale, translations: StaticTranslations) {
+export function fullParty(db: Database.Database, slug: string, locale: Locale, translations: StaticTranslations) {
   const party = SLUG_TO_PARTY[slug]
   const summaries = db.prepare(`
     SELECT vps.vote_id, vps.members, vps.yes, vps.no, vps.abstain, vps.absent,
-           v.date, v.title, v.clean_title, v.result, v.document, v.vote_type
+           v.date, v.title, v.clean_title, v.result
     FROM vote_party_summaries vps
     INNER JOIN votes v ON v.id = vps.vote_id
-    WHERE vps.party = ? AND v.term_id = ${CURRENT_TERM} AND v.procedural = 0
+    WHERE vps.party = ? AND v.term_id = ${CURRENT_TERM} AND v.procedural = 0 AND v.vote_type = 'namentlich'
     ORDER BY v.date DESC
-  `).all(party) as Array<SummaryRow & { date: string; title: string; clean_title: string | null; result: 'angenommen' | 'abgelehnt'; document: string | null; vote_type: string }>
-  const namentlich = summaries.filter((s) => s.vote_type === 'namentlich' && s.yes != null)
+  `).all(party) as Array<SummaryRow & { date: string; title: string; clean_title: string | null; result: 'angenommen' | 'abgelehnt' }>
+  const namentlich = summaries.filter((s) => s.yes != null)
   const voteRows = namentlich.map((s) => {
     const titled = requireVoteCleanTitle({
       id: s.vote_id,
       title: s.title,
       cleanTitle: voteTranslation(translations, locale, s.vote_id)?.clean_title ?? s.clean_title,
     })
-    const top = Math.max(s.yes, s.no, s.abstain)
-    const partyVote =
-      s.yes === top && s.yes > s.no && s.yes > s.abstain ? 'yes'
-      : s.no === top && s.no > s.yes && s.no > s.abstain ? 'no'
-      : s.abstain === top && s.abstain > s.yes && s.abstain > s.no ? 'abstain'
-      : 'split'
     return {
       voteId: s.vote_id,
       date: s.date,
       title: titled.title,
       cleanTitle: titled.cleanTitle,
       result: s.result,
-      partyVote,
-      cohesion: !PARTY_LINE_EXCLUDED.has(party) ? cohesion(s) : null,
+      partyVote: partyVote(s),
+      cohesion: hasPartyLine(party) ? cohesion(s) : null,
       yes: s.yes,
       no: s.no,
       abstain: s.abstain,
@@ -157,30 +117,8 @@ export function fullParty(db: Database.Database, slug: string, locale: StaticLoc
     if (!byVote.has(s.vote_id)) byVote.set(s.vote_id, new Map())
     byVote.get(s.vote_id)!.set(s.party, majorityPosition(s))
   }
-  const pairCounts = new Map<string, { matched: number; shared: number }>()
-  for (const positions of byVote.values()) {
-    const selfPos = positions.get(party)
-    if (!selfPos) continue
-    for (const [other, otherPos] of positions) {
-      if (other === party || other === 'fraktionslos' || !otherPos) continue
-      const c = pairCounts.get(other) ?? { matched: 0, shared: 0 }
-      c.shared += 1
-      if (otherPos === selfPos) c.matched += 1
-      pairCounts.set(other, c)
-    }
-  }
-  const alignments = Array.from(pairCounts.entries())
-    .filter(([, c]) => c.shared > 0)
-    .map(([p, c]) => ({ party: p, agreement: c.matched / c.shared, sharedVotes: c.shared }))
-    .sort((a, b) => b.agreement - a.agreement)
-  let successDecided = 0
-  let successMatched = 0
-  for (const r of voteRows) {
-    if (r.partyVote === 'yes' || r.partyVote === 'no') {
-      successDecided += 1
-      if (r.result === (r.partyVote === 'yes' ? 'angenommen' : 'abgelehnt')) successMatched += 1
-    }
-  }
+  const alignments = partyAlignments(byVote, party)
+  const success = successCounts(voteRows)
   const allVotes = db.prepare(`
     SELECT id, initiator, result, date, title, clean_title FROM votes WHERE term_id = ${CURRENT_TERM} AND procedural = 0
   `).all() as Array<{ id: string; initiator: string | null; result: 'angenommen' | 'abgelehnt'; date: string; title: string; clean_title: string | null }>
@@ -206,25 +144,20 @@ export function fullParty(db: Database.Database, slug: string, locale: StaticLoc
     WHERE party IN (${placeholders})
     ORDER BY amount_eur DESC
   `).all(...donationNames) as DonationRow[]
-  const donations = donationRows.map((d) => ({
-    id: d.id, donor: d.donor, amountEur: d.amount_eur, dateReceived: d.date_received,
-  }))
-  const donationsTotalEur = donationRows.reduce((a, d) => a + d.amount_eur, 0)
-  const seats = voteRows[0]?.members ?? 0
-  const avgCoh = namentlich.reduce((a, s) => a + cohesion(s), 0) / Math.max(namentlich.length, 1)
-  const avgAtt = namentlich.reduce((a, s) => a + attendance(s), 0) / Math.max(namentlich.length, 1)
   return {
     slug,
     party,
-    seats,
-    cohesion: avgCoh,
-    attendance: avgAtt,
-    successRate: successDecided ? successMatched / successDecided : 0,
+    seats: voteRows[0]?.members ?? 0,
+    cohesion: namentlich.reduce((a, s) => a + cohesion(s), 0) / Math.max(namentlich.length, 1),
+    attendance: namentlich.reduce((a, s) => a + attendance(s), 0) / Math.max(namentlich.length, 1),
+    successRate: success.decided ? success.matched / success.decided : 0,
     proposalsTotal,
     proposalsAccepted,
     proposals,
-    donations,
-    donationsTotalEur,
+    donations: donationRows.map((d) => ({
+      id: d.id, donor: d.donor, amountEur: d.amount_eur, dateReceived: d.date_received,
+    })),
+    donationsTotalEur: donationRows.reduce((a, d) => a + d.amount_eur, 0),
     donationsCount: donationRows.length,
     votes: voteRows,
     members: memberRows,

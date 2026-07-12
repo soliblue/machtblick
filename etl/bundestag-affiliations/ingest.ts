@@ -1,6 +1,7 @@
 import { db } from '@machtblick/db/client'
 import { memberAffiliations, members } from '@machtblick/db/schema'
 import { sql } from 'drizzle-orm'
+import { CURRENT_TERM } from '../../apps/bundestag/src/server/term.ts'
 import { fetchAwMandates, fetchParliamentPeriodStart } from './awFractions.ts'
 import { buildAwMatcher } from './matchAwToMember.ts'
 import { loadPartyRuns, type PartyRun } from './runsFromVotes.ts'
@@ -26,7 +27,7 @@ for (const aw of awMandates) {
 console.log(`AW mandates with mid-period change: ${awByMemberId.size}; unmatched: ${matchAw.unmatched().length}`)
 for (const u of matchAw.unmatched()) console.log(`  unmatched: ${u}`)
 
-const runs = loadPartyRuns()
+const runs = loadPartyRuns(CURRENT_TERM)
 const byMember = new Map<string, PartyRun[]>()
 for (const r of runs) {
   const list = byMember.get(r.memberId) ?? []
@@ -34,26 +35,20 @@ for (const r of runs) {
   byMember.set(r.memberId, list)
 }
 
-const rowsToInsert: Array<{ memberId: string; party: string; validFrom: string; validTo: string | null }> = []
+const rowsToInsert: Array<{ memberId: string; party: string; validFrom: string; validTo: string | null; termId: number }> = []
 for (const [memberId, list] of byMember) {
   const aw = awByMemberId.get(memberId)
   for (let i = 0; i < list.length; i++) {
     const run = list[i]
     const next = list[i + 1]
-    const isFirst = i === 0
-    const isFlipBoundary = next && aw && aw.toFraction === next.party
-    const validFrom = isFirst
-      ? (aw && aw.toFraction === run.party ? aw.validFrom : periodStart)
-      : (aw && aw.toFraction === run.party ? aw.validFrom : run.firstDate)
-    const validTo = next
-      ? (isFlipBoundary ? previousDay(aw.validFrom) : previousDay(next.firstDate))
-      : null
-    rowsToInsert.push({ memberId, party: run.party, validFrom, validTo })
+    const validFrom = aw && aw.toFraction === run.party ? aw.validFrom : i === 0 ? periodStart : run.firstDate
+    const validTo = next ? previousDay(aw && aw.toFraction === next.party ? aw.validFrom : next.firstDate) : null
+    rowsToInsert.push({ memberId, party: run.party, validFrom, validTo, termId: CURRENT_TERM })
   }
 }
 
 db.transaction((tx) => {
-  tx.run(sql`DELETE FROM ${memberAffiliations}`)
+  tx.run(sql`DELETE FROM ${memberAffiliations} WHERE term_id = ${CURRENT_TERM}`)
   for (const row of rowsToInsert) tx.insert(memberAffiliations).values(row).run()
 })
 

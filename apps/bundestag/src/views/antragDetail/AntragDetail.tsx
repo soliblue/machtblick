@@ -6,8 +6,9 @@ import { formatDate } from '@/lib/format'
 import { SERIF } from '@/lib/fonts'
 import { isLaenderInitiative } from '@/lib/bundeslaender'
 import { PARTY_LOGO, partyLabel } from '@/lib/parties'
-import { Markdown } from '@/lib/Markdown'
-import { MarkdownInline } from '@/lib/MarkdownInline'
+import { KickerChip } from '@/components/KickerChip'
+import { Markdown } from '@/components/Markdown'
+import { MarkdownInline } from '@/components/MarkdownInline'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { Stamp, type StampVariant } from '@/views/votesList/Stamp'
 import { DebateList } from '@/views/voteDetail/DebateList'
@@ -74,9 +75,7 @@ export function AntragDetail({ data }: Props) {
         <div className="mt-s text-s opacity-l">{t.officialTitle}: {antrag.title}</div>
       ) : null}
       <div className="mt-m flex flex-wrap items-center gap-m text-m">
-        <span className="inline-flex h-[20px] items-center rounded-m border border-fg/40 px-s text-[11px] font-semibold uppercase leading-none" style={{ letterSpacing: '0.14em' }}>
-          {antrag.type === 'gesetzentwurf' ? t.bill : t.motion}
-        </span>
+        <KickerChip>{antrag.type === 'gesetzentwurf' ? t.bill : t.motion}</KickerChip>
         {antrag.introducedDate ? <span className="opacity-l desk:hidden">{formatDate(antrag.introducedDate)}</span> : null}
         {antrag.drucksache ? <span className="opacity-l">Drs. {antrag.drucksache}</span> : null}
       </div>

@@ -1,38 +1,23 @@
 import type Database from 'better-sqlite3'
+import type { PartyHistory, PartyHistoryEvent, PartyHistoryPoint } from '../src/server/getPartyHistory'
 
 const PRE_2005_SEATS_AVAILABLE = false
 const FIRST_COVERED_YEAR_ISO = '2005-01-01'
 
-type TermRow = { id: number; number: number; start_date: string; end_date: string | null; total_seats: number }
+type TermRow = { id: number; number: number; start_date: string; total_seats: number }
 type SeatRow = { term_id: number; party_name: string; seats: number; pct_of_total: number; lineage_id: string | null }
-type EventRow = { id: string; date: string; type: string; label_de: string; lineage_id: string; related_lineage_id: string | null }
+type EventRow = { date: string; type: PartyHistoryEvent['type']; label_de: string; lineage_id: string; related_lineage_id: string | null }
 
-export type PartyHistoryPoint = {
-  termNumber: number
-  year: number
-  seats: number
-  totalSeats: number
-  pctOfTotal: number
-  partyNameAtTime: string
-}
-
-export type PartyHistoryEvent = {
-  date: string
-  type: string
-  labelDe: string
-  side: 'inbound' | 'outbound' | 'self'
-}
-
-export function partyHistory(db: Database.Database, canonical: string): { points: PartyHistoryPoint[]; events: PartyHistoryEvent[] } {
+export function partyHistory(db: Database.Database, canonical: string): PartyHistory {
   const startLineage =
     (db.prepare('SELECT id FROM party_lineages WHERE current_party_id = ?').get(canonical) as { id: string } | undefined)
     ?? (db.prepare('SELECT lineage_id AS id FROM party_lineage_members WHERE party_name = ?').get(canonical) as { id: string } | undefined)
   if (!startLineage) return { points: [], events: [] }
 
-  const allEvents = db.prepare('SELECT id, date, type, label_de, lineage_id, related_lineage_id FROM party_lineage_events').all() as EventRow[]
+  const allEvents = db.prepare('SELECT date, type, label_de, lineage_id, related_lineage_id FROM party_lineage_events').all() as EventRow[]
   const allSeats = db.prepare('SELECT term_id, party_name, seats, pct_of_total, lineage_id FROM party_seat_history').all() as SeatRow[]
   const termById = new Map(
-    (db.prepare('SELECT id, number, start_date, end_date, total_seats FROM bundestag_terms').all() as TermRow[]).map((t) => [t.id, t]),
+    (db.prepare('SELECT id, number, start_date, total_seats FROM bundestag_terms').all() as TermRow[]).map((t) => [t.id, t]),
   )
 
   const trunk = new Set<string>([startLineage.id])

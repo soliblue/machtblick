@@ -1,8 +1,6 @@
-import { createHash } from 'node:crypto'
-import { existsSync } from 'node:fs'
-import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
+import { argValue, findDbPath, sourceHash, trimOrNull } from '../../_shared/worker.mjs'
 import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
 import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
 import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
@@ -69,11 +67,6 @@ const workers = Array.from({ length: Math.min(concurrency, batches.length) }, as
 await Promise.all(workers)
 db.close()
 
-function argValue(name) {
-  const i = process.argv.indexOf(name)
-  return i >= 0 ? process.argv[i + 1] : null
-}
-
 function batchJobs(items, words, maxCount) {
   const batches = []
   let batch = []
@@ -96,19 +89,6 @@ function countWords(text) {
   return text.trim().split(/\s+/).filter(Boolean).length
 }
 
-function findDbPath() {
-  const sourceAdjacent = fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url))
-  if (existsSync(sourceAdjacent)) return sourceAdjacent
-  let dir = process.cwd()
-  while (true) {
-    const candidate = join(dir, 'db', 'machtblick.sqlite')
-    if (existsSync(candidate)) return candidate
-    const parent = dirname(dir)
-    if (parent === dir) return sourceAdjacent
-    dir = parent
-  }
-}
-
 function ensureSchema() {
   db.prepare(`
     CREATE TABLE IF NOT EXISTS speech_translations (
@@ -128,17 +108,13 @@ function ensureSchema() {
   ensureTextColumn(db, 'speech_translations', 'model_reasoning_effort')
 }
 
-function sourceHash(value) {
-  return createHash('sha256').update(JSON.stringify(value)).digest('hex')
-}
-
 function writeBatch(batch, output) {
   const byId = new Map(output.translations.map((t) => [t.speech_id, t]))
   const now = new Date().toISOString()
   for (const job of batch) {
     const translated = byId.get(job.row.id)
     if (!translated) throw new Error(`missing speech translation for ${job.row.id}`)
-    const text = clean(translated.text_full) ?? job.row.text_full
+    const text = trimOrNull(translated.text_full) ?? job.row.text_full
     db.prepare(`
       INSERT INTO speech_translations (
         speech_id, locale, text_excerpt, text_full, source_hash, model, model_reasoning_effort, prompt_version, translated_at
@@ -153,10 +129,6 @@ function writeBatch(batch, output) {
         translated_at = excluded.translated_at
     `).run(job.row.id, excerpt(text), text, job.sourceHash, PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT, PROMPT_VERSION, now)
   }
-}
-
-function clean(value) {
-  return typeof value === 'string' && value.trim() ? value.trim() : null
 }
 
 function excerpt(text) {

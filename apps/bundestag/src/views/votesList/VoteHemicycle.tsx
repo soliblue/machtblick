@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react'
+import { memo, useMemo, type ReactNode } from 'react'
 import { hemicycleSeats } from '@/lib/hemicycle'
 import { useCopy } from '@/lib/i18n'
 import type { VoteChoice } from './VoteDistributionDonut'
@@ -44,9 +44,9 @@ function LegendBlock({ choice, selected, onSelect, className = '', children }: L
   )
 }
 
-export function VoteHemicycle({ yes, no, abstain, absent, totalMembers, hero = false, selected = null, onSelect }: Props) {
+export const VoteHemicycle = memo(function VoteHemicycle({ yes, no, abstain, absent, totalMembers, hero = false, selected = null, onSelect }: Props) {
   const t = useCopy()
-  const seats = hemicycleSeats(totalMembers, RADII, 'centered')
+  const seats = useMemo(() => hemicycleSeats(totalMembers, RADII, 'centered'), [totalMembers])
   const noData = Math.max(0, totalMembers - yes - no - abstain - (absent ?? 0))
   const choiceAt = (i: number): VoteChoice =>
     i < yes ? 'yes' : i < yes + abstain ? 'abstain' : i < yes + abstain + (absent ?? 0) + noData ? 'absent' : 'no'
@@ -102,4 +102,4 @@ export function VoteHemicycle({ yes, no, abstain, absent, totalMembers, hero = f
       </div>
     </div>
   )
-}
+})

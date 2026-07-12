@@ -1,12 +1,12 @@
 import { ChevronRight, ExternalLink } from 'lucide-react'
 import { formatDateShort } from '@/lib/format'
 import { SERIF } from '@/lib/fonts'
-import { highlight } from '@/lib/highlight'
+import { highlight } from '@/components/highlight'
 import { PARTY_COLOR, partySurfaceColor } from '@/lib/parties'
-import { renderSnippet } from '@/lib/snippet'
+import { renderSnippet } from '@/components/snippet'
 import { withLocale } from '@/lib/locale'
 import { useCopy, useLocale } from '@/lib/i18n'
-import { memberSpeechGroupTitle, type MemberSpeechGroup } from '@/hooks/memberSpeechGroups'
+import { memberSpeechGroupTitle, type MemberSpeechGroup } from '@/lib/memberSpeechGroups'
 
 const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 8%, transparent)'
 

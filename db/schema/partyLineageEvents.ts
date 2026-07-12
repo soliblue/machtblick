@@ -1,4 +1,4 @@
-import { sqliteTable, integer, text, index } from 'drizzle-orm/sqlite-core'
+import { sqliteTable, text, index } from 'drizzle-orm/sqlite-core'
 import { partyLineages } from './partyLineages'
 
 export const partyLineageEvents = sqliteTable(

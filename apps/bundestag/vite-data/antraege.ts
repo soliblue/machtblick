@@ -1,10 +1,11 @@
 import type Database from 'better-sqlite3'
+import type { Locale } from '../src/lib/locale'
 import { requireVoteCleanTitle } from '../src/lib/voteTitles'
 import { resolvePictureUrl } from '../src/server/photoManifest'
+import { CURRENT_TERM } from '../src/server/term'
 import {
   motionTranslation,
   voteTranslation,
-  type StaticLocale,
   type StaticTranslations,
 } from './translations'
 
@@ -13,7 +14,7 @@ type AntragRow = {
   type: 'antrag' | 'gesetzentwurf'
   title: string
   clean_title: string | null
-  abstract: string | null
+  abstract_plain: string | null
   beratungsstand: string | null
   initiative_fraktion: string | null
   introduced_date: string | null
@@ -46,13 +47,11 @@ type VoteRow = {
   total_members: number | null
 }
 
-const CURRENT_TERM = 21
-
 function parseJson<T>(value: string | null, fallback: T): T {
   return value ? JSON.parse(value) as T : fallback
 }
 
-export function leanMotions(db: Database.Database, locale: StaticLocale, translations: StaticTranslations) {
+export function leanMotions(db: Database.Database, locale: Locale, translations: StaticTranslations) {
   const rows = db.prepare(`
     SELECT a.id, a.type, a.title, a.clean_title, a.drucksache, a.initiative_fraktion, a.introduced_date, a.beratungsstand
     FROM antraege a
@@ -69,32 +68,26 @@ export function leanMotions(db: Database.Database, locale: StaticLocale, transla
     introduced_date: string | null
     beratungsstand: string | null
   }>
-  return rows.map((row) => ({
-    id: row.id,
-    type: row.type,
-    title: motionTranslation(translations, locale, row.id)?.title ?? row.title,
-    cleanTitle: motionTranslation(translations, locale, row.id)?.clean_title ?? row.clean_title,
-    drucksache: row.drucksache,
-    initiativeFraktion: row.initiative_fraktion,
-    introducedDate: row.introduced_date,
-    beratungsstand: row.beratungsstand,
-  }))
-}
-
-function cleanAbstract(value: string | null) {
-  return value
-    ?.replace(/<br\s*\/?>/gi, '\n')
-    .replace(/<[^>]+>/g, '')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim() || null
+  return rows.map((row) => {
+    const t = motionTranslation(translations, locale, row.id)
+    return {
+      id: row.id,
+      type: row.type,
+      title: t?.title ?? row.title,
+      cleanTitle: t?.clean_title ?? row.clean_title,
+      drucksache: row.drucksache,
+      initiativeFraktion: row.initiative_fraktion,
+      introducedDate: row.introduced_date,
+      beratungsstand: row.beratungsstand,
+    }
+  })
 }
 
 export function fullAntrag(
   db: Database.Database,
   id: number,
-  locale: StaticLocale,
+  locale: Locale,
   translations: StaticTranslations,
-  seats: Map<string, number>,
 ) {
   const row = db.prepare(`
     SELECT
@@ -117,32 +110,28 @@ export function fullAntrag(
     SELECT v.id, v.date, v.title, v.clean_title, v.result, v.vote_type, v.yes, v.no, v.abstain, v.absent, v.total_members
     FROM vote_antraege va
     INNER JOIN votes v ON v.id = va.vote_id
-    WHERE va.antrag_id = ? AND v.term_id = 21 AND v.procedural = 0 AND v.vote_type != 'hammelsprung'
+    WHERE va.antrag_id = ? AND v.term_id = ${CURRENT_TERM} AND v.procedural = 0 AND v.vote_type != 'hammelsprung'
     ORDER BY v.date DESC
   `).all(id) as VoteRow[]
   const handzeichenIds = linkedVotes.filter((v) => v.vote_type === 'handzeichen').map((v) => v.id)
-  const positionsByVote = new Map<string, Array<{ party: string; position: 'yes' | 'no' | 'abstain' | 'mixed' }>>()
+  const talliesByVote = new Map<string, { yes: number; no: number; abstain: number }>()
   if (handzeichenIds.length) {
     const placeholders = handzeichenIds.map(() => '?').join(', ')
-    for (const p of db.prepare(`SELECT vote_id, party, position FROM vote_party_summaries WHERE vote_id IN (${placeholders})`)
-      .all(...handzeichenIds) as Array<{ vote_id: string; party: string; position: 'yes' | 'no' | 'abstain' | 'mixed' }>) {
-      const arr = positionsByVote.get(p.vote_id) ?? []
-      arr.push({ party: p.party, position: p.position })
-      positionsByVote.set(p.vote_id, arr)
+    for (const p of db.prepare(`SELECT vote_id, yes, no, abstain FROM vote_party_summaries WHERE vote_id IN (${placeholders})`)
+      .all(...handzeichenIds) as Array<{ vote_id: string; yes: number | null; no: number | null; abstain: number | null }>) {
+      const t = talliesByVote.get(p.vote_id) ?? { yes: 0, no: 0, abstain: 0 }
+      t.yes += p.yes ?? 0
+      t.no += p.no ?? 0
+      t.abstain += p.abstain ?? 0
+      talliesByVote.set(p.vote_id, t)
     }
   }
   function voteCounts(v: VoteRow) {
     if (v.vote_type === 'namentlich') {
       return { yes: v.yes ?? 0, no: v.no ?? 0, abstain: v.abstain ?? 0, absent: v.absent ?? 0, totalMembers: v.total_members ?? 0 }
     }
-    let yes = 0, no = 0, abstain = 0
-    for (const p of positionsByVote.get(v.id) ?? []) {
-      const s = seats.get(p.party) ?? 0
-      if (p.position === 'yes') yes += s
-      else if (p.position === 'no') no += s
-      else if (p.position === 'abstain') abstain += s
-    }
-    return { yes, no, abstain, absent: 0, totalMembers: yes + no + abstain }
+    const t = talliesByVote.get(v.id) ?? { yes: 0, no: 0, abstain: 0 }
+    return { yes: t.yes, no: t.no, abstain: t.abstain, absent: 0, totalMembers: t.yes + t.no + t.abstain }
   }
   return {
     antrag: {
@@ -150,7 +139,7 @@ export function fullAntrag(
       type: row.type,
       title: translatedMotion?.title ?? row.title,
       cleanTitle: translatedMotion?.clean_title ?? row.clean_title,
-      abstract: cleanAbstract(row.abstract),
+      abstract: row.abstract_plain,
       beratungsstand: row.beratungsstand,
       initiativeFraktion: row.initiative_fraktion,
       introducedDate: row.introduced_date,

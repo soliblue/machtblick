@@ -5,7 +5,7 @@ import { FilterSheet, type FilterSheetGroup } from '@/views/votesList/FilterShee
 import { MemberFilterPill } from './MemberFilterPill'
 import { Pager } from './Pager'
 import { SpeechEntry } from '@/views/speeches/SpeechEntry'
-import { Reader, type ReaderSpeechItem } from '@/views/speeches/Reader'
+import { Reader, type ReaderItem } from '@/views/speeches/Reader'
 import { useReader } from '@/hooks/useReader'
 import { formatDate, formatDateLong } from '@/lib/format'
 import { useSpeechPeople } from '@/hooks/useSpeechPeople'
@@ -27,8 +27,6 @@ type Props = {
   onPageChange: (p: number) => void
 }
 
-const ROW_BORDER = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
-
 function groupByDate(items: SpeechFeedItem[]): Array<[string, SpeechFeedItem[]]> {
   const map = new Map<string, SpeechFeedItem[]>()
   for (const s of items) {
@@ -44,8 +42,7 @@ export function RedenSearch({ data, query, party, date, memberId, page, textsLoa
   const locale = useLocale()
   const t = useCopy()
   const people = useSpeechPeople()
-  const readerItems: ReaderSpeechItem[] = data.items.map((s) => ({
-    kind: 'speech',
+  const readerItems: ReaderItem[] = data.items.map((s) => ({
     ids: s.ids,
     speakerName: s.speakerName,
     speakerMemberId: s.speakerMemberId,
@@ -79,12 +76,12 @@ export function RedenSearch({ data, query, party, date, memberId, page, textsLoa
           onChange={(e) => onQueryChange(e.target.value)}
           placeholder={t.searchSpeeches}
           className="w-full rounded-m border bg-transparent py-xs pl-[1.75rem] pr-s text-m outline-none focus:border-fg"
-          style={{ borderColor: ROW_BORDER }}
+          style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
         />
         {textsLoading && <div className="mt-xs text-s opacity-l">{t.searchIndexLoading}</div>}
       </div>
       <div className="sticky top-[54px] z-20 -mx-l mt-s hidden bg-background px-l py-s desk:block">
-        <FilterPillRow className="">
+        <FilterPillRow>
           <FilterPill label={t.parliamentaryGroup} options={data.parties} value={party} onChange={onPartyChange} />
           <FilterPill label={dayLabel} options={data.dates} value={date} onChange={onDateChange} formatOption={formatDate} />
           <MemberFilterPill label={memberLabel} options={data.membersOptions} value={memberId} onChange={onMemberChange} />
@@ -105,7 +102,6 @@ export function RedenSearch({ data, query, party, date, memberId, page, textsLoa
             <SpeechEntry
               key={s.id}
               speech={s}
-              mode="card"
               choice={s.choice}
               pictureUrl={s.speakerMemberId ? people[s.speakerMemberId] ?? null : null}
               voteId={s.voteId}

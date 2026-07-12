@@ -94,7 +94,8 @@ async function updateEnodiaCookie(text) {
 
 async function getCached(name, fetcher) {
   const path = join(CACHE, `${name}.json`)
-  try { return JSON.parse(await readFile(path, 'utf8')) } catch {}
+  const cached = await readFile(path, 'utf8').then(JSON.parse).catch(() => undefined)
+  if (cached !== undefined) return cached
   const data = await fetcher()
   await writeFile(path, JSON.stringify(data, null, 2))
   await sleep(120)

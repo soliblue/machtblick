@@ -15,7 +15,7 @@ const themeHook = read('apps/bundestag/src/hooks/useTheme.ts')
 const picker = read('apps/bundestag/src/views/nav/ThemePicker.tsx')
 const nav = read('apps/bundestag/src/views/nav/Nav.tsx')
 const css = read('apps/bundestag/src/styles/globals.css')
-const copy = read('apps/bundestag/src/lib/i18n.tsx')
+const copy = read('apps/bundestag/src/lib/copy/de.ts') + read('apps/bundestag/src/lib/copy/en.ts')
 const parties = read('apps/bundestag/src/lib/parties.ts')
 const bubbles = [
   read('apps/bundestag/src/views/speeches/ConversationBubble.tsx'),
@@ -46,12 +46,11 @@ requireFragments(picker, 'ThemePicker.tsx', [
   'role="radiogroup"',
   'aria-label={label}',
   'type="radio"',
-  '<Monitor size={14}',
-  '<Sun size={14}',
-  '<Moon size={14}',
-  'checked={value === \'system\'}',
-  'checked={value === \'light\'}',
-  'checked={value === \'dark\'}',
+  "{ mode: 'system' as const, title: systemLabel, Icon: Monitor }",
+  "{ mode: 'light' as const, title: lightLabel, Icon: Sun }",
+  "{ mode: 'dark' as const, title: darkLabel, Icon: Moon }",
+  '<Icon size={14}',
+  'checked={value === mode}',
 ])
 requireFragments(css, 'globals.css', [
   ":root[data-theme='light']",
@@ -61,7 +60,7 @@ requireFragments(css, 'globals.css', [
   '--color-elevated: #2C2C2E',
   '--color-fg: #FFFFFF',
 ])
-requireFragments(copy, 'i18n.tsx', [
+requireFragments(copy, 'lib/copy', [
   "appearance: 'Darstellung'",
   "themeLight: 'Hell'",
   "themeDark: 'Dunkel'",

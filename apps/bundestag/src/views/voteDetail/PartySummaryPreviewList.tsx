@@ -1,7 +1,7 @@
 import { hasPartyLine, PARTY_COLOR, PARTY_LOGO, PARTY_SLUG, partyLabel, partySurfaceColor } from '@/lib/parties'
 import { PartyLogo } from '@/views/votesList/PartyLogo'
 import { SERIF } from '@/lib/fonts'
-import { MarkdownInline } from '@/lib/MarkdownInline'
+import { MarkdownInline } from '@/components/MarkdownInline'
 import { withLocale } from '@/lib/locale'
 import { AvatarPile, type AvatarPilePerson } from '@/views/speeches/AvatarPile'
 import { useCopy, useLocale } from '@/lib/i18n'

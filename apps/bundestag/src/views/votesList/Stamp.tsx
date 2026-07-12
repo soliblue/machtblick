@@ -25,23 +25,23 @@ const STANCE_LABEL: Partial<Record<StampVariant | StanceStampVariant, 'yes' | 'n
 const BALLOT_LABEL: Partial<Record<StanceStampVariant, 'yes' | 'no'>> = { ja: 'yes', nein: 'no' }
 
 const config: Record<StampVariant | StanceStampVariant, { color: string; rotate: number; opacity?: number }> = {
-  angenommen: { color: 'var(--color-success)', rotate: -4, opacity: 0.85 },
-  abgelehnt: { color: 'var(--color-danger)', rotate: -5, opacity: 0.85 },
-  knapp: { color: 'var(--color-orange)', rotate: 6, opacity: 0.85 },
-  einstimmig: { color: 'var(--color-purple)', rotate: 3, opacity: 0.85 },
-  'fast-einstimmig': { color: 'var(--color-purple)', rotate: 3, opacity: 0.85 },
+  angenommen: { color: 'var(--color-success)', rotate: -4 },
+  abgelehnt: { color: 'var(--color-danger)', rotate: -5 },
+  knapp: { color: 'var(--color-orange)', rotate: 6 },
+  einstimmig: { color: 'var(--color-purple)', rotate: 3 },
+  'fast-einstimmig': { color: 'var(--color-purple)', rotate: 3 },
   abweichler: { color: 'var(--color-fg)', rotate: 5, opacity: 0.75 },
-  beantwortet: { color: 'var(--color-success)', rotate: -3, opacity: 0.85 },
-  offen: { color: 'var(--color-danger)', rotate: 4, opacity: 0.85 },
-  ueberwiesen: { color: 'var(--color-blue)', rotate: 4, opacity: 0.85 },
-  beschlussempfehlung: { color: 'var(--color-purple)', rotate: -3, opacity: 0.85 },
+  beantwortet: { color: 'var(--color-success)', rotate: -3 },
+  offen: { color: 'var(--color-danger)', rotate: 4 },
+  ueberwiesen: { color: 'var(--color-blue)', rotate: 4 },
+  beschlussempfehlung: { color: 'var(--color-purple)', rotate: -3 },
   'nicht-beraten': { color: 'var(--color-fg)', rotate: 3, opacity: 0.7 },
-  dafuer: { color: 'var(--color-success)', rotate: -4, opacity: 0.85 },
-  dagegen: { color: 'var(--color-danger)', rotate: -5, opacity: 0.85 },
-  enthalten: { color: 'var(--color-yellow)', rotate: 4, opacity: 0.85 },
+  dafuer: { color: 'var(--color-success)', rotate: -4 },
+  dagegen: { color: 'var(--color-danger)', rotate: -5 },
+  enthalten: { color: 'var(--color-yellow)', rotate: 4 },
   gespalten: { color: 'var(--color-fg)', rotate: 3, opacity: 0.75 },
-  ja: { color: 'var(--color-success)', rotate: -4, opacity: 0.85 },
-  nein: { color: 'var(--color-danger)', rotate: -5, opacity: 0.85 },
+  ja: { color: 'var(--color-success)', rotate: -4 },
+  nein: { color: 'var(--color-danger)', rotate: -5 },
 }
 
 type Props = { variant: StampVariant | StanceStampVariant; size?: 's' | 'm'; rotated?: boolean }

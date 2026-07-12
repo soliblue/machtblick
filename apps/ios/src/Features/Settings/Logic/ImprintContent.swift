@@ -5,6 +5,15 @@ enum ImprintContent {
         locale == .de ? german : english
     }
 
+    private static let opendata = URL(string: "https://www.bundestag.de/services/opendata")!
+    private static let dserver = URL(string: "https://dserver.bundestag.de/")!
+    private static let parteienfinanzierung = URL(string: "https://www.bundestag.de/parlament/praesidium/parteienfinanzierung")!
+    private static let dipSearch = URL(string: "https://search.dip.bundestag.de/")!
+    private static let abgeordnetenwatch = URL(string: "https://www.abgeordnetenwatch.de/")!
+    private static let wikidata = URL(string: "https://query.wikidata.org/")!
+    private static let commons = URL(string: "https://commons.wikimedia.org/")!
+    private static let soliBlue = URL(string: "https://soli.blue")!
+
     private static let german = SettingsContent(
         title: "Impressum",
         sections: [
@@ -23,22 +32,22 @@ enum ImprintContent {
                         [
                             SettingsContentSource(
                                 name: "Stammdaten",
-                                url: URL(string: "https://www.bundestag.de/services/opendata")!,
+                                url: opendata,
                                 display: "bundestag.de",
                                 description: "Stammdaten der Abgeordneten"),
                             SettingsContentSource(
                                 name: "Plenarprotokolle",
-                                url: URL(string: "https://dserver.bundestag.de/")!,
+                                url: dserver,
                                 display: "dserver.bundestag.de",
                                 description: "Reden und Protokolle der Plenarsitzungen"),
                             SettingsContentSource(
                                 name: "Parlamentaria",
-                                url: URL(string: "https://www.bundestag.de/parlament/praesidium/parteienfinanzierung")!,
+                                url: parteienfinanzierung,
                                 display: "bundestag.de",
                                 description: "Parteispenden über 50.000 Euro"),
                             SettingsContentSource(
                                 name: "DIP",
-                                url: URL(string: "https://search.dip.bundestag.de/")!,
+                                url: dipSearch,
                                 display: "search.dip.bundestag.de",
                                 description: "Anträge und Drucksachen"),
                         ],
@@ -48,7 +57,7 @@ enum ImprintContent {
                         [
                             SettingsContentSource(
                                 name: nil,
-                                url: URL(string: "https://www.abgeordnetenwatch.de/")!,
+                                url: abgeordnetenwatch,
                                 display: "abgeordnetenwatch.de",
                                 description: "Profile, Fraktionswechsel, Porträtverweise")
                         ],
@@ -58,12 +67,12 @@ enum ImprintContent {
                         [
                             SettingsContentSource(
                                 name: "Wikidata",
-                                url: URL(string: "https://query.wikidata.org/")!,
+                                url: wikidata,
                                 display: "query.wikidata.org",
                                 description: "Porträtverweise (P18), CC0"),
                             SettingsContentSource(
                                 name: "Wikimedia Commons",
-                                url: URL(string: "https://commons.wikimedia.org/")!,
+                                url: commons,
                                 display: "commons.wikimedia.org",
                                 description: "Porträtdateien, Lizenzen je Datei mitgespeichert"),
                         ],
@@ -92,7 +101,7 @@ enum ImprintContent {
                         SettingsLinkedParagraph(
                             text: "Machtblick ist ein Projekt von Ahmed Soliman.",
                             linkLabel: "Ahmed Soliman",
-                            url: URL(string: "https://soli.blue")!))
+                            url: soliBlue))
                 ]),
         ])
 
@@ -114,22 +123,22 @@ enum ImprintContent {
                         [
                             SettingsContentSource(
                                 name: "Master data",
-                                url: URL(string: "https://www.bundestag.de/services/opendata")!,
+                                url: opendata,
                                 display: "bundestag.de",
                                 description: "Member master data"),
                             SettingsContentSource(
                                 name: "Plenary records",
-                                url: URL(string: "https://dserver.bundestag.de/")!,
+                                url: dserver,
                                 display: "dserver.bundestag.de",
                                 description: "Speeches and plenary records"),
                             SettingsContentSource(
                                 name: "Parlamentaria",
-                                url: URL(string: "https://www.bundestag.de/parlament/praesidium/parteienfinanzierung")!,
+                                url: parteienfinanzierung,
                                 display: "bundestag.de",
                                 description: "Party donations above 50,000 euros"),
                             SettingsContentSource(
                                 name: "DIP",
-                                url: URL(string: "https://search.dip.bundestag.de/")!,
+                                url: dipSearch,
                                 display: "search.dip.bundestag.de",
                                 description: "Motions and parliamentary papers"),
                         ],
@@ -139,7 +148,7 @@ enum ImprintContent {
                         [
                             SettingsContentSource(
                                 name: nil,
-                                url: URL(string: "https://www.abgeordnetenwatch.de/")!,
+                                url: abgeordnetenwatch,
                                 display: "abgeordnetenwatch.de",
                                 description: "Profiles, party changes, portrait references")
                         ],
@@ -149,12 +158,12 @@ enum ImprintContent {
                         [
                             SettingsContentSource(
                                 name: "Wikidata",
-                                url: URL(string: "https://query.wikidata.org/")!,
+                                url: wikidata,
                                 display: "query.wikidata.org",
                                 description: "Portrait references (P18), CC0"),
                             SettingsContentSource(
                                 name: "Wikimedia Commons",
-                                url: URL(string: "https://commons.wikimedia.org/")!,
+                                url: commons,
                                 display: "commons.wikimedia.org",
                                 description: "Portrait files, licenses stored per file"),
                         ],
@@ -183,7 +192,7 @@ enum ImprintContent {
                         SettingsLinkedParagraph(
                             text: "Machtblick is a project by Ahmed Soliman.",
                             linkLabel: "Ahmed Soliman",
-                            url: URL(string: "https://soli.blue")!))
+                            url: soliBlue))
                 ]),
         ])
 }

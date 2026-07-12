@@ -9,7 +9,7 @@ import { FilterPill } from './FilterPill'
 import { FilterPillRow } from './FilterPillRow'
 import { FilterSheet, type FilterSheetGroup } from './FilterSheet'
 
-const EAGER_CARDS = 30
+const EAGER_CARDS = 6
 
 type Props = {
   groups: VoteDayGroup[]
@@ -54,7 +54,7 @@ export function VotesList({ groups, proposingParty, onProposingPartyChange, avai
       <style>{'@media (max-width:699px){html{scroll-snap-type:y mandatory;scroll-padding-top:52px}}'}</style>
       <div className="sticky top-[54px] z-20 hidden border-b border-fg/15 bg-background desk:block">
         <div className="px-l py-s desk:mx-auto desk:max-w-3xl">
-          <FilterPillRow className="">
+          <FilterPillRow>
             <FilterPill
               label={t.status}
               options={[...VOTE_FLAG_FILTERS]}
@@ -103,22 +103,13 @@ export function VotesList({ groups, proposingParty, onProposingPartyChange, avai
       />
       <div className="desk:hidden">
         <FilterSheet groups={sheetGroups} activeCount={activeCount} />
+      </div>
+      <main className="desk:mx-auto desk:flex desk:max-w-3xl desk:flex-col desk:px-l desk:pb-[64px] desk:pt-m">
         {flat.map((v, i) => (
           <div
             key={v.id}
             id={v.id}
-            className={`relative h-[calc(100svh-96px)] snap-start snap-always px-m pt-l ${i < flat.length - 1 ? 'after:absolute after:inset-x-l after:bottom-0 after:h-px after:bg-elevated' : ''}`}
-          >
-            <LazyVoteCard vote={v} eager={i < EAGER_CARDS} />
-          </div>
-        ))}
-      </div>
-      <main className="mx-auto hidden max-w-3xl flex-col px-l pb-[64px] pt-m desk:flex">
-        {flat.map((v, i) => (
-          <div
-            key={v.id}
-            id={`d-${v.id}`}
-            className={`relative py-m ${i < flat.length - 1 ? 'after:absolute after:inset-x-l after:bottom-0 after:h-px after:bg-elevated' : ''}`}
+            className={`relative h-[calc(100svh-96px)] snap-start snap-always px-m pt-l desk:h-auto desk:px-0 desk:pb-m desk:pt-m ${i < flat.length - 1 ? 'after:absolute after:inset-x-l after:bottom-0 after:h-px after:bg-elevated' : ''}`}
           >
             <LazyVoteCard vote={v} eager={i < EAGER_CARDS} />
           </div>

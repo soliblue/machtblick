@@ -20,15 +20,11 @@ function drucksacheRank(label) {
   return Number(m[1]) * 1_000_000 + Number(m[2])
 }
 
-export function pickAntragFromRows(rows) {
+function pickAntragFromRows(rows) {
   const antrag = rows.filter((r) => isAntragFlavored(r.title) && !isExcluded(r.title))
   if (antrag.length === 0) return null
   antrag.sort((a, b) => drucksacheRank(a.label) - drucksacheRank(b.label))
   return { drucksacheId: antrag[0].label, pdfUrl: antrag[0].url, kind: 'antrag' }
-}
-
-export function pickAntrag(voteId, db) {
-  return pickAntragFromRows(db.prepare(`SELECT label, title, url FROM vote_documents WHERE vote_id = ?`).all(voteId))
 }
 
 const HERE = dirname(fileURLToPath(import.meta.url))

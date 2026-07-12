@@ -7,7 +7,7 @@ enum MotionDebateAdapter {
                 id: entry.id, speakerName: entry.speakerName, speakerMemberId: entry.speakerMemberId,
                 speakerRole: entry.speakerRole, party: entry.party, excerpt: entry.excerpt,
                 contributionType: entry.contributionType, date: entry.date, choice: nil,
-                pictureUrl: entry.speakerMemberId.map { "/members-photos/\($0).jpg" })
+                pictureUrl: entry.speakerMemberId.map(Endpoints.memberPhoto))
         }
     }
 

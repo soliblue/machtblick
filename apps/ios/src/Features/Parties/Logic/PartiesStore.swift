@@ -6,7 +6,7 @@ final class PartiesStore {
     private(set) var parties: [PartyListItem] = []
     private(set) var loadFailed = false
 
-    private var path: String { AppLocale.current.dataPath("/api/parties.json") }
+    private var path: String { AppLocale.current.dataPath(Endpoints.parties) }
 
     func load(cache: ApiCache) async {
         if parties.isEmpty, let cached: [PartyListItem] = cache.cached(path) {

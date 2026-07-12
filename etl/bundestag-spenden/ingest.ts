@@ -3,7 +3,7 @@ import { writeFile, mkdir } from 'node:fs/promises'
 import * as cheerio from 'cheerio'
 import { db } from '@machtblick/db/client'
 import { partyDonations } from '@machtblick/db/schema'
-import { normalizeParty } from './parties.js'
+import { normalizeParty } from '../_shared/parties.ts'
 
 const INDEX_URL = 'https://www.bundestag.de/parlament/praesidium/parteienfinanzierung/fundstellen50000'
 const PERIOD_START = '2025-03-25'

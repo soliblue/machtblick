@@ -70,11 +70,9 @@ export const getPartyHistory = createServerFn({ method: 'GET' })
       }
     }
 
-    const trunkIds = [...trunk]
-    const terms = db.select().from(bundestagTerms).all()
-    const termById = new Map(terms.map((t) => [t.id, t]))
-    const seatRows = allSeats.filter((r) => r.lineageId && trunkIds.includes(r.lineageId))
-    const points: PartyHistoryPoint[] = seatRows
+    const termById = new Map(db.select().from(bundestagTerms).all().map((t) => [t.id, t]))
+    const points: PartyHistoryPoint[] = allSeats
+      .filter((r) => r.lineageId && trunk.has(r.lineageId))
       .map((r) => {
         const term = termById.get(r.termId)!
         return {
@@ -89,7 +87,7 @@ export const getPartyHistory = createServerFn({ method: 'GET' })
       .sort((a, b) => a.termNumber - b.termNumber)
 
     const events: PartyHistoryEvent[] = allEvents
-      .filter((e) => trunkIds.includes(e.lineageId))
+      .filter((e) => trunk.has(e.lineageId))
       .filter((e) => PRE_2005_SEATS_AVAILABLE || e.date >= FIRST_COVERED_YEAR_ISO)
       .map((e): PartyHistoryEvent => ({
         date: e.date,

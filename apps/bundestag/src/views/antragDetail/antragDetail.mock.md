@@ -199,20 +199,20 @@ hemicycle showing the physical majority).
 
 | Element | Text size | Weight | Spacing | Component |
 |---|---|---|---|---|
-| Title | xxl font-display | semibold | mt-l | — |
-| Official title | s | regular, opacity-l | mt-s | — |
+| Title | xxl font-display | semibold | mt-l | |
+| Official title | s | regular, opacity-l | mt-s | |
 | Type chip / kicker chips | 11px uppercase, ls 0.14em | semibold, outlined fg (verdict chip: white on success/danger) | h-[20px] px-s | chip idiom |
-| Meta row | m | regular, opacity-l | mt-s, gap-m | — |
-| Timeline labels | s uppercase, ls 0.08em | regular, opacity-l (terminal: semibold, success/danger) | mt-m, dots 8px, hairline connector | — |
+| Meta row | m | regular, opacity-l | mt-s, gap-m | |
+| Timeline labels | s uppercase, ls 0.08em | regular, opacity-l (terminal: semibold, success/danger) | mt-m, dots 8px, hairline connector | |
 | Section captions | s uppercase, ls 0.08em | regular, opacity-l | mt-xl mb-s | `.caption` |
-| Summary / detail prose | m serif (Charter), leading 1.45 | regular | — | Markdown(Inline) |
+| Summary / detail prose | m serif (Charter), leading 1.45 | regular | | Markdown(Inline) |
 | AI notice / source | s | regular, opacity-l | mt-s / mt-xl | link underline |
-| Vote result card | — | — | p-l, mb-m, hairline + double shadow, 3px top border, radius-m | card recipe |
+| Vote result card | | | p-l, mb-m, hairline + double shadow, 3px top border, radius-m | card recipe |
 | Vote card title | l | semibold | mt-m | link |
-| Hemicycle numerals | 32px font-display tabular-nums | semibold | — | shared hemicycle |
-| Party donuts | — | — | grid gap-l | VoteDistributionDonut 72 + Tooltip |
-| Stamp (no-vote states only) | existing Stamp m | — | — | Stamp |
-| Signatory pile | existing | — | mb-l | SponsorPile |
+| Hemicycle numerals | 32px font-display tabular-nums | semibold | | shared hemicycle |
+| Party donuts | | | grid gap-l | VoteDistributionDonut 72 + Tooltip |
+| Stamp (no-vote states only) | existing Stamp m | | | Stamp |
+| Signatory pile | existing | | mb-l | SponsorPile |
 
 Colors: success/danger for verdicts and terminal timeline states only; party color
 only in the header logo and state badges. Radius 0 everywhere.

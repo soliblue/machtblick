@@ -1,11 +1,10 @@
 import { useMemo } from 'react'
 import type { VoteListItem } from '@/server/votes'
 import type { VoteFlagFilter } from '@/hooks/useVoteFlags'
+import { distinctSorted } from '@/lib/distinctSorted'
 
 export type VoteTypeFilter = VoteListItem['voteType']
 export type VoteResultFilter = VoteListItem['result']
-
-const EMPTY_IDS = new Set<string>()
 
 export function useVoteListFilters(
   votes: VoteListItem[],
@@ -13,16 +12,15 @@ export function useVoteListFilters(
   voteType: VoteTypeFilter | null,
   result: VoteResultFilter | null,
   topic: string | null,
-  query: string = '',
-  flagFilter: VoteFlagFilter = 'all',
-  savedIds: ReadonlySet<string> = EMPTY_IDS,
-  seenIds: ReadonlySet<string> = EMPTY_IDS,
+  query: string,
+  flagFilter: VoteFlagFilter,
+  savedIds: ReadonlySet<string>,
+  seenIds: ReadonlySet<string>,
 ) {
-  const availableParties = useMemo(() => {
-    const set = new Set<string>()
-    for (const v of votes) if (v.proposingParty) set.add(v.proposingParty)
-    return Array.from(set).sort()
-  }, [votes])
+  const availableParties = useMemo(
+    () => distinctSorted(votes.map((v) => v.proposingParty).filter((p): p is string => Boolean(p))),
+    [votes],
+  )
   const availableTopics = useMemo(() => {
     const counts = new Map<string, number>()
     for (const v of votes) if (v.topic) counts.set(v.topic, (counts.get(v.topic) ?? 0) + 1)

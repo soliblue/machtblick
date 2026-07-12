@@ -21,7 +21,7 @@ actor SpeechBodyService {
 
     private func shardPath(id: String, locale: AppLocale) -> String {
         let shard = SpeechShard.of(id)
-        return locale.dataPath("/speeches-search-\(shard).json")
+        return locale.dataPath(Endpoints.speechesSearchShard(shard))
     }
 
     private func fetch(_ path: String) async -> [String: String]? {

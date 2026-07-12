@@ -1,13 +1,12 @@
 import { useMemo } from 'react'
 import type { AntragListItem } from '@/server/antraege'
 import { isLaenderInitiative } from '@/lib/bundeslaender'
+import { distinctSorted } from '@/lib/distinctSorted'
 import { motionStatusBucket, type MotionStatusBucket } from '@/lib/motionStatus'
 
 export type AntragTypeFilter = AntragListItem['type']
 
-export const MOTION_STATUS_BUCKETS: MotionStatusBucket[] = ['angenommen', 'abgelehnt', 'im-verfahren', 'nicht-beraten']
-
-export function antragProposerKey(initiativeFraktion: string | null): string {
+function antragProposerKey(initiativeFraktion: string | null): string {
   return isLaenderInitiative(initiativeFraktion) ? 'Länder' : initiativeFraktion?.trim() ? initiativeFraktion : 'Sonstige'
 }
 
@@ -18,7 +17,7 @@ export function useAntragListFilters(
   status: MotionStatusBucket | null,
 ) {
   const availableProposers = useMemo(
-    () => Array.from(new Set(items.map((a) => antragProposerKey(a.initiativeFraktion)))).sort((a, b) => a.localeCompare(b, 'de')),
+    () => distinctSorted(items.map((a) => antragProposerKey(a.initiativeFraktion)), 'de'),
     [items],
   )
   const filtered = useMemo(() => items.filter((a) => {

@@ -2,11 +2,12 @@ import type { ReactElement } from 'react'
 import { Bookmark, BookmarkCheck, Eye, EyeOff } from 'lucide-react'
 import type { VoteDetail as VoteDetailData } from '@/server/voteDetail'
 import { formatDateLong } from '@/lib/format'
+import type { Locale } from '@/lib/locale'
 import { partyLabel } from '@/lib/parties'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { PartyBadge } from '@/views/votesList/PartyBadge'
 import { Stamp } from '@/views/votesList/Stamp'
-import { MarkdownInline } from '@/lib/MarkdownInline'
+import { MarkdownInline } from '@/components/MarkdownInline'
 import { SERIF } from '@/lib/fonts'
 import { VoteDetailTabs } from './VoteDetailTabs'
 import { ResultTab } from './ResultTab'
@@ -17,10 +18,9 @@ import type { VoteSponsors } from '@/server/voteSponsors'
 import { useCopy, useLocale } from '@/lib/i18n'
 
 export type VoteTab = 'ergebnis' | 'details' | 'reden'
-const VOTE_TABS: VoteTab[] = ['ergebnis', 'details', 'reden']
+export const VOTE_TABS: VoteTab[] = ['ergebnis', 'details', 'reden']
 
-export const isVoteTab = (v: unknown): v is VoteTab =>
-  v === 'ergebnis' || v === 'details' || v === 'reden'
+export const isVoteTab = (v: unknown): v is VoteTab => VOTE_TABS.includes(v as VoteTab)
 
 type Props = {
   data: VoteDetailData & { sponsors: VoteSponsors }
@@ -32,7 +32,7 @@ type Props = {
   onToggleSeen: () => void
 }
 
-function voteFactSummary(vote: VoteDetailData['vote'], partySummaries: VoteDetailData['partySummaries'], locale: 'de' | 'en') {
+function voteFactSummary(vote: VoteDetailData['vote'], partySummaries: VoteDetailData['partySummaries'], locale: Locale) {
   const date = formatDateLong(vote.date, locale)
   const result = locale === 'en' ? (vote.result === 'angenommen' ? 'adopted' : 'rejected') : vote.result
   if (vote.voteType === 'namentlich') {
@@ -106,36 +106,26 @@ export function VoteDetail({ data, activeTab, onTabChange, isSaved, isSeen, onTo
         </span>
         <Stamp variant={vote.result} rotated={false} />
         <div className="flex items-center gap-xs justify-self-end">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
-                aria-label={savedLabel}
-                aria-pressed={isSaved}
-                onClick={onToggleSaved}
-                className="inline-flex h-[32px] w-[32px] items-center justify-center rounded-m border bg-background opacity-l transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
-                style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
-              >
-                {isSaved ? <BookmarkCheck size={17} aria-hidden="true" /> : <Bookmark size={17} aria-hidden="true" />}
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>{savedLabel}</TooltipContent>
-          </Tooltip>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
-                aria-label={seenLabel}
-                aria-pressed={isSeen}
-                onClick={onToggleSeen}
-                className="inline-flex h-[32px] w-[32px] items-center justify-center rounded-m border bg-background opacity-l transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
-                style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
-              >
-                {isSeen ? <Eye size={17} aria-hidden="true" /> : <EyeOff size={17} aria-hidden="true" />}
-              </button>
-            </TooltipTrigger>
-            <TooltipContent>{seenLabel}</TooltipContent>
-          </Tooltip>
+          {[
+            { label: savedLabel, pressed: isSaved, onToggle: onToggleSaved, Icon: isSaved ? BookmarkCheck : Bookmark },
+            { label: seenLabel, pressed: isSeen, onToggle: onToggleSeen, Icon: isSeen ? Eye : EyeOff },
+          ].map(({ label, pressed, onToggle, Icon }) => (
+            <Tooltip key={label}>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  aria-label={label}
+                  aria-pressed={pressed}
+                  onClick={onToggle}
+                  className="inline-flex h-[32px] w-[32px] items-center justify-center rounded-m border bg-background opacity-l transition-opacity hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fg"
+                  style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
+                >
+                  <Icon size={17} aria-hidden="true" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>{label}</TooltipContent>
+            </Tooltip>
+          ))}
         </div>
       </div>
       <h1 lang={locale} className="mt-m font-display text-xl font-semibold leading-[1.15]" style={{ textWrap: 'pretty' }}>
@@ -153,9 +143,9 @@ export function VoteDetail({ data, activeTab, onTabChange, isSaved, isSeen, onTo
 
       {(vote.summarySimplified || vote.summary) && (
         <div className="mb-l">
-          {vote.summarySimplified
-            ? <p className="text-m" style={{ fontFamily: SERIF }}><MarkdownInline>{vote.summarySimplified}</MarkdownInline></p>
-            : <p className="text-m" style={{ fontFamily: SERIF }}>{vote.summary}</p>}
+          <p className="text-m" style={{ fontFamily: SERIF }}>
+            {vote.summarySimplified ? <MarkdownInline>{vote.summarySimplified}</MarkdownInline> : vote.summary}
+          </p>
         </div>
       )}
 

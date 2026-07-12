@@ -10,3 +10,5 @@ metadata:
 **Why:** the previous plumber consciously kept the schema/DB out of sync rather than touch the schema mid-ingest. The journal entries are also non-monotonic (0006_fantastic_firelord exists on disk but with the older snapshot index), so naively reconciling could break replay.
 
 **How to apply:** when generating a new migration, open the generated SQL, delete the `ALTER TABLE members DROP COLUMN dip_person_id;` statement, apply with `sqlite3 db/machtblick.sqlite < db/migrations/<file>.sql` (don't trust `db:migrate`), then rename the file + the `meta/<idx>_snapshot.json` + the `meta/_journal.json` entry to slot above the highest existing `00NN_*` migration. Documented in `.claude/agents/plumber.md` under "Migration drift workaround". Real fix is to add the column to `db/schema/members.ts`, but that needs lead's call.
+
+Since plan 109 (2026-07-12) no TypeScript code sets the column via the typed Drizzle API: `etl/_oneshot/bootstrapDipPersons.ts` (moved from etl/dip/) writes it with raw `sql\`UPDATE members SET dip_person_id = ...\`` so root tsc stays green. Reads go through `etl/dip/resolveMember.ts` raw SQL.

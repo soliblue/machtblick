@@ -39,7 +39,6 @@ export function ResultTab({ data }: Props) {
       <section className="mb-l">
         <PartyDonutGrid summaries={partySummaries} selected={filter} />
       </section>
-
     </>
   )
 }

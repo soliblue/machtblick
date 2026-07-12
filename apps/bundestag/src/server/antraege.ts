@@ -17,7 +17,7 @@ import { normalizeLocale, type Locale } from '@/lib/locale'
 import { SHOW_HAMMELSPRUNG } from '@/lib/voteTypes'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
 import { resolvePictureUrl } from './photoManifest'
-import { getSeatsByParty } from './seats'
+import { isRelatedDebate } from './speechVoteSql'
 import { CURRENT_TERM } from './term'
 import { partySummaryTranslationMap, speechTranslationMap, voteTranslationMap } from './translations'
 import type { SpeechSummary } from './speeches'
@@ -97,14 +97,6 @@ type DebateSpeechRow = {
   position: number
   text_excerpt: string
   debate_source: string | null
-}
-
-function cleanAbstract(value: string | null) {
-  return value
-    ?.replace(/<br\s*\/?>/gi, '\n')
-    .replace(/<[^>]+>/g, '')
-    .replace(/\n{3,}/g, '\n\n')
-    .trim() || null
 }
 
 export type AntragListItem = {
@@ -209,28 +201,11 @@ export const getAntrag = createServerFn({ method: 'GET' })
     const summaryRows = voteRows.length
       ? db.select().from(votePartySummaries).where(inArray(votePartySummaries.voteId, voteRows.map((v) => v.id))).all()
       : []
-    const seats = getSeatsByParty()
     const summariesByVote = new Map<string, AntragLinkedVote['partySummaries']>()
     for (const s of summaryRows) {
       const arr = summariesByVote.get(s.voteId) ?? []
       const t = summaryTranslations.get(`${s.voteId} ${s.party}`)
-      const vote = voteRows.find((v) => v.id === s.voteId)
-      if (vote?.voteType === 'namentlich') {
-        arr.push({ ...s, positionSummary: t?.positionSummary ?? s.positionSummary, keyPoints: t?.keyPoints ?? s.keyPoints, dissentNote: t?.dissentNote ?? s.dissentNote, members: s.members ?? 0, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0 })
-      } else {
-        const members = seats.get(s.party) ?? 0
-        arr.push({
-          ...s,
-          positionSummary: t?.positionSummary ?? s.positionSummary,
-          keyPoints: t?.keyPoints ?? s.keyPoints,
-          dissentNote: t?.dissentNote ?? s.dissentNote,
-          members,
-          yes: s.position === 'yes' ? members : 0,
-          no: s.position === 'no' ? members : 0,
-          abstain: s.position === 'abstain' ? members : 0,
-          absent: 0,
-        })
-      }
+      arr.push({ ...s, positionSummary: t?.positionSummary ?? s.positionSummary, keyPoints: t?.keyPoints ?? s.keyPoints, dissentNote: t?.dissentNote ?? s.dissentNote, members: s.members ?? 0, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0 })
       summariesByVote.set(s.voteId, arr)
     }
     const rawBallots = voteRows.length
@@ -253,26 +228,14 @@ export const getAntrag = createServerFn({ method: 'GET' })
       const t = translations.get(v.id)
       const titled = requireVoteCleanTitle({ id: v.id, title: v.title, cleanTitle: t?.cleanTitle ?? v.cleanTitle })
       const summaries = summariesByVote.get(v.id) ?? []
-      if (v.voteType === 'namentlich') {
-        return {
-          id: v.id,
-          date: v.date,
-          title: titled.title,
-          cleanTitle: titled.cleanTitle,
-          result: v.result,
-          voteType: v.voteType,
-          yes: v.yes ?? 0,
-          no: v.no ?? 0,
-          abstain: v.abstain ?? 0,
-          absent: v.absent ?? 0,
-          totalMembers: v.totalMembers ?? 0,
-          partySummaries: summaries,
-          memberBallots: ballotsByVote.get(v.id) ?? [],
-        }
-      }
-      const yes = summaries.reduce((a, s) => a + s.yes, 0)
-      const no = summaries.reduce((a, s) => a + s.no, 0)
-      const abstain = summaries.reduce((a, s) => a + s.abstain, 0)
+      const counts = v.voteType === 'namentlich'
+        ? { yes: v.yes ?? 0, no: v.no ?? 0, abstain: v.abstain ?? 0, absent: v.absent ?? 0, totalMembers: v.totalMembers ?? 0 }
+        : (() => {
+            const yes = summaries.reduce((a, s) => a + s.yes, 0)
+            const no = summaries.reduce((a, s) => a + s.no, 0)
+            const abstain = summaries.reduce((a, s) => a + s.abstain, 0)
+            return { yes, no, abstain, absent: 0, totalMembers: yes + no + abstain }
+          })()
       return {
         id: v.id,
         date: v.date,
@@ -280,11 +243,7 @@ export const getAntrag = createServerFn({ method: 'GET' })
         cleanTitle: titled.cleanTitle,
         result: v.result,
         voteType: v.voteType,
-        yes,
-        no,
-        abstain,
-        absent: 0,
-        totalMembers: yes + no + abstain,
+        ...counts,
         partySummaries: summaries,
         memberBallots: ballotsByVote.get(v.id) ?? [],
       }
@@ -311,7 +270,7 @@ export const getAntrag = createServerFn({ method: 'GET' })
     const voteDateById = new Map(voteRows.map((v) => [v.id, v.date]))
     let hasRelatedDebate = false
     for (const row of debateRows) {
-      if (row.debate_source === 'related' || row.date !== voteDateById.get(row.vote_id)) hasRelatedDebate = true
+      if (isRelatedDebate(row, voteDateById.get(row.vote_id))) hasRelatedDebate = true
       if (!speechRowsById.has(row.id)) speechRowsById.set(row.id, row)
     }
     const speechRows = [...speechRowsById.values()].sort((a, b) => b.date.localeCompare(a.date) || a.position - b.position)
@@ -350,7 +309,7 @@ export const getAntrag = createServerFn({ method: 'GET' })
         type: row.type,
         title: locale === 'en' ? translation?.title ?? row.title : row.title,
         cleanTitle: locale === 'en' ? translation?.cleanTitle ?? row.cleanTitle : row.cleanTitle,
-        abstract: cleanAbstract(row.abstract),
+        abstract: row.abstractPlain,
         beratungsstand: row.beratungsstand,
         initiativeFraktion: row.initiativeFraktion,
         introducedDate: row.introducedDate,
