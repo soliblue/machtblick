@@ -69,7 +69,9 @@ if sys.argv[1] == "prepare":
 
 if sys.argv[1] == "verify":
     evidence = None
-    for attempt in range(61):
+    observation = None
+    attempts = int(os.environ.get("TESTFLIGHT_VERIFY_ATTEMPTS", "61"))
+    for attempt in range(attempts):
         builds = all_data(
             f"{API}/builds",
             {
@@ -107,6 +109,19 @@ if sys.argv[1] == "verify":
                     )
                 },
             }
+            next_observation = (
+                build["attributes"]["processingState"],
+                evidence["external"],
+                build["id"] in evidence["group_builds"],
+            )
+            if next_observation != observation:
+                print(
+                    f"Observed build {os.environ['TESTFLIGHT_BUILD_NUMBER']}: "
+                    f"processing={next_observation[0]}, external={next_observation[1]}, "
+                    f"public_group={next_observation[2]}",
+                    flush=True,
+                )
+                observation = next_observation
             assert evidence["external"] != "BETA_REJECTED", "Apple rejected the beta build."
             if (
                 build["attributes"]["processingState"] == "VALID"
@@ -114,14 +129,24 @@ if sys.argv[1] == "verify":
                 and evidence["external"] == "IN_BETA_TESTING"
             ):
                 break
-        if attempt < 60:
+        if attempt < attempts - 1:
             time.sleep(30)
     assert evidence is not None, "The uploaded build did not appear in App Store Connect."
-    assert evidence["build"]["attributes"]["version"] == os.environ["TESTFLIGHT_BUILD_NUMBER"]
-    assert evidence["build"]["attributes"]["processingState"] == "VALID"
-    assert evidence["prerelease"] == {"version": "1.0", "platform": "IOS"}
-    assert evidence["build"]["id"] in evidence["group_builds"]
-    assert evidence["external"] == "IN_BETA_TESTING"
+    assert evidence["build"]["attributes"]["version"] == os.environ["TESTFLIGHT_BUILD_NUMBER"], (
+        f"Observed build number {evidence['build']['attributes']['version']}."
+    )
+    assert evidence["build"]["attributes"]["processingState"] == "VALID", (
+        f"Observed processing state {evidence['build']['attributes']['processingState']}."
+    )
+    assert evidence["prerelease"] == {"version": "1.0", "platform": "IOS"}, (
+        f"Observed prerelease {evidence['prerelease']}."
+    )
+    assert evidence["build"]["id"] in evidence["group_builds"], (
+        "The build is not assigned to the public TestFlight group."
+    )
+    assert evidence["external"] == "IN_BETA_TESTING", (
+        f"Observed external build state {evidence['external']}."
+    )
     print(
         f"Machtblick 1.0 ({os.environ['TESTFLIGHT_BUILD_NUMBER']}) is processed and available "
         f"through {os.environ['TESTFLIGHT_PUBLIC_GROUP']} at {PUBLIC_LINK}."
