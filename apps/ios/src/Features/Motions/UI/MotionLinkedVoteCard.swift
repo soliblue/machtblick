@@ -7,7 +7,11 @@ struct MotionLinkedVoteCard: View {
         NavigationLink(value: AppRoute.vote(vote.id)) {
             VStack(alignment: .leading, spacing: ThemeTokens.Spacing.m) {
                 HStack {
-                    ChoicePill(label: vote.result.label, fill: vote.result.color)
+                    ChoicePill(
+                        label: vote.result.label,
+                        fill: vote.result.color,
+                        textColor: vote.result == .angenommen
+                            ? ThemeColor.onSuccess : ThemeColor.onDanger)
                     Spacer()
                     Text("\(Formatters.shortDate(vote.date)) · \(voteTypeLabel)").kicker()
                 }

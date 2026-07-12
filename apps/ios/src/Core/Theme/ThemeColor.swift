@@ -1,10 +1,11 @@
 import SwiftUI
+import UIKit
 
 enum ThemeColor {
-    static let background = Color(hex: 0xFFFFFF)
-    static let surface = Color(hex: 0xF7F7F7)
-    static let elevated = Color(hex: 0xEDEDED)
-    static let fg = Color(hex: 0x0A0A0A)
+    static let background = adaptive(light: 0xFFFFFF, dark: 0x000000)
+    static let surface = adaptive(light: 0xF7F7F7, dark: 0x1C1C1E)
+    static let elevated = adaptive(light: 0xEDEDED, dark: 0x2C2C2E)
+    static let fg = adaptive(light: 0x0A0A0A, dark: 0xFFFFFF)
 
     static let blue = Color(hex: 0x6E9BF0)
     static let green = Color(hex: 0x34C759)
@@ -23,9 +24,23 @@ enum ThemeColor {
 
     static let success = Color(hex: 0x7AB87A)
     static let danger = Color(hex: 0xB54E5E)
+    static let onSuccess = Color(hex: 0x0A0A0A)
+    static let onDanger = Color(hex: 0xFFFFFF)
+    static let onYellow = Color(hex: 0x0A0A0A)
 
     static let border = fg.opacity(ThemeTokens.Opacity.s)
     static let secondary = fg.opacity(ThemeTokens.Opacity.l)
+
+    private static func adaptive(light: UInt32, dark: UInt32) -> Color {
+        Color(uiColor: UIColor { traits in
+            let hex = traits.userInterfaceStyle == .dark ? dark : light
+            return UIColor(
+                red: CGFloat((hex >> 16) & 0xFF) / 255,
+                green: CGFloat((hex >> 8) & 0xFF) / 255,
+                blue: CGFloat(hex & 0xFF) / 255,
+                alpha: 1)
+        })
+    }
 }
 
 extension Color {

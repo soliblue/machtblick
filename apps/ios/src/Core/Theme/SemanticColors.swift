@@ -41,7 +41,12 @@ extension BallotChoice {
     }
 
     var pillText: Color {
-        self == .enthalten ? ThemeColor.fg : ThemeColor.background
+        switch self {
+        case .ja: return ThemeColor.onSuccess
+        case .nein: return ThemeColor.onDanger
+        case .enthalten: return ThemeColor.onYellow
+        case .nichtAbgegeben: return ThemeColor.fg
+        }
     }
 }
 
@@ -56,7 +61,12 @@ extension PartyPosition {
     }
 
     var pillText: Color {
-        self == .abstain ? ThemeColor.fg : ThemeColor.background
+        switch self {
+        case .yes: return ThemeColor.onSuccess
+        case .no: return ThemeColor.onDanger
+        case .abstain: return ThemeColor.onYellow
+        case .mixed, .split: return ThemeColor.fg
+        }
     }
 }
 

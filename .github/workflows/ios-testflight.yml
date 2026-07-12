@@ -59,6 +59,15 @@ jobs:
             -o "$RUNNER_TEMP/machtblick-language-contract"
           "$RUNNER_TEMP/machtblick-language-contract"
 
+      - name: Check theme contract
+        if: ${{ inputs.verify_build_number == '' }}
+        run: |
+          xcrun swiftc \
+            apps/ios/src/Core/Theme/AppTheme.swift \
+            apps/ios/scripts/ThemeContractCheck.swift \
+            -o "$RUNNER_TEMP/machtblick-theme-contract"
+          "$RUNNER_TEMP/machtblick-theme-contract"
+
       - name: Check member payload compatibility
         if: ${{ inputs.verify_build_number == '' }}
         run: |

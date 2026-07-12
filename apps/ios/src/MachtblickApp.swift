@@ -6,6 +6,7 @@ struct MachtblickApp: App {
     let container: ModelContainer
     let cache: ApiCache
     @State private var appLanguage = AppLanguage.persisted
+    @State private var appTheme = AppTheme.persisted
     @State private var motionLink: MotionLink?
 
     init() {
@@ -16,8 +17,8 @@ struct MachtblickApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RootTabView(cache: cache, appLanguage: $appLanguage)
-                .preferredColorScheme(.light)
+            RootTabView(cache: cache, appLanguage: $appLanguage, appTheme: $appTheme)
+                .preferredColorScheme(appTheme.colorScheme)
                 .sheet(item: $motionLink) { link in
                     NavigationStack {
                         MotionDetailView(id: link.id, cache: cache)

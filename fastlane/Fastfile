@@ -57,13 +57,13 @@ platform :ios do
       distribute_external: true,
       groups: [ENV.fetch("TESTFLIGHT_PUBLIC_GROUP")],
       notify_external_testers: false,
-      changelog: "Neu: Ein kompakter Mehr-Bereich mit nativen Seiten zu Daten, Impressum und Datenschutz.",
+      changelog: "Neu: Machtblick folgt standardmäßig dem Erscheinungsbild des iPhones. Unter Mehr kannst du zwischen System, Hell und Dunkel wählen.",
       localized_build_info: {
         "de-DE": {
-          whats_new: "Der neue kompakte Mehr-Bereich bietet Sprachauswahl, Datenaktualität, Teilen sowie native Seiten zu Daten, Impressum und Datenschutz."
+          whats_new: "Machtblick folgt jetzt standardmäßig dem Erscheinungsbild deines iPhones. Unter Mehr kannst du zwischen System, Hell und Dunkel wählen. Datenstand und Teilen stehen nun direkt bei den übrigen Einstellungen."
         },
         "en-US": {
-          whats_new: "The new compact More area includes the language picker, data freshness, sharing, and native About the data, Imprint, and Privacy pages."
+          whats_new: "Machtblick now follows your iPhone appearance by default. In More, you can choose System, Light, or Dark. Last updated and sharing now sit directly with the other settings."
         }
       }
     )

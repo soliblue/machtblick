@@ -7,9 +7,7 @@ struct MemberBallotBadge: View {
         Text(choice.label)
             .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
             .textCase(.uppercase)
-            .foregroundStyle(
-                choice == .ja || choice == .nein ? ThemeColor.background : ThemeColor.fg
-            )
+            .foregroundStyle(choice.pillText)
             .padding(.horizontal, ThemeTokens.Spacing.s)
             .padding(.vertical, ThemeTokens.Spacing.xs)
             .background(

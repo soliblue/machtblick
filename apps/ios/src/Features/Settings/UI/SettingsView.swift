@@ -3,40 +3,47 @@ import SwiftUI
 struct SettingsView: View {
     let cache: ApiCache
     @Binding var appLanguage: AppLanguage
+    @Binding var appTheme: AppTheme
+    @Environment(\.colorScheme) private var colorScheme
     @State private var scroll = ScrollPositionModel()
 
     var body: some View {
         GeometryReader { proxy in
             ScrollView {
                 VStack(spacing: 0) {
-                    HStack(spacing: ThemeTokens.Spacing.m) {
-                        Image(systemName: "globe")
-                            .font(.system(size: ThemeTokens.Icon.m))
-                            .frame(width: ThemeTokens.Icon.l)
-                            .accessibilityHidden(true)
-                        Text(Copy.languageSection)
-                            .font(.system(size: ThemeTokens.Text.l))
-                            .accessibilityHidden(true)
-                        Spacer()
-                        Picker(
-                            Copy.languageSection,
-                            selection: Binding(
-                                get: { appLanguage },
-                                set: {
-                                    AppLanguage.persisted = $0
-                                    appLanguage = $0
-                                })
-                        ) {
-                            ForEach(AppLanguage.allCases) { language in
-                                Text(Copy.languageSelectionName(language)).tag(language)
-                            }
+                    MorePickerRow(
+                        title: Copy.languageSection,
+                        systemImage: "globe",
+                        value: Copy.languageSelectionName(appLanguage),
+                        identifier: "language-picker",
+                        selection: Binding(
+                            get: { appLanguage },
+                            set: {
+                                AppLanguage.persisted = $0
+                                appLanguage = $0
+                            })
+                    ) {
+                        ForEach(AppLanguage.allCases) { language in
+                            Text(Copy.languageSelectionName(language)).tag(language)
                         }
-                        .pickerStyle(.menu)
-                        .tint(ThemeColor.fg)
-                        .accessibilityLabel(Copy.languageSection)
                     }
-                    .foregroundStyle(ThemeColor.fg)
-                    .padding(.vertical, ThemeTokens.Spacing.l)
+                    MoreDivider()
+                    MorePickerRow(
+                        title: Copy.themeSection,
+                        systemImage: "circle.lefthalf.filled",
+                        value: Copy.themeSelectionName(appTheme),
+                        identifier: "appearance-picker",
+                        selection: Binding(
+                            get: { appTheme },
+                            set: {
+                                AppTheme.persisted = $0
+                                appTheme = $0
+                            })
+                    ) {
+                        ForEach(AppTheme.allCases) { theme in
+                            Text(Copy.themeSelectionName(theme)).tag(theme)
+                        }
+                    }
                     MoreDivider()
                     NavigationLink {
                         AboutDataView()
@@ -56,7 +63,6 @@ struct SettingsView: View {
                         MoreRowLabel(title: Copy.privacy, systemImage: "hand.raised")
                     }
                     MoreDivider()
-                    Spacer(minLength: ThemeTokens.Spacing.xl)
                     HStack(alignment: .top, spacing: ThemeTokens.Spacing.m) {
                         Image(systemName: "clock.arrow.circlepath")
                             .font(.system(size: ThemeTokens.Icon.m))
@@ -118,6 +124,15 @@ struct SettingsView: View {
         .background(ThemeColor.background)
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
+        .overlay(alignment: .topLeading) {
+            #if DEBUG
+            Text(colorScheme == .dark ? "dark" : "light")
+                .font(.system(size: 1))
+                .foregroundStyle(ThemeColor.background)
+                .frame(width: 1, height: 1)
+                .accessibilityIdentifier("resolved-theme")
+            #endif
+        }
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 BrandWordmark(scroll: scroll)

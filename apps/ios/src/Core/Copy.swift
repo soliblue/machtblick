@@ -66,6 +66,10 @@ enum Copy {
     static var languageSystem: String { localized("copy.languageSystem") }
     static var languageGerman: String { localized("copy.languageGerman") }
     static var languageEnglish: String { localized("copy.languageEnglish") }
+    static var themeSection: String { localized("copy.themeSection") }
+    static var themeSystem: String { localized("copy.themeSystem") }
+    static var themeLight: String { localized("copy.themeLight") }
+    static var themeDark: String { localized("copy.themeDark") }
     static var aboutData: String { localized("copy.aboutData") }
     static var shareMachtblick: String { localized("copy.shareMachtblick") }
     static var shareMessage: String { localized("copy.shareMessage") }
@@ -176,6 +180,14 @@ enum Copy {
         case .system: return languageSystem
         case .de: return languageGerman
         case .en: return languageEnglish
+        }
+    }
+
+    static func themeSelectionName(_ theme: AppTheme) -> String {
+        switch theme {
+        case .system: return themeSystem
+        case .light: return themeLight
+        case .dark: return themeDark
         }
     }
 

@@ -57,6 +57,14 @@ jobs:
             -o "$RUNNER_TEMP/machtblick-language-contract"
           "$RUNNER_TEMP/machtblick-language-contract"
 
+      - name: Check theme contract
+        run: |
+          xcrun swiftc \
+            apps/ios/src/Core/Theme/AppTheme.swift \
+            apps/ios/scripts/ThemeContractCheck.swift \
+            -o "$RUNNER_TEMP/machtblick-theme-contract"
+          "$RUNNER_TEMP/machtblick-theme-contract"
+
       - name: Check member payload compatibility
         run: |
           xcrun swiftc \
@@ -105,31 +113,57 @@ jobs:
           xcrun simctl boot "$SMOKE_UDID"
           xcrun simctl bootstatus "$SMOKE_UDID" -b
           mkdir -p "$RUNNER_TEMP/machtblick-smoke"
-          for LANGUAGE in de en; do
+          for SCENARIO in de:default:light en:system:dark de:light:dark en:dark:light; do
+            IFS=: read -r LANGUAGE APP_THEME DEVICE_APPEARANCE <<< "$SCENARIO"
+            xcrun simctl ui "$SMOKE_UDID" appearance "$DEVICE_APPEARANCE"
             xcrun simctl install "$SMOKE_UDID" "$RUNNER_TEMP/machtblick-build/Build/Products/Debug-iphonesimulator/Machtblick.app"
             PREFERENCES="$(xcrun simctl get_app_container "$SMOKE_UDID" soli.Machtblick data)/Library/Preferences/soli.Machtblick.plist"
             mkdir -p "$(dirname "$PREFERENCES")"
             plutil -create binary1 "$PREFERENCES"
             plutil -insert appLanguage -string "$LANGUAGE" "$PREFERENCES"
+            if [ "$APP_THEME" != "default" ]; then
+              plutil -insert appTheme -string "$APP_THEME" "$PREFERENCES"
+            fi
             for LAUNCH in 1 2; do
               LAUNCH_OUTPUT="$(xcrun simctl launch --terminate-running-process "$SMOKE_UDID" soli.Machtblick)"
               APP_PID="${LAUNCH_OUTPUT##*: }"
               sleep 8
               kill -0 "$APP_PID"
               if [ "$LAUNCH" = 2 ]; then
-                xcrun simctl io "$SMOKE_UDID" screenshot "$RUNNER_TEMP/machtblick-smoke/$LANGUAGE.png"
+                xcrun simctl io "$SMOKE_UDID" screenshot "$RUNNER_TEMP/machtblick-smoke/${SCENARIO//:/-}.png"
               fi
               xcrun simctl terminate "$SMOKE_UDID" soli.Machtblick
             done
             xcrun simctl uninstall "$SMOKE_UDID" soli.Machtblick
           done
 
+      - name: Exercise theme preference
+        run: |
+          xcrun simctl ui "$SMOKE_UDID" appearance dark
+          xcodebuild test \
+            -project apps/ios/iOS.xcodeproj \
+            -scheme Machtblick \
+            -destination "platform=iOS Simulator,id=$SMOKE_UDID" \
+            -derivedDataPath "$RUNNER_TEMP/machtblick-build" \
+            -resultBundlePath "$RUNNER_TEMP/machtblick-theme-tests.xcresult" \
+            -only-testing:MachtblickUITests/ThemePreferenceUITests/testThemeSwitchingAndPersistence \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO
+
       - name: Upload smoke screenshots
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
-          name: bilingual-simulator-smoke
+          name: appearance-language-simulator-smoke
           path: ${{ runner.temp }}/machtblick-smoke/*.png
+          if-no-files-found: ignore
+
+      - name: Upload theme preference result
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: theme-preference-xcresult
+          path: ${{ runner.temp }}/machtblick-theme-tests.xcresult
           if-no-files-found: ignore
 
       - name: Shut down smoke simulator

@@ -3,7 +3,7 @@ import SwiftUI
 struct ChoicePill: View {
     let label: String
     var fill: Color?
-    var textColor: Color = ThemeColor.background
+    var textColor: Color
 
     var body: some View {
         Text(label)

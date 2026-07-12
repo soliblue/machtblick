@@ -10,6 +10,7 @@ private enum RootTab: Hashable {
 struct RootTabView: View {
     let cache: ApiCache
     @Binding var appLanguage: AppLanguage
+    @Binding var appTheme: AppTheme
     @State private var votesStore = VotesStore()
     @State private var membersStore = MembersStore()
     @State private var partiesStore = PartiesStore()
@@ -50,7 +51,7 @@ struct RootTabView: View {
             }
             Tab(value: RootTab.more) {
                 NavigationStack {
-                    SettingsView(cache: cache, appLanguage: $appLanguage)
+                    SettingsView(cache: cache, appLanguage: $appLanguage, appTheme: $appTheme)
                 }
             } label: {
                 Image(systemName: "slider.horizontal.3")

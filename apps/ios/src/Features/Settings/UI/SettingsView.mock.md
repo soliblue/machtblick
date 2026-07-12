@@ -9,19 +9,20 @@
 |                                          |
 | [globe]  Sprache              Deutsch  v |
 |          ------------------------------  |
+| [circle.lefthalf] Darstellung   System  v|
+|          ------------------------------  |
 | [building.columns]  Über die Daten     > |
 |          ------------------------------  |
 | [doc.text]          Impressum           > |
 |          ------------------------------  |
 | [hand.raised]       Datenschutz         > |
-|                                          |
-|                                          |
-| [arrow.clockwise]   Datenstand            |
+|          ------------------------------  |
+| [arrow.clockwise]   Zuletzt aktualisiert  |
 |                     11. Juli, 22:10       |
 |          ------------------------------  |
 | [square.and.arrow.up] Machtblick teilen   |
 |                                          |
-|              Version 1.0 (31)            |
+|              Version 1.0 (33)            |
 +------------------------------------------+
 |    [seal]     [people]     [pie] [sliders]|
 +------------------------------------------+
@@ -36,19 +37,20 @@
 |                                          |
 | [globe]  Language              English  v|
 |          ------------------------------  |
+| [circle.lefthalf] Appearance    System  v|
+|          ------------------------------  |
 | [building.columns]  About the data     > |
 |          ------------------------------  |
 | [doc.text]          Imprint            > |
 |          ------------------------------  |
 | [hand.raised]       Privacy            > |
-|                                          |
-|                                          |
-| [arrow.clockwise]   Data freshness       |
+|          ------------------------------  |
+| [arrow.clockwise]   Last updated          |
 |                     Jul 11, 10:10 PM      |
 |          ------------------------------  |
 | [square.and.arrow.up] Share Machtblick    |
 |                                          |
-|              Version 1.0 (31)            |
+|              Version 1.0 (33)            |
 +------------------------------------------+
 |    [seal]     [people]     [pie] [sliders]|
 +------------------------------------------+
@@ -69,6 +71,28 @@ All four root tabs are icon-only. Their SF Symbols are `checkmark.seal`, `person
 ```
 
 The Language row is a native trailing `Menu` picker. Its closed value is exactly `System`, `Deutsch`, or `English`. The choices keep their own names in both app languages. Selecting an option updates all app copy immediately. `System` resolves to German only when the phone's first preferred language is German, and to English otherwise. It does not add a second explanatory line.
+
+## Appearance menu
+
+```text
+                         +----------------+
+                         | System        ✓|
+                         | Hell            |
+                         | Dunkel          |
+                         +----------------+
+```
+
+The Appearance row is a native trailing `Menu` picker. Its choices are `System`, `Hell`, and `Dunkel` in German and `System`, `Light`, and `Dark` in English. `System` is the default and follows the iPhone appearance. Explicit Light and Dark choices update the whole app immediately and persist across launches.
+
+The semantic canvas tokens adapt to the selected appearance. Light keeps the existing white, off-white, and elevated gray hierarchy. Dark uses black, `#1C1C1E`, and `#2C2C2E`; foreground becomes white. Borders and secondary text remain derived from `fg`. Accent and party colors keep their existing meaning in both appearances.
+
+## Tokens
+
+- Preference, navigation, and share labels use text `l`; freshness copy uses text `m`; the version uses text `s`.
+- Row icons use icon `m`, navigation chevrons use icon `s`, and the icon column uses icon `l` width.
+- Rows use spacing `m` between icon and copy plus spacing `l` vertically.
+- Dividers use stroke `s`, border opacity `s`, and the existing inset after the icon column.
+- Selected values, supporting text, chevrons, and the version use secondary opacity `l`.
 
 ## Pushed native page
 
@@ -180,7 +204,7 @@ All headings, paragraphs, sources, descriptions, dates, links, and contact addre
 - The canvas and toolbar are `background`, with no grouped-list gray, cards, shadows, pills, or decorative accent color.
 - Root content uses `l` horizontal padding. Rows use at least a 44 point tap target, `m` icon-to-label spacing, `m` icons, `s` chevrons, and `l` body text.
 - Hairline dividers are `fg` at `opacity-s` and begin after the icon column. Section separation comes from `xl` whitespace.
-- The Language value, freshness timestamp, chevrons, link metadata, and version use `secondary`. The version is centered, `text-s`, and visually quiet.
+- The Language and Appearance values, freshness timestamp, chevrons, link metadata, and version use `secondary`. The version is centered, `text-s`, and visually quiet.
 - Reading pages use `display-xxl` for the title, `text-s` captions, and `text-m` prose. Website source group indentation maps to `m` spacing. Links are underlined rather than colored.
-- The freshness block and share action stay near the bottom when the screen is tall, but remain reachable through scrolling at large Dynamic Type sizes.
+- Data freshness and sharing directly follow Privacy without a flexible gap. All rows remain reachable through scrolling at large Dynamic Type sizes.
 - SF Symbols are decorative within labeled rows. Each row is one full-width accessibility element with its localized label, value, and button or link trait.
