@@ -56,7 +56,7 @@ platform :ios do
       skip_waiting_for_build_processing: false,
       distribute_external: true,
       groups: [ENV.fetch("TESTFLIGHT_PUBLIC_GROUP")],
-      notify_external_testers: false,
+      notify_external_testers: true,
       changelog: "Neu: Machtblick folgt standardmäßig dem Erscheinungsbild des iPhones. Unter Mehr kannst du zwischen System, Hell und Dunkel wählen.",
       localized_build_info: {
         "de-DE": {

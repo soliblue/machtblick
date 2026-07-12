@@ -10,9 +10,10 @@ Add a persistent iOS appearance preference that follows the phone by default and
 - Define persistent theme contract: done
 - Implement adaptive colors and root wiring: done
 - Update More layout, localization, mock, and checks: done
-- Verify light, dark, persistence, and language behavior: pending
-- Commit and push: pending
-- Public iOS build and TestFlight deployment: pending
+- Verify light, dark, persistence, and language behavior: done
+- Commit and push: done
+- Public iOS build: done
+- Activate and verify the TestFlight build: in progress
 
 ## Contracts
 
@@ -21,7 +22,7 @@ Add a persistent iOS appearance preference that follows the phone by default and
 - Background, surface, elevated, foreground, border, and secondary tokens adapt semantically. Existing accent and party meanings stay unchanged.
 - The More screen keeps native menu pickers, full-width accessible rows, compact dividers, and the existing bilingual copy contract.
 - Language and appearance stay together at the top. Data freshness and sharing directly follow About the data, Imprint, and Privacy without the current flexible gap.
-- No signing secret, deployment permission, or TestFlight group configuration changes.
+- Existing signing secrets, deployment permissions, and the public TestFlight group stay unchanged. External testers are notified so an approved build enters active testing.
 
 ## Verification
 
@@ -43,3 +44,7 @@ Add a persistent iOS appearance preference that follows the phone by default and
 - 2026-07-12 lead: local localization, Settings parity, More UI, Actionlint, asset JSON, scheme XML, project-structure, and diff checks pass. Xcode compilation and UI execution remain the public macOS gate because the current host has no Xcode runtime.
 - 2026-07-12 public Mac: run `29187237954` compiled the app and UI-test target, passed all contracts, launched the four seeded language and appearance combinations twice each, and passed immediate System, Light, Dark, and relaunch persistence through the real More control.
 - 2026-07-12 lead: artifact inspection caught that menu-style `Picker` suppressed its custom icon and title in the custom scroll layout even though behavior and accessibility passed. Replaced that rendering with a full-width native `Menu` using direct checked choices, retained the same persistence binding and accessibility contract, and added a render-settle delay before screenshots. A second public Mac run is required before deployment.
+- 2026-07-12 public Mac: run `29187584961` passed every contract, all four seeded launch and relaunch scenarios, and the real in-app appearance UI test. Artifact inspection confirmed stable labels, icons, ordering, light mode, dark mode, system mode, immediate switching, and persistence.
+- 2026-07-12 scribe: committed the implementation as `ab462d7` and the corrected appearance row rendering as `8eee194`, then pushed both to `main`.
+- 2026-07-12 deployment: build 32 processed as valid, passed beta review, and joined the public group, but remained `BETA_APPROVED` because the lane disabled external tester notifications. The strict availability check correctly rejected that incomplete state, and the run revoked its temporary certificate and cleaned up signing material.
+- 2026-07-12 lead: retained the `IN_BETA_TESTING` release gate and added external tester activation to the release path instead of treating approval alone as deployment.

@@ -7,6 +7,11 @@ on:
         description: Existing build number to verify without uploading
         required: false
         type: string
+      activate_external_testing:
+        description: Notify external testers for the selected existing build
+        required: false
+        type: boolean
+        default: false
   push:
     tags:
       - 'ios-v*'
@@ -15,7 +20,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: ios-testflight
+  group: ${{ inputs.verify_build_number != '' && format('ios-testflight-verify-{0}', inputs.verify_build_number) || 'ios-testflight' }}
   cancel-in-progress: false
 
 jobs:
@@ -129,6 +134,7 @@ jobs:
         if: ${{ inputs.verify_build_number != '' }}
         env:
           VERIFY_BUILD_NUMBER: ${{ inputs.verify_build_number }}
+          ACTIVATE_EXTERNAL_TESTING: ${{ inputs.activate_external_testing }}
         run: |
           python3 - <<'PY'
           import os
@@ -136,8 +142,18 @@ jobs:
           assert os.environ["VERIFY_BUILD_NUMBER"].isdigit()
           with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as env:
               env.write(f"TESTFLIGHT_BUILD_NUMBER={os.environ['VERIFY_BUILD_NUMBER']}\n")
-              env.write("TESTFLIGHT_VERIFY_ATTEMPTS=1\n")
+              env.write(
+                  f"TESTFLIGHT_VERIFY_ATTEMPTS={181 if os.environ['ACTIVATE_EXTERNAL_TESTING'] == 'true' else 1}\n"
+              )
           PY
+
+      - name: Activate external testing
+        if: ${{ inputs.verify_build_number != '' && inputs.activate_external_testing }}
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+        run: python3 .github/scripts/asc_testflight.py activate
 
       - name: Build and upload to TestFlight
         if: ${{ inputs.verify_build_number == '' }}

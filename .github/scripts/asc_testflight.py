@@ -67,6 +67,53 @@ if sys.argv[1] == "prepare":
         env.write(f"TESTFLIGHT_PUBLIC_GROUP_ID={groups[0]['id']}\n")
     print(f"Resolved public TestFlight group: {groups[0]['attributes']['name']}")
 
+if sys.argv[1] == "activate":
+    builds = all_data(
+        f"{API}/builds",
+        {
+            "filter[app]": app[0]["id"],
+            "filter[version]": os.environ["TESTFLIGHT_BUILD_NUMBER"],
+            "fields[builds]": "version,processingState",
+            "limit": 2,
+        },
+    )
+    assert len(builds) == 1, f"Expected one build, found {len(builds)}."
+    detail = SESSION.get(
+        f"{API}/builds/{builds[0]['id']}/buildBetaDetail",
+        headers=headers(),
+        params={"fields[buildBetaDetails]": "externalBuildState"},
+        timeout=30,
+    )
+    detail.raise_for_status()
+    external = detail.json()["data"]["attributes"]["externalBuildState"]
+    assert builds[0]["attributes"]["processingState"] == "VALID"
+    assert builds[0]["id"] in {
+        item["id"]
+        for item in all_data(
+            f"{API}/betaGroups/{os.environ['TESTFLIGHT_PUBLIC_GROUP_ID']}/relationships/builds",
+            {"limit": 200},
+        )
+    }
+    if external == "IN_BETA_TESTING":
+        print(f"Build {os.environ['TESTFLIGHT_BUILD_NUMBER']} is already in external testing.")
+    else:
+        assert external == "BETA_APPROVED", f"Observed external build state {external}."
+        notification = SESSION.post(
+            f"{API}/buildBetaNotifications",
+            headers={**headers(), "Content-Type": "application/json"},
+            json={
+                "data": {
+                    "type": "buildBetaNotifications",
+                    "relationships": {
+                        "build": {"data": {"type": "builds", "id": builds[0]["id"]}}
+                    },
+                }
+            },
+            timeout=30,
+        )
+        notification.raise_for_status()
+        print(f"Activated external testing for build {os.environ['TESTFLIGHT_BUILD_NUMBER']}.")
+
 if sys.argv[1] == "verify":
     evidence = None
     observation = None
