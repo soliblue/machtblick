@@ -1,12 +1,13 @@
 import SwiftUI
 
-struct MorePickerRow<SelectionValue: Hashable, Content: View>: View {
+struct MorePickerRow<SelectionValue: Hashable>: View {
     let title: String
     let systemImage: String
     let value: String
     let identifier: String
     @Binding var selection: SelectionValue
-    let content: Content
+    let options: [SelectionValue]
+    let optionName: (SelectionValue) -> String
 
     init(
         title: String,
@@ -14,19 +15,31 @@ struct MorePickerRow<SelectionValue: Hashable, Content: View>: View {
         value: String,
         identifier: String,
         selection: Binding<SelectionValue>,
-        @ViewBuilder content: () -> Content
+        options: [SelectionValue],
+        optionName: @escaping (SelectionValue) -> String
     ) {
         self.title = title
         self.systemImage = systemImage
         self.value = value
         self.identifier = identifier
         self._selection = selection
-        self.content = content()
+        self.options = options
+        self.optionName = optionName
     }
 
     var body: some View {
-        Picker(selection: $selection) {
-            content
+        Menu {
+            ForEach(options, id: \.self) { option in
+                Button {
+                    selection = option
+                } label: {
+                    if option == selection {
+                        Label(optionName(option), systemImage: "checkmark")
+                    } else {
+                        Text(optionName(option))
+                    }
+                }
+            }
         } label: {
             HStack(spacing: ThemeTokens.Spacing.m) {
                 Image(systemName: systemImage)
@@ -36,14 +49,18 @@ struct MorePickerRow<SelectionValue: Hashable, Content: View>: View {
                 Text(title)
                     .font(.system(size: ThemeTokens.Text.l))
                 Spacer()
-                Text(value)
-                    .font(.system(size: ThemeTokens.Text.l))
-                    .foregroundStyle(ThemeColor.secondary)
+                HStack(spacing: ThemeTokens.Spacing.xs) {
+                    Text(value)
+                        .font(.system(size: ThemeTokens.Text.l))
+                    Image(systemName: "chevron.up.chevron.down")
+                        .font(.system(size: ThemeTokens.Icon.s))
+                }
+                .foregroundStyle(ThemeColor.secondary)
             }
             .frame(maxWidth: .infinity)
             .contentShape(Rectangle())
         }
-        .pickerStyle(.menu)
+        .buttonStyle(.plain)
         .tint(ThemeColor.fg)
         .accessibilityLabel(title)
         .accessibilityValue(value)

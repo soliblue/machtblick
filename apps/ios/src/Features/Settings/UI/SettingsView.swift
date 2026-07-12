@@ -21,12 +21,9 @@ struct SettingsView: View {
                             set: {
                                 AppLanguage.persisted = $0
                                 appLanguage = $0
-                            })
-                    ) {
-                        ForEach(AppLanguage.allCases) { language in
-                            Text(Copy.languageSelectionName(language)).tag(language)
-                        }
-                    }
+                            }),
+                        options: AppLanguage.allCases,
+                        optionName: Copy.languageSelectionName)
                     MoreDivider()
                     MorePickerRow(
                         title: Copy.themeSection,
@@ -38,12 +35,9 @@ struct SettingsView: View {
                             set: {
                                 AppTheme.persisted = $0
                                 appTheme = $0
-                            })
-                    ) {
-                        ForEach(AppTheme.allCases) { theme in
-                            Text(Copy.themeSelectionName(theme)).tag(theme)
-                        }
-                    }
+                            }),
+                        options: AppTheme.allCases,
+                        optionName: Copy.themeSelectionName)
                     MoreDivider()
                     NavigationLink {
                         AboutDataView()

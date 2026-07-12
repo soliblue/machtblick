@@ -36,7 +36,7 @@ requireFragments(tabs, "RootTabView.swift", [
 requireFragments(settings, "SettingsView.swift", [
   "BrandWordmark(scroll: scroll)",
   "Copy.themeSection",
-  "Copy.themeSelectionName(theme)",
+  "optionName: Copy.themeSelectionName",
   "AboutDataView()",
   "ImprintView()",
   "PrivacyView()",
@@ -53,8 +53,11 @@ requireFragments(settings, "SettingsView.swift", [
   "appTheme = $0",
 ])
 requireFragments(pickerRow, "MorePickerRow.swift", [
-  "Picker(selection: $selection)",
-  ".pickerStyle(.menu)",
+  "Menu {",
+  "ForEach(options, id: \\.self)",
+  "Button {",
+  'Label(optionName(option), systemImage: "checkmark")',
+  ".buttonStyle(.plain)",
   ".frame(maxWidth: .infinity)",
   ".contentShape(Rectangle())",
   ".accessibilityLabel(title)",

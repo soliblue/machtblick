@@ -54,6 +54,7 @@ final class ThemePreferenceUITests: XCTestCase {
         XCTAssertEqual(
             app.descendants(matching: .any)["appearance-picker"].value as? String,
             selection)
+        Thread.sleep(forTimeInterval: 1)
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = screenshot
         attachment.lifetime = .keepAlways
