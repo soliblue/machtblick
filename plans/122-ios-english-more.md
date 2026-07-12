@@ -14,7 +14,9 @@ This plan now governs implementation of the approved product and technical contr
 - ASCII source-of-truth mocks: done
 - Implementation: done
 - Local data, localization, TypeScript, and production-build verification: done
-- macOS build, bilingual simulator smoke, production data deployment, and TestFlight verification: in progress
+- macOS build and compiled localization checks: done on the implemented source, final release-workflow commit rerun in progress
+- Bilingual production data deployment: awaiting explicit production authorization
+- Public TestFlight distribution and exact-build verification: prepared, awaiting production data deployment
 - English App Store screenshots: deferred to the public App Store release, English metadata is done
 
 ## Existing contracts
@@ -143,6 +145,7 @@ The surface uses a native grouped `List` or `Form`, a native three-option picker
 - Feedback metadata is visible in the draft and is never transmitted automatically.
 - The fourth tab remains usable at supported Dynamic Type sizes and has complete accessibility labels.
 - The macOS iOS build gate and bilingual simulator or device smoke checks pass before TestFlight.
+- The exact uploaded build reaches the enabled public-link beta group with a valid processed state and is available for external testing.
 
 ## Log
 
@@ -163,3 +166,9 @@ The surface uses a native grouped `List` or `Form`, a native three-option picker
 - 2026-07-11 visibility: final predeploy rerun passed 4,484 affected pages, 1,886 localized JSON alternates, five bilingual structured datasets, both machine catalogs, sitemap, social metadata, crawler rules, and Cloudflare file limits with no blockers.
 - 2026-07-11 tester: final Cloudflare Pages preview smoke passed German and English member detail at desktop and 390 by 844 mobile, neighboring vote and party routes, six English endpoints, redirects, and zero browser or console errors.
 - 2026-07-11 lead: extended the macOS workflow with executable Swift checks for System resolution, explicit overrides, persistence, localized paths, formatters, legacy and enriched member payload decoding, plus real German and English simulator launches with retained screenshots.
+- 2026-07-11 lead: simulator evidence exposed that `String(localized:locale:)` does not select a string-table language. Replaced it with explicit selected-language bundle lookup, then verified German labels including Ja, Nein, Nicht abgegeben, Grüne, and Linke in the Xcode 26.2 simulator.
+- 2026-07-11 lead: added a compiled app-bundle contract that resolves representative German and English strings through the same lookup used by production code.
+- 2026-07-11 lead: strengthened simulator smoke to install a fresh app per explicit language, persist the same `appLanguage` key used by the picker, terminate, relaunch without launch overrides, and retain the second-launch screenshot.
+- 2026-07-11 lead: completed a final plan audit, replaced accessibility-only tab icons with visible localized labels, and retained token-compliant donut labels while preserving the member highlight contract.
+- 2026-07-11 lead: hardened TestFlight delivery to pin Fastlane 2.237.0, resolve the exact enabled public beta group, capture one build number, supply bilingual test notes, wait for processing, distribute externally, and verify iOS 1.0, valid processing, group membership, and external state `IN_BETA_TESTING`.
+- 2026-07-11 lead: verified the public TestFlight invitation remains live and not full. The production English JSON remains undeployed, so final public TestFlight dispatch stays paused until the user explicitly authorizes the required production web deployment.

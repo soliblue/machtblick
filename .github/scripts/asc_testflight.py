@@ -1,0 +1,115 @@
+import os
+import sys
+import time
+
+import requests
+
+from asc_api import headers
+
+API = "https://api.appstoreconnect.apple.com/v1"
+PUBLIC_LINK = "https://testflight.apple.com/join/r7RVrgtr"
+
+
+def all_data(url, params=None):
+    data = []
+    while url:
+        response = requests.get(url, headers=headers(), params=params, timeout=30)
+        response.raise_for_status()
+        body = response.json()
+        data.extend(body.get("data", []))
+        url = body.get("links", {}).get("next")
+        params = None
+    return data
+
+
+app = all_data(
+    f"{API}/apps",
+    {"filter[bundleId]": "soli.Machtblick", "fields[apps]": "bundleId,name", "limit": 2},
+)
+assert len(app) == 1, f"Expected one Machtblick app, found {len(app)}."
+
+if sys.argv[1] == "prepare":
+    groups = [
+        group
+        for group in all_data(
+            f"{API}/apps/{app[0]['id']}/betaGroups",
+            {
+                "fields[betaGroups]": "name,isInternalGroup,publicLinkEnabled,publicLink",
+                "limit": 200,
+            },
+        )
+        if not group["attributes"]["isInternalGroup"]
+        and group["attributes"]["publicLinkEnabled"]
+        and (group["attributes"]["publicLink"] or "").rstrip("/") == PUBLIC_LINK
+    ]
+    assert len(groups) == 1, f"Expected one Machtblick public group, found {len(groups)}."
+    with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as env:
+        env.write(f"TESTFLIGHT_PUBLIC_GROUP={groups[0]['attributes']['name']}\n")
+        env.write(f"TESTFLIGHT_PUBLIC_GROUP_ID={groups[0]['id']}\n")
+    print(f"Resolved public TestFlight group: {groups[0]['attributes']['name']}")
+
+if sys.argv[1] == "verify":
+    evidence = None
+    for attempt in range(61):
+        builds = all_data(
+            f"{API}/builds",
+            {
+                "filter[app]": app[0]["id"],
+                "filter[version]": os.environ["TESTFLIGHT_BUILD_NUMBER"],
+                "fields[builds]": "version,processingState",
+                "limit": 2,
+            },
+        )
+        if len(builds) == 1:
+            build = builds[0]
+            detail = requests.get(
+                f"{API}/builds/{build['id']}/buildBetaDetail",
+                headers=headers(),
+                params={"fields[buildBetaDetails]": "externalBuildState"},
+                timeout=30,
+            )
+            detail.raise_for_status()
+            prerelease = requests.get(
+                f"{API}/builds/{build['id']}/preReleaseVersion",
+                headers=headers(),
+                params={"fields[preReleaseVersions]": "version,platform"},
+                timeout=30,
+            )
+            prerelease.raise_for_status()
+            evidence = {
+                "build": build,
+                "external": detail.json()["data"]["attributes"]["externalBuildState"],
+                "prerelease": prerelease.json()["data"]["attributes"],
+                "group_builds": {
+                    item["id"]
+                    for item in all_data(
+                        f"{API}/betaGroups/{os.environ['TESTFLIGHT_PUBLIC_GROUP_ID']}/relationships/builds",
+                        {"limit": 200},
+                    )
+                },
+            }
+            assert evidence["external"] != "BETA_REJECTED", "Apple rejected the beta build."
+            if (
+                build["attributes"]["processingState"] == "VALID"
+                and build["id"] in evidence["group_builds"]
+                and evidence["external"] == "IN_BETA_TESTING"
+            ):
+                break
+        if attempt < 60:
+            time.sleep(30)
+    assert evidence is not None, "The uploaded build did not appear in App Store Connect."
+    assert evidence["build"]["attributes"]["version"] == os.environ["TESTFLIGHT_BUILD_NUMBER"]
+    assert evidence["build"]["attributes"]["processingState"] == "VALID"
+    assert evidence["prerelease"] == {"version": "1.0", "platform": "IOS"}
+    assert evidence["build"]["id"] in evidence["group_builds"]
+    assert evidence["external"] == "IN_BETA_TESTING"
+    print(
+        f"Machtblick 1.0 ({os.environ['TESTFLIGHT_BUILD_NUMBER']}) is processed and available "
+        f"through {os.environ['TESTFLIGHT_PUBLIC_GROUP']} at {PUBLIC_LINK}."
+    )
+    with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
+        summary.write(
+            f"Machtblick 1.0 ({os.environ['TESTFLIGHT_BUILD_NUMBER']}) from "
+            f"`{os.environ['GITHUB_SHA']}` is processed and available through the public "
+            f"TestFlight group.\n"
+        )

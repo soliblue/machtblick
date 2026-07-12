@@ -12,13 +12,18 @@ platform :ios do
       is_key_content_base64: false
     )
 
+    build_number = latest_testflight_build_number(
+      api_key: api_key,
+      app_identifier: "soli.Machtblick"
+    )
+    build_number += 1
     increment_build_number(
       xcodeproj: "apps/ios/iOS.xcodeproj",
-      build_number: latest_testflight_build_number(
-        api_key: api_key,
-        app_identifier: "soli.Machtblick"
-      ) + 1
+      build_number: build_number
     )
+    File.open(ENV["GITHUB_ENV"], "a") do |file|
+      file.puts("TESTFLIGHT_BUILD_NUMBER=#{build_number}")
+    end if ENV["CI"]
 
     update_code_signing_settings(
       use_automatic_signing: true,
@@ -49,7 +54,18 @@ platform :ios do
     upload_to_testflight(
       api_key: api_key,
       skip_waiting_for_build_processing: false,
-      distribute_external: false
+      distribute_external: true,
+      groups: [ENV.fetch("TESTFLIGHT_PUBLIC_GROUP")],
+      notify_external_testers: false,
+      changelog: "Neu: Deutsch und Englisch, ein direkter Mehr-Bereich und die überarbeitete Abgeordnetenansicht.",
+      localized_build_info: {
+        "de-DE": {
+          whats_new: "Deutsch und Englisch mit Sprachauswahl, ein direkter Mehr-Bereich und die überarbeitete Abgeordnetenansicht."
+        },
+        "en-US": {
+          whats_new: "German and English with a language picker, a direct More area, and the redesigned member detail."
+        }
+      }
     )
   end
 

@@ -16,14 +16,15 @@ This plan now governs the native implementation against the committed website so
 - Website source stabilized: done
 - Implementation: done
 - Static contract, TypeScript, and production-build verification: done
-- macOS build, bilingual simulator smoke, production deployment, and TestFlight verification: in progress
+- macOS build, DTO contract, compiled localization contract, and initial bilingual process smoke: done
+- Final labeled-tab simulator rerun, production static deployment, and public TestFlight verification: in progress
 
 ## Baseline and scope
 
 - Last deployed baseline commit: `b402e4456440965d2a989167329a3fc15d005e59`.
 - Committed website parity source: `d37533a409bd686ba9d5198a342bfa34135c78a2`.
 - Local `HEAD`, the live GitHub `main` ref, and `origin/main` were verified equal at the parity source before native implementation started.
-- Production still serves the pre-overhaul member header, stat bars, voting filters, and simple vote ledger. Its index, member-shell, and voting-record asset hashes exactly match the local built output at the baseline, and its index contains the TestFlight prompt introduced by `b402e44`. This confirms the deployment boundary.
+- At the planning boundary, production served the pre-overhaul member header, stat bars, voting filters, and simple vote ledger. Its index, member-shell, and voting-record asset hashes matched the local built output at the baseline, and its index contained the TestFlight prompt introduced by `b402e44`. The web member overhaul has since reached production, while the enriched German and English static app-data layer remains undeployed.
 - The relevant web work is recorded in `plans/120-web-donation-bars-only.md` and `plans/121-member-detail-page-overhaul.md`.
 - The worktree also contains unrelated agent configuration changes. Implementation must preserve them.
 - Plan 122 owns German and English app localization, locale-specific paths, and the app-wide language preference. This plan consumes those contracts and does not create a second locale system.
@@ -255,7 +256,7 @@ Contracts:
 
 - Member-detail scrolling remains smooth with a long voting history and all donuts visible.
 - Connector geometry does not trigger repeated layout updates.
-- Normal vote-feed donuts render unchanged when no highlight is supplied.
+- Normal vote-feed donuts retain the existing 44 point drawing, semantic colors, label emphasis, and zero extra top padding when no highlight is supplied. Both contexts use the required shared `PartyVoteOrder.byJaShare` ordering and token `s` labels.
 - Party donation presentation remains unchanged.
 - Member speech search and full-screen debate remain unchanged.
 - The macOS iOS build gate passes. Run an ETTrace comparison if the compact card causes measurable scrolling regression.
@@ -285,3 +286,6 @@ Contracts:
 - 2026-07-11 lead: full Bundestag production build and TypeScript checks passed. The macOS Xcode build and TestFlight gates remain pending on the committed source SHA.
 - 2026-07-11 tester: browser verification passed the redesigned member detail in German and English at desktop and 390 by 844 mobile, including header, stats, two tabs, photo dialog, compact vote cards, donuts, connectors, neighboring routes, redirects, and zero runtime errors.
 - 2026-07-11 visibility: final predeploy visibility audit passed every affected route, bilingual JSON alternate, structured-data dataset, machine catalog, sitemap, and file-limit check.
+- 2026-07-11 lead: audited the completed native port against every plan contract. Visible localized tab labels were restored, the member-only donut scaling stays isolated from default rows, and the explicitly required shared yes-share order remains consistent across normal and highlighted rows.
+- 2026-07-11 lead: verified the web member overhaul is live, but the German static member JSON still lacks proposer, party summaries, and education and still contains initiatives. English app-data endpoints remain 404, confirming that the final bilingual static deployment is required before TestFlight.
+- 2026-07-11 lead: the Xcode 26.2 gate compiles the app, decodes legacy and enriched member payloads, validates compiled German and English resources, and launches both locales. Public TestFlight delivery now verifies the exact processed build reaches the public external group rather than checking the invitation page alone.

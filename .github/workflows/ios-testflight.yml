@@ -13,7 +13,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: macos-15
-    timeout-minutes: 45
+    timeout-minutes: 60
 
     steps:
       - uses: actions/checkout@v4
@@ -48,7 +48,7 @@ jobs:
           "$RUNNER_TEMP/machtblick-member-payload-contract"
 
       - name: Install fastlane
-        run: gem install fastlane
+        run: gem install fastlane --version 2.237.0 --no-document
 
       - name: Decode certificate
         env:
@@ -78,6 +78,13 @@ jobs:
       - name: Install cert-cleanup dependencies
         run: pip3 install --break-system-packages requests cryptography
 
+      - name: Resolve public TestFlight group
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+        run: python3 .github/scripts/asc_testflight.py prepare
+
       - name: Snapshot dev certs before build
         env:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
@@ -101,8 +108,18 @@ jobs:
           import urllib.request
           body = urllib.request.urlopen("https://testflight.apple.com/join/r7RVrgtr").read().decode()
           assert "Join the Machtblick beta" in body
+          assert "View in TestFlight" in body
+          assert "This beta is full" not in body
+          assert "isn’t accepting any new testers" not in body
           print("Public Machtblick TestFlight link is live.")
           PY
+
+      - name: Verify uploaded public build
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+        run: python3 .github/scripts/asc_testflight.py verify
 
       - name: Revoke dev cert created by this run
         if: always()

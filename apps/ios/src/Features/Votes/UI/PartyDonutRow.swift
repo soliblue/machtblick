@@ -67,7 +67,7 @@ struct PartyDonutRow: View {
                         .textCase(.uppercase)
                         .foregroundStyle(emphasized(summary) ? ThemeColor.fg : ThemeColor.secondary)
                         .lineLimit(1)
-                        .minimumScaleFactor(0.65)
+                        .minimumScaleFactor(highlight == nil ? 0.8 : 0.65)
                 }
                 .frame(maxWidth: .infinity)
             }
