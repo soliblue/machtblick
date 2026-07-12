@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm'
-import { members } from '/Users/soli/machtblick/db/schema/index.ts'
+import { members } from '../../../../db/schema/index.ts'
 import { splitName } from '../transform/memberId.mjs'
 
 export function upsertMembers(tx, rows) {

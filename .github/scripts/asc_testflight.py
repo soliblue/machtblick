@@ -70,7 +70,7 @@ if sys.argv[1] == "prepare":
 if sys.argv[1] == "verify":
     evidence = None
     observation = None
-    attempts = int(os.environ.get("TESTFLIGHT_VERIFY_ATTEMPTS", "61"))
+    attempts = int(os.environ.get("TESTFLIGHT_VERIFY_ATTEMPTS", "181"))
     for attempt in range(attempts):
         builds = all_data(
             f"{API}/builds",

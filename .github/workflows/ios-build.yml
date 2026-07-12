@@ -15,17 +15,23 @@ on:
       - '.github/workflows/ios-build.yml'
       - '.github/workflows/ios-testflight.yml'
 
+permissions:
+  contents: read
+
 concurrency:
   group: ios-build-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
+    name: Build and smoke test
     runs-on: macos-15
     timeout-minutes: 30
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          persist-credentials: false
 
       - name: Select Xcode
         run: |
@@ -120,7 +126,7 @@ jobs:
 
       - name: Upload smoke screenshots
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: bilingual-simulator-smoke
           path: ${{ runner.temp }}/machtblick-smoke/*.png

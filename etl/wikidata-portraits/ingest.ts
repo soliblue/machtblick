@@ -2,7 +2,7 @@ import { sql } from 'drizzle-orm'
 import { db } from '@machtblick/db/client'
 import { members } from '@machtblick/db/schema'
 
-const UA = 'machtblick-bundestag/0.1 (https://github.com/soli/machtblick; asoliman96@gmail.com)'
+const UA = 'machtblick-bundestag/0.1 (https://github.com/soliblue/machtblick; hello@machtblick.de)'
 const SPARQL = 'https://query.wikidata.org/sparql'
 const COMMONS_API = 'https://commons.wikimedia.org/w/api.php'
 

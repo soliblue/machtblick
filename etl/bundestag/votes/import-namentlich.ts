@@ -7,7 +7,7 @@ import { normalizeFractionLabel } from '../../abgeordnetenwatch-terms/parties.ts
 const db = new Database(fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url)))
 const TERM_ID = Number(arg('--term') ?? 21)
 const AW_PERIOD_ID = Number(arg('--aw-period') ?? 161)
-const UA = 'machtblick-bundestag/0.1 (https://github.com/soli/machtblick; asoliman96@gmail.com)'
+const UA = 'machtblick-bundestag/0.1 (https://github.com/soliblue/machtblick; hello@machtblick.de)'
 const LIST_URL = 'https://www.bundestag.de/ajax/filterlist/de/parlament/plenum/abstimmung/liste/462112-462112'
 const DETAIL_LIST_URL = 'https://www.bundestag.de/ajax/filterlist/de/parlament/plenum/abstimmung/abstimmungen/484422-484422'
 const AW = 'https://www.abgeordnetenwatch.de/api/v2'

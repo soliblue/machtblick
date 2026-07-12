@@ -34,7 +34,7 @@ platform :ios do
 
     auth_xcargs = ""
     if ENV["CI"]
-      key_path = File.expand_path("../AuthKey.p8", __dir__)
+      key_path = File.join(ENV.fetch("RUNNER_TEMP"), "AuthKey.p8")
       File.write(key_path, ENV["APP_STORE_CONNECT_API_KEY_CONTENT"])
       auth_xcargs = "-authenticationKeyID #{ENV["APP_STORE_CONNECT_API_KEY_ID"]} -authenticationKeyIssuerID #{ENV["APP_STORE_CONNECT_API_ISSUER_ID"]} -authenticationKeyPath #{Shellwords.escape(key_path)}"
     end

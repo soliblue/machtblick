@@ -66,7 +66,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 async function dipFetch(url) {
   let attempt = 0
   while (true) {
-    const headers = { accept: 'application/json', 'user-agent': 'machtblick-etl/0.1 (https://github.com/soli/machtblick)' }
+    const headers = { accept: 'application/json', 'user-agent': 'machtblick-etl/0.1 (https://github.com/soliblue/machtblick; hello@machtblick.de)' }
     if (enodiaCookie) headers.cookie = enodiaCookie
     const res = await fetch(url, { headers })
     const text = await res.text()

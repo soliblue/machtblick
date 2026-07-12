@@ -2,7 +2,7 @@ import { sql } from 'drizzle-orm'
 import { db } from '@machtblick/db/client'
 import { members, memberAbgeordnetenwatch } from '@machtblick/db/schema'
 
-const UA = 'machtblick-bundestag/0.1 (https://github.com/soli/machtblick; asoliman96@gmail.com)'
+const UA = 'machtblick-bundestag/0.1 (https://github.com/soliblue/machtblick; hello@machtblick.de)'
 const AW = 'https://www.abgeordnetenwatch.de/api/v2'
 const WP21 = 161
 const CONCURRENCY = 2
@@ -79,7 +79,7 @@ await pool(todo, CONCURRENCY, async (m) => {
   if (!member.member) {
     if (member.reason === 'ambiguous') ambiguous++
     else unmatched++
-    console.log(`  no match: ${pol.label} (aw=${pid}, mdb=${pol.ext_id_bundestagsverwaltung}) — ${member.reason}`)
+    console.log(`  no match: ${pol.label} (aw=${pid}, mdb=${pol.ext_id_bundestagsverwaltung}): ${member.reason}`)
     return
   }
   if (seen.has(member.member.id)) return

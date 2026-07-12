@@ -1,7 +1,7 @@
 # 108 iOS App
 
 ## Goal
-Native SwiftUI iOS app for machtblick, consuming the website's EXISTING static JSON endpoints (no new backend). Conventions ported from ~/projects/cloude (user's blueprint project). End-to-end implementation including GitHub Actions TestFlight pipeline; user adds the signing secrets. TestFlight is the app's dev.machtblick.de: user tests every build on his phone.
+Native SwiftUI iOS app for machtblick, consuming the website's EXISTING static JSON endpoints (no new backend). Conventions ported from the operator's existing native blueprint. End-to-end implementation including GitHub Actions TestFlight pipeline; user adds the signing secrets. TestFlight is the app's dev.machtblick.de: user tests every build on his phone.
 
 ## Architecture decisions
 - Location: apps/ios/ in this monorepo (self-contained per repo rules).

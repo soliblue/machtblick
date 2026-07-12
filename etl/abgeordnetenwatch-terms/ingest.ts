@@ -3,7 +3,7 @@ import { db } from '@machtblick/db/client'
 import { bundestagTerms, partySeatHistory, partyLineageMembers } from '@machtblick/db/schema'
 import { normalizeFractionLabel } from './parties.ts'
 
-const UA = 'machtblick-bundestag/0.1 (https://github.com/soli/machtblick; asoliman96@gmail.com)'
+const UA = 'machtblick-bundestag/0.1 (https://github.com/soliblue/machtblick; hello@machtblick.de)'
 const AW = 'https://www.abgeordnetenwatch.de/api/v2'
 const BUNDESTAG_PARLIAMENT_ID = 5
 

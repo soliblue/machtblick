@@ -3,21 +3,28 @@ name: Upload iOS App Store Assets
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 concurrency:
   group: ios-app-store-assets
   cancel-in-progress: false
 
 jobs:
   upload:
+    name: Upload App Store assets
+    if: github.actor == github.repository_owner && github.triggering_actor == github.repository_owner
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v4
-      - uses: ruby/setup-ruby@v1
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          persist-credentials: false
+      - uses: ruby/setup-ruby@d45b1a4e94b71acab930e56e79c6aa188764e7f9
         with:
           ruby-version: "3.3"
       - name: Install fastlane
-        run: gem install fastlane
+        run: gem install fastlane --version 2.237.0 --no-document
       - name: Upload metadata and screenshots
         env:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}

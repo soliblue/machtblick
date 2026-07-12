@@ -2,7 +2,7 @@ import { fileURLToPath } from 'node:url'
 import { existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs'
 import Database from 'better-sqlite3'
 
-const UA = 'machtblick-bundestag/0.1 (https://github.com/soli/machtblick; asoliman96@gmail.com)'
+const UA = 'machtblick-bundestag/0.1 (https://github.com/soliblue/machtblick; hello@machtblick.de)'
 const WIDTH = 320
 const DELAY_MS = 400
 const MAX_ATTEMPTS = 5

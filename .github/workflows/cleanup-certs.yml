@@ -3,14 +3,26 @@ name: Cleanup Orphaned Certificates
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-certificate-cleanup
+  cancel-in-progress: false
+
 jobs:
   cleanup:
+    name: Revoke orphaned certificates
+    if: github.actor == github.repository_owner && github.triggering_actor == github.repository_owner
     runs-on: macos-15
+    timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          persist-credentials: false
 
       - name: Install dependencies
-        run: pip3 install --break-system-packages requests cryptography
+        run: pip3 install --break-system-packages requests==2.34.2 cryptography==49.0.0
 
       - name: Revoke all orphaned dev certificates
         env:

@@ -11,17 +11,24 @@ on:
     tags:
       - 'ios-v*'
 
+permissions:
+  contents: read
+
 concurrency:
   group: ios-testflight
   cancel-in-progress: false
 
 jobs:
   deploy:
+    name: Upload and verify TestFlight
+    if: github.actor == github.repository_owner && github.triggering_actor == github.repository_owner
     runs-on: ${{ inputs.verify_build_number != '' && 'ubuntu-latest' || 'macos-15' }}
-    timeout-minutes: 60
+    timeout-minutes: 150
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          persist-credentials: false
 
       - name: Select Xcode
         if: ${{ inputs.verify_build_number == '' }}
@@ -74,7 +81,7 @@ jobs:
           DISTRIBUTION_CERTIFICATE_BASE64: ${{ secrets.DISTRIBUTION_CERTIFICATE_BASE64 }}
         run: |
           mkdir -p certs
-          echo "$DISTRIBUTION_CERTIFICATE_BASE64" | base64 --decode > certs/distribution.p12
+          printf '%s' "$DISTRIBUTION_CERTIFICATE_BASE64" | base64 --decode > certs/distribution.p12
 
       - name: Install provisioning profile
         if: ${{ inputs.verify_build_number == '' }}
@@ -82,22 +89,17 @@ jobs:
           PROVISIONING_PROFILE_BASE64: ${{ secrets.PROVISIONING_PROFILE_BASE64 }}
         run: |
           mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
-          echo "$PROVISIONING_PROFILE_BASE64" | base64 --decode > /tmp/machtblick.mobileprovision
+          printf '%s' "$PROVISIONING_PROFILE_BASE64" | base64 --decode > /tmp/machtblick.mobileprovision
           security cms -D -i /tmp/machtblick.mobileprovision > /tmp/machtblick.mobileprovision.plist
           PROFILE_UUID="$(/usr/libexec/PlistBuddy -c 'Print UUID' /tmp/machtblick.mobileprovision.plist)"
           PROFILE_NAME="$(/usr/libexec/PlistBuddy -c 'Print Name' /tmp/machtblick.mobileprovision.plist)"
-          cp /tmp/machtblick.mobileprovision "$HOME/Library/MobileDevice/Provisioning Profiles/$PROFILE_UUID.mobileprovision"
+          PROFILE_PATH="$HOME/Library/MobileDevice/Provisioning Profiles/$PROFILE_UUID.mobileprovision"
+          cp /tmp/machtblick.mobileprovision "$PROFILE_PATH"
           echo "PROVISIONING_PROFILE_NAME=$PROFILE_NAME" >> "$GITHUB_ENV"
-
-      - name: Debug signing state
-        if: ${{ inputs.verify_build_number == '' }}
-        run: |
-          security list-keychains
-          security find-identity -v -p codesigning || true
-          ls -la "$HOME/Library/MobileDevice/Provisioning Profiles/" || true
+          echo "PROVISIONING_PROFILE_PATH=$PROFILE_PATH" >> "$GITHUB_ENV"
 
       - name: Install cert-cleanup dependencies
-        run: pip3 install --break-system-packages requests cryptography
+        run: pip3 install --break-system-packages requests==2.34.2 cryptography==49.0.0
 
       - name: Resolve public TestFlight group
         env:
@@ -168,4 +170,6 @@ jobs:
 
       - name: Cleanup
         if: always()
-        run: rm -rf certs/
+        run: |
+          rm -rf certs/
+          rm -f AuthKey.p8 "$RUNNER_TEMP/AuthKey.p8" /tmp/machtblick.mobileprovision /tmp/machtblick.mobileprovision.plist /tmp/certs-before.json "${PROVISIONING_PROFILE_PATH:-$RUNNER_TEMP/missing.mobileprovision}"

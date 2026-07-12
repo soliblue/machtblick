@@ -2,7 +2,7 @@
 
 ## Goal
 
-Forward public Impressum mailboxes to `asoliman96@gmail.com`.
+Forward public Impressum mailboxes to the operator's private inbox.
 
 ## Status
 
@@ -18,7 +18,7 @@ Done.
 
 Cloudflare Email Routing is enabled for `machtblick.de`.
 
-Destination `asoliman96@gmail.com` is verified.
+The private forwarding destination is verified out of band.
 
 Rules forward the three Impressum addresses to the destination.
 

@@ -715,7 +715,7 @@ Upstream: Wikidata SPARQL endpoint (`https://query.wikidata.org/sparql`) for ima
 
 ### Required: User-Agent
 
-Both Wikimedia endpoints **require a descriptive User-Agent** with a contact URL or email  -  anonymous or default-UA requests get 403. We send `machtblick-bundestag/0.1 (https://github.com/soli/machtblick; asoliman96@gmail.com)`. If you ever see a sudden 403 spike on the portraits ETL, the UA policy is the first place to check.
+Both Wikimedia endpoints **require a descriptive User-Agent** with a contact URL or email. Anonymous or default-UA requests get 403. We send `machtblick-bundestag/0.1 (https://github.com/soliblue/machtblick; hello@machtblick.de)`. If you ever see a sudden 403 spike on the portraits ETL, the UA policy is the first place to check.
 
 ### P11597 coverage is sparse
 

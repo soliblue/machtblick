@@ -1,4 +1,4 @@
-import { votes, voteDocuments, votePartySummaries } from '/Users/soli/machtblick/db/schema/index.ts'
+import { votes, voteDocuments, votePartySummaries } from '../../../../db/schema/index.ts'
 
 export function writeVote(tx, vote, fetchedAt) {
   tx.insert(votes).values({

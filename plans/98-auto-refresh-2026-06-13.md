@@ -16,7 +16,7 @@ Scheduler command `scripts/bundestag-auto-refresh-preflight` exited `0` at `2026
 
 ```text
 utc=2026-06-13T07:21:09Z
-root=/home/soli/projects/machtblick
+root=repository root
 branch=main
 git_status_begin
 ?? plans/92-logo-variants.md

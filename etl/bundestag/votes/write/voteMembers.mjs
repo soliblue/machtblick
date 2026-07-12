@@ -1,4 +1,4 @@
-import { voteMembers } from '/Users/soli/machtblick/db/schema/index.ts'
+import { voteMembers } from '../../../../db/schema/index.ts'
 
 export function writeVoteMembers(tx, voteId, rows) {
   const batchSize = 200
