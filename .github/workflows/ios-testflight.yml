@@ -33,6 +33,14 @@ jobs:
         if: ${{ inputs.verify_build_number == '' }}
         run: node apps/ios/scripts/check-localizations.mjs
 
+      - name: Check Settings content parity
+        if: ${{ inputs.verify_build_number == '' }}
+        run: node apps/ios/scripts/check-settings-content-parity.mjs
+
+      - name: Check More UI contract
+        if: ${{ inputs.verify_build_number == '' }}
+        run: node apps/ios/scripts/check-more-ui-contract.mjs
+
       - name: Check language contract
         if: ${{ inputs.verify_build_number == '' }}
         run: |

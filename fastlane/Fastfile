@@ -57,13 +57,13 @@ platform :ios do
       distribute_external: true,
       groups: [ENV.fetch("TESTFLIGHT_PUBLIC_GROUP")],
       notify_external_testers: false,
-      changelog: "Neu: Deutsch und Englisch, ein direkter Mehr-Bereich und die überarbeitete Abgeordnetenansicht.",
+      changelog: "Neu: Ein kompakter Mehr-Bereich mit nativen Seiten zu Daten, Impressum und Datenschutz.",
       localized_build_info: {
         "de-DE": {
-          whats_new: "Deutsch und Englisch mit Sprachauswahl, ein direkter Mehr-Bereich und die überarbeitete Abgeordnetenansicht."
+          whats_new: "Der neue kompakte Mehr-Bereich bietet Sprachauswahl, Datenaktualität, Teilen sowie native Seiten zu Daten, Impressum und Datenschutz."
         },
         "en-US": {
-          whats_new: "German and English with a language picker, a direct More area, and the redesigned member detail."
+          whats_new: "The new compact More area includes the language picker, data freshness, sharing, and native About the data, Imprint, and Privacy pages."
         }
       }
     )

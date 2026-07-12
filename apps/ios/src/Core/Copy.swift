@@ -56,11 +56,8 @@ enum Copy {
     static var drucksacheLabel: String { localized("copy.drucksacheLabel") }
     static var dipSource: String { localized("copy.dipSource") }
 
-    static var website: String { localized("copy.website") }
     static var imprint: String { localized("copy.imprint") }
     static var privacy: String { localized("copy.privacy") }
-    static var fontLicense: String { localized("copy.fontLicense") }
-    static var refreshSection: String { localized("copy.refreshSection") }
     static var lastRefresh: String { localized("copy.lastRefresh") }
     static var never: String { localized("copy.never") }
     static var aiNotice: String { localized("copy.aiNotice") }
@@ -69,20 +66,9 @@ enum Copy {
     static var languageSystem: String { localized("copy.languageSystem") }
     static var languageGerman: String { localized("copy.languageGerman") }
     static var languageEnglish: String { localized("copy.languageEnglish") }
-    static var projectSection: String { localized("copy.projectSection") }
-    static var moreTagline: String { localized("copy.moreTagline") }
-    static var moreDescription: String { localized("copy.moreDescription") }
     static var aboutData: String { localized("copy.aboutData") }
-    static var questions: String { localized("copy.questions") }
-    static var feedback: String { localized("copy.feedback") }
-    static var contribute: String { localized("copy.contribute") }
     static var shareMachtblick: String { localized("copy.shareMachtblick") }
     static var shareMessage: String { localized("copy.shareMessage") }
-    static var legalSection: String { localized("copy.legalSection") }
-    static var privacyStatement: String { localized("copy.privacyStatement") }
-    static var questionsSubject: String { localized("copy.questionsSubject") }
-    static var feedbackSubject: String { localized("copy.feedbackSubject") }
-    static var contributeSubject: String { localized("copy.contributeSubject") }
 
     static var tabResult: String { localized("copy.tabResult") }
     static var tabDetails: String { localized("copy.tabDetails") }
@@ -185,10 +171,6 @@ enum Copy {
     static var stampBeschlussempfehlung: String { localized("copy.stampBeschlussempfehlung") }
     static var stampNichtBeraten: String { localized("copy.stampNichtBeraten") }
 
-    static func languageName(_ locale: AppLocale) -> String {
-        locale == .de ? languageGerman : languageEnglish
-    }
-
     static func languageSelectionName(_ language: AppLanguage) -> String {
         switch language {
         case .system: return languageSystem
@@ -220,21 +202,8 @@ enum Copy {
         }
     }
 
-    static func systemLanguageHint(_ locale: AppLocale) -> String {
-        formatted("format.systemLanguageHint", languageName(locale))
-    }
-
     static func versionLabel(version: String, build: String) -> String {
         formatted("format.versionLabel", version, build)
-    }
-
-    static func feedbackBody(
-        version: String, build: String, selection: AppLanguage, resolved: AppLocale,
-        iOSVersion: String
-    ) -> String {
-        formatted(
-            "format.feedbackBody", version, build, languageSelectionName(selection),
-            languageName(resolved), iOSVersion)
     }
 
     static func voteCount(_ count: Int) -> String {

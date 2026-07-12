@@ -27,7 +27,8 @@ struct RootTabView: View {
                 }
                 .id(appLanguage)
             } label: {
-                Label(Copy.votesTab, systemImage: "checkmark.seal")
+                Image(systemName: "checkmark.seal")
+                    .accessibilityLabel(Copy.votesTab)
             }
             Tab(value: RootTab.members) {
                 NavigationStack(path: $membersPath) {
@@ -35,7 +36,8 @@ struct RootTabView: View {
                 }
                 .id(appLanguage)
             } label: {
-                Label(Copy.membersTab, systemImage: "person.2")
+                Image(systemName: "person.2")
+                    .accessibilityLabel(Copy.membersTab)
             }
             Tab(value: RootTab.parties) {
                 NavigationStack(path: $partiesPath) {
@@ -43,14 +45,16 @@ struct RootTabView: View {
                 }
                 .id(appLanguage)
             } label: {
-                Label(Copy.partiesTab, systemImage: "chart.pie")
+                Image(systemName: "chart.pie")
+                    .accessibilityLabel(Copy.partiesTab)
             }
             Tab(value: RootTab.more) {
                 NavigationStack {
                     SettingsView(cache: cache, appLanguage: $appLanguage)
                 }
             } label: {
-                Label(Copy.moreTab, systemImage: "ellipsis.circle")
+                Image(systemName: "slider.horizontal.3")
+                    .accessibilityLabel(Copy.moreTab)
             }
         }
         .tabBarMinimizeBehavior(.onScrollDown)

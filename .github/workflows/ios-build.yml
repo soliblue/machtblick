@@ -5,6 +5,11 @@ on:
   push:
     paths:
       - 'apps/ios/**'
+      - 'apps/bundestag/src/views/datenschutz/Datenschutz.tsx'
+      - 'apps/bundestag/src/views/impressum/Impressum.tsx'
+      - 'apps/bundestag/src/views/impressum/impressumCopy.ts'
+      - 'apps/bundestag/src/views/methodik/Methodik.tsx'
+      - 'apps/bundestag/src/views/methodik/methodikCopy.ts'
       - 'fastlane/Fastfile'
       - '.github/scripts/asc_*.py'
       - '.github/workflows/ios-build.yml'
@@ -29,6 +34,12 @@ jobs:
 
       - name: Check localizations
         run: node apps/ios/scripts/check-localizations.mjs
+
+      - name: Check Settings content parity
+        run: node apps/ios/scripts/check-settings-content-parity.mjs
+
+      - name: Check More UI contract
+        run: node apps/ios/scripts/check-more-ui-contract.mjs
 
       - name: Check language contract
         run: |
