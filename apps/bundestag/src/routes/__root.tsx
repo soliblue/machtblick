@@ -11,6 +11,7 @@ import { copy, LocaleProvider } from '@/lib/i18n'
 import { localeFromPath } from '@/lib/locale'
 import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 import { useTestFlightPrompt } from '@/hooks/useTestFlightPrompt'
+import { useTheme } from '@/hooks/useTheme'
 
 const queryClient = new QueryClient()
 
@@ -41,6 +42,9 @@ export const Route = createRootRoute({
       { rel: 'alternate', type: 'application/atom+xml', title: 'Machtblick: Abstimmungen im Bundestag', href: `${SITE_URL}/votes.xml` },
     ],
     scripts: [
+      {
+        children: `(function(){var t=localStorage.getItem('machtblick.theme');var d=t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches);var c=d?'#000000':'#FFFFFF';document.documentElement.dataset.theme=d?'dark':'light';document.documentElement.style.colorScheme=d?'dark':'light';document.querySelector('meta[name="theme-color"]')?.setAttribute('content',c);document.querySelector('meta[name="msapplication-TileColor"]')?.setAttribute('content',c)})()`,
+      },
       {
         type: 'application/ld+json',
         children: JSON.stringify({
@@ -145,8 +149,9 @@ function RootComponent() {
   const locale = localeFromPath(pathname)
   const t = copy[locale]
   const testFlightPrompt = useTestFlightPrompt()
+  const theme = useTheme()
   return (
-    <html lang={locale} prefix="og: https://ogp.me/ns#">
+    <html lang={locale} prefix="og: https://ogp.me/ns#" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
@@ -155,7 +160,7 @@ function RootComponent() {
           <LocaleProvider locale={locale}>
             <TooltipProvider delayDuration={200}>
               <StampFilter />
-              <Nav />
+              <Nav theme={theme.theme} onThemeChange={theme.selectTheme} />
               <TestFlightPrompt
                 visible={testFlightPrompt.visible}
                 title={t.testFlightPromptTitle}

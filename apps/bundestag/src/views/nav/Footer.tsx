@@ -15,6 +15,14 @@ export function Footer() {
         <a href={withLocale('/motions/', locale)} className={linkClass}>{t.navMotions}</a>
         <a href={withLocale('/speeches/', locale)} className={linkClass}>{t.navSpeeches}</a>
         <a href={withLocale('/methodology/', locale)} className={linkClass}>{t.aboutData}</a>
+        <a
+          href="https://github.com/soliblue/machtblick"
+          target="_blank"
+          rel="noreferrer"
+          className={linkClass}
+        >
+          {t.sourceCode}
+        </a>
         <a href={withLocale('/imprint/', locale)} className={linkClass}>{t.imprint}</a>
         <a href={withLocale('/privacy/', locale)} className={linkClass}>{t.privacy}</a>
       </div>

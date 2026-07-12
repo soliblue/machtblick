@@ -84,7 +84,7 @@ export function FilterSheet({ groups, activeCount, sort }: Props) {
       </button>
       {open && (
         <div className="fixed inset-0 z-40" role="dialog" aria-modal="true" aria-label={t.filterLabel}>
-          <div className="absolute inset-0 bg-fg/40" onClick={close} />
+          <div className="absolute inset-0 bg-black/40" onClick={close} />
           <div
             ref={panelRef}
             tabIndex={-1}

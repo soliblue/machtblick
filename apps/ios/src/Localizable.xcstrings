@@ -1,7 +1,7 @@
 {
   "sourceLanguage": "de",
   "strings": {
-    "copy.aboutData": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Über die Daten"}},"en":{"stringUnit":{"state":"translated","value":"About the data"}}}},
+    "copy.aboutData": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Daten"}},"en":{"stringUnit":{"state":"translated","value":"Data"}}}},
     "copy.absent": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Nicht abgegeben"}},"en":{"stringUnit":{"state":"translated","value":"Not cast"}}}},
     "copy.abstain": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Enthalten"}},"en":{"stringUnit":{"state":"translated","value":"Abstained"}}}},
     "copy.accepted": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Angenommen"}},"en":{"stringUnit":{"state":"translated","value":"Accepted"}}}},
@@ -134,6 +134,7 @@
     "copy.sinceToday": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"heute"}},"en":{"stringUnit":{"state":"translated","value":"today"}}}},
     "copy.sortLabel": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Sortieren"}},"en":{"stringUnit":{"state":"translated","value":"Sort"}}}},
     "copy.sortName": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Name"}},"en":{"stringUnit":{"state":"translated","value":"Name"}}}},
+    "copy.sourceCode": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Code"}},"en":{"stringUnit":{"state":"translated","value":"Code"}}}},
     "copy.speechesSection": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Reden"}},"en":{"stringUnit":{"state":"translated","value":"Speeches"}}}},
     "copy.stageCommittee": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Ausschuss"}},"en":{"stringUnit":{"state":"translated","value":"Committee"}}}},
     "copy.stageEnacted": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Verkündet"}},"en":{"stringUnit":{"state":"translated","value":"Enacted"}}}},

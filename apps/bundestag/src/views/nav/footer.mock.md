@@ -1,80 +1,42 @@
-# Footer (sitewide)
+# Footer
 
-Lives in `apps/bundestag/src/views/nav/Footer.tsx`, rendered once in `__root.tsx` after the `<Outlet />`, inside the body and outside the page container. The `nav/` view already owns sitewide chrome (`ScrollEyeWordmark`), so the footer belongs here rather than in a new `_layout/` view.
+The shared footer is rendered after the route content on every German and English page.
 
-## Layout
+## German
 
-```
+```text
 ... page content ends ...
 
-+============================================================+   <- top border: text @ opacity-s
-|                                                            |
-|  Machtblick - Daten aus oeffentlichen Quellen              |
-|                              Impressum    Datenschutz      |
-|                                                            |
++============================================================+
+|  Anträge  Reden  Daten  Code  Impressum  Datenschutz     |
 +============================================================+
 ```
 
-Inside the existing `max-w-3xl` `px-l` container, mirroring the nav. Two-column flex row, tagline left, links right (`ml-auto`). Single line on desktop and tablet.
+## English
 
-### Mobile (< sm)
+```text
+... page content ends ...
 
-```
 +============================================================+
-|                                                            |
-|  Machtblick - Daten aus oeffentlichen Quellen              |
-|                                                            |
-|  Impressum    Datenschutz                                  |
-|                                                            |
+|  Motions  Speeches  Data  Code  Imprint  Privacy           |
 +============================================================+
 ```
 
-Stack vertically below `sm`, tagline on top, links below.
+The links sit in one right-aligned wrapping flex row inside the existing `max-w-3xl` and `px-l` container. They remain a single line when space permits and wrap naturally at narrower widths without horizontal scrolling.
 
-## Notes
+## Links
 
-- One top border, `1px solid color-mix(in oklab, var(--color-fg) 15%, transparent)`, matching the nav's bottom border so the page is visually bracketed by identical hairlines.
-- No background fill. Footer sits on `var(--color-background)` like the rest of the app. The shade-change idea was tempting but adds a horizontal seam we don't need.
-- Tagline is `text-s opacity-l`. Quiet by design.
-- Two links, same size and weight as the tagline. Active state (matching route) gets `opacity-100` like the nav links, so a user on `/imprint` sees that link as the bold one in the row.
-- No "(C) Machtblick" line. No year. No version. No social icons. No "Built with X" credit. No language switcher. The footer is a legal-link rail, not a navigation surface, and the nav already does navigation.
-- Spacing: `py-l` (16) top and bottom inside the container. `gap-l` (16) between Impressum and Datenschutz. `mt-xl` (24) outside the container to separate from page content.
-- Footer must render on every route, including `/imprint` and `/privacy` themselves. The links self-reference; that's fine and expected.
+- Anträge or Motions: locale-aware `/motions/`
+- Reden or Speeches: locale-aware `/speeches/`
+- Daten or Data: locale-aware `/methodology/`
+- Code: `https://github.com/soliblue/machtblick`, opened in a new tab with `noreferrer`
+- Impressum or Imprint: locale-aware `/imprint/`
+- Datenschutz or Privacy: locale-aware `/privacy/`
 
-## Filters / interactions
-
-- Two links: `/imprint`, `/privacy`. TanStack Router `<Link>`, same `[&.active]` styling as the nav so the current legal page is highlighted.
-- Hover state: `opacity-100` (links default to `opacity-l`).
-- No JS state. Footer is fully static markup.
-
-## Emphasis
-
-The footer should be near-invisible until a reader looks for it. The legal links must be findable on every route without competing with content. If a designer feels tempted to make the footer "more useful" by adding nav links, sitemaps, or credits, resist.
+Only the source-code link is external. It stays a plain text link without an icon so the footer remains visually quiet.
 
 ## Tokens
 
-| Element | Text size | Weight | Spacing | Component |
-|---|---|---|---|---|
-| Footer container | n/a | n/a | py-l, mt-xl, border-top text @ opacity-s | n/a |
-| Inner container | n/a | n/a | max-w-3xl, px-l, flex, items-center | n/a |
-| Tagline | s | regular | opacity-l | n/a |
-| Link group | n/a | n/a | ml-auto, flex, gap-l | n/a |
-| Link | s | regular | opacity-l, hover opacity-100, [&.active] opacity-100 | TanStack Link |
-
-Components used: none. Plain semantic `<footer>` with two `<Link>`s.
-
-## Placement in __root.tsx
-
-```
-<body>
-  <QueryClientProvider ...>
-    <TooltipProvider ...>
-      <StampFilter />
-      <Nav />
-      <Outlet />
-      <Footer />     <-- here, last child inside the providers
-    </TooltipProvider>
-  </QueryClientProvider>
-  <Scripts />
-</body>
-```
+- Footer separation uses `mt-xl` and a top border of foreground at opacity `s`.
+- The inner row uses `gap-l`, `px-l`, `py-l`, and text size `s`.
+- Links use opacity `l`, full opacity on hover, and the existing active-route emphasis for internal destinations.

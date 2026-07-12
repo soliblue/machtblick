@@ -2,7 +2,7 @@ import { ChevronRight, ExternalLink } from 'lucide-react'
 import { formatDateShort } from '@/lib/format'
 import { SERIF } from '@/lib/fonts'
 import { highlight } from '@/lib/highlight'
-import { PARTY_COLOR } from '@/lib/parties'
+import { PARTY_COLOR, partySurfaceColor } from '@/lib/parties'
 import { renderSnippet } from '@/lib/snippet'
 import { withLocale } from '@/lib/locale'
 import { useCopy, useLocale } from '@/lib/i18n'
@@ -59,8 +59,8 @@ export function MemberSpeechGroupRow({ group, terms, preview, onOpen }: Props) {
       <div
         className="mt-m rounded-m p-m text-m line-clamp-3"
         style={{
-          background: `color-mix(in oklab, ${color} 12%, transparent)`,
-          border: `1px solid color-mix(in oklab, ${color} 28%, transparent)`,
+          background: partySurfaceColor(color),
+          border: `1px solid color-mix(in oklab, ${color} 15%, transparent)`,
           fontFamily: SERIF,
           lineHeight: 1.45,
         }}

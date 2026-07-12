@@ -7,6 +7,9 @@ const read = (path) => readFileSync(resolve(root, path), "utf8")
 const tabs = read("apps/ios/src/RootTabView.swift")
 const app = read("apps/ios/src/MachtblickApp.swift")
 const settings = read("apps/ios/src/Features/Settings/UI/SettingsView.swift")
+const footer = read("apps/bundestag/src/views/nav/Footer.tsx")
+const webCopy = read("apps/bundestag/src/lib/i18n.tsx")
+const strings = read("apps/ios/src/Localizable.xcstrings")
 const pickerRow = read("apps/ios/src/Features/Settings/UI/MorePickerRow.swift")
 const theme = read("apps/ios/src/Core/Theme/AppTheme.swift")
 const colors = read("apps/ios/src/Core/Theme/ThemeColor.swift")
@@ -40,9 +43,12 @@ requireFragments(settings, "SettingsView.swift", [
   "AboutDataView()",
   "ImprintView()",
   "PrivacyView()",
+  "Copy.sourceCode",
+  'Link(destination: URL(string: "https://github.com/soliblue/machtblick")!)',
   'systemImage: "building.columns"',
   'systemImage: "doc.text"',
   'systemImage: "hand.raised"',
+  'systemImage: "chevron.left.forwardslash.chevron.right"',
   'systemImage: "circle.lefthalf.filled"',
   'Image(systemName: "clock.arrow.circlepath")',
   "ShareLink(",
@@ -51,6 +57,21 @@ requireFragments(settings, "SettingsView.swift", [
   'identifier: "appearance-picker"',
   "AppTheme.persisted = $0",
   "appTheme = $0",
+])
+requireFragments(footer, "Footer.tsx", [
+  'href="https://github.com/soliblue/machtblick"',
+  'target="_blank"',
+  'rel="noreferrer"',
+  "{t.sourceCode}",
+])
+requireFragments(webCopy, "i18n.tsx", [
+  "aboutData: 'Daten'",
+  "sourceCode: 'Code'",
+  "aboutData: 'Data'",
+])
+requireFragments(strings, "Localizable.xcstrings", [
+  '"copy.aboutData": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Daten"}},"en":{"stringUnit":{"state":"translated","value":"Data"}}}}',
+  '"copy.sourceCode": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Code"}},"en":{"stringUnit":{"state":"translated","value":"Code"}}}}',
 ])
 requireFragments(pickerRow, "MorePickerRow.swift", [
   "Menu {",
@@ -122,6 +143,7 @@ const rowOrder = [
   "AboutDataView()",
   "ImprintView()",
   "PrivacyView()",
+  "Copy.sourceCode",
   "Copy.lastRefresh",
   "ShareLink(",
 ].map((fragment) => settings.indexOf(fragment))

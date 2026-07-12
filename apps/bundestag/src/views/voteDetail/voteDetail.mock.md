@@ -107,7 +107,7 @@ pull to refresh.
 |                                             |
 | < .--------------------------. .-------- > |
 |   | [CDU/CSU]     (a)(b)(c) | | [SPD]     |
-|   | Die Fraktion stuetzt das | | Die       |  party-tinted bubbles
+|   | Die Fraktion stuetzt das | | Die       |  subdued party tint
 |   | Paket, betont aber ...   | | Fraktion  |  horizontal scroll, 300px each
 |   '--------------------------' '--------   |
 |                                             |
@@ -175,8 +175,12 @@ with their line before the user reads the debate.
 | Defector row | m regular | py-s, gap-m | VoteChoicePill |
 | Party summary bubble | l Lora serif regular | p-m, gap-s, 320/400px | AvatarPile |
 | Speech bubble | l Lora serif regular | p-m, gap-s | SpeakerAvatar |
+| Party surface tint | none | shared across both bubble types | semantic party surface |
 | System row | s regular opacity-l | py-m | rule rows |
 
-Colors: party color only for identity tint and party logo. Vote outcomes use
-success and danger. Abstention uses yellow. Neutral facts use foreground opacity.
-Bubbles use the existing radius-m token.
+Colors: party color only for identity tint and party logo. Both party-summary and
+conversation bubbles use one shared surface tint with a lower effective party
+opacity than the current 13% mix. The tint stays quiet against `background` in
+light and dark appearances. Party logos and small party-colored actions keep their
+full identity color. Vote outcomes use success and danger. Abstention uses yellow.
+Neutral facts use foreground opacity. Bubbles use the existing radius-m token.

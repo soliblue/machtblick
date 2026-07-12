@@ -19,13 +19,16 @@ struct MemberPayloadContractCheck {
                 #"{"id":"member","name":"Member","party":"SPD","state":"Berlin","attendance":1,"votesAppeared":1,"defections":0,"history":[{"voteId":"vote","date":"2026-07-11","title":"Title","cleanTitle":"Title","result":"angenommen","choice":"ja","party":"SPD","partyMajority":"ja","defected":false}],"speeches":[]}"#.utf8))
         precondition(legacy.history[0].proposingParty == nil)
         precondition(legacy.history[0].partySummaries == nil)
+        precondition(legacy.needsEnrichmentRefresh)
 
         let enriched = try JSONDecoder().decode(
             MemberDetailPayload.self,
             from: Data(
-                #"{"id":"member","name":"Member","party":"SPD","state":"Berlin","attendance":1,"votesAppeared":1,"defections":0,"history":[{"voteId":"vote","date":"2026-07-11","title":"Title","cleanTitle":"Title","result":"angenommen","choice":"ja","party":"SPD","partyMajority":"ja","defected":false,"proposingParty":"SPD","partySummaries":[{"party":"SPD","position":"yes","members":120,"yes":100,"no":10,"abstain":5,"absent":5}]}],"speeches":[]}"#.utf8))
-        precondition(enriched.history[0].proposingParty == "SPD")
-        precondition(enriched.history[0].partySummaries?.first?.yes == 100)
-        print("Legacy and enriched member payloads decode through the shipping DTO.")
+                #"{"id":"member","name":"Member","party":"Die Linke","state":"Bremen","attendance":1,"votesAppeared":1,"defections":0,"history":[{"voteId":"vote","date":"2026-07-11","title":"Title","cleanTitle":"Title","result":"angenommen","choice":"ja","party":"Die Linke","partyMajority":"ja","defected":false,"proposingParty":"Die Linke","partySummaries":[{"party":"Die Linke","position":"yes","members":64,"yes":60,"no":2,"abstain":1,"absent":1}]}],"speeches":[]}"#.utf8))
+        precondition(enriched.history[0].proposingParty == "Die Linke")
+        precondition(enriched.history[0].partySummaries?.first?.yes == 60)
+        precondition(enriched.history[0].partySummaries?.first?.party == enriched.history[0].party)
+        precondition(!enriched.needsEnrichmentRefresh)
+        print("Legacy member payloads trigger enrichment refresh and current payloads stay cacheable.")
     }
 }

@@ -71,6 +71,7 @@ enum Copy {
     static var themeLight: String { localized("copy.themeLight") }
     static var themeDark: String { localized("copy.themeDark") }
     static var aboutData: String { localized("copy.aboutData") }
+    static var sourceCode: String { localized("copy.sourceCode") }
     static var shareMachtblick: String { localized("copy.shareMachtblick") }
     static var shareMessage: String { localized("copy.shareMessage") }
 

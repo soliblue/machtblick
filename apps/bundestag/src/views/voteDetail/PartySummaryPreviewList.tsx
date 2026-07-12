@@ -1,4 +1,4 @@
-import { hasPartyLine, PARTY_COLOR, PARTY_LOGO, PARTY_SLUG, partyLabel } from '@/lib/parties'
+import { hasPartyLine, PARTY_COLOR, PARTY_LOGO, PARTY_SLUG, partyLabel, partySurfaceColor } from '@/lib/parties'
 import { PartyLogo } from '@/views/votesList/PartyLogo'
 import { SERIF } from '@/lib/fonts'
 import { MarkdownInline } from '@/lib/MarkdownInline'
@@ -41,7 +41,7 @@ export function PartySummaryPreviewList({ summaries, speakersByParty }: Props) {
                 key={s.party}
                 className="flex w-[320px] flex-none flex-col rounded-m p-m desk:w-[400px]"
                 style={{
-                  background: hasPartyLine(s.party) ? `color-mix(in oklab, ${color} 13%, var(--color-background))` : 'var(--color-surface)',
+                  background: hasPartyLine(s.party) ? partySurfaceColor(color) : 'var(--color-surface)',
                 }}
               >
                 <div className="flex items-center justify-between gap-s">

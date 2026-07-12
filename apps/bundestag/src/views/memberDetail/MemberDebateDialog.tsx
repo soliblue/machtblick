@@ -70,7 +70,7 @@ export function MemberDebateDialog({ group, rows, loading, query, people, member
   }, [onClose])
   return (
     <div className="fixed inset-0 z-50" role="presentation" onClick={onClose}>
-      <div className="absolute inset-0 bg-fg/40" />
+      <div className="absolute inset-0 bg-black/40" />
       <section
         ref={panelRef}
         role="dialog"

@@ -39,7 +39,7 @@ export function MemberCard({ member, index = 0 }: Props) {
         )}
       </div>
       <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 z-10 p-s text-background">
+      <div className="absolute inset-x-0 bottom-0 z-10 p-s text-white">
         <div className="text-s font-semibold leading-tight line-clamp-2 desk:text-m" style={{ overflowWrap: 'anywhere' }}>
           {member.name}
         </div>

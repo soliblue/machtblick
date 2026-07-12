@@ -131,6 +131,12 @@ const sameStableMemberData = (german, english, file) => {
       if (!Array.isArray(entry.partySummaries) || !entry.partySummaries.length) {
         throw new Error(`Party summaries missing at ${file}.history[${index}]`)
       }
+      if (
+        entry.partyMajority
+        && !entry.partySummaries.some((summary) => summary.party === entry.party)
+      ) {
+        throw new Error(`Member party summary missing at ${file}.history[${index}]`)
+      }
       for (const summary of entry.partySummaries) {
         if (
           typeof summary.party !== 'string'

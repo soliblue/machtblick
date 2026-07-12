@@ -1,5 +1,5 @@
 import { PartyLogo } from '@/views/votesList/PartyLogo'
-import { PARTY_COLOR } from '@/lib/parties'
+import { PARTY_COLOR, partySurfaceColor } from '@/lib/parties'
 import { SERIF } from '@/lib/fonts'
 import { highlight, tokenize } from '@/lib/highlight'
 import { withLocale } from '@/lib/locale'
@@ -51,7 +51,7 @@ export function ConversationBubble({
     <article
       className="rounded-m p-m"
       style={{
-        background: partyColor ? `color-mix(in oklab, ${partyColor} 13%, var(--color-background))` : 'var(--color-surface)',
+        background: partyColor ? partySurfaceColor(partyColor) : 'var(--color-surface)',
         boxShadow: highlighted ? `0 0 0 2px color-mix(in oklab, ${highlightColor} 70%, transparent)` : undefined,
       }}
     >

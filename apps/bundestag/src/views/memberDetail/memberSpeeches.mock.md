@@ -23,7 +23,7 @@ this member highlighted. Speech turns expand inline inside the debate.
 | Krankenhausversorgung sichern              |
 | 25.06.2026 / 6 Beitraege / 3 kurz          |
 | .-----------------------------------------. |
-| | Die Finanzierung muss in der Flaeche... | |  party-tinted excerpt
+| | Die Finanzierung muss in der Flaeche... | |  subdued party tint
 | '-----------------------------------------' |
 | Ganze Debatte ansehen >                     |
 | ------------------------------------------- |
@@ -120,9 +120,13 @@ their own contribution visible before procedural fragments.
 | Open action | s semibold | mt-s | Button text |
 | Debate title | l display semibold | p-l | dialog or route header |
 | Speech bubble | l Lora serif regular | p-m | SpeakerAvatar, PartyLogo |
+| Party surface tint | none | shared with vote-detail debates | semantic party surface |
 | Highlight ring | none | stroke-m | member highlight |
 | System row | s regular opacity-l | py-m | full-width rules |
 
-Colors: party tint is identity for debate context only. The highlighted member
-ring uses the member party color at opacity-l. Neutral metadata uses foreground
-opacity-l.
+Colors: party tint is identity for debate context only. Excerpt and conversation
+bubbles use the same shared surface tint as vote-detail debates, with a lower
+effective party opacity than the current 13% mix in both light and dark appearances.
+Party logos and small party-colored actions keep their full identity color. The
+highlighted member ring uses the member party color at opacity-l. Neutral metadata
+uses foreground opacity-l.

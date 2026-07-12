@@ -12,7 +12,9 @@ final class MemberDetailStore {
         if detail == nil, let cached: MemberDetailPayload = cache.cached(path) {
             detail = cached
         }
-        if detail == nil || cache.isStale(path, maxAge: 86400) {
+        if detail == nil || detail?.needsEnrichmentRefresh == true
+            || cache.isStale(path, maxAge: 86400)
+        {
             if let fresh: MemberDetailPayload = await cache.fetch(path) {
                 detail = fresh
             } else if detail == nil {

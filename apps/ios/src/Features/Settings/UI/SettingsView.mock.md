@@ -11,11 +11,13 @@
 |          ------------------------------  |
 | [circle.lefthalf] Darstellung   System  v|
 |          ------------------------------  |
-| [building.columns]  Über die Daten     > |
+| [building.columns]  Daten              > |
 |          ------------------------------  |
 | [doc.text]          Impressum           > |
 |          ------------------------------  |
 | [hand.raised]       Datenschutz         > |
+|          ------------------------------  |
+| [chevron.slash]     Code               > |
 |          ------------------------------  |
 | [arrow.clockwise]   Zuletzt aktualisiert  |
 |                     11. Juli, 22:10       |
@@ -39,11 +41,13 @@
 |          ------------------------------  |
 | [circle.lefthalf] Appearance    System  v|
 |          ------------------------------  |
-| [building.columns]  About the data     > |
+| [building.columns]  Data               > |
 |          ------------------------------  |
 | [doc.text]          Imprint            > |
 |          ------------------------------  |
 | [hand.raised]       Privacy            > |
+|          ------------------------------  |
+| [chevron.slash]     Code               > |
 |          ------------------------------  |
 | [arrow.clockwise]   Last updated          |
 |                     Jul 11, 10:10 PM      |
@@ -206,5 +210,6 @@ All headings, paragraphs, sources, descriptions, dates, links, and contact addre
 - Hairline dividers are `fg` at `opacity-s` and begin after the icon column. Section separation comes from `xl` whitespace.
 - The Language and Appearance values, freshness timestamp, chevrons, link metadata, and version use `secondary`. The version is centered, `text-s`, and visually quiet.
 - Reading pages use `display-xxl` for the title, `text-s` captions, and `text-m` prose. Website source group indentation maps to `m` spacing. Links are underlined rather than colored.
-- Data freshness and sharing directly follow Privacy without a flexible gap. All rows remain reachable through scrolling at large Dynamic Type sizes.
+- Data freshness and sharing directly follow Code without a flexible gap. All rows remain reachable through scrolling at large Dynamic Type sizes.
+- Code follows Privacy as a full-width external link to `https://github.com/soliblue/machtblick` and uses the same accessible row anatomy as the native information links.
 - SF Symbols are decorative within labeled rows. Each row is one full-width accessibility element with its localized label, value, and button or link trait.

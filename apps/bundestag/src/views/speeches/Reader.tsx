@@ -93,7 +93,7 @@ export function Reader({ item, index, count, nextName = null, query = '', onPrev
   const label = item.kind === 'summary' ? `${t.partySummaryAria} ${partyLabel(item.party, locale)}` : item.speakerName
   return (
     <div className="fixed inset-0 z-50" role="presentation" onClick={onClose}>
-      <div className="absolute inset-0 bg-fg/40" />
+      <div className="absolute inset-0 bg-black/40" />
       <section
         ref={panelRef}
         role="dialog"

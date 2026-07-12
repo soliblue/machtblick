@@ -60,4 +60,8 @@ struct MemberDetailPayload: Decodable {
     let constituencyNumber: String?
     let constituencyName: String?
     let education: String?
+
+    var needsEnrichmentRefresh: Bool {
+        history.contains { $0.partySummaries == nil }
+    }
 }

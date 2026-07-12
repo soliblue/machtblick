@@ -57,6 +57,13 @@ struct SettingsView: View {
                         MoreRowLabel(title: Copy.privacy, systemImage: "hand.raised")
                     }
                     MoreDivider()
+                    Link(destination: URL(string: "https://github.com/soliblue/machtblick")!) {
+                        MoreRowLabel(
+                            title: Copy.sourceCode,
+                            systemImage: "chevron.left.forwardslash.chevron.right"
+                        )
+                    }
+                    MoreDivider()
                     HStack(alignment: .top, spacing: ThemeTokens.Spacing.m) {
                         Image(systemName: "clock.arrow.circlepath")
                             .font(.system(size: ThemeTokens.Icon.m))
