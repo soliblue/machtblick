@@ -19,7 +19,7 @@ This plan now governs the native implementation against the committed website so
 - macOS build, DTO contract, compiled localization contract, and initial bilingual process smoke: done
 - Final labeled-tab simulator rerun: done on `a8e96fc`
 - Production static deployment, canonical web QA, and postdeployment native data smoke: done on `21ed415`
-- Public TestFlight distribution and exact-build verification: prepared, ready to dispatch
+- Public TestFlight distribution and exact-build verification: in progress under plan 122
 
 ## Baseline and scope
 

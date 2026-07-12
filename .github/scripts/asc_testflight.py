@@ -3,17 +3,36 @@ import sys
 import time
 
 import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 from asc_api import headers
 
 API = "https://api.appstoreconnect.apple.com/v1"
 PUBLIC_LINK = "https://testflight.apple.com/join/r7RVrgtr"
+SESSION = requests.Session()
+SESSION.mount(
+    "https://",
+    HTTPAdapter(
+        max_retries=Retry(
+            total=5,
+            connect=5,
+            read=5,
+            status=5,
+            backoff_factor=2,
+            backoff_max=30,
+            status_forcelist=(429, 500, 502, 503, 504),
+            allowed_methods=("GET",),
+            respect_retry_after_header=True,
+        )
+    ),
+)
 
 
 def all_data(url, params=None):
     data = []
     while url:
-        response = requests.get(url, headers=headers(), params=params, timeout=30)
+        response = SESSION.get(url, headers=headers(), params=params, timeout=30)
         response.raise_for_status()
         body = response.json()
         data.extend(body.get("data", []))
@@ -62,14 +81,14 @@ if sys.argv[1] == "verify":
         )
         if len(builds) == 1:
             build = builds[0]
-            detail = requests.get(
+            detail = SESSION.get(
                 f"{API}/builds/{build['id']}/buildBetaDetail",
                 headers=headers(),
                 params={"fields[buildBetaDetails]": "externalBuildState"},
                 timeout=30,
             )
             detail.raise_for_status()
-            prerelease = requests.get(
+            prerelease = SESSION.get(
                 f"{API}/builds/{build['id']}/preReleaseVersion",
                 headers=headers(),
                 params={"fields[preReleaseVersions]": "version,platform"},

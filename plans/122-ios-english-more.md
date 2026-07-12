@@ -17,7 +17,7 @@ This plan now governs implementation of the approved product and technical contr
 - macOS build, compiled localization checks, and stored German and English relaunch smoke: done on `a8e96fc`
 - Bilingual production data deployment and canonical production verification: done on `21ed415`
 - Postdeployment iOS build, compiled localization, persistent relaunch, and live German and English data smoke: done in GitHub run `29180835348`
-- Public TestFlight distribution and exact-build verification: prepared, ready to dispatch
+- Public TestFlight distribution and exact-build verification: in progress, build 30 uploaded successfully and transient App Store Connect verification retry is being hardened
 - English App Store screenshots: deferred to the public App Store release, English metadata is done
 
 ## Existing contracts
@@ -180,3 +180,4 @@ The surface uses a native grouped `List` or `Form`, a native three-option picker
 - 2026-07-12 tester: canonical production QA passed 46 of 46 desktop, compact mobile, interaction, data, navigation, console, network, and overflow checks in German and English.
 - 2026-07-12 visibility: canonical production visibility passed reciprocal locale alternates, five bilingual structured datasets, all 20 machine-catalog endpoints, robots, and a 3,856 URL bilingual sitemap.
 - 2026-07-12 lead: postdeployment GitHub run `29180835348` passed every iOS gate on exact source `21ed415`. Fresh German and English installs retained their explicit language across a relaunch and rendered live localized content. Original-resolution screenshot review confirmed the compact English title, date, summary, chart, party rows, and visible localized tabs render without clipping.
+- 2026-07-12 lead: TestFlight run `29181146533` built and uploaded Machtblick 1.0 build 30 from `9338a06`, resolved the enabled public group, and verified the invitation remained live and open. The final read-only state poll later received one transient App Store Connect HTTP 500 from `buildBetaDetail`, so the run correctly remained red without implying an app or upload failure. Added bounded GET retries for connection failures, HTTP 429, and transient HTTP 5xx responses while preserving every exact-build assertion.
