@@ -13,7 +13,13 @@ Redesign the native iOS More experience so it is visual, compact, calm, informat
 - Selected ASCII source of truth: done
 - Implementation: done
 - Native content parity and bilingual verification: done
-- iOS build, smoke, commit, push, and TestFlight delivery: pending
+- Commit and push: done at `4fff2c8`
+- iOS build and simulator smoke: blocked before runner start by GitHub Actions billing
+- TestFlight delivery: blocked before runner start by GitHub Actions billing
+
+## External unblock
+
+GitHub must accept hosted Actions jobs again. The account currently reports failed payments or an insufficient Actions spending limit. After billing is restored, rerun iOS Build for `4fff2c8`, require the macOS build and bilingual simulator smoke to pass, then run Deploy iOS to TestFlight for the same commit and verify the new public build.
 
 ## Product contracts
 
@@ -66,3 +72,5 @@ Generate three deliberately different high-fidelity iPhone directions using the 
 - 2026-07-12 designer: replaced the concept-round mock with the selected bilingual ASCII source of truth for the compact root, language menu, and native reading-page hierarchy.
 - 2026-07-12 ios: implemented the flat More root, icon-only tabs, native bilingual About the data, Imprint, and Privacy pages, in-app external links, native mail links, and localized back affordances.
 - 2026-07-12 tester: added ordered website-content parity, static More UI, localization, and release workflow gates. Local checks pass for 171 bilingual catalog keys, 232 ordered native content fields, the selected UI contract, JSON, JavaScript, YAML, Python, and diff hygiene. Swift compilation and simulator smoke remain assigned to macOS CI.
+- 2026-07-12 scribe: committed the selected redesign and release gates as `4fff2c8 feat(ios): redesign More experience`; lead pushed it to `origin/main` while preserving unrelated local agent-configuration edits.
+- 2026-07-12 lead: iOS Build run `29184118608` and TestFlight run `29184135374` both failed before any step or runner started. GitHub reported failed account payments or an insufficient Actions spending limit. This environment is Linux and has no Xcode, App Store Connect key, distribution certificate, or provisioning profile, so there is no safe local iOS signing fallback.
