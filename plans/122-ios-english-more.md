@@ -15,8 +15,9 @@ This plan now governs implementation of the approved product and technical contr
 - Implementation: done
 - Local data, localization, TypeScript, and production-build verification: done
 - macOS build, compiled localization checks, and stored German and English relaunch smoke: done on `a8e96fc`
-- Bilingual production data deployment: awaiting explicit production authorization
-- Public TestFlight distribution and exact-build verification: prepared, awaiting production data deployment
+- Bilingual production data deployment and canonical production verification: done on `21ed415`
+- Postdeployment iOS build, compiled localization, persistent relaunch, and live German and English data smoke: done in GitHub run `29180835348`
+- Public TestFlight distribution and exact-build verification: prepared, ready to dispatch
 - English App Store screenshots: deferred to the public App Store release, English metadata is done
 
 ## Existing contracts
@@ -173,3 +174,9 @@ The surface uses a native grouped `List` or `Form`, a native three-option picker
 - 2026-07-11 lead: hardened TestFlight delivery to pin Fastlane 2.237.0, resolve the exact enabled public beta group, capture one build number, supply bilingual test notes, wait for processing, distribute externally, and verify iOS 1.0, valid processing, group membership, and external state `IN_BETA_TESTING`.
 - 2026-07-11 lead: verified the public TestFlight invitation remains live and not full. The production English JSON remains undeployed, so final public TestFlight dispatch stays paused until the user explicitly authorizes the required production web deployment.
 - 2026-07-12 lead: GitHub run `29173216628` passed catalog, language, member DTO, release-script, Xcode, compiled-bundle, persistent relaunch, screenshot, and cleanup gates on `a8e96fc`. German rendered the complete localized feed and visible Abstimmungen, Abgeordnete, Fraktionen, and Mehr labels. English rendered localized Votes, Members, Parties, More, and the expected load error because production English data is still 404.
+- 2026-07-12 user: explicitly authorized the required production web deployment.
+- 2026-07-12 deployer: built and deployed exact source `21ed415` to Cloudflare Pages. The build prerendered 6,456 pages, passed the 1,930 bilingual artifact gate, and published at `https://d0b5ebb7.machtblick-bundestag.pages.dev` with production alias `https://machtblick.de`.
+- 2026-07-12 lead: verified canonical German and English vote, member, party, motion, and speech artifacts at `https://machtblick.de`, including stable identifiers, matching schemas, 639 members, 37,165 enriched member histories, education, and no initiatives.
+- 2026-07-12 tester: canonical production QA passed 46 of 46 desktop, compact mobile, interaction, data, navigation, console, network, and overflow checks in German and English.
+- 2026-07-12 visibility: canonical production visibility passed reciprocal locale alternates, five bilingual structured datasets, all 20 machine-catalog endpoints, robots, and a 3,856 URL bilingual sitemap.
+- 2026-07-12 lead: postdeployment GitHub run `29180835348` passed every iOS gate on exact source `21ed415`. Fresh German and English installs retained their explicit language across a relaunch and rendered live localized content. Original-resolution screenshot review confirmed the compact English title, date, summary, chart, party rows, and visible localized tabs render without clipping.

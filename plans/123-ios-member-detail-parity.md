@@ -18,14 +18,15 @@ This plan now governs the native implementation against the committed website so
 - Static contract, TypeScript, and production-build verification: done
 - macOS build, DTO contract, compiled localization contract, and initial bilingual process smoke: done
 - Final labeled-tab simulator rerun: done on `a8e96fc`
-- Production static deployment and public TestFlight verification: awaiting production authorization
+- Production static deployment, canonical web QA, and postdeployment native data smoke: done on `21ed415`
+- Public TestFlight distribution and exact-build verification: prepared, ready to dispatch
 
 ## Baseline and scope
 
 - Last deployed baseline commit: `b402e4456440965d2a989167329a3fc15d005e59`.
 - Committed website parity source: `d37533a409bd686ba9d5198a342bfa34135c78a2`.
 - Local `HEAD`, the live GitHub `main` ref, and `origin/main` were verified equal at the parity source before native implementation started.
-- At the planning boundary, production served the pre-overhaul member header, stat bars, voting filters, and simple vote ledger. Its index, member-shell, and voting-record asset hashes matched the local built output at the baseline, and its index contained the TestFlight prompt introduced by `b402e44`. The web member overhaul has since reached production, while the enriched German and English static app-data layer remains undeployed.
+- At the planning boundary, production served the pre-overhaul member header, stat bars, voting filters, and simple vote ledger. Its index, member-shell, and voting-record asset hashes matched the local built output at the baseline, and its index contained the TestFlight prompt introduced by `b402e44`. The web member overhaul and its enriched German and English static app-data layer are now live on canonical production from `21ed415`.
 - The relevant web work is recorded in `plans/120-web-donation-bars-only.md` and `plans/121-member-detail-page-overhaul.md`.
 - The worktree also contains unrelated agent configuration changes. Implementation must preserve them.
 - Plan 122 owns German and English app localization, locale-specific paths, and the app-wide language preference. This plan consumes those contracts and does not create a second locale system.
@@ -291,3 +292,8 @@ Contracts:
 - 2026-07-11 lead: verified the web member overhaul is live, but the German static member JSON still lacks proposer, party summaries, and education and still contains initiatives. English app-data endpoints remain 404, confirming that the final bilingual static deployment is required before TestFlight.
 - 2026-07-11 lead: the Xcode 26.2 gate compiles the app, decodes legacy and enriched member payloads, validates compiled German and English resources, and launches both locales. Public TestFlight delivery now verifies the exact processed build reaches the public external group rather than checking the invitation page alone.
 - 2026-07-12 lead: GitHub run `29173216628` passed on `a8e96fc`, including persisted German and English second launches and visible localized root-tab labels. Native English data and enriched production member cards remain gated only by the undeployed static web layer.
+- 2026-07-12 user: explicitly authorized production deployment of the bilingual static layer.
+- 2026-07-12 deployer: built and deployed exact source `21ed415` to Cloudflare Pages. The production build prerendered 6,456 pages and passed all 1,930 bilingual artifact checks.
+- 2026-07-12 lead: canonical production now serves matching German and English schemas and stable identifiers for all representative member, vote, party, motion, and speech artifacts. All 639 current members include education, omit initiatives, and expose 37,165 enriched history entries with proposer and party summaries.
+- 2026-07-12 tester: canonical member-detail QA passed 46 of 46 checks in German and English at desktop and 390 by 844 mobile, including identity layout, centered stats, two tabs, 59 compact cards, 354 donuts, member highlights, connectors, full-card navigation, speeches, photo attribution, localized links, and clean runtime diagnostics.
+- 2026-07-12 lead: postdeployment GitHub run `29180835348` passed the complete native build and persistent German and English relaunch gates on `21ed415`. Both locales loaded live production data, and original-resolution English screenshot review confirmed the long translated compact title and surrounding layout render completely.
