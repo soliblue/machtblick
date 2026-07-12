@@ -23,6 +23,8 @@ jobs:
       - uses: ruby/setup-ruby@d45b1a4e94b71acab930e56e79c6aa188764e7f9
         with:
           ruby-version: "3.3"
+      - name: Check release version
+        run: node apps/ios/scripts/check-release-version.mjs
       - name: Install fastlane
         run: gem install fastlane --version 2.237.0 --no-document
       - name: Upload metadata and screenshots

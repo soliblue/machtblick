@@ -15,7 +15,9 @@ export function seoMeta({ title, description, canonical, type = 'website', image
   const canonicalPath = canonical ? pagePath(canonical) : null
   const english = canonicalPath === '/en/' || canonicalPath?.startsWith('/en/')
   const fullTitle = title ? `${title} · ${SITE_NAME}` : SITE_NAME
-  const desc = description ?? (english ? 'Transparency about votes, members, and parliamentary groups in the German Bundestag.' : 'Transparenz über Abstimmungen, Abgeordnete und Fraktionen des Deutschen Bundestags.')
+  const desc = description ?? (english
+    ? 'German Bundestag votes, members, parties, motions, and speeches clearly explained, with results and links to official sources.'
+    : 'Bundestag-Abstimmungen, Abgeordnete, Fraktionen, Anträge und Reden verständlich erklärt, mit Ergebnissen und offiziellen Quellen.')
   const url = canonicalPath ? `${SITE_URL}${canonicalPath}` : SITE_URL
   const img = image ? (image.startsWith('https://') || image.startsWith('http://') ? image : `${SITE_URL}${image.startsWith('/') ? image : `/${image}`}`) : SITE_IMAGE
   const alt = imageAlt ?? (english ? 'Machtblick preview for Bundestag votes, members, and parliamentary groups.' : 'Machtblick Vorschau für Abstimmungen, Abgeordnete und Fraktionen des Bundestags.')

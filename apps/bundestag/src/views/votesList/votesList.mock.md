@@ -15,10 +15,13 @@ center, safe-area aware, `fg` fill with `background` text (inverted so it pops o
 feed; pill shape and dark fill are deliberate exceptions to radius-0), lucide funnel
 icon + localized "Filter · n" where n counts all active filter values. The default
 view has no vote-type filter and reads "Filter · 0", semibold when n > 0. Tapping opens a
-bottom sheet: drag handle, one caption-labeled group per filter (Typ, Antragsteller,
-Ergebnis, Kategorie), options as bordered chips, selected = surface bg + semibold + ×,
-applies immediately on select, tap selected again to clear, dismisses on backdrop tap
-or swipe-down. Same filter state and URL semantics as the pills.
+bottom sheet with a sticky header and an explicit X close Button at the upper-left,
+followed by one caption-labeled group per filter (Typ, Antragsteller, Ergebnis,
+Kategorie). Options are bordered chips, selected = surface bg + semibold + ×,
+applies immediately on select, tap selected again to clear. The sheet dismisses through
+the X, backdrop tap, or Escape. It has no drag handle, touch translation, or swipe-down
+dismissal. Vertical gestures scroll the filter content without moving the sheet. Same
+filter state and URL semantics as the pills.
 
 ## What a citizen scans for
 
@@ -78,6 +81,37 @@ One ingredient set on both devices (phase 4 unification).
 +------------------------------------------+     kicker = swipe affordance
 ```
 
+Filter sheet, shared by every mobile host of `FilterSheet`:
+
+```
+                 dimmed backdrop
++------------------------------------------+
+| [ X ]  FILTER                            |  <- sticky header; X Button upper-left
+|------------------------------------------|     remains available while content scrolls
+| TYP                                      |
+| [Alle] [Namentlich] [Hammelsprung]       |
+|                                          |
+| ANTRAGSTELLER                            |
+| [CDU/CSU] [SPD] [Grüne] [Linke] [...]   |
+|                                          |
+| ERGEBNIS                                 |
+| [Angenommen] [Abgelehnt]                 |
+|                                          |
+| KATEGORIE                                |
+| [Arbeit] [Europa] [Gesundheit] [...]     |
+|                                          |
++------------------------------------------+
+```
+
+- The X is a radius-0 icon Button using the Lucide X at icon-m, with a localized close
+  label for assistive technology. Closing returns focus to the floating filter Button.
+- Backdrop tap and Escape remain secondary dismissal paths.
+- There is no drag affordance and no gesture-driven transform. A downward touch inside
+  the sheet scrolls its content only, so it cannot compete with the page's snap gesture.
+- The header stays pinned to the sheet top on an opaque `background` with a bottom
+  `text @ opacity-s` hairline. Filter content scrolls beneath it within the existing
+  maximum sheet height.
+
 Snap feed mechanics:
 - No pill row on mobile (user amendment): filters live behind a floating button +
   bottom sheet (see Filters below). The feed starts directly under the app nav.
@@ -102,15 +136,32 @@ Hemicycle (the V3 viz, exactly as prototyped):
 - SVG ~320x165, 630 seats (totalMembers), 11 rows, dot r 2.4, row radii 54 -> 145,
   seats per row proportional to radius (largest-remainder rounding).
 - All seat positions sorted by angle (desc from 180°), then filled in order:
-  Ja (success) -> Enthalten (fg @ opacity-m) -> abwesend (fg @ opacity-s) -> Nein
-  (danger). Ragged wedge boundaries are expected and correct (rows quantize angles
-  differently); do not try to smooth them.
+  Ja (success) -> Enthalten (fg @ opacity-m in Light) -> abwesend or ohne Daten
+  (fg @ opacity-s in Light) -> Nein (danger). Ragged wedge boundaries are expected
+  and correct (rows quantize angles differently); do not try to smooth them.
 - Below the arc: flanking counts (JA left, NEIN right; label text-s caps fg@70 above
   a font-display semibold 32px number, success/danger; sized down from 40px per user
   amendment to free room for the summary), centered legend stacked on two lines
   ("74 Enthalten" over "65 Abwesend", no dot separator; omit the Enthalten line when
   0) text-s caps fg@40.
 - `role="img"` with aria-label carrying all four counts.
+
+Dark appearance for the shared Stamp and hemicycle primitives:
+- Light keeps the existing colors, blend, opacity, texture, and neutral hierarchy
+  unchanged.
+- A Stamp in Dark keeps its configured success, danger, yellow, accent, or foreground
+  color plus its existing per-variant opacity and grunge. It composites normally in
+  Dark instead of multiplying into the black background. Geometry and rotation do not
+  change. Verdict stamps never fall back to white or inherit a party color.
+- An unselected hemicycle in Dark keeps Ja at success and Nein at danger. Enthalten is
+  `fg @ opacity-l`; Abwesend and synthetic Ohne Daten are `fg @ opacity-m`. This is the
+  smallest token-only ladder that leaves the two neutral states distinct while the
+  fainter state remains above 3:1 against the black background. Ohne Daten deliberately
+  shares the Abwesend neutral channel and never becomes a Ja or Nein shade.
+- Web and iOS use the same dark mapping. At the 320px chamber width, even a one-digit
+  Abwesend or Ohne Daten bucket remains visible at normal phone viewing size. The
+  existing selected-choice dimming may reduce non-selected choices to opacity-s because
+  that state is an explicit interaction, not the resting result view.
 
 Card anatomy, final (user amendments): kicker -> title -> hemicycle with flanking
 counts -> party mini-bar grid (directly below the hemicycle, no caption, one grouped
@@ -234,9 +285,11 @@ captions/legends/footers, m for desc/dek. Display numerals 40px (flank counts) a
 poster-token extension from plan 102 phase 2, mobile only. Weights regular/semibold.
 Spacing xs/s/m/l/xl as annotated. Framed controls use radius-m; vote surfaces are
 unframed. Bars 6px, stroke gaps 2px, min segment 3px. Colors:
-success/danger/fg-opacity ladder (70/40/15), three backgrounds; mobile card bg =
-`background`. Components: existing FilterPill row; everything else is bespoke view code
-(no new shadcn primitives needed).
+success/danger/fg-opacity ladder, three backgrounds; mobile card bg = `background`.
+Light neutrals remain 40/15. Dark neutrals use opacity-l for Enthalten and opacity-m for
+Abwesend or Ohne Daten, while Stamp switches from multiply to normal compositing only in
+Dark. Components: existing FilterPill row, Button for the sheet close control; everything
+else is bespoke view code (no new shadcn primitives needed).
 
 ## Rejected alternatives (do not re-propose)
 

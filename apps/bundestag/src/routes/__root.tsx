@@ -44,7 +44,7 @@ export const Route = createRootRoute({
     ],
     scripts: [
       {
-        children: `(function(){var t=localStorage.getItem('machtblick.theme');var d=t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches);var c=d?'#000000':'#FFFFFF';document.documentElement.dataset.theme=d?'dark':'light';document.documentElement.style.colorScheme=d?'dark':'light';document.querySelector('meta[name="theme-color"]')?.setAttribute('content',c);document.querySelector('meta[name="msapplication-TileColor"]')?.setAttribute('content',c)})()`,
+        children: `(function(){var d=localStorage.getItem('machtblick.theme')==='dark';var c=d?'#000000':'#FFFFFF';document.documentElement.dataset.theme=d?'dark':'light';document.documentElement.style.colorScheme=d?'dark':'light';document.querySelector('meta[name="theme-color"]')?.setAttribute('content',c);document.querySelector('meta[name="msapplication-TileColor"]')?.setAttribute('content',c)})()`,
       },
       {
         type: 'application/ld+json',
@@ -64,7 +64,7 @@ export const Route = createRootRoute({
               name: SITE_NAME,
               url: SITE_URL,
               inLanguage: ['de-DE', 'en-US'],
-              description: 'Transparenz über Abstimmungen, Abgeordnete und Fraktionen des Deutschen Bundestags.',
+              description: 'Bundestag-Abstimmungen, Abgeordnete, Fraktionen, Anträge und Reden verständlich erklärt, mit Ergebnissen und offiziellen Quellen.',
               publisher: { '@id': `${SITE_URL}/#organization` },
             },
             {

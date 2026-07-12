@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Filter } from 'lucide-react'
+import { Filter, X } from 'lucide-react'
 import { useCopy } from '@/lib/i18n'
 
 const HAIR = 'color-mix(in oklab, var(--color-fg) 15%, transparent)'
@@ -28,14 +28,9 @@ export function FilterSheet({ groups, activeCount, sort }: Props) {
   const t = useCopy()
   const [open, setOpen] = useState(false)
   const [queries, setQueries] = useState<Record<string, string>>({})
-  const [dragY, setDragY] = useState(0)
-  const startY = useRef(0)
   const fabRef = useRef<HTMLButtonElement>(null)
   const panelRef = useRef<HTMLDivElement>(null)
-  const close = () => {
-    setOpen(false)
-    setDragY(0)
-  }
+  const close = () => setOpen(false)
   useEffect(() => {
     if (!open) return
     const panel = panelRef.current
@@ -92,17 +87,18 @@ export function FilterSheet({ groups, activeCount, sort }: Props) {
             style={{
               borderColor: HAIR,
               paddingBottom: 'calc(24px + env(safe-area-inset-bottom))',
-              transform: `translateY(${dragY}px)`,
-              transition: dragY === 0 ? 'transform 0.15s ease-out' : 'none',
             }}
-            onTouchStart={(e) => {
-              startY.current = e.touches[0].clientY
-            }}
-            onTouchMove={(e) => setDragY(Math.max(0, e.touches[0].clientY - startY.current))}
-            onTouchEnd={() => (dragY > 80 ? close() : setDragY(0))}
           >
-            <div className="flex justify-center py-m">
-              <div className="h-[4px] w-[40px] bg-fg/15" />
+            <div className="sticky top-0 z-10 -mx-l mb-l flex items-center border-b bg-background px-l py-s" style={{ borderColor: HAIR }}>
+              <button
+                type="button"
+                onClick={close}
+                aria-label={t.close}
+                className="flex size-[44px] items-center justify-center focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-fg"
+              >
+                <X size={17} aria-hidden="true" />
+              </button>
+              <span className="text-s caption opacity-l">{t.filterLabel}</span>
             </div>
             {groups.map((g) => {
               const query = (queries[g.key] ?? '').trim().toLowerCase()

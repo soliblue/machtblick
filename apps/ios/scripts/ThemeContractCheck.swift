@@ -13,7 +13,7 @@ struct ThemeContractCheck {
             }
         }
         UserDefaults.standard.removeObject(forKey: "appTheme")
-        precondition(AppTheme.persisted == .system)
+        precondition(AppTheme.persisted == .light)
         precondition(AppTheme.system.colorScheme == nil)
         precondition(AppTheme.light.colorScheme == .light)
         precondition(AppTheme.dark.colorScheme == .dark)
@@ -21,6 +21,6 @@ struct ThemeContractCheck {
             AppTheme.persisted = theme
             precondition(AppTheme.persisted == theme)
         }
-        print("System default, light and dark overrides, and persistence pass.")
+        print("Light default, explicit system mode, and appearance persistence pass.")
     }
 }

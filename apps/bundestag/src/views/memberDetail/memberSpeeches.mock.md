@@ -125,8 +125,8 @@ their own contribution visible before procedural fragments.
 | System row | s regular opacity-l | py-m | full-width rules |
 
 Colors: party tint is identity for debate context only. Excerpt and conversation
-bubbles use the same shared surface tint as vote-detail debates, with a lower
-effective party opacity than the current 13% mix in both light and dark appearances.
-Party logos and small party-colored actions keep their full identity color. The
-highlighted member ring uses the member party color at opacity-l. Neutral metadata
-uses foreground opacity-l.
+bubbles follow `views/speeches/speeches.mock.md`: the approved quiet wash in
+Light, then an opaque `surface` base, party overlay at opacity-s, and party
+stroke-s border at opacity-m in Dark. Party logos and small party-colored actions
+keep full identity color. The highlighted-member ring replaces the ordinary
+border with party color at opacity-l. Neutral metadata uses foreground opacity-l.

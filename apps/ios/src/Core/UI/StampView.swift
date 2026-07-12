@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct StampView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     let label: String
     let color: Color
     var rotation: Double = 0
@@ -35,7 +37,7 @@ struct StampView: View {
             }
             .compositingGroup()
             .opacity(0.85)
-            .blendMode(.multiply)
+            .blendMode(colorScheme == .dark ? .normal : .multiply)
             .rotationEffect(.degrees(rotation))
     }
 }

@@ -1,6 +1,7 @@
 import os
 import sys
 import time
+from pathlib import Path
 
 import requests
 from requests.adapters import HTTPAdapter
@@ -10,6 +11,11 @@ from asc_api import headers
 
 API = "https://api.appstoreconnect.apple.com/v1"
 PUBLIC_LINK = "https://testflight.apple.com/join/r7RVrgtr"
+APP_VERSION = next(
+    line.removeprefix("MARKETING_VERSION = ")
+    for line in Path("apps/ios/Config/Version.xcconfig").read_text(encoding="utf-8").splitlines()
+    if line.startswith("MARKETING_VERSION = ")
+)
 SESSION = requests.Session()
 SESSION.mount(
     "https://",
@@ -185,7 +191,7 @@ if sys.argv[1] == "verify":
     assert evidence["build"]["attributes"]["processingState"] == "VALID", (
         f"Observed processing state {evidence['build']['attributes']['processingState']}."
     )
-    assert evidence["prerelease"] == {"version": "1.0", "platform": "IOS"}, (
+    assert evidence["prerelease"] == {"version": APP_VERSION, "platform": "IOS"}, (
         f"Observed prerelease {evidence['prerelease']}."
     )
     assert evidence["build"]["id"] in evidence["group_builds"], (
@@ -195,12 +201,12 @@ if sys.argv[1] == "verify":
         f"Observed external build state {evidence['external']}."
     )
     print(
-        f"Machtblick 1.0 ({os.environ['TESTFLIGHT_BUILD_NUMBER']}) is processed and available "
+        f"Machtblick {APP_VERSION} ({os.environ['TESTFLIGHT_BUILD_NUMBER']}) is processed and available "
         f"through {os.environ['TESTFLIGHT_PUBLIC_GROUP']} at {PUBLIC_LINK}."
     )
     with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as summary:
         summary.write(
-            f"Machtblick 1.0 ({os.environ['TESTFLIGHT_BUILD_NUMBER']}) from "
+            f"Machtblick {APP_VERSION} ({os.environ['TESTFLIGHT_BUILD_NUMBER']}) from "
             f"`{os.environ['GITHUB_SHA']}` is processed and available through the public "
             f"TestFlight group.\n"
         )

@@ -53,6 +53,9 @@ jobs:
         if: ${{ inputs.verify_build_number == '' }}
         run: node apps/ios/scripts/check-more-ui-contract.mjs
 
+      - name: Check release version
+        run: node apps/ios/scripts/check-release-version.mjs
+
       - name: Check language contract
         if: ${{ inputs.verify_build_number == '' }}
         run: |

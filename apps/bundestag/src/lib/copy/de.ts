@@ -49,7 +49,6 @@ export const de = {
   contributions: 'Beiträge',
   years: 'Jahre',
   appearance: 'Darstellung',
-  themeSystem: 'System',
   themeLight: 'Hell',
   themeDark: 'Dunkel',
   language: 'Sprache',

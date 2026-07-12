@@ -7,8 +7,8 @@ const RADII = Array.from({ length: 11 }, (_, i) => 54 + (i * (145 - 54)) / 10)
 
 const COLORS: Record<VoteChoice, string> = {
   yes: 'var(--color-success)',
-  abstain: 'color-mix(in oklab, var(--color-fg) 40%, transparent)',
-  absent: 'color-mix(in oklab, var(--color-fg) 15%, transparent)',
+  abstain: 'var(--vote-neutral-abstain)',
+  absent: 'var(--vote-neutral-absent)',
   no: 'var(--color-danger)',
 }
 

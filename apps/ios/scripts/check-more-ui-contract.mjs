@@ -13,6 +13,12 @@ const strings = read("apps/ios/src/Localizable.xcstrings")
 const pickerRow = read("apps/ios/src/Features/Settings/UI/MorePickerRow.swift")
 const theme = read("apps/ios/src/Core/Theme/AppTheme.swift")
 const colors = read("apps/ios/src/Core/Theme/ThemeColor.swift")
+const partySurface = read("apps/ios/src/Core/UI/PartySurface.swift")
+const stamp = read("apps/ios/src/Core/UI/StampView.swift")
+const voteHemicycle = read("apps/ios/src/Features/Votes/UI/VoteHemicycleView.swift")
+const conversationBubble = read("apps/ios/src/Features/Speeches/UI/ConversationBubble.swift")
+const partySummaryBubble = read("apps/ios/src/Features/Speeches/UI/PartySummaryBubble.swift")
+const chatInboxRow = read("apps/ios/src/Features/Members/UI/ChatInboxRow.swift")
 const semanticColors = read("apps/ios/src/Core/Theme/SemanticColors.swift")
 const launchBackground = read("apps/ios/src/Assets.xcassets/LaunchBackground.colorset/Contents.json")
 const accentColor = read("apps/ios/src/Assets.xcassets/AccentColor.colorset/Contents.json")
@@ -94,6 +100,7 @@ requireFragments(theme, "AppTheme.swift", [
   "case light",
   "case dark",
   'string(forKey: "appTheme")',
+  "?? .light",
   "var colorScheme: ColorScheme?",
   "case .system: return nil",
 ])
@@ -107,6 +114,31 @@ requireFragments(colors, "ThemeColor.swift", [
   "static let onDanger",
   "static let onYellow",
 ])
+requireFragments(partySurface, "PartySurface.swift", [
+  "@Environment(\\.colorScheme)",
+  "ThemeColor.surface",
+  "ThemeTokens.Opacity.s",
+  "ThemeTokens.Opacity.m",
+  "ThemeTokens.Opacity.l",
+  "ThemeTokens.Stroke.s",
+  "ThemeTokens.Stroke.l",
+])
+requireFragments(stamp, "StampView.swift", [
+  "@Environment(\\.colorScheme)",
+  ".blendMode(colorScheme == .dark ? .normal : .multiply)",
+])
+requireFragments(voteHemicycle, "VoteHemicycleView.swift", [
+  "@Environment(\\.colorScheme)",
+  "colorScheme == .dark ? ThemeTokens.Opacity.l : ThemeTokens.Opacity.m",
+  "colorScheme == .dark ? ThemeTokens.Opacity.m : ThemeTokens.Opacity.s",
+])
+for (const [source, path] of [
+  [conversationBubble, "ConversationBubble.swift"],
+  [partySummaryBubble, "PartySummaryBubble.swift"],
+  [chatInboxRow, "ChatInboxRow.swift"],
+]) {
+  requireFragments(source, path, ["PartySurface("])
+}
 requireFragments(semanticColors, "SemanticColors.swift", [
   "case .ja: return ThemeColor.onSuccess",
   "case .nein: return ThemeColor.onDanger",
@@ -122,6 +154,7 @@ requireFragments(accentColor, "AccentColor.colorset/Contents.json", [
 ])
 requireFragments(themeUITest, "ThemePreferenceUITests.swift", [
   "testThemeSwitchingAndPersistence()",
+  'selection: "Light", resolved: "light", screenshot: "default-light-on-dark-device"',
   'selection: "System", resolved: "dark"',
   'option: "Light", resolved: "light"',
   'option: "Dark", resolved: "dark"',

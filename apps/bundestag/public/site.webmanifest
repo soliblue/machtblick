@@ -1,7 +1,7 @@
 {
   "name": "Machtblick",
   "short_name": "Machtblick",
-  "description": "Transparenz über Abstimmungen, Abgeordnete und Fraktionen des Deutschen Bundestags.",
+  "description": "Bundestag-Abstimmungen, Abgeordnete, Fraktionen, Anträge und Reden verständlich erklärt, mit Ergebnissen und offiziellen Quellen.",
   "lang": "de-DE",
   "id": "/votes/",
   "start_url": "/votes/",

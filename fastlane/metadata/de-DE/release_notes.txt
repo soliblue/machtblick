@@ -1,0 +1,1 @@
+Machtblick startet jetzt standardmäßig im hellen Design. Im dunklen Design bleiben Fraktionsfarben, Abstimmungsstempel und Sitzverteilungen deutlich erkennbar.

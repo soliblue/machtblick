@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct VoteHemicycleView: View {
+    @Environment(\.colorScheme) private var colorScheme
+
     let yes: Int
     let no: Int
     let abstain: Int
@@ -93,8 +95,10 @@ struct VoteHemicycleView: View {
         switch choice {
         case .yes: return ThemeColor.success
         case .no: return ThemeColor.danger
-        case .abstain: return ThemeColor.fg.opacity(ThemeTokens.Opacity.m)
-        case .absent: return ThemeColor.fg.opacity(ThemeTokens.Opacity.s)
+        case .abstain:
+            return ThemeColor.fg.opacity(colorScheme == .dark ? ThemeTokens.Opacity.l : ThemeTokens.Opacity.m)
+        case .absent:
+            return ThemeColor.fg.opacity(colorScheme == .dark ? ThemeTokens.Opacity.m : ThemeTokens.Opacity.s)
         }
     }
 }

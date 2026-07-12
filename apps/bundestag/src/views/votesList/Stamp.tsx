@@ -55,7 +55,7 @@ export function Stamp({ variant, size = 's', rotated = true }: Props) {
       : 'px-s py-xs text-[10px] sm:text-s'
   return (
     <span
-      className={`inline-block font-semibold uppercase ${sizeClass}`}
+      className={`stamp-mark inline-block font-semibold uppercase ${sizeClass}`}
       style={{
         border: `2.5px solid ${color}`,
         outline: `1px solid ${color}`,
@@ -66,7 +66,6 @@ export function Stamp({ variant, size = 's', rotated = true }: Props) {
         transform: `rotate(${rotated ? rotate : 0}deg)`,
         letterSpacing: '0.12em',
         background: 'transparent',
-        mixBlendMode: 'multiply',
         filter: 'url(#stamp-grunge) contrast(1.1)',
       }}
     >

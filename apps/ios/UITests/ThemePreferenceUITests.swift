@@ -8,7 +8,7 @@ final class ThemePreferenceUITests: XCTestCase {
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_GB"]
         app.launch()
         openMore(app)
-        assertTheme(app, selection: "System", resolved: "dark", screenshot: "system-dark")
+        assertTheme(app, selection: "Light", resolved: "light", screenshot: "default-light-on-dark-device")
 
         selectTheme(app, option: "Light", resolved: "light")
         assertTheme(app, selection: "Light", resolved: "light", screenshot: "light-immediate")

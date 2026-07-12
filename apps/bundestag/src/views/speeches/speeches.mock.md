@@ -79,6 +79,35 @@ returns within the next two turns.
   text-s caps caption, X close. The member's own bubbles get a 2px ring in
   their party color @ 70%; that ring is the "find me in this debate" device.
 
+## Appearance states
+
+The web and iOS conversation and party-summary bubbles share one appearance
+contract. Light keeps the approved quiet party wash. Dark does not reuse that
+low-alpha wash directly over black, because it erases party identity.
+
+```text
+LIGHT                              DARK
+background                         background
+.-------------------------.        .=========================.
+| (o) Anna        SPD-logo |        || (o) Anna      SPD-logo ||
+| Rede mit ruhigem         |        || Rede mit klarer,       ||
+| Partei-Flaechenton       |        || ruhiger SPD-Toenung    ||
+'-------------------------'        '========================='
+ quiet party wash                    surface base + party tint
+                                     + party hairline border
+```
+
+In Dark, each party bubble uses `surface` as its opaque base, a party-color
+overlay at opacity-s, and a stroke-s party border at opacity-m. The border is
+part of the identity surface, not a decorative accent. Party-less turns use
+plain `surface` and the normal `fg` opacity-s border. Foreground text remains at
+full contrast.
+
+The highlighted-member state replaces the normal party border with the existing
+stroke-l party ring at opacity-l. It must still read as stronger than an ordinary
+dark bubble. Party logos remain full identity color. Vote-choice stamps retain
+success, danger, and yellow, and never inherit the bubble party color.
+
 ## State 2: reader (full-speech overlay)
 
 Opened from a feed card (/speeches) or a thread turn. Mobile = bottom sheet rising
@@ -148,7 +177,8 @@ the argument, not the protocol.
 |---|---|---|---|---|
 | Section captions (host) | s uppercase, ls 0.08em | regular, opacity-l | mb-s | none |
 | System chip | s | name semibold, rest regular | my-l py-s, gap-m | hairline rules fg @ opacity-s |
-| Bubble | radius-m | none | p-m, thread gap-l, indent xl | party surface tint / `surface` |
+| Bubble, Light | radius-m | none | p-m, thread gap-l, indent xl | approved quiet party surface / `surface` |
+| Bubble, Dark | radius-m | none | p-m, thread gap-l, indent xl | `surface` + party opacity-s, stroke-s party opacity-m |
 | Bubble speaker name | l | semibold | header gap-s | link |
 | Bubble body | l serif (Charter), lh 1.45 | regular | mt-s, clamp 6 | none |
 | Expand / collapse | s | semibold, party color | mt-s gap-m | button |
@@ -160,7 +190,8 @@ the argument, not the protocol.
 | Avatars | initials text-s | semibold | pile overlap -10px | SpeakerAvatar 24/28/32/36 |
 | Dialog frame | radius-m desktop, radius 0 mobile sheet | none | border fg @ opacity-s | none |
 
-Colors: party color only as bubble surface tint, logo, expand-button text, and
-the member-highlight ring; ballot stamps success/danger/yellow; everything else
-the fg opacity ladder over the three backgrounds. Radius-m on bubbles and the
-desktop dialog plus circular avatars are the sanctioned exceptions to radius 0.
+Colors: party color only as the identity surface tint and border, logo,
+expand-button text, and member-highlight ring. Ballot stamps use
+success/danger/yellow. Everything else uses the fg opacity ladder over the three
+backgrounds. Radius-m on bubbles and the desktop dialog plus circular avatars
+are the sanctioned exceptions to radius 0.

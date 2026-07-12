@@ -1,5 +1,6 @@
+import type { CSSProperties } from 'react'
 import { PartyLogo } from '@/views/votesList/PartyLogo'
-import { PARTY_COLOR, partySurfaceColor } from '@/lib/parties'
+import { PARTY_COLOR } from '@/lib/parties'
 import { SERIF } from '@/lib/fonts'
 import { highlight, tokenize } from '@/components/highlight'
 import { withLocale } from '@/lib/locale'
@@ -49,11 +50,12 @@ export function ConversationBubble({
   const text = expanded ? fullText || speech.excerpt : speech.excerpt
   return (
     <article
-      className="rounded-m p-m"
+      className={`${partyColor ? 'party-surface' : 'party-surface-neutral'} rounded-m p-m`}
       style={{
-        background: partyColor ? partySurfaceColor(partyColor) : 'var(--color-surface)',
-        boxShadow: highlighted ? `0 0 0 2px color-mix(in oklab, ${highlightColor} 70%, transparent)` : undefined,
-      }}
+        '--party-color': partyColor ?? 'var(--color-fg)',
+        borderColor: highlighted ? `color-mix(in oklab, ${highlightColor} 70%, transparent)` : undefined,
+        borderWidth: highlighted ? '2px' : undefined,
+      } as CSSProperties}
     >
       <header className="flex items-center gap-s">
         <div className="flex min-w-0 flex-1 items-center gap-s">

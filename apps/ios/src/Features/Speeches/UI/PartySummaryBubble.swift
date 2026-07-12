@@ -21,7 +21,11 @@ struct PartySummaryBubble: View {
         }
         .padding(ThemeTokens.Spacing.m)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(RoundedRectangle(cornerRadius: 16).fill(tint))
+        .background(
+            PartySurface(
+                party: PartyStyle.hasPartyLine(summary.party) ? summary.party : nil
+            )
+        )
     }
 
     @ViewBuilder private var logo: some View {
@@ -41,11 +45,5 @@ struct PartySummaryBubble: View {
                 .font(.system(size: ThemeTokens.Text.l, weight: .semibold))
                 .foregroundStyle(PartyStyle.color(summary.party))
         }
-    }
-
-    private var tint: Color {
-        PartyStyle.hasPartyLine(summary.party)
-            ? PartyStyle.color(summary.party).opacity(0.13)
-            : ThemeColor.surface
     }
 }

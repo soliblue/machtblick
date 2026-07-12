@@ -1,5 +1,9 @@
 require "shellwords"
 
+APP_VERSION = File.read(
+  File.expand_path("../apps/ios/Config/Version.xcconfig", __dir__)
+).match(/^MARKETING_VERSION = (.+)$/)[1]
+
 default_platform(:ios)
 
 platform :ios do
@@ -57,13 +61,13 @@ platform :ios do
       distribute_external: true,
       groups: [ENV.fetch("TESTFLIGHT_PUBLIC_GROUP")],
       notify_external_testers: true,
-      changelog: "Neu: Machtblick folgt standardmäßig dem Erscheinungsbild des iPhones. Unter Mehr kannst du zwischen System, Hell und Dunkel wählen.",
+      changelog: "Neu: Machtblick startet im hellen Design. Fraktionsfarben, Abstimmungsstempel und Sitzverteilungen bleiben im dunklen Design klar erkennbar.",
       localized_build_info: {
         "de-DE": {
-          whats_new: "Machtblick folgt jetzt standardmäßig dem Erscheinungsbild deines iPhones. Unter Mehr kannst du zwischen System, Hell und Dunkel wählen. Datenstand und Teilen stehen nun direkt bei den übrigen Einstellungen."
+          whats_new: "Machtblick startet jetzt standardmäßig im hellen Design. Im dunklen Design bleiben Fraktionsfarben, Abstimmungsstempel und Sitzverteilungen deutlich erkennbar."
         },
         "en-US": {
-          whats_new: "Machtblick now follows your iPhone appearance by default. In More, you can choose System, Light, or Dark. Last updated and sharing now sit directly with the other settings."
+          whats_new: "Machtblick now starts in Light appearance. Party colors, vote stamps, and seat diagrams remain clearly visible in Dark appearance."
         }
       }
     )
@@ -81,10 +85,11 @@ platform :ios do
     upload_to_app_store(
       api_key: api_key,
       app_identifier: "soli.Machtblick",
-      app_version: "1.0",
+      app_version: APP_VERSION,
       build_number: latest_testflight_build_number(
         api_key: api_key,
-        app_identifier: "soli.Machtblick"
+        app_identifier: "soli.Machtblick",
+        version: APP_VERSION
       ).to_s,
       metadata_path: "fastlane/metadata",
       screenshots_path: "fastlane/screenshots",

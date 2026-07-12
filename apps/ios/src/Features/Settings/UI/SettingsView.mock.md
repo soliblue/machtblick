@@ -9,7 +9,7 @@
 |                                          |
 | [globe]  Sprache              Deutsch  v |
 |          ------------------------------  |
-| [circle.lefthalf] Darstellung   System  v|
+| [circle.lefthalf] Darstellung     Hell  v|
 |          ------------------------------  |
 | [building.columns]  Daten              > |
 |          ------------------------------  |
@@ -24,7 +24,7 @@
 |          ------------------------------  |
 | [square.and.arrow.up] Machtblick teilen   |
 |                                          |
-|              Version 1.0 (33)            |
+|              Version 1.1 (34)            |
 +------------------------------------------+
 |    [seal]     [people]     [pie] [sliders]|
 +------------------------------------------+
@@ -39,7 +39,7 @@
 |                                          |
 | [globe]  Language              English  v|
 |          ------------------------------  |
-| [circle.lefthalf] Appearance    System  v|
+| [circle.lefthalf] Appearance     Light  v|
 |          ------------------------------  |
 | [building.columns]  Data               > |
 |          ------------------------------  |
@@ -54,7 +54,7 @@
 |          ------------------------------  |
 | [square.and.arrow.up] Share Machtblick    |
 |                                          |
-|              Version 1.0 (33)            |
+|              Version 1.1 (34)            |
 +------------------------------------------+
 |    [seal]     [people]     [pie] [sliders]|
 +------------------------------------------+
@@ -80,15 +80,21 @@ The Language row is a native trailing `Menu` picker. Its closed value is exactly
 
 ```text
                          +----------------+
-                         | System        ✓|
-                         | Hell            |
+                         | System          |
+                         | Hell           ✓|
                          | Dunkel          |
                          +----------------+
 ```
 
-The Appearance row is a native trailing `Menu` picker. Its choices are `System`, `Hell`, and `Dunkel` in German and `System`, `Light`, and `Dark` in English. `System` is the default and follows the iPhone appearance. Explicit Light and Dark choices update the whole app immediately and persist across launches.
+The Appearance row is a native trailing `Menu` picker. Its choices are `System`, `Hell`, and `Dunkel` in German and `System`, `Light`, and `Dark` in English. Light is the default regardless of the iPhone appearance. Selecting System explicitly follows the iPhone appearance. Every choice updates the whole app immediately and persists across launches.
 
-The semantic canvas tokens adapt to the selected appearance. Light keeps the existing white, off-white, and elevated gray hierarchy. Dark uses black, `#1C1C1E`, and `#2C2C2E`; foreground becomes white. Borders and secondary text remain derived from `fg`. Accent and party colors keep their existing meaning in both appearances.
+The semantic canvas tokens adapt to the selected appearance. Light keeps the
+existing white, off-white, and elevated gray hierarchy. Dark uses black,
+`#1C1C1E`, and `#2C2C2E`; foreground becomes white. Borders and secondary text
+remain derived from `fg`. Dark conversation and party-summary bubbles use the
+shared speech surface contract: opaque `surface`, party overlay at opacity-s,
+and a stroke-s party border at opacity-m. Accent, party, and vote colors keep
+their existing meaning in both appearances.
 
 ## Tokens
 

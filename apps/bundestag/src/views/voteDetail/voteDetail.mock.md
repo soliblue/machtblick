@@ -178,9 +178,10 @@ with their line before the user reads the debate.
 | Party surface tint | none | shared across both bubble types | semantic party surface |
 | System row | s regular opacity-l | py-m | rule rows |
 
-Colors: party color only for identity tint and party logo. Both party-summary and
-conversation bubbles use one shared surface tint with a lower effective party
-opacity than the current 13% mix. The tint stays quiet against `background` in
-light and dark appearances. Party logos and small party-colored actions keep their
-full identity color. Vote outcomes use success and danger. Abstention uses yellow.
-Neutral facts use foreground opacity. Bubbles use the existing radius-m token.
+Colors: party color only for identity surfaces and logos. Party-summary and
+conversation bubbles follow the cross-platform appearance contract in
+`views/speeches/speeches.mock.md`: the approved quiet wash in Light, then an
+opaque `surface` base, party overlay at opacity-s, and party stroke-s border at
+opacity-m in Dark. Party logos and small party-colored actions keep full identity
+color. Vote outcomes use success and danger. Abstention uses yellow. Neutral
+facts use foreground opacity. Bubbles use the existing radius-m token.

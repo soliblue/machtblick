@@ -49,9 +49,6 @@ export const PARTY_COLOR: Record<string, string> = {
   Wahlprüfungsausschuss: 'var(--color-gray)',
 }
 
-export const partySurfaceColor = (color: string) =>
-  `color-mix(in oklab, ${color} 10%, var(--color-background))`
-
 export const PARTY_SLUG: Record<string, string> = {
   'CDU/CSU': 'cdu-csu',
   SPD: 'spd',

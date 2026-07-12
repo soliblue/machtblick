@@ -5,6 +5,7 @@ import { ScrollEyeWordmark } from '@/views/nav/ScrollEyeWordmark'
 import { useCopy } from '@/lib/i18n'
 import { localeFromPath, localizedPath, withLocale } from '@/lib/locale'
 import type { ThemeMode } from '@/hooks/useTheme'
+import { LanguagePicker } from './LanguagePicker'
 import { ThemePicker } from './ThemePicker'
 
 type Props = {
@@ -37,36 +38,18 @@ export function Nav({ theme, onThemeChange }: Props) {
           <ThemePicker
             value={theme}
             label={t.appearance}
-            systemLabel={t.themeSystem}
             lightLabel={t.themeLight}
             darkLabel={t.themeDark}
             onChange={onThemeChange}
           />
-          <div
-            role="group"
-            aria-label={t.language}
-            className="flex overflow-hidden rounded-m border text-s"
-            style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
-          >
-            <a
-              href={deHref}
-              aria-label={t.german}
-              aria-current={locale === 'de' ? 'page' : undefined}
-              title={t.german}
-              className={`flex h-[32px] w-[36px] items-center justify-center transition-colors ${locale === 'de' ? 'bg-surface opacity-100' : 'opacity-l hover:bg-surface hover:opacity-100'}`}
-            >
-              <span aria-hidden="true">🇩🇪</span>
-            </a>
-            <a
-              href={enHref}
-              aria-label={t.english}
-              aria-current={locale === 'en' ? 'page' : undefined}
-              title={t.english}
-              className={`flex h-[32px] w-[36px] items-center justify-center border-l border-fg/15 transition-colors ${locale === 'en' ? 'bg-surface opacity-100' : 'opacity-l hover:bg-surface hover:opacity-100'}`}
-            >
-              <span aria-hidden="true">🇬🇧</span>
-            </a>
-          </div>
+          <LanguagePicker
+            locale={locale}
+            deHref={deHref}
+            enHref={enHref}
+            label={t.language}
+            germanLabel={t.german}
+            englishLabel={t.english}
+          />
         </div>
         <button
           type="button"
@@ -78,46 +61,35 @@ export function Nav({ theme, onThemeChange }: Props) {
         </button>
       </div>
       {open && (
-        <div className="flex flex-col gap-m px-l pb-m text-m desk:hidden">
-          <a href={href('/votes/')} className={linkClass} onClick={() => setOpen(false)}>{t.navVotes}</a>
-          <a href={href('/members/')} className={linkClass} onClick={() => setOpen(false)}>{t.navMembers}</a>
-          <a href={href('/parties/')} className={linkClass} onClick={() => setOpen(false)}>{t.navParties}</a>
-          <div className="flex items-center gap-m">
+        <div className="absolute inset-x-0 top-full flex max-h-[calc(100svh-54px)] flex-col gap-l overflow-y-auto overscroll-contain border-y border-fg/15 bg-background px-l py-l text-m desk:hidden">
+          <div className="flex flex-col gap-m">
+            <a href={href('/votes/')} className={linkClass} onClick={() => setOpen(false)}>{t.navVotes}</a>
+            <a href={href('/members/')} className={linkClass} onClick={() => setOpen(false)}>{t.navMembers}</a>
+            <a href={href('/parties/')} className={linkClass} onClick={() => setOpen(false)}>{t.navParties}</a>
+          </div>
+          <div>
+            <div className="mb-s text-s caption opacity-l">{t.appearance}</div>
             <ThemePicker
               value={theme}
               label={t.appearance}
-              systemLabel={t.themeSystem}
               lightLabel={t.themeLight}
               darkLabel={t.themeDark}
               onChange={onThemeChange}
+              expanded
             />
-            <div
-              role="group"
-              aria-label={t.language}
-              className="flex w-fit overflow-hidden rounded-m border"
-              style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
-            >
-              <a
-                href={deHref}
-                aria-label={t.german}
-                aria-current={locale === 'de' ? 'page' : undefined}
-                title={t.german}
-                className={`flex h-[32px] w-[40px] items-center justify-center ${locale === 'de' ? 'bg-surface opacity-100' : 'opacity-l'}`}
-                onClick={() => setOpen(false)}
-              >
-                <span aria-hidden="true">🇩🇪</span>
-              </a>
-              <a
-                href={enHref}
-                aria-label={t.english}
-                aria-current={locale === 'en' ? 'page' : undefined}
-                title={t.english}
-                className={`flex h-[32px] w-[40px] items-center justify-center border-l border-fg/15 ${locale === 'en' ? 'bg-surface opacity-100' : 'opacity-l'}`}
-                onClick={() => setOpen(false)}
-              >
-                <span aria-hidden="true">🇬🇧</span>
-              </a>
-            </div>
+          </div>
+          <div>
+            <div className="mb-s text-s caption opacity-l">{t.language}</div>
+            <LanguagePicker
+              locale={locale}
+              deHref={deHref}
+              enHref={enHref}
+              label={t.language}
+              germanLabel={t.german}
+              englishLabel={t.english}
+              expanded
+              onSelect={() => setOpen(false)}
+            />
           </div>
         </div>
       )}

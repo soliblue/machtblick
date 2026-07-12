@@ -1,0 +1,1 @@
+Machtblick now starts in Light appearance. Party colors, vote stamps, and seat diagrams remain clearly visible in Dark appearance.

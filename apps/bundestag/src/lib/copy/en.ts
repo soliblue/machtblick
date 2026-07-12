@@ -49,7 +49,6 @@ export const en = {
   contributions: 'contributions',
   years: 'years old',
   appearance: 'Appearance',
-  themeSystem: 'System',
   themeLight: 'Light',
   themeDark: 'Dark',
   language: 'Language',

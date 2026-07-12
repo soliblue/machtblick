@@ -78,6 +78,7 @@ jobs:
 
       - name: Check release scripts
         run: |
+          node apps/ios/scripts/check-release-version.mjs
           python3 -m py_compile \
             .github/scripts/asc_api.py \
             .github/scripts/asc_certs.py \
@@ -113,7 +114,7 @@ jobs:
           xcrun simctl boot "$SMOKE_UDID"
           xcrun simctl bootstatus "$SMOKE_UDID" -b
           mkdir -p "$RUNNER_TEMP/machtblick-smoke"
-          for SCENARIO in de:default:light en:system:dark de:light:dark en:dark:light; do
+          for SCENARIO in de:default:dark en:system:dark de:light:dark en:dark:light; do
             IFS=: read -r LANGUAGE APP_THEME DEVICE_APPEARANCE <<< "$SCENARIO"
             xcrun simctl ui "$SMOKE_UDID" appearance "$DEVICE_APPEARANCE"
             xcrun simctl install "$SMOKE_UDID" "$RUNNER_TEMP/machtblick-build/Build/Products/Debug-iphonesimulator/Machtblick.app"

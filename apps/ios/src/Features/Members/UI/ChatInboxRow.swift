@@ -19,7 +19,7 @@ struct ChatInboxRow: View {
                 .multilineTextAlignment(.leading)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(ThemeTokens.Spacing.m)
-                .background(RoundedRectangle(cornerRadius: 16).fill(tint))
+                .background(PartySurface(party: PartyStyle.hasPartyLine(party) ? party : nil))
             Button(action: onOpen) {
                 HStack(spacing: ThemeTokens.Spacing.xs) {
                     Text(Copy.viewFullDebate)
@@ -47,13 +47,9 @@ struct ChatInboxRow: View {
         return highlighted(matchSnippet(source, terms: terms), terms: terms)
     }
 
-    private var tint: Color {
-        let party = group.main.party ?? ""
-        return PartyStyle.hasPartyLine(party) ? PartyStyle.color(party).opacity(0.13) : ThemeColor.surface
-    }
+    private var party: String { group.main.party ?? "" }
 
     private var accent: Color {
-        let party = group.main.party ?? ""
         return PartyStyle.hasPartyLine(party) ? PartyStyle.color(party) : ThemeColor.fg
     }
 }

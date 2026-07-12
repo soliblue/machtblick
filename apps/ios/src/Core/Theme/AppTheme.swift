@@ -11,7 +11,7 @@ enum AppTheme: String, CaseIterable, Identifiable, Sendable {
     static var persisted: AppTheme {
         get {
             AppTheme(rawValue: UserDefaults.standard.string(forKey: "appTheme") ?? "")
-                ?? .system
+                ?? .light
         }
         set {
             UserDefaults.standard.set(newValue.rawValue, forKey: "appTheme")

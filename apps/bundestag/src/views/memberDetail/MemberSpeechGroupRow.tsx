@@ -1,8 +1,9 @@
+import type { CSSProperties } from 'react'
 import { ChevronRight, ExternalLink } from 'lucide-react'
 import { formatDateShort } from '@/lib/format'
 import { SERIF } from '@/lib/fonts'
 import { highlight } from '@/components/highlight'
-import { PARTY_COLOR, partySurfaceColor } from '@/lib/parties'
+import { PARTY_COLOR } from '@/lib/parties'
 import { renderSnippet } from '@/components/snippet'
 import { withLocale } from '@/lib/locale'
 import { useCopy, useLocale } from '@/lib/i18n'
@@ -20,7 +21,7 @@ type Props = {
 export function MemberSpeechGroupRow({ group, terms, preview, onOpen }: Props) {
   const locale = useLocale()
   const t = useCopy()
-  const color = PARTY_COLOR[group.main.party ?? ''] ?? 'var(--color-fg)'
+  const color = PARTY_COLOR[group.main.party ?? ''] ?? null
   const title = memberSpeechGroupTitle(group, locale === 'en' ? 'Speech' : 'Rede')
   const shortLabel = group.shortCount > 0
     ? locale === 'en'
@@ -57,13 +58,12 @@ export function MemberSpeechGroupRow({ group, terms, preview, onOpen }: Props) {
         )}
       </div>
       <div
-        className="mt-m rounded-m p-m text-m line-clamp-3"
+        className={`${color ? 'party-surface' : 'party-surface-neutral'} mt-m rounded-m p-m text-m line-clamp-3`}
         style={{
-          background: partySurfaceColor(color),
-          border: `1px solid color-mix(in oklab, ${color} 15%, transparent)`,
+          '--party-color': color ?? 'var(--color-fg)',
           fontFamily: SERIF,
           lineHeight: 1.45,
-        }}
+        } as CSSProperties}
       >
         {preview.snippet ? renderSnippet(preview.snippet) : highlight(preview.body, terms)}
       </div>
