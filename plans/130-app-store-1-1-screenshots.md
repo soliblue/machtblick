@@ -17,6 +17,9 @@ Prepare the Machtblick iOS 1.1 App Store draft with a stronger screenshot story,
 - Replace German and English screenshots in App Store Connect: pending workflow upload
 - Verify the App Store draft and repository changes: completed
 - Commit repository changes: completed
+- Explore denser second-pass compositions: completed
+- Render and verify the revised bilingual screenshot set: completed
+- Commit the second-pass screenshot design: completed
 
 ## Contracts
 
@@ -68,3 +71,9 @@ Prepare the Machtblick iOS 1.1 App Store draft with a stronger screenshot story,
 - 2026-07-13 designer: aligned the concise ASCII storyboard with the implemented routes, source states, localized headlines, renderer geometry, filenames, backgrounds, and callout styling.
 - 2026-07-13 lead: passed screenshot dimensions, localized copy coverage, release-version consistency, native UI contracts, settings parity, script syntax, whitespace, and prohibited-dash checks.
 - 2026-07-13 scribe: committed the verified App Store 1.1 bilingual screenshot automation and metadata change set.
+- 2026-07-13 user: requested a stronger second design pass with larger phones and headlines, materially less unused space, and continued dimensional treatments such as elevated callouts.
+- 2026-07-13 lead: reopened the screenshot design before upload and chose deterministic HTML and CSS concept variants so the real app UI and localized copy remain exact.
+- 2026-07-13 designer: selected an editorial overscale direction with 12 to 16 percent larger phones, 18 to 25 percent larger headlines, tighter locale-specific spacing, and an 80 to 95 percent visual occupancy target.
+- 2026-07-13 lead: rendered and inspected all eight second-pass assets at full resolution and in bilingual contact sheets. The German member image reduced its flat lower band from about 530 pixels to 210 pixels, while every composition now uses at least 92 percent of the canvas height.
+- 2026-07-13 tester: passed all eight second-pass assets after original-resolution review and independent raster decoding, with no clipping, overlap, localization, color-channel, or composition findings.
+- 2026-07-13 scribe: committed the verified second-pass App Store screenshot design.
