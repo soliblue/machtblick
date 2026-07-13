@@ -17,6 +17,7 @@ struct PartyDetailView: View {
                     }
                     .padding(ThemeTokens.Spacing.l)
                 }
+                .appStoreScreenshotReady()
                 .scrollDismissesKeyboard(.interactively)
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {

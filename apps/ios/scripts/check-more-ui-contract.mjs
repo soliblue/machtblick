@@ -91,7 +91,9 @@ requireFragments(pickerRow, "MorePickerRow.swift", [
   ".accessibilityValue(value)",
 ])
 requireFragments(app, "MachtblickApp.swift", [
-  "@State private var appTheme = AppTheme.persisted",
+  "@State private var appTheme: AppTheme",
+  "let theme = screenshot == nil ? AppTheme.persisted : .light",
+  "_appTheme = State(initialValue: theme)",
   "appTheme: $appTheme",
   ".preferredColorScheme(appTheme.colorScheme)",
 ])

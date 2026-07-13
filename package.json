@@ -7,7 +7,11 @@
   "workspaces": ["db", "etl/*", "apps/*"],
   "scripts": {
     "agents:sync": "node scripts/sync-codex-agents.mjs",
-    "ios:screenshots": "node fastlane/render-app-store-screenshots.mjs",
+    "ios:screenshots:capture": "node fastlane/capture-app-store-screenshots.mjs",
+    "ios:screenshots:render": "node fastlane/render-app-store-screenshots.mjs",
+    "ios:screenshots:check": "node fastlane/check-app-store-screenshots.mjs",
+    "ios:screenshots": "npm run ios:screenshots:render && npm run ios:screenshots:check",
+    "ios:screenshots:all": "npm run ios:screenshots:capture && npm run ios:screenshots",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",

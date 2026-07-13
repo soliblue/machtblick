@@ -1,0 +1,148 @@
+{
+  "locales": [
+    {
+      "id": "de-DE",
+      "language": "de",
+      "locale": "de_DE"
+    },
+    {
+      "id": "en-US",
+      "language": "en",
+      "locale": "en_US"
+    }
+  ],
+  "sources": [
+    {
+      "scenario": "currentDecision",
+      "file": "iphone-aktuelle-abstimmung.png"
+    },
+    {
+      "scenario": "motionSummary",
+      "file": "iphone-antrag-zusammenfassung.png"
+    },
+    {
+      "scenario": "partyArguments",
+      "file": "iphone-fraktionsargumente.png"
+    },
+    {
+      "scenario": "memberVotes",
+      "file": "iphone-abgeordneten-stimmen.png"
+    },
+    {
+      "scenario": "partyComparison",
+      "file": "iphone-parteivergleich.png"
+    }
+  ],
+  "screenshots": [
+    {
+      "layout": "below",
+      "sources": ["iphone-aktuelle-abstimmung.png"],
+      "output": "01-iphone-65-heute.png",
+      "background": "#dff4e5",
+      "ink": "#102218",
+      "copy": {
+        "de-DE": {
+          "title": "Was der Bundestag heute entscheidet",
+          "highlights": [
+            { "text": "Bundestag", "background": "#f4d84f" }
+          ],
+          "callouts": [
+            { "value": "137", "label": "JA", "color": "#3f8d58" },
+            { "value": "467", "label": "NEIN", "color": "#b94f61" }
+          ]
+        },
+        "en-US": {
+          "title": "What the Bundestag decides today",
+          "highlights": [
+            { "text": "Bundestag", "background": "#f4d84f" }
+          ],
+          "callouts": [
+            { "value": "137", "label": "YES", "color": "#3f8d58" },
+            { "value": "467", "label": "NO", "color": "#b94f61" }
+          ]
+        }
+      }
+    },
+    {
+      "layout": "above",
+      "sources": ["iphone-abgeordneten-stimmen.png"],
+      "output": "02-iphone-65-abgeordneten.png",
+      "background": "#ffdcd2",
+      "ink": "#291718",
+      "copy": {
+        "de-DE": {
+          "title": "Wie Abgeordnete wirklich stimmen",
+          "highlights": [
+            { "text": "wirklich", "background": "#f4d84f" }
+          ],
+          "callouts": [
+            { "value": "83 %", "label": "ANWESENHEIT", "color": "#3f8d58" },
+            { "value": "9", "label": "ABWEICHUNGEN", "color": "#b94f61" }
+          ]
+        },
+        "en-US": {
+          "title": "How members really vote",
+          "highlights": [
+            { "text": "really", "background": "#f4d84f" }
+          ],
+          "callouts": [
+            { "value": "83%", "label": "ATTENDANCE", "color": "#3f8d58" },
+            { "value": "9", "label": "DEVIATIONS", "color": "#b94f61" }
+          ]
+        }
+      }
+    },
+    {
+      "layout": "split",
+      "sources": ["iphone-antrag-zusammenfassung.png", "iphone-fraktionsargumente.png"],
+      "output": "03-iphone-65-antrag-argument.png",
+      "background": "#dcecff",
+      "ink": "#12213b",
+      "copy": {
+        "de-DE": {
+          "title": "Anträge verstehen und Argumente vergleichen",
+          "highlights": [
+            { "text": "Anträge", "background": "#f4d84f" },
+            { "text": "Argumente", "background": "#ff9c7c" }
+          ]
+        },
+        "en-US": {
+          "title": "Understand motions and compare arguments",
+          "highlights": [
+            { "text": "motions", "background": "#f4d84f" },
+            { "text": "arguments", "background": "#ff9c7c" }
+          ]
+        }
+      }
+    },
+    {
+      "layout": "side",
+      "sources": ["iphone-parteivergleich.png"],
+      "output": "04-iphone-65-parteien.png",
+      "background": "#f4e36c",
+      "ink": "#17212b",
+      "copy": {
+        "de-DE": {
+          "title": "Parteien im Vergleich",
+          "highlights": [
+            { "text": "Vergleich", "background": "#ffffff" }
+          ],
+          "callouts": [
+            { "value": "100 %", "label": "GESCHLOSSENHEIT", "color": "#4f6f91" },
+            { "value": "95 %", "label": "ANWESENHEIT", "color": "#3f8d58" }
+          ]
+        },
+        "en-US": {
+          "title": "Compare the parties",
+          "highlights": [
+            { "text": "Compare", "background": "#ffffff" }
+          ],
+          "callouts": [
+            { "value": "100%", "label": "COHESION", "color": "#4f6f91" },
+            { "value": "95%", "label": "ATTENDANCE", "color": "#3f8d58" }
+          ]
+        }
+      }
+    }
+  ]
+}

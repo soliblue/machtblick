@@ -1,1 +1,1 @@
-Bundestag,Politik,Fraktionen,Anträge,Demokratie,Parlament,Transparenz,Reden,Gesetze,Politiker
+Abgeordnete,Politik,Fraktionen,Anträge,Demokratie,Parlament,Transparenz,Reden,Gesetze,Politiker

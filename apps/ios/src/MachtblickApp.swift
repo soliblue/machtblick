@@ -5,11 +5,20 @@ import SwiftUI
 struct MachtblickApp: App {
     let container: ModelContainer
     let cache: ApiCache
-    @State private var appLanguage = AppLanguage.persisted
-    @State private var appTheme = AppTheme.persisted
+    @State private var appLanguage: AppLanguage
+    @State private var appTheme: AppTheme
     @State private var motionLink: MotionLink?
 
     init() {
+        let screenshot = AppStoreScreenshotScenario.current
+        let language = screenshot == nil ? AppLanguage.persisted : AppStoreScreenshotScenario.appLanguage
+        let theme = screenshot == nil ? AppTheme.persisted : .light
+        if screenshot != nil {
+            AppLanguage.persisted = language
+            AppTheme.persisted = theme
+        }
+        _appLanguage = State(initialValue: language)
+        _appTheme = State(initialValue: theme)
         container = try! ModelContainer(for: CachedPayload.self)
         cache = ApiCache(context: container.mainContext)
         FontRegistrar.registerBundledFonts()

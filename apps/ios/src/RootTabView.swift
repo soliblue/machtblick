@@ -20,6 +20,25 @@ struct RootTabView: View {
     @State private var membersPath: [AppRoute] = []
     @State private var partiesPath: [AppRoute] = []
 
+    init(cache: ApiCache, appLanguage: Binding<AppLanguage>, appTheme: Binding<AppTheme>) {
+        self.cache = cache
+        _appLanguage = appLanguage
+        _appTheme = appTheme
+        switch AppStoreScreenshotScenario.current?.destination {
+        case .vote(let id):
+            _tab = State(initialValue: .votes)
+            _votesPath = State(initialValue: [.vote(id)])
+        case .member(let id):
+            _tab = State(initialValue: .members)
+            _membersPath = State(initialValue: [.member(id)])
+        case .party(let id):
+            _tab = State(initialValue: .parties)
+            _partiesPath = State(initialValue: [.party(id)])
+        case .votes, .none:
+            _tab = State(initialValue: .votes)
+        }
+    }
+
     var body: some View {
         TabView(selection: $tab) {
             Tab(value: RootTab.votes) {

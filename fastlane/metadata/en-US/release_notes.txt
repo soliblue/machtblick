@@ -1,1 +1,4 @@
-Machtblick now starts in Light appearance. Party colors, vote stamps, and seat diagrams remain clearly visible in Dark appearance.
+New in version 1.1:
+• The app interface is now available in German and English.
+• Machtblick now starts in Light mode.
+• Party colors, vote stamps, and seat diagrams are easier to read in Dark mode.

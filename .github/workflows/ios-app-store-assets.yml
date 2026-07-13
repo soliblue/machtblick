@@ -25,6 +25,8 @@ jobs:
           ruby-version: "3.3"
       - name: Check release version
         run: node apps/ios/scripts/check-release-version.mjs
+      - name: Check App Store screenshots
+        run: npm run ios:screenshots:check
       - name: Install fastlane
         run: gem install fastlane --version 2.237.0 --no-document
       - name: Upload metadata and screenshots

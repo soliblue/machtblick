@@ -1,1 +1,4 @@
-Machtblick startet jetzt standardmäßig im hellen Design. Im dunklen Design bleiben Fraktionsfarben, Abstimmungsstempel und Sitzverteilungen deutlich erkennbar.
+Neu in Version 1.1:
+• Die App-Oberfläche ist jetzt auf Deutsch und Englisch verfügbar.
+• Machtblick startet standardmäßig im hellen Design.
+• Fraktionsfarben, Abstimmungsstempel und Sitzverteilungen sind im dunklen Design besser lesbar.

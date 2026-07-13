@@ -36,6 +36,7 @@ struct VotesFeedView: View {
                     votes: visible, cache: cache,
                     onScroll: { scroll.y = $0 },
                     onRefresh: { await store.refresh(cache: cache); refreshTick += 1 })
+                    .appStoreScreenshotReady()
             }
         }
         .background(ThemeColor.background)

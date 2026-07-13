@@ -1,6 +1,6 @@
 import SwiftUI
 
-private enum VoteTab: Hashable {
+enum VoteTab: Hashable {
     case ergebnis
     case details
     case reden
@@ -11,8 +11,14 @@ struct VoteDetailView: View {
     let cache: ApiCache
     @Environment(VoteFlagsStore.self) private var flags
     @State private var store = VoteDetailStore()
-    @State private var tab: VoteTab = .ergebnis
+    @State private var tab: VoteTab
     @State private var selected: VoteChoice?
+
+    init(id: String, cache: ApiCache) {
+        self.id = id
+        self.cache = cache
+        _tab = State(initialValue: AppStoreScreenshotScenario.current?.voteTab ?? .ergebnis)
+    }
 
     var body: some View {
         Group {
@@ -26,6 +32,7 @@ struct VoteDetailView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(ThemeTokens.Spacing.l)
                 }
+                .appStoreScreenshotReady()
                 .scrollDismissesKeyboard(.interactively)
                 .toolbar {
                     ToolbarItemGroup(placement: .topBarTrailing) {

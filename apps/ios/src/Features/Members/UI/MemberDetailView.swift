@@ -11,6 +11,7 @@ struct MemberDetailView: View {
             ThemeColor.background.ignoresSafeArea()
             if let detail = store.detail {
                 MemberDetailContent(detail: detail, cache: cache)
+                    .appStoreScreenshotReady()
             } else if store.loadFailed {
                 ErrorStateView(message: Copy.loadError) {
                     Task { await store.load(id: id, cache: cache) }
