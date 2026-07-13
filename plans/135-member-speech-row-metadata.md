@@ -6,14 +6,14 @@ Remove date and contribution-count metadata from debate rows in the member detai
 
 ## Status
 
-- Lead: in progress
+- Lead: complete
 - Designer: complete
 - Frontend: complete
 - iOS: complete
 - Visibility: complete
 - Tester: complete
-- Deployer: pending
-- Scribe: pending
+- Deployer: complete
+- Scribe: complete
 
 ## Scope
 
@@ -51,4 +51,7 @@ Remove date and contribution-count metadata from debate rows in the member detai
 - 2026-07-13 iOS: Audited the member speeches path from `MemberDetailPanel` through `MemberSpeechesPanel` to its sole list renderer, `ChatInboxRow`. The row already shows only title, excerpt, and full-debate action. Added focused source-contract guards against rendering the group date, total contribution count, or short contribution count, and verified `node apps/ios/scripts/check-more-ui-contract.mjs` passes. No iOS UI implementation, upload, or deployment was needed.
 - 2026-07-13 Frontend: Removed the date, total contribution count, and short-contribution count from only `MemberSpeechGroupRow`, preserving its localized title, optional vote link, excerpt, and full-debate action. Extended the existing build-time static contract to reject those member-row metadata render paths. The focused contract, web TypeScript check, and diff check pass.
 - 2026-07-13 Tester: Playwright against the fresh local production preview passed German desktop, German iPhone 13, and English desktop checks. The target vote-linked row omits its date, contribution count, and short count while retaining its localized title, vote link, excerpt, and full-debate action. The German action opened and loaded the debate dialog on both viewports. All pages returned HTTP 200 with no overlay, console, page, request, HTTP, clipping, wrapping, or horizontal-overflow failures. Screenshots are stored under `/tmp`.
+- 2026-07-13 Tester: Post-deploy Playwright passed on canonical production for German desktop, German iPhone 13, and English desktop. Canonical production already serves the updated row, so the per-deploy fallback was not needed. The requested metadata remains absent, retained content and actions render correctly, and both German full-debate dialogs opened and loaded. All three cases returned HTTP 200 with no overlay, console, page, request, HTTP, wrapping, clipping, or overflow failures. Production screenshots are stored under `/tmp`.
 - 2026-07-13 Visibility: Inspected the fresh generated German and English Anna Aeikens speech routes without rebuilding. Each route contains eight rendered speech rows, zero rendered dates, zero contribution-count labels, two vote links, eight excerpts, and eight full-debate actions. Both retain specific localized member metadata, indexable robots, the existing localized preferred `/votes/` canonicals, reciprocal German, English, and `x-default` alternates, and existing JSON alternates whose files are present. Sharing previews, crawler policy, AI discovery, favicons, manifest, sitemap generation, and all other route families are SKIP because the diff does not change those surfaces.
+- 2026-07-13 Scribe: Committed the focused web change, iOS regression guard, mocks, and plan as `c5f9c81` (`fix(members): remove speech row metadata`); lead pushed it to `origin/main`.
+- 2026-07-13 Deployer: PASS. Deployed only the Bundestag web app to `https://6b73d5a3.machtblick-bundestag.pages.dev`; canonical `https://machtblick.de/members/aeikens-anna/speeches/` returned HTTP 200 with the updated markup. Cloudflare usage is 20 of 500 deployments this month and 11,160 of 20,000 files. No iOS build, upload, TestFlight action, or App Store action was performed.
