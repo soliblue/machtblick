@@ -16,7 +16,7 @@ Prepare and ship version 1.1 with a light-first default, discoverable storefront
 - Clarify selected states in website theme and language controls: completed
 - Stabilize the mobile website menu geometry: completed
 - Verify local static contracts, browser behavior, production build, and visibility: completed
-- Verify the pushed iOS build and TestFlight release: pending
+- Verify the pushed iOS build and TestFlight release: waiting for build 34 Beta App Review
 - Commit and push the verified release: pending
 - Deploy the website and iOS release: pending
 
@@ -81,3 +81,6 @@ Prepare and ship version 1.1 with a light-first default, discoverable storefront
 - 2026-07-12 iOS review: found and fixed a Fastlane parse-time path that would have resolved the version config below `fastlane/`. Confirmed the `__dir__`-relative path, Xcode config inheritance, automatic build numbering, version-scoped App Store build selection, workflow YAML, metadata limits, localization, and Linux-safe contracts with no remaining local blockers.
 - 2026-07-12 tester: definitive Playwright QA passed 8 of 8 cases with no console errors. Exact 700px navigation, theme persistence and keyboard behavior, party speech surfaces, all filter close paths, Dark stamps and neutral seats, and 10 touch menu cycles across 200 sampled frames passed without geometry drift or panel reappearance.
 - 2026-07-12 lead verification: the production build completed with 6456 prerendered pages. Website theme, TypeScript, iOS release, More UI, localization, Settings parity, Python syntax, and diff checks passed locally. The pushed macOS workflow remains responsible for Swift, Xcode, Ruby, signing, and simulator verification.
+- 2026-07-13 user: Explicitly authorized the TestFlight upload workflow for commit `df87872` after the build-only workflow passed.
+- 2026-07-13 lead: TestFlight run 29237647437 built and uploaded build 35, then external distribution failed because build 34 is already in Beta App Review.
+- 2026-07-13 lead: App Store Connect reports build 34 as valid, assigned to the public group, and waiting for Beta App Review. Build 35 is valid and ready for beta submission, but is not assigned to the public group.

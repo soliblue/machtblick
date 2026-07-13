@@ -17,6 +17,8 @@ struct MemberCardView: View {
         AsyncImage(url: HTTPClient.memberPhoto(member.id)) { phase in
             if let image = phase.image {
                 image.resizable().scaledToFill()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .clipped()
                     .overlay(
                         LinearGradient(
                             colors: [.clear, .clear, .black.opacity(0.65)],
