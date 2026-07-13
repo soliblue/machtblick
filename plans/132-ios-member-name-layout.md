@@ -10,7 +10,7 @@ Restore member names to the visible card bounds after the latest photo and place
 - Reproduce the members-page regression: completed
 - Fix the member-card label layout: completed
 - Verify the members page in Simulator: completed
-- Commit, push, and trigger TestFlight: in progress
+- Commit, push, and trigger TestFlight: completed
 
 ## Contracts
 
@@ -29,3 +29,5 @@ Restore member names to the visible card bounds after the latest photo and place
 - 2026-07-13 lead: Pulled and rebased onto `cdb9c47`, then traced the regression to labels attached to scaled photo content rather than a card-sized container.
 - 2026-07-13 lead: Wrapped loaded photos in a card-sized clear container, preserving the existing crop, gradient, placeholder palette, and name styling while restoring leading alignment.
 - 2026-07-13 lead: Built and installed the fixed Debug app on the iOS 26.5 simulator and visually verified complete names for Sanae Abdi, Knut Abraham, Doris Achelwilm, Anna Aeikens, Adis Ahmetović, and Gökay Akbulut.
+- 2026-07-13 scribe: Committed the focused member-name alignment fix as `6c4cf71`.
+- 2026-07-13 lead: Pushed main and dispatched TestFlight workflow run `29244991008` from `6c4cf71`; the run entered progress successfully.
