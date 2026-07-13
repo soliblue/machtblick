@@ -66,16 +66,19 @@ Vote titles use language-aware native hyphenation with the route locale.
 | [ o  Reden durchsuchen................ ] |
 |------------------------------------------|
 | BAfoeG-Reform: Bildung bezahlbar machen  |
-| 11. JUN 2026  6 BEITRAEGE  2 KURZ       |
+| ZUR ABSTIMMUNG ^                         |
 | "Sehr geehrte Frau Praesidentin ..."    |
 |                         GANZE DEBATTE >  |
 |------------------------------------------|
 | Aktuelle Stunde: Mietenpolitik           |
-| 22. MAI 2026  1 BEITRAG                 |
+| "Die Lage auf dem Wohnungsmarkt ..."    |
+|                         GANZE DEBATTE >  |
 ```
 
-- Each grouped appearance is an inbox row with title, date, contribution
-  counts, excerpt, and an explicit full-debate command.
+- Each grouped appearance is an inbox row with title, excerpt, and an explicit
+  full-debate command. Date, total contribution count, and short-contribution
+  count do not appear in these rows.
+- Vote-linked rows retain their optional contextual vote link on web.
 - The full debate opens in a full-screen mobile dialog and centered desktop
   dialog.
 - The selected member's contribution is highlighted in the shared debate

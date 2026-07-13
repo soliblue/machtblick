@@ -20,10 +20,11 @@ const hemicycle = read('apps/bundestag/src/views/votesList/VoteHemicycle.tsx')
 const css = read('apps/bundestag/src/styles/globals.css')
 const copy = read('apps/bundestag/src/lib/copy/de.ts') + read('apps/bundestag/src/lib/copy/en.ts')
 const parties = read('apps/bundestag/src/lib/parties.ts')
+const memberSpeechGroupRow = read('apps/bundestag/src/views/memberDetail/MemberSpeechGroupRow.tsx')
 const bubbles = [
   read('apps/bundestag/src/views/speeches/ConversationBubble.tsx'),
   read('apps/bundestag/src/views/voteDetail/PartySummaryPreviewList.tsx'),
-  read('apps/bundestag/src/views/memberDetail/MemberSpeechGroupRow.tsx'),
+  memberSpeechGroupRow,
 ]
 const reader = read('apps/bundestag/src/views/speeches/Reader.tsx')
 const debateDialog = read('apps/bundestag/src/views/memberDetail/MemberDebateDialog.tsx')
@@ -121,6 +122,9 @@ for (const bubble of bubbles) requireFragments(bubble, 'party speech surface', [
   'party-surface',
   "'--party-color'",
 ])
+for (const fragment of ['formatDateShort', 'group.date', 'group.speeches.length', 'group.shortCount', 't.contribution']) {
+  if (memberSpeechGroupRow.includes(fragment)) throw new Error(`${fragment} must not return to MemberSpeechGroupRow`)
+}
 requireFragments(bubbles[0], 'highlighted member speech surface', [
   '70%, transparent',
   "borderWidth: highlighted ? '2px'",
@@ -180,4 +184,4 @@ for (const fragment of ['translate-y', 'transition-[height', 'transition-[transf
 }
 if (stamp.includes('mixBlendMode')) throw new Error('Inline Stamp blending must not override the Dark appearance contract')
 
-console.log('Website theme selection and subdued party speech surfaces match their static contract.')
+console.log('Website theme selection, subdued party speech surfaces, and member speech rows match their static contracts.')

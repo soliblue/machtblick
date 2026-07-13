@@ -141,6 +141,16 @@ for (const [source, path] of [
 ]) {
   requireFragments(source, path, ["PartySurface("])
 }
+for (const [fragment, label] of [
+  ["group.date", "date"],
+  ["group.main.date", "date"],
+  ["group.speeches.count", "total contribution count"],
+  ["group.shortCount", "short contribution count"],
+]) {
+  if (chatInboxRow.includes(fragment)) {
+    failures.push(`ChatInboxRow.swift must not render member speech row ${label}.`)
+  }
+}
 requireFragments(semanticColors, "SemanticColors.swift", [
   "case .ja: return ThemeColor.onSuccess",
   "case .nein: return ThemeColor.onDanger",

@@ -21,14 +21,13 @@ this member highlighted. Speech turns expand inline inside the debate.
 | [ Reden durchsuchen..................... ]  |
 |                                             |
 | Krankenhausversorgung sichern              |
-| 25.06.2026 / 6 Beitraege / 3 kurz          |
+| Zur Abstimmung ^                            |
 | .-----------------------------------------. |
 | | Die Finanzierung muss in der Flaeche... | |  subdued party tint
 | '-----------------------------------------' |
 | Ganze Debatte ansehen >                     |
 | ------------------------------------------- |
 | Aktuelle Stunde: Pflege                    |
-| 12.06.2026 / 1 Beitrag                     |
 | .-----------------------------------------. |
 | | Danke, Frau Praesidentin. Wir muessen...| |
 | '-----------------------------------------' |
@@ -70,15 +69,14 @@ Opening a row:
 |                                                                      |
 | [ Reden durchsuchen................................................] |
 |                                                                      |
-| Krankenhausversorgung sichern                          25.06.2026    |
-| 6 Beitraege / 3 kurz                                                |
+| Krankenhausversorgung sichern                                       |
+| Zur Abstimmung ^                                                    |
 | .------------------------------------------------------------------. |
 | | Die Finanzierung muss in der Flaeche verlaesslich sein ...       | |
 | '------------------------------------------------------------------' |
 | Ganze Debatte ansehen >                                             |
 | -------------------------------------------------------------------- |
-| Aktuelle Stunde: Pflege                               12.06.2026    |
-| 1 Beitrag                                                            |
+| Aktuelle Stunde: Pflege                                             |
 | .------------------------------------------------------------------. |
 | | Danke, Frau Praesidentin. Wir muessen die Einrichtungen ...      | |
 | '------------------------------------------------------------------' |
@@ -98,10 +96,12 @@ haptics are not copied literally.
 - Short replies never stand alone in the list. They appear inside the opened
   debate near their surrounding turns.
 - Row action opens the full debate. The current member's turns are highlighted.
+- Rows omit dates, total contribution counts, and short-contribution counts.
+- Vote-linked rows keep the optional contextual vote link on web.
 - Speech turns expand inline with "Mehr anzeigen". The separate reader is not
   the primary interaction.
-- If the debate is tied to a vote, the opened surface includes a contextual vote
-  link but does not replace the conversation.
+- If the debate is tied to a vote, the opened surface may repeat the contextual
+  vote link but does not replace the conversation.
 
 ## What This Emphasizes
 
@@ -114,7 +114,7 @@ their own contribution visible before procedural fragments.
 |---|---|---|---|
 | Search input | m regular | px-m py-s | Input anatomy |
 | Inbox title | l display semibold | mb-s | button row |
-| Inbox meta | s regular opacity-l | gap-s | none |
+| Optional vote link | s regular opacity-l | mb-s | text link |
 | Excerpt bubble | l Lora serif regular | p-m | party-tinted bubble |
 | Row divider | none | py-m | border fg opacity-s |
 | Open action | s semibold | mt-s | Button text |
@@ -129,4 +129,5 @@ bubbles follow `views/speeches/speeches.mock.md`: the approved quiet wash in
 Light, then an opaque `surface` base, party overlay at opacity-s, and party
 stroke-s border at opacity-m in Dark. Party logos and small party-colored actions
 keep full identity color. The highlighted-member ring replaces the ordinary
-border with party color at opacity-l. Neutral metadata uses foreground opacity-l.
+border with party color at opacity-l. The optional vote link uses foreground
+opacity-l.

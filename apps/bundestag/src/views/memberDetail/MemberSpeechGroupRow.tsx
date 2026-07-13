@@ -1,6 +1,5 @@
 import type { CSSProperties } from 'react'
 import { ChevronRight, ExternalLink } from 'lucide-react'
-import { formatDateShort } from '@/lib/format'
 import { SERIF } from '@/lib/fonts'
 import { highlight } from '@/components/highlight'
 import { PARTY_COLOR } from '@/lib/parties'
@@ -23,40 +22,20 @@ export function MemberSpeechGroupRow({ group, terms, preview, onOpen }: Props) {
   const t = useCopy()
   const color = PARTY_COLOR[group.main.party ?? ''] ?? null
   const title = memberSpeechGroupTitle(group, locale === 'en' ? 'Speech' : 'Rede')
-  const shortLabel = group.shortCount > 0
-    ? locale === 'en'
-      ? `${group.shortCount} short`
-      : `${group.shortCount} kurz`
-    : null
   return (
     <article className="border-t py-m" style={{ borderColor: ROW_BORDER }}>
-      <div className="grid gap-s desk:grid-cols-[minmax(0,1fr)_auto] desk:items-start">
-        <h2 className="font-display text-l font-semibold leading-tight" style={{ overflowWrap: 'anywhere' }}>
-          {highlight(title, terms)}
-        </h2>
-        <div className="text-s caption opacity-l desk:pt-xs">{formatDateShort(group.date, locale)}</div>
-      </div>
-      <div className="mt-s flex flex-wrap items-center gap-x-s gap-y-xs text-s caption opacity-l">
-        <span>{group.speeches.length} {group.speeches.length === 1 ? t.contribution : t.contributions}</span>
-        {shortLabel && (
-          <>
-            <span aria-hidden="true">/</span>
-            <span>{shortLabel}</span>
-          </>
-        )}
-        {group.voteId && (
-          <>
-            <span aria-hidden="true">/</span>
-            <a
-              href={withLocale(`/votes/${group.voteId}/`, locale)}
-              className="relative z-10 inline-flex items-center gap-xs hover:opacity-100"
-            >
-              {t.toVote}
-              <ExternalLink size={14} aria-hidden="true" />
-            </a>
-          </>
-        )}
-      </div>
+      <h2 className="font-display text-l font-semibold leading-tight" style={{ overflowWrap: 'anywhere' }}>
+        {highlight(title, terms)}
+      </h2>
+      {group.voteId ? (
+        <a
+          href={withLocale(`/votes/${group.voteId}/`, locale)}
+          className="relative z-10 mt-s inline-flex items-center gap-xs text-s caption opacity-l hover:opacity-100"
+        >
+          {t.toVote}
+          <ExternalLink size={14} aria-hidden="true" />
+        </a>
+      ) : null}
       <div
         className={`${color ? 'party-surface' : 'party-surface-neutral'} mt-m rounded-m p-m text-m line-clamp-3`}
         style={{
