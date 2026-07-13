@@ -14,7 +14,7 @@ Prepare the Machtblick iOS 1.1 App Store draft with a stronger screenshot story,
 - Capture and verify the final German and English screenshot sets: completed
 - Audit the App Store Connect 1.1 draft: completed
 - Save localized 1.1 metadata and subtitles in App Store Connect: completed
-- Replace German and English screenshots in App Store Connect: pending workflow upload
+- Replace German and English screenshots in App Store Connect: completed
 - Verify the App Store draft and repository changes: completed
 - Commit repository changes: completed
 - Explore denser second-pass compositions: completed
@@ -23,6 +23,8 @@ Prepare the Machtblick iOS 1.1 App Store draft with a stronger screenshot story,
 - Select the party-list, replacement motion, and member-debate states: completed
 - Capture and render the revised screenshot stories: completed
 - Verify and commit the story revisions: completed
+- Swap the split phones to expose debate context and the vote-detail header: completed
+- Render, verify, and commit the reordered split composition: completed
 
 ## Contracts
 
@@ -86,3 +88,9 @@ Prepare the Machtblick iOS 1.1 App Store draft with a stronger screenshot story,
 - 2026-07-13 lead: completed two fresh bilingual simulator passes on the rebased app, added a final deterministic scroll into the member timeline, and verified eight revised marketing assets at 1284 by 2778 pixels.
 - 2026-07-13 tester: passed the revised bilingual story and composition with no clipping, overlap, stale party-detail claims, or party-summary cards; the English capture retains only official German source terms for Julia Klöckner's role and the Strafgesetzbuch.
 - 2026-07-13 scribe: verified the third-pass App Store screenshot story revisions for commit.
+- 2026-07-13 user: requested the vote-detail header in the lower split phone so the motion is understandable before its details, with the member debate moved to the upper phone.
+- 2026-07-13 user: authorized replacing both localized screenshot sets in the signed-in integrated browser after the revised renders pass verification.
+- 2026-07-13 lead: captured ten fresh localized simulator sources after the final pull, rendered eight 1284 by 2778 assets, and confirmed the split composition now exposes direct debate above the headline and the vote title, result, sponsor, summary, and tabs below it.
+- 2026-07-13 tester: passed all eight final assets after confirming that Julia Klöckner's German role is official transcript metadata rather than untranslated app copy, with no layout, localization, raster, or dimension findings.
+- 2026-07-13 lead: replaced the six old German screenshots and the prior English set in App Store Connect with four ordered assets per locale, then reloaded the version page and confirmed both sets persisted as `01`, `02`, `03`, and `04` without submitting the version for review.
+- 2026-07-13 scribe: verified the focused reordered split composition and bilingual asset refresh for commit.

@@ -106,13 +106,13 @@ Emphasis: member identity, attendance, party-line loyalty, and an actual deviati
 
 Capture routes:
 
-- Top phone: `AppStoreScreenshotDestination.vote("2026-01-29-993-streichung-des-straftatbestandes-der-politikerbeleidigung")`
-- Bottom phone: `AppStoreScreenshotDestination.vote("2025-12-05-984-gesetzentwurf-zur-modernisierung-des-wehrdienstes")`
+- Top phone: `AppStoreScreenshotDestination.vote("2025-12-05-984-gesetzentwurf-zur-modernisierung-des-wehrdienstes")`
+- Bottom phone: `AppStoreScreenshotDestination.vote("2026-01-29-993-streichung-des-straftatbestandes-der-politikerbeleidigung")`
 
 Sources:
 
-- `iphone-antrag-zusammenfassung.png`
-- `iphone-mitgliederdebatte.png`
+- Top phone: `iphone-mitgliederdebatte.png`
+- Bottom phone: `iphone-antrag-zusammenfassung.png`
 
 Output: `03-iphone-65-antrag-argument.png`
 
@@ -123,32 +123,33 @@ Copy:
 | `de-DE` | Anträge verstehen und Argumente vergleichen | `Anträge`, yellow `#f4d84f`; `Argumente`, coral `#ff9c7c` |
 | `en-US` | Understand motions and compare arguments | `motions`, yellow `#f4d84f`; `arguments`, coral `#ff9c7c` |
 
-Top app state: `Details` is selected for `Streichung des Straftatbestandes der Politikerbeleidigung`, dated 29 January 2026. The crop exposes `Was sich ändern soll`, including the bullets that remove the special offence for insulting politicians and treat those insults like insults against private individuals. English renders the same state in localized app UI.
+Top app state: `Reden` or `Speeches` is selected for `Gesetzentwurf zur Modernisierung des Wehrdienstes`, dated 5 December 2025. The crop exposes the lower part of the actual member timeline, including member speech bubbles and Julia Klöckner's parliamentary interjections. Party summary cards are outside the crop and must never replace the conversation. English renders the same state in localized app UI.
 
-Bottom app state: `Reden` or `Speeches` is selected for `Gesetzentwurf zur Modernisierung des Wehrdienstes`, dated 5 December 2025. The final scroll position shows the actual member timeline: a Siemtje Möller speech bubble, Julia Klöckner's parliamentary interjections, then member bubbles for Rüdiger Lucassen and Norbert Röttgen. Party summary cards are outside the crop and must never replace the conversation.
+Bottom app state: `Details` is selected for `Streichung des Straftatbestandes der Politikerbeleidigung`, dated 29 January 2026. The crop exposes the top of the vote detail: the AfD proposer, rejected result, date, title, simplified summary, and `Ergebnis`, `Details`, and `Reden` tabs. English renders the same state in localized app UI.
 
 Composition: solid pale blue `#dcecff`, ink `#12213b`. The top phone enters from above-left at x 137, y -1330, width 1010, rotated -4 degrees. The 132 px centered headline sits at x 70, y 890, width 1144. The bottom phone enters from below-right at x 137, y 1500, width 1010, rotated 4 degrees. There are no callouts.
 
 ```text
 +------------------------------------------------+
-|  /  Details                                  / |
-| /  WAS SICH ÄNDERN SOLL                     /  |
-|/  • Besonderen Straftatbestand streichen  /   |
-|  • Beleidigungen künftig gleich behandeln/   |
+|  /  ... tail of a prior member speech ...   / |
+| /  ---- Präsidentin Julia Klöckner ----    /  |
+|/  . Rüdiger Lucassen · AfD .             /   |
 |        [ANTRÄGE] verstehen und                 |
 |        [ARGUMENTE] vergleichen                 |
-|              / Reden                         / |
-|             / . Siemtje Möller · SPD .     /  |
-|            /  ---- Julia Klöckner ----    /   |
-|           /   . Rüdiger Lucassen · AfD . /   |
-|          /  ---- Julia Klöckner ----    /     |
-|         /   . Norbert Röttgen · CDU/CSU /    |
+|              / AfD  ABGELEHNT  29. JAN. 2026/ |
+|             / Streichung des Straftat-      /  |
+|            / bestandes der Politiker-      /   |
+|           / beleidigung                   /    |
+|          / Eingebracht von  ○ ○ ○ ○      /     |
+|         / Politiker nicht besser         /      |
+|        / geschützt als andere ...       /       |
+|        / [Ergebnis] [Details] [Reden]   /       |
 +------------------------------------------------+
 ```
 
-Interactions represented: Details scroll through the motion summary, while Speeches scrolls through member conversation bubbles and procedural interjections.
+Interactions represented: Speeches scrolls through member conversation bubbles and procedural interjections, while Details and the adjacent tabs open the vote result, simplified motion summary, and debate.
 
-Emphasis: one composition connects what a motion changes with the people and parliamentary exchange behind a different vote.
+Emphasis: viewers see what the vote is about before exploring the member debate and parliamentary exchange.
 
 ## Party comparison
 

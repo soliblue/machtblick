@@ -57,7 +57,7 @@ private struct Scenario {
         Scenario(
             id: "memberDebate",
             source: "iphone-mitgliederdebatte.png",
-            drags: [(0.84, 0.35), (0.84, 0.35), (0.84, 0.45)]),
+            drags: [(0.84, 0.35), (0.84, 0.35)]),
         Scenario(id: "memberVotes", source: "iphone-abgeordneten-stimmen.png", drags: []),
         Scenario(id: "partyComparison", source: "iphone-parteivergleich.png", drags: []),
     ]

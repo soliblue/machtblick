@@ -94,7 +94,7 @@
     },
     {
       "layout": "split",
-      "sources": ["iphone-antrag-zusammenfassung.png", "iphone-mitgliederdebatte.png"],
+      "sources": ["iphone-mitgliederdebatte.png", "iphone-antrag-zusammenfassung.png"],
       "output": "03-iphone-65-antrag-argument.png",
       "background": "#dcecff",
       "ink": "#12213b",
