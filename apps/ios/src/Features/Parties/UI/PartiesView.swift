@@ -58,6 +58,7 @@ struct PartiesView: View {
                 } action: { _, value in
                     scroll.y = value
         }
+        .appStoreScreenshotReady()
         .refreshable {
             await store.refresh(cache: cache)
             refreshTick += 1

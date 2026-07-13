@@ -21,8 +21,8 @@
       "file": "iphone-antrag-zusammenfassung.png"
     },
     {
-      "scenario": "partyArguments",
-      "file": "iphone-fraktionsargumente.png"
+      "scenario": "memberDebate",
+      "file": "iphone-mitgliederdebatte.png"
     },
     {
       "scenario": "memberVotes",
@@ -94,7 +94,7 @@
     },
     {
       "layout": "split",
-      "sources": ["iphone-antrag-zusammenfassung.png", "iphone-fraktionsargumente.png"],
+      "sources": ["iphone-antrag-zusammenfassung.png", "iphone-mitgliederdebatte.png"],
       "output": "03-iphone-65-antrag-argument.png",
       "background": "#dcecff",
       "ink": "#12213b",
@@ -128,8 +128,8 @@
             { "text": "Vergleich", "background": "#ffffff" }
           ],
           "callouts": [
-            { "value": "100 %", "label": "GESCHLOSSENHEIT", "color": "#4f6f91" },
-            { "value": "95 %", "label": "ANWESENHEIT", "color": "#3f8d58" }
+            { "value": "328", "label": "REGIERUNG", "color": "#4f6f91" },
+            { "value": "299", "label": "OPPOSITION", "color": "#b94f61" }
           ]
         },
         "en-US": {
@@ -138,8 +138,8 @@
             { "text": "Compare", "background": "#ffffff" }
           ],
           "callouts": [
-            { "value": "100%", "label": "COHESION", "color": "#4f6f91" },
-            { "value": "95%", "label": "ATTENDANCE", "color": "#3f8d58" }
+            { "value": "328", "label": "GOVERNMENT", "color": "#4f6f91" },
+            { "value": "299", "label": "OPPOSITION", "color": "#b94f61" }
           ]
         }
       }

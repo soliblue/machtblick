@@ -4,13 +4,13 @@ enum AppStoreScreenshotDestination {
     case votes
     case vote(String)
     case member(String)
-    case party(String)
+    case parties
 }
 
 enum AppStoreScreenshotScenario: String {
     case currentDecision
     case motionSummary
-    case partyArguments
+    case memberDebate
     case memberVotes
     case partyComparison
 
@@ -41,20 +41,20 @@ enum AppStoreScreenshotScenario: String {
         case .currentDecision:
             return .votes
         case .motionSummary:
-            return .vote("pp21-74-13-gesetzentwurf-zur-weiterentwicklung-der-treibhausgasminderungs-quote-schlussabst")
-        case .partyArguments:
-            return .vote("2026-04-24-999-gesetzentwurf-zur-temporaren-absenkung-der-energiesteuer-fur-kraftstoffe")
+            return .vote("2026-01-29-993-streichung-des-straftatbestandes-der-politikerbeleidigung")
+        case .memberDebate:
+            return .vote("2025-12-05-984-gesetzentwurf-zur-modernisierung-des-wehrdienstes")
         case .memberVotes:
             return .member("ruffer-corinna")
         case .partyComparison:
-            return .party("cdu-csu")
+            return .parties
         }
     }
 
     var voteTab: VoteTab {
         switch self {
         case .motionSummary: return .details
-        case .partyArguments: return .reden
+        case .memberDebate: return .reden
         default: return .ergebnis
         }
     }

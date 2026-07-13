@@ -54,7 +54,10 @@ private struct Scenario {
     static let all = [
         Scenario(id: "currentDecision", source: "iphone-aktuelle-abstimmung.png", drags: []),
         Scenario(id: "motionSummary", source: "iphone-antrag-zusammenfassung.png", drags: []),
-        Scenario(id: "partyArguments", source: "iphone-fraktionsargumente.png", drags: [(0.84, 0.50)]),
+        Scenario(
+            id: "memberDebate",
+            source: "iphone-mitgliederdebatte.png",
+            drags: [(0.84, 0.35), (0.84, 0.35), (0.84, 0.45)]),
         Scenario(id: "memberVotes", source: "iphone-abgeordneten-stimmen.png", drags: []),
         Scenario(id: "partyComparison", source: "iphone-parteivergleich.png", drags: []),
     ]

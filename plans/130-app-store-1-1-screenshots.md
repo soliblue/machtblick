@@ -20,6 +20,9 @@ Prepare the Machtblick iOS 1.1 App Store draft with a stronger screenshot story,
 - Explore denser second-pass compositions: completed
 - Render and verify the revised bilingual screenshot set: completed
 - Commit the second-pass screenshot design: completed
+- Select the party-list, replacement motion, and member-debate states: completed
+- Capture and render the revised screenshot stories: completed
+- Verify and commit the story revisions: completed
 
 ## Contracts
 
@@ -77,3 +80,9 @@ Prepare the Machtblick iOS 1.1 App Store draft with a stronger screenshot story,
 - 2026-07-13 lead: rendered and inspected all eight second-pass assets at full resolution and in bilingual contact sheets. The German member image reduced its flat lower band from about 530 pixels to 210 pixels, while every composition now uses at least 92 percent of the canvas height.
 - 2026-07-13 tester: passed all eight second-pass assets after original-resolution review and independent raster decoding, with no clipping, overlap, localization, color-channel, or composition findings.
 - 2026-07-13 scribe: committed the verified second-pass App Store screenshot design.
+- 2026-07-13 user: requested the party-list screen for party comparison, a more publicly interesting motion in the split composition, and direct member speeches instead of party-summary cards.
+- 2026-07-13 lead: rebased the four local App Store commits onto remote main at `df87872` before taking new screenshots, with the active plan update restored cleanly from autostash.
+- 2026-07-13 lead: selected the politician-insult offence proposal for the summary crop, the military-service modernization member timeline for the debate crop, and the party-list seat map with 328 government and 299 opposition seats for party comparison.
+- 2026-07-13 lead: completed two fresh bilingual simulator passes on the rebased app, added a final deterministic scroll into the member timeline, and verified eight revised marketing assets at 1284 by 2778 pixels.
+- 2026-07-13 tester: passed the revised bilingual story and composition with no clipping, overlap, stale party-detail claims, or party-summary cards; the English capture retains only official German source terms for Julia Klöckner's role and the Strafgesetzbuch.
+- 2026-07-13 scribe: verified the third-pass App Store screenshot story revisions for commit.

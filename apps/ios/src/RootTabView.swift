@@ -31,9 +31,8 @@ struct RootTabView: View {
         case .member(let id):
             _tab = State(initialValue: .members)
             _membersPath = State(initialValue: [.member(id)])
-        case .party(let id):
+        case .parties:
             _tab = State(initialValue: .parties)
-            _partiesPath = State(initialValue: [.party(id)])
         case .votes, .none:
             _tab = State(initialValue: .votes)
         }

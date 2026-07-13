@@ -106,13 +106,13 @@ Emphasis: member identity, attendance, party-line loyalty, and an actual deviati
 
 Capture routes:
 
-- Top phone: `AppStoreScreenshotDestination.vote("pp21-74-13-gesetzentwurf-zur-weiterentwicklung-der-treibhausgasminderungs-quote-schlussabst")`
-- Bottom phone: `AppStoreScreenshotDestination.vote("2026-04-24-999-gesetzentwurf-zur-temporaren-absenkung-der-energiesteuer-fur-kraftstoffe")`
+- Top phone: `AppStoreScreenshotDestination.vote("2026-01-29-993-streichung-des-straftatbestandes-der-politikerbeleidigung")`
+- Bottom phone: `AppStoreScreenshotDestination.vote("2025-12-05-984-gesetzentwurf-zur-modernisierung-des-wehrdienstes")`
 
 Sources:
 
 - `iphone-antrag-zusammenfassung.png`
-- `iphone-fraktionsargumente.png`
+- `iphone-mitgliederdebatte.png`
 
 Output: `03-iphone-65-antrag-argument.png`
 
@@ -123,9 +123,9 @@ Copy:
 | `de-DE` | Anträge verstehen und Argumente vergleichen | `Anträge`, yellow `#f4d84f`; `Argumente`, coral `#ff9c7c` |
 | `en-US` | Understand motions and compare arguments | `motions`, yellow `#f4d84f`; `arguments`, coral `#ff9c7c` |
 
-Top app state: `Details` is selected for `Strengere Klimapflichten für Kraftstoffanbieter bis 2040`, dated 23 April 2026. The final composition exposes the lower summary bullets under `Was sich ändern soll`, including the 59 percent 2040 duty, synthetic-fuel quota, advanced-biofuel quota, and palm-oil exclusion.
+Top app state: `Details` is selected for `Streichung des Straftatbestandes der Politikerbeleidigung`, dated 29 January 2026. The crop exposes `Was sich ändern soll`, including the bullets that remove the special offence for insulting politicians and treat those insults like insults against private individuals. English renders the same state in localized app UI.
 
-Bottom app state: `Reden` or `Speeches` is selected for the temporary fuel-tax reduction vote. Before capture, the UI test drags from 84 to 50 percent screen height so `FRAKTIONEN IM ÜBERBLICK · 5` or `DEBATE AT A GLANCE · 5` and the party argument cards fill the visible area.
+Bottom app state: `Reden` or `Speeches` is selected for `Gesetzentwurf zur Modernisierung des Wehrdienstes`, dated 5 December 2025. The final scroll position shows the actual member timeline: a Siemtje Möller speech bubble, Julia Klöckner's parliamentary interjections, then member bubbles for Rüdiger Lucassen and Norbert Röttgen. Party summary cards are outside the crop and must never replace the conversation.
 
 Composition: solid pale blue `#dcecff`, ink `#12213b`. The top phone enters from above-left at x 137, y -1330, width 1010, rotated -4 degrees. The 132 px centered headline sits at x 70, y 890, width 1144. The bottom phone enters from below-right at x 137, y 1500, width 1010, rotated 4 degrees. There are no callouts.
 
@@ -133,26 +133,26 @@ Composition: solid pale blue `#dcecff`, ink `#12213b`. The top phone enters from
 +------------------------------------------------+
 |  /  Details                                  / |
 | /  WAS SICH ÄNDERN SOLL                     /  |
-|/  • Pflicht steigt bis 2040 auf 59 Prozent /   |
-|  • Quote für synthetische Kraftstoffe      /   |
+|/  • Besonderen Straftatbestand streichen  /   |
+|  • Beleidigungen künftig gleich behandeln/   |
 |        [ANTRÄGE] verstehen und                 |
 |        [ARGUMENTE] vergleichen                 |
 |              / Reden                         / |
-|             / FRAKTIONEN IM ÜBERBLICK · 5  /  |
-|            / + CDU/CSU +      + SPD +      /   |
-|           /  Entlastung       direkte Hilfe/   |
-|          /                                  /   |
-|         /                                  /    |
+|             / . Siemtje Möller · SPD .     /  |
+|            /  ---- Julia Klöckner ----    /   |
+|           /   . Rüdiger Lucassen · AfD . /   |
+|          /  ---- Julia Klöckner ----    /     |
+|         /   . Norbert Röttgen · CDU/CSU /    |
 +------------------------------------------------+
 ```
 
-Interactions represented: Details scroll through the motion summary, while the horizontal party strip compares five positions and links to party profiles.
+Interactions represented: Details scroll through the motion summary, while Speeches scrolls through member conversation bubbles and procedural interjections.
 
-Emphasis: one composition connects what a motion changes with how parliamentary groups argue about it.
+Emphasis: one composition connects what a motion changes with the people and parliamentary exchange behind a different vote.
 
 ## Party comparison
 
-Capture route: `AppStoreScreenshotDestination.party("cdu-csu")`
+Capture route: `AppStoreScreenshotDestination.parties`
 
 Source: `iphone-parteivergleich.png`
 
@@ -165,37 +165,39 @@ Copy:
 | `de-DE` | Parteien im Vergleich | `Vergleich`, white `#ffffff` |
 | `en-US` | Compare the parties | `Compare`, white `#ffffff` |
 
-App state: CDU/CSU detail at the top of the profile. The source shows `REGIERUNG · 208 SITZE`, 100 percent cohesion, 95 percent attendance, demographics, 17 of 17 accepted motions, agreement rows, and major donations. English renders the same data in English app UI.
+App state: Parties list at the top of the screen. The seat map leads into `REGIERUNG · 328 VON 630 SITZEN` and `OPPOSITION · 299 SITZE`, followed by party rows for CDU/CSU, SPD, AfD, B90/Grüne, and Die Linke with seats, cohesion, and attendance. English uses the exact localized captions `GOVERNMENT · 328 OF 630 SEATS` and `OPPOSITION · 299 SEATS`.
 
 Composition: solid yellow `#f4e36c`, ink `#17212b`. The 128 px headline sits top-left at x 56, y 80, width 1172. Two elevated white callouts stack at x 40, y 770 in the left negative space. A phone enters from the right at x 398, y 500, width 980, rotated 4 degrees.
 
 Callouts:
 
-- Top: `100 % GESCHLOSSENHEIT` or `100% COHESION`, blue border `#4f6f91`, rotated -3 degrees.
-- Bottom: `95 % ANWESENHEIT` or `95% ATTENDANCE`, green border `#3f8d58`, rotated 3 degrees.
+- Top: `328 REGIERUNG` or `328 GOVERNMENT`, blue border `#4f6f91`, rotated -3 degrees.
+- Bottom: `299 OPPOSITION`, red border `#b94f61`, rotated 3 degrees.
+
+Decision: use the 328 government and 299 opposition totals. They are the strongest list-level callouts because they repeat the coalition arithmetic established by the seat map and section captions, while the former cohesion and attendance values described only one party detail screen that is no longer shown.
 
 ```text
 +------------------------------------------------+
 | Parteien im [VERGLEICH]                        |
 |                                                |
 |                    /--------------------------.|
-|                   / CDU/CSU                   ||
-|  / 100 %         / REGIERUNG · 208 SITZE     ||
-| / GESCHLOSSEN-  /                             ||
-|/ HEIT /        / 100 %             95 %       ||
-|              /  GESCHL.            ANWES.     ||
-| / 95 %      /                                 ||
-|/ ANWESEN-  /  76 %               39 %         ||
-|  HEIT /   /   MÄNNLICH           50 BIS 59    ||
-|          /   ANTRÄGE 17 / 17                  ||
-|         /    SPD 100 % · GRÜNE 47 %           ||
-|        /     GROSSSPENDEN                      ||
+|                   /      . . . . . . .        ||
+|  / 328           /    . . . . . . . .         ||
+| / REGIERUNG     / REGIERUNG · 328/630        ||
+|/              / CDU/CSU 208 · G100 · A95    ||
+|               / SPD     120 · G100 · A94    ||
+| / 299        /                                ||
+|/ OPPOSITION / OPPOSITION · 299 SITZE         ||
+|            / AfD     150 · G99 · A87        ||
+|           / B90/Grüne 85 · G99 · A89       ||
+|          /  Die Linke 64 · G100 · A82       ||
+|         /                                     ||
 +------------------------------------------------+
 ```
 
-Interactions represented: the proposals bar opens the party's motions, while agreement rows compare CDU/CSU with every other parliamentary group.
+Interactions represented: each party row opens its profile; the seat map and government or opposition grouping remain visible context.
 
-Emphasis: cohesion and attendance survive thumbnail viewing while the phone supplies the wider party comparison.
+Emphasis: coalition arithmetic is visible at a glance, then party rows show who holds those seats.
 
 ## Assets
 
@@ -203,7 +205,7 @@ Each locale directory contains these five 1284 x 2778 px source captures:
 
 - `fastlane/screenshot-source/<locale>/iphone-aktuelle-abstimmung.png`
 - `fastlane/screenshot-source/<locale>/iphone-antrag-zusammenfassung.png`
-- `fastlane/screenshot-source/<locale>/iphone-fraktionsargumente.png`
+- `fastlane/screenshot-source/<locale>/iphone-mitgliederdebatte.png`
 - `fastlane/screenshot-source/<locale>/iphone-abgeordneten-stimmen.png`
 - `fastlane/screenshot-source/<locale>/iphone-parteivergleich.png`
 
