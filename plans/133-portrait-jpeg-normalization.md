@@ -6,12 +6,12 @@ Make the checked-in Bundestag portrait pipeline decode every source image and pu
 
 ## Status
 
-- Lead: in progress
+- Lead: complete
 - Plumber: complete
 - Visibility: complete
-- Tester: pre-deploy complete
-- Deployer: pending
-- Scribe: pending
+- Tester: complete
+- Deployer: complete
+- Scribe: complete
 
 ## Scope
 
@@ -66,3 +66,8 @@ Make the checked-in Bundestag portrait pipeline decode every source image and pu
 - 2026-07-13 Visibility: PASS. The canonical German and English Anna Aeikens member vote pages both contain the expected `/members-photos/aeikens-anna.jpg` image with matching alt text, contain no PNG reference, and retain absolute self-canonicals plus reciprocal `de`, `en`, and `x-default` alternates. Their JSON alternates exist, and both localized member JSON files use the same canonical JPG URL. Blocking issues: none.
 - 2026-07-13 Tester: PASS. Headless Chromium with iPhone 13 emulation rendered all 9 affected portraits in the searchable member grid and each `/members/<id>/votes/` detail route. Every image used the exact canonical JPG path, decoded with a positive natural width, and returned HTTP 200. The clean run had 0 console errors, 0 page errors, and 0 failed requests.
 - 2026-07-13 Lead: Confirmed the requested production path is the existing Cloudflare Pages project `machtblick-bundestag`, gated by the completed visibility review.
+- 2026-07-13 Scribe: Committed and pushed the focused pipeline change as `3b1319d` (`fix(web): normalize member portraits as jpeg`).
+- 2026-07-13 Deployer: Built from the pushed commit and deployed 11,160 files to `https://089b5dc4.machtblick-bundestag.pages.dev`. Cloudflare Pages usage is 18 of 500 deployments for 2026-07.
+- 2026-07-13 Lead: Production verification found 376 of 376 manifest paths ending in `.jpg`, 376 of 376 references returning HTTP 200 with `image/jpeg` and JPEG magic bytes, 18 of 18 affected localized member JSON files using canonical JPG paths, and the unchanged attribution metadata SHA-256 `6e8a9662238f83803d95fc2d6525982a7d547ad98dc0a854f85fab9c1cc13b99`.
+- 2026-07-13 Tester: PASS on production. All 9 affected members rendered visible, decoded JPG portraits in both the searchable grid and detail route. The run had 0 console errors, 0 page errors, and 0 failed requests.
+- 2026-07-13 Deployer: The immutable deployment has no PNG portrait assets. The custom domain still serves the 9 retired, unreferenced PNG URLs from CDN cache. A targeted purge was blocked by Cloudflare HTTP 401 error 10000 because the configured token lacks zone cache-purge authorization; all replacement JPG URLs are live and referenced.
