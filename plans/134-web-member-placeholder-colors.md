@@ -6,13 +6,13 @@ Bring the iOS missing-photo card treatment to the Bundestag website so member ca
 
 ## Status
 
-- Lead: in progress
+- Lead: complete
 - Designer: complete
 - Frontend: complete
 - Visibility: complete
 - Tester: complete
-- Deployer: pending
-- Scribe: pending
+- Deployer: complete
+- Scribe: complete
 
 ## Scope
 
@@ -60,3 +60,6 @@ Bring the iOS missing-photo card treatment to the Bundestag website so member ca
 - 2026-07-13 Visibility recheck: PASS. The final production build postdates the static CSS mapping fix. Generated `/members/` and `/en/members/` both emit `member-placeholder-blue`, `DA`, foreground text, no portrait, and no gradient for `arndt-dr-michael`; the neighboring photographed card retains its image, black gradient, and white name. Compiled CSS contains the base placeholder rule, the 60/40 oklab mix, and all eight static accent mappings.
 - 2026-07-13 Visibility recheck: PASS. The German and English `arndt-dr-michael` detail routes remain generated and indexable with localized titles, absolute default-tab canonicals, and reciprocal `de`, `en`, and `x-default` alternates. Sharing previews, crawler access, AI discovery, favicons and manifest, sitemap, and JSON alternate sweeps remain SKIP because the final fix does not affect them. Blocking issues: none.
 - 2026-07-13 Tester: PASS on the local member list with the real search interaction. Isabel Cademartori rendered a stable indigo placeholder on desktop and iPhone 13 in both themes, with no black gradient, clipping, overlap, or layout shift. Light mode resolved to `rgb(192, 200, 248)` with `rgb(10, 10, 10)` foreground at 12.12:1 contrast. Dark mode resolved to `rgb(74, 79, 121)` with white foreground at 7.82:1. Card dimensions matched the production baseline at 175 by 233.33 CSS px on desktop and 114 by 152 CSS px on iPhone 13. Katja Mast proved visible palette diversity with a teal `rgb(173, 220, 209)` placeholder at 13.14:1 contrast. Sanae Abdi retained the photographed-card layout, `/members-photos/abdi-sanae.jpg` at 320 by 226 source pixels, white name, and one black gradient. All six cases had zero console errors, page errors, failed requests, and HTTP error responses. Screenshots stayed under `/tmp` and the temporary Playwright spec was removed.
+- 2026-07-13 Tester production: PASS on `https://machtblick.de/members/`, which already served the deployed change so the per-deploy URL was not needed. The real search interaction verified Isabel Cademartori on desktop and iPhone 13 in light and dark themes, Katja Mast as a second palette bucket, and Sanae Abdi as the photographed-card regression. Isabel remained indigo at `rgb(192, 200, 248)` with 12.12:1 contrast in light mode and `rgb(74, 79, 121)` with 7.82:1 contrast in dark mode. Katja remained teal at `rgb(173, 220, 209)` with 13.14:1 contrast. Missing-photo cards had zero gradients, stable backgrounds, full names and initials, no clipping or overlap, and baseline dimensions of 175 by 233.33 CSS px on desktop and 114 by 152 CSS px on iPhone 13. Sanae retained `/members-photos/abdi-sanae.jpg`, its 320 by 226 source dimensions, white name, and one black gradient. All six cases passed with zero console errors, page errors, failed requests, and HTTP error responses. Final screenshots are `/tmp/machtblick-production-*.png`; the temporary Playwright spec and result file were removed.
+- 2026-07-13 Scribe: Committed the scoped implementation and plan as `fdcfb0f` (`fix(bundestag): color missing member portraits`); lead pushed it to `origin/main`.
+- 2026-07-13 Deployer: PASS. Built 6,456 prerendered pages and deployed production to `https://7412f65c.machtblick-bundestag.pages.dev`. The first bare `wrangler` invocation was unavailable on PATH, then the repository-supported npm invocation uploaded the unchanged build successfully. Cloudflare usage is 19 of 500 deployments this month and 11,160 of 20,000 files.
