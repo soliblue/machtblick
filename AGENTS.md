@@ -43,6 +43,8 @@ Durable knowledge goes in one of these places:
 - `.claude/agents/*.md` for specialist source instructions, then run `npm run agents:sync`
 - `plans/NN-slug.md` for work-specific contracts and logs
 
+Selection-only generated image previews live under `/tmp`, never in the repository. Check in generated images only when they are production assets consumed by an app.
+
 Context rot destroys intelligence. Every word in instructions, skills, agents, and plans should be load-bearing. Prefer deleting over adding.
 
 ## Repo Layout

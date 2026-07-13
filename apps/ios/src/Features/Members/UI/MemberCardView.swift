@@ -7,11 +7,6 @@ struct MemberCardView: View {
         Color.clear
             .aspectRatio(3.0 / 4.0, contentMode: .fit)
             .overlay(photo)
-            .overlay(
-                LinearGradient(
-                    colors: [.clear, .clear, .black.opacity(0.65)],
-                    startPoint: .top, endPoint: .bottom))
-            .overlay(alignment: .bottomLeading) { nameLabel }
             .overlay(alignment: .topTrailing) { partyMark }
             .clipShape(RoundedRectangle(cornerRadius: ThemeTokens.Radius.m))
             .accessibilityElement(children: .ignore)
@@ -22,20 +17,31 @@ struct MemberCardView: View {
         AsyncImage(url: HTTPClient.memberPhoto(member.id)) { phase in
             if let image = phase.image {
                 image.resizable().scaledToFill()
+                    .overlay(
+                        LinearGradient(
+                            colors: [.clear, .clear, .black.opacity(0.65)],
+                            startPoint: .top, endPoint: .bottom))
+                    .overlay(alignment: .bottomLeading) { nameLabel(color: .white) }
             } else {
                 Text(initials)
                     .font(.display(ThemeTokens.Text.xxl))
-                    .foregroundStyle(ThemeColor.secondary)
+                    .foregroundStyle(ThemeColor.fg)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(ThemeColor.surface)
+                    .background(
+                        [
+                            ThemeColor.blue, ThemeColor.purple, ThemeColor.orange, ThemeColor.cyan,
+                            ThemeColor.pink, ThemeColor.teal, ThemeColor.indigo, ThemeColor.rust,
+                        ][member.id.utf8.reduce(0) { ($0 * 31 + Int($1)) % 8 }]
+                            .mix(with: ThemeColor.background, by: ThemeTokens.Opacity.m))
+                    .overlay(alignment: .bottomLeading) { nameLabel(color: ThemeColor.fg) }
             }
         }
     }
 
-    private var nameLabel: some View {
+    private func nameLabel(color: Color) -> some View {
         Text(member.name)
             .font(.system(size: ThemeTokens.Text.s, weight: .semibold))
-            .foregroundStyle(.white)
+            .foregroundStyle(color)
             .lineLimit(1)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, ThemeTokens.Spacing.s)

@@ -19,8 +19,8 @@ struct StampView: View {
             .foregroundStyle(color.mix(with: ThemeColor.fg, by: 0.55))
             .padding(.horizontal, ThemeTokens.Spacing.s)
             .padding(.vertical, ThemeTokens.Spacing.xs)
-            .overlay(Rectangle().strokeBorder(color, lineWidth: 2.5))
-            .overlay(Rectangle().stroke(color, lineWidth: ThemeTokens.Stroke.s).padding(-3))
+            .overlay(RoundedRectangle(cornerRadius: ThemeTokens.Radius.s).strokeBorder(color, lineWidth: 2.5))
+            .overlay(RoundedRectangle(cornerRadius: ThemeTokens.Radius.s).stroke(color, lineWidth: ThemeTokens.Stroke.s).padding(-3))
             .overlay {
                 Canvas { context, size in
                     var rng = StampNoise(seed: UInt64(bitPattern: Int64(label.hashValue)))
