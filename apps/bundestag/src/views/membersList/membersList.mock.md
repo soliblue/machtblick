@@ -17,8 +17,8 @@ wall of portrait tiles, with search and filtering kept as web-native controls.
 |                                          |
 | .----------. .----------. .----------.   |
 | |      SPD | |      CDU | |    GRUENE|   |
-| |          | |          | |          |   |
-| | PORTRAIT | | PORTRAIT | | PORTRAIT |   |
+| |          | |    AB    | |          |   |
+| | PORTRAIT | |  ACCENT  | | PORTRAIT |   |
 | |          | |          | |          |   |
 | | Erika    | | Max      | | Lena     |   |
 | '----------' '----------' '----------'   |
@@ -34,7 +34,16 @@ wall of portrait tiles, with search and filtering kept as web-native controls.
   legible without turning the tile into a separate text card.
 - The party mark sits directly in the top-right corner. No badge background,
   metrics, state label, or metadata competes with face recognition.
-- Missing portraits use initials on `surface`.
+- Missing portraits keep the same tile anatomy. They replace the portrait and
+  black gradient with centered initials on a deterministic accent tint, while
+  the member name stays in its existing bottom position.
+- The tint mirrors iOS: hash the member ID into the ordered existing tokens
+  `blue`, `purple`, `orange`, `cyan`, `pink`, `teal`, `indigo`, `rust`, then mix
+  60% of that accent with 40% `background` in oklab. Start the hash at zero and
+  fold each UTF-8 byte as `(hash * 31 + byte) % 8`, matching iOS. Initials and
+  name use full-opacity `fg`, so both follow light and dark themes.
+- Photographed tiles, party marks, dimensions, spacing, typography, links, and
+  hover behavior remain unchanged.
 - Search remains visible. Existing URL-backed filters, sort, statistics, and
   empty state remain available.
 
@@ -51,8 +60,8 @@ wall of portrait tiles, with search and filtering kept as web-native controls.
 |                                                                      |
 | .------------. .------------. .------------. .------------.          |
 | |        SPD | |        CDU | |     GRUENE | |        AfD |          |
-| |            | |            | |            | |            |          |
-| |  PORTRAIT  | |  PORTRAIT  | |  PORTRAIT  | |  PORTRAIT  |          |
+| |            | |     CD     | |            | |            |          |
+| |  PORTRAIT  | |   ACCENT   | |  PORTRAIT  | |  PORTRAIT  |          |
 | |            | |            | |            | |            |          |
 | | Erika      | | Max        | | Lena       | | Jonas      |          |
 | '------------' '------------' '------------' '------------'          |
@@ -75,9 +84,11 @@ column and a larger gap without widening beyond the app's primary list width.
 |---|---|
 | Tile | 3:4, `rounded-m`, `surface`, overflow hidden |
 | Name | s semibold mobile, m semibold desktop, two lines max |
+| Missing portrait | ID-stable accent tint, centered xl semibold initials, `fg` initials and name, no gradient |
 | Party mark | 17px, top-right with `p-s` |
 | Grid | 3 columns mobile, 4 columns from `sm`, gap s/m |
 | Content width | `max-w-3xl` |
 
-Party color appears only in the party mark. The portrait and name are the
-primary scan signals.
+Party color appears only in the party mark. Placeholder tint signals a missing
+portrait and never party identity. The portrait and name are the primary scan
+signals.

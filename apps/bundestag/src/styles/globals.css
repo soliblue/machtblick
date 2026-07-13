@@ -139,6 +139,19 @@
   body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 400; }
 }
 
+.member-placeholder {
+  background: color-mix(in oklab, var(--member-placeholder-accent) 60%, var(--color-background) 40%);
+}
+
+.member-placeholder-blue { --member-placeholder-accent: var(--color-blue); }
+.member-placeholder-purple { --member-placeholder-accent: var(--color-purple); }
+.member-placeholder-orange { --member-placeholder-accent: var(--color-orange); }
+.member-placeholder-cyan { --member-placeholder-accent: var(--color-cyan); }
+.member-placeholder-pink { --member-placeholder-accent: var(--color-pink); }
+.member-placeholder-teal { --member-placeholder-accent: var(--color-teal); }
+.member-placeholder-indigo { --member-placeholder-accent: var(--color-indigo); }
+.member-placeholder-rust { --member-placeholder-accent: var(--color-rust); }
+
 .stamp-mark {
   mix-blend-mode: multiply;
 }
