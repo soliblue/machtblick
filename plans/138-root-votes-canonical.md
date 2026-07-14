@@ -11,7 +11,7 @@ Make the German and English vote lists the canonical root pages so humans, searc
 - Visibility: complete
 - Tester: complete
 - Scribe: complete
-- Deployer: pending
+- Deployer: complete
 
 ## Scope
 
@@ -57,3 +57,5 @@ Make the German and English vote lists the canonical root pages so humans, searc
 - 2026-07-14 Tester: Playwright against a tester-started local server passed six desktop cases. German and English vote roots rendered meaningful content, legacy vote lists returned 301 and preserved `?q=Ukraine`, localized member roots rendered voting records, legacy member vote tabs returned 301 and preserved `?line=abw`, and a neighboring vote detail rendered. No console or page errors.
 - 2026-07-14 Lead: Full production build passed at prerender concurrency two, including route generation, all focused contracts, 10,000-plus prerenders, theme checks, and 1,930 German and English iOS static artifact checks. Generated root and member HTML, sitemap, feed, manifest, redirects, and discovery files match the canonical contract. `git diff --check` passes.
 - 2026-07-14 Scribe: Committed the verified root vote-list and member-route canonicalization as one logical change.
+- 2026-07-14 Deployer: Built and deployed the Bundestag app to Cloudflare Pages at https://068442c5.machtblick-bundestag.pages.dev. Deployment count is 23/500 for 2026-07, with 9,636 files.
+- 2026-07-14 Lead: Removed the obsolete Cloudflare zone redirect `Root to /votes/`, which overrode the new Pages root during rollout. Post-deploy production checks pass: `/`, `/en/`, and sampled member roots return 200 with self-canonicals; former vote-list and member `/votes/` URLs return one-hop 301s with `q` and `line` queries preserved; the live sitemap lists only the new canonical roots.
