@@ -10,6 +10,7 @@ struct MemberListItem: Decodable, Identifiable {
     let mandateType: String?
     let attendance: Double?
     let loyalty: Double?
+    let pictureUrl: String?
 
     var lastName: String {
         name.split(separator: " ").last.map(String.init) ?? name

@@ -2,11 +2,9 @@ import { sql } from 'drizzle-orm'
 import { db } from '@machtblick/db/client'
 import { members, memberAbgeordnetenwatch } from '@machtblick/db/schema'
 import { HONORIFICS, NAME_PARTICLES } from '../_shared/names.ts'
-import { AW_API, AW_UA, awJson, awText, sleep } from '../_shared/awClient.ts'
+import { AW_API, awJson, awText } from '../_shared/awClient.ts'
 
 const WP21 = 161
-const CONCURRENCY = 2
-const DELAY_MS = 600
 
 type Mandate = {
   id: number
@@ -29,18 +27,37 @@ let rangeStart = 0
 const pageSize = 200
 while (true) {
   const url = `${AW_API}/candidacies-mandates?parliament_period=${WP21}&type=mandate&range_start=${rangeStart}&range_end=${rangeStart + pageSize}`
-  const res = await fetch(url, { headers: { 'User-Agent': AW_UA, Accept: 'application/json' } })
-  if (!res.ok) throw new Error(`AW list ${res.status}: ${await res.text()}`)
-  const json = (await res.json()) as AwListResponse
+  const json = await awJson<AwListResponse>(url)
   mandates.push(...json.data)
   if (json.data.length < pageSize) break
   rangeStart += pageSize
 }
 console.log(`mandates fetched: ${mandates.length}`)
 const uniqueMandates = Array.from(new Map(mandates.map((m) => [m.politician.id, m])).values())
-const alreadyIngested = new Set(db.select({ id: memberAbgeordnetenwatch.awPoliticianId }).from(memberAbgeordnetenwatch).all().map((r) => r.id))
+const existingRows = db.select({
+  memberId: memberAbgeordnetenwatch.memberId,
+  awPoliticianId: memberAbgeordnetenwatch.awPoliticianId,
+  rawJson: memberAbgeordnetenwatch.rawJson,
+  pictureUrl: memberAbgeordnetenwatch.pictureUrl,
+}).from(memberAbgeordnetenwatch).where(sql`EXISTS (SELECT 1 FROM member_affiliations a WHERE a.member_id = ${memberAbgeordnetenwatch.memberId} AND a.term_id = 21) AND EXISTS (SELECT 1 FROM members m WHERE m.id = ${memberAbgeordnetenwatch.memberId} AND (m.picture_url IS NULL OR m.picture_url LIKE '%abgeordnetenwatch.de%'))`).all()
+const alreadyIngested = new Set(db.select({ id: memberAbgeordnetenwatch.awPoliticianId }).from(memberAbgeordnetenwatch).all().map((row) => row.id))
 const todo = uniqueMandates.filter((m) => !alreadyIngested.has(m.politician.id))
 console.log(`unique politicians: ${uniqueMandates.length} (${alreadyIngested.size} already ingested, ${todo.length} todo)`)
+
+let refreshedProfiles = 0
+let discoveredPictures = 0
+let removedPictures = 0
+let changedPictures = 0
+for (const row of existingRows) {
+  const pol = JSON.parse(row.rawJson) as Politician
+  const pictureUrl = scrapePicture(await awText(pol.abgeordnetenwatch_url))
+  db.update(memberAbgeordnetenwatch).set({ pictureUrl, fetchedAt: new Date().toISOString() }).where(sql`${memberAbgeordnetenwatch.memberId} = ${row.memberId}`).run()
+  refreshedProfiles++
+  if (!row.pictureUrl && pictureUrl) discoveredPictures++
+  if (row.pictureUrl && !pictureUrl) removedPictures++
+  if (row.pictureUrl !== pictureUrl) changedPictures++
+}
+console.log(`fallback profiles refreshed: ${refreshedProfiles} (${discoveredPictures} found, ${removedPictures} removed, ${changedPictures} changed)`)
 
 const ourMembers = db.select({ id: members.id, first: members.firstName, last: members.lastName, btMdbId: members.btMdbId, picture: members.pictureUrl }).from(members).all()
 const byMdbId = new Map(ourMembers.filter((m) => m.btMdbId).map((m) => [m.btMdbId!, m]))
@@ -52,7 +69,7 @@ for (const m of ourMembers) {
   byNameKey.set(key, arr)
 }
 
-const seen = new Set<string>(db.select({ id: memberAbgeordnetenwatch.memberId }).from(memberAbgeordnetenwatch).all().map((r) => r.id))
+const seen = new Set<string>()
 let viaId = 0
 let viaName = 0
 let ambiguous = 0
@@ -60,15 +77,13 @@ let unmatched = 0
 let withPicture = 0
 let processed = 0
 
-await pool(todo, CONCURRENCY, async (m) => {
+for (const m of todo) {
   const pid = m.politician.id
   const slug = m.politician.abgeordnetenwatch_url.split('/').pop() ?? ''
   const pJson = await awJson<AwSingleResponse>(`${AW_API}/politicians/${pid}`)
   const pol = pJson.data
-  await sleep(DELAY_MS)
   const html = await awText(`https://www.abgeordnetenwatch.de/profile/${slug}`)
   const pictureUrl = scrapePicture(html)
-  await sleep(DELAY_MS)
   const member = matchMember(pol)
   processed++
   if (processed % 25 === 0) console.log(`  ${processed} / ${todo.length}`)
@@ -76,24 +91,23 @@ await pool(todo, CONCURRENCY, async (m) => {
     if (member.reason === 'ambiguous') ambiguous++
     else unmatched++
     console.log(`  no match: ${pol.label} (aw=${pid}, mdb=${pol.ext_id_bundestagsverwaltung}): ${member.reason}`)
-    return
+  } else if (!seen.has(member.member.id)) {
+    seen.add(member.member.id)
+    if (member.via === 'mdb') viaId++
+    else viaName++
+    if (pictureUrl) withPicture++
+    db.insert(memberAbgeordnetenwatch).values({
+      memberId: member.member.id,
+      awPoliticianId: pid,
+      rawJson: JSON.stringify(pol),
+      pictureUrl,
+      fetchedAt: new Date().toISOString(),
+    }).onConflictDoUpdate({
+      target: memberAbgeordnetenwatch.memberId,
+      set: { awPoliticianId: pid, rawJson: JSON.stringify(pol), pictureUrl, fetchedAt: new Date().toISOString() },
+    }).run()
   }
-  if (seen.has(member.member.id)) return
-  seen.add(member.member.id)
-  if (member.via === 'mdb') viaId++
-  else viaName++
-  if (pictureUrl) withPicture++
-  db.insert(memberAbgeordnetenwatch).values({
-    memberId: member.member.id,
-    awPoliticianId: pid,
-    rawJson: JSON.stringify(pol),
-    pictureUrl,
-    fetchedAt: new Date().toISOString(),
-  }).onConflictDoUpdate({
-    target: memberAbgeordnetenwatch.memberId,
-    set: { awPoliticianId: pid, rawJson: JSON.stringify(pol), pictureUrl, fetchedAt: new Date().toISOString() },
-  }).run()
-})
+}
 
 console.log(`matched via mdb id: ${viaId}`)
 console.log(`matched via name:   ${viaName}`)
@@ -101,14 +115,14 @@ console.log(`name ambiguous:     ${ambiguous}`)
 console.log(`unmatched:          ${unmatched}`)
 console.log(`with picture scrape: ${withPicture}`)
 
-const result = db.run(sql`UPDATE members SET picture_url = (SELECT picture_url FROM member_abgeordnetenwatch WHERE member_abgeordnetenwatch.member_id = members.id) WHERE picture_url IS NULL AND EXISTS (SELECT 1 FROM member_abgeordnetenwatch aw WHERE aw.member_id = members.id AND aw.picture_url IS NOT NULL)`)
-const backfilled = Number(result.changes)
+const result = db.run(sql`UPDATE members SET picture_url = (SELECT picture_url FROM member_abgeordnetenwatch WHERE member_abgeordnetenwatch.member_id = members.id) WHERE EXISTS (SELECT 1 FROM member_abgeordnetenwatch aw WHERE aw.member_id = members.id) AND (picture_url LIKE '%abgeordnetenwatch.de%' OR (picture_url IS NULL AND EXISTS (SELECT 1 FROM member_abgeordnetenwatch aw WHERE aw.member_id = members.id AND aw.picture_url IS NOT NULL)))`)
+const synchronized = Number(result.changes)
 
 const totalAfter = db.select({ c: sql<number>`COUNT(*)` }).from(members).where(sql`picture_url IS NOT NULL`).all()[0].c
 console.log(`\nabgeordnetenwatch ingest:`)
 console.log(`  members total:        ${ourMembers.length}`)
 console.log(`  aw rows written:      ${viaId + viaName}`)
-console.log(`  picture backfilled:   ${backfilled}`)
+console.log(`  picture synchronized: ${synchronized}`)
 console.log(`  members with picture: ${totalAfter} (${((totalAfter / ourMembers.length) * 100).toFixed(1)}%)`)
 
 function matchMember(pol: Politician): { member: typeof ourMembers[number] | null; via: 'mdb' | 'name' | 'none'; reason?: string } {
@@ -126,17 +140,6 @@ function scrapePicture(html: string): string | null {
   if (!match) return null
   const path = match[0].replace(/styles\/[a-z_]+\/public\//, '')
   return `https://www.abgeordnetenwatch.de/${path}`
-}
-
-async function pool<T>(items: T[], n: number, fn: (item: T) => Promise<void>) {
-  let i = 0
-  const workers = Array.from({ length: n }, async () => {
-    while (i < items.length) {
-      const idx = i++
-      await fn(items[idx])
-    }
-  })
-  await Promise.all(workers)
 }
 
 function firstToken(s: string) {

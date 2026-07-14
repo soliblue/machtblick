@@ -37,6 +37,17 @@ struct MemberPayloadContractCheck {
         precondition(fraktionslos.history[0].partyMajority == nil)
         precondition(!fraktionslos.history[0].showsLineStatus)
         precondition(!fraktionslos.needsEnrichmentRefresh)
-        print("Legacy member payloads trigger enrichment refresh and current payloads stay cacheable.")
+
+        let memberWithRemotePortrait = try JSONDecoder().decode(
+            MemberListItem.self,
+            from: Data(
+                #"{"id":"member","name":"Member","party":"SPD","state":"Berlin","pictureUrl":"https://example.com/member.png"}"#.utf8))
+        precondition(memberWithRemotePortrait.pictureUrl == "https://example.com/member.png")
+
+        let memberWithoutPortrait = try JSONDecoder().decode(
+            MemberListItem.self,
+            from: Data(#"{"id":"member","name":"Member","party":"SPD","state":"Berlin"}"#.utf8))
+        precondition(memberWithoutPortrait.pictureUrl == nil)
+        print("Member detail and portrait list payloads remain compatible.")
     }
 }

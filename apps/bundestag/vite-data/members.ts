@@ -111,8 +111,12 @@ export function loadMemberBuildData(db: Database.Database, translations: StaticT
   return { majorityByVoteParty, summariesByVote, translations }
 }
 
-export function leanMembers(db: Database.Database, data: MemberBuildData) {
-  const allMembers = db.prepare('SELECT id, name, mandate_type FROM members').all() as Array<Pick<MemberRow, 'id' | 'name' | 'mandate_type'>>
+export function leanMembers(
+  db: Database.Database,
+  data: MemberBuildData,
+  photoManifest?: Record<string, { file: string }>,
+) {
+  const allMembers = db.prepare('SELECT id, name, picture_url, mandate_type FROM members').all() as Array<Pick<MemberRow, 'id' | 'name' | 'picture_url' | 'mandate_type'>>
   const voteDate = new Map(
     (db.prepare(`SELECT id, date FROM votes WHERE term_id = ${CURRENT_TERM} AND procedural = 0`).all() as Array<{ id: string; date: string }>).map((vote) => [vote.id, vote.date]),
   )
@@ -158,6 +162,7 @@ export function leanMembers(db: Database.Database, data: MemberBuildData) {
       return {
         id: member.id,
         name: member.name,
+        pictureUrl: resolvePictureUrl(member.id, member.picture_url, photoManifest),
         party: currentParty.get(member.id) ?? '',
         state: stateByMember.get(member.id) ?? '',
         yearOfBirth: demo?.yearOfBirth ?? null,

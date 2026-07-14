@@ -68,10 +68,15 @@ jobs:
       - name: Check member payload compatibility
         run: |
           xcrun swiftc \
+            apps/ios/src/Core/Localization/AppLanguage.swift \
+            apps/ios/src/Core/Localization/AppLocale.swift \
+            apps/ios/src/Core/Theme/AppTheme.swift \
+            apps/ios/src/Core/Copy.swift \
             apps/ios/src/Features/Votes/Logic/PartyPosition.swift \
             apps/ios/src/Features/Votes/Logic/VoteResult.swift \
             apps/ios/src/Features/Votes/Logic/BallotChoice.swift \
             apps/ios/src/Features/Members/Logic/MemberDetailPayload.swift \
+            apps/ios/src/Features/Members/Logic/MemberListItem.swift \
             apps/ios/scripts/MemberPayloadContractCheck.swift \
             -o "$RUNNER_TEMP/machtblick-member-payload-contract"
           "$RUNNER_TEMP/machtblick-member-payload-contract"

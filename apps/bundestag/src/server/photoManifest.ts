@@ -6,6 +6,10 @@ const manifestPath = [
 ].find(existsSync)
 const manifest: Record<string, { file: string }> = manifestPath ? JSON.parse(readFileSync(manifestPath, 'utf8')) : {}
 
-export function resolvePictureUrl<T extends string | null>(memberId: string, pictureUrl: T): string | T {
-  return manifest[memberId]?.file ?? pictureUrl
+export function resolvePictureUrl<T extends string | null>(
+  memberId: string,
+  pictureUrl: T,
+  entries: Record<string, { file: string }> = manifest,
+): string | T {
+  return entries[memberId]?.file ?? pictureUrl
 }
