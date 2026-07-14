@@ -94,7 +94,7 @@ export function Reader({ item, index, count, nextName = null, query = '', onPrev
           <div className="min-w-0 flex-1">
             <div className="text-m font-semibold">
               {item.speakerMemberId ? (
-                <a href={withLocale(`/members/${item.speakerMemberId}/votes/`, locale)} className="hover:opacity-80">
+                <a href={withLocale(`/members/${item.speakerMemberId}/`, locale)} className="hover:opacity-80">
                   {item.speakerName}
                 </a>
               ) : (

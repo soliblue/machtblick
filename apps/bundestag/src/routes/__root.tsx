@@ -79,7 +79,7 @@ export const Route = createRootRoute({
                   '@type': 'Dataset',
                   name: 'Bundestag votes',
                   description: 'Current-term roll-call votes in the German Bundestag, including results, member choices, party summaries, and source document links.',
-                  url: `${SITE_URL}/votes/`,
+                  url: `${SITE_URL}/`,
                   dateModified: __DATA_LAST_MODIFIED__,
                   creator: { '@id': `${SITE_URL}/#organization` },
                   distribution: [

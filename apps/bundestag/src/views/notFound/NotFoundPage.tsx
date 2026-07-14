@@ -1,5 +1,4 @@
 import { useLocale } from '@/lib/i18n'
-import { withLocale } from '@/lib/locale'
 
 export function NotFoundPage() {
   const locale = useLocale()
@@ -11,7 +10,7 @@ export function NotFoundPage() {
       >
         <h1 className="text-xl font-semibold">{locale === 'en' ? 'This page does not exist.' : 'Diese Seite gibt es nicht.'}</h1>
         <a
-          href={withLocale('/votes/', locale)}
+          href={locale === 'en' ? '/en/' : '/'}
           className="mt-l inline-flex rounded-m border px-m py-s text-m transition-colors hover:bg-surface"
           style={{ borderColor: 'color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
         >

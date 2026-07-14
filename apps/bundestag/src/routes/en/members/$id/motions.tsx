@@ -2,6 +2,6 @@ import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/en/members/$id/motions')({
   beforeLoad: ({ params }) => {
-    throw redirect({ to: '/en/members/$id/votes/', params })
+    throw redirect({ to: '/en/members/$id/', params })
   },
 })

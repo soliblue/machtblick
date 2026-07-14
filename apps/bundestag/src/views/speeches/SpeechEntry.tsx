@@ -49,7 +49,7 @@ export function SpeechEntry({ speech, choice = null, pictureUrl = null, voteId =
           <div className="text-m font-semibold">
             {speech.speakerMemberId ? (
               <a
-                href={withLocale(`/members/${speech.speakerMemberId}/votes/`, locale)}
+                href={withLocale(`/members/${speech.speakerMemberId}/`, locale)}
                 className="relative z-10 hover:opacity-80"
               >
                 {speech.speakerName}

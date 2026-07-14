@@ -4,7 +4,7 @@ import { useVoteListFilters } from '@/hooks/useVoteListFilters'
 import { useVoteDayGroups } from '@/hooks/useVoteDayGroups'
 import { useVoteFlags } from '@/hooks/useVoteFlags'
 
-type Props = { from: '/votes/' | '/en/votes/' }
+type Props = { from: '/' | '/en/' }
 
 export function VotesRouteBody({ from }: Props) {
   const votes = useLoaderData({ from })

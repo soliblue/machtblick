@@ -19,7 +19,7 @@ export function SponsorPortrait({ member, zIndex, overlap }: Props) {
     <Tooltip>
       <TooltipTrigger asChild>
         <a
-          href={withLocale(`/members/${member.memberId}/votes/`, locale)}
+          href={withLocale(`/members/${member.memberId}/`, locale)}
           aria-label={label}
           className="block size-[32px] shrink-0 overflow-hidden rounded-full ring-[1.5px] ring-background"
           style={{ zIndex, marginLeft: overlap ? -12 : 0 }}

@@ -1,12 +1,7 @@
-import { createFileRoute, useLoaderData } from '@tanstack/react-router'
-import { VotingRecordTab } from '@/views/memberDetail/VotingRecordTab'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/en/members/$id/votes')({
-  component: MemberVotesRoute,
+  beforeLoad: ({ location, params }) => {
+    throw redirect({ to: '/en/members/$id/', params, search: location.search, statusCode: 301 })
+  },
 })
-
-function MemberVotesRoute() {
-  const data = useLoaderData({ from: '/en/members/$id' })
-  const { line } = Route.useSearch()
-  return <VotingRecordTab history={(data?.history ?? []).filter((vote) => line !== 'abw' || vote.defected === true)} />
-}

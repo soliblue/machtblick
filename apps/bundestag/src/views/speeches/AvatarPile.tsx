@@ -22,7 +22,7 @@ export function AvatarPile({ people, cap = 8 }: Props) {
       {visible.map((person, index) => (
         <a
           key={person.id}
-          href={withLocale(`/members/${person.id}/votes/`, locale)}
+          href={withLocale(`/members/${person.id}/`, locale)}
           aria-label={person.name}
           className="inline-flex rounded-full border border-background hover:opacity-80"
           style={{ marginLeft: index ? -10 : 0, zIndex: visible.length - index }}

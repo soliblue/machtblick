@@ -12,7 +12,7 @@ type Props = {
 }
 
 const TABS = [
-  { to: '/members/$id/votes/', enTo: '/en/members/$id/votes/', count: 'votes' },
+  { to: '/members/$id/', enTo: '/en/members/$id/', count: 'votes' },
   { to: '/members/$id/speeches/', enTo: '/en/members/$id/speeches/', count: 'speeches' },
 ] as const
 
@@ -36,6 +36,7 @@ export function MemberDetailTabs({ memberId, votes, speeches }: Props) {
           key={tab.to}
           to={tab.to}
           params={{ id: memberId }}
+          activeOptions={{ exact: tab.count === 'votes' }}
           className="min-w-0 px-s py-s text-center text-s font-regular opacity-l transition-[background,opacity] hover:opacity-100"
           style={{ borderRadius: 'calc(var(--radius-m) - var(--spacing-xs))' }}
           activeProps={{

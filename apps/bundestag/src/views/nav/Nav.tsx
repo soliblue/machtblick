@@ -28,9 +28,9 @@ export function Nav({ theme, onThemeChange }: Props) {
       style={{ borderBottom: '1px solid color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
     >
       <div className="mx-auto flex max-w-3xl items-center gap-l px-l py-m text-m">
-        <a href={href('/votes/')} onClick={() => setOpen(false)} aria-label="Machtblick"><ScrollEyeWordmark /></a>
+        <a href={locale === 'en' ? '/en/' : '/'} onClick={() => setOpen(false)} aria-label="Machtblick"><ScrollEyeWordmark /></a>
         <div className="ml-auto hidden gap-l desk:flex">
-          <a href={href('/votes/')} className={linkClass}>{t.navVotes}</a>
+          <a href={locale === 'en' ? '/en/' : '/'} className={linkClass}>{t.navVotes}</a>
           <a href={href('/members/')} className={linkClass}>{t.navMembers}</a>
           <a href={href('/parties/')} className={linkClass}>{t.navParties}</a>
         </div>
@@ -63,7 +63,7 @@ export function Nav({ theme, onThemeChange }: Props) {
       {open && (
         <div className="absolute inset-x-0 top-full flex max-h-[calc(100svh-54px)] flex-col gap-l overflow-y-auto overscroll-contain border-y border-fg/15 bg-background px-l py-l text-m desk:hidden">
           <div className="flex flex-col gap-m">
-            <a href={href('/votes/')} className={linkClass} onClick={() => setOpen(false)}>{t.navVotes}</a>
+            <a href={locale === 'en' ? '/en/' : '/'} className={linkClass} onClick={() => setOpen(false)}>{t.navVotes}</a>
             <a href={href('/members/')} className={linkClass} onClick={() => setOpen(false)}>{t.navMembers}</a>
             <a href={href('/parties/')} className={linkClass} onClick={() => setOpen(false)}>{t.navParties}</a>
           </div>

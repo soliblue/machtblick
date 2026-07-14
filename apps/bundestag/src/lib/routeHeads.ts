@@ -105,8 +105,7 @@ export function voteDetailHead(loaderData: VoteDetailData | undefined, params: P
 
 export function memberDetailHead(loaderData: MemberDetailData | undefined, params: Params, locale: Locale) {
   const en = locale === 'en'
-  const path = withLocale(`/members/${params.id}/votes`, locale)
-  const dataPath = withLocale(`/members/${params.id}`, locale)
+  const path = withLocale(`/members/${params.id}`, locale)
   const name = loaderData?.name ?? (en ? 'Member' : 'Abgeordnete:r')
   const who = loaderData ? `${name} (${[loaderData.party, loaderData.state].filter(Boolean).join(', ')})` : name
   return {
@@ -128,7 +127,7 @@ export function memberDetailHead(loaderData: MemberDetailData | undefined, param
       canonical: path,
       type: 'profile',
     }),
-    links: [...canonicalLink(path), ...alternateJsonLink(dataPath)],
+    links: [...canonicalLink(path), ...alternateJsonLink(path)],
     scripts: [
       ...breadcrumbJsonLd([
         { name: copy[locale].navMembers, path: withLocale('/members', locale) },
@@ -207,9 +206,9 @@ export function partyDetailHead(loaderData: PartyDetailData | undefined, params:
           memberOf: { '@type': 'GovernmentOrganization', name: en ? 'German Bundestag' : 'Deutscher Bundestag' },
           member: detail.members.map((m) => ({
             '@type': 'Person',
-            '@id': `${SITE_URL}${withLocale(`/members/${m.id}/votes`, locale)}/`,
+            '@id': `${SITE_URL}${withLocale(`/members/${m.id}`, locale)}/`,
             name: m.name,
-            url: `${SITE_URL}${withLocale(`/members/${m.id}/votes`, locale)}/`,
+            url: `${SITE_URL}${withLocale(`/members/${m.id}`, locale)}/`,
           })),
         })
       : []),
@@ -271,14 +270,14 @@ function listHead(locale: Locale, base: string, crumb: string, title: string, de
   return {
     meta: seoMeta({ title, description, canonical: path }),
     links: canonicalLink(path),
-    scripts: breadcrumbJsonLd([{ name: 'Machtblick', path: withLocale('/', locale) }, { name: crumb, path }]),
+    scripts: base === '/' ? [] : breadcrumbJsonLd([{ name: 'Machtblick', path: withLocale('/', locale) }, { name: crumb, path }]),
   }
 }
 
 export function votesListHead(locale: Locale) {
   return listHead(
     locale,
-    '/votes',
+    '/',
     copy[locale].navVotes,
     locale === 'en' ? 'Bundestag votes' : 'Abstimmungen im Bundestag',
     locale === 'en'

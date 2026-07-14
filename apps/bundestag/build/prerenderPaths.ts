@@ -2,7 +2,7 @@ import { openDb, partySlugs, publishableAntragIds, publishableVotes, votedMember
 
 export function prerenderPaths(): string[] {
   const db = openDb()
-  const paths = ['/', '/votes/', '/motions/', '/members/', '/parties/', '/speeches/', '/imprint/', '/privacy/', '/methodology/', '/en/', '/en/votes/', '/en/motions/', '/en/members/', '/en/parties/', '/en/speeches/', '/en/imprint/', '/en/privacy/', '/en/methodology/']
+  const paths = ['/', '/motions/', '/members/', '/parties/', '/speeches/', '/imprint/', '/privacy/', '/methodology/', '/en/', '/en/motions/', '/en/members/', '/en/parties/', '/en/speeches/', '/en/imprint/', '/en/privacy/', '/en/methodology/']
   for (const { id } of publishableVotes(db)) {
     paths.push(`/votes/${id}/`)
     paths.push(`/en/votes/${id}/`)
@@ -15,10 +15,8 @@ export function prerenderPaths(): string[] {
   }
   for (const { id } of votedMembers(db)) {
     paths.push(`/members/${id}/`)
-    paths.push(`/members/${id}/votes/`)
     paths.push(`/members/${id}/speeches/`)
     paths.push(`/en/members/${id}/`)
-    paths.push(`/en/members/${id}/votes/`)
     paths.push(`/en/members/${id}/speeches/`)
   }
   for (const slug of partySlugs(db)) {

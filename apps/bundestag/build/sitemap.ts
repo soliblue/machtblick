@@ -10,7 +10,7 @@ function sitemapEntries(): SitemapEntry[] {
   const db = openDb()
   const latest = (db.prepare('SELECT max(date) AS d FROM votes WHERE term_id = ?').get(CURRENT_TERM) as { d: string | null }).d ?? undefined
   const entries: SitemapEntry[] = [
-    ...['/votes/', '/members/', '/parties/', '/speeches/', '/en/votes/', '/en/members/', '/en/parties/', '/en/speeches/'].map((path) => ({ path, lastmod: latest })),
+    ...['/', '/members/', '/parties/', '/speeches/', '/en/', '/en/members/', '/en/parties/', '/en/speeches/'].map((path) => ({ path, lastmod: latest })),
     { path: '/imprint/' },
     { path: '/privacy/' },
     { path: '/methodology/' },
@@ -37,8 +37,8 @@ function sitemapEntries(): SitemapEntry[] {
   for (const id of publishableAntragIds(db)) entries.push({ path: `/motions/${id}/`, lastmod: antragDates.get(id) })
   for (const id of publishableAntragIds(db, 'en')) entries.push({ path: `/en/motions/${id}/`, lastmod: antragDates.get(id) })
   for (const m of votedMembers(db)) {
-    entries.push({ path: `/members/${m.id}/votes/`, lastmod: m.lastVoteDate })
-    entries.push({ path: `/en/members/${m.id}/votes/`, lastmod: m.lastVoteDate })
+    entries.push({ path: `/members/${m.id}/`, lastmod: m.lastVoteDate })
+    entries.push({ path: `/en/members/${m.id}/`, lastmod: m.lastVoteDate })
   }
   for (const slug of partySlugs(db)) {
     entries.push({ path: `/parties/${slug}/`, lastmod: latest })

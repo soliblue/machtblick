@@ -2,7 +2,6 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 import type { PartyProposal } from '@/server/partyDetail'
 import { formatDate } from '@/lib/format'
 import { useCopy, useLocale } from '@/lib/i18n'
-import { withLocale } from '@/lib/locale'
 
 type Props = { proposals: PartyProposal[]; party: string }
 
@@ -19,7 +18,7 @@ export function ProposalsBar({ proposals, party }: Props) {
         <span>{accepted} / {total} {t.acceptedCount}</span>
       </div>
       <a
-        href={`${withLocale('/votes/', locale)}?party=${encodeURIComponent(party)}`}
+        href={`${locale === 'en' ? '/en/' : '/'}?party=${encodeURIComponent(party)}`}
         className="mt-s flex h-8 w-full gap-[2px] overflow-hidden transition-opacity hover:opacity-80"
         aria-label={`${t.proposals}: ${accepted} / ${total} ${t.acceptedCount}`}
       >

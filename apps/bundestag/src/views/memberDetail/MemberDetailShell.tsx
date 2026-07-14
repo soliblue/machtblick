@@ -70,7 +70,7 @@ export function MemberDetailShell({ data, deviationsOnly, children }: Props) {
               <span className="opacity-l">{hasPartyLine(data.party) ? t.noVoteData : t.noPartyLine}</span>
             ) : data.defections > 0 ? (
               <a
-                href={`${withLocale(`/members/${data.id}/votes/`, locale)}${deviationsOnly ? '' : '?line=abw'}`}
+                href={`${withLocale(`/members/${data.id}/`, locale)}${deviationsOnly ? '' : '?line=abw'}`}
                 aria-current={deviationsOnly ? 'true' : undefined}
                 className={`text-danger transition-opacity hover:opacity-100 ${deviationsOnly ? 'font-semibold' : 'font-regular opacity-l'}`}
               >

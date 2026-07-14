@@ -26,11 +26,11 @@ export function writeVotesFeed() {
   const xml = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="de">',
-    `  <id>${SITE_URL}/votes/</id>`,
+    `  <id>${SITE_URL}/</id>`,
     '  <title>Machtblick: Abstimmungen im Bundestag</title>',
     '  <subtitle>Die neuesten Abstimmungen des Deutschen Bundestags mit Ergebnis und Zusammenfassung</subtitle>',
     `  <link rel="self" type="application/atom+xml" href="${SITE_URL}/votes.xml"/>`,
-    `  <link rel="alternate" type="text/html" href="${SITE_URL}/votes/"/>`,
+    `  <link rel="alternate" type="text/html" href="${SITE_URL}/"/>`,
     `  <updated>${votes[0].date}T00:00:00Z</updated>`,
     `  <author><name>Machtblick</name><uri>${SITE_URL}</uri></author>`,
     entries,

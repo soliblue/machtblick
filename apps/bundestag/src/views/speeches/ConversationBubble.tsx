@@ -62,7 +62,7 @@ export function ConversationBubble({
           <SpeakerAvatar name={speech.speakerName} pictureUrl={pictureUrl} size={24} />
           <div className="min-w-0 truncate text-l font-semibold">
             {speech.speakerMemberId ? (
-              <a href={withLocale(`/members/${speech.speakerMemberId}/votes/`, locale)} className="hover:opacity-80">
+              <a href={withLocale(`/members/${speech.speakerMemberId}/`, locale)} className="hover:opacity-80">
                 {speech.speakerName}
               </a>
             ) : (

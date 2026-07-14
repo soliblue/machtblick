@@ -24,7 +24,7 @@ export default defineConfig(({ command }) => {
       tailwindcss(),
       tanstackStart({
         pages: building ? prerenderPaths().map((path) => ({ path })) : [],
-        prerender: { enabled: true, crawlLinks: false },
+        prerender: { enabled: true, crawlLinks: false, concurrency: 2 },
         spa: { enabled: false },
       }),
       viteReact(),

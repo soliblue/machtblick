@@ -10,7 +10,7 @@ export function normalizeLocale(value: unknown): Locale {
 
 export function withLocale(path: string, locale: Locale): string {
   const normalized = path.startsWith('/') ? path : `/${path}`
-  return locale === 'en' ? `/en${normalized === '/' ? '' : normalized}` : normalized
+  return locale === 'en' ? `/en${normalized}` : normalized
 }
 
 function withoutLocale(path: string): string {

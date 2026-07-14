@@ -14,7 +14,7 @@ export function MemberCard({ member, index = 0 }: Props) {
   return (
     <div className="group relative aspect-[3/4] overflow-hidden rounded-m bg-surface transition-opacity hover:opacity-85">
       <a
-        href={withLocale(`/members/${member.id}/votes/`, locale)}
+        href={withLocale(`/members/${member.id}/`, locale)}
         className="absolute inset-0 z-20"
         aria-label={`${member.name}, ${partyLabel(member.party, locale)}, ${member.state}`}
       />
