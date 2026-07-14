@@ -6,14 +6,14 @@ Mirror every current Bundestag member portrait that has a reusable upstream sour
 
 ## Status
 
-- Lead: in progress
+- Lead: completed
 - Plumber: completed
 - Backend: completed
 - iOS: completed
 - Visibility: completed
 - Tester: completed
-- Deployer: pending
-- Scribe: pending
+- Deployer: completed
+- Scribe: completed
 
 ## Scope
 
@@ -62,3 +62,8 @@ Mirror every current Bundestag member portrait that has a reusable upstream sour
 - 2026-07-14 Lead: The built preview returned HTTP 200 with `image/jpeg` and JPEG bytes for all 384 manifest files. Each of the nine previously mixed-format member IDs has a `.jpg` manifest and API reference, a JPEG asset, and an HTTP 200 member detail route. Manifest author, licence, and source URL values exactly match all 384 database rows.
 - 2026-07-14 Visibility: Focused review passed on the fresh production build. German and English `/api/members.json` each parse with 639 entries split into 384 built local JPEGs, 204 absolute HTTPS remote portraits, and 51 null portraits; every local API reference exists in `dist/client` with JPEG bytes. The German and English canonical member pages for local `blos-dr-michael`, remote `edis-mirze`, and null `arndt-dr-michael` retain specific titles and descriptions, indexable robots metadata, absolute canonical and reciprocal hreflang targets, complete 1200 by 630 Open Graph and X previews, parseable JSON-LD, and valid per-member JSON alternates. Person structured data carries the matching local or remote image and omits `image` for the null case; the sampled remote image returned HTTP 200 as `image/jpeg`. Crawler-policy files, sitemap generation, favicons, manifest, and AI discovery documents are `SKIP` because this diff does not change them. No blocking visibility issues found.
 - 2026-07-14 Tester: Browser plugin was unavailable, so Playwright 1.60.0 tested the fresh production-style build through the preview owned by this checkout at `http://127.0.0.1:3001`. All six desktop and iPhone 13 grid-to-detail cases passed for local JPEG `blos-dr-michael`, remote fallback `edis-mirze`, and initials fallback `arndt-dr-michael`. Each case filtered the grid, verified the card portrait state, visible name and bounds, clicked through to the voting detail, and verified the detail portrait state, heading, main content, title, and absence of framework overlays. Local and remote images decoded with positive dimensions and returned HTTP 200. There were no console errors, warnings, page errors, or relevant failed requests. Twelve screenshots are under `/tmp/tester-member-portraits-{desktop,mobile}-{blos-dr-michael,edis-mirze,arndt-dr-michael}-{grid,detail}.png`.
+- 2026-07-14 Scribe: Committed the verified pipeline, generated API contract, and iOS fallback as `4e46b67 feat(members): complete portrait fallbacks`. Lead pushed the commit to `origin/main` and left TestFlight upload disabled.
+- 2026-07-14 Deployer: Rebuilt and deployed only the Bundestag web app to Cloudflare Pages. Production deployment `https://a3714aec.machtblick-bundestag.pages.dev` completed successfully with 10,916 files. Cloudflare Pages usage is 21 of 500 deployments for 2026-07. No iOS or TestFlight deployment was performed.
+- 2026-07-14 Lead: Post-deploy checks passed on both the immutable deployment URL and `https://machtblick.de`. German and English member APIs return 639 rows split into 384 local JPEGs, 204 remote portraits, and 51 null portraits. All 384 local production assets return HTTP 200 as `image/jpeg` with JPEG bytes. All nine former mixed-extension members return HTTP 200 for both their canonical vote detail page and `.jpg` portrait.
+- 2026-07-14 Lead: GitHub Actions iOS Build run `29317395005` passed in 11 minutes 18 seconds. It compiled the new member payload contract, built the full app without signing, launched German and English variants in the simulator, and passed the theme preference UI test. No TestFlight upload was triggered.
+- 2026-07-14 Tester: Post-deploy Playwright verification passed at `https://a3714aec.machtblick-bundestag.pages.dev`. All six desktop and iPhone 13 grid-to-detail cases passed for local JPEG `blos-dr-michael`, remote fallback `edis-mirze`, and initials fallback `arndt-dr-michael`. Search state, exact image source or null state, HTTP 200 image responses, decoded dimensions, names and bounds, detail identity, meaningful content, and absence of framework overlays all passed with zero console errors, warnings, page errors, or relevant request failures. The immutable and canonical German member APIs both returned 639 rows split into 384 local, 204 remote, and 51 null. Twelve production screenshots are under `/tmp/tester-production-member-portraits-{desktop,mobile}-{blos-dr-michael,edis-mirze,arndt-dr-michael}-{grid,detail}.png`.
