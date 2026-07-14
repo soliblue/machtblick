@@ -15,6 +15,7 @@ export function Footer() {
         <a href={withLocale('/motions/', locale)} className={linkClass}>{t.navMotions}</a>
         <a href={withLocale('/speeches/', locale)} className={linkClass}>{t.navSpeeches}</a>
         <a href={withLocale('/methodology/', locale)} className={linkClass}>{t.aboutData}</a>
+        <a href="https://apps.apple.com/us/app/machtblick/id6787755187" className={linkClass}>{t.appStoreLink}</a>
         <a
           href="https://github.com/soliblue/machtblick"
           target="_blank"

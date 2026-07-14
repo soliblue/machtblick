@@ -2,7 +2,7 @@
 
 ## Route
 
-Sitewide modal, rendered after hydration only on the first visit from Safari on iPhone. It never appears in prerendered HTML, desktop browsers, or non-Safari iPhone browsers.
+Sitewide modal, rendered after hydration only on the first visit from a non-Safari browser on iPhone. It never appears in prerendered HTML, desktop browsers, or Safari on iPhone, where the native Smart App Banner is available instead.
 
 ## Layout
 
@@ -28,7 +28,7 @@ The sheet is anchored above the bottom safe area with `l` radius, a restrained b
 ## Behavior
 
 - Set `machtblick.appStorePrompt.seen` in local storage when the modal first appears, not only when dismissed.
-- The modal therefore appears once per Safari profile. Clearing website data or using a private profile can show it again. Visitors who dismissed the earlier TestFlight prompt see the launch announcement once, because the storage key changed with the App Store release.
+- The modal therefore appears once per non-Safari browser profile. Clearing website data or using a private profile can show it again. Visitors who dismissed the earlier TestFlight prompt see the launch announcement once, because the storage key changed with the App Store release.
 - Primary action opens `https://apps.apple.com/us/app/machtblick/id6787755187` in the current browsing context so iOS can hand off to the App Store.
 - Close icon, backdrop, Escape, and `Nicht jetzt` / `Not now` dismiss the modal.
 - Use Radix Dialog for focus containment, restoration, accessible title and description, backdrop dismissal, and Escape handling.

@@ -58,6 +58,7 @@ export const en = {
   sourceCode: 'Code',
   imprint: 'Imprint',
   privacy: 'Privacy',
+  appStoreLink: 'iPhone app',
   appStorePromptTitle: 'Machtblick for iPhone',
   appStorePromptDescription: 'The Machtblick app is now on the App Store.',
   appStorePromptAction: 'Get it on the App Store',

@@ -8,7 +8,8 @@ The shared footer is rendered after the route content on every German and Englis
 ... page content ends ...
 
 +============================================================+
-|  Anträge  Reden  Daten  Code  Impressum  Datenschutz     |
+|  Anträge  Reden  Daten  iPhone-App  Code  Impressum      |
+|  Datenschutz                                              |
 +============================================================+
 ```
 
@@ -18,7 +19,8 @@ The shared footer is rendered after the route content on every German and Englis
 ... page content ends ...
 
 +============================================================+
-|  Motions  Speeches  Data  Code  Imprint  Privacy           |
+|  Motions  Speeches  Data  iPhone app  Code  Imprint       |
+|  Privacy                                                   |
 +============================================================+
 ```
 
@@ -29,11 +31,12 @@ The links sit in one right-aligned wrapping flex row inside the existing `max-w-
 - Anträge or Motions: locale-aware `/motions/`
 - Reden or Speeches: locale-aware `/speeches/`
 - Daten or Data: locale-aware `/methodology/`
+- iPhone-App or iPhone app: `https://apps.apple.com/us/app/machtblick/id6787755187`
 - Code: `https://github.com/soliblue/machtblick`, opened in a new tab with `noreferrer`
 - Impressum or Imprint: locale-aware `/imprint/`
 - Datenschutz or Privacy: locale-aware `/privacy/`
 
-Only the source-code link is external. It stays a plain text link without an icon so the footer remains visually quiet.
+The App Store and source-code links are external. Both stay plain text links without icons so the footer remains visually quiet. The App Store link opens in the current browsing context so iOS can hand off to the App Store.
 
 ## Tokens
 

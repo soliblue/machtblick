@@ -7,15 +7,14 @@ export function useAppStorePrompt() {
 
   useEffect(() => {
     const ua = window.navigator.userAgent
-    const show = window.navigator.vendor === 'Apple Computer, Inc.'
-      && /iPhone/.test(ua)
-      && /Version\/[\d.]+ Mobile\/\S+ Safari\/[\d.]+/.test(ua)
-      && !/(CriOS|FxiOS|EdgiOS|OPiOS|DuckDuckGo|GSA|YaApp_iOS|FBAN|FBAV|Instagram|Line|Mercury|UCBrowser|OPT\/|OPR\/|Brave|Chrome|Firefox|Edge|Opera|SamsungBrowser)/.test(ua)
+    const show = /iPhone/.test(ua)
+      && !/Version\/[\d.]+ Mobile\/\S+ Safari\/[\d.]+/.test(ua)
       && window.localStorage.getItem(SEEN_KEY) !== '1'
-    if (show) {
+    const timeout = show ? window.setTimeout(() => {
       window.localStorage.setItem(SEEN_KEY, '1')
       setVisible(true)
-    }
+    }, 2000) : undefined
+    return () => timeout === undefined ? undefined : window.clearTimeout(timeout)
   }, [])
 
   const dismiss = useCallback(() => setVisible(false), [])

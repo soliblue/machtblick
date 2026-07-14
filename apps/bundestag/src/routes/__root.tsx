@@ -23,6 +23,7 @@ export const Route = createRootRoute({
       { name: 'theme-color', content: '#ffffff' },
       { name: 'application-name', content: SITE_NAME },
       { name: 'apple-mobile-web-app-title', content: SITE_NAME },
+      { name: 'apple-itunes-app', content: 'app-id=6787755187' },
       { name: 'msapplication-TileColor', content: '#ffffff' },
       { name: 'msapplication-config', content: '/browserconfig.xml' },
       ...(import.meta.env.DEV ? [{ name: 'robots', content: 'noindex, nofollow' }] : [{ name: 'robots', content: 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1' }]),
