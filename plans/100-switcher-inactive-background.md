@@ -6,7 +6,7 @@ Keep the original rounded navbar theme and language switchers without an outer b
 
 ## Status
 
-In progress.
+Complete.
 
 ## Shared contracts
 
@@ -43,3 +43,4 @@ In progress.
 - frontend: Changed only the inactive theme and language segment fills from semantic `bg-surface` to `bg-elevated`. The `rounded-m` borderless, divider-free containers and all active, hover, focus, sizing, and interaction styles remain unchanged. The Bundestag TypeScript compiler and scoped diff checks passed.
 - visibility: Classified the two navbar component changes as visibility-insensitive because they only adjust presentation classes and do not change metadata, routes, prerender configuration, discovery files, crawler policy, structured data, sharing assets, or JSON alternates. A fresh `npm run build -w @machtblick/bundestag` completed successfully, including full prerendering and static contract checks. Confirmed the fresh generated root HTML and compiled `bg-elevated` styles under `apps/bundestag/dist/client`. HTML metadata, sharing previews, crawler access, AI discovery, favicons and manifest, sitemap, and JSON alternates were skipped as unaffected. No visibility blockers.
 - tester: Playwright passed at `https://dev.machtblick.de` after explicitly waiting for React hydration on desktop and iPhone 13. Both switchers compute to `border-radius: 14px`, every group and segment border computes to `0px`, inactive segments compute to elevated `rgb(237, 237, 237)`, and selected segments compute to `rgb(10, 10, 10)`. Theme switching, the mobile menu, and the neighboring members link passed with no console or page errors. Evidence: `/tmp/tester-switcher-elevated-desktop.png`, `/tmp/tester-switcher-elevated-iphone13.png`.
+- lead: Committed the verified switcher refinement as `6c4f014`, pushed `main`, and deployed it to Cloudflare Pages at `https://8a4b8694.machtblick-bundestag.pages.dev`. Both the deployment URL and `https://machtblick.de/votes/` returned HTTP 200. Deployment usage is 22/500 for 2026-07 and the production output contains 10916/20000 files.
