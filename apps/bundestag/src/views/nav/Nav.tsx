@@ -24,10 +24,10 @@ export function Nav({ theme, onThemeChange }: Props) {
   const enHref = localizedPath(pathname, 'en')
   return (
     <nav
-      className="sticky top-0 z-50 bg-background"
+      className="sticky top-0 z-50 h-[54px] bg-background"
       style={{ borderBottom: '1px solid color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
     >
-      <div className="mx-auto flex max-w-3xl items-center gap-l px-l py-m text-m">
+      <div className="mx-auto flex h-full max-w-3xl items-center gap-l px-l text-m">
         <a href={locale === 'en' ? '/en/' : '/'} onClick={() => setOpen(false)} aria-label="Machtblick"><ScrollEyeWordmark /></a>
         <div className="ml-auto hidden gap-l desk:flex">
           <a href={locale === 'en' ? '/en/' : '/'} className={linkClass}>{t.navVotes}</a>
