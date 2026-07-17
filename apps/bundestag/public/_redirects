@@ -30,6 +30,10 @@
 /reden/ /speeches/ 301
 /en/reden /en/speeches/ 301
 /en/reden/ /en/speeches/ 301
+/antraege /motions/ 301
+/antraege/ /motions/ 301
+/en/antraege /en/motions/ 301
+/en/antraege/ /en/motions/ 301
 /antraege/:id /motions/:id/ 301
 /antraege/:id/ /motions/:id/ 301
 /en/antraege/:id /en/motions/:id/ 301
