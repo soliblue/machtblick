@@ -3,6 +3,9 @@ Description=Machtblick Bundestag auto refresh
 
 [Service]
 Type=oneshot
+MemoryAccounting=true
 WorkingDirectory=__ROOT__
 Environment=MACHTBLICK_ROOT=__ROOT__
+Environment=MACHTBLICK_AUTO_MODEL=gpt-5.6-sol
+Environment=MACHTBLICK_AUTO_EFFORT=ultra
 ExecStart=__ROOT__/scripts/scheduled-bundestag-auto-refresh

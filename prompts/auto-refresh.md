@@ -107,8 +107,9 @@ Before any deploy:
 7. Run `tester` if behavior or routing changed.
 8. Run `visibility`.
 9. Use `scribe` if tracked source changes were made.
-10. Use `deployer`.
-11. After a successful deploy, run `npm run indexnow -w @machtblick/bundestag` to ping IndexNow with the URLs whose sitemap lastmod falls inside the refresh window (defaults to 7 days; pass `-- --days N` after a longer gap). Report the ping status code.
+10. Stop every preview or dev server started by this run.
+11. Use `deployer`.
+12. After a successful deploy, run `npm run indexnow -w @machtblick/bundestag` to ping IndexNow with the URLs whose sitemap lastmod falls inside the refresh window (defaults to 7 days; pass `-- --days N` after a longer gap). Report the ping status code.
 
 Publish complete slices independently. Incomplete DIP rows may remain in SQLite and must be reported, but they do not block unrelated complete slices. New votes and speeches can deploy when their own vote and speech gates pass. Motion detail pages and JSON should exist only for motions with generated descriptions, and English motion pages require English description translations. Do not deploy if a gate fails for a slice that would be published, if local changes cannot be validated, or if the refreshed data looks suspicious.
 
