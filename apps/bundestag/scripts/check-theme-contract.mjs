@@ -144,7 +144,7 @@ requireFragments(filterSheet, 'FilterSheet.tsx', [
 ])
 requireFragments(memberCard, 'MemberCard.tsx', ['bg-gradient-to-t from-black/70 to-transparent', 'text-white'])
 requireFragments(nav, 'Nav.tsx', [
-  'max-w-3xl items-center gap-l px-l py-m text-m',
+  'h-full max-w-3xl items-center gap-l px-l text-m',
   'hidden gap-l desk:flex',
   'hidden items-center gap-m desk:flex',
   'className="ml-auto desk:hidden"',

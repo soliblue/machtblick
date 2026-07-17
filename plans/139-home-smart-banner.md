@@ -26,3 +26,5 @@ Complete.
 - Visibility: confirmed existing prerender coverage and the German and English verification matrix.
 - Lead: omitted the native banner from both home routes in initial HTML while retaining it elsewhere.
 - Tester: verified all four routes on `dev.machtblick.de` with an iPhone viewport, correct banner counts, rendered content, canonical metadata, and zero console errors.
+- Lead: updated the stale navigation contract fragment to match the previously shipped fixed-height navigation after it blocked the production build.
+- Visibility: fresh production prerender generated correct German and English home and members HTML. Home routes omit the Apple banner, members routes retain it, and titles, descriptions, canonicals, language alternates, robots, Open Graph, and X metadata remain complete. The full production build passes after updating the stale navigation contract fragment.
