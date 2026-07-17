@@ -1,2 +1,0 @@
-- [DIP rate-limit gateway quirk](dip_rate_limit.md) — DIP returns HTML browser-challenge pages, not JSON 429s, when over quota; client retries 30× with backoff
-- [Drizzle drift — members.dip_person_id](drizzle_drift_dip_person_id.md) — column in DB but not schema; strip the spurious DROP COLUMN from every generated migration

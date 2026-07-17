@@ -25,14 +25,11 @@ If local changes already exist, validate them. When they make sense, include the
 Delegate specialist work when it materially helps:
 
 - `plumber` owns source ETL, schema, DB materialization, normalization, and upstream shape fixes.
-- `backend` owns server contracts if refreshed data exposes an API issue.
-- `frontend` owns views and hooks if refreshed data exposes a UI issue.
 - `tester` owns browser smoke checks when user-visible behavior changed.
 - `visibility` must pass before deploy.
-- `scribe` commits tracked source changes when the run plan covers them.
 - `deployer` deploys only after build and visibility pass. This prompt is the explicit scheduled deploy request.
 
-You are responsible for integrating by reading files and command output, not by trusting subagent summaries alone.
+Handle product-code issues directly. You are responsible for integrating by reading files and command output, not by trusting subagent summaries alone.
 
 ## Data Work
 
@@ -106,7 +103,7 @@ Before any deploy:
 6. Confirm generated static data for new routes exists.
 7. Run `tester` if behavior or routing changed.
 8. Run `visibility`.
-9. Use `scribe` if tracked source changes were made.
+9. Commit reviewed tracked source changes directly if the run plan covers them.
 10. Use `deployer`.
 11. After a successful deploy, run `npm run indexnow -w @machtblick/bundestag` to ping IndexNow with the URLs whose sitemap lastmod falls inside the refresh window (defaults to 7 days; pass `-- --days N` after a longer gap). Report the ping status code.
 

@@ -1,23 +1,8 @@
-import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
+import { copyFile, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { basename, join } from "node:path";
 
 const sourceDir = ".claude/agents";
 const targetDir = ".codex/agents";
-const skippedAgents = new Set(["lead"]);
-
-const roleByAgent = {
-  archiver: "worker",
-  designer: "worker",
-  plumber: "worker",
-  backend: "worker",
-  frontend: "worker",
-  tester: "worker",
-  launcher: "worker",
-  visibility: "worker",
-  renamer: "worker",
-  deployer: "worker",
-  scribe: "worker",
-};
 
 const normalizeText = (text) =>
   text
@@ -64,7 +49,6 @@ await mkdir(targetDir, { recursive: true });
 
 const files = (await readdir(sourceDir))
   .filter((file) => file.endsWith(".md"))
-  .filter((file) => !skippedAgents.has(basename(file, ".md")))
   .sort();
 
 for (const file of files) {
@@ -75,12 +59,11 @@ for (const file of files) {
   const [frontmatter, body] = parseFrontmatter(source);
   const metadata = parseYamlLines(frontmatter);
   const name = metadata.name ?? nameFromFile;
-  const codexRole = roleByAgent[name] ?? "worker";
   const description = normalizeText(metadata.description ?? "");
   const developerInstructions = [
     `Generated from .claude/agents/${file} by scripts/sync-codex-agents.mjs. Edit the Claude agent and rerun npm run agents:sync.`,
     "",
-    `Codex role mapping: ${codexRole}.`,
+    "Codex role mapping: worker.",
     "",
     normalizeText(body).trimEnd(),
   ].join("\n");
@@ -96,4 +79,6 @@ for (const file of files) {
   );
 }
 
-console.log(`Synced ${files.length} agents to ${targetDir}`);
+await copyFile("AGENTS.md", "CLAUDE.md");
+
+console.log(`Synced ${files.length} agents to ${targetDir} and mirrored AGENTS.md to CLAUDE.md`);

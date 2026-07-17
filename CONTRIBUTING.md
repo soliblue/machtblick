@@ -2,7 +2,7 @@
 
 Issues and focused pull requests are welcome. By contributing you agree your work is licensed under the project's AGPL-3.0 license (see LICENSE).
 
-Open an issue before beginning a large feature or data-model change. Every implementation change needs a numbered plan under `plans/` that records its goal, status, contracts, open questions, and append-only work log.
+Open an issue before beginning a large feature or data-model change. Use a short numbered plan under `plans/` for complex, concurrent, risky, or multi-session work. Small changes do not need one, and completed plans remain as historical records.
 
 ## Project boundaries
 
@@ -11,7 +11,7 @@ Open an issue before beginning a large feature or data-model change. Every imple
 - Keep views presentational, hooks responsible for client logic, and routes thin.
 - Fix public-data inconsistencies in ETL or reproducible database normalization.
 - Update prerender paths with every new route.
-- Use the repository's fixed design tokens and curated UI primitives.
+- Reuse the code-based design tokens and neighboring shipped UI patterns.
 - Do not add comments, large files, absolute filesystem paths, or catch-all error handling.
 
 ## Sensitive and generated files

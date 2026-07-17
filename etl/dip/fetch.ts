@@ -34,6 +34,10 @@ async function fetchEndpoint(endpoint: string, path: string, params: Record<stri
 
 const updatedStart = process.env.DIP_UPDATED_START
 
+if (updatedStart && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(updatedStart)) {
+  throw new Error('DIP_UPDATED_START must be an ISO datetime such as 2026-05-12T00:00:00')
+}
+
 for (const t of TYPES) {
   const s = slug(t)
   const params: Record<string, string | string[]> = { 'f.wahlperiode': '21', 'f.vorgangstyp': t, format: 'json' }

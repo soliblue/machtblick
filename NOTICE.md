@@ -20,6 +20,8 @@ The DIP API identifier embedded in the source is published by the Bundestag in i
 
 Machtblick uses public API data from [abgeordnetenwatch.de](https://www.abgeordnetenwatch.de/). API responses carry their own license metadata. Source references are retained in the data pipeline and product.
 
+Portrait files are mirrored only when reusable author, license, and source metadata exists. Other approved portrait URLs remain remote display fallbacks and are not redistributed by Machtblick.
+
 ## Wikidata and Wikimedia Commons
 
 Wikidata identifiers and portrait references are used to locate member portraits. Generated portrait binaries are ignored, except for portraits embedded in the tracked App Store screenshots. The generated portrait manifest retains Commons author, source URL, and per-file license metadata where Commons is the source. Portraits embedded in tracked screenshots are credited in [`fastlane/SCREENSHOT-CREDITS.md`](fastlane/SCREENSHOT-CREDITS.md).

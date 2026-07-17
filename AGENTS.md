@@ -1,124 +1,79 @@
-Machtblick is a collection of small apps that use public German datasets to inform the public. Each app is self-contained inside `apps/`, shares utilities via the root, never reaches into another app.
+Machtblick is a collection of small apps that use public German datasets to inform the public. Each app is self-contained inside apps/, shares utilities through the root, and never imports from another app.
 
-## Codex Session Role
+## Authority
 
-Session prefix: subagents are allowed and preferred. This is the user's standing request for Codex to spawn specialist subagents when project instructions call for them or when delegation materially helps.
+- Shipped code and rendered browser or Simulator output are authoritative for current behavior and UI.
+- AGENTS.md is the shared instruction source. npm run agents:sync mirrors it to CLAUDE.md and generates Codex agents from .claude/agents/.
+- Documentation is for public guidance, operations, provenance, and decisions that code cannot express.
+- Temporary research, generated previews, and design alternatives live under /tmp.
 
-Root Codex sessions act as `lead`: hold the full picture, create or update the plan first, coordinate specialist work, and integrate by reading files instead of trusting summaries.
+## Architecture
 
-Use `.codex/agents/*.toml` for spawned specialist agents. There is no Codex `lead` subagent because the root session is lead.
+- apps/bundestag/src/views is presentational.
+- apps/bundestag/src/hooks owns client state and derived behavior.
+- apps/bundestag/src/routes is thin route composition.
+- apps/bundestag/src/server owns server functions and exported contracts.
+- apps/bundestag/build owns prerender paths and generated public artifacts.
+- db/schema is the Drizzle contract. Migrations and reproducible normalization live under db/.
+- etl contains one importer per upstream source plus shared and one-shot utilities.
 
-Specialists:
+## Working model
 
-| Agent | Owns |
+Root sessions implement and coordinate directly. Delegate only when specialist verification or data ownership materially helps.
+
+| Agent | Scope |
 |---|---|
-| designer | ASCII mocks, IA |
-| plumber | ETL, `db/schema/` |
-| backend | API, exported router types |
-| frontend | React + TanStack views and hooks |
-| tester | Browser verification |
-| launcher | Local dev server bring-up |
-| visibility | SEO, sharing previews, crawler and AI assistant discoverability |
-| renamer | Conversation names |
-| archiver | Conversation archive and unarchive actions |
-| deployer | Cloudflare deploys only when explicitly asked |
-| scribe | Git commits |
+| plumber | ETL, schema, migrations, normalization, and data quality |
+| tester | Browser and Simulator verification |
+| visibility | Metadata, sharing, crawler, sitemap, and AI discoverability verification |
+| deployer | Cloudflare production deploys after current-turn user authorization and development-preview verification |
 
-Every change starts with a plan in `plans/NN-slug.md`, small or big. The plan is the durable channel between sessions and subagents, so it carries the goal, status, shared contracts, open questions, and an append-only log per agent.
+Product implementation, thread management, and git operations stay with the root session.
 
-## Conversation Names and Archives
+Production web and TestFlight releases require explicit user authorization in the current turn. Web releases also require the user to verify the current development preview first. Visibility-only work does not alter existing visible pages without explicit approval.
 
-Lead should call `renamer` after the first substantive user message, after about the fifth user message, and whenever the user asks if the current name still fits. Renamer considers what the conversation was really about and uses one emoji plus up to four words. Clarity beats extreme brevity.
+The operator preview is https://dev.machtblick.de. It is noindexed and not for public sharing.
 
-Lead may call `archiver` only when the user asks to archive or unarchive a conversation, or when lead gives explicit target thread ids for completed spawned threads. Archiver requires target thread ids and must not guess from recency. Archiver must not archive the active root thread unless the user explicitly asks.
+Create a plan only for complex, concurrent, risky, or multi-session work. A plan contains the goal, shared contracts, blockers, and a short log. Keep completed plans as historical records, while code and rendered output remain authoritative. Small changes do not need a plan.
 
-## Memory and Context
+Integrate work by reading changed files and command output. Do not trust summaries alone.
 
-Codex memories are local recall, not project truth. Do not rely on `.claude/agent-memory/*` in Codex sessions.
+## Code
 
-Durable knowledge goes in one of these places:
+- Prefer deletion and direct code over abstractions.
+- No comments, docstrings, or source headers.
+- No em dash, en dash, or typed double-hyphen substitute in authored text.
+- No try-catch unless explicitly requested. Let errors propagate.
+- Inline single-use variables and functions.
+- Keep files small, one component per file, with explicit imports.
+- Use positive control flow, default parameters, and ternaries for simple conditionals.
+- Keep views presentational and logic in hooks.
+- Import frontend types from server contracts. Never restate them.
+- Prefer TanStack Router, Query, Table, and Form before alternatives.
+- Use repository-relative paths in checked-in files.
 
-- `AGENTS.md` for concise Codex-facing project rules
-- `CLAUDE.md` for concise Claude-facing project rules
-- `.claude/agents/*.md` for specialist source instructions, then run `npm run agents:sync`
-- `plans/NN-slug.md` for work-specific contracts and logs
+## Data
 
-Selection-only generated image previews live under `/tmp`, never in the repository. Check in generated images only when they are production assets consumed by an app.
+- Fix data in ETL or a checked-in idempotent normalization or migration, never in the read path.
+- Preserve raw upstream material and make refreshes reproducible.
+- Materialize reviewable derived fields before apps read them.
+- Never fabricate public records or commit placeholder data.
+- LLM enrichment runs through local agent CLIs, not provider APIs.
+- prompts/auto-refresh.md is the scheduled refresh runbook.
 
-Context rot destroys intelligence. Every word in instructions, skills, agents, and plans should be load-bearing. Prefer deleting over adding.
+## Web runtime
 
-## Repo Layout
-
-```
-machtblick/
-  apps/
-    bundestag/        # transparency platform for Bundestag votes, members, parties
-      build/          # build-time generators: prerender paths, sitemap, feeds, JSON endpoints
-      src/views/      # presentational only, no fetching, no business logic
-      src/components/ # shared presentational pieces used across views
-      src/hooks/      # TanStack Query hooks, derived state, business logic
-      src/routes/     # TanStack Router file-based routes, thin glue
-      src/server/     # API server functions, owns exported router types
-      src/lib/        # app-local types and utilities
-  db/                 # Drizzle schema (db/schema/), migrations, normalization scripts
-  etl/                # Node importers, one folder per upstream source, plus _shared and _oneshot
-  .claude/
-    agents/           # source agent instructions
-  .codex/
-    agents/           # generated Codex specialist agents
-    config.toml       # Codex project config
-  plans/              # neutral numbered plan files (00-, 01-, ...)
-```
-
-## Dev URL
-
-Live preview of the local checkout is at `https://dev.machtblick.de`, served by a named cloudflared tunnel pointed at `vite dev`. Noindexed (`robots: noindex, nofollow` is injected when `import.meta.env.DEV`), not for sharing. Use it to verify changes on a phone or share a screenshot with the operator before deploying to `machtblick.de`. Bring-up commands and tunnel metadata are machine-specific and stay out of checked-in docs.
-
-## Code Style
-
-- **Less is more.** Prefer deleting over adding. If it is not load-bearing, remove it
-- **No comments.** No inline, no docstrings, no headers
-- **No em dashes, in any variant.** Not U+2014, not U+2013, not spaced double hyphen as a typed substitute, not anywhere. Reach for commas, parentheses, line breaks, or periods instead. Hyphens in compound words, CLI flags (`--port`), and CSS custom properties (`--color-fg`) are unrelated and fine
-- **No try-catch** unless explicitly requested. Let errors propagate
-- **No single-use variables or functions.** Inline the expression. Confirm before extracting new helpers
-- **No large files.** Split aggressively. A filename is a promise about what is inside
-- **Happy path only.** Structure code around doing the work, positive conditionals, no early returns or failure-first guards
-- **Ternary for simple conditionals**
-- **Default parameters over null checks** when possible
-- **Explicit imports, no wildcards**
-- **One component per file**
-- **Predictability over file count.** Folder describes the role, file names mechanical
-- **Views are presentational, logic lives in hooks.** A view that calls `useQuery` is a bug. Routes are thin glue composing a view with its hooks
-- **Type-safe end to end.** Frontend imports types from server. Never restate them
-- **TanStack first.** Router, Query, Table, Form, before reaching for alternatives
-- **ASCII mocks are the source of truth for layout intent.** Commit at `apps/<app>/src/views/<view>/<view>.mock.md`
-- **No absolute filesystem paths in checked-in files.** Scripts, configs, agent definitions, and docs use repo-relative paths
-- **Fix data, not symptoms.** When app logic has to compensate for messy data, the fix belongs in ETL or a checked-in DB normalization script under `db/`, not in the read path. No invisible one-off database edits: every data correction must be reproducible for the next refresh, either by updating the importer or by adding an idempotent checked-in normalization or migration script and referencing it from the plan. Derived public-data fields that humans may review, like titles, mappings, classifications, and labels, must be materialized through ETL or SQL before the app reads them
-- **LLM work in ETL goes through local agent CLIs, not provider APIs.** Prefer `codex exec`; use `claude -p --model sonnet --output-format json` only when a task explicitly needs Claude
-- **Every route must prerender.** New dynamic segment or nested tab means updating `prerenderPaths()` in `apps/<app>/build/prerenderPaths.ts` in the same change
-- **Server functions only run at build time.** A view needing data from a server fn must trigger it from a route `loader` and read with `Route.useLoaderData()`. Never call a server function from `useQuery`
+- Every route must prerender. Update apps/bundestag/build/prerenderPaths.ts with new dynamic segments or nested tabs.
+- Server functions run at build time. Routes call them from loaders and read Route.useLoaderData().
+- Server functions are read-only and validate inputs at the boundary. Upstream access and writes belong in ETL.
+- Never call a server function from useQuery.
 
 ## Design
 
-Tokens are fixed. Reach for one of these before inventing a value.
-
-| Token | Scale |
-|---|---|
-| Text size | `xxl/xl/l/m/s` = 24/22/16/14/12 |
-| Font weight | `regular` (400), `semibold` (600). Only two, ever |
-| Icon size | `s/m/l/xl` = 14/17/19/26 |
-| Spacing | `xs/s/m/l/xl` = 4/8/12/16/24 |
-| Radius | 0. Sharp corners everywhere. The `s/m/l` = 8/14/20 scale and the full pill exist only for floating controls |
-| Stroke | `s/m/l` = 1/1.5/2 px |
-| Opacity | `s/m/l` = 0.15/0.4/0.7 |
-| Palette (light, default) | `background` = white, `surface` = subtle off-white, `elevated` = slightly darker. Three shades total |
-| Accents | Fixed 16-name set + `success` + `danger`. Party colors map onto this set, never bespoke |
-
-Rules:
-
-- Hierarchy comes from size and spacing, not weight inflation
-- Color is meaning, not decoration. Accent = party / result / status
-- Borders are `text @ opacity-s`, not a new gray
-- If you reach for `padding: 10px` you are wrong
-
-UI primitives come from shadcn/ui, restricted to the curated set: Button, Input, Select, Combobox, Card, Badge, Table, Tabs, Tooltip, Skeleton. Adding anything else is a decision, not a default.
+- Web styling lives in apps/bundestag/src/styles/globals.css and apps/bundestag/src/lib/fonts.ts.
+- iOS styling lives in apps/ios/src/Core/Theme/.
+- Reuse shared components and inspect the nearest shipped view before adding a pattern.
+- Design political surfaces for at-a-glance understanding. Do not remove existing data visualizations without explicit approval.
+- Use color for party identity, results, and status, never decorative colored left-edge rails.
+- Design exploration is temporary. Implementation and rendered output replace it.
+- Verify affected themes and breakpoints in a browser or Simulator.

@@ -1,6 +1,4 @@
-import { sqliteTable, text } from 'drizzle-orm/sqlite-core'
-
-import { index } from 'drizzle-orm/sqlite-core'
+import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
 export const members = sqliteTable(
   'members',
@@ -10,6 +8,7 @@ export const members = sqliteTable(
     firstName: text('first_name').notNull(),
     lastName: text('last_name').notNull(),
     btMdbId: text('bt_mdb_id'),
+    dipPersonId: integer('dip_person_id'),
     pictureUrl: text('picture_url'),
     pictureAuthor: text('picture_author'),
     pictureLicense: text('picture_license'),

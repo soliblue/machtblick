@@ -12,7 +12,7 @@ Machtblick makes public German political data easier to understand. It combines 
 - `apps/ios`: native SwiftUI application
 - `db`: Drizzle schema, migrations, and reproducible normalization
 - `etl`: importers for Bundestag Open Data, DIP, abgeordnetenwatch.de, Wikidata, and Wikimedia Commons
-- `plans`: durable implementation records and decisions
+- `plans`: implementation records and decisions
 
 Each app is self-contained and uses shared root packages. Apps never import from another app.
 
