@@ -1,0 +1,85 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "289184",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 4,
+      "dokumentnummer": "21/6851",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "ccc570441501b09733e400a627c91ff8",
+      "aktualisiert": "2026-07-03T14:49:25+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334215",
+          "titel": "Gesetz zur Aussetzung des Anpassungsverfahrens gemäß § 11 Absatz 4 des Abgeordnetengesetzes für das Jahr 2026 (Anpassungsverfahrensaussetzungsgesetz 2026)",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "322242",
+          "titel": "Gesetz zur Streichung der automatischen Anpassung der Abgeordnetenentschädigung",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "335056",
+          "titel": "Gesetz zur Aussetzung des Anpassungsverfahrens gemäß §11 Absatz 4 des Abgeordnetengesetzes für das Jahr 2026 (Anpassungsverfahrensaussetzungsgesetz 2026)",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "335814",
+          "titel": "Gesetz zur Abweichung von dem Anpassungsverfahren gemäß § 11 Absatz 4 des Abgeordnetengesetzes für das Jahr 2026 sowie zur Änderung des Abgeordnetengesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfWIuG",
+          "titel": "Ausschuss für Wahlprüfung, Immunität und Geschäftsordnung"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/068/2106851.pdf",
+        "id": "289184",
+        "dokumentnummer": "21/6851",
+        "datum": "2026-07-03",
+        "verteildatum": "2026-07-03",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Wahlprüfung, Immunität und Geschäftsordnung"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2075",
+          "titel": "Stephan Brandner, MdB, AfD",
+          "autor_titel": "Stephan Brandner, Berichterstattung"
+        },
+        {
+          "id": "1550",
+          "titel": "Dr. Johannes Fechner, MdB, SPD",
+          "autor_titel": "Dr. Johannes Fechner, Berichterstattung"
+        },
+        {
+          "id": "1683",
+          "titel": "Dr. Hendrik Hoppenstedt, MdB, CDU/CSU",
+          "autor_titel": "Dr. Hendrik Hoppenstedt, Berichterstattung"
+        },
+        {
+          "id": "7874",
+          "titel": "Ina Latendorf, MdB, DIE LINKE",
+          "autor_titel": "Ina Latendorf, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Gesetzentwurf der Fraktionen der CDU/CSU und SPD\r\n- Drucksache 21/6330 -\r\nEntwurf eines Gesetzes zur Abweichung von dem Anpassungsverfahren gemäß § 11 Absatz 4 des Abgeordnetengesetzes für das Jahr 2026 (Anpassungsverfahrensabweichungsgesetz 2026)\r\nb) zu dem Gesetzentwurf der Abgeordneten Stephan Brandner, Fabian Jacobi, Peter Bohnhof, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 21/331 -\r\nEntwurf eines Gesetzes zur Streichung der automatischen Anpassung der Abgeordnetenentschädigung\r\nc) zu dem Gesetzentwurf der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 21/6004 -\r\nEntwurf eines Gesetzes zur Aussetzung des Anpassungsverfahrens gemäß § 11 Absatz 4 des Abgeordnetengesetzes für das Jahr 2026 (Anpassungsverfahrensaussetzungsgesetz 2026)\r\nd) zu dem Gesetzentwurf der Fraktion Die Linke\r\n- Drucksache 21/5588 -\r\nEntwurf eines Gesetzes zur Aussetzung des Anpassungsverfahrens gemäß § 11 Absatz 4 des Abgeordnetengesetzes für das Jahr 2026 (Anpassungsverfahrensaussetzungsgesetz 2026)",
+      "datum": "2026-07-03"
+    }
+  ],
+  "cursor": "AoJw0Pfak58DMURydWNrc2FjaGUtMjg5MTg0"
+}

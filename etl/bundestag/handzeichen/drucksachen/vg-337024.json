@@ -1,0 +1,40 @@
+{
+  "id": "337024",
+  "abstract": "Abgabe einer Stellungnahme zum Antrag auf einstweilige Anordnung eines Abg der Fraktion B90/GR auf Verzicht auf zweite und dritte Beratung im Deutschen Bundestag zum Gesetzentwurf der Bundesregierung zur Stabilisierung der Beitragss ätze in der gesetzlichen Krankenversicherung (BT-Drs. 21/6130) in der Sitzungswoche vom 06. Juli 2026 (28. Kalenderwoche); Bestellung einer Prozessvertretung durch die Bundestagspräsidentin",
+  "beratungsstand": "Abgeschlossen",
+  "vorgangstyp": "Verfahren vor dem Bundesverfassungsgericht",
+  "typ": "Vorgang",
+  "wahlperiode": 21,
+  "initiative": [
+    "Ausschuss für Recht und Verbraucherschutz"
+  ],
+  "aktualisiert": "2026-07-14T11:31:28+02:00",
+  "vorgang_verlinkung": [
+    {
+      "verweisung": "Gesetz",
+      "titel": "Gesetz zur Stabilisierung der Beitragssätze in der gesetzlichen Krankenversicherung (GKV-Beitragssatzstabilisierungsgesetz)",
+      "id": "334469",
+      "wahlperiode": 21,
+      "gesta": "M013"
+    }
+  ],
+  "deskriptor": [
+    {
+      "fundstelle": true,
+      "name": "Bundesverfassungsgericht",
+      "typ": "Institutionen"
+    },
+    {
+      "fundstelle": true,
+      "name": "GKV-Beitragssatzstabilisierungsgesetz",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Gerichtsverfahren",
+      "typ": "Sachbegriffe"
+    }
+  ],
+  "titel": "Beschlussempfehlung und Bericht des Ausschusses für Recht und Verbraucherschutz (6. Ausschuss) zu dem Streitverfahren vor dem Bundesverfassungsgericht 2 BvQ 47/26",
+  "datum": "2026-07-09"
+}

@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "288821",
+      "drucksachetyp": "Gesetzentwurf",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6558",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "6a1c8f5923b04426ddfaf73743cfc8d6",
+      "aktualisiert": "2026-06-18T16:31:50+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334555",
+          "titel": "Zweites Gesetz zur Änderung des Straßenverkehrsunfallstatistikgesetzes",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Verkehr"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/065/2106558.pdf",
+        "id": "288821",
+        "dokumentnummer": "21/6558",
+        "datum": "2026-06-18",
+        "verteildatum": "2026-06-18",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Gesetzentwurf",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Entwurf eines Zweiten Gesetzes zur Änderung des Straßenverkehrsunfallstatistikgesetzes",
+      "datum": "2026-06-18"
+    }
+  ],
+  "cursor": "AoJwkIuL7Z4DMURydWNrc2FjaGUtMjg4ODIx"
+}

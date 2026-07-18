@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "289302",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6970",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "9c3a0ca2b17c1a3989e8dca00507beba",
+      "aktualisiert": "2026-07-09T12:38:21+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "337045",
+          "titel": "Sammelübersicht 300 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/069/2106970.pdf",
+        "id": "289302",
+        "dokumentnummer": "21/6970",
+        "datum": "2026-07-08",
+        "verteildatum": "2026-07-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 300 zu Petitionen -",
+      "datum": "2026-07-08"
+    }
+  ],
+  "cursor": "AoJwkPHKoJ8DMURydWNrc2FjaGUtMjg5MzAy"
+}

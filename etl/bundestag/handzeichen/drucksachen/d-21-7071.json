@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "289429",
+      "drucksachetyp": "Entschließungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 27,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/7071",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "654dbd30de87ae9da932c4845c87599e",
+      "aktualisiert": "2026-07-10T09:39:29+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "337065",
+          "titel": "Entschließungsantrag zum Gesetz zur Änderung des Gebäudeenergiegesetzes, zur Änderung des Gebäude-Elektromobilitätsinfrastruktur-Gesetzes und zur Änderung weiterer Vorschriften im Wärmebereich",
+          "vorgangstyp": "Entschließungsantrag BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/070/2107071.pdf",
+        "id": "289429",
+        "dokumentnummer": "21/7071",
+        "datum": "2026-07-09",
+        "verteildatum": "2026-07-09",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Entschließungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2066",
+          "titel": "Marc Bernhard, MdB, AfD",
+          "autor_titel": "Marc Bernhard"
+        },
+        {
+          "id": "2230",
+          "titel": "Leif-Erik Holm, MdB, AfD",
+          "autor_titel": "Leif-Erik Holm"
+        }
+      ],
+      "titel": "zu der dritten Beratung des Gesetzentwurfs der Bundesregierung\r\n- Drucksachen 21/6278, 21/6565, 21/7009 -\r\nEntwurf eines Gesetzes zur Änderung des Gebäudeenergiegesetzes, zur Änderung des Gebäude-Elektromobilitätsinfrastruktur-Gesetzes und zur Änderung weiterer Vorschriften im Wärmebereich",
+      "datum": "2026-07-09"
+    }
+  ],
+  "cursor": "AoJw0LyUo58DMURydWNrc2FjaGUtMjg5NDI5"
+}

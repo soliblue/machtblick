@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "289222",
+      "drucksachetyp": "Wahlvorschlag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6888",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "4c97f354ec1f568347f4b88321f2e957",
+      "aktualisiert": "2026-07-08T16:20:37+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "336989",
+          "titel": "Wahl eines Mitglieds des Stiftungsrates der Bundesstiftung Baukultur gemäß § 7 des Gesetzes zur Errichtung einer \"Bundesstiftung Baukultur\"",
+          "vorgangstyp": "Besetzung externer Gremien durch BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/068/2106888.pdf",
+        "id": "289222",
+        "dokumentnummer": "21/6888",
+        "datum": "2026-07-07",
+        "verteildatum": "2026-07-07",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Wahlvorschlag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "titel": "Wahl eines Mitglieds des Stiftungsrates der Bundesstiftung Baukultur gemäß § 7 des Gesetzes zur Errichtung einer \"Bundesstiftung Baukultur\"",
+      "datum": "2026-07-07"
+    }
+  ],
+  "cursor": "AoJw0KWBnp8DMURydWNrc2FjaGUtMjg5MjIy"
+}

@@ -1,6 +1,7 @@
-import { writeFile, mkdir, readdir } from 'node:fs/promises'
+import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises'
 import { join } from 'node:path'
 import { createHash } from 'node:crypto'
+import { hasProtocolText } from './protocolSource.mjs'
 
 const API = 'https://search.dip.bundestag.de/api/v1'
 const KEY = process.env.DIP_API_KEY ?? 'JuUJMTh.aode9HMRTazR7NwudVElhD26LeNADLxxST'
@@ -15,10 +16,12 @@ console.log(`api lists ${list.numFound} protocols`)
 
 for (const doc of list.documents) {
   const key = doc.dokumentnummer.replace('/', '-')
-  if (existing.has(key)) continue
+  const path = join(OUT, `${key}.xml`)
+  if (existing.has(key) && hasProtocolText(await readFile(path, 'utf8'))) continue
   const xml = await fetchText(`${API}/plenarprotokoll-text/${doc.id}?apikey=${KEY}&format=xml`)
-  await writeFile(join(OUT, `${key}.xml`), xml)
-  console.log(`fetched ${doc.dokumentnummer} (${doc.datum})`)
+  if (!hasProtocolText(xml)) throw new Error(`protocol text missing for ${doc.dokumentnummer}`)
+  await writeFile(path, xml)
+  console.log(`${existing.has(key) ? 'refetched' : 'fetched'} ${doc.dokumentnummer} (${doc.datum})`)
 }
 
 async function fetchText(url) {

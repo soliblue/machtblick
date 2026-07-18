@@ -1,0 +1,54 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "287745",
+      "drucksachetyp": "Verordnung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/5875",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "925beffee121e855beb9303a2cd746fe",
+      "aktualisiert": "2026-05-11T18:28:26+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334786",
+          "titel": "Verordnung zur Umsetzung der Richtlinie (EU) 2024/1785 und zur Umsetzung des Durchführungsbeschlusses (EU) 2022/2427",
+          "vorgangstyp": "Rechtsverordnung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "BRg",
+          "titel": "Bundesregierung"
+        }
+      ],
+      "ressort": [
+        {
+          "federfuehrend": true,
+          "titel": "Bundesministerium für Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/058/2105875.pdf",
+        "id": "287745",
+        "dokumentnummer": "21/5875",
+        "datum": "2026-05-11",
+        "verteildatum": "2026-05-11",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Verordnung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Bundesregierung"
+        ]
+      },
+      "titel": "Verordnung zur Umsetzung der Richtlinie (EU) 2024/1785 und zur Umsetzung des Durchführungsbeschlusses (EU) 2022/2427",
+      "datum": "2026-05-11"
+    }
+  ],
+  "cursor": "AoJwkNaei54DMURydWNrc2FjaGUtMjg3NzQ1"
+}

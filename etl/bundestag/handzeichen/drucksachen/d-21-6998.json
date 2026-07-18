@@ -1,0 +1,75 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "289330",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 4,
+      "dokumentnummer": "21/6998",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "f810334ba7f623139e85cbdd56e34d41",
+      "aktualisiert": "2026-07-09T12:09:19+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334037",
+          "titel": "Strompreise für alle Unternehmen in Deutschland senken",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "335896",
+          "titel": "Effiziente Kapazitätsausschreibungen mit Zukunft - Für eine Versorgungssicherheit ohne teuren fossilen Lock-In",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "335892",
+          "titel": "Energieversorgung sichern - Bezahlbar, erneuerbar und dezentral",
+          "vorgangstyp": "Antrag"
+        },
+        {
+          "id": "334922",
+          "titel": "Gesetz zur Sicherung der Versorgungssicherheit Strom und zur Bereitstellung neuer Kapazitäten und zur Änderung der Besonderen Gebührenverordnung BNetzA",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfWE",
+          "titel": "Ausschuss für Wirtschaft und Energie"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/069/2106998.pdf",
+        "id": "289330",
+        "dokumentnummer": "21/6998",
+        "datum": "2026-07-08",
+        "verteildatum": "2026-07-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Wirtschaft und Energie"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2259",
+          "titel": "Steffen Kotré, MdB, AfD",
+          "autor_titel": "Steffen Kotré, Berichterstattung"
+        },
+        {
+          "id": "7458",
+          "titel": "Dr. Klaus Wiener, MdB, CDU/CSU",
+          "autor_titel": "Dr. Klaus Wiener, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksachen 21/6279, 21/6563 -\r\nEntwurf eines Gesetzes zur Sicherung der Versorgungssicherheit Strom und zur Bereitstellung neuer Kapazitäten und zur Änderung der Besonderen Gebührenverordnung BNetzA\r\nb) zu dem Antrag der Abgeordneten Bernd Schattner, Leif-Erik Holm, Steffen Kotré, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 21/5493 -\r\nStrompreise für alle Unternehmen in Deutschland senken\r\nc) zu dem Antrag der Abgeordneten Katrin Uhlig, Michael Kellner, Dr. Alaa Alhamwi, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 21/6369 -\r\nEffiziente Kapazitätsausschreibungen mit Zukunft - Für eine Versorgungssicherheit ohne teuren fossilen Lock-In\r\nd) zu dem Antrag der Abgeordneten Jörg Cezanne, Lorenz Gösta Beutin, Janine Wissler, weiterer Abgeordneter und der Fraktion Die Linke\r\n- Drucksache 21/6360 -\r\nEnergieversorgung sichern - Bezahlbar, erneuerbar und dezentral",
+      "datum": "2026-07-08"
+    }
+  ],
+  "cursor": "AoJwkPHKoJ8DMURydWNrc2FjaGUtMjg5MzMw"
+}

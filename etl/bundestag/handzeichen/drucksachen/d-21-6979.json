@@ -1,0 +1,65 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "289311",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 2,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 2,
+      "dokumentnummer": "21/6979",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "9ff871c2e9d4b9f366c0e0d92c4730ca",
+      "aktualisiert": "2026-07-09T10:22:05+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "333136",
+          "titel": "Gesetz zur Einführung eines antragslosen Kindergeldes",
+          "vorgangstyp": "Gesetzgebung"
+        },
+        {
+          "id": "335058",
+          "titel": "Gesetz zur Änderung kindergeldrechtlicher Regelungen",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "FinanzA",
+          "titel": "Finanzausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/069/2106979.pdf",
+        "id": "289311",
+        "dokumentnummer": "21/6979",
+        "datum": "2026-07-08",
+        "verteildatum": "2026-07-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Finanzausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2191",
+          "titel": "Kay Gottschalk, MdB, AfD",
+          "autor_titel": "Kay Gottschalk, Berichterstattung"
+        },
+        {
+          "id": "8057",
+          "titel": "Lukas Krieger, MdB, CDU/CSU",
+          "autor_titel": "Lukas Krieger, Berichterstattung"
+        }
+      ],
+      "titel": "a) zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksache 21/5874 -\r\nEntwurf eines Gesetzes zur Einführung eines antragslosen Kindergeldes\r\n\r\nb) zu dem Gesetzentwurf der Abgeordneten Kay Gottschalk, René Springer, Iris Nieland, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 21/6003 -\r\nEntwurf eines Gesetzes zur Änderung kindergeldrechtlicher Regelungen",
+      "datum": "2026-07-08"
+    }
+  ],
+  "cursor": "AoJwkPHKoJ8DMURydWNrc2FjaGUtMjg5MzEx"
+}

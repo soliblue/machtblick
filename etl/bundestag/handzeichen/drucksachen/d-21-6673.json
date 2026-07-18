@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "289113",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6673",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "67847c63cd999fc218637bebe7b6823a",
+      "aktualisiert": "2026-07-03T08:39:41+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "333990",
+          "titel": "Gesetz zur Ermöglichung des Verzichts auf die Amtsbezüge durch Mitglieder der Bundesregierung und Parlamentarische Staatssekretäre",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "InnenA",
+          "titel": "Innenausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/066/2106673.pdf",
+        "id": "289113",
+        "dokumentnummer": "21/6673",
+        "datum": "2026-06-24",
+        "verteildatum": "2026-07-01",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Innenausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7196",
+          "titel": "Marcel Emmerich, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Marcel Emmerich, Berichterstattung"
+        },
+        {
+          "id": "2208",
+          "titel": "Jochen Haug, MdB, AfD",
+          "autor_titel": "Jochen Haug, Berichterstattung"
+        },
+        {
+          "id": "8054",
+          "titel": "Jan Köstering, MdB, DIE LINKE",
+          "autor_titel": "Jan Köstering, Berichterstattung"
+        },
+        {
+          "id": "7981",
+          "titel": "Florian Oest, MdB, CDU/CSU",
+          "autor_titel": "Florian Oest, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Abgeordneten Stephan Brandner, Alexander Arpaschi, Marc Bernhard, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 21/5477 -\r\nEntwurf eines Gesetzes zur Ermöglichung des Verzichts auf die Amtsbezüge durch Mitglieder der Bundesregierung und Parlamentarische Staatssekretäre",
+      "datum": "2026-06-24"
+    }
+  ],
+  "cursor": "AoJwkNDE_J4DMURydWNrc2FjaGUtMjg5MTEz"
+}

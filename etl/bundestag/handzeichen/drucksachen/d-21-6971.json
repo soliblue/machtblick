@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "289303",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6971",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "9dd95eb88c09a038be1952357268859a",
+      "aktualisiert": "2026-07-09T12:39:47+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "337046",
+          "titel": "Sammelübersicht 301 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/069/2106971.pdf",
+        "id": "289303",
+        "dokumentnummer": "21/6971",
+        "datum": "2026-07-08",
+        "verteildatum": "2026-07-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 301 zu Petitionen -",
+      "datum": "2026-07-08"
+    }
+  ],
+  "cursor": "AoJwkPHKoJ8DMURydWNrc2FjaGUtMjg5MzAz"
+}

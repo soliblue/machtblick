@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "289294",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6962",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "59669fcf71daac0710af0e3d0965d68c",
+      "aktualisiert": "2026-07-09T12:22:38+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "337037",
+          "titel": "Sammelübersicht 292 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/069/2106962.pdf",
+        "id": "289294",
+        "dokumentnummer": "21/6962",
+        "datum": "2026-07-08",
+        "verteildatum": "2026-07-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 292 zu Petitionen -",
+      "datum": "2026-07-08"
+    }
+  ],
+  "cursor": "AoJwkPHKoJ8DMURydWNrc2FjaGUtMjg5Mjk0"
+}

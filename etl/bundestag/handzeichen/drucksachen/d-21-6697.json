@@ -1,0 +1,55 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "288956",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 1,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6697",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "1f2d96fc9adc1ff518550f755134795a",
+      "aktualisiert": "2026-06-25T10:58:47+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334556",
+          "titel": "Gesetz zur Ermöglichung der digitalen Fluggastabfertigung",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": true,
+          "bezeichnung": "VerkA",
+          "titel": "Verkehrsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/066/2106697.pdf",
+        "id": "288956",
+        "dokumentnummer": "21/6697",
+        "datum": "2026-06-24",
+        "verteildatum": "2026-06-24",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Verkehrsausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7916",
+          "titel": "Tarek Al-Wazir, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Tarek Al-Wazir, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Gesetzentwurf der Bundesregierung\r\n- Drucksachen 21/6129, 21/6562 -\r\nEntwurf eines Gesetzes zur Ermöglichung der digitalen Fluggastabfertigung\r\n",
+      "datum": "2026-06-24"
+    }
+  ],
+  "cursor": "AoJwkNDE_J4DMURydWNrc2FjaGUtMjg4OTU2"
+}

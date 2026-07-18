@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "288785",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 31,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6466",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "08155e567420c79074b512654d8e1e38",
+      "aktualisiert": "2026-06-17T15:15:25+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "336182",
+          "titel": "Bundesprogramm \"Kultur macht stark. Bündnisse für Bildung\" bedarfsgerecht ausbauen und die vierte Förderphase für die Jahre 2028 bis 2032 nachhaltig verstetigen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106466.pdf",
+        "id": "288785",
+        "dokumentnummer": "21/6466",
+        "datum": "2026-06-11",
+        "verteildatum": "2026-06-17",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "8100",
+          "titel": "David Schliesing, MdB, DIE LINKE",
+          "autor_titel": "David Schliesing"
+        },
+        {
+          "id": "1046",
+          "titel": "Nicole Gohlke, MdB, DIE LINKE",
+          "autor_titel": "Nicole Gohlke"
+        }
+      ],
+      "titel": "Bundesprogramm \"Kultur macht stark. Bündnisse für Bildung\" bedarfsgerecht ausbauen und die vierte Förderphase für die Jahre 2028 bis 2032 nachhaltig verstetigen",
+      "datum": "2026-06-11"
+    }
+  ],
+  "cursor": "AoJw0PqH254DMURydWNrc2FjaGUtMjg4Nzg1"
+}

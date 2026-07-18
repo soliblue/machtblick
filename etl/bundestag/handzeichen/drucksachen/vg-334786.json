@@ -1,0 +1,72 @@
+{
+  "id": "334786",
+  "vorgangstyp": "Rechtsverordnung",
+  "sachgebiet": [
+    "Umwelt"
+  ],
+  "typ": "Vorgang",
+  "wahlperiode": 21,
+  "initiative": [
+    "Bundesregierung"
+  ],
+  "aktualisiert": "2026-07-14T11:31:28+02:00",
+  "deskriptor": [
+    {
+      "fundstelle": false,
+      "name": "Großfeuerungsanlage",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Immissionsschutz",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Innerstaatliche Umsetzung von EU-Recht",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Luftreinhaltung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Lösungsmittel",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Müllverbrennung",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Rahmenbeschluss der EU",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": false,
+      "name": "Richtlinie der EU",
+      "typ": "Sachbegriffe"
+    },
+    {
+      "fundstelle": true,
+      "name": "Verordnung zur Umsetzung der Richtlinie (EU) 2024/1785 und zur Umsetzung des Durchführungsbeschlusses (EU) 2022/2427",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Verordnung über Großfeuerungs-, Gasturbinen- und Verbrennungsmotoranlagen",
+      "typ": "Rechtsmaterialien"
+    },
+    {
+      "fundstelle": false,
+      "name": "Verordnung über die Verbrennung und die Mitverbrennung von Abfällen",
+      "typ": "Rechtsmaterialien"
+    }
+  ],
+  "titel": "Verordnung zur Umsetzung der Richtlinie (EU) 2024/1785 und zur Umsetzung des Durchführungsbeschlusses (EU) 2022/2427",
+  "datum": "2026-07-09"
+}

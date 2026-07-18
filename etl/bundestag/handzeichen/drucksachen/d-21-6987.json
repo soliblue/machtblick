@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "289319",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6987",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "df9536d5742e35e0d4cb5f812dece4f3",
+      "aktualisiert": "2026-07-09T14:21:52+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334219",
+          "titel": "Das Freiwilligenprogramm \"kulturweit\" erhalten - Internationalen Freiwilligendienst sichern und stärken",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AuswA",
+          "titel": "Auswärtiger Ausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/069/2106987.pdf",
+        "id": "289319",
+        "dokumentnummer": "21/6987",
+        "datum": "2026-07-08",
+        "verteildatum": "2026-07-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Auswärtiger Ausschuss"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7905",
+          "titel": "Vinzenz Glaser, MdB, DIE LINKE",
+          "autor_titel": "Vinzenz Glaser, Berichterstattung"
+        },
+        {
+          "id": "1055",
+          "titel": "Jürgen Hardt, MdB, CDU/CSU",
+          "autor_titel": "Jürgen Hardt, Berichterstattung"
+        },
+        {
+          "id": "8190",
+          "titel": "Claudia Roth, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Claudia Roth, Berichterstattung"
+        },
+        {
+          "id": "7438",
+          "titel": "Derya Türk-Nachbaur, MdB, SPD",
+          "autor_titel": "Derya Türk-Nachbaur, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Antrag der Abgeordneten Claudia Roth, Awet Tesfaiesus, Luise Amtsberg, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 21/5517 -\r\nDas Freiwilligenprogramm \"kulturweit\" erhalten - Internationalen Freiwilligendienst sichern und stärken",
+      "datum": "2026-07-08"
+    }
+  ],
+  "cursor": "AoJwkPHKoJ8DMURydWNrc2FjaGUtMjg5MzE5"
+}

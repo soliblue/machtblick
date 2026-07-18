@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "289320",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6988",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "2afc8622cf9b4abc86f027ef0fa24aae",
+      "aktualisiert": "2026-07-09T11:32:51+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "330471",
+          "titel": "Gesetz zur Umsetzung der Richtlinie (EU) 2024/1785 zur Änderung der Richtlinie 2010/75/EU über Industrieemissionen",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfU",
+          "titel": "Ausschuss für Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/069/2106988.pdf",
+        "id": "289320",
+        "dokumentnummer": "21/6988",
+        "datum": "2026-07-08",
+        "verteildatum": "2026-07-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7956",
+          "titel": "Sascha van Beek, MdB, CDU/CSU",
+          "autor_titel": "Sascha van Beek, Berichterstattung"
+        },
+        {
+          "id": "7967",
+          "titel": "Violetta Bock, MdB, DIE LINKE",
+          "autor_titel": "Violetta Bock, Berichterstattung"
+        },
+        {
+          "id": "1349",
+          "titel": "Harald Ebner, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Harald Ebner, Berichterstattung"
+        },
+        {
+          "id": "8080",
+          "titel": "Marcel Queckemeyer, MdB, AfD",
+          "autor_titel": "Marcel Queckemeyer, Berichterstattung"
+        }
+      ],
+      "titel": "des Ausschusses für Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit (16. Ausschuss)\r\nzu dem Gesetzentwurf der Bundesregierung\r\n- Durcksache 21/4786 -\r\nEntwurf eines Gesetzes zur Umsetzung der Richtlinie (EU) 2024/1785 zur Änderung der Richtlinie 2010/75/EU über Industrieemissionen",
+      "datum": "2026-07-08"
+    }
+  ],
+  "cursor": "AoJwkPHKoJ8DMURydWNrc2FjaGUtMjg5MzIw"
+}

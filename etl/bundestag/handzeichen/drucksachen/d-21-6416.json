@@ -1,0 +1,70 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "288771",
+      "drucksachetyp": "Beschlussempfehlung und Bericht",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 5,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6416",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "28146fc9d5ec6e03792f7f922d597bf0",
+      "aktualisiert": "2026-06-16T15:35:00+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "322829",
+          "titel": "Queerfeindliche Hasskriminalität wirksam bekämpfen und die rechtliche Diskriminierung von Lesben, Schwulen, Bisexuellen, trans- und intergeschlechtlichen sowie anderen queeren Personen (LSBTIQ-Personen) beenden",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfRechtVer",
+          "titel": "Ausschuss für Recht und Verbraucherschutz"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/064/2106416.pdf",
+        "id": "288771",
+        "dokumentnummer": "21/6416",
+        "datum": "2026-06-10",
+        "verteildatum": "2026-06-16",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung und Bericht",
+        "herausgeber": "BT",
+        "urheber": [
+          "Ausschuss für Recht und Verbraucherschutz"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7305",
+          "titel": "Susanne Hierl, MdB, CDU/CSU",
+          "autor_titel": "Susanne Hierl, Berichterstattung"
+        },
+        {
+          "id": "2237",
+          "titel": "Fabian Jacobi, MdB, AfD",
+          "autor_titel": "Fabian Jacobi, Berichterstattung"
+        },
+        {
+          "id": "7365",
+          "titel": "Helge Limburg, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Helge Limburg, Berichterstattung"
+        },
+        {
+          "id": "1974",
+          "titel": "Helge Lindh, MdB, SPD",
+          "autor_titel": "Helge Lindh, Berichterstattung"
+        }
+      ],
+      "titel": "zu dem Antrag der Abgeordneten Nyke Slawik, Ulle Schauws, Helge Limburg, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 21/580 -\r\nQueerfeindliche Hasskriminalität wirksam bekämpfen und die rechtliche Diskriminierung von Lesben, Schwulen, Bisexuellen, trans- und intergeschlechtlichen sowie anderen queeren Personen (LSBTIQ-Personen) beenden",
+      "datum": "2026-06-10"
+    }
+  ],
+  "cursor": "AoJwkK--2J4DMURydWNrc2FjaGUtMjg4Nzcx"
+}

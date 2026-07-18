@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "288945",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6687",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "1a9ea39e9528ecd6e889c1167090370b",
+      "aktualisiert": "2026-06-25T11:39:05+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "336580",
+          "titel": "Sammelübersicht 287 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/066/2106687.pdf",
+        "id": "288945",
+        "dokumentnummer": "21/6687",
+        "datum": "2026-06-24",
+        "verteildatum": "2026-06-24",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 287 zu Petitionen -",
+      "datum": "2026-06-24"
+    }
+  ],
+  "cursor": "AoJwkNDE_J4DMURydWNrc2FjaGUtMjg4OTQ1"
+}

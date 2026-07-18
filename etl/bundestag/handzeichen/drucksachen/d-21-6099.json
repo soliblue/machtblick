@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "288066",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 26,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6099",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "6f946a13a9e130239a9ce7a9310598f0",
+      "aktualisiert": "2026-05-26T11:14:11+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335242",
+          "titel": "Kultur und Sport als Staatsziel im Grundgesetz verankern - Öffentliche Daseinsvorsorge sichern und Demokratie stärken",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "LINKE",
+          "titel": "Fraktion DIE LINKE"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/060/2106099.pdf",
+        "id": "288066",
+        "dokumentnummer": "21/6099",
+        "datum": "2026-05-21",
+        "verteildatum": "2026-05-22",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion DIE LINKE"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "8100",
+          "titel": "David Schliesing, MdB, DIE LINKE",
+          "autor_titel": "David Schliesing"
+        },
+        {
+          "id": "7287",
+          "titel": "Christian Görke, MdB, DIE LINKE",
+          "autor_titel": "Christian Görke"
+        }
+      ],
+      "titel": "Kultur und Sport als Staatsziel im Grundgesetz verankern - Öffentliche Daseinsvorsorge sichern und Demokratie stärken",
+      "datum": "2026-05-21"
+    }
+  ],
+  "cursor": "AoJwkMn-pJ4DMURydWNrc2FjaGUtMjg4MDY2"
+}

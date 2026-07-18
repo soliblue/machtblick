@@ -252,7 +252,7 @@ export function motionDetailHead(loaderData: MotionDetailData | undefined, param
           '@type': 'Legislation',
           name,
           legislationType: loaderData.antrag.type === 'gesetzentwurf' ? 'Gesetzentwurf' : 'Antrag',
-          inLanguage: 'de',
+          inLanguage: en ? 'en' : 'de',
           url: `${SITE_URL}${path}/`,
           ...(loaderData.antrag.drucksache ? { legislationIdentifier: loaderData.antrag.drucksache } : {}),
           ...(loaderData.antrag.introducedDate ? { legislationDate: loaderData.antrag.introducedDate, datePublished: loaderData.antrag.introducedDate } : {}),

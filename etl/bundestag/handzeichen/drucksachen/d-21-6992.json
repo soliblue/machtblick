@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "289324",
+      "drucksachetyp": "Entschließungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 9,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6992",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "d7b167880046085e336f1452ee8ce609",
+      "aktualisiert": "2026-07-09T10:43:57+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "337025",
+          "titel": "Entschließungsantrag zum Gesetz zur Einführung eines antragslosen Kindergeldes",
+          "vorgangstyp": "Entschließungsantrag BT"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/069/2106992.pdf",
+        "id": "289324",
+        "dokumentnummer": "21/6992",
+        "datum": "2026-07-08",
+        "verteildatum": "2026-07-08",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Entschließungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7941",
+          "titel": "Dr. Moritz Heuberger, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Moritz Heuberger"
+        },
+        {
+          "id": "7327",
+          "titel": "Misbah Khan, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Misbah Khan"
+        }
+      ],
+      "titel": "zu der dritten Beratung des Gesetzentwurfs der Bundesregierung\r\n- Drucksachen 21/5874, 21/6979 -\r\nEntwurf eines Gesetzes zur Einführung eines antragslosen Kindergeldes",
+      "datum": "2026-07-08"
+    }
+  ],
+  "cursor": "AoJwkPHKoJ8DMURydWNrc2FjaGUtMjg5MzI0"
+}

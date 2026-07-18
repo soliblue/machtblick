@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "287954",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 12,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6007",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "fe75abf84a3796824aae95e95edb7566",
+      "aktualisiert": "2026-05-20T11:37:51+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "335063",
+          "titel": "Jetzt für den nächsten Winter vorsorgen - Gasverbrauch wirksam reduzieren und Gasunabhängigkeit voranbringen",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "B90/GR",
+          "titel": "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/060/2106007.pdf",
+        "id": "287954",
+        "dokumentnummer": "21/6007",
+        "datum": "2026-05-19",
+        "verteildatum": "2026-05-20",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion BÜNDNIS 90/DIE GRÜNEN"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "1769",
+          "titel": "Dr. Julia Verlinden, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Julia Verlinden"
+        },
+        {
+          "id": "7908",
+          "titel": "Dr. Alaa Alhamwi, MdB, BÜNDNIS 90/DIE GRÜNEN",
+          "autor_titel": "Dr. Alaa Alhamwi"
+        }
+      ],
+      "titel": "Jetzt für den nächsten Winter vorsorgen - Gasverbrauch wirksam reduzieren und Gasunabhängigkeit voranbringen",
+      "datum": "2026-05-19"
+    }
+  ],
+  "cursor": "AoJwkLLrn54DMURydWNrc2FjaGUtMjg3OTU0"
+}

@@ -5,23 +5,27 @@ import { fileURLToPath } from 'node:url'
 import { normalizeFractionLabel } from '../../_shared/parties.ts'
 import { HONORIFICS, NAME_PARTICLES } from '../../_shared/names.ts'
 import { AW_API, AW_UA } from '../../_shared/awClient.ts'
+import { DETAIL_BALLOT_LABEL, needsXlsxRefresh, parseDetailBallots } from './detailBallots.ts'
 
 const db = new Database(fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url)))
 const TERM_ID = Number(arg('--term') ?? 21)
 const AW_PERIOD_ID = Number(arg('--aw-period') ?? 161)
 const LIST_URL = 'https://www.bundestag.de/ajax/filterlist/de/parlament/plenum/abstimmung/liste/462112-462112'
 const DETAIL_LIST_URL = 'https://www.bundestag.de/ajax/filterlist/de/parlament/plenum/abstimmung/abstimmungen/484422-484422'
+const DETAIL_ROWS_URL = 'https://www.bundestag.de/apps/na/namensliste.form'
 const SOURCE_ID = Number(arg('--source-id') ?? 0) || null
 const MEMBER_ALIASES = new Map([
+  ['inge graessle', 'grassle-ingeborg'],
+  ['isabel cademartori', 'cademartori-dujisin-isabel'],
   ['thomas max ladzinski', 'ladzinski-thomas'],
   ['daniel zerbin', 'zerbin-prof-dr-daniel'],
 ])
 let enodiaCookie = ''
 
-type LinkItem = { date: string; title: string; description: string | null; initiator: string | null; pdfUrl: string | null; xlsxUrl: string; sourceUrl: string; sourceId: number | null }
+type LinkItem = { date: string; title: string; description: string | null; initiator: string | null; pdfUrl: string | null; xlsxUrl: string | null; sourceUrl: string; sourceId: number | null }
 type DetailItem = { date: string; title: string; description: string; initiator: string | null; sourceId: number }
 type ExistingVote = { id: string; title: string; cleanTitle: string | null }
-type VoteRow = { party: string; last: string; first: string; yes: number; no: number; abstain: number; absent: number }
+type VoteRow = { party: string; state: string | null; last: string; first: string; session: number | null; number: number | null; yes: number; no: number; abstain: number; absent: number }
 type Mandate = {
   id: number
   id_external_administration: string | null
@@ -128,13 +132,28 @@ async function importVotes() {
   const links = (await fetchVoteLinks()).filter((l) => l.date >= term.startDate && (!term.endDate || l.date <= term.endDate) && (!SOURCE_ID || l.sourceId === SOURCE_ID))
   if (SOURCE_ID && links.length === 0) throw new Error(`Bundestag source id ${SOURCE_ID} not found`)
   const latestExisting = db.prepare("SELECT MAX(date) AS date FROM votes WHERE term_id = ? AND vote_type = 'namentlich'").get(TERM_ID) as { date: string | null }
+  const insertVoteDocument = db.prepare(`
+    INSERT INTO vote_documents (vote_id, label, title, url)
+    SELECT ?, ?, ?, ?
+    WHERE NOT EXISTS (
+      SELECT 1 FROM vote_documents WHERE vote_id = ? AND label = ? AND url = ?
+    )
+  `)
   let votesWritten = 0
   let memberVotesWritten = 0
   for (const link of links) {
     if (!link.sourceId && latestExisting.date && link.date <= latestExisting.date) continue
-    const existingVote = db.prepare('SELECT id FROM votes WHERE term_id = ? AND bundestag_id = ?').get(TERM_ID, link.sourceId) as { id: string } | undefined
-    if (!SOURCE_ID && existingVote && latestExisting.date && link.date <= latestExisting.date) continue
-    const rows = await fetchVoteRows(link.xlsxUrl)
+    const existingVote = db.prepare(`
+      SELECT v.id, v.inverted, EXISTS (
+        SELECT 1 FROM vote_documents vd WHERE vd.vote_id = v.id AND vd.label = 'XLSX'
+      ) AS hasXlsx, EXISTS (
+        SELECT 1 FROM vote_documents vd WHERE vd.vote_id = v.id AND vd.label = ?
+      ) AS hasDetailBallots
+      FROM votes v
+      WHERE v.term_id = ? AND v.bundestag_id = ?
+    `).get(DETAIL_BALLOT_LABEL, TERM_ID, link.sourceId) as { id: string; inverted: number; hasXlsx: number; hasDetailBallots: number } | undefined
+    if (!SOURCE_ID && existingVote && latestExisting.date && link.date <= latestExisting.date && !needsXlsxRefresh(Boolean(link.xlsxUrl), Boolean(existingVote.hasXlsx), Boolean(existingVote.hasDetailBallots))) continue
+    const rows = link.xlsxUrl ? await fetchVoteRows(link.xlsxUrl) : await fetchDetailVoteRows(link.sourceId!)
     const first = rows[0]
     if (!first) continue
     const generatedVoteId = link.sourceId ? `${link.date}-${link.sourceId}-${slugify(link.title)}` : `bt${TERM_ID}-${link.date}-${String(first.session).padStart(3, '0')}-${first.number}-${slugify(link.title)}`
@@ -148,15 +167,15 @@ async function importVotes() {
         VALUES (?, ?, ?, 'namentlich', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(id) DO UPDATE SET
           bundestag_id = COALESCE(votes.bundestag_id, excluded.bundestag_id),
-          title = excluded.title,
+          title = CASE WHEN votes.inverted = 1 THEN votes.title ELSE excluded.title END,
           clean_title = COALESCE(votes.clean_title, excluded.clean_title),
-          summary = excluded.summary,
+          summary = CASE WHEN votes.inverted = 1 THEN votes.summary ELSE excluded.summary END,
           document = excluded.document,
           initiator = COALESCE(votes.initiator, excluded.initiator),
-          result = excluded.result,
+          result = CASE WHEN votes.inverted = 1 THEN votes.result ELSE excluded.result END,
           total_members = excluded.total_members,
-          yes = excluded.yes,
-          no = excluded.no,
+          yes = CASE WHEN votes.inverted = 1 THEN votes.yes ELSE excluded.yes END,
+          no = CASE WHEN votes.inverted = 1 THEN votes.no ELSE excluded.no END,
           abstain = excluded.abstain,
           absent = excluded.absent,
           source_url = excluded.source_url,
@@ -180,29 +199,40 @@ async function importVotes() {
         link.sourceUrl,
         new Date().toISOString(),
       )
-      db.prepare('DELETE FROM vote_documents WHERE vote_id = ?').run(voteId)
-      if (link.pdfUrl) db.prepare('INSERT INTO vote_documents (vote_id, label, title, url) VALUES (?, ?, ?, ?)').run(voteId, `${TERM_ID}/${first.session}/${first.number}`, link.title, link.pdfUrl)
-      db.prepare('INSERT INTO vote_documents (vote_id, label, title, url) VALUES (?, ?, ?, ?)').run(voteId, 'XLSX', link.title, link.xlsxUrl)
-      db.prepare('DELETE FROM vote_party_summaries WHERE vote_id = ?').run(voteId)
-      for (const s of partySummaries) {
-        db.prepare(`
-          INSERT INTO vote_party_summaries (vote_id, party, position, members, yes, no, abstain, absent)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        `).run(voteId, s.party, s.position, s.members, s.yes, s.no, s.abstain, s.absent)
+      if (link.pdfUrl) insertVoteDocument.run(voteId, `${TERM_ID}/${first.session}/${first.number}`, link.title, link.pdfUrl, voteId, `${TERM_ID}/${first.session}/${first.number}`, link.pdfUrl)
+      if (link.xlsxUrl) insertVoteDocument.run(voteId, 'XLSX', link.title, link.xlsxUrl, voteId, 'XLSX', link.xlsxUrl)
+      if (!link.xlsxUrl && link.sourceId) {
+        const detailRowsUrl = `${DETAIL_ROWS_URL}?id=${link.sourceId}&ajax=true`
+        insertVoteDocument.run(voteId, DETAIL_BALLOT_LABEL, link.title, detailRowsUrl, voteId, DETAIL_BALLOT_LABEL, detailRowsUrl)
       }
-      db.prepare('DELETE FROM vote_members WHERE vote_id = ?').run(voteId)
-      for (const row of rows) {
-        const memberId = resolveMemberId(row.first, row.last)
-        db.prepare(`
-          INSERT INTO members (id, name, first_name, last_name)
-          VALUES (?, ?, ?, ?)
-          ON CONFLICT(id) DO NOTHING
-        `).run(memberId, `${row.first} ${row.last}`, row.first, row.last)
-        db.prepare(`
-          INSERT INTO vote_members (vote_id, member_id, party, state, choice)
-          VALUES (?, ?, ?, ?, ?)
-        `).run(voteId, memberId, row.party, stateByMember.get(memberId) ?? '', choice(row))
-        memberVotesWritten++
+      if (!existingVote?.inverted) {
+        for (const s of partySummaries) {
+          db.prepare(`
+            INSERT INTO vote_party_summaries (vote_id, party, position, members, yes, no, abstain, absent)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(vote_id, party) DO UPDATE SET
+              position = excluded.position,
+              members = excluded.members,
+              yes = excluded.yes,
+              no = excluded.no,
+              abstain = excluded.abstain,
+              absent = excluded.absent
+          `).run(voteId, s.party, s.position, s.members, s.yes, s.no, s.abstain, s.absent)
+        }
+        db.prepare('DELETE FROM vote_members WHERE vote_id = ?').run(voteId)
+        for (const row of rows) {
+          const memberId = resolveMemberId(row.first, row.last)
+          db.prepare(`
+            INSERT INTO members (id, name, first_name, last_name)
+            VALUES (?, ?, ?, ?)
+            ON CONFLICT(id) DO NOTHING
+          `).run(memberId, `${row.first} ${row.last}`, row.first, row.last)
+          db.prepare(`
+            INSERT INTO vote_members (vote_id, member_id, party, state, choice)
+            VALUES (?, ?, ?, ?, ?)
+          `).run(voteId, memberId, row.party, row.state ?? stateByMember.get(memberId) ?? '', choice(row))
+          memberVotesWritten++
+        }
       }
     })()
     votesWritten++
@@ -229,7 +259,8 @@ async function fetchVoteLinks() {
   const detailsByKey = new Map<string, DetailItem[]>()
   const detailsByDate = new Map<string, DetailItem[]>()
   const detailsByXlsxUrl = new Map<string, DetailItem>()
-  for (const detail of await fetchVoteDetails()) {
+  const details = await fetchVoteDetails()
+  for (const detail of details) {
     const key = detailKey(detail)
     detailsByKey.set(key, [...(detailsByKey.get(key) ?? []), detail])
     detailsByDate.set(detail.date, [...(detailsByDate.get(detail.date) ?? []), detail])
@@ -253,8 +284,21 @@ async function fetchVoteLinks() {
       const sourceUrl = sourceId ? `https://www.bundestag.de/parlament/plenum/abstimmung/abstimmung?id=${sourceId}` : xlsxUrl
       if (date && title) linksByKey.set(sourceId ? String(sourceId) : xlsxUrl, { date, title, description: detail?.description ?? null, initiator: detail?.initiator ?? null, pdfUrl, xlsxUrl, sourceUrl, sourceId })
     }
-    if (offset + 30 >= hits) return [...linksByKey.values()]
+    if (offset + 30 >= hits) break
   }
+  for (const detail of details) {
+    if (!linksByKey.has(String(detail.sourceId))) linksByKey.set(String(detail.sourceId), {
+      date: detail.date,
+      title: detail.title,
+      description: detail.description,
+      initiator: detail.initiator,
+      pdfUrl: null,
+      xlsxUrl: null,
+      sourceUrl: `https://www.bundestag.de/parlament/plenum/abstimmung/abstimmung?id=${detail.sourceId}`,
+      sourceId: detail.sourceId,
+    })
+  }
+  return [...linksByKey.values()]
 }
 
 function matchDetailByPrefix(details: DetailItem[], title: string) {
@@ -331,6 +375,7 @@ async function fetchVoteRows(url: string) {
     session: Number(r[1]),
     number: Number(r[2]),
     party: normalizeParty(String(r[3] ?? '')),
+    state: null,
     last: String(r[4] ?? '').trim(),
     first: String(r[5] ?? '').trim(),
     yes: Number(r[7] ?? 0),
@@ -340,7 +385,20 @@ async function fetchVoteRows(url: string) {
   })).filter((r) => r.term === TERM_ID && r.party && r.last && r.first)
 }
 
-function summaries(rows: Awaited<ReturnType<typeof fetchVoteRows>>) {
+async function fetchDetailVoteRows(sourceId: number): Promise<VoteRow[]> {
+  const url = `${DETAIL_ROWS_URL}?id=${sourceId}&ajax=true`
+  const res = await fetchBundestag(url)
+  if (!res.ok) throw new Error(`detail ballots ${res.status}: ${url}`)
+  const html = await res.text()
+  const rows = parseDetailBallots(html).map((row) => ({ ...row, party: normalizeParty(row.party), state: row.state || null, session: null, number: null }))
+  if (rows.length === 0 || rows.some((row) => !row.party || !row.last || !row.first)) throw new Error(`detail ballots missing: ${url}`)
+  const expected = html.match(/data-chart-values="([\d,]+)"/)?.[1]
+  const counts = countRows(rows)
+  if (expected && expected !== [counts.yes, counts.no, counts.abstain, counts.absent].join(',')) throw new Error(`detail ballot totals differ: ${url}`)
+  return rows
+}
+
+function summaries(rows: VoteRow[]) {
   const byParty = new Map<string, { party: string; members: number; yes: number; no: number; abstain: number; absent: number }>()
   for (const row of rows) {
     const s = byParty.get(row.party) ?? { party: row.party, members: 0, yes: 0, no: 0, abstain: 0, absent: 0 }
@@ -355,7 +413,7 @@ function summaries(rows: Awaited<ReturnType<typeof fetchVoteRows>>) {
   return [...byParty.values()].map((s) => ({ ...s, position: position(s) }))
 }
 
-function countRows(rows: Awaited<ReturnType<typeof fetchVoteRows>>) {
+function countRows(rows: VoteRow[]) {
   return rows.reduce((a, r) => ({
     total: a.total + 1,
     yes: a.yes + (choice(r) === 'ja' ? 1 : 0),

@@ -1,0 +1,48 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "288948",
+      "drucksachetyp": "Beschlussempfehlung",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 0,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/6690",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "5802dcd7980ab7490a75ebc9f74d9c12",
+      "aktualisiert": "2026-06-25T11:51:29+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "336583",
+          "titel": "Sammelübersicht 290 des Petitionsausschusses (2. Ausschuss) über Anträge zu Petitionen",
+          "vorgangstyp": "Petition"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "PetA",
+          "titel": "Petitionsausschuss"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/066/2106690.pdf",
+        "id": "288948",
+        "dokumentnummer": "21/6690",
+        "datum": "2026-06-24",
+        "verteildatum": "2026-06-24",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Beschlussempfehlung",
+        "herausgeber": "BT",
+        "urheber": [
+          "Petitionsausschuss"
+        ]
+      },
+      "titel": "- Sammelübersicht 290 zu Petitionen -",
+      "datum": "2026-06-24"
+    }
+  ],
+  "cursor": "AoJwkNDE_J4DMURydWNrc2FjaGUtMjg4OTQ4"
+}
