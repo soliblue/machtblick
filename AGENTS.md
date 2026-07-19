@@ -12,25 +12,14 @@ Specialists:
 
 | Agent | Owns |
 |---|---|
-| designer | ASCII mocks, IA |
-| plumber | ETL, `db/schema/` |
+| plumber | ETL, `db/schema/`, source quirks |
 | backend | API, exported router types |
 | frontend | React + TanStack views and hooks |
-| tester | Browser verification |
-| launcher | Local dev server bring-up |
-| visibility | SEO, sharing previews, crawler and AI assistant discoverability |
-| renamer | Conversation names |
-| archiver | Conversation archive and unarchive actions |
-| deployer | Cloudflare deploys only when explicitly asked |
-| scribe | Git commits |
+| tester | Browser verification before deploys that change user-visible behavior |
+| deployer | Cloudflare deploys, pre-deploy visibility checks; only when explicitly asked |
+| designer | Summoned for redesign rounds; throwaway sketches, never standing docs |
 
 Every change starts with a plan in `plans/NN-slug.md`, small or big. The plan is the durable channel between sessions and subagents, so it carries the goal, status, shared contracts, open questions, and an append-only log per agent.
-
-## Conversation Names and Archives
-
-Lead should call `renamer` after the first substantive user message, after about the fifth user message, and whenever the user asks if the current name still fits. Renamer considers what the conversation was really about and uses one emoji plus up to four words. Clarity beats extreme brevity.
-
-Lead may call `archiver` only when the user asks to archive or unarchive a conversation, or when lead gives explicit target thread ids for completed spawned threads. Archiver requires target thread ids and must not guess from recency. Archiver must not archive the active root thread unless the user explicitly asks.
 
 ## Memory and Context
 
@@ -91,7 +80,7 @@ Live preview of the local checkout is at `https://dev.machtblick.de`, served by 
 - **Views are presentational, logic lives in hooks.** A view that calls `useQuery` is a bug. Routes are thin glue composing a view with its hooks
 - **Type-safe end to end.** Frontend imports types from server. Never restate them
 - **TanStack first.** Router, Query, Table, Form, before reaching for alternatives
-- **ASCII mocks are the source of truth for layout intent.** Commit at `apps/<app>/src/views/<view>/<view>.mock.md`
+- **Design truth lives in CLAUDE.md's Design section.** ASCII sketches are design-time scaffolding, deleted when the view ships. No standing .mock.md files
 - **No absolute filesystem paths in checked-in files.** Scripts, configs, agent definitions, and docs use repo-relative paths
 - **Fix data, not symptoms.** When app logic has to compensate for messy data, the fix belongs in ETL or a checked-in DB normalization script under `db/`, not in the read path. No invisible one-off database edits: every data correction must be reproducible for the next refresh, either by updating the importer or by adding an idempotent checked-in normalization or migration script and referencing it from the plan. Derived public-data fields that humans may review, like titles, mappings, classifications, and labels, must be materialized through ETL or SQL before the app reads them
 - **LLM work in ETL goes through local agent CLIs, not provider APIs.** Prefer `codex exec`; use `claude -p --model sonnet --output-format json` only when a task explicitly needs Claude

@@ -585,6 +585,8 @@ Quarterly is fine. Term metadata only changes when a new Bundestag constitutes; 
 
 ## DIP Anträge & Gesetzentwürfe: data notes
 
+- Rate limiting: the DIP API (Enodia gateway) returns HTML rate-limit pages instead of JSON 429s when quota is exceeded. Detect non-JSON responses and back off long; do not parse the HTML as data.
+
 Upstream: DIP search API (`https://search.dip.bundestag.de/api/v1/`). **Two vorgangstypen:** `Antrag` and **`Gesetzgebung`**, note: the bill vorgangstyp is `Gesetzgebung`, NOT `Gesetzentwurf`. `Gesetzentwurf` is the *position-step* name (the introducing Drucksache on a Gesetzgebung-vorgang). The plan and the schema enum use `gesetzentwurf` as the slug because that reads cleanly, but DIP queries must filter `f.vorgangstyp=Gesetzgebung`. Full spike findings, picker rules and the 20-vote audit live in `plans/26-antraege.md`. Anfragen (Kleine/Große Anfrage, Schriftliche Frage) and their answer-text ETL were removed in plan 84 / migration `0027_remove_anfragen.sql`; git history has the code, `plans/06-anfragen.md` the spike findings.
 
 ### Migration drift workaround

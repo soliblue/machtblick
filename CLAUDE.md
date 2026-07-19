@@ -26,7 +26,7 @@ machtblick/
 
 ## Dev URL
 
-Live preview of the local checkout is at `https://dev.machtblick.de`, served by a named cloudflared tunnel pointed at `vite dev`. Noindexed (`robots: noindex, nofollow` is injected when `import.meta.env.DEV`), not for sharing. Use it to verify changes on a phone or share a screenshot with the operator before deploying to `machtblick.de`. Bring-up commands and tunnel metadata live in `lead`'s agent memory, not here, because they are machine-specific.
+Live preview of the local checkout is at `https://dev.machtblick.de`, served by a named cloudflared tunnel pointed at `vite dev`. Noindexed (`robots: noindex, nofollow` is injected when `import.meta.env.DEV`), not for sharing. Use it to verify changes on a phone or share a screenshot with the operator before deploying to `machtblick.de`. Bring-up after a reboot: `npx vite dev --port 5174 --host` in `apps/bundestag`, and `cloudflared tunnel --config ~/.cloudflared/machtblick-dev.yml run` (named tunnel `machtblick-dev`; a 530/1033 on the public URL means the daemon is down, just rerun it).
 
 ## Code Style
 
@@ -45,7 +45,7 @@ Live preview of the local checkout is at `https://dev.machtblick.de`, served by 
 - **Views are presentational; logic lives in hooks.** A view that calls `useQuery` is a bug. Routes are thin glue composing a view with its hooks
 - **Type-safe end to end.** Frontend imports types from server; never restate them
 - **TanStack first.** Router, Query, Table, Form, before reaching for alternatives
-- **ASCII mocks are the source of truth for layout intent.** Commit at `apps/<app>/src/views/<view>/<view>.mock.md`
+- **Design truth lives in this file's Design section.** ASCII sketches are design-time scaffolding, made during a redesign, deleted when the view ships. No standing .mock.md files
 - **No absolute filesystem paths in checked-in files.** Scripts, configs, agent definitions, and docs use repo-relative paths so the project works for anyone who clones it
 - **Fix data, not symptoms.** When app logic has to compensate for messy data (server-side flips, regex fallbacks, "if X then invert Y"), the fix belongs in ETL or a one-shot DB normalization script under `db/`, not in the read path. Derived public-data fields that humans may review, like titles, mappings, classifications, and labels, must be materialized through ETL or SQL before the app reads them. Document the quirk inline in `.claude/agents/plumber.md` (per-source section) so it doesn't get rediscovered. Hacks in app code rot; clean data scales.
 - **LLM work in ETL goes through local agent CLIs, not provider APIs.** Prefer `codex exec` because Codex credits are plentiful; use `claude -p --model sonnet --output-format json` only when a task explicitly needs Claude. For enrichment steps that need a model (title simplification, classification, summarization, parsing fallbacks), shell out with the prompt on stdin and parse strict JSON from stdout or an output file. Loop locally with concurrency control; no SDK, no API keys in code.
@@ -69,7 +69,7 @@ Tokens are fixed. Reach for one of these before inventing a value.
 | Palette (light, default) | `background` = white, `surface` = subtle off-white, `elevated` = slightly darker. Three shades total |
 | Accents | Fixed 16-name set + `success` + `danger`. Party colors map onto this set, never bespoke |
 
-The card language, settled in plan 102 on `/votes/` (reference mock `apps/bundestag/src/views/votesList/votesList.mock.md`); every remaining view converges on it:
+The card language, settled in plan 102 on `/votes/`; every remaining view converges on it:
 
 - Cards are white (`background`) with a 1px `text @ opacity-s` border, no shadow (user removed all card shadows 2026-07-05; shadows only on true overlays like the Reader sheet), radius 0, padding `l`
 - Verdict/status rides the top edge: 3px top border in the status color, a small semibold uppercase white chip in the same color straddling it, centered. Text always straight, never rotated
@@ -94,24 +94,17 @@ UI primitives come from shadcn/ui, restricted to the curated set: Button, Input,
 
 ## Team
 
-`lead` is the default session persona. Specialists dispatched via the Agent tool.
+The main session orchestrates: it holds the full picture, delegates execution to specialists via the Agent tool (briefing each like a smart colleague with goal, constraints, exact paths, and the plan file to read and log to), verifies their work by reading the actual files, and integrates. Specialists share no context with each other; plan files are the only durable channel between sessions and subagents, carrying goal, status, shared contracts, open questions, and an append-only log per agent. Every change starts with a plan in `plans/NN-slug.md`, small or big.
 
 | Agent | Owns |
 |----------|---------|
-| designer | ASCII mocks, IA |
-| plumber  | ETL, `db/schema/` |
+| plumber  | ETL, `db/schema/`, source quirks |
 | backend  | API, exported router types |
 | frontend | React + TanStack views and hooks |
-| tester | Browser verification |
-| launcher | Local dev server bring-up |
-| visibility | SEO, sharing previews, crawler and AI assistant discoverability |
-| renamer | Conversation names |
-| archiver | Conversation archive and unarchive actions |
-| deployer | Cloudflare deploys only when explicitly asked |
-| scribe | Git commits |
+| tester | Browser verification before deploys that change user-visible behavior |
+| deployer | Cloudflare deploys, pre-deploy visibility checks; only when explicitly asked |
+| designer | Summoned for redesign rounds; throwaway sketches, never standing docs |
 
-Every change starts with a plan in `plans/NN-slug.md`, small or big. The plan is the only durable channel between sessions and subagents, so it carries the goal, status, shared contracts, open questions, and an append-only log per agent.
+## Commits
 
-Conversation names should stay glanceable. Lead should call `renamer` after the first substantive user message, after about the fifth user message, and whenever the user asks if the current name still fits. Renamer considers what the conversation was really about and uses one emoji plus up to four words. Clarity beats extreme brevity.
-
-Lead may call `archiver` only when the user asks to archive or unarchive a conversation, or when lead gives explicit target thread ids for completed spawned threads. Archiver requires target thread ids and must not guess from recency. Archiver must not archive the active root thread unless the user explicitly asks.
+Conventional Commits: type(scope): imperative subject under 72 chars, no trailing period, no em dashes. Scope is the app or area (`feat(bundestag):`, `chore(db):`). Body only when the why is not obvious from the diff. Stage with explicit paths, never `git add -A`. One logical change per commit; a plan under `plans/` must cover the work. Commit and push only when the operator asks.

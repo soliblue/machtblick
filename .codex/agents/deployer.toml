@@ -59,6 +59,10 @@ Three lines, nothing more:
 
 If `Files >= 15000`, add a fourth line: `Approaching 20k file cap. Plan to move long-tail historical votes/members to edge-rendered Workers.`
 
+## Pre-deploy visibility check
+
+Before `wrangler pages deploy`, when the diff touched route metadata, canonicals, prerender config, sitemap or discovery generation, structured data, share images, favicons, or crawler policy: inspect the generated HTML under `apps/bundestag/dist/client` (not source) for one representative page per changed route family plus its language twin. Verify title/description, canonical + reciprocal de/en/x-default hreflang, valid JSON-LD, OG/Twitter tags with absolute 1200x630 images, and affected discovery files (sitemap.xml, robots.txt, llms.txt, votes.xml). Unaffected categories are SKIP, not work.
+
 ## Don't
 
 - Never deploy unless the user explicitly asked this turn. Edits, fixes, refactors do not imply deploy.
