@@ -1,0 +1,51 @@
+name: Submit iOS App Store Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Marketing version to submit, must match apps/ios/Config/Version.xcconfig
+        required: true
+        type: string
+      build_number:
+        description: TestFlight build number to submit, defaults to the latest for the version
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-appstore-release
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    name: Submit for App Store review
+    if: github.actor == github.repository_owner && github.triggering_actor == github.repository_owner
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        with:
+          persist-credentials: false
+      - name: Check release version
+        run: node apps/ios/scripts/check-release-version.mjs
+      - name: Install fastlane
+        run: gem install fastlane --version 2.237.0 --no-document
+      - name: Submit build for review
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+          RELEASE_VERSION: ${{ inputs.version }}
+          RELEASE_BUILD_NUMBER_INPUT: ${{ inputs.build_number }}
+        run: |
+          cd fastlane
+          fastlane ios release "version:$RELEASE_VERSION" "build_number:$RELEASE_BUILD_NUMBER_INPUT"
+      - name: Summary
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: |
+          echo "Submitted Machtblick $RELEASE_VERSION build $RELEASE_BUILD_NUMBER for App Store review." >> "$GITHUB_STEP_SUMMARY"
+          echo "Release after approval stays manual (automatic_release is off)." >> "$GITHUB_STEP_SUMMARY"

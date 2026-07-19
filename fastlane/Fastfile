@@ -73,6 +73,43 @@ platform :ios do
     )
   end
 
+  desc "Submit an existing TestFlight build for App Store review"
+  lane :release do |options|
+    UI.user_error!("Requested version #{options[:version].inspect} does not match Version.xcconfig MARKETING_VERSION #{APP_VERSION}") unless options[:version] == APP_VERSION
+
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APP_STORE_CONNECT_API_KEY_ID"],
+      issuer_id: ENV["APP_STORE_CONNECT_API_ISSUER_ID"],
+      key_content: ENV["APP_STORE_CONNECT_API_KEY_CONTENT"],
+      is_key_content_base64: false
+    )
+
+    build_number = options[:build_number].to_s
+    build_number = latest_testflight_build_number(
+      api_key: api_key,
+      app_identifier: "soli.Machtblick",
+      version: APP_VERSION
+    ).to_s if build_number.empty?
+
+    File.open(ENV["GITHUB_ENV"], "a") do |file|
+      file.puts("RELEASE_BUILD_NUMBER=#{build_number}")
+    end if ENV["CI"]
+
+    upload_to_app_store(
+      api_key: api_key,
+      app_identifier: "soli.Machtblick",
+      app_version: APP_VERSION,
+      build_number: build_number,
+      skip_binary_upload: true,
+      skip_screenshots: true,
+      skip_metadata: true,
+      force: true,
+      submit_for_review: true,
+      automatic_release: false,
+      precheck_include_in_app_purchases: false
+    )
+  end
+
   desc "Upload App Store metadata and screenshots"
   lane :app_store_assets do
     api_key = app_store_connect_api_key(
