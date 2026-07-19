@@ -15,12 +15,6 @@ struct MemberDetailTabs: View {
     @Binding var selection: MemberDetailTab
 
     var body: some View {
-        Picker("", selection: $selection) {
-            ForEach(tabs, id: \.self) { tab in
-                Text(tab.label).tag(tab)
-            }
-        }
-        .labelsHidden()
-        .pickerStyle(.segmented)
+        SegmentedTabs(tabs: tabs, label: \.label, selection: $selection)
     }
 }

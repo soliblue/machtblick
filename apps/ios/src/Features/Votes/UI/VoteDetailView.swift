@@ -84,10 +84,7 @@ struct VoteDetailView: View {
     @ViewBuilder private func picker(_ detail: VoteDetailPayload) -> some View {
         let available = tabs(detail)
         if available.count > 1 {
-            Picker("", selection: $tab) {
-                ForEach(available, id: \.self) { Text(tabLabel($0)).tag($0) }
-            }
-            .pickerStyle(.segmented)
+            SegmentedTabs(tabs: available, label: tabLabel, selection: $tab)
         }
     }
 
