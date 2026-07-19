@@ -61,13 +61,13 @@ platform :ios do
       distribute_external: true,
       groups: [ENV.fetch("TESTFLIGHT_PUBLIC_GROUP")],
       notify_external_testers: true,
-      changelog: "Neu: Machtblick startet im hellen Design. Fraktionsfarben, Abstimmungsstempel und Sitzverteilungen bleiben im dunklen Design klar erkennbar.",
+      changelog: "Neu: Abstimmungen lassen sich jetzt in der Übersicht und in Abgeordnetenprofilen durchsuchen.",
       localized_build_info: {
         "de-DE": {
-          whats_new: "Machtblick startet jetzt standardmäßig im hellen Design. Im dunklen Design bleiben Fraktionsfarben, Abstimmungsstempel und Sitzverteilungen deutlich erkennbar."
+          whats_new: "Abstimmungen lassen sich jetzt in der Übersicht und in Abgeordnetenprofilen durchsuchen."
         },
         "en-US": {
-          whats_new: "Machtblick now starts in Light appearance. Party colors, vote stamps, and seat diagrams remain clearly visible in Dark appearance."
+          whats_new: "Votes can now be searched from the main feed and member profiles."
         }
       }
     )

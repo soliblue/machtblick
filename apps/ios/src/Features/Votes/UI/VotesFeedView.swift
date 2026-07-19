@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct VotesFeedView: View {
-    let store: VotesStore
+    @Bindable var store: VotesStore
     let cache: ApiCache
     @Environment(VoteFlagsStore.self) private var flags
     @State private var showFilters = false
@@ -36,12 +36,15 @@ struct VotesFeedView: View {
                     votes: visible, cache: cache,
                     onScroll: { scroll.y = $0 },
                     onRefresh: { await store.refresh(cache: cache); refreshTick += 1 })
+                    .id(store.search)
                     .appStoreScreenshotReady()
             }
         }
         .background(ThemeColor.background)
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
+        .searchable(text: $store.search, prompt: Copy.searchVotes)
+        .searchToolbarBehavior(.minimize)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 BrandWordmark(scroll: scroll)
@@ -53,6 +56,7 @@ struct VotesFeedView: View {
                 }
                 .accessibilityLabel(Copy.filterLabel)
             }
+            DefaultToolbarItem(kind: .search, placement: .topBarTrailing)
         }
         .appDestinations(cache: cache)
         .sheet(isPresented: $showFilters) {

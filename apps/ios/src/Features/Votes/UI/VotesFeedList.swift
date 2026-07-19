@@ -26,6 +26,7 @@ struct VotesFeedList: View {
         }
         .scrollTargetBehavior(.paging)
         .scrollIndicators(.hidden)
+        .scrollDismissesKeyboard(.interactively)
         .onScrollGeometryChange(for: Double.self) { geo in
             geo.contentOffset.y
         } action: { _, value in

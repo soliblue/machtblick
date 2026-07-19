@@ -117,6 +117,7 @@
     "copy.saveVote": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Abstimmung speichern"}},"en":{"stringUnit":{"state":"translated","value":"Save vote"}}}},
     "copy.searchMembers": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Abgeordnete durchsuchen"}},"en":{"stringUnit":{"state":"translated","value":"Search members"}}}},
     "copy.searchSpeeches": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Reden durchsuchen"}},"en":{"stringUnit":{"state":"translated","value":"Search speeches"}}}},
+    "copy.searchVotes": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Abstimmungen durchsuchen"}},"en":{"stringUnit":{"state":"translated","value":"Search votes"}}}},
     "copy.seats": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Sitze"}},"en":{"stringUnit":{"state":"translated","value":"Seats"}}}},
     "copy.sexDivers": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Divers"}},"en":{"stringUnit":{"state":"translated","value":"Diverse"}}}},
     "copy.sexFemale": {"localizations":{"de":{"stringUnit":{"state":"translated","value":"Weiblich"}},"en":{"stringUnit":{"state":"translated","value":"Female"}}}},

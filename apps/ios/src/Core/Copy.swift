@@ -89,6 +89,7 @@ enum Copy {
     static var partySummariesTitle: String { localized("copy.partySummariesTitle") }
     static var debateTimeline: String { localized("copy.debateTimeline") }
     static var readFullSpeech: String { localized("copy.readFullSpeech") }
+    static var searchVotes: String { localized("copy.searchVotes") }
     static var searchSpeeches: String { localized("copy.searchSpeeches") }
     static var noSpeechesFound: String { localized("copy.noSpeechesFound") }
     static var translationFallbackNotice: String { localized("copy.translationFallbackNotice") }

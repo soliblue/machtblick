@@ -12,6 +12,7 @@ final class VotesStore {
     var topicFilter: String?
     var voteTypeFilter: String?
     var flagFilter: VoteFlagFilter = .all
+    var search = ""
 
     private var path: String { AppLocale.current.dataPath(Endpoints.votes) }
 
@@ -73,11 +74,19 @@ final class VotesStore {
     }
 
     var filtered: [VoteListItem] {
-        votes.filter { vote in
+        let query = search.trimmingCharacters(in: .whitespacesAndNewlines)
+        return votes.filter { vote in
             (proposerFilter == nil || vote.initiator == proposerFilter)
                 && (resultFilter == nil || vote.result == resultFilter)
                 && (topicFilter == nil || vote.topic == topicFilter)
                 && (voteTypeFilter == nil || vote.voteType == voteTypeFilter)
+                && (query.isEmpty
+                    || vote.cleanTitle.range(
+                        of: query, options: [.caseInsensitive, .diacriticInsensitive],
+                        locale: AppLocale.current.locale) != nil
+                    || vote.title.range(
+                        of: query, options: [.caseInsensitive, .diacriticInsensitive],
+                        locale: AppLocale.current.locale) != nil)
         }
     }
 }
