@@ -11,6 +11,16 @@ on:
         description: TestFlight build number to submit, defaults to the latest for the version
         required: false
         type: string
+      whats_new_de:
+        description: German release notes shown on the App Store
+        required: false
+        type: string
+        default: Verbesserungen und Fehlerbehebungen.
+      whats_new_en:
+        description: English release notes shown on the App Store
+        required: false
+        type: string
+        default: Improvements and bug fixes.
 
 permissions:
   contents: read
@@ -40,6 +50,8 @@ jobs:
           APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
           RELEASE_VERSION: ${{ inputs.version }}
           RELEASE_BUILD_NUMBER_INPUT: ${{ inputs.build_number }}
+          WHATS_NEW_DE: ${{ inputs.whats_new_de }}
+          WHATS_NEW_EN: ${{ inputs.whats_new_en }}
         run: |
           cd fastlane
           fastlane ios release "version:$RELEASE_VERSION" "build_number:$RELEASE_BUILD_NUMBER_INPUT"

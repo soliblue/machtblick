@@ -106,6 +106,10 @@ platform :ios do
       skip_binary_upload: true,
       skip_screenshots: true,
       skip_metadata: true,
+      release_notes: {
+        "de-DE" => ENV["WHATS_NEW_DE"].to_s.strip.empty? ? "Verbesserungen und Fehlerbehebungen." : ENV["WHATS_NEW_DE"],
+        "en-US" => ENV["WHATS_NEW_EN"].to_s.strip.empty? ? "Improvements and bug fixes." : ENV["WHATS_NEW_EN"]
+      },
       force: true,
       submit_for_review: true,
       automatic_release: false,
