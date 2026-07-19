@@ -25,6 +25,7 @@ export function MemberDetailTabs({ memberId, votes, speeches }: Props) {
     .map((tab) => ({
       to: locale === 'en' ? tab.enTo : tab.to,
       label: tab.count === 'votes' ? t.votes : t.speeches,
+      count: tab.count,
     }))
   return tabs.length > 0 ? (
     <nav
