@@ -21,6 +21,7 @@ struct MembersGridView: View {
         .background(ThemeColor.background)
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
+        .clearsQueryOnSearchDismiss($store.search)
         .searchable(text: $store.search, prompt: Copy.searchMembers)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {

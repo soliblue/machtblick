@@ -43,6 +43,7 @@ struct VotesFeedView: View {
         .background(ThemeColor.background)
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
+        .clearsQueryOnSearchDismiss($store.search)
         .searchable(text: $store.search, prompt: Copy.searchVotes)
         .searchToolbarBehavior(.minimize)
         .toolbar {
