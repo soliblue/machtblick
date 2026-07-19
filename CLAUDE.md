@@ -63,7 +63,7 @@ Tokens are fixed. Reach for one of these before inventing a value.
 | Font roles | Fraunces (`font-display`, semibold) = titles and poster numerals. Charter serif = summary prose. System sans = all other UI |
 | Icon size | `s/m/l/xl` = 14/17/19/26 |
 | Spacing | `xs/s/m/l/xl` = 4/8/12/16/24 |
-| Radius | 0. Sharp corners everywhere. The `s/m/l` = 8/14/20 scale and the full pill exist only for floating controls (e.g. the mobile filter button) |
+| Radius | `s/m/l` = 8/14/20. Surfaces (cards, tab strips, info boxes, dialogs) use `m`; the Stamp uses `s`; full pill for floating controls. Full-bleed surfaces (nav, sheets, day bands) stay square |
 | Stroke | `s/m/l` = 1/1.5/2 px |
 | Opacity | `s/m/l` = 0.15/0.4/0.7 |
 | Palette (light, default) | `background` = white, `surface` = subtle off-white, `elevated` = slightly darker. Three shades total |

@@ -14,11 +14,12 @@ export function ResultTab({ data }: Props) {
   const toggle = (c: VoteChoice) => setFilter((prev) => (prev === c ? null : c))
   return (
     <>
-      <div className="mb-l bg-surface p-m text-s">
-        {t.officialDataNotice}{' '}
+      <div className="mb-l rounded-m bg-surface p-m text-s">
+        {t.officialDataNoticePrefix}{' '}
         <a href={vote.sourceUrl ?? undefined} target="_blank" rel="noreferrer" className="underline">
-          {t.officialDataLink} ↗
+          {t.officialDataNoticeLink}
         </a>
+        .
       </div>
 
       <section className="mb-l">

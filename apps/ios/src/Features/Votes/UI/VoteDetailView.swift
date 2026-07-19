@@ -132,13 +132,13 @@ struct VoteDetailView: View {
     private func ergebnis(_ detail: VoteDetailPayload) -> some View {
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.xl) {
             if let url = HTTPClient.absolute(detail.vote.sourceUrl) {
-                Text("\(Copy.officialDataNotice) [\(Copy.officialDataLink) ↗](\(url.absoluteString))")
+                linkedText(Copy.officialDataNotice(url: url.absoluteString))
                     .font(.system(size: ThemeTokens.Text.s))
                     .foregroundStyle(ThemeColor.secondary)
                     .tint(ThemeColor.fg)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(ThemeTokens.Spacing.m)
-                    .background(ThemeColor.surface)
+                    .background(ThemeColor.surface, in: RoundedRectangle(cornerRadius: ThemeTokens.Radius.m))
             }
             VoteHemicycleView(
                 yes: detail.vote.yes, no: detail.vote.no, abstain: detail.vote.abstain,
@@ -161,7 +161,7 @@ struct VoteDetailView: View {
                 .tint(ThemeColor.fg)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(ThemeTokens.Spacing.m)
-                .background(ThemeColor.surface)
+                .background(ThemeColor.surface, in: RoundedRectangle(cornerRadius: ThemeTokens.Radius.m))
             if let detailText = detail.vote.summaryDetail {
                 MarkdownText(markdown: detailText, bodySize: ThemeTokens.Text.l)
             }
@@ -170,9 +170,13 @@ struct VoteDetailView: View {
 
     private func summaryNotice(_ detail: VoteDetailPayload) -> Text {
         if let pdf = detail.antragPdfUrl, let url = HTTPClient.absolute(pdf) {
-            return Text("\(Copy.aiSummaryNotice) [\(Copy.fullMotion)](\(url.absoluteString))")
+            return linkedText(Copy.aiSummaryNoticeLinked(url: url.absoluteString))
         }
         return Text(Copy.aiSummaryNotice)
+    }
+
+    private func linkedText(_ markdown: String) -> Text {
+        Text((try? AttributedString(markdown: markdown)) ?? AttributedString(markdown))
     }
 
     private func noticeBox(_ text: String) -> some View {
@@ -181,6 +185,6 @@ struct VoteDetailView: View {
             .foregroundStyle(ThemeColor.fg)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(ThemeTokens.Spacing.m)
-            .background(ThemeColor.surface)
+            .background(ThemeColor.surface, in: RoundedRectangle(cornerRadius: ThemeTokens.Radius.m))
     }
 }

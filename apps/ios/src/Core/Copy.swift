@@ -79,10 +79,7 @@ enum Copy {
     static var tabDetails: String { localized("copy.tabDetails") }
     static var tabSpeeches: String { localized("copy.tabSpeeches") }
     static var officialTitle: String { localized("copy.officialTitle") }
-    static var officialDataNotice: String { localized("copy.officialDataNotice") }
-    static var officialDataLink: String { localized("copy.officialDataLink") }
     static var aiSummaryNotice: String { localized("copy.aiSummaryNotice") }
-    static var fullMotion: String { localized("copy.fullMotion") }
     static var invertedNotice: String { localized("copy.invertedNotice") }
     static var petitionNotice: String { localized("copy.petitionNotice") }
 
@@ -215,6 +212,14 @@ enum Copy {
 
     static func versionLabel(version: String, build: String) -> String {
         formatted("format.versionLabel", version, build)
+    }
+
+    static func officialDataNotice(url: String) -> String {
+        formatted("format.officialDataNotice", url)
+    }
+
+    static func aiSummaryNoticeLinked(url: String) -> String {
+        formatted("format.aiSummaryNoticeLinked", url)
     }
 
     static func voteCount(_ count: Int) -> String {
