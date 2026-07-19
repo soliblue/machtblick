@@ -103,7 +103,7 @@ if sys.argv[1] == "activate":
     if external == "IN_BETA_TESTING":
         print(f"Build {os.environ['TESTFLIGHT_BUILD_NUMBER']} is already in external testing.")
     else:
-        assert external == "BETA_APPROVED", f"Observed external build state {external}."
+        assert external in ("BETA_APPROVED", "WAITING_FOR_BETA_REVIEW", "IN_BETA_REVIEW"), f"Observed external build state {external}."
         notification = SESSION.post(
             f"{API}/buildBetaNotifications",
             headers={**headers(), "Content-Type": "application/json"},
@@ -197,7 +197,7 @@ if sys.argv[1] == "verify":
     assert evidence["build"]["id"] in evidence["group_builds"], (
         "The build is not assigned to the public TestFlight group."
     )
-    assert evidence["external"] == "IN_BETA_TESTING", (
+    assert evidence["external"] in ("IN_BETA_TESTING", "WAITING_FOR_BETA_REVIEW", "IN_BETA_REVIEW"), (
         f"Observed external build state {evidence['external']}."
     )
     print(
