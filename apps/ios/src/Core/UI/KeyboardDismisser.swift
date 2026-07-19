@@ -3,6 +3,7 @@ import UIKit
 final class KeyboardDismisser: NSObject, UIGestureRecognizerDelegate {
     static let shared = KeyboardDismisser()
     private var installed = false
+    private var keyboardVisible = false
 
     func install() {
         guard !installed,
@@ -12,11 +13,20 @@ final class KeyboardDismisser: NSObject, UIGestureRecognizerDelegate {
                 .first(where: { $0.isKeyWindow })
         else { return }
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismiss))
-        tap.cancelsTouchesInView = false
         tap.delegate = self
         window.addGestureRecognizer(tap)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self, selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification, object: nil)
         installed = true
     }
+
+    @objc private func keyboardWillShow() { keyboardVisible = true }
+
+    @objc private func keyboardWillHide() { keyboardVisible = false }
 
     @objc private func dismiss() {
         UIApplication.shared.sendAction(
@@ -31,6 +41,12 @@ final class KeyboardDismisser: NSObject, UIGestureRecognizerDelegate {
             }
             view = current.superview
         }
-        return true
+        return keyboardVisible
+    }
+
+    func gestureRecognizer(
+        _ recognizer: UIGestureRecognizer, shouldBeRequiredToFailBy other: UIGestureRecognizer
+    ) -> Bool {
+        keyboardVisible
     }
 }
