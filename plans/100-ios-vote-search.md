@@ -21,6 +21,7 @@ Add native, localized vote search to the iOS vote feed and the member detail vot
 - Keep search state local to its screen or owning feature store.
 - Add German and English search copy.
 - Describe vote search in the German and English TestFlight release notes.
+- Publish the test build on the open 1.2 TestFlight train because Apple closed 1.1 after approval.
 
 ## Open Questions
 
@@ -38,3 +39,5 @@ Add native, localized vote search to the iOS vote feed and the member detail vot
 - 2026-07-19 lead: User requested commit, push, and delivery to their phone for testing.
 - 2026-07-19 lead: Updated the TestFlight release notes to describe vote search instead of the prior theme release.
 - 2026-07-19 lead: Linux-safe localization, Settings parity, More UI, release version, Python syntax, and diff checks passed. Ruby, Swift, and Xcode checks remain assigned to GitHub Actions on macOS.
+- 2026-07-19 lead: Commit df241d4 pushed to main. iOS build run 29674875252 passed the full Xcode build, bilingual Simulator smoke launches, and UI tests.
+- 2026-07-19 lead: TestFlight run 29675151528 produced a signed IPA but Apple rejected upload because the approved 1.1 train is closed. Bumped the centralized marketing version to 1.2 for the required retry.
