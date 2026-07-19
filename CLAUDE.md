@@ -1,6 +1,6 @@
 Machtblick is a collection of small apps that use public German datasets to inform the public. Each app is self-contained inside `apps/`, shares utilities via the root, never reaches into another app. Live surfaces: `https://machtblick.de` (web) and the iOS app on the App Store at `https://apps.apple.com/us/app/machtblick/id6787755187` (link this everywhere, not TestFlight; the beta phase is over).
 
-## Memory, Context Rot and Agents
+## Context Rot
 
 Context rot destroys intelligence, so every word in CLAUDE.md, skills, or agents should be load-bearing for future decisions; prefer deleting over adding. Delegate non-trivial retrieval to Explore subagents (in parallel when independent), so the main session orchestrates summaries instead of loading raw tool output. `CLAUDE.md` is public, checked-in project knowledge: anything concise and project-related belongs here so it's shared with all collaborators.
 
@@ -94,7 +94,7 @@ UI primitives come from shadcn/ui, restricted to the curated set: Button, Input,
 
 ## Team
 
-The main session orchestrates: it holds the full picture, delegates execution to specialists via the Agent tool (briefing each like a smart colleague with goal, constraints, exact paths, and the plan file to read and log to), verifies their work by reading the actual files, and integrates. Specialists share no context with each other; plan files are the only durable channel between sessions and subagents, carrying goal, status, shared contracts, open questions, and an append-only log per agent. Every change starts with a plan in `plans/NN-slug.md`, small or big.
+The main session orchestrates: it holds the full picture, delegates execution to specialists via the Agent tool (briefing each like a smart colleague with goal, constraints, exact paths, and the plan file to read and log to), verifies their work by reading the actual files, and integrates. Specialists share no context with each other; plan files are the only durable channel between sessions and subagents, carrying goal, status, shared contracts, open questions, and an append-only log per agent. Every change starts with a plan in `plans/NN-slug.md`, small or big. Codex sessions have standing permission to spawn these specialists; their `.codex/agents/*.toml` are generated from `.claude/agents/*.md` via `npm run agents:sync`, edit the source, never the toml.
 
 | Agent | Owns |
 |----------|---------|

@@ -1,6 +1,6 @@
 # Bundestag Auto Refresh
 
-You are a scheduled Codex app-server conversation for Machtblick. Your visible thread name is `🤖 YYYY-MM-DD Auto`. This run is allowed to deploy if and only if the data refresh is clean, verification passes, and visibility passes.
+You are a scheduled Codex app-server conversation for Machtblick. Your visible thread name is `🤖 YYYY-MM-DD Auto`. This run is allowed to deploy if and only if the data refresh is clean and verification passes.
 
 ## Start
 
@@ -28,9 +28,7 @@ Delegate specialist work when it materially helps:
 - `backend` owns server contracts if refreshed data exposes an API issue.
 - `frontend` owns views and hooks if refreshed data exposes a UI issue.
 - `tester` owns browser smoke checks when user-visible behavior changed.
-- `visibility` must pass before deploy.
-- `scribe` commits tracked source changes when the run plan covers them.
-- `deployer` deploys only after build and visibility pass. This prompt is the explicit scheduled deploy request.
+- `deployer` deploys only after the build and its own pre-deploy visibility check pass. This prompt is the explicit scheduled deploy request.
 
 You are responsible for integrating by reading files and command output, not by trusting subagent summaries alone.
 
@@ -105,8 +103,8 @@ Before any deploy:
 5. Run `npm run build -w @machtblick/bundestag`.
 6. Confirm generated static data for new routes exists.
 7. Run `tester` if behavior or routing changed.
-8. Run `visibility`.
-9. Use `scribe` if tracked source changes were made.
+8. `deployer` runs its pre-deploy visibility check as part of the deploy.
+9. Commit tracked source changes per CLAUDE.md's Commits section if the run plan covers them.
 10. Stop every preview or dev server started by this run.
 11. Use `deployer`.
 12. After a successful deploy, run `npm run indexnow -w @machtblick/bundestag` to ping IndexNow with the URLs whose sitemap lastmod falls inside the refresh window (defaults to 7 days; pass `-- --days N` after a longer gap). Report the ping status code.
@@ -120,5 +118,5 @@ End with a compact report:
 - Whether upstream data changed.
 - Commands run and counts before and after.
 - Subagents used.
-- Build, tester, visibility, and deploy results.
+- Build, tester, and deploy results (including the pre-deploy visibility check).
 - Any blocker or follow-up plan.

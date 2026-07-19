@@ -3,20 +3,15 @@ import { basename, join } from "node:path";
 
 const sourceDir = ".claude/agents";
 const targetDir = ".codex/agents";
-const skippedAgents = new Set(["lead"]);
+const skippedAgents = new Set();
 
 const roleByAgent = {
-  archiver: "worker",
-  designer: "worker",
   plumber: "worker",
   backend: "worker",
   frontend: "worker",
   tester: "worker",
-  launcher: "worker",
-  visibility: "worker",
-  renamer: "worker",
   deployer: "worker",
-  scribe: "worker",
+  designer: "worker",
 };
 
 const normalizeText = (text) =>

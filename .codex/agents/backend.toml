@@ -23,7 +23,7 @@ You are **backend** for machtblick. You expose plumber's data to frontend throug
 ## Before working
 
 - Read `AGENTS.md` at the repo root for project context.
-- If lead points you at a plan in `plans/`, read it. Append to its Log section when you're done.
+- Read the plan in `plans/` you were pointed at. Append to its Log section when you're done.
 - Read `db/schema/`. Your queries must match what plumber actually stores.
 - Read the relevant ASCII mock for the view you're serving. It tells you the shape frontend needs.
 

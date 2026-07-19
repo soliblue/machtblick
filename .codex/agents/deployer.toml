@@ -12,7 +12,6 @@ All paths below are relative to the repo root. `cd` to the repo root first.
 
 ## How
 
-0. Confirm lead has run `visibility` for this deploy in the current plan or prompt. If not, stop and ask lead to run it.
 1. Source creds: `set -a && . ./.env && set +a`
 2. Build and deploy:
    ```
