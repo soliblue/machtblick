@@ -98,6 +98,18 @@ platform :ios do
       file.puts("RELEASE_BUILD_NUMBER=#{build_number}")
     end if ENV["CI"]
 
+    notes = {
+      "de-DE" => ENV["WHATS_NEW_DE"].to_s.strip.empty? ? "Verbesserungen und Fehlerbehebungen." : ENV["WHATS_NEW_DE"],
+      "en-US" => ENV["WHATS_NEW_EN"].to_s.strip.empty? ? "Improvements and bug fixes." : ENV["WHATS_NEW_EN"]
+    }
+    app = Spaceship::ConnectAPI::App.find("soli.Machtblick")
+    edit_version = app.get_edit_app_store_version(includes: "appStoreVersionLocalizations")
+    UI.user_error!("No editable App Store version found for #{APP_VERSION}") unless edit_version
+    UI.user_error!("Editable version is #{edit_version.version_string}, expected #{APP_VERSION}") unless edit_version.version_string == APP_VERSION
+    edit_version.get_app_store_version_localizations.each do |localization|
+      localization.update(attributes: { whats_new: notes[localization.locale] }) if notes[localization.locale]
+    end
+
     upload_to_app_store(
       api_key: api_key,
       app_identifier: "soli.Machtblick",
@@ -106,10 +118,6 @@ platform :ios do
       skip_binary_upload: true,
       skip_screenshots: true,
       skip_metadata: true,
-      release_notes: {
-        "de-DE" => ENV["WHATS_NEW_DE"].to_s.strip.empty? ? "Verbesserungen und Fehlerbehebungen." : ENV["WHATS_NEW_DE"],
-        "en-US" => ENV["WHATS_NEW_EN"].to_s.strip.empty? ? "Improvements and bug fixes." : ENV["WHATS_NEW_EN"]
-      },
       force: true,
       submit_for_review: true,
       automatic_release: false,
