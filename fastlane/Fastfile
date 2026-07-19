@@ -71,6 +71,9 @@ platform :ios do
         }
       }
     )
+  rescue => e
+    raise unless e.message.include?("Another build is in review")
+    UI.important("Build uploaded and processed; external distribution skipped because another build holds the beta review slot. Distribute it in App Store Connect once the queue clears.")
   end
 
   desc "Submit an existing TestFlight build for App Store review"
