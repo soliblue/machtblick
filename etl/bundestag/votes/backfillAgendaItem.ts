@@ -4,6 +4,7 @@ import { join } from 'node:path'
 import { sql } from 'drizzle-orm'
 import { db } from '@machtblick/db/client'
 import { votes } from '@machtblick/db/schema'
+import { decodeHtmlEntities } from '../../_shared/entities.mjs'
 
 const rawDir = fileURLToPath(new URL('../../bundestag-reden-xml/raw/xml/', import.meta.url))
 
@@ -202,5 +203,5 @@ function normalizeText(input: string) {
 }
 
 function textFromXml(input: string) {
-  return input.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim()
+  return decodeHtmlEntities(input.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim()
 }

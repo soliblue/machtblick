@@ -2,6 +2,7 @@ import type { Vorgang, Vorgangsposition } from './types.ts'
 import { antragVorgangstypToSlug, isAntragIntroducingPosition, isGesetzentwurfPosition } from './normalize.ts'
 import { antraege } from '@machtblick/db/schema'
 import { normalizePartyList } from '../_shared/parties.ts'
+import { decodeHtmlEntities } from '../_shared/entities.mjs'
 
 type Row = typeof antraege.$inferInsert
 
@@ -22,8 +23,8 @@ export function buildAntragRow(v: Vorgang, positions: Vorgangsposition[]): Row |
   return {
     id: Number(v.id),
     type,
-    title: v.titel,
-    abstract: v.abstract ?? null,
+    title: decodeHtmlEntities(v.titel),
+    abstract: v.abstract ? decodeHtmlEntities(v.abstract) : null,
     beratungsstand: v.beratungsstand ?? null,
     wahlperiode: v.wahlperiode,
     initiativeFraktion: v.initiative ? normalizePartyList(v.initiative.join(', ')) : null,

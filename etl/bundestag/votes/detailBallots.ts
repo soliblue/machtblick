@@ -1,3 +1,5 @@
+import { decodeHtmlEntities } from '../../_shared/entities.mjs'
+
 export type DetailBallot = {
   party: string
   state: string
@@ -34,5 +36,5 @@ export function parseDetailBallots(html: string): DetailBallot[] {
 }
 
 function htmlText(html: string) {
-  return html.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'").replace(/\s+/g, ' ').trim()
+  return decodeHtmlEntities(html.replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').trim()
 }

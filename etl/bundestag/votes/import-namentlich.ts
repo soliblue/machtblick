@@ -6,6 +6,7 @@ import { normalizeFractionLabel } from '../../_shared/parties.ts'
 import { HONORIFICS, NAME_PARTICLES } from '../../_shared/names.ts'
 import { AW_API, AW_UA } from '../../_shared/awClient.ts'
 import { DETAIL_BALLOT_LABEL, needsXlsxRefresh, parseDetailBallots } from './detailBallots.ts'
+import { decodeHtmlEntities } from '../../_shared/entities.mjs'
 
 const db = new Database(fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url)))
 const TERM_ID = Number(arg('--term') ?? 21)
@@ -519,7 +520,7 @@ function month(name: string) {
 }
 
 function text(html: string) {
-  return html.replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/\s+/g, ' ').trim()
+  return decodeHtmlEntities(html.replace(/<[^>]+>/g, '')).replace(/\s+/g, ' ').trim()
 }
 
 function detailKey(item: { date: string; title: string }) {

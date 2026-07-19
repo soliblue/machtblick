@@ -1,5 +1,6 @@
 import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises'
 import { join } from 'node:path'
+import { decodeHtmlEntities } from '../../_shared/entities.mjs'
 
 const RAW = new URL('./raw/', import.meta.url).pathname
 const OUT = new URL('./blocks/', import.meta.url).pathname
@@ -10,13 +11,7 @@ const OUTCOME = /\b(?:Damit\s+)?(?:Der|Die|Das)\s+[^.?!]{1,120}?\b(?:ist|sind)\s
 function extractText(xml) {
   const m = xml.match(/<text>([\s\S]*?)<\/text>/)
   if (!m) return ''
-  return m[1]
-    .replace(/<!\[CDATA\[/g, '')
-    .replace(/\]\]>/g, '')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&amp;/g, '&')
-    .replace(/&quot;/g, '"')
+  return decodeHtmlEntities(m[1].replace(/<!\[CDATA\[/g, '').replace(/\]\]>/g, ''))
 }
 
 function extractDate(xml) {
