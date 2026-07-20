@@ -71,6 +71,7 @@ struct MembersGridView: View {
             }
             .padding(ThemeTokens.Spacing.l)
         }
+        .scrollPosition(scroll.binding)
         .scrollDismissesKeyboard(.interactively)
         .onScrollGeometryChange(for: Double.self) { geo in
                     geo.contentOffset.y

@@ -74,6 +74,7 @@ enum Copy {
     static var sourceCode: String { localized("copy.sourceCode") }
     static var shareMachtblick: String { localized("copy.shareMachtblick") }
     static var shareMessage: String { localized("copy.shareMessage") }
+    static var scrollToTop: String { localized("copy.scrollToTop") }
 
     static var tabResult: String { localized("copy.tabResult") }
     static var tabDetails: String { localized("copy.tabDetails") }

@@ -61,13 +61,13 @@ platform :ios do
       distribute_external: true,
       groups: [ENV.fetch("TESTFLIGHT_PUBLIC_GROUP")],
       notify_external_testers: true,
-      changelog: "Neu: Abstimmungen lassen sich jetzt in der Übersicht und in Abgeordnetenprofilen durchsuchen.",
+      changelog: "Neu: Ein Tipp auf das Machtblick-Logo springt zum Seitenanfang.",
       localized_build_info: {
         "de-DE": {
-          whats_new: "Abstimmungen lassen sich jetzt in der Übersicht und in Abgeordnetenprofilen durchsuchen."
+          whats_new: "Ein Tipp auf das Machtblick-Logo springt jetzt zum Seitenanfang."
         },
         "en-US": {
-          whats_new: "Votes can now be searched from the main feed and member profiles."
+          whats_new: "Tap the Machtblick logo to jump back to the top."
         }
       }
     )

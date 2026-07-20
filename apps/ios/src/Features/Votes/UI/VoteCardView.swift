@@ -79,6 +79,7 @@ struct VoteCardView: View {
             .padding(.vertical, ThemeTokens.Spacing.s)
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier("vote-\(vote.id)")
         .task {
             if needsDetail { await detailStore.load(id: vote.id, cache: cache) }
         }

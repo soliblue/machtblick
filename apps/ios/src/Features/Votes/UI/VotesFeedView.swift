@@ -33,8 +33,7 @@ struct VotesFeedView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 VotesFeedList(
-                    votes: visible, cache: cache,
-                    onScroll: { scroll.y = $0 },
+                    votes: visible, cache: cache, scroll: scroll,
                     onRefresh: { await store.refresh(cache: cache); refreshTick += 1 })
                     .id(store.search)
                     .appStoreScreenshotReady()

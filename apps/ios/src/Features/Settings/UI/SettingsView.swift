@@ -116,6 +116,7 @@ struct SettingsView: View {
                 .padding(.horizontal, ThemeTokens.Spacing.l)
                 .padding(.bottom, ThemeTokens.Spacing.l)
             }
+            .scrollPosition(scroll.binding)
             .onScrollGeometryChange(for: Double.self) { geometry in
                 geometry.contentOffset.y
             } action: { _, value in

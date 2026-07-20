@@ -156,6 +156,18 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO
 
+      - name: Exercise logo scroll to top
+        run: |
+          xcodebuild test \
+            -project apps/ios/iOS.xcodeproj \
+            -scheme Machtblick \
+            -destination "platform=iOS Simulator,id=$SMOKE_UDID" \
+            -derivedDataPath "$RUNNER_TEMP/machtblick-build" \
+            -resultBundlePath "$RUNNER_TEMP/machtblick-scroll-tests.xcresult" \
+            -only-testing:MachtblickUITests/ScrollToTopUITests/testBrandScrollsVotesToTop \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO
+
       - name: Upload smoke screenshots
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -170,6 +182,14 @@ jobs:
         with:
           name: theme-preference-xcresult
           path: ${{ runner.temp }}/machtblick-theme-tests.xcresult
+          if-no-files-found: ignore
+
+      - name: Upload scroll result
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: scroll-to-top-xcresult
+          path: ${{ runner.temp }}/machtblick-scroll-tests.xcresult
           if-no-files-found: ignore
 
       - name: Shut down smoke simulator

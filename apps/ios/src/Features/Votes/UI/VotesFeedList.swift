@@ -3,7 +3,7 @@ import SwiftUI
 struct VotesFeedList: View {
     let votes: [VoteListItem]
     let cache: ApiCache
-    var onScroll: (Double) -> Void = { _ in }
+    let scroll: ScrollPositionModel
     var onRefresh: (() async -> Void)? = nil
 
     var body: some View {
@@ -25,12 +25,13 @@ struct VotesFeedList: View {
             .scrollTargetLayout()
         }
         .scrollTargetBehavior(.paging)
+        .scrollPosition(scroll.binding)
         .scrollIndicators(.hidden)
         .scrollDismissesKeyboard(.interactively)
         .onScrollGeometryChange(for: Double.self) { geo in
             geo.contentOffset.y
         } action: { _, value in
-            onScroll(value)
+            scroll.y = value
         }
         .refreshable { await onRefresh?() }
     }
