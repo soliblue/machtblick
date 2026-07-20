@@ -127,8 +127,16 @@ requireFragments(partySurface, "PartySurface.swift", [
 ])
 requireFragments(stamp, "StampView.swift", [
   "@Environment(\\.colorScheme)",
+  ".foregroundStyle(color)",
+  "RoundedRectangle(cornerRadius: ThemeTokens.Radius.s).strokeBorder(color, lineWidth: 2.5)",
   ".blendMode(colorScheme == .dark ? .normal : .multiply)",
 ])
+if ((stamp.match(/RoundedRectangle/g) ?? []).length !== 1) {
+  failures.push("StampView.swift must keep exactly one rounded stamp border.")
+}
+if (stamp.includes("ThemeTokens.Radius.s +")) {
+  failures.push("StampView.swift must use the radius-s token without arithmetic.")
+}
 requireFragments(voteHemicycle, "VoteHemicycleView.swift", [
   "@Environment(\\.colorScheme)",
   "colorScheme == .dark ? ThemeTokens.Opacity.l : ThemeTokens.Opacity.m",

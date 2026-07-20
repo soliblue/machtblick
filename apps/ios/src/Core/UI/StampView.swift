@@ -16,11 +16,10 @@ struct StampView: View {
             .textCase(.uppercase)
             .lineLimit(1)
             .fixedSize()
-            .foregroundStyle(color.mix(with: ThemeColor.fg, by: 0.55))
+            .foregroundStyle(color)
             .padding(.horizontal, ThemeTokens.Spacing.s)
             .padding(.vertical, ThemeTokens.Spacing.xs)
             .overlay(RoundedRectangle(cornerRadius: ThemeTokens.Radius.s).strokeBorder(color, lineWidth: 2.5))
-            .overlay(RoundedRectangle(cornerRadius: ThemeTokens.Radius.s + 3).stroke(color, lineWidth: ThemeTokens.Stroke.s).padding(-3))
             .overlay {
                 Canvas { context, size in
                     var rng = StampNoise(seed: UInt64(bitPattern: Int64(label.hashValue)))

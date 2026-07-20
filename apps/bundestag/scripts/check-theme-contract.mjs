@@ -95,7 +95,14 @@ requireFragments(css, 'globals.css', [
   ":root[data-theme='dark'] .stamp-mark",
   'mix-blend-mode: normal',
 ])
-requireFragments(stamp, 'Stamp.tsx', ['stamp-mark'])
+requireFragments(stamp, 'Stamp.tsx', [
+  'stamp-mark',
+  'border: `2.5px solid ${color}`',
+  "borderRadius: 'var(--radius-s)'",
+  'color,',
+])
+if (css.includes('.stamp-mark::after')) throw new Error('globals.css must keep stamps to one border')
+if (stamp.includes('--stamp-color')) throw new Error('Stamp.tsx must not restore the second stamp border')
 requireFragments(hemicycle, 'VoteHemicycle.tsx', [
   "abstain: 'var(--vote-neutral-abstain)'",
   "absent: 'var(--vote-neutral-absent)'",

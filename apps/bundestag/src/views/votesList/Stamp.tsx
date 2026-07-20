@@ -59,8 +59,7 @@ export function Stamp({ variant, size = 's', rotated = true }: Props) {
       style={{
         border: `2.5px solid ${color}`,
         borderRadius: 'var(--radius-s)',
-        ['--stamp-color' as string]: color,
-        color: `color-mix(in srgb, ${color} 45%, var(--color-fg))`,
+        color,
         opacity,
         transform: `rotate(${rotated ? rotate : 0}deg)`,
         letterSpacing: '0.12em',

@@ -153,17 +153,7 @@
 .member-placeholder-rust { --member-placeholder-accent: var(--color-rust); }
 
 .stamp-mark {
-  position: relative;
   mix-blend-mode: multiply;
-}
-
-.stamp-mark::after {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border: 1px solid var(--stamp-color);
-  border-radius: calc(var(--radius-s) + 3px);
-  pointer-events: none;
 }
 
 :root[data-theme='dark'] .stamp-mark {
