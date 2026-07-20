@@ -6,7 +6,7 @@ Tapping the Machtblick wordmark or eyes in any root tab scrolls that tab to the 
 
 ## Status
 
-In progress.
+Implemented, tested, pushed, and uploaded as iOS 1.4. Waiting for Apple to activate external TestFlight testing.
 
 ## Contracts
 
@@ -26,3 +26,4 @@ None.
 - 2026-07-20 root: Implemented the shared button, localized accessibility label, four scroll bindings, focused UI test, CI test step, and current TestFlight notes.
 - 2026-07-20 root: First macOS build found the secondary party proposals feed call site. Added its local scroll model before rerunning the gate.
 - 2026-07-20 root: Xcode 26.2 build, language and theme smoke tests, and the focused scroll UI test passed. Apple rejected the 1.3 upload because the approved train is closed, so the centralized version moved to 1.4.
+- 2026-07-20 root: iOS 1.4 passed the full gate and uploaded successfully. The public link is live; App Store Connect is still waiting to activate the new external build.
