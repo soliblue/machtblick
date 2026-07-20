@@ -21,6 +21,11 @@ on:
         required: false
         type: string
         default: Improvements and bug fixes.
+      update_release_mode_only:
+        description: Update automatic release without resubmitting an existing review
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -53,6 +58,7 @@ jobs:
           RELEASE_VERSION: ${{ inputs.version }}
         run: python3 .github/scripts/asc_appstore.py
       - name: Submit build for review
+        if: ${{ !inputs.update_release_mode_only }}
         env:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
@@ -65,8 +71,14 @@ jobs:
           cd fastlane
           fastlane ios release "version:$RELEASE_VERSION" "build_number:$RELEASE_BUILD_NUMBER_INPUT"
       - name: Summary
+        if: ${{ !inputs.update_release_mode_only }}
         env:
           RELEASE_VERSION: ${{ inputs.version }}
         run: |
           echo "Submitted Machtblick $RELEASE_VERSION build $RELEASE_BUILD_NUMBER for App Store review." >> "$GITHUB_STEP_SUMMARY"
-          echo "Release after approval stays manual (automatic_release is off)." >> "$GITHUB_STEP_SUMMARY"
+          echo "Release after approval is automatic." >> "$GITHUB_STEP_SUMMARY"
+      - name: Release mode summary
+        if: ${{ inputs.update_release_mode_only }}
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: echo "Machtblick $RELEASE_VERSION will release automatically after approval." >> "$GITHUB_STEP_SUMMARY"

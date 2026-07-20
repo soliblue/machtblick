@@ -29,15 +29,31 @@ versions = [
     version
     for version in all_data(
         f"{API}/apps/{app[0]['id']}/appStoreVersions",
-        {"fields[appStoreVersions]": "versionString,platform,appStoreState", "limit": 200},
+        {
+            "fields[appStoreVersions]": "versionString,platform,appStoreState,releaseType",
+            "limit": 200,
+        },
     )
     if version["attributes"]["versionString"] == os.environ["RELEASE_VERSION"]
     and version["attributes"]["platform"] == "IOS"
 ]
 assert len(versions) <= 1, f"Expected at most one iOS version, found {len(versions)}."
 if versions:
-    assert versions[0]["attributes"]["appStoreState"] == "PREPARE_FOR_SUBMISSION"
-    print(f"App Store version {os.environ['RELEASE_VERSION']} is ready for submission.")
+    response = SESSION.patch(
+        f"{API}/appStoreVersions/{versions[0]['id']}",
+        headers={**headers(), "Content-Type": "application/json"},
+        json={
+            "data": {
+                "type": "appStoreVersions",
+                "id": versions[0]["id"],
+                "attributes": {"releaseType": "AFTER_APPROVAL"},
+            }
+        },
+        timeout=30,
+    )
+    response.raise_for_status()
+    assert response.json()["data"]["attributes"]["releaseType"] == "AFTER_APPROVAL"
+    print(f"App Store version {os.environ['RELEASE_VERSION']} will release automatically after approval.")
 else:
     response = SESSION.post(
         f"{API}/appStoreVersions",
@@ -48,7 +64,7 @@ else:
                 "attributes": {
                     "platform": "IOS",
                     "versionString": os.environ["RELEASE_VERSION"],
-                    "releaseType": "MANUAL",
+                    "releaseType": "AFTER_APPROVAL",
                 },
                 "relationships": {
                     "app": {"data": {"type": "apps", "id": app[0]["id"]}}
@@ -58,4 +74,4 @@ else:
         timeout=30,
     )
     response.raise_for_status()
-    print(f"Created App Store version {os.environ['RELEASE_VERSION']} with manual release.")
+    print(f"Created App Store version {os.environ['RELEASE_VERSION']} with automatic release.")

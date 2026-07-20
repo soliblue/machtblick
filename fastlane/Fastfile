@@ -120,7 +120,7 @@ platform :ios do
       skip_metadata: true,
       force: true,
       submit_for_review: true,
-      automatic_release: false,
+      automatic_release: true,
       precheck_include_in_app_purchases: false
     )
   end

@@ -24,9 +24,10 @@ if (!verifier.includes('Path("apps/ios/Config/Version.xcconfig")')) {
 if (!releaseWorkflow.includes("python3 .github/scripts/asc_appstore.py")) {
   throw new Error("App Store submission must prepare the editable release version.")
 }
-if (!appStorePreparation.includes('"releaseType": "MANUAL"')) {
-  throw new Error("App Store versions must keep release after approval manual.")
+if (!appStorePreparation.includes('"releaseType": "AFTER_APPROVAL"')) {
+  throw new Error("App Store versions must release automatically after approval.")
 }
+if (!fastfile.includes("automatic_release: true")) throw new Error("Fastlane must release automatically after approval.")
 
 for (const locale of ["de-DE", "en-US"]) {
   const subtitle = read(`fastlane/metadata/${locale}/subtitle.txt`).trim()
