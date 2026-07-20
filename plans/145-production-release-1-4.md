@@ -24,3 +24,5 @@ None.
 
 - 2026-07-20 root: Confirmed the iOS build gate passed for `5583124` and its replacement TestFlight binary uploaded successfully.
 - 2026-07-20 root: Confirmed the App Store workflow defaults to the latest TestFlight build for version 1.4 and keeps automatic release off.
+- 2026-07-20 root: App Store submission run `29769296369` resolved build 45, then failed because version 1.4 had no editable App Store version.
+- 2026-07-20 root: Added an idempotent App Store Connect preparation step that creates the missing 1.4 version with manual release before submission.

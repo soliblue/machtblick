@@ -43,6 +43,15 @@ jobs:
         run: node apps/ios/scripts/check-release-version.mjs
       - name: Install fastlane
         run: gem install fastlane --version 2.237.0 --no-document
+      - name: Install App Store dependencies
+        run: pip3 install --break-system-packages requests==2.34.2 cryptography==49.0.0
+      - name: Prepare App Store version
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+          RELEASE_VERSION: ${{ inputs.version }}
+        run: python3 .github/scripts/asc_appstore.py
       - name: Submit build for review
         env:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}

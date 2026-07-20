@@ -6,6 +6,8 @@ const version = config.match(/^MARKETING_VERSION = ([0-9]+(?:\.[0-9]+){1,2})$/m)
 const project = read("apps/ios/iOS.xcodeproj/project.pbxproj")
 const fastfile = read("fastlane/Fastfile")
 const verifier = read(".github/scripts/asc_testflight.py")
+const releaseWorkflow = read(".github/workflows/ios-appstore-release.yml")
+const appStorePreparation = read(".github/scripts/asc_appstore.py")
 
 if (!version) throw new Error("Version.xcconfig must define one numeric MARKETING_VERSION.")
 if (project.includes("MARKETING_VERSION =")) throw new Error("The Xcode project must inherit MARKETING_VERSION from Version.xcconfig.")
@@ -18,6 +20,12 @@ if (!fastfile.includes('File.expand_path("../apps/ios/Config/Version.xcconfig", 
 if (!fastfile.includes("app_version: APP_VERSION")) throw new Error("App Store assets must use APP_VERSION.")
 if (!verifier.includes('Path("apps/ios/Config/Version.xcconfig")')) {
   throw new Error("TestFlight verification must read the centralized marketing version.")
+}
+if (!releaseWorkflow.includes("python3 .github/scripts/asc_appstore.py")) {
+  throw new Error("App Store submission must prepare the editable release version.")
+}
+if (!appStorePreparation.includes('"releaseType": "MANUAL"')) {
+  throw new Error("App Store versions must keep release after approval manual.")
 }
 
 for (const locale of ["de-DE", "en-US"]) {
