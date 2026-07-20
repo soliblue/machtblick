@@ -5,6 +5,7 @@ struct PartyProposalsFeed: View {
     let voteIds: [String]
     let cache: ApiCache
     @State private var store = VotesStore()
+    @State private var scroll = ScrollPositionModel()
 
     var body: some View {
         Group {
@@ -17,7 +18,7 @@ struct PartyProposalsFeed: View {
                     .foregroundStyle(ThemeColor.secondary)
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
-                VotesFeedList(votes: feed, cache: cache)
+                VotesFeedList(votes: feed, cache: cache, scroll: scroll)
             }
         }
         .background(ThemeColor.background)

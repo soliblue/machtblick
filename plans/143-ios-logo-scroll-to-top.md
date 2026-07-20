@@ -24,3 +24,4 @@ None.
 - 2026-07-20 root: Located the shared wordmark and four root scroll views. Selected SwiftUI `ScrollPosition` for native scroll-to-top behavior.
 - 2026-07-20 explore: Confirmed the shared model is the smallest coherent iOS 26 implementation and identified the TestFlight workflow.
 - 2026-07-20 root: Implemented the shared button, localized accessibility label, four scroll bindings, focused UI test, CI test step, and current TestFlight notes.
+- 2026-07-20 root: First macOS build found the secondary party proposals feed call site. Added its local scroll model before rerunning the gate.
