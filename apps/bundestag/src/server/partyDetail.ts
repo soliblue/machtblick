@@ -105,7 +105,7 @@ export const getParty = createServerFn({ method: 'GET' })
     const summaryTranslations = voteTranslationMap(summaries.map((s) => s.voteId), locale)
     const voteRows: PartyVoteRow[] = summaries.map((s) => {
       const t = summaryTranslations.get(s.voteId)
-      const titled = requireVoteCleanTitle({ id: s.voteId, title: s.title, cleanTitle: t?.cleanTitle ?? s.cleanTitle })
+      const titled = requireVoteCleanTitle({ id: s.voteId, title: t?.title ?? t?.cleanTitle ?? s.title, cleanTitle: t?.cleanTitle ?? s.cleanTitle })
       const yes = s.yes ?? 0
       const no = s.no ?? 0
       const abstain = s.abstain ?? 0
@@ -181,7 +181,7 @@ export const getParty = createServerFn({ method: 'GET' })
     for (const v of allVotes) {
       if (v.initiator !== party) continue
       const t = proposalTranslations.get(v.id)
-      const titled = requireVoteCleanTitle({ id: v.id, title: v.title, cleanTitle: t?.cleanTitle ?? v.cleanTitle })
+      const titled = requireVoteCleanTitle({ id: v.id, title: t?.title ?? t?.cleanTitle ?? v.title, cleanTitle: t?.cleanTitle ?? v.cleanTitle })
       proposalsTotal += 1
       if (v.result === 'angenommen') proposalsAccepted += 1
       proposals.push({ voteId: v.id, date: v.date, title: titled.title, cleanTitle: titled.cleanTitle, result: v.result })

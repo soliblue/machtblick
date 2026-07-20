@@ -19,6 +19,7 @@ export function publishableAntragIds(db: Database.Database, locale: Locale = 'de
     INNER JOIN antrag_descriptions ad ON ad.antrag_id = a.id
     ${locale === 'en' ? "INNER JOIN antrag_description_translations t ON t.antrag_id = a.id AND t.locale = 'en'" : ''}
     WHERE a.wahlperiode = ?
+      AND (a.abstract IS NOT NULL OR ad.summary_simplified IS NOT NULL OR a.drucksache_pdf_url IS NOT NULL)
     ORDER BY a.id
   `).all(CURRENT_TERM) as Array<{ id: number }>
   return rows.map((r) => r.id)

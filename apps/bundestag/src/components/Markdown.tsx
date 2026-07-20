@@ -5,7 +5,7 @@ type Props = { children: string; serif?: boolean }
 
 export function Markdown({ children, serif = false }: Props) {
   const bodyStyle = serif ? { fontFamily: SERIF } : undefined
-  const bodyClass = serif ? 'text-m leading-[1.45]' : 'text-m'
+  const bodyClass = serif ? 'text-l leading-[1.45]' : 'text-m'
   return (
     <div className="flex flex-col gap-m text-m">
       <ReactMarkdown

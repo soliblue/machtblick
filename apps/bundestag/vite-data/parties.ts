@@ -127,10 +127,11 @@ export function fullParty(db: Database.Database, slug: string, locale: Locale, t
   const proposals: Array<{ voteId: string; date: string; title: string; cleanTitle: string | null; result: 'angenommen' | 'abgelehnt' }> = []
   for (const v of allVotes) {
     if (v.initiator !== party) continue
+    const translatedVote = voteTranslation(translations, locale, v.id)
     const titled = requireVoteCleanTitle({
       id: v.id,
-      title: v.title,
-      cleanTitle: voteTranslation(translations, locale, v.id)?.clean_title ?? v.clean_title,
+      title: translatedVote?.title ?? translatedVote?.clean_title ?? v.title,
+      cleanTitle: translatedVote?.clean_title ?? v.clean_title,
     })
     proposalsTotal += 1
     if (v.result === 'angenommen') proposalsAccepted += 1

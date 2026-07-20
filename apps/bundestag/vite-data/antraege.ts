@@ -156,10 +156,11 @@ export function fullAntrag(
       portraitUrl: resolvePictureUrl(s.member_id, s.picture_url),
     })),
     linkedVotes: linkedVotes.map((v) => {
+      const translatedVote = voteTranslation(translations, locale, v.id)
       const titled = requireVoteCleanTitle({
         id: v.id,
-        title: v.title,
-        cleanTitle: voteTranslation(translations, locale, v.id)?.clean_title ?? v.clean_title,
+        title: translatedVote?.title ?? translatedVote?.clean_title ?? v.title,
+        cleanTitle: translatedVote?.clean_title ?? v.clean_title,
       })
       return {
         id: v.id,

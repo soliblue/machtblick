@@ -226,7 +226,7 @@ export const getAntrag = createServerFn({ method: 'GET' })
     }
     const linkedVotes: AntragLinkedVote[] = voteRows.map((v) => {
       const t = translations.get(v.id)
-      const titled = requireVoteCleanTitle({ id: v.id, title: v.title, cleanTitle: t?.cleanTitle ?? v.cleanTitle })
+      const titled = requireVoteCleanTitle({ id: v.id, title: t?.title ?? t?.cleanTitle ?? v.title, cleanTitle: t?.cleanTitle ?? v.cleanTitle })
       const summaries = summariesByVote.get(v.id) ?? []
       const counts = v.voteType === 'namentlich'
         ? { yes: v.yes ?? 0, no: v.no ?? 0, abstain: v.abstain ?? 0, absent: v.absent ?? 0, totalMembers: v.totalMembers ?? 0 }

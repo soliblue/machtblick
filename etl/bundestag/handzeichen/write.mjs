@@ -25,7 +25,9 @@ let skipped = 0
 for (const f of files) {
   const data = JSON.parse(await readFile(join(IN, f), 'utf8'))
   if (!data.votes?.length) continue
-  const termId = Number(String(data.number).match(/^\d+/)?.[0])
+  const [term, session] = String(data.number).split('/')
+  const termId = Number(term)
+  const sourceUrl = `https://dserver.bundestag.de/btp/${term}/${term}${session.padStart(3, '0')}.pdf`
   const activeParties = new Set(db.select({ party: memberAffiliations.party }).from(memberAffiliations).where(and(
     eq(memberAffiliations.termId, termId),
     lte(memberAffiliations.validFrom, data.date),
@@ -33,7 +35,7 @@ for (const f of files) {
   )).all().map((row) => row.party))
   for (const v of data.votes) {
     if (v.vote_type === 'namentlich') { skipped++; continue }
-    const id = `pp${data.number.replace('/', '-')}-${v.index}-${slugify(v.title)}`
+    const id = v.id ?? `pp${data.number.replace('/', '-')}-${v.index}-${slugify(v.title)}`
     const exists = db.select({ id: votes.id, inverted: votes.inverted }).from(votes).where(eq(votes.id, id)).get()
     const isPetitionBundle = /^Sammelübersicht\s+\d+\s+zu\s+Petitionen/i.test(v.title) || /^Petitionsausschuss\s+Sammelübersicht\s+\d+/i.test(v.title)
     const all = new Set([...(v.ja ?? []), ...(v.nein ?? []), ...(v.enth ?? [])])
@@ -48,7 +50,7 @@ for (const f of files) {
           isPetitionBundle,
           document: (v.drucksache ?? []).join(', ') || null,
           result: v.outcome === 'unklar' ? 'angenommen' : v.outcome,
-          sourceUrl: `https://search.dip.bundestag.de/api/v1/plenarprotokoll/${data.number}`,
+          sourceUrl,
           fetchedAt: new Date().toISOString(),
         }).run()
       } else {
@@ -58,7 +60,7 @@ for (const f of files) {
           title: v.title,
           isPetitionBundle,
           document: (v.drucksache ?? []).join(', ') || null,
-          sourceUrl: `https://search.dip.bundestag.de/api/v1/plenarprotokoll/${data.number}`,
+          sourceUrl,
           fetchedAt: new Date().toISOString(),
           ...(exists.inverted ? {} : { result: v.outcome === 'unklar' ? 'angenommen' : v.outcome }),
         }).where(eq(votes.id, id)).run()

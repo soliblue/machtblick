@@ -124,7 +124,7 @@ export function leanVotes(db: Database.Database, locale: Locale, data: VoteBuild
   }
   return rows.map((v) => {
     const translated = voteTranslation(data.translations, locale, v.id)
-    const titled = requireVoteCleanTitle({ id: v.id, title: v.title, cleanTitle: translated?.clean_title ?? v.clean_title })
+    const titled = requireVoteCleanTitle({ id: v.id, title: translated?.title ?? translated?.clean_title ?? v.title, cleanTitle: translated?.clean_title ?? v.clean_title })
     const partySummaries = (byVote.get(v.id) ?? []).map((s) => ({
       party: s.party, position: s.position, members: s.members ?? 0, yes: s.yes ?? 0, no: s.no ?? 0, abstain: s.abstain ?? 0, absent: s.absent ?? 0,
     }))
@@ -174,7 +174,7 @@ export function fullVote(db: Database.Database, id: string, locale: Locale, data
       })()
   const vote = requireVoteCleanTitle({
     id: voteRow.id, bundestagId: null as number | null, voteType: voteRow.vote_type, date: voteRow.date,
-    agendaItem: voteRow.agenda_item, title: voteRow.title, cleanTitle: translatedVote?.clean_title ?? voteRow.clean_title,
+    agendaItem: voteRow.agenda_item, title: translatedVote?.title ?? translatedVote?.clean_title ?? voteRow.title, cleanTitle: translatedVote?.clean_title ?? voteRow.clean_title,
     topic: translatedVote?.topic ?? voteRow.topic,
     subject: translatedVote?.subject ?? voteRow.subject,
     summary: translatedVote?.summary ?? voteRow.summary,

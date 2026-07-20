@@ -143,7 +143,7 @@ export function VoteDetail({ data, activeTab, onTabChange, isSaved, isSeen, onTo
 
       {(vote.summarySimplified || vote.summary) && (
         <div className="mb-l">
-          <p className="text-m" style={{ fontFamily: SERIF }}>
+          <p className="text-l leading-[1.45]" style={{ fontFamily: SERIF }}>
             {vote.summarySimplified ? <MarkdownInline>{vote.summarySimplified}</MarkdownInline> : vote.summary}
           </p>
         </div>

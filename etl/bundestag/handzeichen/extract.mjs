@@ -49,7 +49,7 @@ async function processJob(job) {
     const batch = job.data.blocks.slice(i, i + BATCH_SIZE)
     const prompt = PROMPT_TEMPLATE
       .replace('__COUNT__', String(batch.length))
-      .replace('__BLOCKS__', batch.map((b, k) => `--- Block index=${i + k} ---\n${b.block}`).join('\n\n'))
+      .replace('__BLOCKS__', batch.map((b, k) => `--- Block index=${i + k} ---\n${b.context ? `Kontext (gehört zu vorherigen Abstimmungen, nur zum Auflösen von Verweisen):\n${b.context}\n\nAbstimmung:\n` : ''}${b.block}`).join('\n\n'))
     const res = await callModel(prompt).catch((e) => {
       throw new Error(`${job.file} batch ${i / BATCH_SIZE + 1} failed: ${e.message}`)
     })

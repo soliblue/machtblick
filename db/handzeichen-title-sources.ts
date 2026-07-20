@@ -6,6 +6,7 @@ type ExtractedProtocol = {
   number: string
   votes?: Array<{
     index: number
+    id?: string
     title: string
     vote_type: string
   }>
@@ -17,7 +18,7 @@ export function readHandzeichenTitleSources() {
   for (const file of readdirSync(dir).filter((name) => name.endsWith('.json'))) {
     const data = JSON.parse(readFileSync(join(dir, file), 'utf8')) as ExtractedProtocol
     for (const vote of data.votes ?? []) {
-      if (vote.vote_type === 'handzeichen') sources.set(`pp${data.number.replace('/', '-')}-${vote.index}-${slugify(vote.title)}`, vote.title)
+      if (vote.vote_type === 'handzeichen') sources.set(vote.id ?? `pp${data.number.replace('/', '-')}-${vote.index}-${slugify(vote.title)}`, vote.title)
     }
   }
   return sources

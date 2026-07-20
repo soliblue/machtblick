@@ -106,8 +106,8 @@ export function AntragDetail({ data }: Props) {
         <section className="mt-xl">
           <div className="mb-s text-s caption opacity-l">{t.proposalSummary}</div>
           {antrag.summarySimplified
-            ? <p className="text-m leading-[1.45]" style={{ fontFamily: SERIF }}><MarkdownInline>{antrag.summarySimplified}</MarkdownInline></p>
-            : <p className="whitespace-pre-line text-m leading-[1.45]" style={{ fontFamily: SERIF }}>{summary}</p>}
+            ? <p className="text-l leading-[1.45]" style={{ fontFamily: SERIF }}><MarkdownInline>{antrag.summarySimplified}</MarkdownInline></p>
+            : <p className="whitespace-pre-line text-l leading-[1.45]" style={{ fontFamily: SERIF }}>{summary}</p>}
           {antrag.summarySimplified && (
             <p className="mt-s text-s opacity-l">
               {t.aiSummaryNotice}

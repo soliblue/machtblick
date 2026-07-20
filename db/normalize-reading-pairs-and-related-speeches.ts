@@ -2,6 +2,7 @@ import Database from 'better-sqlite3'
 import { readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { isGenericStem, normalizeText, readingStage, stemKey, stripStage } from './readingPairs'
 
 const db = new Database(fileURLToPath(new URL('./machtblick.sqlite', import.meta.url)))
 const rawDir = fileURLToPath(new URL('../etl/bundestag-reden-xml/raw/xml/', import.meta.url))
@@ -347,15 +348,6 @@ function sourceFor(rows: VoteRow[], predicate: (row: VoteRow) => boolean) {
   return rows.filter(predicate).sort((a, b) => readingSourceScore(b) - readingSourceScore(a))[0] ?? null
 }
 
-function isGenericStem(key: string) {
-  return key.length < 8
-    || key === 'gesetz'
-    || key === 'gesetzentwurf'
-    || key === 'schlussabstimmung'
-    || key === 'dritte beratung'
-    || key === 'dritte beratung und schlussabstimmung'
-}
-
 function initiatorFromVote(row: InitiatorRow) {
   if (isPetitionBundle(row)) return 'Petitionsausschuss'
   if (isWahlpruefung(row)) return 'Wahlprüfungsausschuss'
@@ -425,35 +417,6 @@ function isPetitionBundle(row: InitiatorRow) {
 
 function isWahlpruefung(row: InitiatorRow) {
   return normalizeText(row.title).includes('wahlprufungsausschuss') || normalizeText(row.document ?? '').includes('wahlprufungsausschuss')
-}
-
-function readingStage(title: string): 'second' | 'third' | 'final' | null {
-  const value = normalizeText(title)
-  if (value.includes('zweite beratung') || value.includes('2 beratung')) return 'second'
-  if (value.includes('dritte beratung') || value.includes('3 beratung')) return 'third'
-  if (value.includes('schlussabstimmung')) return 'final'
-  return null
-}
-
-function stemKey(title: string) {
-  return normalizeText(stripStage(title))
-}
-
-function stripStage(value: string) {
-  return value
-    .replace(/\s*\((?:zweite|dritte|2\.|3\.)\s+Beratung(?:,\s*Schlussabstimmung)?\)/gi, '')
-    .replace(/\s*\((?:second|third)\s+reading(?:,\s*final vote)?\)/gi, '')
-    .replace(/\s*\((?:Schlussabstimmung|final vote)\)/gi, '')
-    .replace(/^Schlussabstimmung:\s*/i, '')
-    .replace(/^Dritte Beratung(?: und Schlussabstimmung)?(?: des| der| zum| zu dem)?\s*/i, '')
-    .replace(/^Zweite Beratung(?: des| der| zum| zu dem)?\s*/i, '')
-    .replace(/[:\s-]+(?:zweite|dritte|2\.|3\.)\s+Beratung(?:\s+und\s+Schlussabstimmung)?$/i, '')
-    .replace(/[:\s-]+Schlussabstimmung$/i, '')
-    .trim()
-}
-
-function normalizeText(value: string) {
-  return value.toLowerCase().normalize('NFD').replace(/\p{M}/gu, '').replace(/ß/g, 'ss').replace(/[^a-z0-9]+/g, ' ').trim()
 }
 
 function drucksachenForVote(voteId: string, document: string) {

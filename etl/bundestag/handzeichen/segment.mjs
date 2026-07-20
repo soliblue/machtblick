@@ -28,12 +28,14 @@ function blocksFromProtocol(text) {
   const blocks = []
   let prevEnd = 0
   for (const m of outcomes) {
-    const blockStart = Math.max(prevEnd, m.index - 2000)
+    const lookback = Math.max(0, m.index - 2000)
+    const blockStart = Math.max(prevEnd, lookback)
     const blockEnd = m.index + m[0].length
     const block = norm.slice(blockStart, blockEnd).trim()
-    if (block.length < 200) continue
+    const context = blockStart > lookback ? norm.slice(lookback, blockStart).trim() : ''
+    if (block.length + context.length < 200) continue
     if (/namentliche?\s+Abstimmung/i.test(block) && /Schriftführer/i.test(block)) continue
-    blocks.push({ outcome: m[1], block })
+    blocks.push({ outcome: m[1], block, ...(context ? { context } : {}) })
     prevEnd = blockEnd
   }
   return blocks
