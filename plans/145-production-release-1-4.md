@@ -6,7 +6,7 @@ Deploy the current web app to Cloudflare Pages and submit the latest processed i
 
 ## Status
 
-Automatic-release follow-up in progress.
+Complete.
 
 ## Contracts
 
@@ -30,3 +30,4 @@ None.
 - 2026-07-20 deployer: Production build and all bundled static contracts passed; deployed 9,936 files to `https://bcb2f356.machtblick-bundestag.pages.dev` with project-resolved Wrangler 4.112.0. Cloudflare usage is 28/500 deployments for 2026-07.
 - 2026-07-20 deployer: Verified HTTP 200 at the immutable deployment and `https://machtblick.de/`. At 390x844 both rendered `Angenommen` with matching `rgb(122, 184, 122)` text and border, 8px radius, one border, and no `::after` outer ring.
 - 2026-07-20 root: Operator corrected the prior manual-release default. Changed App Store version preparation and Fastlane to release automatically after approval, with a workflow mode for updating an already-submitted version without resubmission.
+- 2026-07-20 root: GitHub run `29770043302` updated the submitted App Store version 1.4 to release automatically after approval and verified the returned setting.
