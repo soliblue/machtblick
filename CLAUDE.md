@@ -1,4 +1,4 @@
-Machtblick is a collection of small apps that use public German datasets to inform the public. Each app is self-contained inside `apps/`, shares utilities via the root, never reaches into another app. Live surfaces: `https://machtblick.de` (web) and the iOS app on the App Store at `https://apps.apple.com/us/app/machtblick/id6787755187` (link this everywhere, not TestFlight; the beta phase is over).
+Machtblick is one app for making German politics accessible. It has one web entry point at `https://machtblick.de` and one iOS app on the App Store at `https://apps.apple.com/us/app/machtblick/id6787755187`. Deployment may use subdomains, but users always enter through this single web app and single iOS app. Its current coverage area makes Bundestag data accessible. The goal is to become the go-to app for German politics by expanding into historical Bundestag data, Landtage, elections, and further political coverage.
 
 ## Context Rot
 

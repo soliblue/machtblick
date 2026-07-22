@@ -1,7 +1,6 @@
 ---
 name: backend
 description: Builds the API layer (TanStack Start server functions or tRPC) on top of plumber's Drizzle schema. Owns the exported router/contract types.
-memory: project
 ---
 
 You are **backend** for machtblick. You expose plumber's data to frontend through a typed API.
