@@ -4,31 +4,13 @@ Machtblick is one app for making German politics accessible. It has one web entr
 
 Context rot destroys intelligence, so every word in CLAUDE.md, skills, or agents should be load-bearing for future decisions; prefer deleting over adding. Delegate non-trivial retrieval to Explore subagents (in parallel when independent), so the main session orchestrates summaries instead of loading raw tool output. `CLAUDE.md` is public, checked-in project knowledge: anything concise and project-related belongs here so it's shared with all collaborators.
 
-## Repo layout
+## VPS Dev URL
 
-```
-machtblick/
-  apps/
-    bundestag/        # transparency platform for Bundestag votes, members, parties
-      build/          # build-time generators: prerender paths, sitemap, feeds, JSON endpoints
-      src/views/      # presentational only; no fetching, no business logic
-      src/components/ # shared presentational pieces used across views
-      src/hooks/      # TanStack Query hooks, derived state, business logic
-      src/routes/     # TanStack Router file-based routes; thin glue
-      src/server/     # API server functions; owns exported router types
-      src/lib/        # app-local types and utilities
-  db/                 # Drizzle schema (db/schema/), migrations, normalization scripts
-  etl/                # Node importers, one folder per upstream source, plus _shared and _oneshot
-  .claude/
-    agents/           # source specialist instructions
-  plans/              # numbered plan files (00-, 01-, ...) for multi-agent work
-```
-
-## Dev URL
-
-Live preview of the local checkout is at `https://dev.machtblick.de`, served by a named cloudflared tunnel pointed at `vite dev`. Noindexed (`robots: noindex, nofollow` is injected when `import.meta.env.DEV`), not for sharing. Use it to verify changes on a phone or share a screenshot with the operator before deploying to `machtblick.de`. Bring-up after a reboot: `npx vite dev --port 5174 --host` in `apps/bundestag`, and `cloudflared tunnel --config ~/.cloudflared/machtblick-dev.yml run` (named tunnel `machtblick-dev`; a 530/1033 on the public URL means the daemon is down, just rerun it).
+On the development VPS, `https://dev.machtblick.de` points through the named `machtblick-dev` Cloudflare tunnel to Vite on port 5174. The preview is noindexed and not for public sharing. After a VPS reboot, run `npx vite dev --port 5174 --host` in `apps/bundestag` and `cloudflared tunnel --config ~/.cloudflared/machtblick-dev.yml run`. A 530/1033 response means the tunnel daemon is down.
 
 ## Code Style
+
+### General
 
 - **Less is more.** Prefer deleting over adding; if it isn't load-bearing, remove it
 - **No comments.** No inline, no docstrings, no headers
@@ -40,57 +22,52 @@ Live preview of the local checkout is at `https://dev.machtblick.de`, served by 
 - **Ternary for simple conditionals**
 - **Default parameters over null checks** when possible
 - **Explicit imports, no wildcards**
-- **One component per file**
+- **One component or view per file**
 - **Predictability over file count.** Folder describes the role, file names mechanical
-- **Views are presentational; logic lives in hooks.** A view that calls `useQuery` is a bug. Routes are thin glue composing a view with its hooks
-- **Type-safe end to end.** Frontend imports types from server; never restate them
-- **TanStack first.** Router, Query, Table, Form, before reaching for alternatives
 - **Design truth lives in this file's Design section.** ASCII sketches are design-time scaffolding, made during a redesign, deleted when the view ships. No standing .mock.md files
 - **No absolute filesystem paths in checked-in files.** Scripts, configs, agent definitions, and docs use repo-relative paths so the project works for anyone who clones it
 - **Fix data, not symptoms.** When app logic has to compensate for messy data (server-side flips, regex fallbacks, "if X then invert Y"), the fix belongs in ETL or a one-shot DB normalization script under `db/`, not in the read path. Derived public-data fields that humans may review, like titles, mappings, classifications, and labels, must be materialized through ETL or SQL before the app reads them. Document the quirk inline in `.claude/agents/plumber.md` (per-source section) so it doesn't get rediscovered. Hacks in app code rot; clean data scales.
 - **LLM work in ETL goes through local agent CLIs, not provider APIs.** Prefer `codex exec` because Codex credits are plentiful; use `claude -p --model sonnet --output-format json` only when a task explicitly needs Claude. For enrichment steps that need a model (title simplification, classification, summarization, parsing fallbacks), shell out with the prompt on stdin and parse strict JSON from stdout or an output file. Loop locally with concurrency control; no SDK, no API keys in code.
+
+### Web
+
+- **Views are presentational; logic lives in hooks.** A view that calls `useQuery` is a bug. Routes are thin glue composing a view with its hooks
+- **Type-safe end to end.** Frontend imports types from server; never restate them
+- **TanStack first.** Router, Query, Table, Form, before reaching for alternatives
 - **Every route must prerender.** We ship to Cloudflare Pages with `spa: false`. Any path not in `apps/<app>/build/prerenderPaths.ts` (imported by `vite.config.ts`) falls back to the root `index.html`, which has no dehydrated loader data. New dynamic segment or new nested tab → add it to `prerenderPaths()` in the same change. Child routes that read a parent's loader (`useLoaderData({ from: '<parent>' })`) must guard with `?? defaultValue` because on a cold prerender-fallback hit the parent loader hasn't resolved yet.
 - **Server functions only run at build time.** On Cloudflare Pages with `spa: false`, `createServerFn(...)` handlers execute during prerender and their results are dehydrated into the HTML; at runtime `/_serverFn/...` returns the SPA fallback. A view needing data from a server fn must trigger it from a route `loader` and read with `Route.useLoaderData()`. **Never call a server function from `useQuery`** (works locally, returns HTML in prod, crashes downstream on JSON parse). Lazy data → put the loader on a sub-route so it only fires when that route is active.
 
+### iOS
+
+- **SwiftUI views are presentational; logic lives in stores.** Feature UI belongs under `UI/`; loading, filtering, and persistent state belong in `@Observable` stores under `Logic/`
+
 ## Design
 
-Tokens are fixed. Reach for one of these before inventing a value.
+Use shared tokens before adding one-off values. Exceptions belong inside shared primitives, not individual call sites.
 
 | Token | Scale |
 |---|---|
-| Text size | `xxl/xl/l/m/s` = 24/22/16/14/12. One sanctioned exception: poster numerals, `font-display` semibold 32px+ `tabular-nums`, big result counts only |
-| Font weight | `regular` (400), `semibold` (600). Only two, ever |
-| Font roles | Fraunces (`font-display`, semibold) = titles and poster numerals. Charter serif = summary prose. System sans = all other UI |
+| Text size | `xxl/xl/l/m/s` = 24/22/16/14/12. Display numerals use Fraunces semibold at 32 or 40px with `tabular-nums` for results, seats, and statistics |
+| Font weight | UI uses `regular` (400) and `semibold` (600). Rendered prose may preserve bold and italic |
+| Font roles | Fraunces (`font-display`, semibold) for titles and display numerals. Lora for summary prose. System sans for all other UI |
 | Icon size | `s/m/l/xl` = 14/17/19/26 |
 | Spacing | `xs/s/m/l/xl` = 4/8/12/16/24 |
-| Radius | `s/m/l` = 8/14/20. Surfaces (cards, tab strips, info boxes, dialogs) use `m`; the Stamp uses `s`; full pill for floating controls. Full-bleed surfaces (nav, sheets, day bands) stay square |
+| Radius | `s/m/l` = 8/14/20. Contained surfaces and controls generally use `m`, stamps use `s`, floating controls use pills, and edge-to-edge feed surfaces stay square |
 | Stroke | `s/m/l` = 1/1.5/2 px |
 | Opacity | `s/m/l` = 0.15/0.4/0.7 |
-| Palette (light, default) | `background` = white, `surface` = subtle off-white, `elevated` = slightly darker. Three shades total |
-| Accents | Fixed 16-name set + `success` + `danger`. Party colors map onto this set, never bespoke |
+| Palette | `background`, `surface`, `elevated`, and `fg` adapt to the active theme |
+| Accents | Shared named accents plus semantic `success` and `danger`. Party colors use the shared palette |
 
-The card language, settled in plan 102 on `/votes/`; every remaining view converges on it:
-
-- Cards are white (`background`) with a 1px `text @ opacity-s` border, no shadow (user removed all card shadows 2026-07-05; shadows only on true overlays like the Reader sheet), radius 0, padding `l`
-- Verdict/status rides the top edge: 3px top border in the status color, a small semibold uppercase white chip in the same color straddling it, centered. Text always straight, never rotated
-- Vote result colors: Ja `success`, Nein `danger`, Enthaltung `yellow` (neutral `fg @ opacity-m` inside the hemicycle dot mass), Abwesend faint `fg @ opacity-s`
-- The hemicycle is the canonical result viz (one dot = one seat, absences visible); per-party breakdown = mini donut row sorted Ja-share left to Nein-share right, mixed party = semibold label
-- Summaries are real generated markdown rendered as serif prose with a fitted line clamp; the whole card is one stretched link
-- Meta and captions: `text-s` uppercase, letter-spacing 0.08em, `opacity-l`
-- One component, both devices: mobile = full-viewport snap-feed card, desktop = the same component reflowed into columns via responsive classes. Never a second design per breakpoint
-- Mobile primary action floats bottom center as a full pill (`fg` fill, `background` text, lucide funnel, active count) opening a bottom sheet; desktop keeps the sticky FilterPill row. Feeds have no masthead or visible h1
-
-Rules:
-
+- Primary editorial cards use `background` without elevation shadows. Borders and radius follow the surface; overlays, floating controls, and selected tab controls may use shadow
+- Vote outcomes use semantic colors: Ja `success`, Nein `danger`, Enthaltung `yellow`, and theme-adaptive neutrals for absence
+- The hemicycle is the canonical result visualization, with one dot per seat and absences visible. Party breakdowns use mini donuts sorted from highest Ja share to lowest, with mixed parties labeled semibold
+- Vote-feed summaries render generated markdown as Lora prose with a fitted line clamp, and the full card is the link. On web, one responsive component serves all breakpoints
+- Meta and captions use `text-s`, uppercase, 0.08em letter spacing, and `opacity-l`
+- Primary feeds have no visible masthead or page title
 - Hierarchy comes from size and spacing, not weight inflation
-- Color is meaning, not decoration. Accent = party / result / status; party color is identity only, never stats or charts
-- Proposer renders as the party logo alone (plain text for non-parties), never logo plus name
+- Party color identifies parties. Result and stance colors communicate outcomes
+- Compact proposer kickers render the party logo alone and use text for non-parties
 - Borders are `text @ opacity-s`, not a new gray
-- If you reach for `padding: 10px` you're wrong
-
-Banned, user-rejected AI tells (do not re-propose): left-edge accent rails or stripes, rotated stamps on list surfaces (the Stamp is a detail-page device, straight when inline), gray or `surface` card backgrounds, mastheads or page titles on feed pages, a third font weight, bespoke grays.
-
-UI primitives come from shadcn/ui, restricted to the curated set: Button, Input, Select, Combobox, Card, Badge, Table, Tabs, Tooltip, Skeleton. Adding anything else is a decision, not a default.
 
 ## Team
 
