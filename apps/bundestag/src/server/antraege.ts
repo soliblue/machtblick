@@ -12,13 +12,15 @@ import {
   votePartySummaries,
   votes,
 } from '@machtblick/db/schema'
-import { and, desc, eq, inArray, sql } from 'drizzle-orm'
+import { and, eq, inArray, sql } from 'drizzle-orm'
 import { normalizeLocale, type Locale } from '@/lib/locale'
 import { SHOW_HAMMELSPRUNG } from '@/lib/voteTypes'
+import { compareVotesNewest } from '@/lib/voteOrdering'
 import { loadAffiliationsByMember, partyAt } from './memberParty'
 import { resolvePictureUrl } from './photoManifest'
 import { isRelatedDebate } from './speechVoteSql'
 import { CURRENT_TERM } from './term'
+import { getChamberSize } from './seats'
 import { partySummaryTranslationMap, speechTranslationMap, voteTranslationMap } from './translations'
 import type { SpeechSummary } from './speeches'
 import { requireVoteCleanTitle } from '@/lib/voteTitles'
@@ -40,7 +42,7 @@ export type AntragLinkedVote = {
   yes: number
   no: number
   abstain: number
-  absent: number
+  absent: number | null
   totalMembers: number
   partySummaries: Array<{
     voteId: string
@@ -107,14 +109,58 @@ export type AntragListItem = {
   introducedDate: string | null
   beratungsstand: string | null
   summary: string | null
-  vote: { date: string; yes: number; no: number; result: 'angenommen' | 'abgelehnt' } | null
-  hasVote: boolean
+  vote: {
+    date: string
+    title: string
+    yes: number
+    no: number
+    abstain: number
+    absent: number | null
+    totalMembers: number
+    partySummaries: Array<{
+      party: string
+      position: 'yes' | 'no' | 'abstain' | 'mixed'
+      members: number
+      yes: number
+      no: number
+      abstain: number
+      absent: number
+    }>
+  } | null
   activityDate: string
 }
 
 const clipListSummary = (text: string | null) => {
   const plain = (text ?? '').replace(/\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[*_`#]+/g, '').replace(/\s+/g, ' ').trim()
   return plain ? (plain.length > 220 ? `${plain.slice(0, 220).replace(/\s+\S*$/, '')}…` : plain) : null
+}
+
+function voteCounts(
+  vote: {
+    voteType: 'namentlich' | 'handzeichen' | 'hammelsprung'
+    yes: number | null
+    no: number | null
+    abstain: number | null
+    absent: number | null
+    totalMembers: number | null
+  },
+  summaries: Array<{ yes: number; no: number; abstain: number }>,
+  chamber: number,
+) {
+  return vote.voteType === 'namentlich'
+    ? {
+        yes: vote.yes ?? 0,
+        no: vote.no ?? 0,
+        abstain: vote.abstain ?? 0,
+        absent: vote.absent ?? 0,
+        totalMembers: vote.totalMembers ?? chamber,
+      }
+    : (() => {
+        const yes = summaries.reduce((sum, summary) => sum + summary.yes, 0)
+        const no = summaries.reduce((sum, summary) => sum + summary.no, 0)
+        const abstain = summaries.reduce((sum, summary) => sum + summary.abstain, 0)
+        return { yes, no, abstain, absent: null, totalMembers: Math.max(chamber, yes + no + abstain) }
+      })()
 }
 
 export const listAntraege = createServerFn({ method: 'GET' })
@@ -143,13 +189,57 @@ export const listAntraege = createServerFn({ method: 'GET' })
     const links = db.select({ antragId: voteAntraege.antragId, voteId: voteAntraege.voteId }).from(voteAntraege).all()
     const voteById = new Map(
       db
-        .select({ id: votes.id, date: votes.date, voteType: votes.voteType, result: votes.result, yes: votes.yes, no: votes.no })
+        .select({
+          id: votes.id,
+          bundestagId: votes.bundestagId,
+          date: votes.date,
+          title: votes.title,
+          cleanTitle: votes.cleanTitle,
+          voteType: votes.voteType,
+          yes: votes.yes,
+          no: votes.no,
+          abstain: votes.abstain,
+          absent: votes.absent,
+          totalMembers: votes.totalMembers,
+        })
         .from(votes)
         .where(eq(votes.termId, CURRENT_TERM))
         .all()
         .filter((v) => SHOW_HAMMELSPRUNG || v.voteType !== 'hammelsprung')
         .map((v) => [v.id, v]),
     )
+    const voteTranslations = voteTranslationMap([...voteById.keys()], locale)
+    const linkedVoteIds = [...new Set(links.map((link) => link.voteId).filter((id) => voteById.has(id)))]
+    const summariesByVote = new Map<string, NonNullable<AntragListItem['vote']>['partySummaries']>()
+    for (const summary of linkedVoteIds.length
+      ? db
+          .select({
+            voteId: votePartySummaries.voteId,
+            party: votePartySummaries.party,
+            position: votePartySummaries.position,
+            members: votePartySummaries.members,
+            yes: votePartySummaries.yes,
+            no: votePartySummaries.no,
+            abstain: votePartySummaries.abstain,
+            absent: votePartySummaries.absent,
+          })
+          .from(votePartySummaries)
+          .where(inArray(votePartySummaries.voteId, linkedVoteIds))
+          .all()
+      : []) {
+      const summaries = summariesByVote.get(summary.voteId) ?? []
+      summaries.push({
+        party: summary.party,
+        position: summary.position,
+        members: summary.members ?? 0,
+        yes: summary.yes ?? 0,
+        no: summary.no ?? 0,
+        abstain: summary.abstain ?? 0,
+        absent: summary.absent ?? 0,
+      })
+      summariesByVote.set(summary.voteId, summaries)
+    }
+    const chamber = [...voteById.values()].find((vote) => vote.voteType === 'namentlich')?.totalMembers ?? 0
     const votesByAntrag = new Map<number, NonNullable<ReturnType<typeof voteById.get>>[]>()
     for (const l of links) {
       const vote = voteById.get(l.voteId)
@@ -162,8 +252,11 @@ export const listAntraege = createServerFn({ method: 'GET' })
       .filter((r) => locale !== 'en' || translationById.has(r.id))
       .map((r) => {
         const t = translationById.get(r.id)
-        const linked = (votesByAntrag.get(r.id) ?? []).sort((a, b) => b.date.localeCompare(a.date))
-        const named = linked.find((v) => v.voteType === 'namentlich')
+        const linked = (votesByAntrag.get(r.id) ?? []).sort(compareVotesNewest)
+        const latest = linked[0]
+        const voteTranslation = latest ? voteTranslations.get(latest.id) : undefined
+        const partySummaries = latest ? summariesByVote.get(latest.id) ?? [] : []
+        const counts = latest ? voteCounts(latest, partySummaries, chamber) : null
         return {
           id: r.id,
           type: r.type,
@@ -172,9 +265,17 @@ export const listAntraege = createServerFn({ method: 'GET' })
           introducedDate: r.introducedDate,
           beratungsstand: r.beratungsstand,
           summary: clipListSummary(locale === 'en' ? t?.summarySimplified ?? null : r.summarySimplified),
-          vote: named ? { date: named.date, yes: named.yes ?? 0, no: named.no ?? 0, result: named.result } : null,
-          hasVote: linked.length > 0,
-          activityDate: [r.introducedDate ?? '', linked[0]?.date ?? ''].sort().pop() || '',
+          vote: latest && counts ? {
+            date: latest.date,
+            title: requireVoteCleanTitle({
+              id: latest.id,
+              title: voteTranslation?.title ?? voteTranslation?.cleanTitle ?? latest.title,
+              cleanTitle: voteTranslation?.cleanTitle ?? latest.cleanTitle,
+            }).cleanTitle,
+            ...counts,
+            partySummaries,
+          } : null,
+          activityDate: [r.introducedDate ?? '', latest?.date ?? ''].sort().pop() || '',
         }
       })
       .sort((a, b) => b.activityDate.localeCompare(a.activityDate) || b.id - a.id)
@@ -194,7 +295,7 @@ export const getAntrag = createServerFn({ method: 'GET' })
     const links = db.select({ voteId: voteAntraege.voteId }).from(voteAntraege).where(eq(voteAntraege.antragId, id)).all()
     const voteIds = links.map((l) => l.voteId)
     const voteRows = voteIds.length
-      ? db.select().from(votes).where(inArray(votes.id, voteIds)).orderBy(desc(votes.date)).all().filter((v) => SHOW_HAMMELSPRUNG || v.voteType !== 'hammelsprung')
+      ? db.select().from(votes).where(inArray(votes.id, voteIds)).all().filter((v) => SHOW_HAMMELSPRUNG || v.voteType !== 'hammelsprung').sort(compareVotesNewest)
       : []
     const translations = voteTranslationMap(voteRows.map((v) => v.id), locale)
     const summaryTranslations = partySummaryTranslationMap(voteRows.map((v) => v.id), locale)
@@ -224,18 +325,12 @@ export const getAntrag = createServerFn({ method: 'GET' })
       arr.push({ memberId: b.memberId, name: b.name, choice: b.choice, pictureUrl: resolvePictureUrl(b.memberId, b.pictureUrl), party: vote ? partyAt(affByMember.get(b.memberId), vote.date) : '' })
       ballotsByVote.set(b.voteId, arr)
     }
+    const chamber = getChamberSize()
     const linkedVotes: AntragLinkedVote[] = voteRows.map((v) => {
       const t = translations.get(v.id)
       const titled = requireVoteCleanTitle({ id: v.id, title: t?.title ?? t?.cleanTitle ?? v.title, cleanTitle: t?.cleanTitle ?? v.cleanTitle })
       const summaries = summariesByVote.get(v.id) ?? []
-      const counts = v.voteType === 'namentlich'
-        ? { yes: v.yes ?? 0, no: v.no ?? 0, abstain: v.abstain ?? 0, absent: v.absent ?? 0, totalMembers: v.totalMembers ?? 0 }
-        : (() => {
-            const yes = summaries.reduce((a, s) => a + s.yes, 0)
-            const no = summaries.reduce((a, s) => a + s.no, 0)
-            const abstain = summaries.reduce((a, s) => a + s.abstain, 0)
-            return { yes, no, abstain, absent: 0, totalMembers: yes + no + abstain }
-          })()
+      const counts = voteCounts(v, summaries, chamber)
       return {
         id: v.id,
         date: v.date,

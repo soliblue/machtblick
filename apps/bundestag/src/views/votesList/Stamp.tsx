@@ -11,6 +11,7 @@ export type StampVariant =
   | 'offen'
   | 'ueberwiesen'
   | 'beschlussempfehlung'
+  | 'im-verfahren'
   | 'nicht-beraten'
 
 export type StanceStampVariant = 'dafuer' | 'dagegen' | 'enthalten' | 'gespalten' | 'ja' | 'nein'
@@ -35,6 +36,7 @@ const config: Record<StampVariant | StanceStampVariant, { color: string; rotate:
   offen: { color: 'var(--color-danger)', rotate: 4 },
   ueberwiesen: { color: 'var(--color-blue)', rotate: 4 },
   beschlussempfehlung: { color: 'var(--color-purple)', rotate: -3 },
+  'im-verfahren': { color: 'var(--color-blue)', rotate: 0 },
   'nicht-beraten': { color: 'var(--color-fg)', rotate: 3, opacity: 0.7 },
   dafuer: { color: 'var(--color-success)', rotate: -4 },
   dagegen: { color: 'var(--color-danger)', rotate: -5 },

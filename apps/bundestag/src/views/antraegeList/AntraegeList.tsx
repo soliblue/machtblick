@@ -33,34 +33,43 @@ export function AntraegeList({ items, type, onTypeChange, proposer, onProposerCh
   const safePage = Math.min(page, pageCount - 1)
   const slice = items.slice(safePage * PAGE_SIZE, (safePage + 1) * PAGE_SIZE)
   const sheetGroups: FilterSheetGroup[] = [
+    { key: 'status', label: t.status, options: MOTION_STATUS_BUCKETS, value: status, onChange: (v) => onStatusChange(v as MotionStatusBucket | null), format: (o) => t.motionBuckets[o as MotionStatusBucket] },
     { key: 'type', label: t.type, options: ['antrag', 'gesetzentwurf'], value: type, onChange: (v) => onTypeChange(v as AntragTypeFilter | null), format: (o) => typeLabels[o as AntragTypeFilter] },
     { key: 'proposer', label: t.proposer, options: availableProposers, value: proposer, onChange: onProposerChange, format: proposerLabel },
-    { key: 'status', label: t.status, options: MOTION_STATUS_BUCKETS, value: status, onChange: (v) => onStatusChange(v as MotionStatusBucket | null), format: (o) => t.motionBuckets[o as MotionStatusBucket] },
   ]
   return (
     <>
+      <style>{'@media (max-width:699px){html{scroll-snap-type:y mandatory;scroll-padding-top:54px}}@media (max-width:699px) and (max-height:640px){html{scroll-snap-type:none}.motion-snap-card{height:auto}.motion-snap-card>article{min-height:calc(100svh - 98px)}}'}</style>
       <div className="sticky top-[54px] z-20 hidden border-b border-fg/15 bg-background desk:block">
         <div className="px-l py-s desk:mx-auto desk:max-w-3xl">
           <FilterPillRow>
+            <FilterPill label={t.status} options={MOTION_STATUS_BUCKETS} value={status} onChange={(v) => onStatusChange(v as MotionStatusBucket | null)} formatOption={(o) => t.motionBuckets[o as MotionStatusBucket]} />
             <FilterPill label={t.type} options={['antrag', 'gesetzentwurf']} value={type} onChange={(v) => onTypeChange(v as AntragTypeFilter | null)} formatOption={(o) => typeLabels[o as AntragTypeFilter]} />
             <FilterPill label={t.proposer} options={availableProposers} value={proposer} onChange={onProposerChange} formatOption={proposerLabel} />
-            <FilterPill label={t.status} options={MOTION_STATUS_BUCKETS} value={status} onChange={(v) => onStatusChange(v as MotionStatusBucket | null)} formatOption={(o) => t.motionBuckets[o as MotionStatusBucket]} />
           </FilterPillRow>
         </div>
       </div>
-      <main className="mx-auto max-w-3xl p-l">
-        <h1 className="sr-only">{t.motionsIndexCount}</h1>
-        <div className="desk:hidden">
-          <FilterSheet groups={sheetGroups} activeCount={[type, proposer, status].filter(Boolean).length} />
-        </div>
-        <div className="mb-m text-s caption opacity-l">
-          {items.length.toLocaleString(locale === 'en' ? 'en-US' : 'de-DE')} {t.motionsIndexCount}
-        </div>
-        <div className="pt-s">
-          {slice.map((a) => <AntragCard key={a.id} antrag={a} />)}
-        </div>
-        {pageCount > 1 && <Pager page={safePage} pageCount={pageCount} onPage={onPageChange} />}
+      <h1 className="sr-only">{t.motionsIndexCount}</h1>
+      <div className="desk:hidden">
+        <FilterSheet groups={sheetGroups} activeCount={[type, proposer, status].filter(Boolean).length} />
+      </div>
+      <main className="desk:mx-auto desk:flex desk:max-w-3xl desk:flex-col desk:px-l desk:pt-m">
+        {slice.map((a, i) => (
+          <div
+            key={a.id}
+            id={`motion-${a.id}`}
+            className={`motion-snap-card relative h-[calc(100svh-98px)] snap-start snap-always px-m pt-l desk:h-auto desk:px-0 desk:pb-m desk:pt-m ${i < slice.length - 1 ? 'after:absolute after:inset-x-l after:bottom-0 after:h-px after:bg-elevated' : ''}`}
+          >
+            <AntragCard antrag={a} />
+          </div>
+        ))}
+        {pageCount > 1 && (
+          <div className="snap-start px-l pb-[80px] pt-xl desk:px-0 desk:pb-[64px] desk:pt-0">
+            <Pager page={safePage} pageCount={pageCount} onPage={onPageChange} />
+          </div>
+        )}
       </main>
+      {items.length === 0 && <p className="mx-auto max-w-3xl px-l py-xl text-center text-m opacity-l">{t.noData}</p>}
     </>
   )
 }

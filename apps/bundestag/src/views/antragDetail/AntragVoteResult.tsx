@@ -8,7 +8,7 @@ import { VoteHemicycle } from '@/views/votesList/VoteHemicycle'
 import { deriveStamps } from '@/views/votesList/deriveStamps'
 import { PartyDonutGrid } from '@/views/voteDetail/PartyDonutGrid'
 import { KickerChip } from '@/components/KickerChip'
-import { VerdictChip } from '@/components/VerdictChip'
+import { Stamp } from '@/views/votesList/Stamp'
 
 type Props = {
   vote: AntragLinkedVote
@@ -24,29 +24,30 @@ export function AntragVoteResult({ vote }: Props) {
   return (
     <section
       aria-label={[vote.cleanTitle, accepted ? t.accepted : t.rejected, `${t.yes} ${vote.yes}`, `${t.no} ${vote.no}`, `${t.abstention} ${vote.abstain}`].join(' · ')}
-      className="relative mb-m overflow-hidden rounded-m border border-fg/15 bg-background p-l"
-      style={{ borderTop: `3px solid ${accepted ? 'var(--color-success)' : 'var(--color-danger)'}` }}
     >
-      <VerdictChip accepted={accepted}>{accepted ? t.accepted : t.rejected}</VerdictChip>
-      <div className="mt-s flex flex-wrap items-center gap-s">
-        <span className="text-s caption opacity-l">
-          {formatDateShort(vote.date, locale)} · {vote.voteType === 'namentlich' ? t.namedVote : vote.voteType === 'handzeichen' ? t.showOfHands : t.division}
-        </span>
-        <span className="ml-auto flex flex-wrap gap-s">
-          {kickerStamps.map((stamp) => <KickerChip key={stamp}>{t.stampClose[stamp]}</KickerChip>)}
-        </span>
+      <div className="mb-l flex items-start gap-m rounded-m bg-surface p-m">
+        <a href={withLocale(`/votes/${vote.id}/`, locale)} className="min-w-0 flex-1 underline-offset-4 hover:underline">
+          <span className="block text-s caption opacity-l">
+            {formatDateShort(vote.date, locale)} · {vote.voteType === 'namentlich' ? t.namedVote : vote.voteType === 'handzeichen' ? t.showOfHands : t.division}
+          </span>
+          <span className="mt-xs block text-m font-semibold">{vote.cleanTitle}</span>
+          {kickerStamps.length > 0 ? (
+            <span className="mt-s flex flex-wrap gap-s">
+              {kickerStamps.map((stamp) => <KickerChip key={stamp}>{t.stampClose[stamp]}</KickerChip>)}
+            </span>
+          ) : null}
+        </a>
+        <Stamp variant={vote.result} rotated={false} />
       </div>
-      <a href={withLocale(`/votes/${vote.id}/`, locale)} className="mt-m block text-l font-semibold underline-offset-4 hover:underline">
-        {vote.cleanTitle}
-      </a>
       {vote.totalMembers > 0 && (
-        <div className="mt-l flex justify-center">
+        <div className="flex justify-center">
           <VoteHemicycle
             yes={vote.yes}
             no={vote.no}
             abstain={vote.abstain}
             absent={vote.voteType === 'namentlich' ? vote.absent : null}
             totalMembers={vote.totalMembers}
+            hero
             selected={filter}
             onSelect={toggle}
           />
