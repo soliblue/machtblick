@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "289408",
+      "drucksachetyp": "Änderungsantrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 26,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/7031",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "3e01d6eacea7f1b1e2ebca4ae7dc6205",
+      "aktualisiert": "2026-07-09T17:38:18+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "322242",
+          "titel": "Gesetz zur Streichung der automatischen Anpassung der Abgeordnetenentschädigung",
+          "vorgangstyp": "Gesetzgebung"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/070/2107031.pdf",
+        "id": "289408",
+        "dokumentnummer": "21/7031",
+        "datum": "2026-07-09",
+        "verteildatum": "2026-07-09",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Änderungsantrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "2075",
+          "titel": "Stephan Brandner, MdB, AfD",
+          "autor_titel": "Stephan Brandner"
+        },
+        {
+          "id": "2237",
+          "titel": "Fabian Jacobi, MdB, AfD",
+          "autor_titel": "Fabian Jacobi"
+        }
+      ],
+      "titel": "zu der zweiten Beratung des Gesetzentwurfs der Abgeordneten Stephan Brandner, Fabian Jacobi, Peter Bohnhof, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksachen 21/331, 21/6851 -\r\nEntwurf eines Gesetzes zur Streichung der automatischen Anpassung der Abgeordnetenentschädigung",
+      "datum": "2026-07-09"
+    }
+  ],
+  "cursor": "AoJw0LyUo58DMURydWNrc2FjaGUtMjg5NDA4"
+}

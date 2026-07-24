@@ -46,6 +46,7 @@
     "etl:handzeichen:refresh": "node etl/bundestag/handzeichen/refresh.mjs",
     "oneshot:votes:historical": "tsx etl/_oneshot/import-historical.ts",
     "oneshot:handzeichen:husk-repair": "node etl/_oneshot/repair-handzeichen-husk-votes.mjs",
+    "oneshot:handzeichen:false-inversion-repair": "node etl/_oneshot/repair-false-handzeichen-inversions.mjs",
     "oneshot:vote-1019-title": "node etl/_oneshot/repair-vote-1019-truncated-title.mjs",
     "oneshot:personnel-summaries": "node etl/_oneshot/backfill-personnel-vote-summaries.mjs",
     "etl:votes:namentlich": "tsx etl/bundestag/votes/import-namentlich.ts",

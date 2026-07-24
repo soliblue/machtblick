@@ -4,6 +4,7 @@ import { extractDrucksachen, readDrucksacheCache, underlyingTitleFromCache } fro
 import { pLimit } from '../polarity/limit.mjs'
 import { cleanTitleWithLLM } from './llm.mjs'
 import { argValue } from '../../_shared/worker.mjs'
+import { pinnedSourceDrucksache } from '../handzeichen/source.mjs'
 
 const DB_PATH = fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url))
 const args = new Set(process.argv.slice(2))
@@ -64,9 +65,11 @@ console.log(`titles: ${rows.length} candidate rows; processing ${work.length}${d
 
 const update = db.prepare(`UPDATE votes SET clean_title = ? WHERE id = ?`)
 
-async function resolveDrucksacheTitle(document) {
-  const dnrs = extractDrucksachen(document)
-  for (const d of dnrs) {
+async function resolveDrucksacheTitle(row) {
+  const dnrs = extractDrucksachen(row.document)
+  const pinned = pinnedSourceDrucksache(row.id)
+  const ordered = pinned ? [pinned, ...dnrs.filter((dnr) => dnr !== pinned)] : dnrs
+  for (const d of ordered) {
     const doc = await readDrucksacheCache(d)
     const t = doc ? underlyingTitleFromCache(doc) : null
     if (t) return t
@@ -90,7 +93,7 @@ const tasks = work.map((row) =>
     if (row.procedural || row.vote_type === 'hammelsprung') {
       return { row, result: { clean_title: displaySourceTitle(row), confidence: 'high', direct: true } }
     }
-    const drucksacheTitle = await resolveDrucksacheTitle(row.document)
+    const drucksacheTitle = await resolveDrucksacheTitle(row)
     const nnn = sammelNumber(row.title)
     const sourceTitle = displaySourceTitle(row)
     try {
@@ -146,4 +149,3 @@ for (const item of outcomes) {
 
 console.log(`done. processed=${work.length} written=${written} direct=${direct} kept_original=${nulled} low_skipped=${lowSkipped} failed=${failed}`)
 db.close()
-

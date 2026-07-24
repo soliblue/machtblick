@@ -10,11 +10,15 @@ Dokument-Teaser: __DOCUMENT__
 Antragstellende Fraktion: __PROPOSER__
 Fraktionspositionen: __POSITIONS__
 Berichtetes Ergebnis: __RESULT__
+Offizieller Abstimmungsabschnitt aus dem Plenarprotokoll:
+__SOURCE_BLOCK__
 
 Antworte AUSSCHLIESSLICH als JSON-Objekt:
 {"inverted": boolean, "confidence": "high"|"medium"|"low", "reason": "kurzer deutscher Satz"}
 
 Regeln:
-- inverted=true wenn die Abstimmungsform plausibel eine Beschlussempfehlung zur Ablehnung war (Indizien: Antragsteller stimmt Nein; Koalition stimmt Ja; Ergebnis "angenommen" trotz Oppositions-Antrag; oder Dokument verweist auf eine Beschlussempfehlungs-Drucksache).
+- Der offizielle Abstimmungsabschnitt hat Vorrang vor Dokument-Teaser, Antragsteller und Fraktionspositionen.
+- inverted=true nur wenn tatsächlich über eine Beschlussempfehlung zur Ablehnung abgestimmt wurde.
+- inverted=false wenn der Abschnitt direkt nach Zustimmung zum Antrag oder Gesetzentwurf fragt und diesen anschließend als abgelehnt bezeichnet, auch wenn zuvor eine Beschlussempfehlung zur Ablehnung genannt wird.
 - inverted=false wenn es plausible Alternativerklärungen gibt (z.B. der Antrag wurde im Laufe des Verfahrens geändert, der Antragsteller distanzierte sich, oder es war eine reine Fraktions-Strategie).
 - Bei confidence=low wird KEINE Inversion vorgenommen.

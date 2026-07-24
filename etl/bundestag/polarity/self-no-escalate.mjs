@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs'
 import { applyInversion, defectionSignature } from './apply.mjs'
 import { pLimit } from './limit.mjs'
 import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
+import { handzeichenSourceBlock } from '../handzeichen/source.mjs'
 
 const FRAKTIONEN = new Set(['CDU/CSU', 'B90/Grüne', 'Die Linke', 'AfD', 'SPD', 'FDP', 'BSW'])
 
@@ -35,6 +36,7 @@ const tasks = candidates.map((row) =>
       .replace('__PROPOSER__', row.initiator)
       .replace('__POSITIONS__', posLine)
       .replace('__RESULT__', row.result)
+      .replace('__SOURCE_BLOCK__', handzeichenSourceBlock(row.id)?.slice(-6000) ?? '(nicht vorhanden)')
     const result = await runPreprocessingCodex({ prompt, schemaPath, tmpPrefix: 'machtblick-polarity-self-no-' })
     return { row, result }
   }),

@@ -2,6 +2,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises'
 import { existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
+import { pinnedSourceDrucksache } from '../handzeichen/source.mjs'
 
 const ANTRAG_FLAVORED = ['Antrag:', 'Gesetzentwurf:', 'Entschließungsantrag:', 'Änderungsantrag:']
 const EXCLUDED = ['Beschlussempfehlung', 'Bericht:', 'Ergänzung', 'Wahlvorschlag', 'Unterrichtung', 'Verordnung']
@@ -138,6 +139,15 @@ async function pickFromVoteDocument(voteId, db) {
       AND drucksache_pdf_url IS NOT NULL
     LIMIT 1
   `)
+  const pinned = pinnedSourceDrucksache(voteId)
+  if (pinned) {
+    const antrag = directAntrag.get(pinned)
+    if (antrag) return { drucksacheId: antrag.drucksache, pdfUrl: antrag.drucksache_pdf_url, kind: 'antrag' }
+    const data = await loadDrucksache(pinned)
+    const doc = data.documents?.find((item) => item.dokumentnummer === pinned) ?? data.documents?.[0]
+    if (!doc?.fundstelle?.pdf_url) return null
+    return { drucksacheId: pinned, pdfUrl: doc.fundstelle.pdf_url, kind: 'antrag' }
+  }
   for (const ref of refs.slice().reverse()) {
     const antrag = directAntrag.get(ref.n)
     if (antrag) return { drucksacheId: antrag.drucksache, pdfUrl: antrag.drucksache_pdf_url, kind: 'antrag' }
@@ -156,10 +166,17 @@ export async function pickAntragWithFallback(voteId, db) {
   const rows = db.prepare(`SELECT label, title, url FROM vote_documents WHERE vote_id = ?`).all(voteId)
   const primary = pickAntragFromRows(rows)
   if (primary) return primary
-  const linked = pickLinkedAntrag(voteId, db)
-  if (linked) return linked
-  const voteDocument = await pickFromVoteDocument(voteId, db)
-  if (voteDocument) return voteDocument
+  if (pinnedSourceDrucksache(voteId)) {
+    const voteDocument = await pickFromVoteDocument(voteId, db)
+    if (voteDocument) return voteDocument
+    const linked = pickLinkedAntrag(voteId, db)
+    if (linked) return linked
+  } else {
+    const linked = pickLinkedAntrag(voteId, db)
+    if (linked) return linked
+    const voteDocument = await pickFromVoteDocument(voteId, db)
+    if (voteDocument) return voteDocument
+  }
   const beschluss = findBeschluss(rows)
   if (beschluss) {
     const btitle = beschluss.title || ''

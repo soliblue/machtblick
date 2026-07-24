@@ -3,6 +3,8 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createHash } from 'node:crypto'
 import Database from 'better-sqlite3'
+import { argValue } from '../../_shared/worker.mjs'
+import { pinnedSourceDrucksache } from './source.mjs'
 
 const API = 'https://search.dip.bundestag.de/api/v1'
 const KEY = process.env.DIP_API_KEY ?? 'JuUJMTh.aode9HMRTazR7NwudVElhD26LeNADLxxST'
@@ -120,7 +122,14 @@ async function resolveProposer(dnr) {
 }
 
 const db = new Database(fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url)))
-const rows = db.prepare("SELECT id, document FROM votes WHERE vote_type IN ('handzeichen','hammelsprung') AND document IS NOT NULL").all()
+const voteFilter = argValue('--vote')
+const rows = db.prepare(`
+  SELECT id, document
+  FROM votes
+  WHERE vote_type IN ('handzeichen','hammelsprung')
+    AND document IS NOT NULL
+    AND (? IS NULL OR id = ?)
+`).all(voteFilter ?? null, voteFilter ?? null)
 console.log(`processing ${rows.length} votes`)
 
 const upd = db.prepare('UPDATE votes SET document = ? WHERE id = ?')
@@ -131,7 +140,9 @@ for (const r of rows) {
   if (!dnrs.length) { none++; continue }
   let proposer = null
   let type = null
-  for (const d of dnrs) {
+  const pinned = pinnedSourceDrucksache(r.id)
+  const ordered = pinned ? [pinned, ...dnrs.filter((dnr) => dnr !== pinned)] : dnrs
+  for (const d of ordered) {
     const source = await resolveProposer(d)
     if (source) {
       proposer = source.proposer
