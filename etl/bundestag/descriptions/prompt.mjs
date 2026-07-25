@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
-export const PROMPT_VERSION = 6
+export const PROMPT_VERSION = 7
 
 const promptPath = (name) => fileURLToPath(new URL(`../../../prompts/etl/bundestag/${name}.md`, import.meta.url))
 const RULES = readFileSync(promptPath('descriptions-rules'), 'utf8').trimEnd()

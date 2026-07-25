@@ -1,15 +1,20 @@
 import { db } from '@machtblick/db/client'
-import { members } from '@machtblick/db/schema'
+import { memberMandates, members } from '@machtblick/db/schema'
 import { sql } from 'drizzle-orm'
+import { buildDipMemberResolver, type DipMemberCandidate } from './dipMemberResolver.ts'
 
-const rows = db.all(sql`SELECT id, dip_person_id FROM ${members} WHERE dip_person_id IS NOT NULL`) as Array<{
-  id: string
-  dip_person_id: number
-}>
+const resolveMember = buildDipMemberResolver(db.all(sql`
+  SELECT DISTINCT
+    ${members.id},
+    ${members.name},
+    ${members.firstName} AS firstName,
+    ${members.lastName} AS lastName,
+    ${members.dipPersonId} AS dipPersonId
+  FROM ${members}
+  JOIN ${memberMandates} ON ${memberMandates.memberId} = ${members.id}
+  WHERE ${memberMandates.termId} = 21
+`) as DipMemberCandidate[])
 
-const byDipId = new Map<number, string>()
-for (const r of rows) byDipId.set(r.dip_person_id, r.id)
-
-export function memberIdForDipPerson(dipPersonId: number) {
-  return byDipId.get(dipPersonId) ?? null
+export function memberIdForDipPerson(dipPersonId: number, activityTitle = '') {
+  return resolveMember(dipPersonId, activityTitle)
 }

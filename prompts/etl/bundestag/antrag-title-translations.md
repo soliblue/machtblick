@@ -8,6 +8,8 @@ Rules:
 - title: translate the official title into natural English. German legalese becomes plain English; keep the meaning precise.
 - clean_title: translate the short phrase into a concise English phrase (imperative or noun phrase, under 100 characters). Return null when the input clean_title is null.
 - Preserve Drucksache numbers, party names, person names, institution names, dates, and counts verbatim.
+- Translate residence or a center of life abroad as living abroad, never as foreign nationality.
+- Translate "Volksverhetzung" as "incitement of the masses", using hyphens when it modifies a noun.
 - Keep "Bundestag" as Bundestag. Keep proper names of German laws; add a short English gloss only when the title is otherwise incomprehensible.
 - Do not add facts, commentary, or markdown.
 - Do not use Unicode dash punctuation.

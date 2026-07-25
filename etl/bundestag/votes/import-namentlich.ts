@@ -7,6 +7,7 @@ import { HONORIFICS, NAME_PARTICLES } from '../../_shared/names.ts'
 import { AW_API, AW_UA } from '../../_shared/awClient.ts'
 import { DETAIL_BALLOT_LABEL, needsXlsxRefresh, parseDetailBallots } from './detailBallots.ts'
 import { decodeHtmlEntities } from '../../_shared/entities.mjs'
+import { hasNextVoteListPage, parseVoteListPage } from './voteListPage.ts'
 
 const db = new Database(fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url)))
 const TERM_ID = Number(arg('--term') ?? 21)
@@ -266,26 +267,20 @@ async function fetchVoteLinks() {
     detailsByKey.set(key, [...(detailsByKey.get(key) ?? []), detail])
     detailsByDate.set(detail.date, [...(detailsByDate.get(detail.date) ?? []), detail])
   }
-  for (let offset = 0; ; offset += 30) {
-    const html = await fetchBundestag(`${LIST_URL}?offset=${offset}&limit=30`).then((r) => r.text())
-    const hits = Number(html.match(/data-hits="(\d+)"/)?.[1] ?? 0)
-    for (const row of html.matchAll(/<tr>([\s\S]*?)<\/tr>/g)) {
-      const body = row[1]
-      const xlsxUrl = body.match(/href="([^"]+_xls\.xlsx)"/)?.[1]
-      if (!xlsxUrl) continue
-      const pdfUrl = body.match(/href="([^"]+\.pdf)"/)?.[1] ?? null
-      const label = text(body.match(/<strong>\s*([\s\S]*?)\s*<\/strong>/)?.[1] ?? '')
-      const publicationDate = parseDate(text(body.match(/data-th="Veröffentlichung"[\s\S]*?<p>\s*([\s\S]*?)\s*<\/p>/)?.[1] ?? ''))
-      const date = publicationDate ?? parseDate(label.match(/^(\d{2}\.\d{2}\.\d{4,5})/)?.[1] ?? '')
-      const title = label.replace(/^\d{2}\.\d{2}\.\d{4,5}:\s*/, '').trim()
+  let hasNextPage = true
+  for (let offset = 0; hasNextPage; offset += 30) {
+    const page = parseVoteListPage(await fetchBundestag(`${LIST_URL}?offset=${offset}&limit=30`).then((r) => r.text()))
+    for (const download of page.downloads) {
+      const date = parseDate(download.publicationDate) ?? parseDate(download.label.match(/^(\d{2}\.\d{2}\.\d{4,5})/)?.[1] ?? '')
+      const title = download.label.replace(/^\d{2}\.\d{2}\.\d{4,5}:\s*/, '').trim()
       const matches = date && title ? detailsByKey.get(detailKey({ date, title })) : null
-      const detail = detailsByXlsxUrl.get(xlsxUrl) ?? matches?.shift() ?? (date && title ? matchDetailByPrefix(detailsByDate.get(date) ?? [], title) : null)
-      if (detail) detailsByXlsxUrl.set(xlsxUrl, detail)
-      const sourceId = detail?.sourceId ?? (Number(body.match(/abstimmung\?id=(\d+)/)?.[1] ?? 0) || null)
-      const sourceUrl = sourceId ? `https://www.bundestag.de/parlament/plenum/abstimmung/abstimmung?id=${sourceId}` : xlsxUrl
-      if (date && title) linksByKey.set(sourceId ? String(sourceId) : xlsxUrl, { date, title, description: detail?.description ?? null, initiator: detail?.initiator ?? null, pdfUrl, xlsxUrl, sourceUrl, sourceId })
+      const detail = detailsByXlsxUrl.get(download.xlsxUrl) ?? matches?.shift() ?? (date && title ? matchDetailByPrefix(detailsByDate.get(date) ?? [], title) : null)
+      if (detail) detailsByXlsxUrl.set(download.xlsxUrl, detail)
+      const sourceId = detail?.sourceId ?? download.sourceId
+      const sourceUrl = sourceId ? `https://www.bundestag.de/parlament/plenum/abstimmung/abstimmung?id=${sourceId}` : download.xlsxUrl
+      if (date && title) linksByKey.set(sourceId ? String(sourceId) : download.xlsxUrl, { date, title, description: detail?.description ?? null, initiator: detail?.initiator ?? null, pdfUrl: download.pdfUrl, xlsxUrl: download.xlsxUrl, sourceUrl, sourceId })
     }
-    if (offset + 30 >= hits) break
+    hasNextPage = hasNextVoteListPage(page, offset, 30)
   }
   for (const detail of details) {
     if (!linksByKey.has(String(detail.sourceId))) linksByKey.set(String(detail.sourceId), {

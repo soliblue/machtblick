@@ -10,6 +10,9 @@ Regeln:
 - Keine Fraktionsnamen, Drucksachennummern oder Formalien wie "Antrag" am Anfang, wenn der sachliche Kern ohne sie klar bleibt.
 - Keine Wertung und kein Abstimmungsergebnis.
 - Keine Gedankenstriche. Nutze Komma, Doppelpunkt oder normale Bindestriche in zusammengesetzten Begriffen.
+- Bewahre sachliche Einschraenkungen wie zustaendige Institution, benannte Programme, Personenkreis, Voraussetzungen und Zeitraum. Verallgemeinere sie nicht.
+- Wenn nur mehrere benannte Programme betroffen sind, schreibe nicht pauschal alle Foerderung.
+- Formuliere Aufenthalt, Wohnsitz oder Lebensmittelpunkt im Ausland nicht als auslaendische Staatsangehoerigkeit.
 - Wenn der offizielle Titel bereits kurz und gut verstaendlich ist, gib ihn bereinigt zurueck.
 - Gib null nur zurueck, wenn der Titel ohne Informationsverlust nicht sinnvoll gekuerzt werden kann.
 

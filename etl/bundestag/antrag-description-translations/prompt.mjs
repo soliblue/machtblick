@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
-export const PROMPT_VERSION = 'antrag-translation-en-v1'
+export const PROMPT_VERSION = 'antrag-translation-en-v2'
 const TEMPLATE = readFileSync(fileURLToPath(new URL('../../../prompts/etl/bundestag/antrag-description-translations.md', import.meta.url)), 'utf8').trimEnd()
 
 export function buildPrompt(rows) {

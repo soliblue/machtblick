@@ -9,6 +9,7 @@ Regeln für summary_simplified:
 
 Allgemeine Regeln:
 - Konkrete Zahlen und Eigennamen wortgetreu übernehmen.
+- Trenne unabhängige Pflichten in eigene Sätze. Übertrage eine Voraussetzung nur auf die Pflicht, die im Quelltext daran gebunden ist.
 - Keine §§-Zitate.
 - Keine Verfahrensformulierungen ("Der Antrag fordert...", "Die Fraktion XY möchte..."): nenne die Regel direkt.
 - Keine Erwähnung des Abstimmungsergebnisses, der Parteipolitik oder einer parteilichen Bewertung. Neutral bleiben.

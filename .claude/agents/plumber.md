@@ -66,6 +66,8 @@ Invariants:
 
 Upstream: `bundestag.de` plenary protocols + DIP search API. Tables: `votes` (one row per Abstimmung; vote types `namentlich`, `handzeichen`, `hammelsprung`), `vote_party_summaries` (per-vote per-fraction tally; counts upstream for namentlich, derived for the rest), `vote_members` (per-member ballot, namentlich only).
 
+The namentlich download list uses attributed `<tr>` elements, may omit `data-hits`, and publishes both `-xls.xlsx` and `_xls.xlsx` filenames. Parse both filename forms and use page length for pagination when the hit count is absent. Detail cards remain the source-id fallback but do not expose XLSX URLs.
+
 ### `result` is treacherous
 
 The chamber usually votes on a committee **Beschlussempfehlung**, which can recommend acceptance OR rejection of the underlying Antrag, so upstream `result = angenommen` can mean either outcome. Upstream is inconsistent: namentlich feeds tend to record the substantive outcome, handzeichen feeds the procedural one. After our normalization (`db:normalize` + polarity), **`votes.result` always means the substantive outcome for the underlying Antrag.** Apps read it directly; never compensate in the read path.
@@ -283,6 +285,7 @@ Tables: `antraege` (one row per vorgang; `initiative_fraktion` is the joined `in
 
 - **Introducing-position picker** (`pickIntroducingPosition`, `etl/dip/buildAntraege.ts`): Antrag vorgaenge take the `Antrag` step. Gesetzgebung vorgaenge prefer the `Gesetzentwurf` step with `zuordnung=BT` (form `21/N`); BReg bills are tabled in the Bundesrat first (`N/YY` form), and only the BT Drucksache matches `vote_documents`. BR-only rows (Länder bills that never reach BT) simply don't link, which is correct.
 - **Signatory whitelist:** only `Antrag` and `Gesetzentwurf` aktivitaetsart values map to signatories (confirmed by full cache scan; there is no `Urheberschaft` or `Mitunterzeichnung` art). `Berichterstattung` is a committee rapporteur, not a signatory.
+- **DIP person IDs are aliases, not stable person keys.** One MdB can have concurrent IDs after a faction-status change, and new MdBs can postdate the one-shot `members.dip_person_id` seed. Structured signatories resolve `person_id` directly first, then fall back to the unique normalized activity `titel` among WP21 mandate holders. Do not replace an older scalar ID with the newest alias because historical activities may still use it.
 - **Zero-signer rows are upstream truth**, not bugs: BReg bills (signed by ministry officials), coalition motions (attributed to "die Fraktion", confirmed 43/43 with `aktivitaet_anzahl=0`), and a handful of single-Fraktion motions with the same shape. Don't add fallback heuristics; the audit doesn't flag these.
 - **`vorgangsbezug` is multi-valued; scan ALL entries, not `[0]`.** ~2% of aktivitaeten list an EU-Vorlage vorgang first and the actual Antrag second; indexing `[0]` silently drops those signatories. Both `buildSignatoryRows` and the `process.ts` pre-filter iterate all entries; membership filtering against `antraege` does the final selection.
 

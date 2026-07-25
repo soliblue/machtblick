@@ -17,7 +17,7 @@ export function buildSignatoryRows(aktivitaeten: Aktivitaet[]) {
     if (!isAntrag) continue
     if (!a.person_id || !a.vorgangsbezug?.length) continue
     const dipPersonId = Number(a.person_id)
-    const memberId = memberIdForDipPerson(dipPersonId)
+    const memberId = memberIdForDipPerson(dipPersonId, a.titel)
     if (!memberId) continue
     for (const vb of a.vorgangsbezug) {
       const targetId = Number(vb.id)
