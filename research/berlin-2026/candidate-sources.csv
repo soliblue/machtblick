@@ -1,0 +1,24 @@
+party,candidacy_scope,coverage_status,published_count,source_url,notes,retrieved_at
+Alternative für Deutschland,all,missing,0,https://afd.berlin/abgeordnetenhauswahl/,"Admitted; no candidate names in the current dataset",2026-07-25
+Basisdemokratische Partei Deutschland,all,not_admitted,0,https://diebasis-berlin.de/wahlen/,"Not admitted; no candidate records included",2026-07-25
+bergpartei die überpartei,all,missing,0,,"Admitted in selected districts; no candidate names in the current dataset",2026-07-25
+Bündnis 90 Die Grünen,Landesliste,complete,50,https://gruene.berlin/unsere-kandidatinnen-fuer-die-liste-zur-abgeordnetenhauswahl-2026,"50 Landesliste candidacies; combined coverage is 90 unique people and 128 candidacies",2026-07-25
+Bündnis 90 Die Grünen,direct,complete,78,https://gruene.berlin/fileadmin/BE/lv_berlin/files/Direktkandidierende_AGHWahl_2026.pdf,"One candidate for every constituency",2026-07-25
+Bündnis Sahra Wagenknecht,Landesliste,complete,20,https://bsw.berlin/allgemein/bsw-berlin-komplettiert-landesliste-fuer-die-abgeordnetenhauswahl-2026/,"20 confirmed list candidates and 20 candidacies; 3 have biography and priority summaries",2026-07-25
+Christlich Demokratische Union Deutschlands,all,missing,0,,"Admitted with district lists in every district; no candidate names in the current dataset",2026-07-25
+Deutsche Kommunistische Partei,all,missing,0,https://berlin.dkp.de/dkp-bei-der-abgeordnetenhauswahl/,"Admitted; no candidate names on the campaign page",2026-07-25
+Die Heimat,all,missing,0,,"Admitted in selected districts; no candidate names in the current dataset",2026-07-25
+Die Linke,Bezirksliste_and_direct,complete,98,https://dielinke.berlin/partei/wahlen/abgeordnetenhauswahlen-2026/,"98 unique people and 163 candidacies across 12 district pages: 85 district-list and 78 direct; 87 biographies and 82 priority profiles",2026-07-25
+Die Urbane. Eine HipHop Partei,all,missing,0,https://www.die-urbane.de/die-urbane/landesverbaende/du-berlin.html,"Admitted; no candidate names in the current dataset",2026-07-25
+Freie Demokratische Partei,Landesliste,complete,24,https://www.fdp-berlin.de/ein-starkes-team-fuer-eine-stadt-die-wieder-funktioniert,"24 list candidates with public contact links",2026-07-25
+FREIE WÄHLER,all,not_admitted,0,,"Not admitted; no candidate records included",2026-07-25
+MERA25,all,not_admitted,0,https://mera25.de/berlin/,"Not admitted; no candidate records included",2026-07-25
+Ökologisch-Demokratische Partei,Landesliste,complete,8,https://www.oedp-berlin.de/wahlen/abgeordnetenhauswahl-2026/landesliste,"8 list candidates and 8 candidacies",2026-07-25
+Partei des Fortschritts,Landesliste,complete,7,https://partei-des-fortschritts.de/wahl-zum-abgeordnetenhaus-berlin/,"7 list candidates and 7 candidacies",2026-07-25
+Partei für Arbeit Rechtsstaat Tierschutz Elitenförderung und basisdemokratische Initiative,all,missing,0,https://die-partei-berlin.de/,"Admitted; no candidate names in the current dataset",2026-07-25
+PARTEI MENSCH KLIMA TIERSCHUTZ,Landesliste,complete,18,https://berlin.tierschutzpartei.de/berliner-wahlen-2026,"18 list candidates and 18 candidacies",2026-07-25
+Piratenpartei Deutschland,all,not_admitted,0,https://www.piratenpartei.berlin/,"Not admitted; no candidate records included",2026-07-25
+Sozialdemokratische Partei Deutschlands,Bezirksliste_and_direct,complete,111,https://spd.berlin/kandidatinnen/,"111 unique people and 180 candidacies: 102 district-list and 78 direct; 57 candidate sites yielded 53 biographies and 51 priority profiles",2026-07-25
+Sozialistische Gleichheitspartei Vierte Internationale,Landesliste,lead_candidate_only,1,https://www.wsws.org/de/articles/2026/07/13/yziz-j13.html,"One named lead candidate; no numbered list position or remaining list names published",2026-07-25
+Volt Deutschland,Landesliste,complete,19,https://voltdeutschland.org/berlin/neuigkeiten/volt-berlin-waehlt-landesliste-2026,"19 list candidacies; combined coverage is 79 unique people and 97 candidacies",2026-07-25
+Volt Deutschland,direct,complete,78,https://voltdeutschland.org/berlin/direktkandidierende-agh-2026,"One candidate for every constituency",2026-07-25

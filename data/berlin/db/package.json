@@ -1,0 +1,19 @@
+{
+  "name": "@machtblick/berlin-db",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./client": "./client.ts",
+    "./types": "./types.ts"
+  },
+  "scripts": {
+    "migrate": "tsx migrate.ts"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.5.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11"
+  }
+}

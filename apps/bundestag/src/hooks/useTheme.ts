@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-
-export type ThemeMode = 'light' | 'dark'
+import type { ThemeMode } from '@machtblick/web-ui'
 
 const STORAGE_KEY = 'machtblick.theme'
 

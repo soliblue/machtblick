@@ -1,0 +1,19 @@
+{
+  "name": "@machtblick/web-ui",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    },
+    "./styles.css": "./src/styles.css"
+  },
+  "peerDependencies": {
+    "react": "^19.2.6"
+  },
+  "dependencies": {
+    "lucide-react": "^1.14.0"
+  }
+}

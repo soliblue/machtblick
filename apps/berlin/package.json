@@ -1,0 +1,34 @@
+{
+  "name": "@machtblick/berlin",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "predev": "npm run all -w @machtblick/berlin-etl && npm run portraits:fetch",
+    "dev": "vite dev",
+    "prebuild": "npm run test:portraits -w @machtblick/berlin-etl && npm run test:portraits && npm run all -w @machtblick/berlin-etl && npm run portraits:fetch",
+    "build": "vite build",
+    "portraits:fetch": "node scripts/fetch-candidate-portraits.mjs",
+    "test:portraits": "node --test scripts/candidate-portrait-jpeg.test.mjs",
+    "start": "vite preview --port 5176"
+  },
+  "dependencies": {
+    "@machtblick/berlin-db": "*",
+    "@machtblick/web-ui": "*",
+    "@tanstack/react-router": "^1.169.2",
+    "@tanstack/react-start": "^1.167.65",
+    "lucide-react": "^1.14.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.0.1",
+    "sharp": "^0.35.3",
+    "tailwindcss": "^4.3.0",
+    "typescript": "^5.6.3",
+    "vite": "^8.0.12"
+  }
+}

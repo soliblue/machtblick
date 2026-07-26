@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@machtblick/db": "*",
+    "@machtblick/web-ui": "*",
     "@tanstack/react-query": "^5.62.7",
     "@tanstack/react-router": "^1.169.2",
     "@tanstack/react-start": "^1.167.65",

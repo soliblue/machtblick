@@ -1,12 +1,10 @@
 import { useState } from 'react'
 import { useRouterState } from '@tanstack/react-router'
+import { ProductPicker, ThemePicker, type ThemeMode } from '@machtblick/web-ui'
 import { Menu, X } from 'lucide-react'
-import { ScrollEyeWordmark } from '@/views/nav/ScrollEyeWordmark'
 import { useCopy } from '@/lib/i18n'
 import { localeFromPath, localizedPath, withLocale } from '@/lib/locale'
-import type { ThemeMode } from '@/hooks/useTheme'
 import { LanguagePicker } from './LanguagePicker'
-import { ThemePicker } from './ThemePicker'
 
 type Props = {
   theme: ThemeMode
@@ -28,13 +26,13 @@ export function Nav({ theme, onThemeChange }: Props) {
       style={{ borderBottom: '1px solid color-mix(in oklab, var(--color-fg) 15%, transparent)' }}
     >
       <div className="mx-auto flex h-full max-w-3xl items-center gap-l px-l text-m">
-        <a href={locale === 'en' ? '/en/' : '/'} onClick={() => setOpen(false)} aria-label="Machtblick"><ScrollEyeWordmark /></a>
-        <div className="ml-auto hidden gap-l desk:flex">
+        <ProductPicker current="Bundestag" bundestagHref={locale === 'en' ? 'https://machtblick.de/en/' : 'https://machtblick.de'} />
+        <div className="ml-auto hidden gap-l min-[760px]:flex">
           <a href={locale === 'en' ? '/en/' : '/'} className={linkClass}>{t.navVotes}</a>
           <a href={href('/members/')} className={linkClass}>{t.navMembers}</a>
           <a href={href('/parties/')} className={linkClass}>{t.navParties}</a>
         </div>
-        <div className="hidden items-center gap-m desk:flex">
+        <div className="hidden items-center gap-m min-[760px]:flex">
           <ThemePicker
             value={theme}
             label={t.appearance}
@@ -55,13 +53,13 @@ export function Nav({ theme, onThemeChange }: Props) {
           type="button"
           aria-label={open ? t.menuClose : t.menuOpen}
           onClick={() => setOpen((v) => !v)}
-          className="ml-auto desk:hidden"
+          className="ml-auto min-[760px]:hidden"
         >
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
       {open && (
-        <div className="absolute inset-x-0 top-full flex max-h-[calc(100svh-54px)] flex-col gap-l overflow-y-auto overscroll-contain border-y border-fg/15 bg-background px-l py-l text-m desk:hidden">
+        <div className="absolute inset-x-0 top-full flex max-h-[calc(100svh-54px)] flex-col gap-l overflow-y-auto overscroll-contain border-y border-fg/15 bg-background px-l py-l text-m min-[760px]:hidden">
           <div className="flex flex-col gap-m">
             <a href={locale === 'en' ? '/en/' : '/'} className={linkClass} onClick={() => setOpen(false)}>{t.navVotes}</a>
             <a href={href('/members/')} className={linkClass} onClick={() => setOpen(false)}>{t.navMembers}</a>

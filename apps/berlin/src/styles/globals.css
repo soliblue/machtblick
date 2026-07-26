@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@import "@machtblick/web-ui/styles.css";
+
+.candidate-card {
+  contain-intrinsic-block-size: auto 260px;
+  content-visibility: auto;
+}
+
+.comparison-card {
+  contain-intrinsic-block-size: auto 620px;
+  content-visibility: auto;
+}
+
+@media (pointer: coarse) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}

@@ -51,6 +51,7 @@ apps/bundestag/public/sitemap.xml
 apps/bundestag/public/votes.xml
 apps/bundestag/public/speeches-people.json
 apps/bundestag/public/members-photos/
+apps/berlin/public/candidate-portraits/
 apps/bundestag/public/members/*.json
 apps/bundestag/public/parties/*.json
 

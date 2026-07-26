@@ -1,0 +1,1986 @@
+[
+  {
+    "partySlug": "afd",
+    "status": "current_2026",
+    "title": "Berlin. Stark. Machen.",
+    "sourceUrl": "https://reinickendorf.afd.berlin/wp-content/uploads/2026/07/AfD-WK-Berlin-Wahlprogramm-Webversion-1.pdf",
+    "publicationDate": "2026-07-17",
+    "summary": "Das Berliner AfD-Wahlprogramm verbindet eine stark restriktive Migrationspolitik mit mehr Polizei und Überwachung, einem marktfreundlicheren Wohnungsbau, einer autoorientierten Verkehrspolitik und der Ablehnung zentraler Berliner Klimaziele.",
+    "topics": [
+      {
+        "slug": "wohnen",
+        "title": "Wohnen und Bauen",
+        "summary": "Die AfD setzt vor allem auf weniger Regulierung, private Investitionen und eine bevorzugte Vergabe geförderten Wohnraums an langjährig in Berlin lebende Menschen.",
+        "positions": [
+          "Ein Punktesystem soll bei geförderten und landeseigenen Wohnungen unter anderem Wohnsitzdauer, Einkommen, Kinder und systemrelevante Berufe berücksichtigen.",
+          "Enteignungen von Wohnungsunternehmen und einen Mietendeckel lehnt die Partei ab, stattdessen will sie Bauvorschriften und Milieuschutz lockern.",
+          "Für selbst genutztes Wohneigentum fordert sie öffentliche Bürgschaften, die Abschaffung der Grunderwerbsteuer beim Ersterwerb und langfristig die Abschaffung der Grundsteuer.",
+          "Sozialwohnungen sollen stärker über Mietzuschüsse für Berechtigte statt über dauerhafte Objektförderung zugänglich werden."
+        ],
+        "categories": [
+          "wohnen"
+        ]
+      },
+      {
+        "slug": "innere-sicherheit",
+        "title": "Innere Sicherheit und Justiz",
+        "summary": "Polizei, Justiz und Ordnungsämter sollen mehr Personal, Technik und Eingriffsbefugnisse erhalten.",
+        "positions": [
+          "Die Partei fordert mehr Personal und bessere Ausstattung für Polizei, Justiz und Feuerwehr sowie eine neue Bezirkspolizei bei den Ordnungsämtern.",
+          "Kriminalitätsschwerpunkte sollen vollständig videoüberwacht und häufiger ohne konkreten Anlass kontrolliert werden.",
+          "Das Landesantidiskriminierungsgesetz soll aufgehoben und das Vermummungsverbot bei Versammlungen wieder verschärft werden.",
+          "Bodycams, Taser und Waffenverbotszonen sollen breiter eingesetzt werden."
+        ],
+        "categories": [
+          "sicherheit-migration",
+          "verwaltung-demokratie"
+        ]
+      },
+      {
+        "slug": "migration-integration",
+        "title": "Migration, Asyl und Staatsangehörigkeit",
+        "summary": "Das Programm verlangt einen weitgehenden Aufnahmestopp, mehr Abschiebungen und eine deutliche Begrenzung von Einbürgerung.",
+        "positions": [
+          "Berlin soll nach dem Willen der Partei keine weiteren Asylsuchenden aufnehmen und zusätzliche Aufnahmeprogramme beenden.",
+          "Ausreisepflichtige Menschen sollen schneller abgeschoben, Leistungen stärker als Sachleistungen gewährt und ein Berliner Winterabschiebestopp ausgeschlossen werden.",
+          "Die Partei will Einbürgerungen begrenzen und eine nach ihrer Darstellung konsequente Remigrationspolitik verfolgen.",
+          "Integrationsleistungen sollen verbindlicher eingefordert und bei Verstößen gegen Regeln sanktioniert werden."
+        ],
+        "categories": [
+          "sicherheit-migration"
+        ]
+      },
+      {
+        "slug": "bildung",
+        "title": "Schule und Bildung",
+        "summary": "Die AfD betont Leistung, Disziplin, gegliederte Schulformen und die deutsche Sprache.",
+        "positions": [
+          "Noten, Kopfnoten und verbindliche Leistungsstandards sollen gestärkt werden.",
+          "Das gegliederte Schulsystem und Förderschulen sollen erhalten, eine vollständige Inklusion abgelehnt werden.",
+          "Schulen sollen bei Gewalt und schweren Störungen mit Auszeiten, Ordnungsmaßnahmen und stärkerer Autorität reagieren können.",
+          "Deutschkenntnisse sollen vor der Einschulung verbindlich geprüft und bei Bedarf intensiv gefördert werden."
+        ],
+        "categories": [
+          "bildung"
+        ]
+      },
+      {
+        "slug": "mobilitaet",
+        "title": "Mobilität und Verkehr",
+        "summary": "Das Programm will Bus und Bahn verbessern, weist dem Auto aber weiterhin eine zentrale Rolle zu.",
+        "positions": [
+          "U-Bahn, S-Bahn und Bus sollen ausgebaut, Takte verdichtet und Außenbezirke besser angebunden werden.",
+          "Straßenkapazitäten und Parkplätze sollen erhalten, die A100 weitergebaut und pauschale Tempo-30-Regelungen zurückgenommen werden.",
+          "Rad- und Fußverkehr sollen dort ausgebaut werden, wo dies den Autoverkehr nach Auffassung der Partei nicht unverhältnismäßig einschränkt.",
+          "Verkehrsmittel sollen digital besser verknüpft und neue Antriebe technologieoffen behandelt werden."
+        ],
+        "categories": [
+          "mobilitaet"
+        ]
+      },
+      {
+        "slug": "klima-energie",
+        "title": "Klima, Energie und Umwelt",
+        "summary": "Die AfD lehnt die Berliner Klimaneutralitätsziele und einen schnellen Ausstieg aus fossilen Energieträgern ab.",
+        "positions": [
+          "Das Berliner Klimaschutz- und Energiewendegesetz soll durch ein auf Versorgungssicherheit ausgerichtetes Gesetz ersetzt werden.",
+          "Das Ziel eines klimaneutralen Berlins bis 2045 wird abgelehnt.",
+          "Gas und Kohle sollen länger genutzt, Kernenergie auf Bundesebene wieder ermöglicht und Windkraftanlagen in Berliner Wäldern ausgeschlossen werden.",
+          "Kleingärten, Wälder und Stadtgrün sollen geschützt, zusätzliche landesrechtliche Solarpflichten aber abgelehnt werden."
+        ],
+        "categories": [
+          "klima-umwelt"
+        ]
+      },
+      {
+        "slug": "demokratie-verwaltung",
+        "title": "Demokratie und Verwaltung",
+        "summary": "Direktwahlen und Volksabstimmungen sollen ausgebaut, Verwaltung und Haushalt stärker auf Kernaufgaben ausgerichtet werden.",
+        "positions": [
+          "Der Regierende Bürgermeister und die Bezirksbürgermeister sollen direkt gewählt werden.",
+          "Volksabstimmungen und ein Einspruchsrecht der Bevölkerung gegen Parlamentsentscheidungen sollen erleichtert werden.",
+          "Verwaltungsverfahren sollen digitalisiert, Zuständigkeiten klarer gebündelt und Personal nach Leistung ausgewählt werden.",
+          "Der Haushalt soll Ausgaben für aus Sicht der Partei ideologische Projekte kürzen und Investitionen in Infrastruktur priorisieren."
+        ],
+        "categories": [
+          "verwaltung-demokratie"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "title": "Wahlprogramm Berlin 2026",
+        "url": "https://reinickendorf.afd.berlin/wp-content/uploads/2026/07/AfD-WK-Berlin-Wahlprogramm-Webversion-1.pdf",
+        "format": "pdf",
+        "embeddable": false,
+        "publisher": "AfD Berlin",
+        "publicationDate": "2026-07-17",
+        "kind": "wahlprogramm"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  },
+  {
+    "partySlug": "b",
+    "status": "general",
+    "title": "Parteiprogramm, Stand 27. Dezember 2023",
+    "sourceUrl": "https://www.bundeswahlleiterin.de/dam/jcr/cd0291eb-794b-4067-99cc-935ca9446a64/b.pdf",
+    "publicationDate": "2023-12-27",
+    "summary": "Ein eigenes Programm für die Berlin-Wahl 2026 war nicht auffindbar. Das archivierte allgemeine Programm der B* verbindet Ökoanarchismus, Selbstorganisation und solidarische Ökonomie mit dadaistischen und satirischen Forderungen. Es ist kein aktuelles Berlin-Wahlprogramm.",
+    "topics": [
+      {
+        "slug": "demokratie-teilhabe",
+        "title": "Selbstorganisation und Demokratie",
+        "summary": "Das allgemeine Programm stellt horizontale Organisation, Konsens und direkte Beteiligung in den Mittelpunkt.",
+        "positions": [
+          "Politische Strukturen sollen sich von unten nach oben aus selbstständigen, gleichberechtigten Kollektiven bilden.",
+          "Wesentliche Entscheidungen sollen im Konsens getroffen und Verantwortung nicht an eine Parteiführung abgegeben werden.",
+          "Transparenz und verbindlichere Wahlversprechen sollen die Beteiligung an staatlichen Strukturen stärken."
+        ],
+        "categories": [
+          "verwaltung-demokratie",
+          "vielfalt-teilhabe"
+        ]
+      },
+      {
+        "slug": "wirtschaft-soziales",
+        "title": "Wirtschaft und soziale Sicherung",
+        "summary": "Die B* fordert eine solidarische, wachstumskritische Wirtschaftsordnung.",
+        "positions": [
+          "Ein bedingungsloses Grundeinkommen soll mit dem Abbau neoliberaler Arbeitsmarktreformen verbunden werden.",
+          "Das Programm fordert Obergrenzen für großen Besitz und eine stärkere Angleichung von Erbschaften.",
+          "Regionale Währungen mit Wertverlust, solidarische Ökonomie und die Abschaffung von Zinsen werden als Alternativen genannt."
+        ],
+        "categories": [
+          "wirtschaft-arbeit",
+          "soziales-gesundheit"
+        ]
+      },
+      {
+        "slug": "klima-mobilitaet",
+        "title": "Klima und Mobilität",
+        "summary": "Ökologische Forderungen werden teilweise bewusst zugespitzt und satirisch formuliert.",
+        "positions": [
+          "Erneuerbare Energie soll ungehindert ausgebaut und die Besteuerung von Kraftstoffen grundlegend reformiert werden.",
+          "Verkehrsflächen sollen stärker zugunsten von Fußverkehr, Radverkehr und Menschen mit eingeschränkter Mobilität geordnet werden.",
+          "Das Programm verbindet den Schutz von Bäumen mit einer satirisch formulierten Verringerung des Autobestands."
+        ],
+        "categories": [
+          "klima-umwelt",
+          "mobilitaet"
+        ]
+      },
+      {
+        "slug": "bildung-kultur",
+        "title": "Bildung und Freiräume",
+        "summary": "Lernen, Kreativität und nicht kommerzielle Räume sollen weniger durch Konkurrenz und Bewertung geprägt sein.",
+        "positions": [
+          "Schule soll Freundschaft, freien Geist und selbstständiges Lernen stärker fördern als Konkurrenz und Benotung.",
+          "Bedrohte Freiräume sollen erhalten und neue Räume für Kreativität und Gemeinschaft ohne kommerziellen Druck geschaffen werden.",
+          "Initiativen, die solche Freiräume organisieren, sollen besser vernetzt werden."
+        ],
+        "categories": [
+          "bildung",
+          "kultur"
+        ]
+      },
+      {
+        "slug": "frieden-aussenpolitik",
+        "title": "Frieden und Außenpolitik",
+        "summary": "Das allgemeine Programm vertritt antimilitaristische und internationalistische Positionen.",
+        "positions": [
+          "Deutschland soll aus der NATO austreten.",
+          "Das Verteidigungsministerium soll für zivile Zwischennutzungen und andere öffentliche Aufgaben umgewidmet werden.",
+          "Grenzen und Nationalismus werden grundsätzlich infrage gestellt."
+        ],
+        "categories": [
+          "frieden"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "title": "Programm, Stand 27. Dezember 2023",
+        "url": "https://www.bundeswahlleiterin.de/dam/jcr/cd0291eb-794b-4067-99cc-935ca9446a64/b.pdf",
+        "format": "pdf",
+        "embeddable": false,
+        "publisher": "bergpartei, die überpartei",
+        "publicationDate": "2023-12-27",
+        "kind": "other"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  },
+  {
+    "partySlug": "gruene",
+    "status": "current_2026",
+    "title": "Politik ändern, Berlin bleiben",
+    "sourceUrl": "https://gruene.berlin/fileadmin/BE/lv_berlin/files/Wahlprogramm_2026_Online.pdf",
+    "publicationDate": "2026-02-15",
+    "summary": "Das Grünen-Programm verbindet eine beschleunigte Wärme-, Strom- und Verkehrswende mit stärkerem Mieterschutz, sozialer Teilhabe, Antidiskriminierung und einer digitaleren Verwaltung.",
+    "topics": [
+      {
+        "slug": "klima-energie",
+        "title": "Klima und Energie",
+        "summary": "Berlin soll schneller klimaneutral werden und Wärme, Strom und Gebäude systematisch auf erneuerbare Energie umstellen.",
+        "positions": [
+          "Die Berliner Wärmeversorgung soll mit Großwärmepumpen, Geothermie, Abwärme und erneuerbaren Quellen dekarbonisiert werden.",
+          "Öffentliche Dächer sollen bis 2030 weitgehend mit Solarenergie ausgestattet und Mieterstrommodelle ausgeweitet werden.",
+          "Neue Landesvorhaben sollen einen verbindlichen Klimacheck durchlaufen.",
+          "Stadtgrün, Entsiegelung, Schwammstadtmaßnahmen und Hitzeschutz sollen Berlin an Extremwetter anpassen."
+        ],
+        "categories": [
+          "klima-umwelt"
+        ]
+      },
+      {
+        "slug": "wohnen",
+        "title": "Wohnen und Mieten",
+        "summary": "Die Grünen wollen Mieterschutz ausweiten, bezahlbare Anteile in großen Beständen sichern und mehr gemeinwohlorientierten Wohnraum schaffen.",
+        "positions": [
+          "Ein Berliner Bezahlbare-Mieten-Gesetz soll größere Vermieter zu einem Anteil bezahlbarer Wohnungen und zu Rücklagen für Instandhaltung verpflichten.",
+          "Landeseigene Wohnungen sollen durch Belegungsquoten, begrenzte Mietsteigerungen und eine Privatisierungsbremse dauerhaft bezahlbar bleiben.",
+          "Leerstand, Zweckentfremdung und missbräuchliche möblierte Kurzzeitvermietung sollen schärfer kontrolliert werden.",
+          "Berlin soll sich im Bund für wirksamere Mietbegrenzung, eine Einschränkung von Indexmieten und eine Länderöffnung für weitergehende Regeln einsetzen."
+        ],
+        "categories": [
+          "wohnen"
+        ]
+      },
+      {
+        "slug": "mobilitaet",
+        "title": "Mobilität",
+        "summary": "Bus und Bahn, Rad- und Fußverkehr sollen zuverlässiger, sicherer und im Straßenraum stärker priorisiert werden.",
+        "positions": [
+          "U-Bahn, Straßenbahn, S-Bahn und Bus sollen ausgebaut, modernisiert und in den Außenbezirken dichter getaktet werden.",
+          "Sichere Radnetze, Schulstraßen, barrierefreie Wege und verkehrsberuhigte Kieze sollen den Umweltverbund stärken.",
+          "Eine Verlängerung der A100 wird abgelehnt.",
+          "Höhere und stärker gestaffelte Bewohnerparkgebühren sollen unter anderem den öffentlichen Verkehr finanzieren."
+        ],
+        "categories": [
+          "mobilitaet"
+        ]
+      },
+      {
+        "slug": "bildung",
+        "title": "Bildung und Betreuung",
+        "summary": "Das Programm setzt auf gebührenfreie, inklusive Bildung, mehr Gemeinschaftsschulen und multiprofessionelle Teams.",
+        "positions": [
+          "Die Zahl der Gemeinschaftsschulen soll verdoppelt und längeres gemeinsames Lernen gestärkt werden.",
+          "Schulen sollen mehr Lehrkräfte, Sozialarbeit, Psychologie und weitere Fachprofessionen in festen Teams erhalten.",
+          "Grundkompetenzen sollen gesichert, Lernfortschritte aber mit moderneren Rückmeldungen statt allein über Noten begleitet werden.",
+          "Der Kitagutschein soll ab dem ersten Geburtstag automatisch verfügbar sein und frühkindliche Sprachförderung ausgebaut werden."
+        ],
+        "categories": [
+          "bildung"
+        ]
+      },
+      {
+        "slug": "wirtschaft-arbeit",
+        "title": "Wirtschaft und Arbeit",
+        "summary": "Eine klimaneutrale, innovative Wirtschaft soll mit fairen Arbeitsbedingungen und gezielter Entbürokratisierung verbunden werden.",
+        "positions": [
+          "Genehmigungen und Förderzugänge sollen einfacher werden, ohne Umwelt-, Sozial- oder Beteiligungsstandards abzubauen.",
+          "Start-ups, Wissenschaftstransfer, Kultur- und Kreativwirtschaft sowie soziale Unternehmen sollen stärker unterstützt werden.",
+          "Tarifbindung, Mitbestimmung und gute Arbeitsbedingungen sollen bei öffentlicher Vergabe und Förderung mehr Gewicht erhalten.",
+          "Kreislaufwirtschaft, regionale Wertschöpfung und nachhaltige öffentliche Beschaffung sollen ausgebaut werden."
+        ],
+        "categories": [
+          "wirtschaft-arbeit",
+          "klima-umwelt"
+        ]
+      },
+      {
+        "slug": "vielfalt-antidiskriminierung",
+        "title": "Vielfalt und soziale Teilhabe",
+        "summary": "Die Grünen verstehen Schutz vor Diskriminierung und gleichberechtigte Teilhabe als Querschnittsaufgabe.",
+        "positions": [
+          "Das Landesantidiskriminierungsrecht und unabhängige Beratungsangebote sollen gestärkt werden.",
+          "Queere Menschen, Geflüchtete, Menschen mit Behinderungen und von Rassismus Betroffene sollen besser geschützt und beteiligt werden.",
+          "Barrierefreiheit soll bei öffentlichen Gebäuden, Verkehr, Digitalisierung und Kultur verbindlicher umgesetzt werden.",
+          "Soziale Infrastruktur, Prävention und niedrigschwellige Gesundheitsangebote sollen in allen Kiezen gesichert werden."
+        ],
+        "categories": [
+          "vielfalt-teilhabe",
+          "soziales-gesundheit"
+        ]
+      },
+      {
+        "slug": "verwaltung-digitalisierung",
+        "title": "Verwaltung und Digitalisierung",
+        "summary": "Verwaltungsleistungen sollen digital, zugänglich und datensparsam aus einer Hand angeboten werden.",
+        "positions": [
+          "Ein digitales Bürgeramt und das Once-only-Prinzip sollen wiederholte Nachweise und Behördengänge vermeiden.",
+          "Öffentlich finanzierte Software soll möglichst als Open Source entwickelt und öffentliche Daten nach Open-Data-Grundsätzen bereitgestellt werden.",
+          "Zuständigkeiten zwischen Senat und Bezirken sollen klarer werden und Bezirke ausreichend Personal und Mittel erhalten.",
+          "Digitale Angebote sollen barrierefrei sein und analoge Zugänge weiterhin offenhalten."
+        ],
+        "categories": [
+          "verwaltung-demokratie",
+          "vielfalt-teilhabe"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "title": "Landeswahlprogramm 2026",
+        "url": "https://gruene.berlin/fileadmin/BE/lv_berlin/files/Wahlprogramm_2026_Online.pdf",
+        "format": "pdf",
+        "embeddable": false,
+        "publisher": "Bündnis 90/Die Grünen Berlin",
+        "publicationDate": "2026-02-15",
+        "kind": "wahlprogramm"
+      },
+      {
+        "title": "Wahlprogramm 2026 in leichter Sprache",
+        "url": "https://gruene.berlin/fileadmin/BE/lv_berlin/files/Wahlprogramm_2026_Leichte_Sprache_Online.pdf",
+        "format": "pdf",
+        "embeddable": false,
+        "publisher": "Bündnis 90/Die Grünen Berlin",
+        "publicationDate": "2026-02-15",
+        "kind": "kurzprogramm"
+      },
+      {
+        "title": "Wahlprogramm 2026 im Web",
+        "url": "https://gruene.berlin/wahlprogramm",
+        "format": "html",
+        "publisher": "Bündnis 90/Die Grünen Berlin",
+        "publicationDate": "2026-02-15",
+        "kind": "wahlprogramm"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  },
+  {
+    "partySlug": "bsw",
+    "status": "current_2026",
+    "title": "Wahlprogramm des BSW Berlin zur Abgeordnetenhauswahl 2026",
+    "sourceUrl": "https://bsw.berlin/wp-content/uploads/Wahlprogramm-BSW-Berlin-AGH-Wahl-2026.pdf",
+    "publicationDate": "2026-04-25",
+    "summary": "Das BSW verbindet eine interventionistische Sozial- und Wohnungspolitik mit einem starken Friedensschwerpunkt, einer Begrenzung von Migration, wirtschaftspolitischem Pragmatismus und dem Anspruch auf einen funktionierenden Staat.",
+    "topics": [
+      {
+        "slug": "frieden-aussenpolitik",
+        "title": "Frieden und Militarisierung",
+        "summary": "Das Programm lehnt Aufrüstung, Wehrpflicht und eine militärische Nutzung Berliner Infrastruktur ab.",
+        "positions": [
+          "Das BSW fordert ein Ende der Aufrüstung und der deutschen Beteiligung an den Kriegen in der Ukraine und im Nahen Osten.",
+          "Eine verbindliche Zivilklausel soll Kooperationen von Berliner Schulen und Hochschulen mit NATO, Bundeswehr und Rüstungszwecken ausschließen.",
+          "Bundeswehrwerbung in Schulen, in Fahrzeugen des Nahverkehrs und im öffentlichen Raum soll soweit landesrechtlich möglich verboten werden.",
+          "Investitionen in Brücken, Verkehr und Krankenhäuser sollen ausschließlich zivilen Bedürfnissen dienen."
+        ],
+        "categories": [
+          "frieden"
+        ]
+      },
+      {
+        "slug": "wohnen",
+        "title": "Wohnen und Mieten",
+        "summary": "Wohnen soll stärker als öffentliche Daseinsvorsorge behandelt und der Mietmarkt enger reguliert werden.",
+        "positions": [
+          "Der Volksentscheid Deutsche Wohnen & Co. enteignen soll umgesetzt werden.",
+          "Berlin soll über den Bundesrat einen Mietendeckel für angespannte Wohnungsmärkte ermöglichen.",
+          "Landeseigene, gemeinnützige und genossenschaftliche Wohnungen sowie dauerhaft gebundener Sozialwohnraum sollen ausgebaut werden.",
+          "Möblierte Kurzzeitvermietung, Mikroapartments und spekulativer Leerstand sollen stärker begrenzt werden."
+        ],
+        "categories": [
+          "wohnen"
+        ]
+      },
+      {
+        "slug": "wirtschaft-arbeit",
+        "title": "Wirtschaft, Arbeit und Soziales",
+        "summary": "Das BSW will Industrie und Mittelstand stärken, Tarifbindung ausweiten und soziale Leistungen vor Kürzungen schützen.",
+        "positions": [
+          "Öffentliche Aufträge und Förderungen sollen an Tariflöhne und gute Arbeitsbedingungen gebunden werden.",
+          "Das Programm wirbt für einen gesetzlichen Mindestlohn von mindestens 15 Euro und eine höhere Allgemeinverbindlichkeit von Tarifverträgen.",
+          "Industrie und kleine Unternehmen sollen durch günstigere Energie und weniger unnötige Bürokratie entlastet werden.",
+          "Soziale Beratung, Kultur, Gesundheit und öffentliche Infrastruktur sollen nicht zugunsten von Rüstungsausgaben gekürzt werden."
+        ],
+        "categories": [
+          "wirtschaft-arbeit",
+          "soziales-gesundheit"
+        ]
+      },
+      {
+        "slug": "migration-integration",
+        "title": "Migration und innere Sicherheit",
+        "summary": "Migration soll nach Auffassung des BSW stärker kontrolliert und begrenzt werden, zugleich grenzt sich das Programm von rassistischer Diskriminierung ab.",
+        "positions": [
+          "Die Aufnahme soll an kommunalen Kapazitäten ausgerichtet und irreguläre Zuwanderung begrenzt werden.",
+          "Menschen ohne Bleiberecht sowie ausländische Straftäter sollen konsequenter abgeschoben werden.",
+          "Polizei und Justiz sollen bürgernah, personell ausreichend ausgestattet und schneller arbeitsfähig sein.",
+          "Pauschale Überwachung und eine Softwareabhängigkeit von Anbietern wie Palantir werden abgelehnt."
+        ],
+        "categories": [
+          "sicherheit-migration"
+        ]
+      },
+      {
+        "slug": "bildung",
+        "title": "Bildung",
+        "summary": "Das Programm kombiniert frühe Sprachförderung und klare Leistungsstandards mit Gemeinschaftsschulen und multiprofessioneller Unterstützung.",
+        "positions": [
+          "Sprachentwicklung soll ab dem dritten Lebensjahr geprüft und der Kitabesuch ab vier Jahren verpflichtend werden.",
+          "Lesen, Schreiben und Rechnen sollen in Grundschulen wieder stärker im Zentrum stehen, Smartphones und Tablets dort begrenzt werden.",
+          "Gemeinschaftsschulen und längeres gemeinsames Lernen sollen ausgebaut werden.",
+          "Förderschulen und die Wahlmöglichkeit der Eltern sollen parallel zur Inklusion erhalten bleiben."
+        ],
+        "categories": [
+          "bildung"
+        ]
+      },
+      {
+        "slug": "mobilitaet",
+        "title": "Mobilität",
+        "summary": "Bus und Bahn sollen deutlich ausgebaut werden, das Programm erkennt aber auch die Rolle des Autos besonders in Außenbezirken an.",
+        "positions": [
+          "U-Bahn, S-Bahn, Straßenbahn und Bus sollen vor allem in den Außenbezirken ausgebaut und verlässlicher werden.",
+          "Fuß- und Radwege sollen sicherer und als zusammenhängende Netze geplant werden.",
+          "Auto, Fahrrad, Fußverkehr und Nahverkehr sollen ohne pauschale Verbote in ein gemeinsames Verkehrskonzept eingebunden werden.",
+          "Die Verkehrsinfrastruktur soll instandgesetzt und Entscheidungen stärker am tatsächlichen Bedarf der Bezirke ausgerichtet werden."
+        ],
+        "categories": [
+          "mobilitaet"
+        ]
+      },
+      {
+        "slug": "verwaltung-digitalisierung",
+        "title": "Verwaltung und Digitalisierung",
+        "summary": "Berlin soll digital souveräner, schneller und personell handlungsfähiger werden.",
+        "positions": [
+          "Öffentliche IT soll stärker auf freie Software, offene Standards und eigene Kompetenz setzen.",
+          "Behördendaten sollen als offene Daten verfügbar sein, soweit Datenschutz und Sicherheit dies erlauben.",
+          "Personalgewinnung, Bezahlung und Arbeitsbedingungen im öffentlichen Dienst sollen verbessert werden.",
+          "Verfahren sollen vereinfacht und Zuständigkeiten nachvollziehbar gebündelt werden."
+        ],
+        "categories": [
+          "verwaltung-demokratie",
+          "wirtschaft-arbeit"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "title": "Wahlprogramm BSW Berlin 2026",
+        "url": "https://bsw.berlin/wp-content/uploads/Wahlprogramm-BSW-Berlin-AGH-Wahl-2026.pdf",
+        "format": "pdf",
+        "publisher": "BSW Landesverband Berlin",
+        "publicationDate": "2026-04-25",
+        "kind": "wahlprogramm"
+      },
+      {
+        "title": "Veröffentlichungsseite des Wahlprogramms",
+        "url": "https://bsw.berlin/allgemein/entwurf-des-landeswahlprogramms-des-berliner-bsw/",
+        "format": "html",
+        "publisher": "BSW Landesverband Berlin",
+        "publicationDate": "2026-04-25",
+        "kind": "other"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  },
+  {
+    "partySlug": "cdu",
+    "status": "current_2026",
+    "title": "Berlin wird.",
+    "sourceUrl": "https://berlin-wird.de/image/uploads/data/regierungsprogramm2026_2031.pdf",
+    "publicationDate": "2026-07-14",
+    "summary": "Das CDU-Regierungsprogramm wirbt für Kontinuität mit stärkerer Polizei, geordneter Migration, mehr Wohnungsbau und Eigentum, wirtschaftliches Wachstum, ein leistungsorientiertes Bildungssystem sowie eine Verkehrspolitik, die alle Verkehrsmittel einschließlich des Autos berücksichtigt.",
+    "topics": [
+      {
+        "slug": "innere-sicherheit",
+        "title": "Sicherheit und Justiz",
+        "summary": "Polizei, Feuerwehr und Justiz sollen personell, technisch und baulich weiter gestärkt werden.",
+        "positions": [
+          "Die CDU will mehr Polizeipersonal, moderne Dienststellen und eine bessere Bezahlung und Ausstattung der Einsatzkräfte.",
+          "Bodycams, Taser, intelligente Videoüberwachung und Waffenverbotszonen sollen weiter eingesetzt werden.",
+          "Organisierte Kriminalität, Steuerkriminalität, Extremismus und Antisemitismus sollen mit spezialisierten Strukturen verfolgt werden.",
+          "Feuerwehr, Rettungsdienst und Katastrophenschutz sollen krisenfester und verlässlicher finanziert werden."
+        ],
+        "categories": [
+          "sicherheit-migration"
+        ]
+      },
+      {
+        "slug": "migration-integration",
+        "title": "Migration und Integration",
+        "summary": "Die CDU will Migration ordnen und begrenzen sowie Integration stärker mit Regeln und Eigenleistung verbinden.",
+        "positions": [
+          "Menschen ohne Bleiberecht und ausländische Straftäter sollen schneller zurückgeführt werden.",
+          "Aufnahme und Unterbringung sollen stärker an Berlins tatsächlichen Kapazitäten ausgerichtet werden.",
+          "Deutschlernen, Erwerbsarbeit und die Anerkennung der freiheitlichen Ordnung werden als zentrale Integrationsanforderungen formuliert.",
+          "Einbürgerungsverfahren sollen verlässlich sein, Missbrauch aber konsequenter verhindert werden."
+        ],
+        "categories": [
+          "sicherheit-migration"
+        ]
+      },
+      {
+        "slug": "wohnen",
+        "title": "Wohnen und Stadtentwicklung",
+        "summary": "Mehr und schnellerer Neubau, Mieterschutz und eine höhere Eigentumsquote sollen zusammenwirken.",
+        "positions": [
+          "Planungs- und Genehmigungsverfahren sollen vereinfacht und serielles sowie modulares Bauen ausgeweitet werden.",
+          "Landeseigene, genossenschaftliche und private Bauträger sollen gemeinsam mehr Wohnraum schaffen.",
+          "Bezahlbare Bestandsmieten und Sozialwohnungen sollen gesichert, Wohneigentum besonders für Familien gefördert werden.",
+          "Neue Quartiere sollen mit Schulen, Verkehr, Gewerbe und Grünflächen geplant werden."
+        ],
+        "categories": [
+          "wohnen"
+        ]
+      },
+      {
+        "slug": "wirtschaft-arbeit",
+        "title": "Wirtschaft und Innovation",
+        "summary": "Berlin soll als Standort für Mittelstand, Industrie, Forschung und Gründungen wachsen.",
+        "positions": [
+          "Genehmigungen sollen über zentrale Anlaufstellen schneller und digitaler werden.",
+          "Mittelstand, Handwerk und Industrie sollen von Bürokratie entlastet und bei Fachkräftegewinnung unterstützt werden.",
+          "Start-ups, Wissenschaftstransfer, Gesundheitswirtschaft und Zukunftstechnologien sollen gezielt gefördert werden.",
+          "Der Landeshaushalt soll solide bleiben und Investitionen stärker priorisieren."
+        ],
+        "categories": [
+          "wirtschaft-arbeit"
+        ]
+      },
+      {
+        "slug": "bildung",
+        "title": "Bildung",
+        "summary": "Die CDU setzt auf frühe Deutschförderung, verbindliche Grundlagen, Leistung und modernere Schulen.",
+        "positions": [
+          "Ein verpflichtendes Chancenjahr vor der Schule soll sicherstellen, dass Kinder ausreichend Deutsch sprechen.",
+          "Deutsch und Mathematik sollen durch verbindliche Standards, regelmäßige Tests und gezielte Förderung gestärkt werden.",
+          "Noten, das Gymnasium und unterschiedliche Bildungswege sollen erhalten bleiben.",
+          "Schulen sollen saniert, digital ausgestattet und durch professionellen IT-Support unterstützt werden."
+        ],
+        "categories": [
+          "bildung"
+        ]
+      },
+      {
+        "slug": "mobilitaet",
+        "title": "Mobilität",
+        "summary": "Die CDU will Straßen, Bus und Bahn, Rad- und Fußwege parallel ausbauen und Einschränkungen für Autofahrende zurücknehmen.",
+        "positions": [
+          "Tempo 50 auf Hauptstraßen und ausreichende Parkmöglichkeiten sollen erhalten beziehungsweise wiederhergestellt werden.",
+          "A100 und die Tangentialverbindung Ost sollen weitergebaut, Brücken und Hauptstraßen schneller saniert werden.",
+          "Bus, Bahn und neue flexible Angebote sollen ausgebaut und zuverlässiger werden.",
+          "Lücken im Radwegenetz sowie unsichere Kreuzungen und Fußwege sollen behoben werden."
+        ],
+        "categories": [
+          "mobilitaet"
+        ]
+      },
+      {
+        "slug": "klima-umwelt",
+        "title": "Klima, Energie und Stadtnatur",
+        "summary": "Das Programm setzt auf mehr erneuerbare Energie, Hitzeschutz und Sauberkeit, ohne die Stadtpolitik allein am Klimaschutz auszurichten.",
+        "positions": [
+          "Solarenergie und andere erneuerbare Quellen sollen ausgebaut und Energienetze modernisiert werden.",
+          "Hitzeschutz, Trinkbrunnen, Stadtbäume und entsiegelte Flächen sollen die Stadt widerstandsfähiger machen.",
+          "Parks, Gewässer und öffentliche Räume sollen sauberer und besser gepflegt werden.",
+          "Klimaschutzmaßnahmen sollen nach Wirksamkeit, Bezahlbarkeit und Technologieoffenheit bewertet werden."
+        ],
+        "categories": [
+          "klima-umwelt"
+        ]
+      },
+      {
+        "slug": "verwaltung-digitalisierung",
+        "title": "Verwaltung und digitale Stadt",
+        "summary": "Verwaltungsleistungen sollen schneller, digitaler und mit klareren Verantwortlichkeiten erbracht werden.",
+        "positions": [
+          "Anträge und Nachweise sollen online, medienbruchfrei und möglichst nur einmal eingereicht werden müssen.",
+          "Personalgewinnung und interne Abläufe sollen modernisiert, unnötige Berichtspflichten abgebaut werden.",
+          "Landeseigene Unternehmen sollen sich auf ihre Kernaufgaben konzentrieren und verbindliche Leistungsziele erfüllen.",
+          "Bezirke und Senat sollen Zuständigkeiten klarer aufteilen und Investitionen verlässlich planen."
+        ],
+        "categories": [
+          "verwaltung-demokratie"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "title": "Regierungsprogramm 2026 bis 2031",
+        "url": "https://berlin-wird.de/image/uploads/data/regierungsprogramm2026_2031.pdf",
+        "format": "pdf",
+        "publisher": "CDU Berlin",
+        "publicationDate": "2026-07-14",
+        "kind": "wahlprogramm"
+      },
+      {
+        "title": "Berlin wird, Programmseite",
+        "url": "https://berlin-wird.de/",
+        "format": "html",
+        "publisher": "CDU Berlin",
+        "publicationDate": "2026-07-14",
+        "kind": "other"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  },
+  {
+    "partySlug": "dkp",
+    "status": "current_2026",
+    "title": "Geld für Berlin und seine Menschen statt Waffen für den Krieg",
+    "sourceUrl": "https://berlin.dkp.de/wp-content/uploads/sites/83/2026/04/Wahlprogramm.pdf",
+    "publicationDate": null,
+    "summary": "Das DKP-Wahlprogramm ordnet Berlins Wohnungs-, Bildungs-, Verkehrs- und Gesundheitsprobleme einer kapitalistischen Profitorientierung und Aufrüstungspolitik zu. Es fordert Vergesellschaftung, starke öffentliche Daseinsvorsorge und eine konsequent antimilitaristische Landespolitik.",
+    "topics": [
+      {
+        "slug": "wohnen",
+        "title": "Wohnen",
+        "summary": "Wohnraum soll der privaten Gewinnerzielung weitgehend entzogen und kommunal organisiert werden.",
+        "positions": [
+          "Die DKP fordert einen politisch festgelegten Mietendeckel und ein Verbot von Zwangsräumungen.",
+          "Private Wohnungskonzerne sollen entschädigungslos vergesellschaftet und der Volksentscheid von 2021 umgesetzt werden.",
+          "Ein großes kommunales Wohnungsbauprogramm soll dauerhaft bezahlbare Wohnungen schaffen.",
+          "Dauerhafter Wohnungs- und Büroleerstand soll sanktioniert und nach einem Jahr in städtische Nutzung überführt werden."
+        ],
+        "categories": [
+          "wohnen"
+        ]
+      },
+      {
+        "slug": "frieden-aussenpolitik",
+        "title": "Frieden und Rüstungsindustrie",
+        "summary": "Berlin soll weder Rüstungsstandort noch Teil militärischer Mobilmachung werden.",
+        "positions": [
+          "Berliner Rüstungsproduktion soll auf zivile Güter umgestellt werden, Arbeitsplätze sollen dabei erhalten bleiben.",
+          "Öffentliche Investitionen sollen in Infrastruktur, Bildung, Gesundheit und erneuerbare Energie statt in Rüstung fließen.",
+          "Bundeswehrwerbung, Musterungszentren und militärische Übungen in Berlin werden abgelehnt.",
+          "Forschung und Lehre an Berliner Hochschulen sollen ausschließlich zivil ausgerichtet sein."
+        ],
+        "categories": [
+          "frieden",
+          "wirtschaft-arbeit"
+        ]
+      },
+      {
+        "slug": "bildung-kultur",
+        "title": "Bildung und Kultur",
+        "summary": "Kürzungen und Privatisierung sollen zurückgenommen und öffentliche Einrichtungen besser ausgestattet werden.",
+        "positions": [
+          "Geplante Kürzungen sollen zurückgenommen und zusätzlich 200 Millionen Euro in Bildungsangebote und öffentliche Sportstätten investiert werden.",
+          "Klassen sollen kleiner und Schulen mit mehr Personal ausgestattet werden.",
+          "Bundeswehroffiziere und militärische Kooperationen sollen aus Schulen und Hochschulen ausgeschlossen werden.",
+          "Friedensbildung und selbstständiges Denken sollen gestärkt werden."
+        ],
+        "categories": [
+          "bildung",
+          "kultur",
+          "frieden"
+        ]
+      },
+      {
+        "slug": "mobilitaet",
+        "title": "Verkehr",
+        "summary": "Der öffentliche Verkehr soll kostenlos, öffentlich organisiert und gegenüber neuen Straßen priorisiert werden.",
+        "positions": [
+          "Nahverkehr in Berlin und Brandenburg soll kostenlos werden.",
+          "Mittel für Autobahnausbau sollen in Sanierung, Personal und Erneuerung von BVG und S-Bahn fließen.",
+          "Eine Privatisierung oder Zerstückelung der S-Bahn wird abgelehnt.",
+          "Ein städtisches Sharingangebot mit Fahrrädern, Autos, Rollern und Lastenrädern soll in allen Stadtteilen verfügbar sein."
+        ],
+        "categories": [
+          "mobilitaet"
+        ]
+      },
+      {
+        "slug": "gesundheit-pflege",
+        "title": "Gesundheit und Pflege",
+        "summary": "Gesundheitsversorgung soll bedarfsorientiert statt gewinnorientiert organisiert werden.",
+        "positions": [
+          "Eine wohnortnahe gesundheitliche Versorgung soll allen unabhängig vom Einkommen offenstehen.",
+          "Weitere Schließungen von Krankenhäusern und Pflegeeinrichtungen werden abgelehnt.",
+          "Landesmittel sollen in Personal, Prävention und Pflege statt in eine militärische Vorbereitung des Gesundheitswesens fließen."
+        ],
+        "categories": [
+          "soziales-gesundheit"
+        ]
+      },
+      {
+        "slug": "demokratie-grundrechte",
+        "title": "Grundrechte und Polizei",
+        "summary": "Das Programm kritisiert Überwachung und polizeiliche Repression, besonders gegen palästinasolidarische und antimilitaristische Proteste.",
+        "positions": [
+          "Das 2025 geänderte Berliner Polizeigesetz soll zurückgenommen werden.",
+          "Überwachung und Abriegelung öffentlicher Räume wie des Görlitzer Parks werden abgelehnt.",
+          "Palästinasolidarische und Antikriegsproteste sollen vor Verboten und Repression geschützt werden.",
+          "Öffentliche Mittel sollen stärker in Armutsbekämpfung statt in Überwachung fließen."
+        ],
+        "categories": [
+          "verwaltung-demokratie",
+          "sicherheit-migration",
+          "frieden"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "title": "Wahlprogramm zur Berliner Abgeordnetenhauswahl 2026",
+        "url": "https://berlin.dkp.de/wp-content/uploads/sites/83/2026/04/Wahlprogramm.pdf",
+        "format": "pdf",
+        "publisher": "DKP Landesverband Berlin",
+        "publicationDate": null,
+        "kind": "wahlprogramm"
+      },
+      {
+        "title": "Warum die DKP bei der Abgeordnetenhauswahl antritt",
+        "url": "https://berlin.dkp.de/dkp-bei-der-abgeordnetenhauswahl/",
+        "format": "html",
+        "publisher": "DKP Landesverband Berlin",
+        "publicationDate": "2026-05-04",
+        "kind": "broschuere"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  },
+  {
+    "partySlug": "heimat",
+    "status": "general",
+    "title": "Parteiprogramm der Heimat",
+    "sourceUrl": "https://die-heimat.de/wp-content/uploads/2023/11/Parteiprogramm_Heimat.pdf",
+    "publicationDate": "2010-06-05",
+    "summary": "Es war kein Berlin-Wahlprogramm 2026 auffindbar. Das allgemeine Parteiprogramm wurde ursprünglich 2010 beschlossen und später unter dem Namen Die Heimat neu veröffentlicht. Es vertritt ethnisch-nationalistische, migrationsfeindliche und gesellschaftlich autoritäre Positionen und ist nicht Berlin-spezifisch.",
+    "topics": [
+      {
+        "slug": "migration-staatsbild",
+        "title": "Migration und Staatsbild",
+        "summary": "Das Programm definiert Staat und Gesellschaft ethnisch und fordert einen weitgehenden Rückbau von Einwanderung.",
+        "positions": [
+          "Die Partei stellt ethnische Abstammung und nationale Homogenität über ein staatsbürgerliches Zugehörigkeitsverständnis.",
+          "Asyl- und Einwanderungsrechte sollen stark eingeschränkt und viele dauerhaft in Deutschland lebende Ausländer zurückgeführt werden.",
+          "Sozialleistungen und politische Rechte sollen stärker an deutsche Staatsangehörigkeit gebunden werden."
+        ],
+        "categories": [
+          "sicherheit-migration",
+          "vielfalt-teilhabe"
+        ]
+      },
+      {
+        "slug": "familie-gesellschaft",
+        "title": "Familie und Gesellschaft",
+        "summary": "Das Programm vertritt ein traditionelles, heterosexuelles Familienbild und lehnt moderne Gleichstellungs- und Geschlechterpolitik ab.",
+        "positions": [
+          "Ehe und Familie aus Vater, Mutter und Kindern sollen finanziell und rechtlich bevorzugt werden.",
+          "Gleichstellungs-, Gender- und queere Politik werden zurückgewiesen.",
+          "Familienleistungen sollen nach Vorstellung der Partei vorrangig deutschen Familien zugutekommen."
+        ],
+        "categories": [
+          "soziales-gesundheit",
+          "vielfalt-teilhabe"
+        ]
+      },
+      {
+        "slug": "wirtschaft-soziales",
+        "title": "Wirtschaft und Soziales",
+        "summary": "Sozialstaatliche Forderungen werden mit Nationalismus, regionaler Wirtschaft und Ausschlüssen für Nichtdeutsche verbunden.",
+        "positions": [
+          "Regionale Wirtschaftskreisläufe, Mittelstand und heimische Produktion sollen gestärkt werden.",
+          "Zentrale Bereiche der Daseinsvorsorge und Sozialversicherung sollen stärker staatlich organisiert werden.",
+          "Sozialleistungen sollen nach dem Programm nicht allen Einwohnern gleichberechtigt offenstehen."
+        ],
+        "categories": [
+          "wirtschaft-arbeit",
+          "soziales-gesundheit"
+        ]
+      },
+      {
+        "slug": "europa-aussenpolitik",
+        "title": "Europa und Außenpolitik",
+        "summary": "Die Heimat fordert nationale Souveränität außerhalb heutiger europäischer und transatlantischer Strukturen.",
+        "positions": [
+          "Deutschland soll die Europäische Union und die NATO verlassen.",
+          "Nationale Währung, Grenzkontrollen und weitreichende staatliche Souveränität sollen wiederhergestellt werden.",
+          "Auslandseinsätze und eine enge militärische Bindung an die USA werden abgelehnt."
+        ],
+        "categories": [
+          "frieden",
+          "verwaltung-demokratie"
+        ]
+      },
+      {
+        "slug": "bildung-kultur",
+        "title": "Bildung und Kultur",
+        "summary": "Bildung und Kultur sollen eine ethnisch definierte nationale Identität vermitteln.",
+        "positions": [
+          "Das gegliederte Schulsystem und eine frühe Leistungsdifferenzierung sollen ausgebaut werden.",
+          "Das Programm befürwortet eine Trennung von Schülern nach Deutschkenntnissen und Herkunft.",
+          "Kulturförderung und Geschichtsvermittlung sollen stärker einer nationalistischen Erinnerungspolitik folgen."
+        ],
+        "categories": [
+          "bildung",
+          "kultur",
+          "vielfalt-teilhabe"
+        ]
+      },
+      {
+        "slug": "umwelt-energie",
+        "title": "Umwelt und Energie",
+        "summary": "Natur- und Heimatschutz werden mit regionaler Landwirtschaft und einer technologieoffenen Energiepolitik verbunden.",
+        "positions": [
+          "Landwirtschaft, Wälder, Landschaften und regionale Lebensmittelproduktion sollen stärker geschützt werden.",
+          "Die Energieversorgung soll nach Versorgungssicherheit und nationaler Unabhängigkeit ausgerichtet werden.",
+          "Kernenergie und fossile Energieträger werden nicht grundsätzlich ausgeschlossen."
+        ],
+        "categories": [
+          "klima-umwelt",
+          "wirtschaft-arbeit"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "title": "Parteiprogramm der Heimat",
+        "url": "https://die-heimat.de/wp-content/uploads/2023/11/Parteiprogramm_Heimat.pdf",
+        "format": "pdf",
+        "publisher": "Die Heimat",
+        "publicationDate": "2010-06-05",
+        "kind": "other"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  },
+  {
+    "partySlug": "linke",
+    "status": "current_2026",
+    "title": "Wahlprogramm zur Abgeordnetenhauswahl 2026",
+    "sourceUrl": "https://dielinke.berlin/wahlprogramm/",
+    "publicationDate": "2026-04-25",
+    "summary": "Die Linke setzt auf weitreichende Mietenregulierung und Vergesellschaftung, gebührenfreie soziale Dienste, Umverteilung, einen Ausbau des öffentlichen Verkehrs und eine soziale Klimapolitik.",
+    "topics": [
+      {
+        "slug": "wohnen",
+        "title": "Wohnen und Mieten",
+        "summary": "Mieten sollen eingefroren oder begrenzt, öffentliche Bestände ausgeweitet und große Wohnungskonzerne vergesellschaftet werden.",
+        "positions": [
+          "In den ersten 100 Tagen soll für landeseigene Wohnungen ein einjähriger Mietenstopp gelten, danach sollen Erhöhungen auf höchstens ein Prozent jährlich begrenzt werden.",
+          "Neu vermietete landeseigene Wohnungen sollen grundsätzlich unter der ortsüblichen Vergleichsmiete angeboten werden.",
+          "Der Volksentscheid Deutsche Wohnen & Co. enteignen soll mit einem Vergesellschaftungsgesetz umgesetzt werden.",
+          "Leerstand, Abriss, Ferienwohnungen und unzulässige Mieten sollen strenger kontrolliert und sanktioniert werden."
+        ],
+        "categories": [
+          "wohnen"
+        ]
+      },
+      {
+        "slug": "wirtschaft-arbeit-soziales",
+        "title": "Arbeit und soziale Sicherheit",
+        "summary": "Gute Arbeit, starke öffentliche Leistungen und eine stärkere Belastung großer Vermögen sollen soziale Ungleichheit verringern.",
+        "positions": [
+          "Öffentliche Vergaben und Förderungen sollen an Tarifverträge, Mitbestimmung und gute Arbeitsbedingungen gebunden werden.",
+          "Privatisierungen der Daseinsvorsorge sollen verhindert und zentrale Leistungen wieder öffentlich organisiert werden.",
+          "Obdachlosigkeit soll mit Housing First, Prävention und dauerhaftem Wohnraum bekämpft werden.",
+          "Berlin soll sich über den Bundesrat für höhere Steuern auf große Vermögen und Erbschaften einsetzen."
+        ],
+        "categories": [
+          "wirtschaft-arbeit",
+          "soziales-gesundheit",
+          "wohnen"
+        ]
+      },
+      {
+        "slug": "mobilitaet",
+        "title": "Mobilität",
+        "summary": "Öffentlicher Verkehr, Fuß- und Radverkehr sollen Vorrang erhalten und sozial zugänglich sein.",
+        "positions": [
+          "Fahrpreise sollen stabil bleiben, das Netz insbesondere in Außenbezirken ausgebaut und ein Umstieg vom Auto mit einem kostenlosen Deutschlandticket belohnt werden.",
+          "Fahren ohne Fahrschein soll nicht länger strafrechtlich verfolgt werden.",
+          "Tempo 30, sichere Radwege, breite Fußwege und Kiezblocks sollen ausgeweitet werden.",
+          "Neue Autobahnen und eine Verlängerung der A100 werden abgelehnt."
+        ],
+        "categories": [
+          "mobilitaet"
+        ]
+      },
+      {
+        "slug": "bildung",
+        "title": "Bildung und Ausbildung",
+        "summary": "Bildung von der Kita bis zur Hochschule soll gebührenfrei, inklusiv und personell besser ausgestattet sein.",
+        "positions": [
+          "Kita, Schulessen, Lernmittel und Studium sollen ohne Gebühren oder versteckte Kosten zugänglich sein.",
+          "Gemeinschaftsschulen und inklusive Lernformen sollen ausgebaut werden.",
+          "Berlin soll jährlich etwa 3.000 Lehramtsabsolventen gewinnen und multiprofessionelle Teams stärken.",
+          "Eine Ausbildungsplatzumlage und ein Azubiwerk sollen Ausbildung und bezahlbares Wohnen für Auszubildende sichern."
+        ],
+        "categories": [
+          "bildung"
+        ]
+      },
+      {
+        "slug": "klima-energie",
+        "title": "Klima und Energie",
+        "summary": "Klimaschutz soll über öffentliche Infrastruktur und sozial abgefederte Veränderungen organisiert werden.",
+        "positions": [
+          "Energie- und Wärmenetze sollen in öffentlicher Hand bleiben und schneller auf erneuerbare Quellen umgestellt werden.",
+          "Gebäudesanierungen sollen Mieter nicht durch höhere Warmmieten verdrängen.",
+          "Mehr Grün, Entsiegelung, Hitzeschutz und Regenwassermanagement sollen die Stadt an die Klimakrise anpassen.",
+          "Weniger Autoverkehr und ein dichter öffentlicher Verkehr sollen die Emissionen des Verkehrs senken."
+        ],
+        "categories": [
+          "klima-umwelt",
+          "mobilitaet",
+          "wohnen"
+        ]
+      },
+      {
+        "slug": "verwaltung-digitalisierung",
+        "title": "Verwaltung",
+        "summary": "Die Verwaltung soll einfacher, digital souverän und als attraktiver öffentlicher Arbeitgeber organisiert werden.",
+        "positions": [
+          "Verwaltungsabläufe sollen vor ihrer Digitalisierung vereinfacht und über ein einheitliches Berlin-Portal angeboten werden.",
+          "Der öffentliche Dienst soll besser bezahlen, mehr ausbilden und Personal langfristig binden.",
+          "Bezirke sollen mehr verlässliche Mittel erhalten, während der Senat berlinweite Standards und Steuerung sicherstellt.",
+          "Öffentliche Software und Daten sollen möglichst offen und gemeinwohlorientiert genutzt werden."
+        ],
+        "categories": [
+          "verwaltung-demokratie",
+          "wirtschaft-arbeit"
+        ]
+      },
+      {
+        "slug": "demokratie-vielfalt",
+        "title": "Demokratie und Vielfalt",
+        "summary": "Politische und soziale Teilhabe soll unabhängig von Einkommen, Herkunft, Behinderung oder Aufenthaltsstatus erweitert werden.",
+        "positions": [
+          "Direkte Demokratie und Beteiligung in Bezirken und Kiezen sollen leichter zugänglich werden.",
+          "Antidiskriminierungsstellen und der Schutz queerer, migrantischer und behinderter Menschen sollen ausgebaut werden.",
+          "Menschen ohne deutschen Pass sollen mehr kommunale Mitsprache und leichteren Zugang zu öffentlichen Leistungen erhalten.",
+          "Kultur, Jugendangebote und selbstverwaltete Räume sollen dauerhaft finanziert werden."
+        ],
+        "categories": [
+          "verwaltung-demokratie",
+          "vielfalt-teilhabe",
+          "kultur"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "title": "Wahlprogramm zur Abgeordnetenhauswahl 2026",
+        "url": "https://dielinke.berlin/wahlprogramm/",
+        "format": "html",
+        "publisher": "Die Linke Berlin",
+        "publicationDate": "2026-04-25",
+        "kind": "wahlprogramm"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  },
+  {
+    "partySlug": "die-urbane",
+    "status": "campaign_material",
+    "title": "Berlin braucht dringend Support",
+    "sourceUrl": "https://www.die-urbane.de/die-urbane/landesverbaende/du-berlin.html",
+    "publicationDate": null,
+    "summary": "Ein eigenes Berliner Wahlprogramm 2026 war nicht auffindbar. Die aktuelle Berliner Kampagnenseite und das allgemeine Parteiprogramm verbinden Antirassismus, soziale und kulturelle Selbstermächtigung, Friedenspolitik und eine gemeinwohlorientierte Stadtentwicklung.",
+    "topics": [
+      {
+        "slug": "vielfalt-antidiskriminierung",
+        "title": "Antidiskriminierung",
+        "summary": "Die Urbane stellt den Kampf gegen Rassismus, Faschismus, Antifeminismus und andere Machtstrukturen in den Mittelpunkt.",
+        "positions": [
+          "Antirassistische, queerfeministische und dekoloniale Perspektiven sollen in Politik, Bildung und Verwaltung verankert werden.",
+          "Eine unabhängige Berliner Beschwerde- und Schlichtungsstelle soll Menschen bei Diskriminierung unterstützen.",
+          "Von Diskriminierung betroffene Gruppen sollen Entscheidungen nicht nur beraten, sondern gleichberechtigt mitgestalten."
+        ],
+        "categories": [
+          "vielfalt-teilhabe",
+          "verwaltung-demokratie",
+          "bildung"
+        ]
+      },
+      {
+        "slug": "frieden-aussenpolitik",
+        "title": "Frieden",
+        "summary": "Die Kampagne wendet sich gegen militärische und rhetorische Aufrüstung und setzt auf Deeskalation und globale Gerechtigkeit.",
+        "positions": [
+          "Rüstungsausgaben und eine Militarisierung gesellschaftlicher Bereiche werden abgelehnt.",
+          "Konflikte sollen durch Diplomatie, Abrüstung und die Beseitigung sozialer und kolonialer Ungleichheiten bearbeitet werden.",
+          "Internationale Solidarität soll sich an Menschenrechten und den Perspektiven Betroffener ausrichten."
+        ],
+        "categories": [
+          "frieden",
+          "vielfalt-teilhabe"
+        ]
+      },
+      {
+        "slug": "demokratie-teilhabe",
+        "title": "Teilhabe und Selbstorganisation",
+        "summary": "Politik soll stärker aus Nachbarschaften, Bewegungen und niedrigschwelliger Beteiligung entstehen.",
+        "positions": [
+          "Entscheidungsstrukturen sollen flacher werden und Menschen ohne Parteibuch kontinuierlich mitwirken können.",
+          "Lokale Initiativen und selbstorganisierte Projekte sollen Räume, Finanzierung und politischen Zugang erhalten.",
+          "Politische Bildung und kulturelle Ausdrucksformen sollen Beteiligung für Menschen öffnen, die von etablierten Institutionen wenig erreicht werden."
+        ],
+        "categories": [
+          "verwaltung-demokratie",
+          "vielfalt-teilhabe",
+          "kultur"
+        ]
+      },
+      {
+        "slug": "wohnen-wirtschaft",
+        "title": "Wohnen und Gemeinwohl",
+        "summary": "Das allgemeine Programm behandelt Boden, Wohnraum und Versorgung als gesellschaftliche Güter.",
+        "positions": [
+          "Boden und Wohnraum sollen nicht allein Marktkräften überlassen, sondern stärker gemeinwohlorientiert verwaltet werden.",
+          "Die Konzentration von Boden- und Immobilieneigentum soll begrenzt und kollektive Eigentumsformen gestärkt werden.",
+          "Ökonomische Entscheidungen sollen soziale, ökologische und diskriminierungskritische Folgen berücksichtigen."
+        ],
+        "categories": [
+          "wohnen",
+          "wirtschaft-arbeit",
+          "klima-umwelt"
+        ]
+      },
+      {
+        "slug": "kultur-oeffentlicher-raum",
+        "title": "Kultur und öffentlicher Raum",
+        "summary": "HipHop-Kultur, freie Kunst und selbstbestimmte Nutzung des Stadtraums werden als politische Infrastruktur verstanden.",
+        "positions": [
+          "Nicht kommerzielle Kulturorte, Clubkultur und kreative Freiräume sollen geschützt werden.",
+          "Öffentliche Räume sollen für Kunst, Begegnung und politische Organisation zugänglich sein.",
+          "Kulturförderung soll marginalisierte Perspektiven und unabhängige Strukturen stärker berücksichtigen."
+        ],
+        "categories": [
+          "kultur",
+          "vielfalt-teilhabe"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "title": "Die Urbane Berlin, aktuelle Kampagnenseite",
+        "url": "https://www.die-urbane.de/die-urbane/landesverbaende/du-berlin.html",
+        "format": "html",
+        "publisher": "Die Urbane Berlin",
+        "publicationDate": null,
+        "kind": "other"
+      },
+      {
+        "title": "Parteiprogramm 2021",
+        "url": "https://www.die-urbane.de/files/files/Dokumente/Mai-2021-Die_Urbane_Ein_Parteiprogramm_v2a.pdf",
+        "format": "pdf",
+        "publisher": "Die Urbane. Eine HipHop Partei",
+        "publicationDate": null,
+        "kind": "other"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  },
+  {
+    "partySlug": "fdp",
+    "status": "current_2026",
+    "title": "Für die Freiheit",
+    "sourceUrl": "https://www.fdp-berlin.de/sites/default/files/2026-05/Wahlprogramm_FDP%20Berlin_Abgeordnetenhauswahl%202026.pdf",
+    "publicationDate": null,
+    "summary": "Das FDP-Wahlprogramm setzt auf individuelle Wahlfreiheit, Wettbewerb, private Investitionen, technologieoffene Modernisierung und eine digitalere Verwaltung. In Bildung, Wohnen und Verkehr will es staatliche Vorgaben reduzieren und Angebote ausweiten.",
+    "topics": [
+      {
+        "slug": "bildung",
+        "title": "Bildung",
+        "summary": "Frühe Deutschförderung, mehr Schulautonomie, Wahlfreiheit und verbindliche Leistungserwartungen bilden den Kern der Bildungspolitik.",
+        "positions": [
+          "Ein verpflichtendes Vorschuljahr in Kitas und Sprachstandstests im Alter von drei bis vier Jahren sollen Kinder auf die Schule vorbereiten.",
+          "Schulen sollen Personal und Budgets eigenständiger steuern und an nachvollziehbaren Ergebnissen gemessen werden.",
+          "Freie Schulwahl und perspektivisch Bildungsgutscheine sollen öffentliche und private Schulen stärker in Wettbewerb setzen.",
+          "Förderschulen sollen wieder angeboten und Eltern zwischen Förderschule und inklusivem Unterricht wählen können.",
+          "Datenkunde, Wirtschaft, Medienkompetenz und Berufsorientierung sollen in Lehrplänen mehr Gewicht erhalten."
+        ],
+        "categories": [
+          "bildung"
+        ]
+      },
+      {
+        "slug": "wirtschaft-arbeit",
+        "title": "Wirtschaft und Innovation",
+        "summary": "Berlin soll durch weniger Bürokratie, niedrigere Belastungen und bessere Bedingungen für Gründungen und Forschung wachsen.",
+        "positions": [
+          "Genehmigungen sollen beschleunigt, Berichtspflichten reduziert und zeitlich begrenzte Experimentierräume ermöglicht werden.",
+          "Die Gewerbesteuer soll gesenkt und öffentliche Wirtschaftsförderung stärker auf messbare Standortwirkungen ausgerichtet werden.",
+          "Start-ups, Games, Life Sciences, Wissenschaftstransfer und industrielle Innovation sollen gezielt unterstützt werden.",
+          "Landeseigene Unternehmen sollen auf ihre Kernaufgaben geprüft und bei geeigneten Leistungen auch andere Eigentumsformen erwogen werden."
+        ],
+        "categories": [
+          "wirtschaft-arbeit",
+          "verwaltung-demokratie"
+        ]
+      },
+      {
+        "slug": "wohnen",
+        "title": "Wohnen und Eigentum",
+        "summary": "Mehr Angebot, private Investitionen und Eigentumsbildung sollen Mieten dämpfen, zusätzliche Mietregulierung wird abgelehnt.",
+        "positions": [
+          "Planungsregeln sollen vereinfacht, landeseigene Flächen auch verkauft und große neue Quartiere schneller erschlossen werden.",
+          "Mietpreisbremse, Mietendeckel, Vergesellschaftung und Milieuschutzgebiete sollen beendet werden.",
+          "Soziale Unterstützung soll langfristig stärker über Wohngeld für bedürftige Haushalte statt über dauerhafte Objektförderung erfolgen.",
+          "Eine Fehlbelegungsabgabe soll günstige Sozialwohnungen wieder stärker ihrer Zielgruppe öffnen.",
+          "Selbstnutzer, Genossenschaften und private Bauprojekte sollen mit günstigen Darlehen und Eigentumsförderung unterstützt werden."
+        ],
+        "categories": [
+          "wohnen",
+          "wirtschaft-arbeit"
+        ]
+      },
+      {
+        "slug": "mobilitaet",
+        "title": "Mobilität",
+        "summary": "Alle Verkehrsmittel sollen ausgebaut und digital verknüpft werden, ohne das Auto aus der Stadt zu drängen.",
+        "positions": [
+          "Bus und Bahn sollen dichter fahren, Außenbezirke mit Rufbussen besser erschlossen und U-Bahnen schrittweise automatisiert werden.",
+          "Straßen, Schienen, Radwege und Fußwege sollen nach einem gemeinsamen Metropolregionsplan ausgebaut werden.",
+          "Sharing, autonomes Fahren, Ladeinfrastruktur und digitale Verkehrssteuerung sollen neue Mobilitätsangebote ermöglichen.",
+          "Jeder Berliner soll in kurzer Distanz Zugang zum öffentlichen Verkehr haben, zentrale Orte sollen aus allen Bezirken schneller erreichbar werden."
+        ],
+        "categories": [
+          "mobilitaet"
+        ]
+      },
+      {
+        "slug": "verwaltung-digitalisierung",
+        "title": "Verwaltung und Digitalisierung",
+        "summary": "Digitale Verfahren, künstliche Intelligenz und transparente Automatisierung sollen Verwaltung und Stadt effizienter machen.",
+        "positions": [
+          "Ein KI-Assistent für die Verwaltung soll Routineanfragen bearbeiten und Beschäftigte entlasten.",
+          "Automatisierte Entscheidungen sollen in einem öffentlichen Register dokumentiert und nachvollziehbar bleiben.",
+          "Behördengänge sollen durch digitale Ende-zu-Ende-Verfahren und zentrale Konten ersetzt werden.",
+          "Open Source, europäische digitale Souveränität und ein besserer Zugang zu öffentlichen Daten sollen Abhängigkeiten reduzieren."
+        ],
+        "categories": [
+          "verwaltung-demokratie"
+        ]
+      },
+      {
+        "slug": "innere-sicherheit",
+        "title": "Sicherheit und Rechtsstaat",
+        "summary": "Polizei, Justiz und Katastrophenschutz sollen personell und technisch besser ausgestattet werden.",
+        "positions": [
+          "Mehr Personal, moderne Ausrüstung und digitale Verfahren sollen Polizei, Justiz und Feuerwehr stärken.",
+          "Prävention, Opferschutz und konsequente Strafverfolgung sollen gemeinsam gegen Gewalt und organisierte Kriminalität wirken.",
+          "Extremismus, Antisemitismus und Angriffe auf die freiheitliche Ordnung sollen entschlossen bekämpft werden.",
+          "Überwachung und neue Befugnisse sollen rechtsstaatlich kontrolliert und auf konkrete Gefahren ausgerichtet bleiben."
+        ],
+        "categories": [
+          "sicherheit-migration",
+          "verwaltung-demokratie"
+        ]
+      },
+      {
+        "slug": "klima-energie",
+        "title": "Klima und Energie",
+        "summary": "Klimaschutz soll technologieoffen, marktwirtschaftlich und stärker über Innovation als über Verbote erfolgen.",
+        "positions": [
+          "Strom-, Wärme- und Verkehrssektor sollen besser gekoppelt und Abwärme, Wasserstoff sowie erneuerbarer Überschussstrom genutzt werden.",
+          "Gebäudeeigentümer sollen zwischen technischen Lösungen wählen können, pauschale Verbote werden abgelehnt.",
+          "Stadtgrün, Gewässer, Entsiegelung und Hitzeschutz sollen verbessert werden.",
+          "Klimamaßnahmen sollen auf Kosten, Wirksamkeit und Skalierbarkeit geprüft werden."
+        ],
+        "categories": [
+          "klima-umwelt"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "title": "Wahlprogramm zur Abgeordnetenhauswahl 2026",
+        "url": "https://www.fdp-berlin.de/sites/default/files/2026-05/Wahlprogramm_FDP%20Berlin_Abgeordnetenhauswahl%202026.pdf",
+        "format": "pdf",
+        "publisher": "FDP Berlin",
+        "publicationDate": null,
+        "kind": "wahlprogramm"
+      },
+      {
+        "title": "Wahlprogramm im Web",
+        "url": "https://www.fdp-berlin.de/beschluss/wahlprogramm-zur-abgeordnetenhauswahl-2026",
+        "format": "html",
+        "publisher": "FDP Berlin",
+        "publicationDate": null,
+        "kind": "wahlprogramm"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  },
+  {
+    "partySlug": "oedp",
+    "status": "general",
+    "title": "Landespolitisches Programm für Berlin",
+    "sourceUrl": "https://www.oedp-berlin.de/fileadmin/user_upload/01-instanzen/02/030-Programm/Landesprogramm-Berlin.pdf",
+    "publicationDate": "2026-03-21",
+    "summary": "Die ÖDP hat ein aktuelles Berliner Landesprogramm, aber kein ausdrücklich zur Wahl 2026 bezeichnetes Wahlprogramm veröffentlicht. Es verbindet konsequenten Klima- und Naturschutz mit Gemeinwohlökonomie, direkter Demokratie, bezahlbarem Wohnen und einer ökologischen Verkehrswende.",
+    "topics": [
+      {
+        "slug": "klima-energie",
+        "title": "Klima und Energie",
+        "summary": "Berlin soll schnell klimaneutral werden und öffentliche Investitionen konsequent an CO2-Einsparungen ausrichten.",
+        "positions": [
+          "Der Kohleausstieg soll bis 2030 erfolgen und erneuerbare Strom- und Wärmeerzeugung deutlich ausgebaut werden.",
+          "Öffentliche Gebäude und geeignete Dächer sollen umfassend für Solarenergie genutzt werden.",
+          "Der Gebäudebestand soll energetisch saniert werden, ohne Mieter finanziell zusätzlich zu belasten.",
+          "Neue Investitionen des Landes sollen nach ihrem Potenzial zur Emissionsminderung priorisiert werden."
+        ],
+        "categories": [
+          "klima-umwelt",
+          "wohnen"
+        ]
+      },
+      {
+        "slug": "mobilitaet",
+        "title": "Mobilität",
+        "summary": "Autoverkehr soll zugunsten von Bus, Bahn, Fuß- und Radverkehr sinken.",
+        "positions": [
+          "ÖPNV, S-Bahn und Regionalbahn ins Umland sollen ausgebaut und häufiger fahren.",
+          "Sichere Radwege und Fahrradparkhäuser an Umsteigebahnhöfen sollen den Radverkehr stärken.",
+          "Eine sozial ausgestaltete City-Maut und kostenlose Park-and-Ride-Plätze am Stadtrand sollen den Umstieg erleichtern.",
+          "Eine Privatisierung oder Zerschlagung der S-Bahn wird abgelehnt."
+        ],
+        "categories": [
+          "mobilitaet"
+        ]
+      },
+      {
+        "slug": "wirtschaft-arbeit",
+        "title": "Gemeinwohlökonomie",
+        "summary": "Wirtschaftlicher Erfolg soll nicht nur am Wachstum, sondern an sozialer, ökologischer und demokratischer Wirkung gemessen werden.",
+        "positions": [
+          "Berlin soll Gemeinwohlbilanzen und alternative Wohlstandsindikatoren in Wirtschaftsförderung und Beschaffung berücksichtigen.",
+          "Unternehmen mit guten Gemeinwohlbilanzen sollen steuerlich begünstigt werden können.",
+          "Daseinsvorsorge soll grundsätzlich in öffentlicher Hand liegen.",
+          "Regionale kleine Betriebe, sozialversicherungspflichtige Arbeit und Gründungen, insbesondere von Frauen, sollen gefördert werden."
+        ],
+        "categories": [
+          "wirtschaft-arbeit",
+          "verwaltung-demokratie"
+        ]
+      },
+      {
+        "slug": "wohnen",
+        "title": "Wohnen und Stadtentwicklung",
+        "summary": "Bezahlbarer Wohnraum soll vor allem öffentlich und genossenschaftlich entstehen, ohne Grünflächen immer weiter zu bebauen.",
+        "positions": [
+          "Wuchermieten und Immobilienspekulation sollen durch ein faireres Mietrecht begrenzt werden.",
+          "Städtische Flächen sollen für kommunalen und genossenschaftlichen Wohnungsbau genutzt werden.",
+          "Wohnraum soll Vorrang vor neuen Büroflächen haben.",
+          "Nachverdichtung soll Grünflächen, Kleingärten und das Tempelhofer Feld nicht gefährden."
+        ],
+        "categories": [
+          "wohnen",
+          "klima-umwelt"
+        ]
+      },
+      {
+        "slug": "demokratie-teilhabe",
+        "title": "Demokratie und Transparenz",
+        "summary": "Verwaltung und politische Entscheidungen sollen offener und direkte Beteiligung verbindlicher werden.",
+        "positions": [
+          "Ein weitreichendes Transparenzgesetz soll Akten und Entscheidungen der Verwaltung standardmäßig öffentlich machen.",
+          "Bürgerräte sollen Vorschläge für Kieze und Bezirke erarbeiten, deren Behandlung verbindlich geregelt wird.",
+          "Bürgerentscheide auf Bezirks- und Landesebene sollen verbindlich sein.",
+          "Eine Ersatzstimme, Wahlalter 16 und ein Abgeordnetenhauswahlrecht für EU-Bürger sollen politische Teilhabe erweitern.",
+          "Unternehmensspenden an im Abgeordnetenhaus vertretene Parteien sollen verboten werden."
+        ],
+        "categories": [
+          "verwaltung-demokratie",
+          "vielfalt-teilhabe"
+        ]
+      },
+      {
+        "slug": "kreislaufwirtschaft-natur",
+        "title": "Kreislaufwirtschaft, Natur und Tiere",
+        "summary": "Abfallvermeidung, öffentliches Wassermanagement, Biodiversität und Tierschutz sollen gemeinsam vorangebracht werden.",
+        "positions": [
+          "Pfand- und Rücknahmepflichten sollen ausgeweitet, Wiederverwendung und regionale Aufbereitung gefördert werden.",
+          "Berlin soll Open-Source-Software und langlebige IT beschaffen sowie Gebäude eher sanieren als abreißen.",
+          "Wasser, Wälder, Stadtbäume, Kleingärten und das Tempelhofer Feld sollen als natürliche Lebensräume geschützt werden.",
+          "Tierversuche sollen beendet und tierversuchsfreie Forschung sowie pflanzenbetonte öffentliche Verpflegung gefördert werden."
+        ],
+        "categories": [
+          "klima-umwelt",
+          "tierschutz",
+          "wirtschaft-arbeit"
+        ]
+      },
+      {
+        "slug": "bildung-kultur",
+        "title": "Bildung und Kultur",
+        "summary": "Bildung soll ganzheitlich, personell gut ausgestattet und weniger von früher Bildschirmnutzung geprägt sein.",
+        "positions": [
+          "Schulen sollen mehr Pädagogen, Sozialarbeiter und Psychologen erhalten und ausländische Abschlüsse schneller anerkennen.",
+          "Lernmittel sollen kostenlos sein, Bildungseinrichtungen besser instand gehalten werden.",
+          "Musik, Werken, Theater, Kochen und Schulgärten sollen praktische und ökologische Bildung stärken.",
+          "Kulturelle Angebote, Grün- und Freizeiträume sollen in allen Bezirken verfügbar sein."
+        ],
+        "categories": [
+          "bildung",
+          "kultur",
+          "klima-umwelt"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "title": "Landespolitisches Programm für Berlin",
+        "url": "https://www.oedp-berlin.de/fileadmin/user_upload/01-instanzen/02/030-Programm/Landesprogramm-Berlin.pdf",
+        "format": "pdf",
+        "publisher": "ÖDP Berlin",
+        "publicationDate": "2026-03-21",
+        "kind": "other"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  },
+  {
+    "partySlug": "pdf",
+    "status": "missing",
+    "title": "Berlin-Wahlprogramm angekündigt, noch nicht veröffentlicht",
+    "sourceUrl": "https://partei-des-fortschritts.de/wahl-zum-abgeordnetenhaus-berlin/",
+    "publicationDate": null,
+    "summary": "Die offizielle Wahlseite kündigt ein Programm für die Berlin-Wahl 2026 an, weist aber am 25. Juli 2026 weiterhin darauf hin, dass es noch in Arbeit ist. Das allgemeine Grundsatzprogramm ist als Hintergrund dokumentiert, wurde jedoch nicht als Berliner Wahlprogramm ausgewertet.",
+    "topics": [],
+    "documents": [
+      {
+        "title": "Wahl zum Abgeordnetenhaus Berlin 2026",
+        "url": "https://partei-des-fortschritts.de/wahl-zum-abgeordnetenhaus-berlin/",
+        "format": "html",
+        "publisher": "Partei des Fortschritts",
+        "publicationDate": null,
+        "kind": "other"
+      },
+      {
+        "title": "Grundsatzprogramm, Stand 21. März 2026",
+        "url": "https://partei-des-fortschritts.de/wp-content/uploads/2026/04/260321_PdF_GrundsatzProgramm.pdf",
+        "format": "pdf",
+        "publisher": "Partei des Fortschritts",
+        "publicationDate": "2026-03-21",
+        "kind": "other"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  },
+  {
+    "partySlug": "die-partei",
+    "status": "current_2026",
+    "title": "Ein 10-Punkte-Plan. Punktepläne sind beliebt!",
+    "sourceUrl": "https://die-partei-berlin.de/",
+    "publicationDate": "2026-06-22",
+    "summary": "Die PARTEI veröffentlicht ein ausdrücklich satirisches Zehn-Punkte-Programm. Es greift Wohnungsnot, Verkehr, Sicherheit, Arbeit und soziale Absicherung mit absichtlich unrealistischen, widersprüchlichen oder grotesken Vorschlägen auf.",
+    "topics": [
+      {
+        "slug": "wohnen-stadtentwicklung",
+        "title": "Wohnen und Stadtgebiet",
+        "summary": "Die Wohnungsnot wird satirisch mit einer räumlichen Vergrößerung Berlins beantwortet.",
+        "positions": [
+          "Berlin soll sein Stadtgebiet auf Kosten angrenzender Länder erweitern, um Wohnraum zu gewinnen.",
+          "Konflikte mit Brandenburg oder Niedersachsen werden im Programm bewusst überzogen als diplomatisch oder gewaltsam lösbar dargestellt."
+        ],
+        "categories": [
+          "wohnen"
+        ]
+      },
+      {
+        "slug": "hauptstadtpolitik",
+        "title": "Bundesregierung und Stadt",
+        "summary": "Das Programm macht die Bundesregierung satirisch für hohe Mieten, Architektur und Alltagskosten verantwortlich.",
+        "positions": [
+          "Bundesregierung und Bundesinstitutionen sollen nach Bonn zurückziehen.",
+          "Die dadurch frei werdenden Flächen werden indirekt als Entlastung für Berlin dargestellt."
+        ],
+        "categories": [
+          "verwaltung-demokratie",
+          "wohnen"
+        ]
+      },
+      {
+        "slug": "mobilitaet",
+        "title": "ÖPNV und Verkehr",
+        "summary": "Widersprüchliche Berliner Verkehrspolitik wird mit bewusst absurden Ausbau- und Umnutzungsideen parodiert.",
+        "positions": [
+          "Das U-Bahn-Netz soll massiv und mehrspurig ausgebaut werden.",
+          "Der Ausbau der A100 soll enden und bestehende Abschnitte sollen als Autokino genutzt werden.",
+          "Für entfernte Parkplätze sollen Ersatzplätze entstehen, zugleich sollen Pollerabstände Kiezblocks weitgehend durchlässig machen.",
+          "Auf Hauptstraßen soll nachts eine höhere Richtgeschwindigkeit gelten."
+        ],
+        "categories": [
+          "mobilitaet"
+        ]
+      },
+      {
+        "slug": "wirtschaft-arbeit",
+        "title": "Arbeit und Industrie",
+        "summary": "Struktur- und Industriepolitik werden durch eine erfundene Rohstoffförderung in Innenstadtbezirken parodiert.",
+        "positions": [
+          "In Kreuzberg soll eine Neodym-Mine entstehen.",
+          "Schwer- und Rüstungsindustrie soll in Berlin angesiedelt werden.",
+          "Die Finanzierung soll satirisch aus dem Länderfinanzausgleich anderer Länder kommen."
+        ],
+        "categories": [
+          "wirtschaft-arbeit",
+          "frieden"
+        ]
+      },
+      {
+        "slug": "innere-sicherheit",
+        "title": "Polizei und Sicherheit",
+        "summary": "Der Punkt zur Polizei setzt auf satirische Zuspitzung von Geschlechter- und Gewaltdebatten.",
+        "positions": [
+          "Für den Polizeidienst sollen nach dem Programm nur noch FLINTA-Personen ausgewählt werden.",
+          "Die Maßnahme wird als Mittel gegen Polizeigewalt und Amtsmissbrauch dargestellt."
+        ],
+        "categories": [
+          "sicherheit-migration",
+          "vielfalt-teilhabe"
+        ]
+      },
+      {
+        "slug": "soziales-kultur",
+        "title": "Soziales, Flughafen und Kultur",
+        "summary": "Berlinzulage, Flughafenpolitik und Kulturförderung werden in kurzen satirischen Forderungen behandelt.",
+        "positions": [
+          "Eine Berlinzulage soll als großzügige pauschale Einkommensleistung zurückkehren.",
+          "Der Flughafen Tempelhof soll wieder öffnen, auch um durch Fluglärm den Mietspiegel zu beeinflussen.",
+          "Kultur wird mit dem knappen Hinweis abgetan, sie sei kostenlos im Internet verfügbar."
+        ],
+        "categories": [
+          "soziales-gesundheit",
+          "kultur",
+          "mobilitaet"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "title": "Wahlprogramm zur AGH-Wahl 2026",
+        "url": "https://die-partei-berlin.de/",
+        "format": "html",
+        "publisher": "Die PARTEI Berlin",
+        "publicationDate": "2026-06-22",
+        "kind": "wahlprogramm"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  },
+  {
+    "partySlug": "tierschutzpartei",
+    "status": "current_2026",
+    "title": "Wahlprogramm Berlin 2026",
+    "sourceUrl": "https://berlin.tierschutzpartei.de/wahlprogramm-berlin-2026.pdf",
+    "publicationDate": "2026-03-14",
+    "summary": "Das Programm verknüpft Tierrechte mit Klimaneutralität bis 2035, einer starken öffentlichen und gemeinwohlorientierten Wohnungspolitik, kostenfreiem Nahverkehr, sozialer Absicherung und mehr direkter Demokratie.",
+    "topics": [
+      {
+        "slug": "tierschutz",
+        "title": "Tierrechte und Tierschutz",
+        "summary": "Tiere sollen rechtlich und praktisch stärker geschützt, Ausbeutung und vermeidbares Leid schrittweise beendet werden.",
+        "positions": [
+          "Tierversuche sollen beendet, keine neuen Versuchslabore genehmigt und tierversuchsfreie Forschung gezielt finanziert werden.",
+          "Ein Wildtierkompetenzzentrum, betreute Taubenschläge und eine bessere Finanzierung des Tierheims sollen kommunalen Tierschutz stärken.",
+          "Wildtiere in Zirkussen, Pferderennen und andere aus Sicht der Partei leidverursachende Unterhaltungsformen sollen verboten werden.",
+          "Zoos und Tierparks sollen zu Schutz- und Bildungsorten mit höheren Haltungsstandards umgebaut werden.",
+          "Öffentliche Verpflegung soll pflanzenbetonter werden und tierische Produkte aus schlechter Haltung ausschließen."
+        ],
+        "categories": [
+          "tierschutz"
+        ]
+      },
+      {
+        "slug": "klima-energie",
+        "title": "Klima und Energie",
+        "summary": "Berlin soll bis 2035 klimaneutral werden und öffentliche Entscheidungen an ihren Klimafolgen messen.",
+        "positions": [
+          "Ein CO2-Schattenpreis von 195 Euro pro Tonne soll bei öffentlichen Investitionen und Beschaffung berücksichtigt werden.",
+          "Landesverwaltung und landeseigene Unternehmen sollen schnell klimaneutral arbeiten.",
+          "Strom und Wärme sollen bis 2035 weitgehend aus Solarenergie, Windkraft, Wärmepumpen, Geothermie und Abwärme stammen.",
+          "Ein Klimavorbehalt soll Gesetze und Haushaltsentscheidungen auf Vereinbarkeit mit Klimazielen prüfen."
+        ],
+        "categories": [
+          "klima-umwelt"
+        ]
+      },
+      {
+        "slug": "wohnen",
+        "title": "Wohnen und Stadtentwicklung",
+        "summary": "Wohnraum soll stärker öffentlich kontrolliert, dauerhaft bezahlbar und auf bereits versiegelten Flächen geschaffen werden.",
+        "positions": [
+          "Haushalte sollen durch eine Härtefallregelung höchstens 30 Prozent ihres Einkommens für die Warmmiete ausgeben müssen.",
+          "Ein öffentliches Mietenkataster und Meldepflichten sollen Mietpreise transparent und kontrollierbar machen.",
+          "Der Volksentscheid Deutsche Wohnen & Co. enteignen soll mit angemessener Entschädigung umgesetzt werden.",
+          "Öffentliche Grundstücke sollen nicht verkauft, sondern gemeinwohlorientiert im Erbbaurecht vergeben werden.",
+          "Neuer Wohnraum soll vorrangig durch Umnutzung und Nachverdichtung bereits versiegelter Flächen entstehen."
+        ],
+        "categories": [
+          "wohnen"
+        ]
+      },
+      {
+        "slug": "mobilitaet",
+        "title": "Mobilität",
+        "summary": "Öffentlicher Verkehr, Rad- und Fußverkehr sollen das Auto zunehmend ersetzen.",
+        "positions": [
+          "Der Nahverkehr soll mittelfristig kostenlos werden, zunächst mit sehr günstigen Sozial- und Umstiegstickets.",
+          "S-Bahn, U-Bahn, Regionalbahn und Bus sollen ausgebaut und häufiger fahren, besonders in schlecht angebundenen Außenbezirken.",
+          "A100 und Tangentialverbindung Ost werden abgelehnt.",
+          "Sichere Radnetze, Kiezblocks und Projekte des Volksentscheids Berlin autofrei werden unterstützt.",
+          "Verkehrspolitik soll das Ziel null Verkehrstote verfolgen."
+        ],
+        "categories": [
+          "mobilitaet"
+        ]
+      },
+      {
+        "slug": "gesundheit-soziales",
+        "title": "Gesundheit und Soziales",
+        "summary": "Gesundheit, Pflege und Existenzsicherung sollen als gemeinwohlorientierte Daseinsvorsorge organisiert werden.",
+        "positions": [
+          "Krankenhäuser und Pflege sollen bedarfsorientiert finanziert und nicht auf Gewinnerzielung ausgerichtet werden.",
+          "Psychische Gesundheit, Suchtberatung, Prävention und wohnortnahe Versorgung sollen ausgebaut werden.",
+          "Wohnungslosigkeit soll mit Housing First, Mietschuldenprävention und dauerhaftem Wohnraum bekämpft werden.",
+          "Soziale Leistungen sollen niedrigschwellig, barrierefrei und ohne diskriminierende Zugangshürden erreichbar sein."
+        ],
+        "categories": [
+          "soziales-gesundheit",
+          "wohnen"
+        ]
+      },
+      {
+        "slug": "bildung",
+        "title": "Bildung",
+        "summary": "Bildung soll inklusiv, gebührenfrei, demokratisch und stärker an Klima, Tierethik und praktischen Fähigkeiten ausgerichtet werden.",
+        "positions": [
+          "Kitas und Schulen sollen mehr Personal, kleinere Gruppen und multiprofessionelle Teams erhalten.",
+          "Lernmittel, Essen und Teilhabeangebote sollen für Kinder kostenlos sein.",
+          "Inklusive Bildung und individuelle Förderung sollen Regelschulen für alle zugänglich machen.",
+          "Klima-, Umwelt-, Ernährungs- und Tierschutzbildung sollen fächerübergreifend verankert werden."
+        ],
+        "categories": [
+          "bildung",
+          "klima-umwelt",
+          "tierschutz"
+        ]
+      },
+      {
+        "slug": "demokratie-teilhabe",
+        "title": "Demokratie und Teilhabe",
+        "summary": "Direkte Demokratie und politische Beteiligung sollen mit niedrigeren Hürden ausgebaut werden.",
+        "positions": [
+          "Unterschriftenquoren und andere Hürden für Volksbegehren und Bürgerentscheide sollen sinken.",
+          "Unterstützungsunterschriften sollen auch digital gesammelt werden können.",
+          "Die Fünf-Prozent-Hürde soll abgeschafft und ein BVV-Wahlalter ab 14 Jahren geprüft werden.",
+          "Beteiligungsverfahren sollen barrierefrei sein und zufällig geloste Bürgerräte ergänzend eingesetzt werden."
+        ],
+        "categories": [
+          "verwaltung-demokratie",
+          "vielfalt-teilhabe"
+        ]
+      },
+      {
+        "slug": "verwaltung-wirtschaft",
+        "title": "Verwaltung und Wirtschaft",
+        "summary": "Öffentliche Verwaltung und Wirtschaftspolitik sollen digital, transparent, gemeinwohlorientiert und ökologisch werden.",
+        "positions": [
+          "Verwaltungsverfahren sollen digitalisiert werden, analoge und barrierefreie Zugänge aber erhalten bleiben.",
+          "Öffentliche Aufträge und Förderungen sollen an Tierwohl, Klimaschutz, Tarifbindung und soziale Kriterien geknüpft werden.",
+          "Kreislaufwirtschaft, Reparatur, Wiederverwendung und regionale Produktion sollen gefördert werden.",
+          "Haushaltsentscheidungen sollen langfristige Umwelt- und Sozialkosten einbeziehen."
+        ],
+        "categories": [
+          "verwaltung-demokratie",
+          "wirtschaft-arbeit",
+          "klima-umwelt"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "title": "Wahlprogramm Berlin 2026",
+        "url": "https://berlin.tierschutzpartei.de/wahlprogramm-berlin-2026.pdf",
+        "format": "pdf",
+        "publisher": "Tierschutzpartei Berlin",
+        "publicationDate": "2026-03-14",
+        "kind": "wahlprogramm"
+      },
+      {
+        "title": "Kurzwahlprogramm Berlin 2026",
+        "url": "https://berlin.tierschutzpartei.de/kurzwahlprogramm-berlin-2026.pdf",
+        "format": "pdf",
+        "publisher": "Tierschutzpartei Berlin",
+        "publicationDate": "2026-03-14",
+        "kind": "kurzprogramm"
+      },
+      {
+        "title": "Berliner Wahlen 2026",
+        "url": "https://berlin.tierschutzpartei.de/berliner-wahlen-2026",
+        "format": "html",
+        "publisher": "Tierschutzpartei Berlin",
+        "publicationDate": "2026-03-14",
+        "kind": "other"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  },
+  {
+    "partySlug": "spd",
+    "status": "current_2026",
+    "title": "Wieder Berlin",
+    "sourceUrl": "https://spd.berlin/media/2026/06/SPD_Berlin_Wahlprogramm_20260521-v3-4.pdf",
+    "publicationDate": "2026-05-09",
+    "summary": "Die SPD verbindet eine investierende Wirtschaftspolitik und höhere Tarifbindung mit umfangreichem Wohnungsbau, Mieterschutz, gebührenfreier Bildung, einem Ausbau öffentlicher Mobilität und einem sozial abgefederten Weg zur Klimaneutralität.",
+    "topics": [
+      {
+        "slug": "wirtschaft-arbeit",
+        "title": "Wirtschaft und gute Arbeit",
+        "summary": "Öffentliche Investitionen, Industriepolitik und höhere Tarifbindung sollen Wachstum und soziale Sicherheit verbinden.",
+        "positions": [
+          "Eine Investitionsdekade soll Verkehr, Schulen, Verwaltung, Energie und digitale Infrastruktur modernisieren.",
+          "Die Tarifbindung soll auf 80 Prozent steigen, öffentliche Vergaben und Förderungen sollen tarifgebundene Unternehmen bevorzugen.",
+          "Industrie, Handwerk, Start-ups, Forschung und Gesundheitswirtschaft sollen gezielt vernetzt und gefördert werden.",
+          "Fachkräfte sollen durch Ausbildung, Weiterbildung, schnellere Anerkennung und eine offenere Einwanderungsverwaltung gewonnen werden."
+        ],
+        "categories": [
+          "wirtschaft-arbeit",
+          "verwaltung-demokratie"
+        ]
+      },
+      {
+        "slug": "wohnen",
+        "title": "Wohnen und Mieten",
+        "summary": "Mehr Neubau soll mit einem großen gemeinwohlorientierten Anteil und stärkerem Mieterschutz verbunden werden.",
+        "positions": [
+          "Von 2026 bis 2031 sollen 100.000 Wohnungen entstehen, mehr als die Hälfte davon öffentlich, genossenschaftlich oder gemeinwohlorientiert.",
+          "Bei kooperativer Baulandentwicklung soll die Hälfte neuer Wohnungen als geförderter Wohnraum entstehen.",
+          "Modulares, serielles und vereinfachtes Bauen soll Genehmigungen und Baukosten senken.",
+          "Mietpreisbremse, Milieuschutz, Kontrollen gegen Zweckentfremdung und Schutz vor möblierter Umgehung sollen gestärkt werden.",
+          "Landeseigene Wohnungen und Grundstücke sollen dauerhaft dem Gemeinwohl dienen."
+        ],
+        "categories": [
+          "wohnen"
+        ]
+      },
+      {
+        "slug": "bildung-familie",
+        "title": "Bildung und Familie",
+        "summary": "Gebührenfreie Bildung, frühe Förderung und verlässliche Betreuung sollen gleiche Chancen schaffen.",
+        "positions": [
+          "Kitas, Schulessen, Lernmittel und zentrale Bildungsangebote sollen gebührenfrei bleiben.",
+          "Sprachförderung soll früh beginnen und Schulen sollen mehr multiprofessionelle Teams erhalten.",
+          "Schulbau, Sanierung, digitale Ausstattung und Ganztagsangebote sollen schneller ausgebaut werden.",
+          "Ausbildung, Jugendsozialarbeit und bezahlbares Wohnen für Studierende und Auszubildende sollen gestärkt werden."
+        ],
+        "categories": [
+          "bildung",
+          "soziales-gesundheit"
+        ]
+      },
+      {
+        "slug": "mobilitaet",
+        "title": "Mobilität",
+        "summary": "Ein dichterer öffentlicher Verkehr und bessere aktive Mobilität sollen die Stadt verlässlich und klimafreundlich verbinden.",
+        "positions": [
+          "Bus, Bahn und Straßenbahn sollen ausgebaut, barrierefrei werden und besonders in Außenbezirken häufiger fahren.",
+          "Das Deutschlandticket soll langfristig finanziert und durch Sozialangebote ergänzt werden.",
+          "Sichere Rad- und Fußwege, moderne Umsteigepunkte und Sharing-Angebote sollen Verkehrsmittel besser verbinden.",
+          "Brücken, Straßen und Schienen sollen mit einer verlässlichen Investitionsplanung saniert werden.",
+          "Verkehrspolitik soll soziale Zugänglichkeit, Klimaschutz und die Bedürfnisse von Pendlern gemeinsam berücksichtigen."
+        ],
+        "categories": [
+          "mobilitaet",
+          "klima-umwelt"
+        ]
+      },
+      {
+        "slug": "gesundheit-soziales",
+        "title": "Gesundheit und soziale Sicherheit",
+        "summary": "Gesundheitsversorgung, Pflege und soziale Infrastruktur sollen wohnortnah und krisenfest sein.",
+        "positions": [
+          "Krankenhäuser, Rettungsdienste und Gesundheitsämter sollen verlässlich finanziert und personell gestärkt werden.",
+          "Gemeinsame Gesundheitszentren, Hausarztversorgung und psychische Hilfen sollen Versorgungslücken in Bezirken schließen.",
+          "Pflegeberufe sollen bessere Arbeitsbedingungen erhalten, pflegende Angehörige mehr Beratung und Entlastung.",
+          "Wohnungslosigkeit soll durch Prävention, Housing First und mehr geschützten Wohnraum reduziert werden."
+        ],
+        "categories": [
+          "soziales-gesundheit",
+          "wohnen"
+        ]
+      },
+      {
+        "slug": "klima-energie",
+        "title": "Klima und Energie",
+        "summary": "Berlin soll vor 2045 klimaneutral werden und die Transformation über öffentliche Netze, Investitionen und sozialen Ausgleich steuern.",
+        "positions": [
+          "Strom, Wärme und Verkehr sollen schrittweise von fossilen Energien auf erneuerbare Quellen umgestellt werden.",
+          "Solarenergie soll bis 2035 ein Viertel des in Berlin erzeugten Stroms liefern.",
+          "Öffentliche Energie- und Wärmenetze sollen integriert geplant und gemeinwohlorientiert betrieben werden.",
+          "Gebäudesanierung, Hitzeschutz, Entsiegelung und Schwammstadtmaßnahmen sollen Klima und Lebensqualität gemeinsam verbessern."
+        ],
+        "categories": [
+          "klima-umwelt",
+          "wohnen",
+          "mobilitaet"
+        ]
+      },
+      {
+        "slug": "vielfalt-verwaltung",
+        "title": "Vielfalt und Verwaltung",
+        "summary": "Eine diskriminierungsfreie Stadt soll mit einer zugänglichen und proaktiven Verwaltung verbunden werden.",
+        "positions": [
+          "Antidiskriminierung, der Schutz queerer Menschen und die Teilhabe von Menschen mit Behinderungen sollen gestärkt werden.",
+          "Ein Welcome Center, mehr Sprach- und Anerkennungsberatung und ein Berliner City-ID-Modell sollen Zugänge zu Leistungen verbessern.",
+          "Verwaltungsleistungen sollen nach dem Once-only-Prinzip digital und zunehmend automatisch angeboten werden.",
+          "Open Source, offene Standards und wiederverwendbare öffentliche Software sollen die digitale Souveränität erhöhen.",
+          "Analoge und persönliche Zugänge sollen für Menschen ohne digitale Möglichkeiten erhalten bleiben."
+        ],
+        "categories": [
+          "vielfalt-teilhabe",
+          "verwaltung-demokratie",
+          "sicherheit-migration"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "title": "Wahlprogramm der SPD Berlin 2026",
+        "url": "https://spd.berlin/media/2026/06/SPD_Berlin_Wahlprogramm_20260521-v3-4.pdf",
+        "format": "pdf",
+        "publisher": "SPD Berlin",
+        "publicationDate": "2026-05-09",
+        "kind": "wahlprogramm"
+      },
+      {
+        "title": "Wahlprogramm im Web",
+        "url": "https://spd.berlin/wahlprogramm/",
+        "format": "html",
+        "publisher": "SPD Berlin",
+        "publicationDate": "2026-05-09",
+        "kind": "wahlprogramm"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  },
+  {
+    "partySlug": "sgp",
+    "status": "campaign_material",
+    "title": "Berlinwahl 2026: Sozialismus statt Krieg",
+    "sourceUrl": "https://www.wsws.org/de/articles/2026/07/10/sgpb-j10.html",
+    "publicationDate": "2026-07-10",
+    "summary": "Die Wahlerklärung der SGP ist kein ausdifferenziertes Landeswahlprogramm. Sie stellt den Kampf gegen Krieg, Aufrüstung, Sozialkürzungen und die Macht großer Vermögen in den Mittelpunkt und wirbt für eine internationale sozialistische Bewegung.",
+    "topics": [
+      {
+        "slug": "frieden-aussenpolitik",
+        "title": "Krieg und Aufrüstung",
+        "summary": "Die SGP lehnt deutsche Aufrüstung, NATO-Politik und militärische Unterstützung laufender Kriege grundsätzlich ab.",
+        "positions": [
+          "Deutsche Truppen sollen aus Auslandseinsätzen und Osteuropa abgezogen werden.",
+          "Militärhilfen für Ukraine und Israel sollen enden, die NATO soll aufgelöst und die Wehrpflicht abgeschafft werden.",
+          "Zivile Produktion soll nicht auf Rüstung umgestellt werden.",
+          "Industrie und öffentliche Mittel sollen Wohnungen, Krankenhäusern, Schulen und Infrastruktur statt dem Militär dienen."
+        ],
+        "categories": [
+          "frieden"
+        ]
+      },
+      {
+        "slug": "wirtschaft-eigentum",
+        "title": "Wirtschaft und Eigentum",
+        "summary": "Banken, Großkonzerne und Milliardenvermögen sollen enteignet und demokratisch kontrolliert werden.",
+        "positions": [
+          "Große Vermögen, Banken und Konzerne sollen in gesellschaftliches Eigentum überführt werden.",
+          "Produktion und Investitionen sollen an gesellschaftlichen Bedürfnissen statt privatem Profit ausgerichtet werden.",
+          "Technologie wie künstliche Intelligenz soll Arbeitszeit verkürzen und belastende Arbeit verringern, nicht Beschäftigung vernichten."
+        ],
+        "categories": [
+          "wirtschaft-arbeit"
+        ]
+      },
+      {
+        "slug": "arbeit-soziales",
+        "title": "Arbeit und öffentliche Dienste",
+        "summary": "Arbeitsplätze, Löhne und soziale Infrastruktur sollen gegen Kürzungen und Privatisierung verteidigt werden.",
+        "positions": [
+          "Die SGP wendet sich gegen Entlassungen, Lohnsenkungen und Kürzungen bei Renten, Gesundheit, Bildung, Kultur und Nahverkehr.",
+          "Unabhängige Aktionskomitees in Betrieben, Schulen, Hochschulen und Nachbarschaften sollen Arbeitskämpfe organisieren.",
+          "Öffentliche Dienste und Krankenhäuser sollen ausgebaut statt auf Gewinnerzielung und Einsparungen ausgerichtet werden."
+        ],
+        "categories": [
+          "wirtschaft-arbeit",
+          "soziales-gesundheit",
+          "kultur"
+        ]
+      },
+      {
+        "slug": "demokratie-antifaschismus",
+        "title": "Demokratie und Antifaschismus",
+        "summary": "Die Erklärung verbindet den Kampf gegen die AfD und staatliche Repression mit einer revolutionär-sozialistischen Organisierung.",
+        "positions": [
+          "Überwachung, Verbote von Demonstrationen und Repression gegen Kriegsgegner werden abgelehnt.",
+          "Die AfD soll durch unabhängige Mobilisierung der Arbeiterklasse statt durch Bündnisse mit etablierten Parteien bekämpft werden.",
+          "Errungene Mandate sollen als öffentliche Plattform für Widerstand gegen Krieg, soziale Ungleichheit und Autoritarismus dienen."
+        ],
+        "categories": [
+          "verwaltung-demokratie",
+          "frieden"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "title": "Berlinwahl 2026: Sozialismus statt Krieg",
+        "url": "https://www.wsws.org/de/articles/2026/07/10/sgpb-j10.html",
+        "format": "html",
+        "publisher": "Sozialistische Gleichheitspartei",
+        "publicationDate": "2026-07-10",
+        "kind": "broschuere"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  },
+  {
+    "partySlug": "volt",
+    "status": "current_2026",
+    "title": "Berlin lebt",
+    "sourceUrl": "https://voltdeutschland.org/storage/assets-berlin/pdf/policy-wahlprogramm-2026/wahlprogramm-edited-20-7.pdf",
+    "publicationDate": "2026-04-25",
+    "summary": "Volt legt ein daten- und best-practice-orientiertes Programm vor. Schwerpunkte sind eine messbar leistungsfähige digitale Verwaltung, deutlich mehr Wohnungsbau, multimodale Mobilität mit City-Maut, Innovation, Klimaschutz und ein europäisch geprägtes, vielfältiges Berlin.",
+    "topics": [
+      {
+        "slug": "verwaltung-digitalisierung",
+        "title": "Verwaltung und Digitalisierung",
+        "summary": "Verwaltungsleistungen sollen messbar, digital, interoperabel und mit klarer Fallverantwortung erbracht werden.",
+        "positions": [
+          "Für Standardfälle sollen verbindliche Bearbeitungsziele von in der Regel zehn Arbeitstagen gelten.",
+          "Jeder Vorgang soll eine klar zuständige Person oder Stelle erhalten und sein Status digital nachvollziehbar sein.",
+          "Once-only, interoperable Akten und gemeinsame Standards sollen Mehrfachnachweise und Medienbrüche beenden.",
+          "Öffentlich finanzierte Software soll nach dem Grundsatz Public Money, Public Code offen und wiederverwendbar sein.",
+          "Leistungsdaten der Verwaltung sollen veröffentlicht und zur kontinuierlichen Verbesserung genutzt werden."
+        ],
+        "categories": [
+          "verwaltung-demokratie"
+        ]
+      },
+      {
+        "slug": "wohnen",
+        "title": "Wohnen",
+        "summary": "Volt will sehr viel mehr bauen und den öffentlichen sowie genossenschaftlichen Bestand ausweiten, lehnt aber Enteignung und starre Mietendeckel ab.",
+        "positions": [
+          "Flächen und Verfahren sollen Wohnraum für bis zu 300.000 zusätzliche Wohnungen ermöglichen.",
+          "Serielles, modulares Bauen, Aufstockung und Umnutzung sollen schneller genehmigt werden.",
+          "Landeseigene, genossenschaftliche und sozial gebundene Wohnungen sollen deutlich zunehmen.",
+          "Mietpreisbremse und gezielte soziale Förderung sollen erhalten, pauschale Mietendeckel und Vergesellschaftung abgelehnt werden.",
+          "Housing First und eine soziale Wohnraumagentur sollen Wohnungslosigkeit und Fehlbelegung besser bearbeiten."
+        ],
+        "categories": [
+          "wohnen",
+          "soziales-gesundheit"
+        ]
+      },
+      {
+        "slug": "mobilitaet",
+        "title": "Mobilität",
+        "summary": "Öffentlicher Verkehr, sichere aktive Mobilität und digitale Angebote sollen durch eine City-Maut finanziert und besser verbunden werden.",
+        "positions": [
+          "U-Bahn, S-Bahn, Straßenbahn und Bus sollen ausgebaut, automatisiert und verlässlicher werden.",
+          "Digitale Rufbusse und Sharing sollen Lücken besonders in Außenbezirken schließen.",
+          "Eine nach Zeit und Emissionen gestaffelte City-Maut im S-Bahn-Ring soll ÖPNV, Rad- und Fußverkehr finanzieren.",
+          "Kreuzungen und Radnetze sollen sicherer, Barrieren im Fußverkehr beseitigt werden.",
+          "Tempo 30 soll besonders an Schulen, Wohngebieten und gefährlichen Orten gelten."
+        ],
+        "categories": [
+          "mobilitaet"
+        ]
+      },
+      {
+        "slug": "wirtschaft-bildung",
+        "title": "Wirtschaft, Arbeit und Bildung",
+        "summary": "Innovation, Fachkräfte, Gründungen und praxisnahe Bildung sollen Berlin wirtschaftlich widerstandsfähiger machen.",
+        "positions": [
+          "Berlin soll als europäischer Start-up- und Innovationsstandort mit einfacheren Verfahren und besserem Zugang zu Kapital wachsen.",
+          "Kleine und mittlere Unternehmen sollen bei Digitalisierung und verantwortlichem Einsatz von künstlicher Intelligenz unterstützt werden.",
+          "Frühkindliche Bildung soll verbindliche Qualitätsstandards erhalten, Schulen sollen Grundkompetenzen und individuelles Lernen verbinden.",
+          "Eine Ausbildungsgarantie, duale Bildungswege und schnellere Anerkennung ausländischer Abschlüsse sollen Fachkräfte sichern.",
+          "Öffentliche Daten und Wissenschaftstransfer sollen neue Dienste und Unternehmen ermöglichen."
+        ],
+        "categories": [
+          "wirtschaft-arbeit",
+          "bildung"
+        ]
+      },
+      {
+        "slug": "sicherheit-gesundheit",
+        "title": "Sicherheit, Gesundheit und Soziales",
+        "summary": "Prävention, moderne Behörden und wohnortnahe Gesundheitsangebote sollen Sicherheit und Teilhabe stärken.",
+        "positions": [
+          "Polizei und Rettungsdienste sollen digitaler arbeiten und stärker durch Prävention, Sozialarbeit und Opferschutz ergänzt werden.",
+          "Biometrische Echtzeitüberwachung wird abgelehnt, automatisierte Systeme sollen menschlich kontrolliert werden.",
+          "Gesundheitszentren, psychische Hilfen und Drogenhilfe sollen in unterversorgten Bezirken ausgebaut werden.",
+          "Frauenhäuser und Schutzplätze sollen bedarfsgerecht erweitert, Gewaltbetroffene besser begleitet werden.",
+          "Soziale Leistungen sollen möglichst gebündelt und proaktiv angeboten werden."
+        ],
+        "categories": [
+          "sicherheit-migration",
+          "soziales-gesundheit",
+          "vielfalt-teilhabe"
+        ]
+      },
+      {
+        "slug": "klima-energie",
+        "title": "Klima und Energie",
+        "summary": "Berlin soll erneuerbare Energie, zirkuläres Bauen und Klimaanpassung schneller umsetzen.",
+        "positions": [
+          "Geeignete öffentliche Dächer sollen bis 2031 mit Solaranlagen ausgestattet werden.",
+          "Wärmepumpen, Abwärme, Geothermie und eine Berlin-Brandenburg-Energiepartnerschaft sollen fossile Wärme ersetzen.",
+          "Wiederverwendung von Baustoffen und Lebenszyklusstandards sollen den Ressourcenverbrauch des Bauens senken.",
+          "Schwammstadt, Entsiegelung, Bäume und Hitzeschutz sollen Berlin an Extremwetter anpassen."
+        ],
+        "categories": [
+          "klima-umwelt"
+        ]
+      },
+      {
+        "slug": "europa-vielfalt",
+        "title": "Europa und Vielfalt",
+        "summary": "Berlin soll europäischer, international zugänglich und diskriminierungsfrei regiert werden.",
+        "positions": [
+          "Berlin soll europäische Fördermittel, kommunale Netzwerke und gemeinsame Standards strategischer nutzen.",
+          "Mehrsprachige Verwaltung und schnellere Anerkennung sollen Zugewanderten den Zugang zu Arbeit und Leistungen erleichtern.",
+          "Antidiskriminierung, queere Rechte, Barrierefreiheit und kulturelle Teilhabe sollen als Querschnittsaufgaben verankert werden.",
+          "Kultur, Wissenschaft und Jugendaustausch sollen Berlin enger mit europäischen Partnerstädten verbinden."
+        ],
+        "categories": [
+          "vielfalt-teilhabe",
+          "verwaltung-demokratie",
+          "kultur"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "title": "Wahlprogramm Berlin 2026",
+        "url": "https://voltdeutschland.org/storage/assets-berlin/pdf/policy-wahlprogramm-2026/wahlprogramm-edited-20-7.pdf",
+        "format": "pdf",
+        "embeddable": false,
+        "publisher": "Volt Berlin",
+        "publicationDate": "2026-04-25",
+        "kind": "wahlprogramm"
+      },
+      {
+        "title": "Kurz-Wahlprogramm Berlin 2026",
+        "url": "https://voltdeutschland.org/storage/assets-berlin/pdf/policy-wahlprogramm-2026/kurzwahlprogramm-2026-final.pdf",
+        "format": "pdf",
+        "embeddable": false,
+        "publisher": "Volt Berlin",
+        "publicationDate": "2026-04-25",
+        "kind": "kurzprogramm"
+      },
+      {
+        "title": "Programm Berlin 2026 im Web",
+        "url": "https://voltdeutschland.org/berlin/programm/programme/programm-berlin-2026",
+        "format": "html",
+        "publisher": "Volt Berlin",
+        "publicationDate": "2026-04-25",
+        "kind": "wahlprogramm"
+      }
+    ],
+    "retrievedAt": "2026-07-25"
+  }
+]
