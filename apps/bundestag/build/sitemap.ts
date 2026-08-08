@@ -26,7 +26,8 @@ function sitemapEntries(): SitemapEntry[] {
     (db.prepare(`
       SELECT a.id, max(
         coalesce(a.introduced_date, ''),
-        coalesce((SELECT max(v.date) FROM vote_antraege va INNER JOIN votes v ON v.id = va.vote_id WHERE va.antrag_id = a.id), '')
+        coalesce((SELECT max(v.date) FROM vote_antraege va INNER JOIN votes v ON v.id = va.vote_id WHERE va.antrag_id = a.id), ''),
+        coalesce(substr(a.updated_at, 1, 10), '')
       ) AS d
       FROM antraege a WHERE a.wahlperiode = ?
     `).all(CURRENT_TERM) as Array<{ id: number; d: string }>).map((r) => [r.id, r.d || undefined]),
