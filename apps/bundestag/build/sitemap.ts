@@ -1,5 +1,6 @@
 import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
+import { DONATION_PARTY_NAMES, SLUG_TO_PARTY } from '../src/lib/parties'
 import { SITE_URL } from '../src/lib/seo'
 import { CURRENT_TERM } from '../src/server/term'
 import { openDb, partySlugs, publishableAntragIds, publishableVotes, votedMembers } from './shared'
@@ -42,8 +43,19 @@ function sitemapEntries(): SitemapEntry[] {
     entries.push({ path: `/en/members/${m.id}/`, lastmod: m.lastVoteDate })
   }
   for (const slug of partySlugs(db)) {
-    entries.push({ path: `/parties/${slug}/`, lastmod: latest })
-    entries.push({ path: `/en/parties/${slug}/`, lastmod: latest })
+    const donationNames = DONATION_PARTY_NAMES[SLUG_TO_PARTY[slug]] ?? []
+    const lastmod = donationNames.length
+      ? (db.prepare(`
+          SELECT max(d) AS d FROM (
+            SELECT ? AS d
+            UNION ALL
+            SELECT date_notified AS d FROM party_donations
+            WHERE party IN (${donationNames.map(() => '?').join(', ')})
+          )
+        `).get(latest ?? null, ...donationNames) as { d: string | null }).d ?? undefined
+      : latest
+    entries.push({ path: `/parties/${slug}/`, lastmod })
+    entries.push({ path: `/en/parties/${slug}/`, lastmod })
   }
   db.close()
   return entries
