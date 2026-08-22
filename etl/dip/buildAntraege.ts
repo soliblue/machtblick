@@ -24,7 +24,7 @@ export function buildAntragRow(v: Vorgang, positions: Vorgangsposition[]): Row |
     id: Number(v.id),
     type,
     title: decodeHtmlEntities(v.titel),
-    abstract: v.abstract ? decodeHtmlEntities(v.abstract) : null,
+    abstract: v.abstract ? normalizeAntragAbstract(v.id, v.abstract) : null,
     beratungsstand: v.beratungsstand ?? null,
     wahlperiode: v.wahlperiode,
     initiativeFraktion: v.initiative ? normalizePartyList(v.initiative.join(', ')) : null,
@@ -35,4 +35,11 @@ export function buildAntragRow(v: Vorgang, positions: Vorgangsposition[]): Row |
     deskriptor: v.deskriptor?.map((d) => ({ name: d.name, typ: d.typ })) ?? null,
     updatedAt: v.aktualisiert,
   }
+}
+
+export function normalizeAntragAbstract(id: string, abstract: string): string {
+  const decoded = decodeHtmlEntities(abstract)
+  if (id !== '338368' || decoded.includes('ab dem Geburtsjahrgang 2020')) return decoded
+  if (decoded.includes('ab dem Geburtsjahrgang 2000')) return decoded.replace('ab dem Geburtsjahrgang 2000', 'ab dem Geburtsjahrgang 2020')
+  throw new Error(`unexpected DIP abstract for Vorgang ${id}`)
 }

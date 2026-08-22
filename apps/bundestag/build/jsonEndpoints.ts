@@ -7,7 +7,7 @@ import { writeSpeechesStatic } from '../vite-data/speeches'
 import type { Locale } from '../src/lib/locale'
 import { loadStaticTranslations } from '../vite-data/translations'
 import { leanVotes, fullVote, loadVoteBuildData } from '../vite-data/votes'
-import { openDb, partySlugs, publishableAntragIds, publishableVotes, votedMembers } from './shared'
+import { openDb, partySlugs, publishableAntragIds, publishableMembers, publishableVotes } from './shared'
 
 function writeDir(dir: string, files: Array<[string, () => unknown]>) {
   mkdirSync(dir, { recursive: true })
@@ -25,7 +25,7 @@ export function writeJsonEndpoints() {
   const voteData = loadVoteBuildData(db, translations)
   const memberData = loadMemberBuildData(db, translations)
   const voteIds = publishableVotes(db).map((v) => v.id)
-  const memberIds = votedMembers(db).map((m) => m.id)
+  const memberIds = publishableMembers(db).map((m) => m.id)
   const slugs = partySlugs(db)
   rmSync(`${publicDir}/antraege`, { force: true, recursive: true })
   rmSync(`${publicDir}/en/antraege`, { force: true, recursive: true })

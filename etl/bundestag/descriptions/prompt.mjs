@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
-export const PROMPT_VERSION = 7
+export const PROMPT_VERSION = 9
 
 const promptPath = (name) => fileURLToPath(new URL(`../../../prompts/etl/bundestag/${name}.md`, import.meta.url))
 const RULES = readFileSync(promptPath('descriptions-rules'), 'utf8').trimEnd()
@@ -19,8 +19,14 @@ const TEMPLATES = {
   unterrichtung: UNTERRICHTUNG_TEMPLATE,
 }
 
-export function buildPrompt(title, text, kind = 'antrag') {
+export function buildPrompt(title, text, kind = 'antrag', review = null) {
   const truncated = text.length > 30000 ? text.slice(0, 30000) : text
   const template = TEMPLATES[kind] ?? TEMPLATES.antrag
-  return template.replace('__TITLE__', title).replace('__TEXT__', truncated).replace('__RULES__', RULES)
+  return template.replace('__TITLE__', title).replace('__TEXT__', truncated).replace('__RULES__', RULES) + (review ? `
+
+Geprüfte, quellengestützte Korrekturen:
+- Die Sätze unter required müssen im genannten Feld wortgetreu enthalten sein.
+- Aussagen unter forbidden müssen entfernt werden.
+- Ersetze widersprüchliche oder allgemeinere Formulierungen und vermeide Dopplungen.
+${JSON.stringify(review, null, 2)}` : '')
 }

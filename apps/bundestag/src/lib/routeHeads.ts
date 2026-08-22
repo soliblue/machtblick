@@ -111,10 +111,16 @@ export function memberDetailHead(loaderData: MemberDetailData | undefined, param
   return {
     meta: seoMeta({
       title: loaderData
-        ? en ? `${name} (${loaderData.party}): Voting record` : `${name} (${loaderData.party}): Abstimmungsverhalten`
+        ? loaderData.votesAppeared === 0
+          ? en ? `${name} (${loaderData.party}): Member profile` : `${name} (${loaderData.party}): Abgeordnetenprofil`
+          : en ? `${name} (${loaderData.party}): Voting record` : `${name} (${loaderData.party}): Abstimmungsverhalten`
         : name,
       description: loaderData
-        ? loaderData.loyalty !== null
+        ? loaderData.votesAppeared === 0
+          ? en
+            ? `${who} in the German Bundestag. No roll-call voting data is available yet.`
+            : `${who} im Deutschen Bundestag. Noch keine Daten zu namentlichen Abstimmungen verfügbar.`
+          : loaderData.loyalty !== null
           ? en
             ? `${who} in the German Bundestag: ${pct(loaderData.attendance)} attendance and ${pct(loaderData.loyalty)} party-line loyalty in roll-call votes.`
             : `${who} im Bundestag: ${pct(loaderData.attendance)} Anwesenheit und ${pct(loaderData.loyalty)} Linientreue bei namentlichen Abstimmungen.`

@@ -11,8 +11,10 @@ struct MemberDetailStats: View {
         HStack(alignment: .top, spacing: ThemeTokens.Spacing.l) {
             MemberStatValue(
                 label: Copy.attendance,
-                value: Formatters.percent(detail.attendance),
-                supportingText: Copy.missedVotes(missedVotes, total: detail.history.count)
+                value: detail.votesAppeared == 0 ? "-" : Formatters.percent(detail.attendance),
+                supportingText: detail.votesAppeared == 0
+                    ? Copy.noVoteData
+                    : Copy.missedVotes(missedVotes, total: detail.history.count)
             )
             MemberStatValue(
                 label: Copy.loyalty,

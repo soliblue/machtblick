@@ -42,7 +42,7 @@ export const listMembers = createServerFn({ method: 'GET' }).handler(async (): P
   const stats = new Map<string, { name: string; lastName: string; party: string; state: string; mandateType: string | null; pictureUrl: string | null; total: number; absent: number; loyalMatches: number; loyalEligible: number }>()
   for (const m of allMembers) {
     if (!currentPartyByMember.has(m.id)) continue
-    stats.set(m.id, { name: m.name, lastName: m.lastName, party: currentPartyByMember.get(m.id) ?? '', state: '', mandateType: m.mandateType, pictureUrl: m.pictureUrl, total: 0, absent: 0, loyalMatches: 0, loyalEligible: 0 })
+    stats.set(m.id, { name: m.name, lastName: m.lastName, party: currentPartyByMember.get(m.id) ?? '', state: m.listState ?? '', mandateType: m.mandateType, pictureUrl: m.pictureUrl, total: 0, absent: 0, loyalMatches: 0, loyalEligible: 0 })
   }
   for (const r of vmRows) {
     const s = stats.get(r.memberId)
@@ -61,7 +61,6 @@ export const listMembers = createServerFn({ method: 'GET' }).handler(async (): P
   }
   const out: MemberListItem[] = []
   for (const [id, s] of stats) {
-    if (!s.total) continue
     const demo = demographics.get(id)
     out.push({
       id,
@@ -70,7 +69,7 @@ export const listMembers = createServerFn({ method: 'GET' }).handler(async (): P
       party: s.party,
       state: s.state,
       votesAppeared: s.total,
-      attendance: 1 - s.absent / s.total,
+      attendance: s.total ? 1 - s.absent / s.total : 0,
       loyalty: s.loyalEligible > 0 ? s.loyalMatches / s.loyalEligible : null,
       yearOfBirth: demo?.yearOfBirth ?? null,
       sex: demo?.sex ?? null,

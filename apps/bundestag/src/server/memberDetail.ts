@@ -204,7 +204,7 @@ export const getMember = createServerFn({ method: 'GET' })
       id,
       name: m.name,
       party: currentParty,
-      state: vmRows[0]?.state ?? '',
+      state: vmRows[0]?.state ?? m.listState ?? '',
       attendance: vmRows.length ? 1 - absent / vmRows.length : 0,
       loyalty: loyalEligible > 0 ? loyalMatches / loyalEligible : null,
       votesAppeared: vmRows.length,

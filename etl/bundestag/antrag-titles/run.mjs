@@ -5,6 +5,8 @@ import { pLimit } from '../polarity/limit.mjs'
 import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
 import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
 import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
+import { reviewedGermanTitle, shouldSkipGermanTitle } from '../antrag-descriptions/reviewedCorrections.mjs'
+import { antragTitleSourceHash } from './sourceHash.mjs'
 
 const schemaPath = fileURLToPath(new URL('./output-schema.json', import.meta.url))
 const timeoutMs = Number(process.env.CODEX_TIMEOUT_MS ?? 240000)
@@ -20,7 +22,7 @@ const db = new Database(dbPath)
 ensureSchema()
 
 const rows = db.prepare(`
-  SELECT a.id, a.type, a.title, ad.summary_simplified AS summary
+  SELECT a.id, a.type, a.title, a.drucksache, ad.summary_simplified AS summary
   FROM antraege a
   INNER JOIN antrag_descriptions ad ON ad.antrag_id = a.id
   WHERE a.wahlperiode = 21
@@ -37,6 +39,7 @@ for (let i = 0; i < selected.length; i += batchSize) batches.push(selected.slice
 console.log(`antrag title jobs: ${selected.length}/${rows.length} rows, ${batches.length} batches, db=${dbPath}, model=${PREPROCESSING_MODEL}, reasoning=${PREPROCESSING_REASONING_EFFORT}`)
 
 const update = db.prepare('UPDATE antraege SET clean_title = ? WHERE id = ?')
+const rowById = new Map(selected.map((row) => [row.id, { ...row, sourceHash: antragTitleSourceHash(row.type, row.title, row.summary) }]))
 const limit = pLimit(concurrency)
 let written = 0
 let nulled = 0
@@ -66,8 +69,9 @@ db.close()
 
 function writeOutput(output) {
   for (const item of output.items) {
-    const cleanTitle = cleanText(item.clean_title)
-    if (item.confidence === 'low') {
+    const row = rowById.get(item.id)
+    const cleanTitle = cleanText(reviewedGermanTitle(item.id, row?.drucksache, row?.sourceHash, item.clean_title))
+    if (shouldSkipGermanTitle(item.id, row?.drucksache, row?.sourceHash, item.confidence)) {
       low++
     } else if (!cleanTitle) {
       nulled++

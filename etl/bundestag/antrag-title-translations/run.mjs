@@ -1,4 +1,3 @@
-import { createHash } from 'node:crypto'
 import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
 import { argValue, chunk, findDbPath } from '../../_shared/worker.mjs'
@@ -6,6 +5,8 @@ import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
 import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
 import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
 import { ensureTextColumn } from '../preprocessing/schema.mjs'
+import { applyReviewedTitleFields } from '../antrag-descriptions/reviewedCorrections.mjs'
+import { antragTitleTranslationSourceHash } from './sourceHash.mjs'
 
 const schemaPath = fileURLToPath(new URL('./output-schema.json', import.meta.url))
 const timeoutMs = Number(process.env.CODEX_TIMEOUT_MS ?? 240000)
@@ -21,7 +22,7 @@ const db = new Database(dbPath)
 ensureSchema()
 
 const candidates = db.prepare(`
-  SELECT a.id, a.title, a.clean_title, t.title_source_hash
+  SELECT a.id, a.title, a.clean_title, a.drucksache, t.title_source_hash
   FROM antrag_description_translations t
   INNER JOIN antraege a ON a.id = t.antrag_id
   WHERE t.locale = 'en'
@@ -31,7 +32,7 @@ const candidates = db.prepare(`
 `).all(antragFilter ?? null, antragFilter ?? null)
 
 const jobs = candidates
-  .map((row) => ({ row, hash: sourceHash(row.title, row.clean_title) }))
+  .map((row) => ({ row, hash: antragTitleTranslationSourceHash(row.title, row.clean_title) }))
   .filter((job) => force || job.row.title_source_hash !== job.hash)
 
 const selected = limit > 0 ? jobs.slice(0, limit) : jobs
@@ -79,10 +80,6 @@ function ensureSchema() {
   }
 }
 
-function sourceHash(title, cleanTitle) {
-  return createHash('sha256').update(JSON.stringify({ title, cleanTitle })).digest('hex')
-}
-
 function writeBatch(batch, output) {
   const byId = new Map(output.translations.map((t) => [t.antrag_id, t]))
   const now = new Date().toISOString()
@@ -92,7 +89,7 @@ function writeBatch(batch, output) {
     WHERE antrag_id = ? AND locale = 'en'
   `)
   for (const job of batch) {
-    const translated = byId.get(job.row.id)
+    const translated = applyReviewedTitleFields(job.row.id, 'en', job.row.drucksache, job.hash, byId.get(job.row.id))
     if (!translated) throw new Error(`missing title translation for ${job.row.id}`)
     const title = clean(translated.title)
     if (!title) throw new Error(`empty title translation for ${job.row.id}`)

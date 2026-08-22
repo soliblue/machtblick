@@ -7,6 +7,7 @@ import { PROMPT_VERSION } from './prompt.mjs'
 import { pLimit } from '../polarity/limit.mjs'
 import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
 import { ensureTextColumn } from '../preprocessing/schema.mjs'
+import { germanDescriptionReviewForHash, sourceTextHash } from '../antrag-descriptions/reviewedCorrections.mjs'
 
 const dbPath = process.env.MACHTBLICK_DB ?? findDbPath()
 const db = new Database(dbPath)
@@ -53,6 +54,7 @@ const upsertAntragDescription = db.prepare(`
 const counts = { antrag: 0, petitionen: 0, wahleinspruch: 0, verordnung: 0, unterrichtung: 0 }
 let skippedNoPdf = 0
 let llmFailure = 0
+let reviewedFailure = 0
 
 const limit = pLimit(4)
 
@@ -76,26 +78,30 @@ async function processVote(row) {
     return
   }
   try {
-    const { summarySimplified, summaryDetail } = await generateDescriptions(row.title, text, picked.kind)
+    const antraege = antragByDrucksache.all(picked.drucksacheId)
+    const inputHash = sourceTextHash(text)
+    const review = antraege.length === 1 ? germanDescriptionReviewForHash(antraege[0].id, picked.drucksacheId, inputHash) : null
+    const { summarySimplified, summaryDetail } = await generateDescriptions(row.title, text, picked.kind, antraege[0]?.id, picked.drucksacheId, inputHash, review)
     const generatedAt = new Date().toISOString()
     updateVote.run(summarySimplified, summaryDetail, row.id)
     upsertDecision.run(row.id, picked.drucksacheId, picked.pdfUrl, PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT, generatedAt, PROMPT_VERSION)
-    const antraege = antragByDrucksache.all(picked.drucksacheId)
     if (antraege.length === 1) upsertAntragDescription.run(antraege[0].id, summarySimplified, summaryDetail, row.id, picked.pdfUrl, PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT, generatedAt, PROMPT_VERSION)
     counts[picked.kind] = (counts[picked.kind] ?? 0) + 1
     const total = counts.antrag + counts.petitionen + counts.wahleinspruch + counts.verordnung + counts.unterrichtung
     if (total % 5 === 0) console.log(`  ${total}/${selected.length - skippedNoPdf} done`)
   } catch (e) {
     llmFailure++
+    if (e.message.startsWith('reviewed')) reviewedFailure++
     console.warn(`x ${row.id} LLM failed (${picked.drucksacheId}, ${picked.kind}): ${e.message}`)
   }
 }
 
 await Promise.all(selected.map((row) => limit(() => processVote(row))))
 
-console.log(`done. total=${selected.length}/${candidates.length} skipped_no_pdf=${skippedNoPdf} llm_failure=${llmFailure}`)
+console.log(`done. total=${selected.length}/${candidates.length} skipped_no_pdf=${skippedNoPdf} llm_failure=${llmFailure} reviewed_failure=${reviewedFailure}`)
 console.log(`  by kind: antrag=${counts.antrag} petitionen=${counts.petitionen} wahleinspruch=${counts.wahleinspruch} verordnung=${counts.verordnung} unterrichtung=${counts.unterrichtung}`)
 db.close()
+if (llmFailure > 0) process.exit(1)
 
 function ensureSchema() {
   db.prepare(`

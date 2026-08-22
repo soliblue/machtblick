@@ -25,16 +25,32 @@ export function publishableAntragIds(db: Database.Database, locale: Locale = 'de
   return rows.map((r) => r.id)
 }
 
-export function votedMembers(db: Database.Database): Array<{ id: string; lastVoteDate: string }> {
+export function publishableMembers(db: Database.Database): Array<{ id: string; lastModified: string }> {
   return db.prepare(`
-    SELECT m.rowid, m.id, max(v.date) AS lastVoteDate
+    WITH member_votes AS (
+      SELECT vm.member_id, max(v.date) AS last_vote_date
+      FROM vote_members vm
+      INNER JOIN votes v ON v.id = vm.vote_id
+      WHERE v.term_id = ?
+      GROUP BY vm.member_id
+    ), current_members AS (
+      SELECT member_id, max(valid_from) AS valid_from
+      FROM member_affiliations
+      WHERE term_id = ? AND valid_to IS NULL
+      GROUP BY member_id
+    )
+    SELECT m.id,
+           CASE
+             WHEN mv.last_vote_date IS NULL THEN cm.valid_from
+             WHEN cm.valid_from IS NULL THEN mv.last_vote_date
+             ELSE max(mv.last_vote_date, cm.valid_from)
+           END AS lastModified
     FROM members m
-    INNER JOIN vote_members vm ON vm.member_id = m.id
-    INNER JOIN votes v ON v.id = vm.vote_id
-    WHERE v.term_id = ?
-    GROUP BY m.rowid, m.id
+    LEFT JOIN member_votes mv ON mv.member_id = m.id
+    LEFT JOIN current_members cm ON cm.member_id = m.id
+    WHERE mv.member_id IS NOT NULL OR cm.member_id IS NOT NULL
     ORDER BY m.rowid
-  `).all(CURRENT_TERM) as Array<{ id: string; lastVoteDate: string }>
+  `).all(CURRENT_TERM, CURRENT_TERM) as Array<{ id: string; lastModified: string }>
 }
 
 export function partySlugs(db: Database.Database): string[] {

@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { DONATION_PARTY_NAMES, SLUG_TO_PARTY } from '../src/lib/parties'
 import { SITE_URL } from '../src/lib/seo'
 import { CURRENT_TERM } from '../src/server/term'
-import { openDb, partySlugs, publishableAntragIds, publishableVotes, votedMembers } from './shared'
+import { openDb, partySlugs, publishableAntragIds, publishableMembers, publishableVotes } from './shared'
 
 type SitemapEntry = { path: string; lastmod?: string }
 
@@ -38,9 +38,9 @@ function sitemapEntries(): SitemapEntry[] {
   entries.push({ path: '/en/motions/', lastmod: latestMotionActivity })
   for (const id of publishableAntragIds(db)) entries.push({ path: `/motions/${id}/`, lastmod: antragDates.get(id) })
   for (const id of publishableAntragIds(db, 'en')) entries.push({ path: `/en/motions/${id}/`, lastmod: antragDates.get(id) })
-  for (const m of votedMembers(db)) {
-    entries.push({ path: `/members/${m.id}/`, lastmod: m.lastVoteDate })
-    entries.push({ path: `/en/members/${m.id}/`, lastmod: m.lastVoteDate })
+  for (const m of publishableMembers(db)) {
+    entries.push({ path: `/members/${m.id}/`, lastmod: m.lastModified })
+    entries.push({ path: `/en/members/${m.id}/`, lastmod: m.lastModified })
   }
   for (const slug of partySlugs(db)) {
     const donationNames = DONATION_PARTY_NAMES[SLUG_TO_PARTY[slug]] ?? []

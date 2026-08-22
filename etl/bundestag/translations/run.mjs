@@ -5,6 +5,7 @@ import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
 import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
 import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
 import { ensureTextColumn } from '../preprocessing/schema.mjs'
+import { prepareReviewedAntragTranslation } from '../antrag-description-translations/reviewedTranslation.mjs'
 
 const schemaPath = fileURLToPath(new URL('./output-schema-batch.json', import.meta.url))
 const concurrency = Number(argValue('--concurrency') ?? 2)
@@ -233,12 +234,22 @@ function writeTranslations(job, output) {
 
 function syncAntragTranslation(job, vote, now) {
   const matches = db.prepare(`
-    SELECT a.id
+    SELECT a.id, a.drucksache, ad.summary_simplified, ad.summary_detail
     FROM antraege a
     INNER JOIN vote_description_decisions vdd ON vdd.drucksache_id = a.drucksache
+    INNER JOIN antrag_descriptions ad ON ad.antrag_id = a.id
     WHERE a.wahlperiode = 21 AND vdd.vote_id = ?
   `).all(job.vote.id)
   if (matches.length === 1) {
+    const { sourceHash: hash, translated } = prepareReviewedAntragTranslation({
+      id: matches[0].id,
+      drucksache: matches[0].drucksache,
+      summary_simplified: matches[0].summary_simplified,
+      summary_detail: matches[0].summary_detail,
+    }, {
+      summary_simplified: trimOrNull(vote.summary_simplified),
+      summary_detail: trimOrNull(vote.summary_detail),
+    })
     db.prepare(`
       INSERT INTO antrag_description_translations (
         antrag_id, locale, summary_simplified, summary_detail, source_hash, model, model_reasoning_effort, prompt_version, translated_at
@@ -253,9 +264,9 @@ function syncAntragTranslation(job, vote, now) {
         translated_at = excluded.translated_at
     `).run(
       matches[0].id,
-      trimOrNull(vote.summary_simplified),
-      trimOrNull(vote.summary_detail),
-      job.voteHash,
+      translated.summary_simplified,
+      translated.summary_detail,
+      hash,
       PREPROCESSING_MODEL,
       PREPROCESSING_REASONING_EFFORT,
       PROMPT_VERSION,
@@ -272,4 +283,3 @@ function writeBatch(batch, output) {
     else console.warn(`missing vote translation for ${job.vote.id}`)
   }
 }
-

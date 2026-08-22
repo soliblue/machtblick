@@ -1,4 +1,4 @@
-import { openDb, partySlugs, publishableAntragIds, publishableVotes, votedMembers } from './shared'
+import { openDb, partySlugs, publishableAntragIds, publishableMembers, publishableVotes } from './shared'
 
 export function prerenderPaths(): string[] {
   const db = openDb()
@@ -13,7 +13,7 @@ export function prerenderPaths(): string[] {
   for (const id of publishableAntragIds(db, 'en')) {
     paths.push(`/en/motions/${id}/`)
   }
-  for (const { id } of votedMembers(db)) {
+  for (const { id } of publishableMembers(db)) {
     paths.push(`/members/${id}/`)
     paths.push(`/members/${id}/speeches/`)
     paths.push(`/en/members/${id}/`)

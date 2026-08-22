@@ -105,9 +105,9 @@ Read paths consume the materialized `antraege.abstract_plain` (`materializeAntra
 `etl/bundestag-affiliations/` builds time-ranged fraktion runs from two signals:
 
 1. `vote_members.party` runs (primary): consecutive same-party votes collapse into runs; the first changed vote marks the flip.
-2. abgeordnetenwatch `fraction_membership` (boundary refinement + Nachrücker entry dates). AW only stores the LATEST fraktion change per mandate, not full history. AW `valid_from` matching the next run's party refines the boundary; matching the first run's party marks a Nachrücker entry date. Otherwise first-run `valid_from` defaults to the parliament period start (WP21: 2025-03-25).
+2. abgeordnetenwatch current mandates (boundary refinement + Nachrücker entry dates + roster-only entrants). AW only stores the LATEST fraktion change per mandate, not full history. Keep fraction `valid_from` separate from mandate `start_date`: the first refines a party boundary, the second opens a new mandate. A current mandate holder without ballots gets an affiliation directly from AW. Leave and re-entry creates a second run even when the party is unchanged, using the old mandate detail end and the new mandate start. Otherwise first-run `valid_from` defaults to the parliament period start (WP21: 2025-03-25).
 
-Idempotent: deletes and rewrites the current term's rows each run. **Term-scoped:** `loadPartyRuns(termId)` (`etl/bundestag-affiliations/runsFromVotes.ts`) reads only `votes.term_id = CURRENT_TERM` ballots, labels pass through `canonicalPartyToken` (raw label kept when unmatched so `fraktionslos` survives), rows insert with explicit `termId`, delete is term-scoped. Running unscoped once produced 1,108 WP20-only members with open "term-21" affiliations, which leaked into handzeichen party extraction (spurious FDP/BSW rows). We deliberately do NOT generate WP20 affiliation history: no boundary data, no consumer. Sanity: open term-21 rows must equal the seat total (630) after close-departed; per-party open counts must match `party_seat_history` term 21.
+Idempotent: deletes and rewrites the current term's rows each run. Before its transaction it requires exactly 630 current AW rows, zero unmatched, 630 unique canonical members, nonempty parties, and conflict-free mandate remapping. **Term-scoped:** `loadPartyRuns(termId)` (`etl/bundestag-affiliations/runsFromVotes.ts`) reads only `votes.term_id = CURRENT_TERM` ballots, labels pass through `canonicalPartyToken` (raw label kept when unmatched so `fraktionslos` survives), rows insert with explicit `termId`, delete is term-scoped. Running unscoped once produced 1,108 WP20-only members with open "term-21" affiliations, which leaked into handzeichen party extraction (spurious FDP/BSW rows). We deliberately do NOT generate WP20 affiliation history: no boundary data, no consumer. Sanity: open term-21 rows must equal the seat total (630) after close-departed; per-party open counts must match `party_seat_history` term 21.
 
 ### Member ID stability
 
@@ -127,14 +127,15 @@ Three ingest generations coexist: WP20 dataset ("First Last" ids like `heil-pein
 
 ### Former MdB / mandate close-out
 
-No explicit `is_current` flag; `member_affiliations.valid_to IS NULL` means sitting. `db/close-departed-mandates.ts` (`npm run db:close-departed`) owns the close-out, idempotent, two passes:
+No explicit `is_current` flag; `member_affiliations.valid_to IS NULL` means sitting. `db/close-departed-mandates.ts` (`npm run db:close-departed`) owns the close-out, idempotent, three passes:
 
 1. Stammdaten `MDBWP_BIS` (authoritative), joined via `members.bt_mdb_id`; also upgrades provisional dates once Stammdaten publishes.
-2. Roster-gap fallback: a namentlich roster lists every sitting member including absentees, so the roster IS the chamber. A member with WP21 ballots absent from the last two namentlich rosters has departed; close at last appearance. Needed because Stammdaten republishes with weeks-to-months lag.
+2. abgeordnetenwatch mandate detail `end_date`: the current period roster omits departed members, but their saved `member_mandates.aw_mandate_id` detail endpoint remains available. `etl:affiliations` compares exact mandate ids, fetches missing mandate details, and stores exact ends before rebuilding affiliations, so an old mandate still closes when the same member has re-entered.
+3. Roster-gap fallback: a namentlich roster lists every sitting member including absentees, so the roster IS the chamber. A member with WP21 ballots absent from the last two namentlich rosters has departed; close at last appearance. A newer open mandate suppresses this fallback until the member appears in a vote. Needed when both Stammdaten and abgeordnetenwatch lag.
 
 Critical: the affiliations ingest is a delete + rewrite that reopens every run's `valid_to`, silently clobbering earlier close-outs (departed members then count as sitting). The close script is therefore chained into `npm run etl:affiliations` itself; never run the ingest bare. The script prints the chamber-wide sitting count, which must equal 630.
 
-`etl/bundestag-stammdaten/fetch.ts` re-downloads when the local XML is older than 7 days (it used to skip whenever the file existed, so `MDBWP_BIS` never arrived); python3 zipfile fallback when `unzip` is missing. abgeordnetenwatch is no help: the WP21 mandate list returns only current holders, departed mandates vanish without an end date.
+`etl/bundestag-stammdaten/fetch.ts` re-downloads when the local XML is older than 7 days (it used to skip whenever the file existed, so `MDBWP_BIS` never arrived); python3 zipfile fallback when `unzip` is missing.
 
 ### Handzeichen proposer enrichment is mandatory
 
@@ -246,10 +247,10 @@ Upstream: HTML tables at `bundestag.de/parlament/praesidium/parteienfinanzierung
 Upstream: `https://www.abgeordnetenwatch.de/api/v2/`. Feeds `member_abgeordnetenwatch` (full politician JSON archived in `raw_json`) and backfills `members.picture_url` where Wikidata left NULL. Script `npm run etl:abgeordnetenwatch` (`etl/abgeordnetenwatch-members/ingest.ts`).
 
 - The 21. BT is parliament-period **id 161**. Mandates via `candidacies-mandates?parliament_period=161&type=mandate` (~860 rows for 630 politicians; one MP can have several mandate entries).
-- **`ext_id_bundestagsverwaltung` on the politician payload is the 8-digit Stammdaten ID**, i.e. `members.bt_mdb_id`; primary matching is a direct ID lookup. Name-key fallback exists but is rarely needed.
+- **Politician profile `ext_id_bundestagsverwaltung` is not unique.** Martin Hess and Nicole Hess both reported Martin's 8-digit ID in 2026. Match the current-term `member_mandates.aw_politician_id` first; when profile ID and a unique name disagree, the name wins. Resume validation deletes wrong profile-to-member mappings and clears only an exactly matching stale AW portrait before reprocessing.
 - No `profile_picture_url` in the API despite documentation. Pictures are scraped from the profile HTML: capture the `sites/default/files/styles/<style>/public/politicians-profile-pictures/<file>` path, strip the style segment; the remaining path ALREADY starts with `sites/default/files/`, so concatenate `https://www.abgeordnetenwatch.de/${path}` directly (double-prefixing once produced 404s across 275 members; if portraits 404, eyeball the stored URL first).
 - **Rate limit is real and per-resource-key:** concurrency 2 with 600ms delay is the sweet spot; exponential backoff capped at 60s; also retry socket errors. Mandate list and profile HTML are unthrottled. Full run ~30 min.
-- Resumable: already-ingested politician ids are skipped at startup; the final upsert + picture backfill publish the changes. The backfill fills NULLs only, never overwrites Wikidata pictures.
+- Resumable: already-ingested politician ids are skipped at startup. All profile refreshes and required replacements are fetched and collision-checked before one transaction removes invalid mappings, publishes replacements, and synchronizes portraits. The backfill fills NULLs only, never overwrites Wikidata pictures.
 - Mandate list caps at 100 results per response regardless of `range_end`, but offset paging still works; don't tighten the paginator.
 - Don't denormalize `year_of_birth`/`occupation`/etc. onto `members` until a consumer exists; read via `json_extract` on `raw_json`.
 
@@ -288,6 +289,7 @@ Tables: `antraege` (one row per vorgang; `initiative_fraktion` is the joined `in
 - **DIP person IDs are aliases, not stable person keys.** One MdB can have concurrent IDs after a faction-status change, and new MdBs can postdate the one-shot `members.dip_person_id` seed. Structured signatories resolve `person_id` directly first, then fall back to the unique normalized activity `titel` among WP21 mandate holders. Do not replace an older scalar ID with the newest alias because historical activities may still use it.
 - **Zero-signer rows are upstream truth**, not bugs: BReg bills (signed by ministry officials), coalition motions (attributed to "die Fraktion", confirmed 43/43 with `aktivitaet_anzahl=0`), and a handful of single-Fraktion motions with the same shape. Don't add fallback heuristics; the audit doesn't flag these.
 - **`vorgangsbezug` is multi-valued; scan ALL entries, not `[0]`.** ~2% of aktivitaeten list an EU-Vorlage vorgang first and the actual Antrag second; indexing `[0]` silently drops those signatories. Both `buildSignatoryRows` and the `process.ts` pre-filter iterate all entries; membership filtering against `antraege` does the final selection.
+- DIP Vorgang 338368 incorrectly says the Frühstartrente starts with birth cohort 2000; its official Drucksache 21/445 says 2020. `buildAntragRow` corrects that exact ID and phrase while `antraege_raw` preserves the upstream payload.
 
 ### Vote linkage
 

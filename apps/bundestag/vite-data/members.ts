@@ -116,7 +116,7 @@ export function leanMembers(
   data: MemberBuildData,
   photoManifest?: Record<string, { file: string }>,
 ) {
-  const allMembers = db.prepare('SELECT id, name, picture_url, mandate_type FROM members').all() as Array<Pick<MemberRow, 'id' | 'name' | 'picture_url' | 'mandate_type'>>
+  const allMembers = db.prepare('SELECT id, name, picture_url, mandate_type, list_state FROM members').all() as Array<Pick<MemberRow, 'id' | 'name' | 'picture_url' | 'mandate_type' | 'list_state'>>
   const voteDate = new Map(
     (db.prepare(`SELECT id, date FROM votes WHERE term_id = ${CURRENT_TERM} AND procedural = 0`).all() as Array<{ id: string; date: string }>).map((vote) => [vote.id, vote.date]),
   )
@@ -141,10 +141,10 @@ export function leanMembers(
   }
   const demographics = loadDemographics(db)
   return allMembers
-    .filter((member) => ballotsByMember.has(member.id))
+    .filter((member) => currentParty.has(member.id))
     .map((member) => {
       const demo = demographics.get(member.id)
-      const ballots = ballotsByMember.get(member.id)!
+      const ballots = ballotsByMember.get(member.id) ?? []
       const affiliations = affiliationsByMember.get(member.id)
       let absent = 0
       let loyalMatches = 0
@@ -163,12 +163,12 @@ export function leanMembers(
         id: member.id,
         name: member.name,
         pictureUrl: resolvePictureUrl(member.id, member.picture_url, photoManifest),
-        party: currentParty.get(member.id) ?? '',
-        state: stateByMember.get(member.id) ?? '',
+        party: currentParty.get(member.id)!,
+        state: stateByMember.get(member.id) ?? member.list_state ?? '',
         yearOfBirth: demo?.yearOfBirth ?? null,
         sex: demo?.sex ?? null,
         mandateType: parseMandate(member.mandate_type),
-        attendance: 1 - absent / ballots.length,
+        attendance: ballots.length ? 1 - absent / ballots.length : 0,
         loyalty: loyalEligible > 0 ? loyalMatches / loyalEligible : null,
       }
     })
@@ -273,7 +273,7 @@ export function fullMember(
     id,
     name: member.name,
     party: affiliations.find((row) => row.valid_to === null)?.party ?? '',
-    state: voteRows[0]?.state ?? '',
+    state: voteRows[0]?.state ?? member.list_state ?? '',
     attendance: voteRows.length ? 1 - absent / voteRows.length : 0,
     loyalty: loyalEligible > 0 ? loyalMatches / loyalEligible : null,
     votesAppeared: voteRows.length,

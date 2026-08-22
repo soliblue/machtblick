@@ -1,4 +1,3 @@
-import { createHash } from 'node:crypto'
 import { fileURLToPath } from 'node:url'
 import Database from 'better-sqlite3'
 import { argValue, chunk, findDbPath, normalizeDashes } from '../../_shared/worker.mjs'
@@ -6,6 +5,8 @@ import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
 import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
 import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
 import { ensureTextColumn } from '../preprocessing/schema.mjs'
+import { antragDescriptionSourceHash } from './sourceHash.mjs'
+import { prepareReviewedAntragTranslation, reviewedTranslationPromptRows } from './reviewedTranslation.mjs'
 
 const schemaPath = fileURLToPath(new URL('./output-schema.json', import.meta.url))
 const timeoutMs = Number(process.env.CODEX_TIMEOUT_MS ?? 180000)
@@ -20,7 +21,7 @@ const db = new Database(dbPath)
 ensureSchema()
 
 const candidates = db.prepare(`
-  SELECT ad.antrag_id, a.title, ad.summary_simplified, ad.summary_detail
+  SELECT ad.antrag_id, a.title, a.drucksache, ad.summary_simplified, ad.summary_detail
   FROM antrag_descriptions ad
   INNER JOIN antraege a ON a.id = ad.antrag_id
   LEFT JOIN antrag_description_translations t
@@ -32,7 +33,7 @@ const candidates = db.prepare(`
 `).all(antragFilter ?? null, antragFilter ?? null)
 
 const jobs = candidates
-  .map((row) => ({ row, hash: sourceHash(row.summary_simplified, row.summary_detail) }))
+  .map((row) => ({ row, hash: antragDescriptionSourceHash(row.summary_simplified, row.summary_detail) }))
   .filter((job) => force || stale(job.row.antrag_id, job.hash))
 
 const selected = limit > 0 ? jobs.slice(0, limit) : jobs
@@ -49,7 +50,7 @@ const workers = Array.from({ length: Math.min(concurrency, batches.length) }, as
     cursor++
     try {
       const output = await runPreprocessingCodex({
-        prompt: buildPrompt(batch.map((job) => job.row)),
+        prompt: buildPrompt(reviewedTranslationPromptRows(batch.map((job) => job.row))),
         schemaPath,
         timeoutMs,
         tmpPrefix: 'machtblick-antrag-translation-',
@@ -67,6 +68,7 @@ const workers = Array.from({ length: Math.min(concurrency, batches.length) }, as
 await Promise.all(workers)
 console.log(`done. completed=${completed} failed=${failed}`)
 db.close()
+if (failed > 0) process.exit(1)
 
 function ensureSchema() {
   db.prepare(`
@@ -87,10 +89,6 @@ function ensureSchema() {
   ensureTextColumn(db, 'antrag_description_translations', 'model_reasoning_effort')
 }
 
-function sourceHash(summarySimplified, summaryDetail) {
-  return createHash('sha256').update(JSON.stringify({ summarySimplified, summaryDetail })).digest('hex')
-}
-
 function stale(antragId, hash) {
   const row = db.prepare('SELECT source_hash FROM antrag_description_translations WHERE antrag_id = ? AND locale = ?').get(antragId, 'en')
   return row?.source_hash !== hash
@@ -100,8 +98,12 @@ function writeBatch(batch, output) {
   const byId = new Map(output.translations.map((t) => [t.antrag_id, t]))
   const now = new Date().toISOString()
   for (const job of batch) {
-    const translated = byId.get(job.row.antrag_id)
-    if (!translated) throw new Error(`missing Antrag translation for ${job.row.antrag_id}`)
+    const { translated } = prepareReviewedAntragTranslation({
+      id: job.row.antrag_id,
+      drucksache: job.row.drucksache,
+      summary_simplified: job.row.summary_simplified,
+      summary_detail: job.row.summary_detail,
+    }, byId.get(job.row.antrag_id))
     db.prepare(`
       INSERT INTO antrag_description_translations (
         antrag_id, locale, summary_simplified, summary_detail, source_hash, model, model_reasoning_effort, prompt_version, translated_at
@@ -126,4 +128,3 @@ function writeBatch(batch, output) {
     )
   }
 }
-

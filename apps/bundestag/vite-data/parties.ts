@@ -93,7 +93,7 @@ export function fullParty(db: Database.Database, slug: string, locale: Locale, t
     SELECT ma.member_id FROM member_affiliations ma WHERE ma.term_id = ${CURRENT_TERM} AND ma.party = ? AND ma.valid_to IS NULL
   `).all(party) as Array<{ member_id: string }>
   const memberIds = new Set(currentPartyMembers.map((r) => r.member_id))
-  const allMemberRows = db.prepare('SELECT id, name FROM members').all() as Array<{ id: string; name: string }>
+  const allMemberRows = db.prepare('SELECT id, name, list_state FROM members').all() as Array<{ id: string; name: string; list_state: string | null }>
   const stateRows = db.prepare(`
     SELECT vm.member_id, vm.state
     FROM vote_members vm
@@ -103,8 +103,8 @@ export function fullParty(db: Database.Database, slug: string, locale: Locale, t
   const stateByMember = new Map<string, string>()
   for (const r of stateRows) if (!stateByMember.has(r.member_id)) stateByMember.set(r.member_id, r.state)
   const memberRows = allMemberRows
-    .filter((m) => memberIds.has(m.id) && stateByMember.has(m.id))
-    .map((m) => ({ id: m.id, name: m.name, state: stateByMember.get(m.id) ?? '' }))
+    .filter((m) => memberIds.has(m.id))
+    .map((m) => ({ id: m.id, name: m.name, state: stateByMember.get(m.id) ?? m.list_state ?? '' }))
     .sort((a, b) => a.name.localeCompare(b.name, 'de'))
   const allSummaries = db.prepare(`
     SELECT vps.vote_id, vps.party, vps.yes, vps.no, vps.abstain

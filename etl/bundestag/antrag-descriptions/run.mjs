@@ -6,6 +6,7 @@ import { buildPrompt, PROMPT_VERSION } from '../descriptions/prompt.mjs'
 import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
 import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
 import { ensureTextColumn } from '../preprocessing/schema.mjs'
+import { applyReviewedFields, assertReviewedFields, germanDescriptionReviewForHash, sourceTextHash } from './reviewedCorrections.mjs'
 
 const schemaPath = fileURLToPath(new URL('./output-schema.json', import.meta.url))
 const timeoutMs = Number(process.env.CODEX_TIMEOUT_MS ?? 240000)
@@ -48,13 +49,15 @@ const workers = Array.from({ length: Math.min(concurrency, selected.length) }, a
         skipped++
         console.warn(`x ${row.id} text too short (${row.drucksache})`)
       } else {
+        const inputHash = sourceTextHash(text)
+        const review = germanDescriptionReviewForHash(row.id, row.drucksache, inputHash)
         const output = await runPreprocessingCodex({
-          prompt: buildPrompt(row.title, text, 'antrag'),
+          prompt: buildPrompt(row.title, text, 'antrag', review),
           schemaPath,
           timeoutMs,
           tmpPrefix: 'machtblick-antrag-codex-',
         })
-        writeSummary(row, output)
+        writeSummary(row, output, review, inputHash)
         completed++
         console.log(`${row.id} ${row.drucksache}`)
       }
@@ -68,6 +71,7 @@ const workers = Array.from({ length: Math.min(concurrency, selected.length) }, a
 await Promise.all(workers)
 console.log(`done. completed=${completed} skipped=${skipped} failed=${failed}`)
 db.close()
+if (failed > 0) process.exit(1)
 
 function ensureSchema() {
   db.prepare(`
@@ -88,10 +92,12 @@ function ensureSchema() {
   ensureTextColumn(db, 'antrag_descriptions', 'model_reasoning_effort')
 }
 
-function writeSummary(row, output) {
-  const summarySimplified = normalizeDashes(output.summary_simplified)
-  const summaryDetail = normalizeDashes(output.summary_detail)
+function writeSummary(row, output, review, inputHash) {
+  const reviewed = applyReviewedFields(row.id, 'de', row.drucksache, inputHash, output)
+  const summarySimplified = normalizeDashes(reviewed.summary_simplified)
+  const summaryDetail = normalizeDashes(reviewed.summary_detail)
   if (!summarySimplified || !summaryDetail) throw new Error(`incomplete output for ${row.id}`)
+  assertReviewedFields(row.id, 'de', review, { summary_simplified: summarySimplified, summary_detail: summaryDetail })
   db.prepare(`
     INSERT INTO antrag_descriptions (
       antrag_id, summary_simplified, summary_detail, source_vote_id, source_pdf_url, model, model_reasoning_effort, generated_at, prompt_version
@@ -107,4 +113,3 @@ function writeSummary(row, output) {
       prompt_version = excluded.prompt_version
   `).run(row.id, summarySimplified, summaryDetail, row.drucksache_pdf_url, PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT, new Date().toISOString(), PROMPT_VERSION)
 }
-

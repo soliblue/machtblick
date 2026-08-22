@@ -1,12 +1,14 @@
 import type { MemberVoteRow } from '@/server/memberDetail'
 import { MemberVoteCard } from './MemberVoteCard'
+import { useCopy } from '@/lib/i18n'
 
 type Props = {
   history: MemberVoteRow[]
 }
 
 export function VotingRecordTab({ history }: Props) {
-  return (
+  const t = useCopy()
+  return history.length > 0 ? (
     <div className="flex flex-col">
       {history.map((vote, index) => (
         <div
@@ -16,6 +18,10 @@ export function VotingRecordTab({ history }: Props) {
           <MemberVoteCard vote={vote} />
         </div>
       ))}
+    </div>
+  ) : (
+    <div className="rounded-m border border-fg/15 p-xl text-center text-m opacity-l">
+      <div className="font-semibold opacity-100">{t.noVoteData}</div>
     </div>
   )
 }

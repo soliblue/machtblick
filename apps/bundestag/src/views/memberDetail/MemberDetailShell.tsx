@@ -60,8 +60,10 @@ export function MemberDetailShell({ data, deviationsOnly, children }: Props) {
         <div className="col-span-2 grid grid-cols-2 gap-s desk:col-span-1 desk:col-start-2 desk:max-w-[360px]">
           <MemberStatValue
             label={t.attendance}
-            value={pct(data.attendance)}
-            sub={<span className="opacity-l">{missed} {t.of} {data.history.length} {t.missed}</span>}
+            value={data.votesAppeared === 0 ? '-' : pct(data.attendance)}
+            sub={data.votesAppeared === 0
+              ? <span className="opacity-l">{t.noVoteData}</span>
+              : <span className="opacity-l">{missed} {t.of} {data.history.length} {t.missed}</span>}
           />
           <MemberStatValue
             label={t.loyalty}

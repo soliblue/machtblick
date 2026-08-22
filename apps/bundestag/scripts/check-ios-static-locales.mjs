@@ -37,13 +37,19 @@ expected.set(
     "SELECT count(*) AS count FROM votes WHERE term_id = 21 AND procedural = 0 AND vote_type != 'hammelsprung'",
   ).get().count,
 )
-expected.set('members', database.prepare(`
-  SELECT count(DISTINCT m.id) AS count
+const expectedMemberFiles = database.prepare(`
+  SELECT m.id
   FROM members m
-  INNER JOIN vote_members vm ON vm.member_id = m.id
-  INNER JOIN votes v ON v.id = vm.vote_id
-  WHERE v.term_id = 21
-`).get().count)
+  WHERE EXISTS (
+    SELECT 1 FROM member_affiliations ma
+    WHERE ma.member_id = m.id AND ma.term_id = 21 AND ma.valid_to IS NULL
+  ) OR EXISTS (
+    SELECT 1 FROM vote_members vm
+    INNER JOIN votes v ON v.id = vm.vote_id
+    WHERE vm.member_id = m.id AND v.term_id = 21
+  )
+`).all().map(({ id }) => `${id}.json`).sort()
+expected.set('members', expectedMemberFiles.length)
 expected.set('motions', database.prepare(`
   SELECT count(*) AS count
   FROM antraege a
@@ -197,6 +203,9 @@ for (const category of categories) {
     throw new Error(
       `${category} has ${germanFiles.length} files, expected ${expected.get(category)}`,
     )
+  }
+  if (category === 'members' && JSON.stringify(germanFiles) !== JSON.stringify(expectedMemberFiles)) {
+    throw new Error('Member publication does not match current members and WP21 participants')
   }
   for (const file of germanFiles) {
     const german = JSON.parse(readFileSync(resolve(germanDirectory, file), 'utf8'))

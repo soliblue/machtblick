@@ -7,24 +7,31 @@ struct MemberVotesPanel: View {
     var body: some View {
         let entries = filtered
         VStack(alignment: .leading, spacing: ThemeTokens.Spacing.m) {
-            SearchField(placeholder: Copy.searchVotes, text: $query)
-            if entries.isEmpty {
-                Text(Copy.noResults)
+            if history.isEmpty {
+                Text(Copy.noVoteData)
                     .font(.system(size: ThemeTokens.Text.m))
                     .foregroundStyle(ThemeColor.secondary)
                     .padding(.vertical, ThemeTokens.Spacing.l)
             } else {
-                LazyVStack(alignment: .leading, spacing: 0) {
-                    ForEach(entries) { entry in
-                        MemberVoteCard(entry: entry)
-                            .overlay(alignment: .bottom) {
-                                if entry.id != entries.last?.id {
-                                    Rectangle()
-                                        .fill(ThemeColor.elevated)
-                                        .frame(height: ThemeTokens.Stroke.s)
-                                        .padding(.horizontal, ThemeTokens.Spacing.l)
+                SearchField(placeholder: Copy.searchVotes, text: $query)
+                if entries.isEmpty {
+                    Text(Copy.noResults)
+                        .font(.system(size: ThemeTokens.Text.m))
+                        .foregroundStyle(ThemeColor.secondary)
+                        .padding(.vertical, ThemeTokens.Spacing.l)
+                } else {
+                    LazyVStack(alignment: .leading, spacing: 0) {
+                        ForEach(entries) { entry in
+                            MemberVoteCard(entry: entry)
+                                .overlay(alignment: .bottom) {
+                                    if entry.id != entries.last?.id {
+                                        Rectangle()
+                                            .fill(ThemeColor.elevated)
+                                            .frame(height: ThemeTokens.Stroke.s)
+                                            .padding(.horizontal, ThemeTokens.Spacing.l)
+                                    }
                                 }
-                            }
+                        }
                     }
                 }
             }
