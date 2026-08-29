@@ -19,13 +19,13 @@ import {
 } from './reviewedCorrections.mjs'
 
 test('reviewed correction metadata covers every source without cached fixtures', () => {
-  assert.deepEqual(reviewedSourceMetadata().map((source) => source.id), [338352, 338353, 338354, 338356, 338358, 338359, 338361, 338362, 338368, 338369, 338370, 338371, 338372, 338407, 338411, 338436, 338523])
-  assert.equal(new Set(reviewedSourceMetadata().map((source) => source.drucksache)).size, 17)
+  assert.deepEqual(reviewedSourceMetadata().map((source) => source.id), [334134, 335940, 338352, 338353, 338354, 338356, 338358, 338359, 338361, 338362, 338368, 338369, 338370, 338371, 338372, 338407, 338411, 338436, 338523, 338552])
+  assert.equal(new Set(reviewedSourceMetadata().map((source) => source.drucksache)).size, 20)
   assert.equal(reviewedSourceMetadata().every((source) => /^[a-f0-9]{64}$/.test(source.sourceHash)), true)
   assert.equal(sourceTextHash('reviewed fixture'), 'ce9a85bb5c5d562b77484cc44e2e9fd032a39c75223137ff944905a2aed5224b')
-  assert.deepEqual(reviewedPinMetadata().map((source) => source.id), [338347, 338352, 338353, 338354, 338356, 338358, 338359, 338361, 338362, 338363, 338365, 338367, 338368, 338369, 338370, 338371, 338407, 338411, 338436, 338523])
+  assert.deepEqual(reviewedPinMetadata().map((source) => source.id), [334134, 335940, 338347, 338352, 338353, 338354, 338356, 338358, 338359, 338361, 338362, 338363, 338365, 338367, 338368, 338369, 338370, 338371, 338407, 338411, 338436, 338523, 338552])
   assert.equal(reviewedPinMetadata().every((source) => [source.deSourceHash, source.enSourceHash].filter(Boolean).every((hash) => /^[a-f0-9]{64}$/.test(hash))), true)
-  assert.deepEqual(reviewedTitlePinMetadata().map((source) => source.id), [338352, 338355, 338372, 338407, 338410, 338411])
+  assert.deepEqual(reviewedTitlePinMetadata().map((source) => source.id), [334134, 335940, 338352, 338355, 338372, 338407, 338410, 338411])
   assert.equal(reviewedTitlePinMetadata().every((source) => [source.deSourceHash, source.enSourceHash].filter(Boolean).every((hash) => /^[a-f0-9]{64}$/.test(hash))), true)
 })
 
@@ -80,6 +80,70 @@ test('reviewed full-field pins replace arbitrary model output and bind the input
     () => applyReviewedFields(338352, 'de', '457/26', 'changed', { summary_simplified: 'arbitrary', summary_detail: 'arbitrary' }),
     /input hash mismatch/,
   )
+})
+
+test('August 29 source reviews preserve legal thresholds and mandatory rules', () => {
+  const israel = applyReviewedFields(334134, 'de', '21/7733', '989d8e571773506238d29cd2b2813e36bce0a06d38fff2b8eb18506db4f0d72a', {
+    summary_simplified: 'arbitrary',
+    summary_detail: 'arbitrary',
+  })
+  assert.match(israel.summary_simplified, /fördern kann/)
+  assert.match(israel.summary_simplified, /Handlungen der israelischen Regierung/)
+  assert.match(israel.summary_detail, /Verbreiten eines von der neuen Regel erfassten Inhalts aus dem Ausland/)
+  assert.match(israel.summary_detail, /nur unter zusätzlichen Voraussetzungen gelten/)
+  assert.match(israel.summary_detail, /deutschen Öffentlichkeit zugänglich gemacht/)
+  assert.match(israel.summary_detail, /geeignet sein, den öffentlichen Frieden zu stören/)
+  assert.match(israel.summary_detail, /deutsche Staatsangehörigkeit besitzen oder ihre Lebensgrundlage in Deutschland haben/)
+  assert.doesNotMatch(israel.summary_detail, /wenn die Tat im Ausland begangen wird/)
+  assert.match(israel.summary_detail, /erhebliches verfassungsrechtliches Risiko/)
+  assert.throws(() => assertReviewedFields(334134, 'de', germanDescriptionReviewForHash(334134, '21/7733', '989d8e571773506238d29cd2b2813e36bce0a06d38fff2b8eb18506db4f0d72a'), {
+    ...israel,
+    summary_detail: `${israel.summary_detail} Durch eine weitere Änderung des Strafgesetzbuches soll deutsches Strafrecht auch auf den neuen Tatbestand angewandt werden, wenn die Tat im Ausland begangen wird.`,
+  }), /retains forbidden text/)
+
+  const israelEnglish = applyReviewedFields(334134, 'en', '21/7733', '816463b61eb26666951c6ad052e835bb39c95690668cf83739ee0b3e4a48632d', {
+    summary_simplified: 'arbitrary',
+    summary_detail: 'arbitrary',
+  })
+  assert.match(israelEnglish.summary_detail, /disseminating material covered by the new provision from abroad/)
+  assert.match(israelEnglish.summary_detail, /only under additional conditions/)
+  assert.match(israelEnglish.summary_detail, /accessible to the German public/)
+  assert.match(israelEnglish.summary_detail, /capable of disturbing public peace/)
+  assert.match(israelEnglish.summary_detail, /German national or have their livelihood in Germany/)
+  assert.doesNotMatch(israelEnglish.summary_detail, /applicable to the new offense when it is committed abroad/)
+  assert.throws(() => assertReviewedFields(334134, 'en', englishDescriptionReview(334134, '21/7733'), {
+    ...israelEnglish,
+    summary_detail: `${israelEnglish.summary_detail} A further amendment to the Criminal Code would make German criminal law applicable to the new offense when it is committed abroad.`,
+  }), /retains forbidden text/)
+  assert.equal(
+    applyReviewedTitleFields(334134, 'de', '21/7733', '7005975523b694bda158f81ac402d5b287e4c72da088c319ab98144eebefb6ae', { clean_title: 'arbitrary' }).clean_title,
+    'Israels Existenzrechtsleugnung bei Eignung zu antisemitischer Gewalt oder Willkür ahnden',
+  )
+  assert.equal(reviewedGermanTitle(334134, '21/7733', '7005975523b694bda158f81ac402d5b287e4c72da088c319ab98144eebefb6ae', 'arbitrary').length <= 90, true)
+  assert.equal(
+    applyReviewedTitleFields(334134, 'en', '21/7733', '1fdac7ba8ca38bc81e278167c22ac6b5f7f43c6c4c5b7bacc8751141c1749b60', { clean_title: 'arbitrary' }).clean_title,
+    "Punish denial of Israel's right to exist if it can encourage antisemitic violence or arbitrary acts",
+  )
+
+  const privacy = applyReviewedFields(335940, 'de', '21/7732', '1ea835e0e708f002ffbdb5e16521446abd6b8afbbe8a45f8567d6030fdf128e9', {
+    summary_simplified: 'arbitrary',
+    summary_detail: 'arbitrary',
+  })
+  assert.match(privacy.summary_simplified, /ohne wesentliche Änderungen/)
+  assert.match(privacy.summary_detail, /Tag nach seiner Verkündung/)
+  assert.equal(
+    applyReviewedTitleFields(335940, 'en', '21/7732', 'a70a8a596c3cb8b5a15ffa8d18f0f88b2da2f06b9107717a26049bb374ca6b23', { clean_title: 'arbitrary' }).clean_title,
+    'Establish the Data Protection Conference in law and coordinate supervision across German states',
+  )
+  assert.throws(() => applyReviewedTitleFields(335940, 'en', '21/7732', 'changed', { clean_title: 'arbitrary' }), /title input hash mismatch/)
+
+  const rent = applyReviewedFields(338552, 'de', '21/7688', '0317bc265a9fad1a4426a7ade7c19fd7fddf4420767ecef9e468c19ae3497d68', {
+    summary_simplified: 'arbitrary',
+    summary_detail: 'arbitrary',
+  })
+  assert.match(rent.summary_detail, /ist dort ein Inflationsausgleich von höchstens zwei Prozent pro Jahr zu gestatten/)
+  assert.match(rent.summary_detail, /in allen drei Gebietstypen eine Härtefallregelung/)
+  assert.match(rent.summary_detail, /Modernisierungsumlage aber abgeschafft/)
 })
 
 test('reviewed title pins replace complete affected fields', () => {
