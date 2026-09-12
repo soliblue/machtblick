@@ -5,6 +5,7 @@ import { buildPrompt, PROMPT_VERSION } from './prompt.mjs'
 import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
 import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
 import { ensureTextColumn } from '../preprocessing/schema.mjs'
+import { clearGeneratedSummaries, shouldClearGeneratedSummary, speechSourcesChanged } from './sourceSpeeches.mjs'
 
 const schemaPath = fileURLToPath(new URL('./output-schema.json', import.meta.url))
 const concurrency = Number(argValue('--concurrency') ?? 2)
@@ -30,7 +31,7 @@ ensureSchema()
 const candidates = db.prepare(`
   SELECT v.id AS vote_id, v.date, v.agenda_item, v.title, v.clean_title, v.summary, v.summary_simplified, v.result, v.inverted,
          s.party, s.position, s.members, s.yes, s.no, s.abstain, s.absent, s.position_summary,
-         d.generated_at, p.decided_at
+         d.source_speech_ids, d.generated_at, p.decided_at
   FROM vote_party_summaries s
   INNER JOIN votes v ON v.id = s.vote_id
   LEFT JOIN vote_party_summary_decisions d ON d.vote_id = s.vote_id AND d.party = s.party
@@ -42,12 +43,18 @@ const candidates = db.prepare(`
 `).all(voteType, voteType, voteFilter ?? null, voteFilter ?? null)
 
 const jobs = []
+const staleGeneratedSummaries = []
 for (const row of candidates) {
   const speeches = loadSpeeches(row, row.party)
   const words = speeches.reduce((sum, s) => sum + s.word_count, 0)
-  const stale = row.decided_at && row.generated_at && row.generated_at < row.decided_at
-  if (speeches.length > 0 && words >= minWords && (force || !row.position_summary || stale)) jobs.push({ row, speeches })
+  const sourcesChanged = speechSourcesChanged(row.source_speech_ids, speeches)
+  const stale = (row.decided_at && row.generated_at && row.generated_at < row.decided_at) || sourcesChanged
+  if (shouldClearGeneratedSummary(row, sourcesChanged, speeches, words, minWords)) staleGeneratedSummaries.push(row)
+  else if (speeches.length > 0 && words >= minWords && (force || !row.position_summary || stale)) jobs.push({ row, speeches })
 }
+
+clearGeneratedSummaries(db, staleGeneratedSummaries)
+if (staleGeneratedSummaries.length > 0) console.log(`cleared ${staleGeneratedSummaries.length} stale ineligible party position summaries`)
 
 const selected = limit > 0 ? jobs.slice(0, limit) : jobs
 console.log(`party position jobs: ${selected.length}/${jobs.length} eligible, db=${dbPath}, model=${PREPROCESSING_MODEL}, reasoning=${PREPROCESSING_REASONING_EFFORT}`)
@@ -146,4 +153,3 @@ function writeSummary({ row, speeches }, output) {
       generated_at = excluded.generated_at
   `).run(row.vote_id, row.party, JSON.stringify(speeches.map((s) => s.id)), PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT, PROMPT_VERSION, new Date().toISOString())
 }
-

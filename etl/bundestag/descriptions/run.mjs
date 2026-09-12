@@ -22,7 +22,7 @@ const candidates = db.prepare(`
   WHERE v.procedural = 0
     AND v.term_id = 21
     AND v.vote_type != 'hammelsprung'
-    AND v.summary_simplified IS NULL
+    AND (v.summary_simplified IS NULL OR v.summary_detail IS NULL)
     AND (? IS NULL OR v.id = ?)
 `).all(voteFilter ?? null, voteFilter ?? null)
 

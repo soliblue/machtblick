@@ -43,7 +43,7 @@ Run source refreshes in this order when the evidence says they are needed:
 1. `npm run etl:stammdaten`
 2. `npm run etl:abgeordnetenwatch`
 3. `npm run etl:votes:namentlich`
-4. `npm run db:merge-members && npm run db:normalize:member-names && npm run db:backfill:member-states`
+4. `npm run db:merge-members && npm run db:normalize:member-names && npm run db:normalize:member-mandate-ids && npm run db:backfill:member-states`
 5. `npm run db:normalize`
 6. `npm run etl:handzeichen:refresh`
 7. `DIP_UPDATED_START=<last-local-update> npm run etl:dip`
@@ -52,17 +52,24 @@ Run source refreshes in this order when the evidence says they are needed:
 10. `npm run etl:affiliations`
 11. `npm run db:backfill:initiators`
 
+After step 9, rerun the XML initiator and polarity watchdogs now that the newest protocol XML exists:
+
+1. `npm run etl:initiator`
+2. `node etl/bundestag/polarity/self-no-escalate.mjs`
+3. `node etl/bundestag/votes/initiator/audit-self-no.mjs`
+4. `node etl/bundestag/votes/initiator/audit-suspicious-initiator.mjs`
+
 `db:decode-entities` (step 8) is an idempotent sweep that decodes stray HTML entities (`&#39;`, `&quot;`, `&auml;`, ...) left in stored text by upstream HTML/JSON; ingests decode at entry via `etl/_shared/entities.mjs`, this catches anything that slips through. It also runs inside `etl:handzeichen:refresh`.
 
 `etl:affiliations` (step 10) is a full delete-and-rewrite of `member_affiliations` and ends by chaining `db/close-departed-mandates.ts`, which closes `valid_to` for departed MdBs (Stammdaten `MDBWP_BIS` first, then a roster-gap fallback for members absent from the last two namentliche roll-call rosters). Never run the affiliations ingest without the close step: the rewrite reopens every previously-closed mandate and the app then counts departed members (Baerbock, Habeck, ...) as sitting. `npm run db:close-departed` re-runs the close standalone; the chamber-wide sitting count it prints must equal the seat total (630 in WP21).
 
 `db:normalize` (step 5) is the legacy result flip (proposer voted no on an `angenommen` vote). It must run after the namentlich ingest and strictly before `etl:handzeichen:refresh`, because the refresh runs polarity inversion internally and `db:normalize` after polarity can double-flip an inverted vote whose post-inversion proposer votes no. Never run it again later in the same run.
 
-`etl:handzeichen:refresh` (step 6) owns the polarity-aware path internally: it ingests handzeichen, then runs polarity inversion, the procedural flagger, initiator backfill, self-no escalation, and the self-no and suspicious-initiator audits in the correct order for both handzeichen and namentlich votes, followed by descriptions, titles, agenda backfill, materialization, party positions, validation, and translations for its slice.
+`etl:handzeichen:refresh` (step 6) owns the polarity-aware path internally: it ingests handzeichen, then runs polarity inversion, the procedural flagger, initiator backfill, self-no escalation, and the self-no and suspicious-initiator audits in the correct order for both handzeichen and namentlich votes, followed by descriptions, titles, agenda backfill, materialization, party positions, validation, and translations for its slice. Its XML initiator pass precedes the standalone speech fetch, so repeat the initiator and polarity watchdogs after step 9 for newly published sessions.
 
 `db:backfill:initiators` (step 11) fills `votes.initiator` for votes the XML/teaser extractor could not resolve: document-text parse, then vote_documents titles, then DIP Drucksache lookup (cached under `etl/bundestag/handzeichen/drucksachen/`), then the Haushalt title rule. It only fills empty rows, never overwrites, and skips petition bundles and procedural votes. It also runs inside `etl:handzeichen:refresh`; the standalone step covers the namentlich-only ingest path. Run it after every vote ingest so new votes never render as "Sonstige" for lack of extraction.
 
-The member hygiene chain (step 4) runs after every namentlich ingest: `db:merge-members` is a watchdog that collapses accidentally forked member identities, `db:normalize:member-names` keeps `members.name` in canonical "First Last" form, `db:backfill:member-states` fills `vote_members.state` and `members.list_state` for new members and ballots. All three are idempotent and print what they changed; a nonzero merge count means the importer's name resolution regressed and deserves a look.
+The member hygiene chain (step 4) runs after every namentlich ingest: `db:merge-members` is a watchdog that collapses accidentally forked member identities, `db:normalize:member-names` keeps `members.name` in canonical "First Last" form, `db:normalize:member-mandate-ids` copies valid 8-digit Stammdaten ids from members to term-21 mandates only when the mandate id is empty or padded legacy data and stops on conflicting real ids, and `db:backfill:member-states` fills `vote_members.state` and `members.list_state` for new members and ballots. All four are idempotent and print what they changed; a nonzero merge count means the importer's name resolution regressed and deserves a look.
 
 Run derived refreshes after source data is current, in this order (titles and descriptions first, then speech↔vote linkage, then summaries that depend on it, then translations last):
 
@@ -78,6 +85,8 @@ Run derived refreshes after source data is current, in this order (titles and de
 10. `npm run etl:antrag-description-translations`
 11. `npm run etl:antrag-title-translations`
 12. `npm run etl:speech-translations`
+
+If `etl:antrag-descriptions` creates descriptions for motions that did not have them before, rerun `etl:antrag-titles` immediately after step 4. The title job selects only motions that already have descriptions, so the first title pass cannot see newly described motions.
 
 `etl:antrag-title-translations` fills English `title`/`clean_title` on `antrag_description_translations` for every motion that already has an English description translation. It is hash-keyed on the German title pair and idempotent; it must run after `etl:antrag-titles` and `etl:antrag-description-translations`, otherwise new English motion pages render German titles.
 

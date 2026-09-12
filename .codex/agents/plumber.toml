@@ -61,7 +61,7 @@ Invariants:
 - `db:normalize` (legacy result flip) runs after the namentlich ingest and strictly BEFORE `etl:handzeichen:refresh` (which runs polarity internally). Never after polarity: it could re-flip rows whose post-inversion proposer votes NO.
 - `etl:votes:namentlich` does not self-materialize. After any vote ingest run `etl:votes:backfill-agenda` -> `db:normalize:reading-pairs` -> `db:materialize`, and before `etl:party-positions`, or linked votes resolve to zero speeches.
 - `db:materialize` must run after any vote ingest or polarity flip.
-- Member hygiene after every namentlich ingest: `db:merge-members` (watchdog: nonzero merge count means importer name resolution regressed), `db:normalize:member-names`, `db:backfill:member-states`.
+- Member hygiene after every namentlich ingest: `db:merge-members` (watchdog: nonzero merge count means importer name resolution regressed), `db:normalize:member-names`, `db:normalize:member-mandate-ids`, `db:backfill:member-states`.
 - `etl:affiliations` chains `db/close-departed-mandates.ts`; never run the affiliations ingest bare (see mandate close-out below).
 - Translations (`etl:translations` etc.) run last; they are hash-keyed and self-heal.
 
@@ -79,7 +79,7 @@ The chamber usually votes on a committee **Beschlussempfehlung**, which can reco
 
 ### `procedural` flag
 
-`votes.procedural` (ours, not upstream) marks non-substantive votes: `Federführung*`, the `Überweisung*` family, `Wahl/Bestellung/Benennung/Abberufung *`, immunity/Strafverfahren decisions (these arrive as `Antrag der Bundesregierung` in the teaser but are Geschäftsordnungsausschuss matters). Filtered from all listings and prerender, kept in DB for direct URLs and idempotency.
+`votes.procedural` (ours, not upstream) marks non-substantive votes: `Federführung*`, the `Überweisung*` family including `Zurückverweisung*`, `Wahl/Bestellung/Benennung/Abberufung *`, and court-participation decisions such as `Stellungnahme im Verfahren *` or immunity/Strafverfahren matters. Party-prefixed titles like `AfD-Wahlvorschlag*` are elections too. Filtered from all listings and prerender, kept in DB for direct URLs and idempotency.
 
 Applied by `etl/bundestag/votes/procedural/run.mjs` on every refresh (idempotent title-LIKE update), chained before the initiator backfill. When a new procedural shape surfaces, add it to BOTH `procedural/run.mjs` (PATTERNS) and `etl/bundestag/votes/initiator/audit-suspicious-initiator.mjs` (SUSPICIOUS_TITLE_PATTERNS); the audit is the watchdog for shapes flagged in one place but not the other.
 
@@ -122,8 +122,9 @@ Upstream sometimes lists extra given names (`Kempf, Martina` vs `Kempf, Martina 
 
 Three ingest generations coexist: WP20 dataset ("First Last" ids like `heil-peine-hubertus`, padded 4-digit AW ids in `bt_mdb_id`), WP21 dataset ("Last, First" ids, real 8-digit Stammdaten ids), and WP1-15 historical members. Honorifics, particles, and Ortszusätze fork identities under strict name matching, so:
 
-- `npm run db:merge-members` (`db/merge-member-duplicates.ts`): merges members sharing a `bt_mdb_id`, plus term-21 voters sharing a relaxed name key when exactly one candidate has a real 8-digit mdb id. Repoints all referencing tables, coalesce-fills the canonical row, purges unreferenced garbage rows. Run after every namentlich ingest as a watchdog.
-- The `import-namentlich.ts` resolver matches by three key levels (full, parens-stripped, first-token), prefers term-21 mandate holders, throws on ambiguity. AW mandates resolve by `id_external_administration` -> `bt_mdb_id` first.
+- `npm run db:merge-members` (`db/merge-member-duplicates.ts`): merges members sharing a `bt_mdb_id` or current-term AW politician id, plus term-21 voters sharing a relaxed name key when exactly one candidate has a real 8-digit mdb id. AW-id groups prefer the unique validated `member_abgeordnetenwatch` mapping, then WP21 ballot evidence; historical ballots cannot select the canonical row. Repoints all referencing tables, coalesce-fills the canonical row, purges unreferenced garbage rows. Run after every namentlich ingest as a watchdog.
+- The `import-namentlich.ts` resolver matches by three key levels (full, parens-stripped, first-token), prefers term-21 mandate holders, throws on ambiguity. AW mandates resolve by validated AW politician id first, then `id_external_administration` and name; the external id can be a padded legacy namespace that disagrees with Stammdaten. Preserve an existing canonical Stammdaten id on both member and mandate rows, using the padded external id only as a lookup alias.
+- `npm run db:normalize:member-mandate-ids` repairs existing term-21 mandate rows from their joined member's valid 8-digit Stammdaten id only when the mandate id is empty or a padded `0000` legacy id. It leaves padded authoritative member ids unchanged and stops on a conflicting nonlegacy mandate id.
 - Cross-era duplicates that never voted in WP21 (same human, different mdb namespaces) are known and deliberately NOT merged; they don't surface in any WP21 view.
 
 **Bundesland:** the WP21 XLSX has no Bundesland column; `import-namentlich.ts` writes `vote_members.state` from a per-member lookup (term mandate `list_state` -> `members.list_state` -> mode of prior ballots). `npm run db:backfill:member-states` repairs residue via Stammdaten `LISTE`/`WKR_LAND` codes, then a Wahlkreis-number -> Land range map (needed for direct-mandate Nachrücker). WP21 coverage 100%; WP20's ~1100 members have no upstream state source and stay empty.
@@ -147,6 +148,8 @@ Critical: the affiliations ingest is a delete + rewrite that reopens every run's
 ### Handzeichen segmentation, husk votes, id pinning
 
 `segment.mjs` cuts one block per outcome sentence and clamps each block at the previous outcome's end, so back-to-back readings (2./3. Beratung right after an Änderungsantrag vote) get only the bare voting sentence ("dem Gesetzentwurf zustimmen") with the bill named in the previous block. That produced published husk votes titled just `Gesetzentwurf` with no Drucksache (pp21-90-15/16) and Drucksache-less third readings (pp21-87-1, pp21-89-2). Fix: blocks now carry a `context` field (the clamped-away lookback); `extract.mjs` renders it as a Kontext section and the extract system prompt instructs resolving title/Drucksache from it while reading positions only from the block. The min-length skip counts block+context, so tiny procedural voting sentences are no longer dropped entirely.
+
+`handzeichen/fetch.mjs` and `handzeichen/proposers.mjs` use the shared DIP client for authentication. DIP may advertise a protocol before publishing its text; skip only a canonical, identity-matching protocol detail without text and retry it on the next refresh. HTTP errors, API error envelopes, malformed protocol lists, and mismatched detail records fail closed. Proposer caches accept only envelopes with numeric `numFound` and a `documents` array because authentication failures also arrive as JSON.
 
 - **`extracted/` is the effective id registry.** Vote ids derive from `pp<term>-<session>-<index>-slugify(title)` at write time; re-extracting a protocol with different titles would re-slug ids and orphan published rows. An extracted vote may carry an explicit `id` field which pins the published id; `write.mjs` and `db/handzeichen-title-sources.ts` both honor it. Repairs that change a title on a published vote must pin the old id (see `etl/_oneshot/repair-handzeichen-husk-votes.mjs`, `oneshot:handzeichen:husk-repair`).
 - **Public `source_url` is the dserver protokoll PDF** (`https://dserver.bundestag.de/btp/<term>/<term><3-digit-session>.pdf`), never the DIP API endpoint (401s for citizens). Set by `write.mjs` for handzeichen/hammelsprung; namentlich keeps bundestag.de abstimmung links (enforced by `bad_namentlich_source_url`).
@@ -220,6 +223,7 @@ From official Plenarprotokoll XML via `etl/bundestag-reden-xml/` (`npm run etl:s
 - **Vote -> speech linkage hinges on `votes.agenda_item`.** The per-vote speeches tab reads `vote_debate_groups` (built by `materializeVoteDebateGroups` in `db/materialize-derived-data.ts`, full rebuild, idempotent; consumed by `loadDebateForVote` in `apps/bundestag/src/server/voteDetail.ts`); both of its linkage paths require `votes.agenda_item`, which NO vote ingest sets. It is populated by `npm run etl:votes:backfill-agenda` (`etl/bundestag/votes/backfillAgendaItem.ts`, parses `<tagesordnungspunkt>` blocks from `etl/bundestag-reden-xml/raw/xml/`, matches by Drucksache, idempotent, `--dry-run`). When debugging a missing speeches tab, check `votes.agenda_item` FIRST: if NULL, run backfill then materialize; don't touch the read path.
 - A vote whose Drucksache never appears in the published protocol XML stays linkless (same upstream-extraction class as NULL-document handzeichen rows). Procedural votes are intentionally excluded from `vote_debate_groups`.
 - **Joint debates are correct linkage, not mislinks.** A `<tagesordnungspunkt>` block often bundles several motions (`TOP 25a + 25b + ZP 20`), so a vote's linked debate group legitimately contains speeches mostly about sibling motions; party-position summaries then honestly note the speeches don't mention the vote's subject (pp21-90-10 kulturweit is the canonical case, verified against the 21090 protocol). Don't "fix" by unlinking, and don't judge linkage by summary wording; verify against the protocol block.
+- `etl:party-positions` owns only prose with a `vote_party_summary_decisions` row. When its recorded speech set changes and the current set becomes empty or falls below `--min-words`, it clears the generated German fields, decision, and translations. Summary rows without a generation decision are preserved.
 
 ## Bundestag MdB-Stammdaten
 
@@ -237,13 +241,14 @@ Used to populate `members.bt_mdb_id` so speeches join `<redner id>` deterministi
 
 Upstream: HTML tables at `bundestag.de/parlament/praesidium/parteienfinanzierung/fundstellen50000/<year>`, one subpage per year. Script `npm run etl:donations` (`etl/bundestag-spenden/ingest.ts`). Weekly cadence is plenty.
 
-- Five `<td>` per data row; month headers are `colspan="5"` rows, filtered by `tds.length === 5`. `<thead>` blocks open mid-table; flattening `table.find('tr')` handles it.
+- Five `<td>` per data row; header rows have no `<td>`. Any nonzero cell count other than five is a malformed source shape and must abort before database access. `<thead>` blocks open mid-table; flattening `table.find('tr')` handles it.
 - Period boundary: filter `date_received >= 2025-03-25` (21. BT constitution); earlier rows on the 2025 subpage belong to WP20.
 - Donor cell: name + address stacked with `<br/>`; first line = `donor`, rest = `donor_address`. Multi-line donor names bleed into address; acceptable, the source doesn't separate them. Don't invent ETL heuristics.
 - Amounts: German number format, strip dots, drop cents.
 - Dates: `DD.MM.YYYY`, plus installment lists (`18./20./24.10. 2025`, take the LAST date) and stray spaces before the year.
 - Stable id: `sha1(party|donor|date_received|amount_eur).slice(0, 16)`, upsert on conflict.
-- Party labels via `normalizeParty` (`etl/_shared/parties.ts`): CDU and CSU stay separate (legal entities); unmapped labels are logged and skipped; soft hyphens stripped.
+- Party labels via `normalizeParty` (`etl/_shared/parties.ts`): CDU and CSU stay separate (legal entities); unmapped labels block reconciliation; soft hyphens stripped.
+- The fetched 2025 and 2026 tables are one complete WP21 snapshot. Atomically upsert current rows and delete missing WP21 rows only after every configured source page parses successfully; preserve WP20 and other-source rows. Empty year tables, duplicate rows, and unknown party labels fail closed. Each fetched year's in-scope row count must retain at least 90% of that source URL's existing in-scope rows before deletion; the 2026 reconciliation was 67 to 68 rows with two stale IDs replaced by three current IDs.
 
 ## abgeordnetenwatch politicians
 
@@ -293,6 +298,7 @@ Tables: `antraege` (one row per vorgang; `initiative_fraktion` is the joined `in
 - **Zero-signer rows are upstream truth**, not bugs: BReg bills (signed by ministry officials), coalition motions (attributed to "die Fraktion", confirmed 43/43 with `aktivitaet_anzahl=0`), and a handful of single-Fraktion motions with the same shape. Don't add fallback heuristics; the audit doesn't flag these.
 - **`vorgangsbezug` is multi-valued; scan ALL entries, not `[0]`.** ~2% of aktivitaeten list an EU-Vorlage vorgang first and the actual Antrag second; indexing `[0]` silently drops those signatories. Both `buildSignatoryRows` and the `process.ts` pre-filter iterate all entries; membership filtering against `antraege` does the final selection.
 - DIP Vorgang 338368 incorrectly says the Frühstartrente starts with birth cohort 2000; its official Drucksache 21/445 says 2020. `buildAntragRow` corrects that exact ID and phrase while `antraege_raw` preserves the upstream payload.
+- DIP titles can contain CRLF and repeated whitespace. `buildAntragRow` decodes entities, collapses internal whitespace, and trims before storing `antraege.title`; `antraege_raw` preserves the upstream payload.
 
 ### Vote linkage
 

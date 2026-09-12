@@ -1,10 +1,11 @@
 export const REVIEWED_PIN = [
   338362,
   {
-    "drucksache": "468/26",
-    "deSourceHash": "6c075d0424df4bed05e965af694fd08d8f45671fd3fc0d6e6bdaed4e70f5dde9",
+    "drucksache": "21/7871",
+    "deSourceHash": "545935c4cdea39a20eb0137ce47ebda8ccac28cb18f53eaa542eba54f1952b94",
     "de": {
-      "summary_simplified": "Der Gesetzentwurf soll das **Luftfahrt-Bundesamt** für die Kontrolle der europäischen Vorgaben zu nachhaltigen Flugkraftstoffen zuständig machen. Verpflichtet werden die Leitungsorgane der betroffenen Flughäfen der Europäischen Union. Luftfahrzeugbetreiber, die ohne Befreiung ihre Betankungspflicht unterschreiten, sollen grundsätzlich **1 332 Euro je nicht getankter Tonne Flugkraftstoff** zahlen. Für Informations- und Anordnungsverstöße nach Artikel 6 gelten grundsätzlich bis zu 30 000 Euro, für Verstöße nach Artikel 7 oder 8 bis zu 10 000 Euro und für die doppelte Anrechnung einer SAF-Charge bis zu 50 000 Euro. Für das Luftfahrt-Bundesamt sind **5 Vollzeitstellen** und jährlich **167 000 Euro** vorgesehen."
+      "summary_simplified": "Der Gesetzentwurf soll das **Luftfahrt-Bundesamt** für die Kontrolle der europäischen Vorgaben zu nachhaltigen Flugkraftstoffen zuständig machen. Verpflichtet werden die Leitungsorgane der betroffenen Flughäfen der Europäischen Union. Luftfahrzeugbetreiber, die ohne Befreiung ihre Betankungspflicht unterschreiten, sollen grundsätzlich **1 332 Euro je nicht getankter Tonne Flugkraftstoff** zahlen. Für Informations- und Anordnungsverstöße nach Artikel 6 gelten grundsätzlich bis zu 30 000 Euro, für Verstöße nach Artikel 7 oder 8 bis zu 10 000 Euro und für die doppelte Anrechnung einer SAF-Charge bis zu 50 000 Euro. Für das Luftfahrt-Bundesamt sind **5 Vollzeitstellen** und jährlich **167 000 Euro** vorgesehen.",
+      "summary_detail": "## Was sich ändern soll\n\n* Das **Luftfahrt-Bundesamt** soll Luftfahrzeugbetreiber und die Leitungsorgane betroffener Flughäfen kontrollieren. Es darf dafür Grundstücke betreten, Prüfungen durchführen sowie Auskünfte und Unterlagen verlangen. Wohnräume darf es nur betreten, um dringende Gefahren für die öffentliche Sicherheit oder Ordnung zu verhindern.\n* Verpflichtet werden die Leitungsorgane der betroffenen Flughäfen der Europäischen Union. Stellen sie den erforderlichen Zugang zu Flugkraftstoffen mit Mindestanteilen nachhaltiger Flugkraftstoffe nicht sicher, soll das Luftfahrt-Bundesamt Maßnahmen verlangen. Der Mangel muss unverzüglich, spätestens aber innerhalb von drei Jahren nach der Aufforderung behoben werden.\n* Luftfahrzeugbetreiber, die an einem betroffenen Flughafen in Deutschland ohne Befreiung weniger als **90 Prozent** ihres Jahresbedarfs tanken, sollen grundsätzlich **1 332 Euro je nicht getankter Tonne Flugkraftstoff** zahlen. Das Luftfahrt-Bundesamt soll sie vor der Festsetzung anhören. Die Höhe kann durch Rechtsverordnung an einen neuen Durchschnittspreis angepasst werden.\n* Für Informations- und Anordnungsverstöße nach Artikel 6 gelten grundsätzlich bis zu 30 000 Euro, für Verstöße nach Artikel 7 oder 8 bis zu 10 000 Euro und für die doppelte Anrechnung einer SAF-Charge bis zu 50 000 Euro.\n* Für bestimmte Amtshandlungen sollen Gebühren zwischen **530 Euro** und **2 100 Euro** anfallen. Für das Luftfahrt-Bundesamt sind **5 Vollzeitstellen** und jährlich **167 000 Euro** vorgesehen. Für Bürgerinnen und Bürger sowie die Wirtschaft wird kein zusätzlicher Verwaltungsaufwand erwartet.\n\n## Hintergrund\n\nDie Verordnung (EU) 2023/2405 legt gemeinsame europäische Vorgaben für nachhaltige Flugkraftstoffe fest. Deutschland muss eine zuständige Behörde benennen, Kontrollen ermöglichen und Sanktionen schaffen. Nachhaltige Flugkraftstoffe sollen außerdem helfen, die Treibhausgasemissionen des Luftverkehrs zu senken. Die Europäische Kommission leitete im **Juni 2026** ein Vertragsverletzungsverfahren gegen Deutschland ein, deshalb bezeichnet die Bundesregierung den Gesetzentwurf als besonders eilbedürftig."
     },
     "enSourceHash": "280f3c1e633004eb784a18f06a25186cd681159c75a6398dd687baa8d9c66695",
     "en": {
@@ -15,8 +16,8 @@ export const REVIEWED_PIN = [
 export const REVIEWED_GUIDANCE = [
   338362,
   {
-    "drucksache": "468/26",
-    "sourceHash": "6c075d0424df4bed05e965af694fd08d8f45671fd3fc0d6e6bdaed4e70f5dde9",
+    "drucksache": "21/7871",
+    "sourceHash": "545935c4cdea39a20eb0137ce47ebda8ccac28cb18f53eaa542eba54f1952b94",
     "de": {
       "summary_simplified": {
         "required": [

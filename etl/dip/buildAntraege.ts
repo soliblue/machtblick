@@ -23,7 +23,7 @@ export function buildAntragRow(v: Vorgang, positions: Vorgangsposition[]): Row |
   return {
     id: Number(v.id),
     type,
-    title: decodeHtmlEntities(v.titel),
+    title: decodeHtmlEntities(v.titel).replace(/\s+/g, ' ').trim(),
     abstract: v.abstract ? normalizeAntragAbstract(v.id, v.abstract) : null,
     beratungsstand: v.beratungsstand ?? null,
     wahlperiode: v.wahlperiode,

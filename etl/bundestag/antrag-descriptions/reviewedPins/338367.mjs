@@ -1,7 +1,12 @@
 export const REVIEWED_PIN = [
   338367,
   {
-    "drucksache": "443/26",
+    "drucksache": "21/7859",
+    "deSourceHash": "4735129870157cb74041d7b1e60d145a3f83eed311b9f26dd098035c06bae12e",
+    "de": {
+      "summary_simplified": "Die Tabaksteuer soll von **2027 bis 2030 jedes Jahr steigen**. Betroffen sind Zigaretten, Feinschnitt, Zigarren, Zigarillos, Pfeifentabak, erhitzter Tabak, Wasserpfeifentabak und Flüssigkeiten für elektronische Zigaretten. Die höheren Steuern werden voraussichtlich vollständig auf die Preise aufgeschlagen. Für den Bund werden dadurch zusätzliche Einnahmen von **756 Mio. Euro im Jahr 2027** bis **3.589 Mio. Euro im Jahr 2030** erwartet.",
+      "summary_detail": "## Was sich ändern soll\n\n* Die Steuersätze für Zigaretten, Feinschnitt, Zigarren, Zigarillos, Pfeifentabak und erhitzten Tabak steigen von 2027 bis 2030 jährlich.\n* Für Substitute für Tabakwaren steigt die Steuer von **0,33 Euro je Milliliter im Jahr 2027** schrittweise auf **0,36 Euro je Milliliter ab 2030**.\n* Bei Wasserpfeifentabak bleibt die Zusatzsteuer von **23 Euro je Kilogramm** bestehen. Die gesamte Belastung steigt jedoch mit dem höheren Steuersatz für Pfeifentabak.\n* Die höheren Steuern werden voraussichtlich vollständig über höhere Preise an Verbraucherinnen und Verbraucher weitergegeben.\n* Der Bund erwartet zusätzliche Einnahmen von **756 Mio. Euro für 2027**, **1.595 Mio. Euro für 2028**, **2.548 Mio. Euro für 2029** und **3.589 Mio. Euro für 2030**.\n\n## Hintergrund\n\nDie Bundesregierung will den Bundeshaushalt entlasten, die Einnahmen aus der Tabaksteuer besser planbar machen und unterschiedliche Tabakprodukte angemessen besteuern. Zugleich sollen höhere Preise den Schutz der öffentlichen Gesundheit unterstützen. Neue Produkte wie erhitzter Tabak und Flüssigkeiten für elektronische Zigaretten sind inzwischen fest am Markt etabliert und auch für Jugendliche und junge Erwachsene attraktiv. Nach einer neuen europäischen Tabaksteuerregelung könnten weitere Änderungen nötig werden."
+    },
     "enSourceHash": "2d442ff2ecc8cca0abda07d073e49c402d023aa67bac74771d0fedf6647d430f",
     "en": {
       "summary_simplified": "Tobacco tax is to **increase every year from 2027 to 2030**. This applies to cigarettes, fine cut tobacco, cigars, cigarillos, pipe tobacco, heated tobacco, water pipe tobacco, and liquids for electronic cigarettes. The higher taxes are expected to be passed on in full through higher prices. This is expected to generate additional federal revenue ranging from **756 million euros in 2027** to **3,589 million euros in 2030**.",

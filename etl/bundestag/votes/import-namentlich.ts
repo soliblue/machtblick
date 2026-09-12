@@ -8,6 +8,7 @@ import { AW_API, AW_UA } from '../../_shared/awClient.ts'
 import { DETAIL_BALLOT_LABEL, needsXlsxRefresh, parseDetailBallots } from './detailBallots.ts'
 import { decodeHtmlEntities } from '../../_shared/entities.mjs'
 import { hasNextVoteListPage, parseVoteListPage } from './voteListPage.ts'
+import { resolveMandateMember } from './mandateMember.ts'
 
 const db = new Database(fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url)))
 const TERM_ID = Number(arg('--term') ?? 21)
@@ -48,6 +49,8 @@ const existingMembers = db.prepare('SELECT id, first_name AS firstName, last_nam
 const keyMaps = [new Map<string, string[]>(), new Map<string, string[]>(), new Map<string, string[]>()]
 for (const m of existingMembers) registerMemberKeys(m.id, m.firstName, m.lastName)
 const memberIdByMdbId = new Map(existingMembers.filter((m) => m.btMdbId).map((m) => [m.btMdbId!, m.id]))
+const btMdbIdByMemberId = new Map(existingMembers.map((member) => [member.id, member.btMdbId]))
+const memberIdByAwPoliticianId = new Map((db.prepare('SELECT aw_politician_id AS awPoliticianId, member_id AS memberId FROM member_abgeordnetenwatch').all() as Array<{ awPoliticianId: number; memberId: string }>).map((row) => [row.awPoliticianId, row.memberId]))
 const termMemberIds = new Set((db.prepare('SELECT DISTINCT member_id AS id FROM member_mandates WHERE term_id = ?').all(TERM_ID) as Array<{ id: string }>).map((r) => r.id))
 const usedMemberIds = new Set(existingMembers.map((m) => m.id))
 
@@ -66,14 +69,19 @@ async function importMandates() {
     for (const mandate of mandates) {
       const name = splitAwName(mandate.politician.label)
       const mdbId = mandate.id_external_administration?.padStart(8, '0') ?? null
-      const memberId = (mdbId ? memberIdByMdbId.get(mdbId) : null) ?? resolveMemberId(name.first, name.last)
+      const { memberId, btMdbId } = resolveMandateMember(mandate.politician.id, mdbId, memberIdByAwPoliticianId, memberIdByMdbId, btMdbIdByMemberId, () => resolveMemberId(name.first, name.last))
+      memberIdByAwPoliticianId.set(mandate.politician.id, memberId)
+      if (btMdbId) {
+        memberIdByMdbId.set(btMdbId, memberId)
+        btMdbIdByMemberId.set(memberId, btMdbId)
+      }
       if (mdbId) memberIdByMdbId.set(mdbId, memberId)
       termMemberIds.add(memberId)
       db.prepare(`
         INSERT INTO members (id, name, first_name, last_name, bt_mdb_id)
         VALUES (?, ?, ?, ?, ?)
         ON CONFLICT(id) DO UPDATE SET bt_mdb_id = COALESCE(members.bt_mdb_id, excluded.bt_mdb_id)
-      `).run(memberId, `${name.first} ${name.last}`, name.first, name.last, mandate.id_external_administration?.padStart(8, '0') ?? null)
+      `).run(memberId, `${name.first} ${name.last}`, name.first, name.last, btMdbId)
       membersWritten++
       db.prepare(`
         INSERT INTO member_mandates (member_id, term_id, bt_mdb_id, aw_politician_id, aw_mandate_id, mandate_type, list_state, constituency_number, constituency_name, valid_from, valid_to)
@@ -90,7 +98,7 @@ async function importMandates() {
       `).run(
         memberId,
         TERM_ID,
-        mandate.id_external_administration?.padStart(8, '0') ?? null,
+        btMdbId,
         mandate.politician.id,
         mandate.id,
         mandateType(mandate),

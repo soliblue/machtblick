@@ -1,4 +1,5 @@
 import { REVIEWED_TITLE_PIN as TITLE_334134 } from './334134.mjs'
+import { REVIEWED_TITLE_PIN as TITLE_334554 } from './334554.mjs'
 import { REVIEWED_TITLE_PIN as TITLE_335940 } from './335940.mjs'
 import { REVIEWED_TITLE_PIN as TITLE_338352 } from './338352.mjs'
 import { REVIEWED_TITLE_PIN as TITLE_338355 } from './338355.mjs'
@@ -6,9 +7,12 @@ import { REVIEWED_TITLE_PIN as TITLE_338372 } from './338372.mjs'
 import { REVIEWED_TITLE_PIN as TITLE_338407 } from './338407.mjs'
 import { REVIEWED_TITLE_PIN as TITLE_338410 } from './338410.mjs'
 import { REVIEWED_TITLE_PIN as TITLE_338411 } from './338411.mjs'
+import { REVIEWED_TITLE_PIN as TITLE_338788 } from './338788.mjs'
+import { REVIEWED_TITLE_PIN as TITLE_338869 } from './338869.mjs'
 
 export const REVIEWED_TITLE_PINS = new Map([
   TITLE_334134,
+  TITLE_334554,
   TITLE_335940,
   TITLE_338352,
   TITLE_338355,
@@ -16,4 +20,6 @@ export const REVIEWED_TITLE_PINS = new Map([
   TITLE_338407,
   TITLE_338410,
   TITLE_338411,
+  TITLE_338788,
+  TITLE_338869,
 ])

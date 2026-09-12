@@ -1,0 +1,60 @@
+{
+  "numFound": 1,
+  "documents": [
+    {
+      "id": "287521",
+      "drucksachetyp": "Antrag",
+      "dokumentart": "Drucksache",
+      "autoren_anzahl": 34,
+      "typ": "Dokument",
+      "vorgangsbezug_anzahl": 1,
+      "dokumentnummer": "21/5764",
+      "wahlperiode": 21,
+      "herausgeber": "BT",
+      "pdf_hash": "bd52f83ac76611a16020dd444d51a183",
+      "aktualisiert": "2026-05-06T16:52:16+02:00",
+      "vorgangsbezug": [
+        {
+          "id": "334609",
+          "titel": "Fertigstellung der Autobahn 20 vor der Bahn-Neubaustrecke Hamburg-Hannover priorisieren",
+          "vorgangstyp": "Antrag"
+        }
+      ],
+      "urheber": [
+        {
+          "einbringer": false,
+          "bezeichnung": "AfD",
+          "titel": "Fraktion der AfD"
+        }
+      ],
+      "fundstelle": {
+        "pdf_url": "https://dserver.bundestag.de/btd/21/057/2105764.pdf",
+        "id": "287521",
+        "dokumentnummer": "21/5764",
+        "datum": "2026-05-05",
+        "verteildatum": "2026-05-06",
+        "dokumentart": "Drucksache",
+        "drucksachetyp": "Antrag",
+        "herausgeber": "BT",
+        "urheber": [
+          "Fraktion der AfD"
+        ]
+      },
+      "autoren_anzeige": [
+        {
+          "id": "7935",
+          "titel": "Stefan Henze, MdB, AfD",
+          "autor_titel": "Stefan Henze"
+        },
+        {
+          "id": "2196",
+          "titel": "Wolfgang Wiehle, MdB, AfD",
+          "autor_titel": "Wolfgang Wiehle"
+        }
+      ],
+      "titel": "Fertigstellung der Autobahn 20 vor der Bahn-Neubaustrecke Hamburg-Hannover priorisieren",
+      "datum": "2026-05-05"
+    }
+  ],
+  "cursor": "AoJwkJHl-50DMURydWNrc2FjaGUtMjg3NTIx"
+}

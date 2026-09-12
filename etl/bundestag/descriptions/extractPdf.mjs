@@ -101,11 +101,11 @@ async function runModelOcr(pdf) {
   return runPreprocessingCodex({ prompt, timeoutMs: 600000, tmpPrefix: 'machtblick-pdf-text-' })
 }
 
-export async function extractPdf(drucksacheId, pdfUrl) {
+export async function extractPdf(drucksacheId, pdfUrl, refresh = false) {
   const cached = txtPath(drucksacheId)
-  if (existsSync(cached)) return readFileSync(cached, 'utf8')
+  if (!refresh && existsSync(cached)) return readFileSync(cached, 'utf8')
   const pdf = pdfPath(drucksacheId)
-  if (!existsSync(pdf)) await download(pdfUrl, pdf)
+  if (refresh || !existsSync(pdf)) await download(pdfUrl, pdf)
   let text = clean(runPdftotext(pdf))
   if (text.length < MIN_CHARS) text = clean(await runPdfjs(pdf))
   if (text.length < MIN_CHARS) text = clean(await runModelOcr(pdf))

@@ -1,7 +1,12 @@
 export const REVIEWED_PIN = [
   338368,
   {
-    "drucksache": "445/26",
+    "drucksache": "21/7864",
+    "deSourceHash": "fb3ac3a15ac5ac9d1fc760cfa557be574ba070963965f2e21ef0ef51eb483218",
+    "de": {
+      "summary_simplified": "Der Staat soll für anspruchsberechtigte Kinder ab dem sechsten Lebensjahr monatlich **10 Euro** für die private Altersvorsorge anlegen. Schließen die Eltern einen passenden Vertrag ab, fließt das Geld in ein persönliches Depot, andernfalls wird es gemeinsam für das Kind am Kapitalmarkt angelegt. Private Einzahlungen von bis zu **6 840 Euro pro Jahr** sind zusätzlich möglich. Das geförderte Vermögen und seine Erträge können grundsätzlich erst ab **65 Jahren** ausgezahlt werden.",
+      "summary_detail": "## Was sich ändern soll\n\n* Für anspruchsberechtigte Kinder zwischen 6 und 18 Jahren zahlt der Staat monatlich **10 Euro** in die private Altersvorsorge ein.\n* Voraussetzung sind ein erster Wohnsitz in Deutschland und eine Identifikationsnummer.\n* Schließen die Eltern einen passenden Vertrag auf den Namen des Kindes ab, wird die Förderung dort angelegt.\n* Ohne persönlichen Vertrag wird das Geld kollektiv am Kapitalmarkt angelegt. Der daraus entstehende Anspruch kann später in einen persönlichen Vertrag übertragen werden.\n* Zusätzlich dürfen privat bis zu **6 840 Euro pro Kalenderjahr** eingezahlt werden.\n* Das geförderte Vermögen ist nicht beleihbar, nicht veräußerbar und nicht pfändbar. Es kann grundsätzlich erst ab **65 Jahren** ausgezahlt werden.\n* Die Erträge bleiben bis zum Beginn der Auszahlung steuerfrei.\n* Die Förderung beginnt mit dem Geburtsjahrgang **2020**. Ab **2027** kommt jährlich der Geburtsjahrgang hinzu, dessen Kinder sechs Jahre alt werden.\n* Für ältere Kinder unter 18 Jahren können ebenfalls passende Verträge abgeschlossen werden, jedoch ohne staatliche Zahlungen.\n\n## Hintergrund\n\nDie Bundesregierung will den langfristigen Aufbau einer privaten Altersvorsorge schon im Kindesalter beginnen. Frühe und regelmäßige Anlagen am Kapitalmarkt sollen Vermögen aufbauen und Kindern sowie Eltern praktische Erfahrungen mit Finanzfragen vermitteln. Die Förderung soll nicht davon abhängen, ob Eltern selbst einen Vertrag abschließen oder über ausreichende finanzielle Kenntnisse verfügen. Für die staatlichen Zahlungen sind **198 Millionen Euro** im Jahr **2027** vorgesehen, bis **2030** steigt der Betrag auf **411 Millionen Euro**."
+    },
     "enSourceHash": "2d44d26dde157d9a297f13de728c6c69cc0c964700d50eaf76eafa755b519ee0",
     "en": {
       "summary_simplified": "The state is to invest **10 euros** per month in private retirement savings for eligible children from the age of six. If the parents enter into an eligible contract, the money will flow into a personal investment account. Otherwise, it will be invested collectively in the capital market for the child. Additional private contributions of up to **6,840 euros per year** will be permitted. The subsidized assets and their returns generally cannot be paid out before the age of **65**.",
@@ -12,8 +17,8 @@ export const REVIEWED_PIN = [
 export const REVIEWED_GUIDANCE = [
   338368,
   {
-    "drucksache": "445/26",
-    "sourceHash": "1378d4c875953f1eee59aed79f9cef466b3a68d709aaef73b968a2a59ea24709",
+    "drucksache": "21/7864",
+    "sourceHash": "fb3ac3a15ac5ac9d1fc760cfa557be574ba070963965f2e21ef0ef51eb483218",
     "de": null,
     "en": {
       "summary_simplified": {

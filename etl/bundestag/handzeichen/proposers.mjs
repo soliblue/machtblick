@@ -1,16 +1,12 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises'
-import { join } from 'node:path'
+import { join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { createHash } from 'node:crypto'
 import Database from 'better-sqlite3'
 import { argValue } from '../../_shared/worker.mjs'
+import { dipList } from '../../dip/client.ts'
 import { pinnedSourceDrucksache } from './source.mjs'
 
-const API = 'https://search.dip.bundestag.de/api/v1'
-const KEY = process.env.DIP_API_KEY ?? 'JuUJMTh.aode9HMRTazR7NwudVElhD26LeNADLxxST'
 const CACHE = new URL('./drucksachen/', import.meta.url).pathname
-let enodiaCookie = ''
-await mkdir(CACHE, { recursive: true })
 
 const PROPOSER_MAP = {
   'CDU/CSU': 'CDU/CSU',
@@ -65,40 +61,16 @@ function sourceType(doc) {
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 
-async function dipFetch(url) {
-  let attempt = 0
-  while (true) {
-    const headers = { accept: 'application/json', 'user-agent': 'machtblick-etl/0.1 (https://github.com/soliblue/machtblick; hello@machtblick.de)' }
-    if (enodiaCookie) headers.cookie = enodiaCookie
-    const res = await fetch(url, { headers })
-    const text = await res.text()
-    if (text.startsWith('{')) return JSON.parse(text)
-    if (text.includes('Enodia Verification')) {
-      await updateEnodiaCookie(text)
-      continue
-    }
-    attempt++
-    if (attempt > 30) throw new Error(`DIP non-JSON after ${attempt} retries: ${url}`)
-    await sleep(Math.min(300000, 10000 * attempt))
-  }
+export function isDocumentsEnvelope(data) {
+  return typeof data?.numFound === 'number' && Array.isArray(data.documents)
 }
 
-async function updateEnodiaCookie(text) {
-  const evl = text.match(/window\.chl = "([^"]+)"/)?.[1]
-  if (!evl) throw new Error('Enodia challenge missing')
-  const envelope = JSON.parse(Buffer.from(evl.split('.')[0], 'base64').toString('utf8'))
-  const challenge = envelope.content.challenge
-  let solution = 0
-  while (!createHash('sha256').update(`${challenge}${solution}`).digest('hex').startsWith('0000')) solution++
-  const auth = await fetch('https://search.dip.bundestag.de/.enodia/verify', { method: 'POST', body: `${solution}-${evl}` }).then((r) => r.text())
-  enodiaCookie = `enodia=${auth}`
-}
-
-async function getCached(name, fetcher) {
-  const path = join(CACHE, `${name}.json`)
+export async function getCached(name, fetcher, cache = CACHE) {
+  const path = join(cache, `${name}.json`)
   const cached = await readFile(path, 'utf8').then(JSON.parse).catch(() => undefined)
-  if (cached !== undefined) return cached
+  if (isDocumentsEnvelope(cached)) return cached
   const data = await fetcher()
+  if (!isDocumentsEnvelope(data)) throw new Error(`invalid DIP documents response: ${name}`)
   await writeFile(path, JSON.stringify(data, null, 2))
   await sleep(120)
   return data
@@ -106,7 +78,7 @@ async function getCached(name, fetcher) {
 
 async function fetchDrucksache(dnr) {
   return getCached(`d-${dnr.replace('/', '-')}`, () =>
-    dipFetch(`${API}/drucksache?apikey=${KEY}&f.dokumentnummer=${encodeURIComponent(dnr)}&format=json`),
+    dipList('/drucksache', { 'f.dokumentnummer': dnr, format: 'json' }),
   )
 }
 
@@ -121,50 +93,53 @@ async function resolveProposer(dnr) {
   return null
 }
 
-const db = new Database(fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url)))
-const voteFilter = argValue('--vote')
-const rows = db.prepare(`
-  SELECT id, document
-  FROM votes
-  WHERE vote_type IN ('handzeichen','hammelsprung')
-    AND document IS NOT NULL
-    AND (? IS NULL OR id = ?)
-`).all(voteFilter ?? null, voteFilter ?? null)
-console.log(`processing ${rows.length} votes`)
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  await mkdir(CACHE, { recursive: true })
+  const db = new Database(fileURLToPath(new URL('../../../db/machtblick.sqlite', import.meta.url)))
+  const voteFilter = argValue('--vote')
+  const rows = db.prepare(`
+    SELECT id, document
+    FROM votes
+    WHERE vote_type IN ('handzeichen','hammelsprung')
+      AND document IS NOT NULL
+      AND (? IS NULL OR id = ?)
+  `).all(voteFilter ?? null, voteFilter ?? null)
+  console.log(`processing ${rows.length} votes`)
 
-const upd = db.prepare('UPDATE votes SET document = ? WHERE id = ?')
-let resolved = 0
-let none = 0
-for (const r of rows) {
-  const dnrs = [...r.document.matchAll(/\b(\d+\/\d+)\b/g)].map((m) => m[1])
-  if (!dnrs.length) { none++; continue }
-  let proposer = null
-  let type = null
-  const pinned = pinnedSourceDrucksache(r.id)
-  const ordered = pinned ? [pinned, ...dnrs.filter((dnr) => dnr !== pinned)] : dnrs
-  for (const d of ordered) {
-    const source = await resolveProposer(d)
-    if (source) {
-      proposer = source.proposer
-      type = source.type
-      break
+  const upd = db.prepare('UPDATE votes SET document = ? WHERE id = ?')
+  let resolved = 0
+  let none = 0
+  for (const r of rows) {
+    const dnrs = [...r.document.matchAll(/\b(\d+\/\d+)\b/g)].map((m) => m[1])
+    if (!dnrs.length) { none++; continue }
+    let proposer = null
+    let type = null
+    const pinned = pinnedSourceDrucksache(r.id)
+    const ordered = pinned ? [pinned, ...dnrs.filter((dnr) => dnr !== pinned)] : dnrs
+    for (const d of ordered) {
+      const source = await resolveProposer(d)
+      if (source) {
+        proposer = source.proposer
+        type = source.type
+        break
+      }
     }
+    if (proposer) {
+      const dStr = `Drucksache ${dnrs.join(', ')}`
+      const newDoc = proposer === 'Bundesregierung'
+        ? `${type} der Bundesregierung (${dStr})`
+        : proposer === 'Bundesrat'
+        ? `${type} des Bundesrates (${dStr})`
+        : `${type} der Fraktion der ${proposer} (${dStr})`
+      upd.run(newDoc, r.id)
+      resolved++
+    } else none++
+    if ((resolved + none) % 25 === 0) console.log(`  ${resolved + none}/${rows.length} (resolved ${resolved})`)
   }
-  if (proposer) {
-    const dStr = `Drucksache ${dnrs.join(', ')}`
-    const newDoc = proposer === 'Bundesregierung'
-      ? `${type} der Bundesregierung (${dStr})`
-      : proposer === 'Bundesrat'
-      ? `${type} des Bundesrates (${dStr})`
-      : `${type} der Fraktion der ${proposer} (${dStr})`
-    upd.run(newDoc, r.id)
-    resolved++
-  } else none++
-  if ((resolved + none) % 25 === 0) console.log(`  ${resolved + none}/${rows.length} (resolved ${resolved})`)
-}
-console.log(`done. resolved: ${resolved}, no proposer: ${none}`)
-if (unknownBezeichnungen.size) {
-  console.warn(`⚠ unmapped bezeichnungen encountered: ${[...unknownBezeichnungen].join(', ')}`)
-  console.warn(`  add them to PROPOSER_MAP or KNOWN_COMMITTEES and re-run`)
-  process.exitCode = 1
+  console.log(`done. resolved: ${resolved}, no proposer: ${none}`)
+  if (unknownBezeichnungen.size) {
+    console.warn(`⚠ unmapped bezeichnungen encountered: ${[...unknownBezeichnungen].join(', ')}`)
+    console.warn(`  add them to PROPOSER_MAP or KNOWN_COMMITTEES and re-run`)
+    process.exitCode = 1
+  }
 }

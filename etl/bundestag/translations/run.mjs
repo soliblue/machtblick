@@ -6,6 +6,7 @@ import { runPreprocessingCodex } from '../preprocessing/codex.mjs'
 import { PREPROCESSING_MODEL, PREPROCESSING_REASONING_EFFORT } from '../preprocessing/config.mjs'
 import { ensureTextColumn } from '../preprocessing/schema.mjs'
 import { prepareReviewedAntragTranslation } from '../antrag-description-translations/reviewedTranslation.mjs'
+import { matchingAntragDescription } from './antragSync.mjs'
 
 const schemaPath = fileURLToPath(new URL('./output-schema-batch.json', import.meta.url))
 const concurrency = Number(argValue('--concurrency') ?? 2)
@@ -233,19 +234,13 @@ function writeTranslations(job, output) {
 }
 
 function syncAntragTranslation(job, vote, now) {
-  const matches = db.prepare(`
-    SELECT a.id, a.drucksache, ad.summary_simplified, ad.summary_detail
-    FROM antraege a
-    INNER JOIN vote_description_decisions vdd ON vdd.drucksache_id = a.drucksache
-    INNER JOIN antrag_descriptions ad ON ad.antrag_id = a.id
-    WHERE a.wahlperiode = 21 AND vdd.vote_id = ?
-  `).all(job.vote.id)
-  if (matches.length === 1) {
+  const match = matchingAntragDescription(db, job.vote.id, job.vote.summary_simplified, job.vote.summary_detail)
+  if (match) {
     const { sourceHash: hash, translated } = prepareReviewedAntragTranslation({
-      id: matches[0].id,
-      drucksache: matches[0].drucksache,
-      summary_simplified: matches[0].summary_simplified,
-      summary_detail: matches[0].summary_detail,
+      id: match.id,
+      drucksache: match.drucksache,
+      summary_simplified: match.summary_simplified,
+      summary_detail: match.summary_detail,
     }, {
       summary_simplified: trimOrNull(vote.summary_simplified),
       summary_detail: trimOrNull(vote.summary_detail),
@@ -263,7 +258,7 @@ function syncAntragTranslation(job, vote, now) {
         prompt_version = excluded.prompt_version,
         translated_at = excluded.translated_at
     `).run(
-      matches[0].id,
+      match.id,
       translated.summary_simplified,
       translated.summary_detail,
       hash,

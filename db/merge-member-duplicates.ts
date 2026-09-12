@@ -1,6 +1,7 @@
 import Database from 'better-sqlite3'
 import { fileURLToPath } from 'node:url'
 import { HONORIFICS, NAME_PARTICLES } from '../etl/_shared/names.ts'
+import { awMemberDuplicateMerges } from './awMemberDuplicates.ts'
 
 const db = new Database(fileURLToPath(new URL('./machtblick.sqlite', import.meta.url)))
 
@@ -24,8 +25,14 @@ function isRealMdbId(id: string | null) {
 
 const members = db.prepare('SELECT id, first_name AS firstName, last_name AS lastName, bt_mdb_id AS btMdbId FROM members').all() as Member[]
 const voteCounts = new Map((db.prepare('SELECT member_id AS id, COUNT(*) AS n FROM vote_members GROUP BY member_id').all() as Array<{ id: string; n: number }>).map((r) => [r.id, r.n]))
+const term21VoteCounts = new Map((db.prepare("SELECT vm.member_id AS id, COUNT(*) AS n FROM vote_members vm JOIN votes v ON v.id = vm.vote_id WHERE v.term_id = 21 GROUP BY vm.member_id").all() as Array<{ id: string; n: number }>).map((r) => [r.id, r.n]))
 const mandateCounts = new Map((db.prepare('SELECT member_id AS id, COUNT(*) AS n FROM member_mandates GROUP BY member_id').all() as Array<{ id: string; n: number }>).map((r) => [r.id, r.n]))
 const awIds = new Set((db.prepare('SELECT member_id AS id FROM member_abgeordnetenwatch').all() as Array<{ id: string }>).map((r) => r.id))
+const awMemberIdsByPoliticianId = new Map<number, Set<string>>()
+for (const row of db.prepare('SELECT member_id AS memberId, aw_politician_id AS awPoliticianId FROM member_abgeordnetenwatch').all() as Array<{ memberId: string; awPoliticianId: number }>) {
+  awMemberIdsByPoliticianId.set(row.awPoliticianId, (awMemberIdsByPoliticianId.get(row.awPoliticianId) ?? new Set()).add(row.memberId))
+}
+const uniqueAwMemberIdByPoliticianId = new Map([...awMemberIdsByPoliticianId].filter(([, ids]) => ids.size === 1).map(([awPoliticianId, ids]) => [awPoliticianId, [...ids][0]]))
 const term21Voters = new Set((db.prepare("SELECT DISTINCT vm.member_id AS id FROM vote_members vm JOIN votes v ON v.id = vm.vote_id WHERE v.term_id = 21").all() as Array<{ id: string }>).map((r) => r.id))
 
 function score(id: string) {
@@ -46,6 +53,12 @@ for (const group of byMdbId.values()) {
 }
 
 const resolve = (id: string) => merges.get(id) ?? id
+for (const [dupe, canonical] of awMemberDuplicateMerges(
+  db.prepare('SELECT member_id AS memberId, aw_politician_id AS awPoliticianId FROM member_mandates WHERE term_id = 21 AND aw_politician_id IS NOT NULL').all() as Array<{ memberId: string; awPoliticianId: number }>,
+  uniqueAwMemberIdByPoliticianId,
+  (id) => term21VoteCounts.get(id) ?? 0,
+  resolve,
+)) merges.set(dupe, canonical)
 const byKey = new Map<string, Set<string>>()
 for (const m of members) {
   const key = relaxedKey(m.firstName, m.lastName)

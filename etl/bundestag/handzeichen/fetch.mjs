@@ -1,49 +1,66 @@
 import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises'
-import { join } from 'node:path'
-import { createHash } from 'node:crypto'
+import { fileURLToPath } from 'node:url'
+import { join, resolve } from 'node:path'
+import { dipList } from '../../dip/client.ts'
 import { hasProtocolText } from './protocolSource.mjs'
 
-const API = 'https://search.dip.bundestag.de/api/v1'
-const KEY = process.env.DIP_API_KEY ?? 'JuUJMTh.aode9HMRTazR7NwudVElhD26LeNADLxxST'
 const OUT = new URL('./raw/', import.meta.url).pathname
-let enodiaCookie = ''
 
-await mkdir(OUT, { recursive: true })
-const existing = new Set((await readdir(OUT)).map((f) => f.replace(/\.xml$/, '')))
-
-const list = await fetchJson(`${API}/plenarprotokoll?apikey=${KEY}&f.wahlperiode=21&f.zuordnung=BT&format=json`)
-console.log(`api lists ${list.numFound} protocols`)
-
-for (const doc of list.documents) {
-  const key = doc.dokumentnummer.replace('/', '-')
-  const path = join(OUT, `${key}.xml`)
-  if (existing.has(key) && hasProtocolText(await readFile(path, 'utf8'))) continue
-  const xml = await fetchText(`${API}/plenarprotokoll-text/${doc.id}?apikey=${KEY}&format=xml`)
-  if (!hasProtocolText(xml)) throw new Error(`protocol text missing for ${doc.dokumentnummer}`)
-  await writeFile(path, xml)
-  console.log(`${existing.has(key) ? 'refetched' : 'fetched'} ${doc.dokumentnummer} (${doc.datum})`)
+function isProtocolDocument(document) {
+  return typeof document?.id === 'string'
+    && document.dokumentart === 'Plenarprotokoll'
+    && document.typ === 'Dokument'
+    && /^21\/\d+$/.test(document.dokumentnummer)
+    && document.wahlperiode === 21
+    && document.herausgeber === 'BT'
 }
 
-async function fetchText(url) {
-  let text = await fetch(url, enodiaCookie ? { headers: { cookie: enodiaCookie } } : {}).then((r) => r.text())
-  if (text.includes('Enodia Verification')) {
-    await updateEnodiaCookie(text)
-    text = await fetch(url, { headers: { cookie: enodiaCookie } }).then((r) => r.text())
+export function protocolDocuments(response) {
+  if (!Number.isInteger(response?.numFound)
+    || !Array.isArray(response.documents)
+    || response.documents.length === 0
+    || response.numFound < response.documents.length
+    || response.documents.some((document) => !isProtocolDocument(document))) {
+    throw new Error('invalid DIP protocol list response')
   }
-  return text
+  return response.documents
 }
 
-async function fetchJson(url) {
-  return JSON.parse(await fetchText(url))
+export function protocolXml(document, expected) {
+  if (!isProtocolDocument(document)
+    || !isProtocolDocument(expected)
+    || document.id !== expected.id
+    || document.dokumentnummer !== expected.dokumentnummer
+    || (document.text != null && typeof document.text !== 'string')) {
+    throw new Error(`invalid DIP protocol detail for ${expected?.dokumentnummer ?? 'unknown protocol'}`)
+  }
+  return document.text?.trim()
+    ? `<?xml version='1.0' encoding='UTF-8'?>\n<document>\n${Object.entries(document).map(([key, value]) => xmlNodes(key, value)).join('')}</document>\n`
+    : null
 }
 
-async function updateEnodiaCookie(text) {
-  const evl = text.match(/window\.chl = "([^"]+)"/)?.[1]
-  if (!evl) throw new Error('Enodia challenge missing')
-  const envelope = JSON.parse(Buffer.from(evl.split('.')[0], 'base64').toString('utf8'))
-  const challenge = envelope.content.challenge
-  let solution = 0
-  while (!createHash('sha256').update(`${challenge}${solution}`).digest('hex').startsWith('0000')) solution++
-  const auth = await fetch('https://search.dip.bundestag.de/.enodia/verify', { method: 'POST', body: `${solution}-${evl}` }).then((r) => r.text())
-  enodiaCookie = `enodia=${auth}`
+function xmlNodes(key, value) {
+  if (Array.isArray(value)) return value.map((item) => xmlNodes(key, item)).join('')
+  if (value && typeof value === 'object') return `<${key}>${Object.entries(value).map(([childKey, childValue]) => xmlNodes(childKey, childValue)).join('')}</${key}>\n`
+  return value == null ? '' : `  <${key}>${String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&apos;')}</${key}>\n`
+}
+
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  await mkdir(OUT, { recursive: true })
+  const existing = new Set((await readdir(OUT)).map((file) => file.replace(/\.xml$/, '')))
+  const list = await dipList('/plenarprotokoll', { 'f.wahlperiode': '21', 'f.zuordnung': 'BT', format: 'json' })
+  console.log(`api lists ${list.numFound} protocols`)
+
+  for (const doc of protocolDocuments(list)) {
+    const key = doc.dokumentnummer.replace('/', '-')
+    const path = join(OUT, `${key}.xml`)
+    if (existing.has(key) && hasProtocolText(await readFile(path, 'utf8'))) continue
+    const xml = protocolXml(await dipList(`/plenarprotokoll-text/${doc.id}`, { format: 'json' }), doc)
+    if (!xml) {
+      console.log(`skipped incomplete ${doc.dokumentnummer} (${doc.datum})`)
+      continue
+    }
+    await writeFile(path, xml)
+    console.log(`${existing.has(key) ? 'refetched' : 'fetched'} ${doc.dokumentnummer} (${doc.datum})`)
+  }
 }

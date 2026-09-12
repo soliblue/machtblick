@@ -9,17 +9,20 @@ const SUSPICIOUS_TITLE_PATTERNS = [
   /\bImmunität\b.*\b(?:aufheben|aufgehoben)\b/i,
   /^Wahl\s/i,
   /^Wahlvorschl(ag|äge)\b/i,
+  /-Wahlvorschl(?:ag|äge)(?:\s|$)/i,
   /^Bestellung\s/i,
   /^Benennung\s/i,
   /^Abberufung\s/i,
   /^Verfahrensbeteiligung\s+BVerfG\b/i,
   /^Beschlussempfehlung\s+zum\s+Streitverfahren\s+vor\s+dem\s+BVerfG\b/i,
+  /^Stellungnahme\s+im\s+Verfahren(?:\s|$)/i,
   /^Normenkontrolle\s+zum\s+Bundeshaushalt\b/i,
   /^Federführung\b/i,
   /^Überweisung\b/i,
   /^Ausschussüberweisung\b/i,
   /^Überweisungsvorschlag\b/i,
   /^Erneute\s+Überweisung\b/i,
+  /^Zurückverweisung(?:\s|$)/i,
 ]
 
 const db = new Database(fileURLToPath(new URL('../../../../db/machtblick.sqlite', import.meta.url)))

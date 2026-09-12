@@ -25,3 +25,15 @@ test('accepts the corrected DIP cohort and rejects unknown target shapes', () =>
   assert.equal(normalizeAntragAbstract('338368', 'Kinder ab dem Geburtsjahrgang 2020'), 'Kinder ab dem Geburtsjahrgang 2020')
   assert.throws(() => normalizeAntragAbstract('338368', 'Kinder ab dem Geburtsjahrgang 2019'), /unexpected DIP abstract/)
 })
+
+test('normalizes decoded DIP title whitespace', () => {
+  assert.equal(
+    buildAntragRow({
+      ...vorgang,
+      id: '338869',
+      titel:
+        ' Vorzeitige Teilrückzahlung Portugals von Krediten des Europäischen Finanzstabilisierungsmechanismus \r\nAntrag auf Einholung eines zustimmenden Beschlusses &amp; Umsetzung ',
+    }, [])?.title,
+    'Vorzeitige Teilrückzahlung Portugals von Krediten des Europäischen Finanzstabilisierungsmechanismus Antrag auf Einholung eines zustimmenden Beschlusses & Umsetzung',
+  )
+})

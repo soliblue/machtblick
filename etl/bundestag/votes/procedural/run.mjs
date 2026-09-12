@@ -9,11 +9,14 @@ const PATTERNS = [
   'Ausschussüberweisung%',
   'Überweisungsvorschlag%',
   'Erneute Überweisung%',
+  'Zurückverweisung%',
   'Wahl %',
   'Wahl der%',
   'Wahl von%',
   'Wahlvorschlag%',
   'Wahlvorschläge%',
+  '%-Wahlvorschlag%',
+  '%-Wahlvorschläge%',
   'Wahl Stiftungsrat%',
   'Wahl Kuratorium%',
   'Beschlussempfehlung des Wahlprüfungsausschusses%',
@@ -31,6 +34,7 @@ const PATTERNS = [
   'Immunität %',
   'Verfahrensbeteiligung BVerfG%',
   'Beschlussempfehlung zum Streitverfahren vor dem BVerfG%',
+  'Stellungnahme im Verfahren %',
   'Normenkontrolle zum Bundeshaushalt%',
 ]
 

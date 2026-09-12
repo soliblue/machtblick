@@ -3,6 +3,7 @@ import test from 'node:test'
 import { REVIEWED_PIN as PIN_334134 } from '../antrag-descriptions/reviewedPins/334134.mjs'
 import { REVIEWED_PIN as PIN_335940 } from '../antrag-descriptions/reviewedPins/335940.mjs'
 import { REVIEWED_PIN as PIN_338552 } from '../antrag-descriptions/reviewedPins/338552.mjs'
+import { REVIEWED_PIN as PIN_338785 } from '../antrag-descriptions/reviewedPins/338785.mjs'
 import { prepareReviewedAntragTranslation, prepareReviewedAntragTranslationForHash, reviewedTranslationPromptRows } from './reviewedTranslation.mjs'
 
 test('reviewed prompt rows include source-bound requirements', () => {
@@ -14,7 +15,7 @@ test('reviewed prompt rows include source-bound requirements', () => {
 test('reviewed translation pins converge before validation', () => {
   const source = {
     id: 338368,
-    drucksache: '445/26',
+    drucksache: '21/7864',
     summary_simplified: 'Der Staat zahlt 10 Euro. Zusätzlich sind 6 840 Euro erlaubt. Die Altersgrenze ist 65.',
     summary_detail: 'Kinder ab 2020 erhalten 10 Euro. Ab 2027 sind 6 840 Euro erlaubt. Die Altersgrenze ist 65. Die Kosten steigen von 198 Millionen Euro auf 411 Millionen Euro bis 2030.',
   }
@@ -38,6 +39,24 @@ test('unmapped translations retain numeric validation', () => {
     summary_simplified: 'The amount is 265.000 euros.',
     summary_detail: 'The amount is 265.000 euros.',
   }), /must contain 265,000/)
+})
+
+test('September 12 English review preserves professional consultation thresholds', () => {
+  const [id, pin] = PIN_338785
+  const { sourceHash, translated } = prepareReviewedAntragTranslationForHash({
+    id,
+    drucksache: pin.drucksache,
+    summary_simplified: pin.de.summary_simplified,
+    summary_detail: pin.de.summary_detail,
+  }, pin.enSourceHash, {
+    summary_simplified: 'arbitrary',
+    summary_detail: 'arbitrary',
+  })
+  assert.equal(sourceHash, pin.enSourceHash)
+  assert.deepEqual(translated, pin.en)
+  assert.match(translated.summary_detail, /at least 80 minutes per week/)
+  assert.match(translated.summary_detail, /at least 120 minutes/)
+  assert.match(translated.summary_detail, /at least 240 minutes/)
 })
 
 test('August 29 English pins remain source-bound and numerically valid', () => {

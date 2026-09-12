@@ -20,14 +20,14 @@ const db = new Database(dbPath)
 ensureSchema()
 
 const candidates = db.prepare(`
-  SELECT a.id, a.type, a.title, a.drucksache, a.drucksache_pdf_url
+  SELECT a.id, a.type, a.title, a.drucksache, a.drucksache_pdf_url, ad.source_pdf_url
   FROM antraege a
   LEFT JOIN antrag_descriptions ad ON ad.antrag_id = a.id
   WHERE a.wahlperiode = 21
     AND a.drucksache IS NOT NULL
     AND a.drucksache_pdf_url IS NOT NULL
     AND (? IS NULL OR a.id = ?)
-    AND (? = 1 OR ad.summary_simplified IS NULL OR ad.summary_detail IS NULL)
+    AND (? = 1 OR ad.summary_simplified IS NULL OR ad.summary_detail IS NULL OR ad.source_pdf_url IS NOT a.drucksache_pdf_url)
   ORDER BY a.introduced_date DESC, a.id DESC
 `).all(antragFilter ?? null, antragFilter ?? null, force ? 1 : 0)
 
@@ -44,7 +44,7 @@ const workers = Array.from({ length: Math.min(concurrency, selected.length) }, a
     const row = selected[cursor]
     cursor++
     try {
-      const text = await extractPdf(row.drucksache, row.drucksache_pdf_url)
+      const text = await extractPdf(row.drucksache, row.drucksache_pdf_url, row.source_pdf_url !== row.drucksache_pdf_url)
       if (!text || text.length < 200) {
         skipped++
         console.warn(`x ${row.id} text too short (${row.drucksache})`)

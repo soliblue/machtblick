@@ -22,8 +22,9 @@ export async function dipList<T>(path: string, params: Record<string, string | s
     if (enodiaCookie) headers.cookie = enodiaCookie
     const res = await fetch(url, { headers })
     const text = await res.text()
-    if (text.startsWith('{')) return JSON.parse(text) as ListEnvelope<T>
     if (text.includes('Enodia Verification')) await updateEnodiaCookie(text)
+    else if (!res.ok) throw new Error(`DIP HTTP ${res.status}: ${path}`)
+    else if (text.trimStart().startsWith('{')) return JSON.parse(text) as ListEnvelope<T>
     attempt++
     if (attempt > 30) throw new Error(`DIP non-JSON after ${attempt} retries: ${path}`)
     await sleep(Math.min(300000, 10000 * attempt))
