@@ -125,10 +125,11 @@ requireFragments(css, 'dark party speech surfaces', [
   ":root[data-theme='dark'] .party-surface-neutral",
   'border-color: color-mix(in oklab, var(--color-fg) 15%, transparent)',
 ])
-for (const bubble of bubbles) requireFragments(bubble, 'party speech surface', [
-  'party-surface',
-  "'--party-color'",
-])
+for (const bubble of bubbles.slice(0, 2)) {
+  if (bubble.includes('party-surface')) throw new Error('Debate surfaces must remain untinted')
+}
+requireFragments(bubbles[1], 'party summary separators', ['border-r border-solid border-fg/15', 'last:border-r-0'])
+requireFragments(memberSpeechGroupRow, 'member speech surface', ['party-surface', "'--party-color'"])
 for (const fragment of ['formatDateShort', 'group.date', 'group.speeches.length', 'group.shortCount', 't.contribution']) {
   if (memberSpeechGroupRow.includes(fragment)) throw new Error(`${fragment} must not return to MemberSpeechGroupRow`)
 }

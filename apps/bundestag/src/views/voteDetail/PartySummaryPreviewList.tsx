@@ -1,5 +1,4 @@
-import type { CSSProperties } from 'react'
-import { hasPartyLine, PARTY_COLOR, PARTY_LOGO, PARTY_SLUG, partyLabel } from '@/lib/parties'
+import { PARTY_COLOR, PARTY_LOGO, PARTY_SLUG, partyLabel } from '@/lib/parties'
 import { PartyLogo } from '@/views/votesList/PartyLogo'
 import { SERIF } from '@/lib/fonts'
 import { MarkdownInline } from '@/components/MarkdownInline'
@@ -40,10 +39,7 @@ export function PartySummaryPreviewList({ summaries, speakersByParty }: Props) {
             return (
               <article
                 key={s.party}
-                className={`${hasPartyLine(s.party) ? 'party-surface' : 'party-surface-neutral'} flex w-[320px] flex-none flex-col rounded-m p-m desk:w-[400px]`}
-                style={{
-                  '--party-color': color,
-                } as CSSProperties}
+                className="flex w-[320px] flex-none flex-col border-r border-solid border-fg/15 p-m last:border-r-0 desk:w-[400px]"
               >
                 <div className="flex items-center justify-between gap-s">
                   {PARTY_SLUG[s.party] ? (

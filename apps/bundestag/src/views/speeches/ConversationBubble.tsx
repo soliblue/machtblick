@@ -1,4 +1,3 @@
-import type { CSSProperties } from 'react'
 import { PartyLogo } from '@/views/votesList/PartyLogo'
 import { PARTY_COLOR } from '@/lib/parties'
 import { SERIF } from '@/lib/fonts'
@@ -50,12 +49,11 @@ export function ConversationBubble({
   const text = expanded ? fullText || speech.excerpt : speech.excerpt
   return (
     <article
-      className={`${partyColor ? 'party-surface' : 'party-surface-neutral'} rounded-m p-m`}
+      className="rounded-m p-m"
       style={{
-        '--party-color': partyColor ?? 'var(--color-fg)',
         borderColor: highlighted ? `color-mix(in oklab, ${highlightColor} 70%, transparent)` : undefined,
         borderWidth: highlighted ? '2px' : undefined,
-      } as CSSProperties}
+      }}
     >
       <header className="flex items-center gap-s">
         <div className="flex min-w-0 flex-1 items-center gap-s">
