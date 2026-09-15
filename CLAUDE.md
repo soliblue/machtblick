@@ -55,7 +55,7 @@ Use shared tokens before adding one-off values. Exceptions belong inside shared 
 | Radius | `s/m/l` = 8/14/20. Contained surfaces and controls generally use `m`, stamps use `s`, floating controls use pills, and edge-to-edge feed surfaces stay square |
 | Stroke | `s/m/l` = 1/1.5/2 px |
 | Opacity | `s/m/l` = 0.15/0.4/0.7 |
-| Palette | `background`, `surface`, `elevated`, and `fg` adapt to the active theme |
+| Palette | Web uses the light `background`, `surface`, `elevated`, and `fg` palette; iOS adapts to the active theme |
 | Accents | Shared named accents plus semantic `success` and `danger`. Party colors use the shared palette |
 
 - Primary editorial cards use `background` without elevation shadows. Borders and radius follow the surface; overlays, floating controls, and selected tab controls may use shadow

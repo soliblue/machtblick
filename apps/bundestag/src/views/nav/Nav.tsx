@@ -4,16 +4,9 @@ import { Menu, X } from 'lucide-react'
 import { ScrollEyeWordmark } from '@/views/nav/ScrollEyeWordmark'
 import { useCopy } from '@/lib/i18n'
 import { localeFromPath, localizedPath, withLocale } from '@/lib/locale'
-import type { ThemeMode } from '@/hooks/useTheme'
 import { LanguagePicker } from './LanguagePicker'
-import { ThemePicker } from './ThemePicker'
 
-type Props = {
-  theme: ThemeMode
-  onThemeChange: (theme: ThemeMode) => void
-}
-
-export function Nav({ theme, onThemeChange }: Props) {
+export function Nav() {
   const [open, setOpen] = useState(false)
   const pathname = useRouterState({ select: (s) => s.location.pathname })
   const locale = localeFromPath(pathname)
@@ -35,13 +28,6 @@ export function Nav({ theme, onThemeChange }: Props) {
           <a href={href('/parties/')} className={linkClass}>{t.navParties}</a>
         </div>
         <div className="hidden items-center gap-m desk:flex">
-          <ThemePicker
-            value={theme}
-            label={t.appearance}
-            lightLabel={t.themeLight}
-            darkLabel={t.themeDark}
-            onChange={onThemeChange}
-          />
           <LanguagePicker
             locale={locale}
             deHref={deHref}
@@ -66,17 +52,6 @@ export function Nav({ theme, onThemeChange }: Props) {
             <a href={locale === 'en' ? '/en/' : '/'} className={linkClass} onClick={() => setOpen(false)}>{t.navVotes}</a>
             <a href={href('/members/')} className={linkClass} onClick={() => setOpen(false)}>{t.navMembers}</a>
             <a href={href('/parties/')} className={linkClass} onClick={() => setOpen(false)}>{t.navParties}</a>
-          </div>
-          <div>
-            <div className="mb-s text-s caption opacity-l">{t.appearance}</div>
-            <ThemePicker
-              value={theme}
-              label={t.appearance}
-              lightLabel={t.themeLight}
-              darkLabel={t.themeDark}
-              onChange={onThemeChange}
-              expanded
-            />
           </div>
           <div>
             <div className="mb-s text-s caption opacity-l">{t.language}</div>

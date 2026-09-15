@@ -11,7 +11,6 @@ import { copy, LocaleProvider } from '@/lib/i18n'
 import { localeFromPath } from '@/lib/locale'
 import { NotFoundPage } from '@/views/notFound/NotFoundPage'
 import { useAppStorePrompt } from '@/hooks/useAppStorePrompt'
-import { useTheme } from '@/hooks/useTheme'
 
 const queryClient = new QueryClient()
 
@@ -21,6 +20,7 @@ export const Route = createRootRoute({
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'theme-color', content: '#ffffff' },
+      { name: 'color-scheme', content: 'light' },
       { name: 'application-name', content: SITE_NAME },
       { name: 'apple-mobile-web-app-title', content: SITE_NAME },
       ...(matches.at(-1)?.pathname === '/' || matches.at(-1)?.pathname === '/en/' ? [] : [{ name: 'apple-itunes-app', content: 'app-id=6787755187' }]),
@@ -44,9 +44,6 @@ export const Route = createRootRoute({
       { rel: 'alternate', type: 'application/atom+xml', title: 'Machtblick: Abstimmungen im Bundestag', href: `${SITE_URL}/votes.xml` },
     ],
     scripts: [
-      {
-        children: `(function(){var d=localStorage.getItem('machtblick.theme')==='dark';var c=d?'#000000':'#FFFFFF';document.documentElement.dataset.theme=d?'dark':'light';document.documentElement.style.colorScheme=d?'dark':'light';document.querySelector('meta[name="theme-color"]')?.setAttribute('content',c);document.querySelector('meta[name="msapplication-TileColor"]')?.setAttribute('content',c)})()`,
-      },
       {
         type: 'application/ld+json',
         children: JSON.stringify({
@@ -151,9 +148,8 @@ function RootComponent() {
   const locale = localeFromPath(pathname)
   const t = copy[locale]
   const appStorePrompt = useAppStorePrompt()
-  const theme = useTheme()
   return (
-    <html lang={locale} prefix="og: https://ogp.me/ns#" suppressHydrationWarning>
+    <html lang={locale} prefix="og: https://ogp.me/ns#">
       <head>
         <HeadContent />
       </head>
@@ -162,7 +158,7 @@ function RootComponent() {
           <LocaleProvider locale={locale}>
             <TooltipProvider delayDuration={200}>
               <StampFilter />
-              <Nav theme={theme.theme} onThemeChange={theme.selectTheme} />
+              <Nav />
               <AppStorePrompt
                 visible={appStorePrompt.visible}
                 title={t.appStorePromptTitle}
