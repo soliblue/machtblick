@@ -1,0 +1,24 @@
+party,candidacy_scope,coverage_status,published_count,source_url,notes,retrieved_at
+Alternative für Deutschland,all,missing,,https://afd.berlin/abgeordnetenhauswahl/,No candidate directory found,2026-07-22
+Basisdemokratische Partei Deutschland,list_and_direct,partial,,https://diebasis-berlin.de/wahlen/,Candidate material is present but not structured enough to establish complete coverage,2026-07-22
+bergpartei die überpartei,all,missing,,,No candidate directory found,2026-07-22
+Bündnis 90 Die Grünen,Landesliste,complete,50,https://gruene.berlin/unsere-kandidatinnen-fuer-die-liste-zur-abgeordnetenhauswahl-2026,Numbered Landesliste with individual profiles,2026-07-22
+Bündnis 90 Die Grünen,direct,complete,78,https://gruene.berlin/fileadmin/BE/lv_berlin/files/Direktkandidierende_AGHWahl_2026.pdf,One candidate for every constituency,2026-07-22
+Bündnis Sahra Wagenknecht,Landesliste,lead_team_only,3,https://bsw.berlin/allgemein/startschuss-fuer-berlin-wir-stellen-unser-spitzen-team-fuer-die-abgeordnetenhauswahl-vor/,Only the first three candidates are centrally presented,2026-07-22
+Christlich Demokratische Union Deutschlands,Bezirksliste_and_direct,fragmented,,,Candidate material is distributed across district associations,2026-07-22
+Deutsche Kommunistische Partei,all,missing,,https://berlin.dkp.de/dkp-bei-der-abgeordnetenhauswahl/,No candidate directory found on the campaign page,2026-07-22
+Die Heimat,all,missing,,,No candidate directory found,2026-07-22
+Die Linke,Bezirksliste_and_direct,complete_navigation,,https://dielinke.berlin/partei/wahlen/abgeordnetenhauswahlen-2026/,Central hub links all 12 district candidate sections,2026-07-22
+Die Urbane. Eine HipHop Partei,all,missing,,https://www.die-urbane.de/die-urbane/landesverbaende/du-berlin.html,No candidate directory found,2026-07-22
+Freie Demokratische Partei,Landesliste,complete,24,https://www.fdp-berlin.de/ein-starkes-team-fuer-eine-stadt-die-wieder-funktioniert,Numbered list with profiles and public contact links,2026-07-22
+FREIE WÄHLER,all,fragmented,,,Individual campaign sites exist but no consolidated official directory was found,2026-07-22
+MERA25,all,missing,,https://mera25.de/berlin/,No candidate directory found,2026-07-22
+Ökologisch-Demokratische Partei,Landesliste,complete,8,https://www.oedp-berlin.de/wahlen/abgeordnetenhauswahl-2026/landesliste,Numbered Landesliste,2026-07-22
+Partei des Fortschritts,Landesliste,complete_navigation,,https://partei-des-fortschritts.de/wahl-zum-abgeordnetenhaus-berlin/,Candidate cards are published but no count has been normalized yet,2026-07-22
+Partei für Arbeit Rechtsstaat Tierschutz Elitenförderung und basisdemokratische Initiative,all,missing,,https://die-partei-berlin.de/,No candidate directory found,2026-07-22
+PARTEI MENSCH KLIMA TIERSCHUTZ,Landesliste,complete,18,https://berlin.tierschutzpartei.de/berliner-wahlen-2026,Numbered Landesliste plus separate BVV district lists,2026-07-22
+Piratenpartei Deutschland,all,missing,,https://www.piratenpartei.berlin/,Site still foregrounds 2021 election material,2026-07-22
+Sozialdemokratische Partei Deutschlands,direct,complete,78,https://spd.berlin/kandidatinnen/,One candidate for every constituency with district grouping and profile links,2026-07-22
+Sozialistische Gleichheitspartei Vierte Internationale,Landesliste,lead_candidate_only,1,https://www.wsws.org/de/articles/2026/07/10/sgpb-j10.html,Only the lead candidate is identified in the election statement,2026-07-22
+Volt Deutschland,Landesliste,complete,19,https://voltdeutschland.org/berlin/neuigkeiten/volt-berlin-waehlt-landesliste-2026,Numbered Landesliste,2026-07-22
+Volt Deutschland,direct,complete,78,https://voltdeutschland.org/berlin/direktkandidierende-agh-2026,One candidate for every constituency,2026-07-22
