@@ -31,6 +31,10 @@ on:
         required: false
         type: boolean
         default: false
+      replaces_build_number:
+        description: Submitted build to replace after the new build is VALID
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -66,6 +70,19 @@ jobs:
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
           APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
         run: python3 .github/scripts/appstore_release_status.py
+      - name: Check review replacement guards
+        if: ${{ !inputs.inspect_only && !inputs.update_release_mode_only && inputs.replaces_build_number != '' }}
+        run: python3 -m unittest discover -s .github/scripts -p test_appstore_review_replace.py
+      - name: Replace previous review submission
+        if: ${{ !inputs.inspect_only && !inputs.update_release_mode_only && inputs.replaces_build_number != '' }}
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+          RELEASE_VERSION: ${{ inputs.version }}
+          REPLACED_BUILD_NUMBER: ${{ inputs.replaces_build_number }}
+          RELEASE_BUILD_NUMBER: ${{ inputs.build_number }}
+        run: python3 .github/scripts/appstore_review_replace.py
       - name: Prepare App Store version
         if: ${{ !inputs.inspect_only }}
         env:

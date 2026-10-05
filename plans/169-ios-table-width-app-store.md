@@ -6,7 +6,7 @@ Upload the verified result-table width fix and submit its build to App Review.
 
 ## Status
 
-Uploading the replacement build, then replacing the earlier review submission.
+Submitting processed build 47 after verifying the replacement path.
 
 ## Contracts
 
@@ -26,3 +26,5 @@ Uploading the replacement build, then replacing the earlier review submission.
 
 - Root: user explicitly requested submission after the width fix passed native checks and screenshot review. Start from the verified width branch, with an isolated release checkout.
 - Root: read-only inspection run 37301313575 confirmed iOS 1.5 still WAITING_FOR_REVIEW, attached build 46 VALID, and automatic release AFTER_APPROVAL. Keep version 1.5 and upload its next build with the width fix and updated German/English notes.
+- Root: upload run 37301644213 succeeded on a2d846f, with iOS 1.5 build 47 processed VALID. App source is identical to the native-verified d25f15f; only release notes and tooling changed.
+- Release worker: exact version/build/review-item checks, a fresh pre-cancellation read, and a 600-second deadline protect replacement. Ten mocked tests pass, covering mismatch/race cases, pagination, HTTP errors, safe resume, and both documented terminal submission states. Only DEVELOPER_REJECTED on the exact earlier version/build permits resubmission.
