@@ -6,7 +6,7 @@ Make the shared vote and motion result table fill the available content width.
 
 ## Status
 
-Implementing the layout correction and native verification.
+Complete. Native width checks and screenshots verified.
 
 ## Contracts
 
@@ -31,3 +31,5 @@ Implementing the layout correction and native verification.
 - Results: native artifacts showed Grid children and hit-test frames extending beyond its reported scroll width. Replaced Grid with a focused native Layout that caches widest intrinsic cell per column, reports max(viewport proposal, intrinsic width), shares only surplus width, and places full-width row rules. Existing cell padding, fonts, backgrounds, counts and identifiers stay intact. A dedicated layout is necessary to make rendering, scroll extent and hit-testing agree without duplicate hidden views or per-cell state. Localization, More UI, settings parity, and new-source whitespace checks pass; native fit/overflow tests remain required.
 - Results: pass observed viewport directly as Layout.minimumWidth, removing the constraining frame wrapper. Non-finite maximum-size proposals use intrinsic/minimum width, keeping reported size finite. Native CI must confirm fits, trailing inset, full-width shading/rules and unknown-column hit-testing after scroll.
 - Root: native run 37295161683 rejected the initial Grid frame approach. German fit cases passed, English last cells extended 3.67pt past the viewport, and Handzeichen overflow had incorrect hit bounds. Keep the original width tolerances and verify the actual measured layout next.
+- Root: native run 37298415604 passed on d25f15f with Xcode 26.2 and iPhone 17 Pro. Build, data contracts, localization, launches, theme persistence, scroll-to-top, and all three result/motion test methods passed. German/light and English/dark screenshots confirm full-width total shading and row rules, retained trailing padding, and readable last columns, including unknown counts and unavailable absence. Reviewed vote and linked-motion results in both languages and both Handzeichen result states.
+- Root: the verified width fix is on fix/ios-result-table-width-2026-10-05. App Store 1.5 build 46 predates this change; this task did not upload or replace a submitted build.
