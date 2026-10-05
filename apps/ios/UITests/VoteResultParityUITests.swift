@@ -17,14 +17,18 @@ final class VoteResultParityUITests: XCTestCase {
             XCTAssertFalse(
                 session.app.descendants(matching: .any)["vote-result-cell-\(vote)-total-unknown"]
                     .exists)
+            session.scrollTo(
+                session.app.descendants(matching: .any)["vote-result-cell-\(vote)-fraktionslos-yes"])
+            XCTAssertTrue(
+                session.app.descendants(matching: .any)["vote-result-cell-\(vote)-total-yes"].isHittable)
             for pair in zip(
                 ["total", "cdu-csu", "afd", "spd", "gruene", "linke"],
                 ["cdu-csu", "afd", "spd", "gruene", "linke", "fraktionslos"])
             {
                 XCTAssertLessThan(
-                    session.app.descendants(matching: .any)["vote-result-row-\(vote)-\(pair.0)"]
+                    session.app.descendants(matching: .any)["vote-result-cell-\(vote)-\(pair.0)-yes"]
                         .frame.minY,
-                    session.app.descendants(matching: .any)["vote-result-row-\(vote)-\(pair.1)"]
+                    session.app.descendants(matching: .any)["vote-result-cell-\(vote)-\(pair.1)-yes"]
                         .frame.minY)
             }
             session.capture("\(language)-rollcall-results", test: self)
@@ -32,8 +36,11 @@ final class VoteResultParityUITests: XCTestCase {
                 session.app.buttons["vote-result-party-\(vote)-cdu-csu"])
             session.app.buttons["vote-result-party-\(vote)-cdu-csu"].tap()
             XCTAssertTrue(
-                session.app.staticTexts[language == "de" ? "Geschlossenheit" : "Cohesion"]
-                    .waitForExistence(timeout: 30))
+                session.app.staticTexts.matching(
+                    NSPredicate(
+                        format: "label ==[c] %@",
+                        language == "de" ? "Geschlossenheit" : "Cohesion"))
+                    .firstMatch.waitForExistence(timeout: 30))
             XCTAssertTrue(session.app.staticTexts["CDU/CSU"].exists)
             session.capture("\(language)-result-party-navigation", test: self)
             session.app.terminate()

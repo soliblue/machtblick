@@ -37,8 +37,6 @@ struct VoteResultTable: View {
                         }
                     }
                     .background(row.party == nil ? ThemeColor.surface : .clear)
-                    .accessibilityElement(children: .contain)
-                    .accessibilityIdentifier("vote-result-row-\(model.id)-\(row.party.map(PartyStyle.slug) ?? "total")")
                     Rectangle()
                         .fill(ThemeColor.border)
                         .frame(height: ThemeTokens.Stroke.s)

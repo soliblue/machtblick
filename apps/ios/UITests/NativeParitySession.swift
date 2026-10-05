@@ -37,6 +37,12 @@ struct NativeParitySession {
         XCTAssertTrue(element.isHittable)
     }
 
+    func motionTab(_ label: String) -> XCUIElement {
+        app.buttons.matching(
+            NSPredicate(format: "identifier == %@ AND label == %@", "motion-detail-tabs", label))
+            .firstMatch
+    }
+
     func assertCell(vote: String, row: String = "total", column: String, value: String) {
         XCTAssertTrue(
             app.descendants(matching: .any)["vote-result-cell-\(vote)-\(row)-\(column)"]

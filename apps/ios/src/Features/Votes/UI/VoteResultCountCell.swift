@@ -24,6 +24,7 @@ struct VoteResultCountCell: View {
         .padding(.leading, ThemeTokens.Spacing.xs)
         .padding(.trailing, isLastColumn ? ThemeTokens.Spacing.xl : ThemeTokens.Spacing.xs)
         .padding(.vertical, ThemeTokens.Spacing.l)
+        .frame(height: row.party == nil ? ThemeTokens.Display.poster + ThemeTokens.Spacing.l * 2 : nil)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(row.party.map(PartyStyle.label) ?? Copy.resultTotal), \(column.label)")
         .accessibilityValue(row.count(column).map { String($0) } ?? Copy.resultUnavailable)

@@ -25,5 +25,6 @@ struct VoteResultPartyCell: View {
         .padding(.leading, ThemeTokens.Spacing.m)
         .padding(.trailing, ThemeTokens.Spacing.s)
         .padding(.vertical, ThemeTokens.Spacing.l)
+        .frame(height: row.party == nil ? ThemeTokens.Display.poster + ThemeTokens.Spacing.l * 2 : nil)
     }
 }
