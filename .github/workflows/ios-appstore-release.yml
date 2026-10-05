@@ -26,6 +26,11 @@ on:
         required: false
         type: boolean
         default: false
+      inspect_only:
+        description: Read the App Store version and attached build without changes
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -38,7 +43,7 @@ jobs:
   submit:
     name: Submit for App Store review
     if: github.actor == github.repository_owner && github.triggering_actor == github.repository_owner
-    runs-on: macos-15
+    runs-on: ${{ inputs.inspect_only && 'ubuntu-latest' || 'macos-15' }}
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
@@ -47,13 +52,22 @@ jobs:
       - name: Check release version
         run: node apps/ios/scripts/check-release-version.mjs
       - name: Install fastlane
+        if: ${{ !inputs.inspect_only }}
         run: gem install fastlane --version 2.237.0 --no-document
       - name: Install App Store dependencies
         run: |
           python3 -m venv "$RUNNER_TEMP/asc-venv"
           "$RUNNER_TEMP/asc-venv/bin/python" -m pip install requests==2.34.2 cryptography==49.0.0
           echo "$RUNNER_TEMP/asc-venv/bin" >> "$GITHUB_PATH"
+      - name: Inspect App Store versions
+        if: ${{ inputs.inspect_only }}
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+        run: python3 .github/scripts/appstore_release_status.py
       - name: Prepare App Store version
+        if: ${{ !inputs.inspect_only }}
         env:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
@@ -61,7 +75,7 @@ jobs:
           RELEASE_VERSION: ${{ inputs.version }}
         run: python3 .github/scripts/asc_appstore.py
       - name: Submit build for review
-        if: ${{ !inputs.update_release_mode_only }}
+        if: ${{ !inputs.inspect_only && !inputs.update_release_mode_only }}
         env:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
@@ -74,7 +88,7 @@ jobs:
           cd fastlane
           fastlane ios release "version:$RELEASE_VERSION" "build_number:$RELEASE_BUILD_NUMBER_INPUT"
       - name: Verify submitted version
-        if: ${{ !inputs.update_release_mode_only }}
+        if: ${{ !inputs.inspect_only && !inputs.update_release_mode_only }}
         env:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
@@ -84,14 +98,14 @@ jobs:
           WHATS_NEW_EN: ${{ inputs.whats_new_en }}
         run: python3 .github/scripts/asc_appstore_verify.py
       - name: Summary
-        if: ${{ !inputs.update_release_mode_only }}
+        if: ${{ !inputs.inspect_only && !inputs.update_release_mode_only }}
         env:
           RELEASE_VERSION: ${{ inputs.version }}
         run: |
           echo "Submitted Machtblick $RELEASE_VERSION build $RELEASE_BUILD_NUMBER for App Store review." >> "$GITHUB_STEP_SUMMARY"
           echo "Release after approval is automatic." >> "$GITHUB_STEP_SUMMARY"
       - name: Release mode summary
-        if: ${{ inputs.update_release_mode_only }}
+        if: ${{ !inputs.inspect_only && inputs.update_release_mode_only }}
         env:
           RELEASE_VERSION: ${{ inputs.version }}
         run: echo "Machtblick $RELEASE_VERSION will release automatically after approval." >> "$GITHUB_STEP_SUMMARY"
