@@ -66,6 +66,26 @@ struct NativeParitySession {
         XCTAssertTrue(cell.isHittable)
     }
 
+    func assertResultTableWidth(vote: String, column: String) {
+        let viewport = app.scrollViews.matching(
+            NSPredicate(
+                format: "identifier == %@ OR identifier == %@",
+                "vote-results-\(vote)", "motion-linked-vote-\(vote)"))
+            .firstMatch
+        let total = app.descendants(matching: .any)["vote-result-cell-\(vote)-total-\(column)"]
+        let party = app.buttons["vote-result-party-\(vote)-cdu-csu"]
+        let result = app.descendants(matching: .any)["vote-result-cell-\(vote)-cdu-csu-\(column)"]
+        XCTAssertTrue(viewport.waitForExistence(timeout: 5))
+        XCTAssertTrue(total.isHittable)
+        XCTAssertGreaterThanOrEqual(total.frame.maxX, viewport.frame.maxX - 28)
+        XCTAssertLessThanOrEqual(total.frame.maxX, viewport.frame.maxX + 2)
+        XCTAssertGreaterThanOrEqual(result.frame.maxX, viewport.frame.maxX - 28)
+        XCTAssertLessThanOrEqual(result.frame.maxX, viewport.frame.maxX + 2)
+        XCTAssertGreaterThanOrEqual(
+            result.frame.maxX - party.frame.minX,
+            viewport.frame.width - 40)
+    }
+
     func capture(_ name: String, test: XCTestCase) {
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = name

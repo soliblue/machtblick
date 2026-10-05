@@ -2,6 +2,7 @@ import SwiftUI
 
 struct VoteResultTable: View {
     let model: VoteResultsModel
+    @State private var viewportWidth: CGFloat = 0
 
     var body: some View {
         ScrollView(.horizontal) {
@@ -9,12 +10,14 @@ struct VoteResultTable: View {
                 GridRow {
                     Text(Copy.resultParty)
                         .foregroundStyle(ThemeColor.secondary)
+                        .fixedSize(horizontal: true, vertical: false)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading, ThemeTokens.Spacing.m)
                         .padding(.trailing, ThemeTokens.Spacing.s)
                     ForEach(model.columns) { column in
                         Text(column.shortLabel)
                             .foregroundStyle(column.color)
+                            .fixedSize(horizontal: true, vertical: false)
                             .padding(.leading, ThemeTokens.Spacing.xs)
                             .padding(.trailing, column == model.columns.last ? ThemeTokens.Spacing.xl : ThemeTokens.Spacing.xs)
                             .accessibilityLabel(column.label)
@@ -44,8 +47,10 @@ struct VoteResultTable: View {
                         .accessibilityHidden(true)
                 }
             }
+            .frame(minWidth: viewportWidth, idealWidth: viewportWidth, alignment: .leading)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { viewportWidth = $0 }
         .accessibilityElement(children: .contain)
         .accessibilityLabel(Copy.resultSection)
         .accessibilityIdentifier("vote-results-\(model.id)")

@@ -16,6 +16,7 @@ final class MotionParityUITests: XCTestCase {
             session.assertCell(vote: vote, column: "absent", value: "34")
             session.assertCell(vote: vote, row: "cdu-csu", column: "yes", value: "206")
             session.revealResultColumn(vote: vote, column: "absent")
+            session.assertResultTableWidth(vote: vote, column: "absent")
             session.capture("\(language)-motion-results", test: self)
 
             session.scrollToTop(session.motionTab("Details"))

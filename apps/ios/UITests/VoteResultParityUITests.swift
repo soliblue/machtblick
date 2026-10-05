@@ -31,6 +31,7 @@ final class VoteResultParityUITests: XCTestCase {
                     session.app.descendants(matching: .any)["vote-result-cell-\(vote)-\(pair.1)-yes"]
                         .frame.minY)
             }
+            session.assertResultTableWidth(vote: vote, column: "absent")
             session.capture("\(language)-rollcall-results", test: self)
             session.scrollTo(
                 session.app.buttons["vote-result-party-\(vote)-cdu-csu"])
@@ -68,6 +69,7 @@ final class VoteResultParityUITests: XCTestCase {
                 value: language == "de" ? "Nicht erfasst" : "Not recorded")
             session.capture("\(language)-handzeichen-results", test: self)
             session.revealResultColumn(vote: vote, column: "unknown")
+            session.assertResultTableWidth(vote: vote, column: "unknown")
             session.capture("\(language)-handzeichen-unknown-seats", test: self)
             session.app.terminate()
         }
