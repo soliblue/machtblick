@@ -18,7 +18,6 @@ def headers():
     payload = {
         "iss": os.environ["APP_STORE_CONNECT_API_ISSUER_ID"],
         "aud": "appstoreconnect-v1",
-        "sub": key_id,
         "iat": now,
         "exp": now + 1200,
     }

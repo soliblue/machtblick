@@ -6,7 +6,7 @@ Apply the recent web vote-result table and debate-surface improvements to iOS, v
 
 ## Status
 
-Implementation and native verification complete. Uploading version 1.5 for App Store submission.
+Implementation and native verification complete. Repairing release authentication before uploading version 1.5 for App Store submission.
 
 ## Contracts
 
@@ -49,3 +49,4 @@ Implementation and native verification complete. Uploading version 1.5 for App S
 - Root: CI 37278961486 passed every native gate, including bilingual table counts, missing-data scrolling, party navigation, and motion tab interactions. Reviewed exported light/dark result, motion, debate, and party screenshots. App Store upload 37281022916 uses the verified cad7bc0 source.
 - Root: upload 37281022916 stopped before archiving because pip could not replace Homebrew's cryptography package. Isolated both release workflows in a Python virtual environment and limited certificate cleanup to runs with a successful snapshot. Native source remains unchanged.
 - Root: retry 37281442973 reached Apple but certificate listing returned 403. Prepare-only run 37281736322 also received 403 on app lookup. Added Apple's structured error detail to app-lookup failures to diagnose account access before further upload attempts.
+- Explore release: issuer-backed team JWTs should omit sub; the shared helper incorrectly sets sub to the key id. Remove that claim and verify ES256 with a generated test key before retrying Apple access. Existing signing secrets support manual signing if provisioning permissions remain unavailable.
