@@ -6,7 +6,7 @@ Apply the recent web vote-result table and debate-surface improvements to iOS, v
 
 ## Status
 
-Implementation and native verification complete. Repairing release authentication before uploading version 1.5 for App Store submission.
+Implementation and native verification complete. Apple blocks upload and submission until the operator accepts a pending account agreement.
 
 ## Contracts
 
@@ -23,6 +23,7 @@ Implementation and native verification complete. Repairing release authenticatio
 ## Open questions
 
 - Select the exact processed release build after native verification.
+- Operator must review and accept the pending agreement in App Store Connect Business.
 
 ## Ownership
 
@@ -50,3 +51,4 @@ Implementation and native verification complete. Repairing release authenticatio
 - Root: upload 37281022916 stopped before archiving because pip could not replace Homebrew's cryptography package. Isolated both release workflows in a Python virtual environment and limited certificate cleanup to runs with a successful snapshot. Native source remains unchanged.
 - Root: retry 37281442973 reached Apple but certificate listing returned 403. Prepare-only run 37281736322 also received 403 on app lookup. Added Apple's structured error detail to app-lookup failures to diagnose account access before further upload attempts.
 - Explore release: issuer-backed team JWTs should omit sub; the shared helper incorrectly sets sub to the key id. Remove that claim and verify ES256 with a generated test key before retrying Apple access. Existing signing secrets support manual signing if provisioning permissions remain unavailable.
+- Root: verified corrected team claims and ES256 signature with a generated key. Run 37282036616 returned FORBIDDEN.REQUIRED_AGREEMENTS_MISSING_OR_EXPIRED, stating that an in-effect agreement is unsigned or expired. Asked the operator to review App Store Connect Business. No binary was uploaded or submitted; finish upload and review submission after the agreement is accepted.
