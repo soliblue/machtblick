@@ -12,6 +12,7 @@ def all_data(url, params=None):
     data = []
     while url:
         response = SESSION.get(url, headers=headers(), params=params, timeout=30)
+        assert response.ok, response.json().get("errors", [])
         response.raise_for_status()
         body = response.json()
         data.extend(body.get("data", []))
