@@ -60,7 +60,7 @@ Use shared tokens before adding one-off values. Exceptions belong inside shared 
 
 - Primary editorial cards use `background` without elevation shadows. Borders and radius follow the surface; overlays, floating controls, and selected tab controls may use shadow
 - Vote outcomes use semantic colors: Ja `success`, Nein `danger`, Enthaltung `yellow`, and theme-adaptive neutrals for absence
-- Web detail results use a plain table with totals first, then one row per party and columns for yes, no, abstention, and absence. Unknown counts remain distinct from zero. Other result surfaces use the hemicycle with one dot per seat and absences visible
+- Detail results use a plain table with totals first, then one row per party and columns for yes, no, abstention, and absence. Unknown counts remain distinct from zero. Other result surfaces use the hemicycle with one dot per seat and absences visible
 - Vote-feed summaries render generated markdown as Lora prose with a fitted line clamp, and the full card is the link. On web, one responsive component serves all breakpoints
 - Meta and captions use `text-s`, uppercase, 0.08em letter spacing, and `opacity-l`
 - Primary feeds have no visible masthead or page title

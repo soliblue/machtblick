@@ -6,13 +6,15 @@ struct VoteHemicycleView: View {
     let yes: Int
     let no: Int
     let abstain: Int
-    let absent: Int
+    let absent: Int?
     let total: Int
     var hero = false
     var selected: VoteChoice?
     var onSelect: ((VoteChoice) -> Void)?
 
     private static let radii = (0..<11).map { 54.0 + Double($0) * (145.0 - 54.0) / 10.0 }
+
+    private var unknown: Int { max(0, total - yes - no - abstain - (absent ?? 0)) }
 
     var body: some View {
         VStack(spacing: ThemeTokens.Spacing.m) {
@@ -39,8 +41,11 @@ struct VoteHemicycleView: View {
                     if abstain > 0 {
                         legendLine("\(abstain) \(Copy.abstain)", choice: .abstain)
                     }
-                    if absent > 0 {
+                    if let absent, absent > 0 {
                         legendLine("\(absent) \(Copy.absent)", choice: .absent)
+                    }
+                    if unknown > 0 {
+                        legendLine("\(unknown) \(Copy.resultNoData)", choice: .absent)
                     }
                 }
                 Spacer()
@@ -84,10 +89,9 @@ struct VoteHemicycleView: View {
     }
 
     private func seatChoice(at index: Int) -> VoteChoice {
-        let noData = max(0, total - yes - no - abstain - absent)
         if index < yes { return .yes }
         if index < yes + abstain { return .abstain }
-        if index < yes + abstain + absent + noData { return .absent }
+        if index < yes + abstain + (absent ?? 0) + unknown { return .absent }
         return .no
     }
 

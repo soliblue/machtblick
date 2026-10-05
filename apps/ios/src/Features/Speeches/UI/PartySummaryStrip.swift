@@ -13,6 +13,13 @@ struct PartySummaryStrip: View {
                         ForEach(summaries) { summary in
                             PartySummaryBubble(summary: summary, speakers: speakers(for: summary.party))
                                 .frame(width: 300, alignment: .topLeading)
+                                .overlay(alignment: .trailing) {
+                                    if summary.id != summaries.last?.id {
+                                        Rectangle()
+                                            .fill(ThemeColor.border)
+                                            .frame(width: ThemeTokens.Stroke.s)
+                                    }
+                                }
                         }
                     }
                 }

@@ -24,7 +24,7 @@ struct VoteDetailPayload: Decodable {
         let yes: Int
         let no: Int
         let abstain: Int
-        let absent: Int
+        let absent: Int?
         let sourceUrl: String
         let contextJson: String?
         let procedureJson: String?

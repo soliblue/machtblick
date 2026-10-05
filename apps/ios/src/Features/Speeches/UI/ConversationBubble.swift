@@ -29,7 +29,15 @@ struct ConversationBubble: View {
         }
         .padding(ThemeTokens.Spacing.m)
         .frame(maxWidth: maxWidth, alignment: trailing ? .trailing : .leading)
-        .background(PartySurface(party: speech.party, highlight: highlight))
+        .overlay {
+            if highlight {
+                RoundedRectangle(cornerRadius: ThemeTokens.Radius.m)
+                    .strokeBorder(
+                        speech.party.map { PartyStyle.color($0).opacity(ThemeTokens.Opacity.l) }
+                            ?? ThemeColor.fg.opacity(ThemeTokens.Opacity.m),
+                        lineWidth: ThemeTokens.Stroke.l)
+            }
+        }
         .frame(maxWidth: .infinity, alignment: trailing ? .trailing : .leading)
     }
 

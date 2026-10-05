@@ -58,16 +58,17 @@ platform :ios do
     upload_to_testflight(
       api_key: api_key,
       skip_waiting_for_build_processing: false,
-      distribute_external: true,
-      groups: [ENV.fetch("TESTFLIGHT_PUBLIC_GROUP")],
-      notify_external_testers: true,
-      changelog: "Neu: Ein Tipp auf das Machtblick-Logo springt zum Seitenanfang.",
+      skip_submission: ENV["APP_STORE_ONLY"] == "true",
+      distribute_external: ENV["APP_STORE_ONLY"] != "true",
+      groups: ENV["APP_STORE_ONLY"] == "true" ? [] : [ENV.fetch("TESTFLIGHT_PUBLIC_GROUP")],
+      notify_external_testers: ENV["APP_STORE_ONLY"] != "true",
+      changelog: File.read(File.expand_path("metadata/de-DE/release_notes.txt", __dir__)),
       localized_build_info: {
         "de-DE": {
-          whats_new: "Ein Tipp auf das Machtblick-Logo springt jetzt zum Seitenanfang."
+          whats_new: File.read(File.expand_path("metadata/de-DE/release_notes.txt", __dir__))
         },
         "en-US": {
-          whats_new: "Tap the Machtblick logo to jump back to the top."
+          whats_new: File.read(File.expand_path("metadata/en-US/release_notes.txt", __dir__))
         }
       }
     )

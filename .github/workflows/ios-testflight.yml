@@ -3,6 +3,11 @@ name: Deploy iOS to TestFlight
 on:
   workflow_dispatch:
     inputs:
+      app_store_only:
+        description: Upload and verify a processed build for App Store submission
+        required: false
+        type: boolean
+        default: false
       verify_build_number:
         description: Existing build number to verify without uploading
         required: false
@@ -124,6 +129,7 @@ jobs:
         run: pip3 install --break-system-packages requests==2.34.2 cryptography==49.0.0
 
       - name: Resolve public TestFlight group
+        if: ${{ !inputs.app_store_only }}
         env:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
@@ -156,7 +162,7 @@ jobs:
           PY
 
       - name: Activate external testing
-        if: ${{ inputs.verify_build_number != '' && inputs.activate_external_testing }}
+        if: ${{ inputs.verify_build_number != '' && inputs.activate_external_testing && !inputs.app_store_only }}
         env:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
@@ -166,6 +172,7 @@ jobs:
       - name: Build and upload to TestFlight
         if: ${{ inputs.verify_build_number == '' }}
         env:
+          APP_STORE_ONLY: ${{ inputs.app_store_only }}
           DISTRIBUTION_CERTIFICATE_PASSWORD: ${{ secrets.DISTRIBUTION_CERTIFICATE_PASSWORD }}
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
@@ -175,6 +182,7 @@ jobs:
           fastlane ios beta_local
 
       - name: Verify public TestFlight link
+        if: ${{ !inputs.app_store_only }}
         run: |
           python3 - <<'PY'
           import urllib.request
@@ -187,11 +195,20 @@ jobs:
           PY
 
       - name: Verify uploaded public build
+        if: ${{ !inputs.app_store_only }}
         env:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
           APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
         run: python3 .github/scripts/asc_testflight.py verify
+
+      - name: Verify App Store build
+        if: ${{ inputs.app_store_only }}
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+        run: python3 .github/scripts/asc_build.py
 
       - name: Revoke dev cert created by this run
         if: ${{ always() && inputs.verify_build_number == '' }}

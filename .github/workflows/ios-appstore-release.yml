@@ -70,6 +70,16 @@ jobs:
         run: |
           cd fastlane
           fastlane ios release "version:$RELEASE_VERSION" "build_number:$RELEASE_BUILD_NUMBER_INPUT"
+      - name: Verify submitted version
+        if: ${{ !inputs.update_release_mode_only }}
+        env:
+          APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}
+          APP_STORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APP_STORE_CONNECT_API_KEY_CONTENT }}
+          RELEASE_VERSION: ${{ inputs.version }}
+          WHATS_NEW_DE: ${{ inputs.whats_new_de }}
+          WHATS_NEW_EN: ${{ inputs.whats_new_en }}
+        run: python3 .github/scripts/asc_appstore_verify.py
       - name: Summary
         if: ${{ !inputs.update_release_mode_only }}
         env:

@@ -12,7 +12,7 @@ struct MachtblickApp: App {
     init() {
         let screenshot = AppStoreScreenshotScenario.current
         let language = screenshot == nil ? AppLanguage.persisted : AppStoreScreenshotScenario.appLanguage
-        let theme = screenshot == nil ? AppTheme.persisted : .light
+        let theme = screenshot == nil ? AppTheme.persisted : AppStoreScreenshotScenario.appTheme
         if screenshot != nil {
             AppLanguage.persisted = language
             AppTheme.persisted = theme

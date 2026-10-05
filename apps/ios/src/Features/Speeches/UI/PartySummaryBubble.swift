@@ -21,11 +21,6 @@ struct PartySummaryBubble: View {
         }
         .padding(ThemeTokens.Spacing.m)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        .background(
-            PartySurface(
-                party: PartyStyle.hasPartyLine(summary.party) ? summary.party : nil
-            )
-        )
     }
 
     @ViewBuilder private var logo: some View {

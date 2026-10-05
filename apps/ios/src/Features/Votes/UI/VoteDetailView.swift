@@ -12,7 +12,6 @@ struct VoteDetailView: View {
     @Environment(VoteFlagsStore.self) private var flags
     @State private var store = VoteDetailStore()
     @State private var tab: VoteTab
-    @State private var selected: VoteChoice?
 
     init(id: String, cache: ApiCache) {
         self.id = id
@@ -60,7 +59,6 @@ struct VoteDetailView: View {
         .background(ThemeColor.background)
         .navigationBarTitleDisplayMode(.inline)
         .sensoryFeedback(.selection, trigger: tab)
-        .sensoryFeedback(.selection, trigger: selected)
         .sensoryFeedback(.selection, trigger: flags.isSaved(id))
         .sensoryFeedback(.selection, trigger: flags.isSeen(id))
         .task { await store.load(id: id, cache: cache) }
@@ -140,15 +138,7 @@ struct VoteDetailView: View {
                     .padding(ThemeTokens.Spacing.m)
                     .background(ThemeColor.surface, in: RoundedRectangle(cornerRadius: ThemeTokens.Radius.m))
             }
-            VoteHemicycleView(
-                yes: detail.vote.yes, no: detail.vote.no, abstain: detail.vote.abstain,
-                absent: detail.vote.absent, total: max(detail.vote.totalMembers, 1), hero: true,
-                selected: selected,
-                onSelect: { choice in selected = selected == choice ? nil : choice }
-            )
-            .frame(maxWidth: 440)
-            .frame(maxWidth: .infinity)
-            VoteDonutGrid(summaries: detail.partySummaries.map(\.counts), selected: selected)
+            VoteResultTable(model: VoteResultsModel(detail: detail))
             DefectorsSection(defectors: detail.defectors)
         }
     }

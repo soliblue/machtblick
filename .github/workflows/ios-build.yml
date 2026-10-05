@@ -86,9 +86,43 @@ jobs:
           node apps/ios/scripts/check-release-version.mjs
           python3 -m py_compile \
             .github/scripts/asc_api.py \
+            .github/scripts/asc_build.py \
             .github/scripts/asc_certs.py \
-            .github/scripts/asc_testflight.py
+            .github/scripts/asc_testflight.py \
+            .github/scripts/asc_appstore.py \
+            .github/scripts/asc_appstore_verify.py
           ruby -c fastlane/Fastfile
+
+      - name: Check vote result and motion data compatibility
+        run: |
+          mkdir -p "$RUNNER_TEMP/machtblick-parity-fixtures"
+          curl --fail --location --silent --show-error --retry 2 \
+            https://machtblick.de/api/votes.json \
+            --output "$RUNNER_TEMP/machtblick-parity-fixtures/votes.json"
+          curl --fail --location --silent --show-error --retry 2 \
+            https://machtblick.de/votes/2025-12-05-984-gesetzentwurf-zur-modernisierung-des-wehrdienstes.json \
+            --output "$RUNNER_TEMP/machtblick-parity-fixtures/rollcall.json"
+          curl --fail --location --silent --show-error --retry 2 \
+            https://machtblick.de/votes/pp21-81-1-modernisierung-der-okodesign-und-energieverbrauchskennzeichnungsregeln.json \
+            --output "$RUNNER_TEMP/machtblick-parity-fixtures/handzeichen.json"
+          curl --fail --location --silent --show-error --retry 2 \
+            https://machtblick.de/motions/325558.json \
+            --output "$RUNNER_TEMP/machtblick-parity-fixtures/motion.json"
+          xcrun swiftc \
+            apps/ios/src/Features/Votes/Logic/BallotChoice.swift \
+            apps/ios/src/Features/Votes/Logic/PartyPosition.swift \
+            apps/ios/src/Features/Votes/Logic/PartyVoteSummary.swift \
+            apps/ios/src/Features/Votes/Logic/VoteChoice.swift \
+            apps/ios/src/Features/Votes/Logic/VoteDetailPayload.swift \
+            apps/ios/src/Features/Votes/Logic/VoteListItem.swift \
+            apps/ios/src/Features/Votes/Logic/VoteResult.swift \
+            apps/ios/src/Features/Votes/Logic/VoteResultColumn.swift \
+            apps/ios/src/Features/Votes/Logic/VoteResultRow.swift \
+            apps/ios/src/Features/Votes/Logic/VoteResultsModel.swift \
+            apps/ios/src/Features/Motions/Logic/MotionDetailPayload.swift \
+            apps/ios/scripts/VoteResultContractCheck.swift \
+            -o "$RUNNER_TEMP/machtblick-vote-result-contract"
+          "$RUNNER_TEMP/machtblick-vote-result-contract" "$RUNNER_TEMP/machtblick-parity-fixtures"
 
       - name: Build without signing
         run: |
@@ -167,6 +201,46 @@ jobs:
             -only-testing:MachtblickUITests/ScrollToTopUITests/testBrandScrollsVotesToTop \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO
+
+      - name: Exercise native result and motion parity
+        timeout-minutes: 10
+        run: |
+          xcodebuild test \
+            -project apps/ios/iOS.xcodeproj \
+            -scheme Machtblick \
+            -destination "platform=iOS Simulator,id=$SMOKE_UDID" \
+            -derivedDataPath "$RUNNER_TEMP/machtblick-build" \
+            -resultBundlePath "$RUNNER_TEMP/machtblick-parity-tests.xcresult" \
+            -only-testing:MachtblickUITests/VoteResultParityUITests \
+            -only-testing:MachtblickUITests/MotionParityUITests \
+            -parallel-testing-enabled NO \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO
+
+      - name: Export native parity screenshots
+        if: always()
+        run: |
+          if [ -d "$RUNNER_TEMP/machtblick-parity-tests.xcresult" ]; then
+            xcrun xcresulttool export attachments \
+              --path "$RUNNER_TEMP/machtblick-parity-tests.xcresult" \
+              --output-path "$RUNNER_TEMP/machtblick-parity-screenshots"
+          fi
+
+      - name: Upload native parity screenshots
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: native-parity-screenshots
+          path: ${{ runner.temp }}/machtblick-parity-screenshots
+          if-no-files-found: ignore
+
+      - name: Upload native parity result
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: native-parity-xcresult
+          path: ${{ runner.temp }}/machtblick-parity-tests.xcresult
+          if-no-files-found: ignore
 
       - name: Upload smoke screenshots
         if: always()

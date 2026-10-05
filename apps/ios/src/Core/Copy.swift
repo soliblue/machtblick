@@ -30,10 +30,18 @@ enum Copy {
     static var unknown: String { localized("copy.unknown") }
     static var government: String { localized("copy.government") }
     static var resultSection: String { localized("copy.resultSection") }
-    static var debateSection: String { localized("copy.debateSection") }
     static var defectorsSection: String { localized("copy.defectorsSection") }
     static var motionPdf: String { localized("copy.motionPdf") }
     static var majority: String { localized("copy.majority") }
+    static var resultParty: String { localized("copy.resultParty") }
+    static var resultTotal: String { localized("copy.resultTotal") }
+    static var resultAbstention: String { localized("copy.resultAbstention") }
+    static var resultAbstentionShort: String { localized("copy.resultAbstentionShort") }
+    static var resultAbsence: String { localized("copy.resultAbsence") }
+    static var resultAbsenceShort: String { localized("copy.resultAbsenceShort") }
+    static var resultNoData: String { localized("copy.resultNoData") }
+    static var resultUnavailable: String { localized("copy.resultUnavailable") }
+    static var resultUnavailableShort: String { localized("copy.resultUnavailableShort") }
 
     static var searchMembers: String { localized("copy.searchMembers") }
     static var attendance: String { localized("copy.attendance") }
@@ -166,11 +174,11 @@ enum Copy {
     static var stageEnacted: String { localized("copy.stageEnacted") }
     static var laenderMotion: String { localized("copy.laenderMotion") }
     static var broughtBy: String { localized("copy.broughtBy") }
-    static var proposalSummary: String { localized("copy.proposalSummary") }
     static var officialTitleMotion: String { localized("copy.officialTitleMotion") }
     static var stampUeberwiesen: String { localized("copy.stampUeberwiesen") }
     static var stampBeschlussempfehlung: String { localized("copy.stampBeschlussempfehlung") }
     static var stampNichtBeraten: String { localized("copy.stampNichtBeraten") }
+    static var stampImVerfahren: String { localized("copy.stampImVerfahren") }
 
     static func languageSelectionName(_ language: AppLanguage) -> String {
         switch language {

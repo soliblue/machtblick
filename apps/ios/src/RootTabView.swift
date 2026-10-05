@@ -28,6 +28,9 @@ struct RootTabView: View {
         case .vote(let id):
             _tab = State(initialValue: .votes)
             _votesPath = State(initialValue: [.vote(id)])
+        case .motion(let id):
+            _tab = State(initialValue: .votes)
+            _votesPath = State(initialValue: [.motion(id)])
         case .member(let id):
             _tab = State(initialValue: .members)
             _membersPath = State(initialValue: [.member(id)])

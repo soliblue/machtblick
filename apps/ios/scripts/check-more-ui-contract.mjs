@@ -92,7 +92,7 @@ requireFragments(pickerRow, "MorePickerRow.swift", [
 ])
 requireFragments(app, "MachtblickApp.swift", [
   "@State private var appTheme: AppTheme",
-  "let theme = screenshot == nil ? AppTheme.persisted : .light",
+  "let theme = screenshot == nil ? AppTheme.persisted : AppStoreScreenshotScenario.appTheme",
   "_appTheme = State(initialValue: theme)",
   "appTheme: $appTheme",
   ".preferredColorScheme(appTheme.colorScheme)",
@@ -142,12 +142,14 @@ requireFragments(voteHemicycle, "VoteHemicycleView.swift", [
   "colorScheme == .dark ? ThemeTokens.Opacity.l : ThemeTokens.Opacity.m",
   "colorScheme == .dark ? ThemeTokens.Opacity.m : ThemeTokens.Opacity.s",
 ])
+requireFragments(chatInboxRow, "ChatInboxRow.swift", ["PartySurface("])
 for (const [source, path] of [
   [conversationBubble, "ConversationBubble.swift"],
   [partySummaryBubble, "PartySummaryBubble.swift"],
-  [chatInboxRow, "ChatInboxRow.swift"],
 ]) {
-  requireFragments(source, path, ["PartySurface("])
+  if (source.includes("PartySurface(")) {
+    failures.push(`${path} must keep its editorial surface transparent.`)
+  }
 }
 for (const [fragment, label] of [
   ["group.date", "date"],

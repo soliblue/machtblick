@@ -1,0 +1,45 @@
+# iOS web parity and App Store release
+
+## Goal
+
+Apply the recent web vote-result table and debate-surface improvements to iOS, verify native behavior, and submit a new App Store version.
+
+## Status
+
+Implementation complete. Local contracts and syntax checks pass. Preparing macOS build and simulator verification.
+
+## Contracts
+
+- Share the native results table between vote detail and linked motion results. Totals precede parties; unknown counts remain distinct from zero.
+- Table columns are party, yes, no, abstention, absence, plus no-data when seats are unaccounted for. Sort all parties by membership. Non-roll-call absence is unavailable. Use semantic result colors, shared typography, localized labels, and working party links.
+- Port applicable debate and summary styling using shared iOS tokens and adaptive themes.
+- Summary carousel cards are transparent with trailing fg/15 separators except the last. Speech cards are transparent and retain member highlights.
+- Bring motion detail to the existing web Result, Details, and Speeches tabs with a compact proposer and status header.
+- Native motion JSON lacks party results and debate. Load existing full-vote JSON in MotionDetailStore rather than requiring a web data deploy.
+- Preserve the existing dirty web, ETL, database, and version work. Stage only this task's files if the release path requires a commit.
+- Run native build, contract, and simulator checks before uploading. Submit the new processed build for App Review and verify its final state.
+- Keep automatic release after approval, as established by the previous release.
+
+## Open questions
+
+- Select the exact processed release build after native verification.
+
+## Ownership
+
+- Results worker: vote models, results models and table UI, VoteDetailView, MotionLinkedVoteCard, table localization. Shared card interface: MotionLinkedVoteCard(vote:detail:) with detail defaulting to nil.
+- Surfaces worker: MotionDetailStore, MotionDetailView and its tab/header components, speech and summary surfaces. The store exposes linkedVoteDetails keyed by vote id for the linked card.
+- Tester: native result/data contracts, targeted simulator tests, test scenarios, and iOS build workflow verification/artifacts.
+- Root: integration, version and release notes, isolated release branch, GitHub build/upload/submission, final state verification.
+
+## Log
+
+- Root: found the September web result-table and plain-debate changes. Initial status showed a native version-config edit that subsequently cleared; current version remains 1.4.
+- Explore web: identified null Handzeichen absence decoding, total-only linked-motion JSON, old native charts, party-tinted debate surfaces, and the July motion-tab parity gap.
+- Explore release: confirmed authenticated GitHub owner access and macOS CI. Apple lists released version 1.4. Use version 1.5 and an isolated branch from origin/main to avoid publishing the unrelated local ETL commits.
+- Tester: added real-data Swift result and motion contracts, native table/navigation/tab tests in German/light and English/dark, horizontal no-data-column interaction, and CI screenshot exports. Confirmed both production locales use Wehrdienst totals 323/272/1/34 and Handzeichen totals 328/299/0 with absence unavailable and three unknown seats. YAML, localization, More UI, release-version, Python syntax, and whitespace checks pass locally; native compile and simulator execution await macOS CI.
+- Root: selected 1.5, updated German/English release notes, and added an App Store upload mode that verifies processing independently of external beta review. Added read-only checks for the attached submitted build, review state, automatic release, and saved localized notes.
+- Root: reviewed shared table, optional absence/chamber totals, linked-vote cache enrichment, motion panels, debate surfaces, and targeted tests. Passed 182 bilingual localization keys, 232 settings fields, native More/release contracts, workflow YAML, Python syntax, and whitespace checks.
+
+- Results: added shared native result model/table for vote detail and linked motion cards, with total-first membership order, optional no-data, distinct zero/unavailable values, accessible party links, and Fraunces totals. Full/list absence now accepts null; feeds decode emitted totalMembers and label unaccounted seats separately. Moved unchanged party order enum for UI-free decoder tests. Localization (183 entries), settings parity, and whitespace checks pass; native compilation/rendering remains the CI gate.
+- Results: removed unused VoteDonutGrid and its count helper; kept feed/member donut components. Removed two stale section labels after surface integration. All Node gates now pass: 181 bilingual catalog keys, native More contract, 232 settings fields.
+- Surfaces: implemented native motion Result/Details/Speeches tabs, compact logo/status/date header, preserved signatories, summaries, timeline and PDF/DIP sources. MotionDetailStore caches full linked-vote payloads; MotionDebateAdapter merges and deduplicates linked debates and summaries. Removed summary/speech party tints and retained highlight borders; carousel separators use shared adaptive fg/15. Local diff check passes; macOS build and simulator verification remain with tester/root.

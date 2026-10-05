@@ -3,6 +3,7 @@ import Foundation
 enum AppStoreScreenshotDestination {
     case votes
     case vote(String)
+    case motion(Int)
     case member(String)
     case parties
 }
@@ -13,6 +14,9 @@ enum AppStoreScreenshotScenario: String {
     case memberDebate
     case memberVotes
     case partyComparison
+    case rollCallResults
+    case handzeichenResults
+    case linkedMotion
 
     static var current: AppStoreScreenshotScenario? {
 #if DEBUG
@@ -36,6 +40,17 @@ enum AppStoreScreenshotScenario: String {
 #endif
     }
 
+    static var appTheme: AppTheme {
+#if DEBUG
+        let arguments = ProcessInfo.processInfo.arguments
+        return arguments.firstIndex(of: "-AppStoreScreenshotTheme").flatMap { index in
+            arguments.indices.contains(index + 1) ? AppTheme(rawValue: arguments[index + 1]) : nil
+        } ?? .light
+#else
+        .light
+#endif
+    }
+
     var destination: AppStoreScreenshotDestination {
         switch self {
         case .currentDecision:
@@ -48,6 +63,12 @@ enum AppStoreScreenshotScenario: String {
             return .member("ruffer-corinna")
         case .partyComparison:
             return .parties
+        case .rollCallResults:
+            return .vote("2025-12-05-984-gesetzentwurf-zur-modernisierung-des-wehrdienstes")
+        case .handzeichenResults:
+            return .vote("pp21-81-1-modernisierung-der-okodesign-und-energieverbrauchskennzeichnungsregeln")
+        case .linkedMotion:
+            return .motion(325558)
         }
     }
 

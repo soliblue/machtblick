@@ -18,21 +18,4 @@ struct PartyVoteSummary: Decodable, Identifiable {
     var jaShare: Double {
         Double(yes - no) / Double(max(yes + no + abstain, 1))
     }
-
-    func count(_ choice: VoteChoice) -> Int {
-        switch choice {
-        case .yes: return yes
-        case .no: return no
-        case .abstain: return abstain
-        case .absent: return absent
-        }
-    }
-}
-
-enum PartyVoteOrder {
-    static func byJaShare(_ summaries: [PartyVoteSummary]) -> [PartyVoteSummary] {
-        summaries
-            .filter { PartyStyle.hasPartyLine($0.party) }
-            .sorted { $0.jaShare > $1.jaShare }
-    }
 }
