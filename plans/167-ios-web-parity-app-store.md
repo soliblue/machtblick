@@ -6,7 +6,7 @@ Apply the recent web vote-result table and debate-surface improvements to iOS, v
 
 ## Status
 
-Implementation and native verification complete. Apple blocks upload and submission until the operator accepts a pending account agreement.
+Complete. Machtblick 1.5 build 46 is submitted and WAITING_FOR_REVIEW. Release after approval is automatic.
 
 ## Contracts
 
@@ -22,8 +22,7 @@ Implementation and native verification complete. Apple blocks upload and submiss
 
 ## Open questions
 
-- Select the exact processed release build after native verification.
-- Operator must review and accept the pending agreement in App Store Connect Business.
+- None.
 
 ## Ownership
 
@@ -52,3 +51,7 @@ Implementation and native verification complete. Apple blocks upload and submiss
 - Root: retry 37281442973 reached Apple but certificate listing returned 403. Prepare-only run 37281736322 also received 403 on app lookup. Added Apple's structured error detail to app-lookup failures to diagnose account access before further upload attempts.
 - Explore release: issuer-backed team JWTs should omit sub; the shared helper incorrectly sets sub to the key id. Remove that claim and verify ES256 with a generated test key before retrying Apple access. Existing signing secrets support manual signing if provisioning permissions remain unavailable.
 - Root: verified corrected team claims and ES256 signature with a generated key. Run 37282036616 returned FORBIDDEN.REQUIRED_AGREEMENTS_MISSING_OR_EXPIRED, stating that an in-effect agreement is unsigned or expired. Asked the operator to review App Store Connect Business. No binary was uploaded or submitted; finish upload and review submission after the agreement is accepted.
+- Root: operator confirmed the agreement is accepted. Resume the verified release without changing native source.
+- Root: Apple initially continued returning the agreement error. Prepare-only run 37288851109 then succeeded, confirming account access and version 1.5 with automatic release. Retry the binary upload, then submit its exact processed build.
+- Root: upload 37289035258 archived, signed, and uploaded version 1.5 build 46 from 8a455a3. Apple processing completed and asc_build.py confirmed VALID. Submit the exact build with the reviewed German and English notes.
+- Root: submission 37289911510 succeeded. asc_appstore_verify.py confirmed version 1.5, attached VALID build 46, WAITING_FOR_REVIEW, AFTER_APPROVAL, and both reviewed localized notes. Native checks 37278961486 and upload checks 37289035258 passed; native source is unchanged from the tested cad7bc0 commit.
