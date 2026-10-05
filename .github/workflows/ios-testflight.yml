@@ -126,7 +126,10 @@ jobs:
           echo "PROVISIONING_PROFILE_PATH=$PROFILE_PATH" >> "$GITHUB_ENV"
 
       - name: Install cert-cleanup dependencies
-        run: pip3 install --break-system-packages requests==2.34.2 cryptography==49.0.0
+        run: |
+          python3 -m venv "$RUNNER_TEMP/asc-venv"
+          "$RUNNER_TEMP/asc-venv/bin/python" -m pip install requests==2.34.2 cryptography==49.0.0
+          echo "$RUNNER_TEMP/asc-venv/bin" >> "$GITHUB_PATH"
 
       - name: Resolve public TestFlight group
         if: ${{ !inputs.app_store_only }}
@@ -137,6 +140,7 @@ jobs:
         run: python3 .github/scripts/asc_testflight.py prepare
 
       - name: Snapshot dev certs before build
+        id: cert_snapshot
         if: ${{ inputs.verify_build_number == '' }}
         env:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
@@ -211,7 +215,7 @@ jobs:
         run: python3 .github/scripts/asc_build.py
 
       - name: Revoke dev cert created by this run
-        if: ${{ always() && inputs.verify_build_number == '' }}
+        if: ${{ always() && steps.cert_snapshot.outcome == 'success' }}
         env:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
           APP_STORE_CONNECT_API_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_ISSUER_ID }}

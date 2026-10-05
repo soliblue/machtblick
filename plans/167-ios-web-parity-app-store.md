@@ -6,7 +6,7 @@ Apply the recent web vote-result table and debate-surface improvements to iOS, v
 
 ## Status
 
-Implementation complete. Native build, data contracts, launch, theme, and scroll checks passed. Rerunning corrected parity tests and total-row styling.
+Implementation and native verification complete. Uploading version 1.5 for App Store submission.
 
 ## Contracts
 
@@ -46,3 +46,5 @@ Implementation complete. Native build, data contracts, launch, theme, and scroll
 - Results: removed unused VoteDonutGrid and its count helper; kept feed/member donut components. Removed two stale section labels after surface integration. All Node gates now pass: 181 bilingual catalog keys, native More contract, 232 settings fields.
 - Surfaces: implemented native motion Result/Details/Speeches tabs, compact logo/status/date header, preserved signatories, summaries, timeline and PDF/DIP sources. MotionDetailStore caches full linked-vote payloads; MotionDebateAdapter merges and deduplicates linked debates and summaries. Removed summary/speech party tints and retained highlight borders; carousel separators use shared adaptive fg/15. Local diff check passes; macOS build and simulator verification remain with tester/root.
 - Results: visual review identified uneven total shading from differently tall GridRow cells. Matched party/count total-cell heights to 64 using shared tokens and removed repeated row accessibility wrappers, preserving unique count/party elements. Localization, More UI, settings parity, and whitespace checks pass; root reruns native CI/rendering.
+- Root: CI 37278961486 passed every native gate, including bilingual table counts, missing-data scrolling, party navigation, and motion tab interactions. Reviewed exported light/dark result, motion, debate, and party screenshots. App Store upload 37281022916 uses the verified cad7bc0 source.
+- Root: upload 37281022916 stopped before archiving because pip could not replace Homebrew's cryptography package. Isolated both release workflows in a Python virtual environment and limited certificate cleanup to runs with a successful snapshot. Native source remains unchanged.

@@ -49,7 +49,10 @@ jobs:
       - name: Install fastlane
         run: gem install fastlane --version 2.237.0 --no-document
       - name: Install App Store dependencies
-        run: pip3 install --break-system-packages requests==2.34.2 cryptography==49.0.0
+        run: |
+          python3 -m venv "$RUNNER_TEMP/asc-venv"
+          "$RUNNER_TEMP/asc-venv/bin/python" -m pip install requests==2.34.2 cryptography==49.0.0
+          echo "$RUNNER_TEMP/asc-venv/bin" >> "$GITHUB_PATH"
       - name: Prepare App Store version
         env:
           APP_STORE_CONNECT_API_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
