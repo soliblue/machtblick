@@ -6,7 +6,7 @@ Upload the verified result-table width fix and submit its build to App Review.
 
 ## Status
 
-Checking the live App Store version before uploading and replacing the earlier build.
+Uploading the replacement build, then replacing the earlier review submission.
 
 ## Contracts
 
@@ -25,3 +25,4 @@ Checking the live App Store version before uploading and replacing the earlier b
 ## Log
 
 - Root: user explicitly requested submission after the width fix passed native checks and screenshot review. Start from the verified width branch, with an isolated release checkout.
+- Root: read-only inspection run 37301313575 confirmed iOS 1.5 still WAITING_FOR_REVIEW, attached build 46 VALID, and automatic release AFTER_APPROVAL. Keep version 1.5 and upload its next build with the width fix and updated German/English notes.

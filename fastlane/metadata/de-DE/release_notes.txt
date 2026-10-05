@@ -2,3 +2,4 @@ Neu in Version 1.5:
 • Abstimmungsergebnisse als übersichtliche Tabelle mit Gesamtergebnis und Fraktionen.
 • Anträge mit getrennten Bereichen für Ergebnis, Details und Reden.
 • Klarere Zusammenfassungen und Debatten. Fehlende Abstimmungsdaten bleiben erkennbar.
+• Ergebnistabellen nutzen die gesamte verfügbare Breite.

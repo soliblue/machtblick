@@ -2,3 +2,4 @@ New in version 1.5:
 • Clear vote-result tables with totals and party breakdowns.
 • Separate Results, Details, and Speeches tabs for motions.
 • Cleaner summaries and debates. Missing voting data stays visible.
+• Result tables use the full available width.
