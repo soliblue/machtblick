@@ -6,8 +6,8 @@ struct VoteResultTable: View {
 
     var body: some View {
         ScrollView(.horizontal) {
-            Grid(alignment: .trailing, horizontalSpacing: 0, verticalSpacing: 0) {
-                GridRow {
+            VoteResultTableLayout(columns: model.columns.count + 1, minimumWidth: viewportWidth) {
+                Group {
                     Text(Copy.resultParty)
                         .foregroundStyle(ThemeColor.secondary)
                         .fixedSize(horizontal: true, vertical: false)
@@ -28,10 +28,9 @@ struct VoteResultTable: View {
                 Rectangle()
                     .fill(ThemeColor.border)
                     .frame(height: ThemeTokens.Stroke.s)
-                    .gridCellUnsizedAxes(.horizontal)
                     .accessibilityHidden(true)
                 ForEach(model.rows) { row in
-                    GridRow {
+                    Group {
                         VoteResultPartyCell(voteId: model.id, row: row)
                         ForEach(model.columns) { column in
                             VoteResultCountCell(
@@ -43,11 +42,9 @@ struct VoteResultTable: View {
                     Rectangle()
                         .fill(ThemeColor.border)
                         .frame(height: ThemeTokens.Stroke.s)
-                        .gridCellUnsizedAxes(.horizontal)
                         .accessibilityHidden(true)
                 }
             }
-            .frame(minWidth: viewportWidth, idealWidth: viewportWidth, alignment: .leading)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { viewportWidth = $0 }

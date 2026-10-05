@@ -54,16 +54,34 @@ struct NativeParitySession {
     }
 
     func revealResultColumn(vote: String, column: String) {
+        let viewport = app.scrollViews.matching(
+            NSPredicate(
+                format: "identifier == %@ OR identifier == %@",
+                "vote-results-\(vote)", "motion-linked-vote-\(vote)"))
+            .firstMatch
         let cell = app.descendants(matching: .any)["vote-result-cell-\(vote)-total-\(column)"]
-        let y = app.descendants(matching: .any)["vote-result-cell-\(vote)-total-yes"].frame.midY
-            / app.frame.height
-        for _ in 0..<3 where !cell.isHittable {
-            app.coordinate(withNormalizedOffset: CGVector(dx: 0.85, dy: y))
+        XCTAssertTrue(viewport.waitForExistence(timeout: 5))
+        let y = (cell.frame.midY - viewport.frame.minY) / viewport.frame.height
+        for _ in 0..<3 where !cell.isHittable || cell.frame.maxX > viewport.frame.maxX + 2 {
+            viewport.coordinate(withNormalizedOffset: CGVector(dx: 0.85, dy: y))
                 .press(
                     forDuration: 0.05,
-                    thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.15, dy: y)))
+                    thenDragTo: viewport.coordinate(withNormalizedOffset: CGVector(dx: 0.15, dy: y)))
+        }
+        XCTContext.runActivity(named: "Result column geometry") { activity in
+            let attachment = XCTAttachment(string: """
+                viewport: \(viewport.frame)
+                total: \(cell.frame)
+                hittable: \(cell.isHittable)
+                party: \(app.buttons["vote-result-party-\(vote)-cdu-csu"].frame)
+                partyLast: \(app.descendants(matching: .any)["vote-result-cell-\(vote)-cdu-csu-\(column)"].frame)
+                """)
+            attachment.name = "result-geometry-\(vote)-\(column)"
+            activity.add(attachment)
         }
         XCTAssertTrue(cell.isHittable)
+        XCTAssertGreaterThanOrEqual(cell.frame.minX, viewport.frame.minX - 2)
+        XCTAssertLessThanOrEqual(cell.frame.maxX, viewport.frame.maxX + 2)
     }
 
     func assertResultTableWidth(vote: String, column: String) {

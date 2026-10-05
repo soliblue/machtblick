@@ -31,8 +31,10 @@ final class VoteResultParityUITests: XCTestCase {
                     session.app.descendants(matching: .any)["vote-result-cell-\(vote)-\(pair.1)-yes"]
                         .frame.minY)
             }
+            session.revealResultColumn(vote: vote, column: "absent")
             session.assertResultTableWidth(vote: vote, column: "absent")
             session.capture("\(language)-rollcall-results", test: self)
+            session.app.scrollViews.matching(identifier: "vote-results-\(vote)").firstMatch.swipeRight()
             session.scrollTo(
                 session.app.buttons["vote-result-party-\(vote)-cdu-csu"])
             session.app.buttons["vote-result-party-\(vote)-cdu-csu"].tap()
